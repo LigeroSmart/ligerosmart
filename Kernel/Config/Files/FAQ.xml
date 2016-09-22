@@ -1012,6 +1012,17 @@ Your OTRS Notification Master
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems" Required="1" Valid="1">
+        <Description Translatable="1">Show invalid items in the FAQ Explorer result of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="PreferencesGroups###FAQOverviewSmallPageShown" Required="0" Valid="1">
         <Description Translatable="1">Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.</Description>
         <Group>FAQ</Group>

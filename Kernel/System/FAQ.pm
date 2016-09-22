@@ -1194,8 +1194,14 @@ sub AttachmentIndex {
 Count the number of articles for a defined category. Only valid FAQ articles will be counted.
 
     my $ArticleCount = $FAQObject->FAQCount(
-        CategoryIDs  => [1,2,3,4],
+        CategoryIDs => [1,2,3,4],
+        ItemStates =>  {
+            1 => 'internal',
+            2 => 'external',
+            3 => 'public',
+        },
         OnlyApproved => 1,   # optional (default 0)
+        Valid        => 1,   # optional (default 0)
         UserID       => 1,
     );
 
@@ -1219,6 +1225,9 @@ sub FAQCount {
             return;
         }
     }
+
+    # set default value
+    my $Valid = $Param{Valid} ? 1 : 0;
 
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
@@ -1252,7 +1261,13 @@ sub FAQCount {
     }
 
     # build valid id string
-    my $ValidIDsString = join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+    my $ValidIDsString;
+    if ($Valid) {
+        $ValidIDsString = join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+    }
+    else {
+        $ValidIDsString = join ', ', keys { $Kernel::OM->Get('Kernel::System::Valid')->ValidList() };
+    }
 
     my $SQL = 'SELECT COUNT(*) '
         . 'FROM faq_item i, faq_state s '

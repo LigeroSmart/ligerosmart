@@ -174,6 +174,7 @@ sub Run {
                 CategoryIDs  => [$SubCategoryID],
                 ItemStates   => $InterfaceStates,
                 OnlyApproved => 1,
+                Valid        => 1,
                 UserID       => $Self->{UserID},
             );
 

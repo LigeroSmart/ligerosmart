@@ -22,6 +22,13 @@ $Selenium->RunTest(
         # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
+        # disable show invalid FAQ items SySConfig
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems',
+            Value => 0,
+        );
+
         # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
@@ -52,6 +59,21 @@ $Selenium->RunTest(
 
             push @FAQs, \%FAQ;
         }
+
+        # set one FAQ as invalid see bug bug#11498 (http://bugs.otrs.org/show_bug.cgi?id=11498)ShowInvalidFAQItems
+        my $InvalidFAQTitle = "Invalid $FAQs[0]->{FAQTitle}";
+        my $Success         = $FAQObject->FAQUpdate(
+            ItemID      => $FAQs[0]->{FAQID},
+            Title       => $InvalidFAQTitle,
+            CategoryID  => 1,
+            StateID     => 1,
+            LanguageID  => 1,
+            Approved    => 1,
+            ContentType => 'text/html',
+            ValidID     => 2,
+            UserID      => 1,
+        );
+        $FAQs[0]->{FAQTitle} = $InvalidFAQTitle;
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -101,6 +123,22 @@ $Selenium->RunTest(
         # order FAQ item per FAQID by Down
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down");
 
+        # verify Invalid FAQ is not visible on explorer screen
+        $Self->True(
+            index( $Selenium->get_page_source(), $FAQs[0]->{FAQTitle} ) == -1,
+            "$FAQs[0]->{FAQTitle} is not found",
+        );
+
+        # enable show invalid FAQ items SySConfig
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems',
+            Value => 1,
+        );
+
+        # refresh screen
+        $Selenium->VerifiedRefresh();
+
         # check and delete test created FAQs
         for my $FAQ (@FAQs) {
 
@@ -110,7 +148,7 @@ $Selenium->RunTest(
                 "$FAQ->{FAQTitle} is found",
             );
 
-            my $Success = $FAQObject->FAQDelete(
+            $Success = $FAQObject->FAQDelete(
                 ItemID => $FAQ->{FAQID},
                 UserID => 1,
             );

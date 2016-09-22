@@ -993,6 +993,56 @@ for my $Test (@Tests) {
     }
 }
 
+%FAQData = $FAQObject->FAQGet(
+    ItemID => $FAQItemID1,
+    UserID => 1,
+);
+
+$FAQUpdate = $FAQObject->FAQUpdate(
+    %FAQData,
+    ItemID => $FAQItemID1,
+    Valid  => 2,
+    UserID => 1,
+);
+$Self->True(
+    $FAQUpdate,
+    "FAQUpdate() set FAQ $FAQItemID1 to invalid",
+);
+
+my $InterfaceStates = $FAQObject->StateTypeList(
+    Types  => $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Agent::StateTypes'),
+    UserID => 1,
+);
+
+my $ArticleCount = $FAQObject->FAQCount(
+    CategoryIDs => [ 1, ],
+    ItemStates  => $InterfaceStates,
+    Valid       => 0,
+    UserID      => 1,
+);
+$Self->IsNot(
+    $ArticleCount,
+    0,
+    "FAQCount() Valid and Invalid",
+);
+
+my $ArticleCountValid = $FAQObject->FAQCount(
+    CategoryIDs => [ 1, ],
+    ItemStates  => $InterfaceStates,
+    Valid       => 1,
+    UserID      => 1,
+);
+$Self->IsNot(
+    $ArticleCountValid,
+    0,
+    "FAQCount() Valid",
+);
+
+$Self->True(
+    $ArticleCountValid < $ArticleCount ? 1 : 0,
+    "Valid Items are less than Valid and Invalid ($ArticleCountValid < $ArticleCount) with true",
+);
+
 $FAQDelete = $FAQObject->FAQDelete(
     ItemID => $FAQItemID1,
     UserID => 1,
