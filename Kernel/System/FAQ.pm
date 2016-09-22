@@ -1266,7 +1266,8 @@ sub FAQCount {
         $ValidIDsString = join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
     }
     else {
-        $ValidIDsString = join ', ', keys { $Kernel::OM->Get('Kernel::System::Valid')->ValidList() };
+        my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
+        $ValidIDsString = join ', ', keys %ValidList;
     }
 
     my $SQL = 'SELECT COUNT(*) '
