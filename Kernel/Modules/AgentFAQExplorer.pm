@@ -201,8 +201,9 @@ sub Run {
     my @ValidIDs;
     my $Valid = 1;
     if ( $Config->{ShowInvalidFAQItems} ) {
-        @ValidIDs = keys { $ValidObject->ValidList() };
-        $Valid = 0;
+        my %ValidList = $ValidObject->ValidList();
+        @ValidIDs = keys %ValidList;
+        $Valid    = 0;
     }
     else {
         @ValidIDs = ( $ValidObject->ValidLookup( Valid => 'valid' ) );
