@@ -14,6 +14,13 @@ use vars qw($Self);
 
 use Kernel::System::FAQ;
 
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
 my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
@@ -1050,37 +1057,6 @@ $FAQDelete = $FAQObject->FAQDelete(
 $Self->True(
     $FAQDelete,
     "FAQDelete(): with True ($FAQItemID1)",
-);
-
-# clean the system
-$FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQID,
-    UserID => 1,
-);
-
-$Self->True(
-    $FAQDelete,
-    "FAQDelete() for ItemFieldGet: with True",
-);
-
-# check that cache is clean
-$Cache = $CacheObject->Get(
-    Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
-);
-$Self->Is(
-    $Cache,
-    undef,
-    "Cache for FAQ No ItemFields After FAQDelete(): Complete cache",
-);
-$Cache = $CacheObject->Get(
-    Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
-);
-$Self->Is(
-    $Cache,
-    undef,
-    "Cache for FAQ With ItemFields After FAQDelete(): Complete cache",
 );
 
 1;
