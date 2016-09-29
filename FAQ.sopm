@@ -139,6 +139,7 @@
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQHistory.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQJournal.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQLanguage.t"/>
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQLinkObject.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t"/>
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t"/>

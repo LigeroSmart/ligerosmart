@@ -1570,7 +1570,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer:AgentFAQLanguage:AgentFAQPrint:AgentFAQSearch:AgentFAQZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer:AgentFAQLanguage:AgentFAQLinkObject:AgentFAQPrint:AgentFAQSearch:AgentFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer:CustomerFAQPrint:CustomerFAQSearch:CustomerFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicFAQExplorer:PublicFAQPrint:PublicFAQRSS:PublicFAQSearch:PublicFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ:FAQJournalOverview/Small:FAQMenu/Generic:FAQOverview/Small:HeaderMeta/AgentFAQSearch:HeaderMeta/CustomerFAQSearch:HeaderMeta/PublicFAQSearch:LinkObject/FAQ
