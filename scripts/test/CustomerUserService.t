@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/4cb9487912ec1c6c26c62a4521798d523a1be07c/scripts/test/CustomerUserService.t
+# $origin: https://github.com/OTRS/otrs/blob/b713354c504d4913294a34adfdfc6bf3260d3890/scripts/test/CustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

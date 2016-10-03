@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/4cb9487912ec1c6c26c62a4521798d523a1be07c/scripts/test/SLA.t
+# $origin: https://github.com/OTRS/otrs/blob/ffac5e2b8ea4f12bd8cb20e0fedf34fde0a43192/scripts/test/SLA.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
