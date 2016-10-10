@@ -9,35 +9,35 @@
     <Description Lang="en">Includes "Ticket Master/Slave" feature.</Description>
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml"/>
-        <File Permission="644" Location="Kernel/Language/cs_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/de_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/hu_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/ja_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/ms_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/pt_BR_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/ru_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/sr_Cyrl_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/sw_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/th_TH_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Language/zh_CN_OTRSMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentPreMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketBulk/MasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldMasterSlave.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketMasterSlave.tt"/>
-        <File Permission="644" Location="Kernel/System/DynamicField/Driver/MasterSlave.pm"/>
-        <File Permission="644" Location="Kernel/System/Ticket/Event/MasterSlave.pm"/>
-        <File Permission="644" Location="scripts/test/DynamicField/MasterSlave/EditFieldRender.t"/>
-        <File Permission="644" Location="scripts/test/DynamicField/MasterSlave/ValueSet.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t"/>
-        <File Permission="644" Location="scripts/test/Ticket/Event/MasterSlave.t"/>
-        <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml" />
+        <File Permission="644" Location="Kernel/Language/cs_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/de_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/es_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/hu_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/ja_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/ms_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/pt_BR_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/ru_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/sr_Cyrl_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/sw_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/th_TH_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Language/zh_CN_OTRSMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminDynamicFieldMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentPreMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/TicketBulk/MasterSlave.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminDynamicFieldMasterSlave.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketMasterSlave.tt" />
+        <File Permission="644" Location="Kernel/System/DynamicField/Driver/MasterSlave.pm" />
+        <File Permission="644" Location="Kernel/System/Ticket/Event/MasterSlave.pm" />
+        <File Permission="644" Location="scripts/test/DynamicField/MasterSlave/EditFieldRender.t" />
+        <File Permission="644" Location="scripts/test/DynamicField/MasterSlave/ValueSet.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t" />
+        <File Permission="644" Location="scripts/test/Ticket/Event/MasterSlave.t" />
+        <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm" />
     </Filelist>
     <CodeInstall Type="post"><![CDATA[
         $Kernel::OM->Get('var::packagesetup::OTRSMasterSlave')->CodeInstall();
