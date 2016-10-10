@@ -13,771 +13,771 @@
     <Description Lang="es">El paquete OTRS::ITSM Change Management.</Description>
     <Description Lang="hu">Az OTRS::ITSM változásmenedzsment csomag.</Description>
     <Filelist>
-        <File Permission="644" Location="doc/itsm-change-management-database.dia"/>
-        <File Permission="644" Location="doc/itsm-change-management-database.png"/>
-        <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml"/>
-        <File Permission="644" Location="Kernel/Language/de_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/en_CA_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/en_GB_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/en_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/fa_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/hu_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/ja_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/ms_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/nb_NO_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/nl_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/pl_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/pt_BR_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/pt_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/ru_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/sw_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/zh_CN_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Language/zh_TW_ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminITSMChangeNotification.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminITSMStateMachine.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMCABMemberSearch.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAdd.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAddFromTemplate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCABTemplate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCondition.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeConditionEdit.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeDelete.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeEdit.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistory.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistoryZoom.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeInvolvedPersons.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeManager.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyCAB.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyChanges.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyWorkOrders.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePIR.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePrint.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePSA.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeReset.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSchedule.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSearch.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTemplate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTimeSlot.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeZoom.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateDelete.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEdit.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEditCAB.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEditContent.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateOverview.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMUserSearch.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAddFromTemplate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAgent.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderDelete.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderEdit.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistory.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderReport.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTake.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
-        <File Permission="644" Location="Kernel/Modules/CustomerITSMChangeSchedule.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuChangeDelete.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuTimeSlot.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuWorkOrdersNeeded.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/OverviewSmall.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMTemplate/OverviewSmall.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrder/MenuGeneric.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrder/MenuWithPermissionFromChange.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrder/MenuWithTakePermission.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Layout/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Layout/ITSMTemplate.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LinkObject/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LinkObject/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketMenu/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/ChangeManager.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyCAB.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyChanges.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyWorkOrders.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAITSMChangeManagement.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeCIPAllocate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeNotification.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMStateMachine.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMCABMemberSearch.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeAdd.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeAddFromTemplate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeCABTemplate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeCondition.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeConditionEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeDelete.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeHistory.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeHistoryZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeInvolvedPersons.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeOverviewNavBar.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeOverviewSmall.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeReset.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeSearch.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeTemplate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeTimeSlot.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateDelete.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEditCAB.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEditContent.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateOverviewNavBar.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateOverviewSmall.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMUserSearch.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAdd.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAddFromTemplate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAgent.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderDelete.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderHistory.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderHistoryZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderReport.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderTake.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderTemplate.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderZoom.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerITSMChangeOverview.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ITSMChange.tt"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/System/DynamicField/Event/UpdateITSMChangeConditions.pm"/>
-        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/History.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMStateMachine.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Notification.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Template.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Condition.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ConditionDelete.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryDelete.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Notification.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarChangeManagerCacheDelete.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarMyCABCacheDelete.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarMyChangesCacheDelete.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Action.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Attribute.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Expression.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/ToolBarMyWorkOrdersCacheDelete.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderNumberCalc.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeManagerCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/EmptyAgentCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Number/AutoIncrement.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Number/Date.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Number/DateChecksum.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/AddWorkOrderCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/CABCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Template/CAB.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMCondition.pm"/>
-        <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/LinkObject/ITSMChange.pm"/>
-        <File Permission="644" Location="Kernel/System/LinkObject/ITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm"/>
-        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm"/>
-        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm"/>
-        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementRfcRequester.pm"/>
-        <File Permission="644" Location="Kernel/System/Ticket/Acl/RestrictTicketTypes.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Admin/ITSM/Change/Delete.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Admin/ITSM/Change/Check.pm"/>
-        <File Permission="644" Location="scripts/test/ITSMChange.t"/>
-        <File Permission="644" Location="scripts/test/ITSMCondition.t"/>
-        <File Permission="644" Location="scripts/test/ITSMStateMachine.t"/>
-        <File Permission="644" Location="scripts/test/ITSMTemplate.t"/>
-        <File Permission="644" Location="scripts/test/ITSMWorkOrder.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChange.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeAdd.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeAddFromTemplate.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeCABTemplate.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeCondition.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeEdit.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeHistory.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeHistoryZoom.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMChangeCIPAllocate.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMStateMachine.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeManager.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyCAB.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyChanges.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyWorkOrders.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeInvolvedPersons.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangePIR.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangePSA.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeSchedule.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeTemplate.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeZoom.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateDelete.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateEdit.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateEditCAB.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateEditContent.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAdd.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAgent.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderDelete.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderEdit.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderHistory.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeDelete.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeReset.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderHistoryZoom.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderReport.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderTemplate.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderZoom.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMCABMemberSearch.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeSearch.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeTimeSlot.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateOverview.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMUserSearch.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAddFromTemplate.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeConditionEdit.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderTake.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ITSMChange/MenuGeneric.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ITSMWorkOrder/MenuGeneric.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/ITSMChange.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/ITSMWorkOrder.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/ChangeManager.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyCAB.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyChanges.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyWorkOrder.t"/>
-        <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/Change/Delete.t"/>
-        <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/Change/Check.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CABMemberSearch.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.NotificationEvent.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Zoom.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.UserSearch.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Responsive.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.RTEContent.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.WorkorderGraph.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Table.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Default.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/flag_shadow.png"/>
-        <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="doc/itsm-change-management-database.dia" />
+        <File Permission="644" Location="doc/itsm-change-management-database.png" />
+        <File Permission="644" Location="Kernel/Config/Files/ITSMChangeManagement.xml" />
+        <File Permission="644" Location="Kernel/Language/de_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/en_CA_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/en_GB_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/en_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/es_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/fa_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/hu_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/ja_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/ms_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/nb_NO_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/nl_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/pl_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/pt_BR_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/pt_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/ru_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/sw_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/zh_CN_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Language/zh_TW_ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminITSMChangeNotification.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminITSMStateMachine.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMCABMemberSearch.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChange.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAdd.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeAddFromTemplate.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCABTemplate.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCondition.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeConditionEdit.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeDelete.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeEdit.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistory.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistoryZoom.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeInvolvedPersons.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeManager.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyCAB.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyChanges.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyWorkOrders.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePIR.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePrint.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePSA.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeReset.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSchedule.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSearch.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTemplate.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTimeSlot.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeZoom.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateDelete.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEdit.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEditCAB.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateEditContent.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMTemplateOverview.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMUserSearch.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAdd.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAddFromTemplate.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderAgent.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderDelete.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderEdit.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistory.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderReport.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTake.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm" />
+        <File Permission="644" Location="Kernel/Modules/CustomerITSMChangeSchedule.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuChangeDelete.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuGeneric.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuTimeSlot.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/MenuWorkOrdersNeeded.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChange/OverviewSmall.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMTemplate/OverviewSmall.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrder/MenuGeneric.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrder/MenuWithPermissionFromChange.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrder/MenuWithTakePermission.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Layout/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Layout/ITSMTemplate.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObject/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/LinkObject/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/TicketMenu/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/ChangeManager.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyCAB.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyChanges.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyWorkOrders.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAITSMChangeManagement.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeCIPAllocate.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeNotification.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMStateMachine.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMCABMemberSearch.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeAdd.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeAddFromTemplate.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeCABTemplate.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeCondition.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeConditionEdit.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeDelete.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeEdit.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeHistory.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeHistoryZoom.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeInvolvedPersons.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeOverviewNavBar.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeOverviewSmall.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeReset.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeSearch.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeTemplate.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeTimeSlot.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeZoom.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateDelete.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEdit.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEditCAB.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEditContent.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateOverviewNavBar.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateOverviewSmall.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMUserSearch.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAdd.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAddFromTemplate.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAgent.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderDelete.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderEdit.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderHistory.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderHistoryZoom.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderReport.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderTake.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderTemplate.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderZoom.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerITSMChangeOverview.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ITSMChange.tt" />
+        <File Permission="644" Location="Kernel/System/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/System/DynamicField/Event/UpdateITSMChangeConditions.pm" />
+        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/History.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMStateMachine.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Notification.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Condition.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ConditionDelete.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryDelete.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/Notification.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarChangeManagerCacheDelete.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarMyCABCacheDelete.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarMyChangesCacheDelete.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Action.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Attribute.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Expression.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/ToolBarMyWorkOrdersCacheDelete.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderNumberCalc.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeManagerCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/EmptyAgentCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Number/AutoIncrement.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Number/Date.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Number/DateChecksum.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/AddWorkOrderCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/CABCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Permission/ChangeManagerCheck.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template/CAB.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMCondition.pm" />
+        <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/System/LinkObject/ITSMChange.pm" />
+        <File Permission="644" Location="Kernel/System/LinkObject/ITSMWorkOrder.pm" />
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm" />
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm" />
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm" />
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm" />
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementRfcRequester.pm" />
+        <File Permission="644" Location="Kernel/System/Ticket/Acl/RestrictTicketTypes.pm" />
+        <File Permission="644" Location="Kernel/System/Console/Command/Admin/ITSM/Change/Delete.pm" />
+        <File Permission="644" Location="Kernel/System/Console/Command/Admin/ITSM/Change/Check.pm" />
+        <File Permission="644" Location="scripts/test/ITSMChange.t" />
+        <File Permission="644" Location="scripts/test/ITSMCondition.t" />
+        <File Permission="644" Location="scripts/test/ITSMStateMachine.t" />
+        <File Permission="644" Location="scripts/test/ITSMTemplate.t" />
+        <File Permission="644" Location="scripts/test/ITSMWorkOrder.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChange.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeAdd.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeAddFromTemplate.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeCABTemplate.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeCondition.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeEdit.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeHistory.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeHistoryZoom.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMChangeCIPAllocate.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/Admin/AdminITSMStateMachine.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeManager.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyCAB.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyChanges.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeMyWorkOrders.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeInvolvedPersons.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangePIR.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangePSA.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeSchedule.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeTemplate.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeZoom.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateDelete.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateEdit.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateEditCAB.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateEditContent.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAdd.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAgent.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderDelete.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderEdit.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderHistory.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeDelete.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeReset.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderHistoryZoom.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderReport.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderTemplate.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderZoom.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMCABMemberSearch.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeSearch.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeTimeSlot.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMTemplateOverview.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMUserSearch.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderAddFromTemplate.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMChangeConditionEdit.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentITSMWorkOrderTake.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ITSMChange/MenuGeneric.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ITSMWorkOrder/MenuGeneric.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/ITSMChange.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/LinkObject/ITSMWorkOrder.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/ChangeManager.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyCAB.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyChanges.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/MyWorkOrder.t" />
+        <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/Change/Delete.t" />
+        <File Permission="644" Location="scripts/test/Console/Command/Admin/ITSM/Change/Check.t" />
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CABMemberSearch.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.NotificationEvent.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Zoom.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.UserSearch.js" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Responsive.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.RTEContent.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.WorkorderGraph.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Table.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Default.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/flag_shadow.png" />
+        <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm" />
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="change_item">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="description" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="description_plain" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="justification" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="justification_plain" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="change_state_id" Required="true" Type="INTEGER"/>
-            <Column Name="change_manager_id" Required="false" Type="INTEGER"/>
-            <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
-            <Column Name="category_id" Required="true" Type="INTEGER"/>
-            <Column Name="impact_id" Required="true" Type="INTEGER"/>
-            <Column Name="priority_id" Required="true" Type="INTEGER"/>
-            <Column Name="requested_time" Required="false" Type="DATE"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_number" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="title" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="description" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="description_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="justification" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="justification_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="change_state_id" Required="true" Type="INTEGER" />
+            <Column Name="change_manager_id" Required="false" Type="INTEGER" />
+            <Column Name="change_builder_id" Required="true" Type="INTEGER" />
+            <Column Name="category_id" Required="true" Type="INTEGER" />
+            <Column Name="impact_id" Required="true" Type="INTEGER" />
+            <Column Name="priority_id" Required="true" Type="INTEGER" />
+            <Column Name="requested_time" Required="false" Type="DATE" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <Unique Name="change_item_change_number">
-                <UniqueColumn Name="change_number"/>
+                <UniqueColumn Name="change_number" />
             </Unique>
             <Index Name="change_item_title">
-                <IndexColumn Name="title"/>
+                <IndexColumn Name="title" />
             </Index>
             <Index Name="change_item_change_state_id">
-                <IndexColumn Name="change_state_id"/>
+                <IndexColumn Name="change_state_id" />
             </Index>
             <Index Name="change_item_change_manager_id">
-                <IndexColumn Name="change_manager_id"/>
+                <IndexColumn Name="change_manager_id" />
             </Index>
             <Index Name="change_item_change_builder_id">
-                <IndexColumn Name="change_builder_id"/>
+                <IndexColumn Name="change_builder_id" />
             </Index>
             <Index Name="change_item_category_id">
-                <IndexColumn Name="category_id"/>
+                <IndexColumn Name="category_id" />
             </Index>
             <Index Name="change_item_impact_id">
-                <IndexColumn Name="impact_id"/>
+                <IndexColumn Name="impact_id" />
             </Index>
             <Index Name="change_item_priority_id">
-                <IndexColumn Name="priority_id"/>
+                <IndexColumn Name="priority_id" />
             </Index>
             <Index Name="change_item_create_time">
-                <IndexColumn Name="create_time"/>
+                <IndexColumn Name="create_time" />
             </Index>
             <Index Name="change_item_requested_time">
-                <IndexColumn Name="requested_time"/>
+                <IndexColumn Name="requested_time" />
             </Index>
             <Index Name="change_item_change_time">
-                <IndexColumn Name="change_time"/>
+                <IndexColumn Name="change_time" />
             </Index>
             <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="change_state_id" Foreign="id"/>
-                <Reference Local="category_id" Foreign="id"/>
-                <Reference Local="impact_id" Foreign="id"/>
-                <Reference Local="priority_id" Foreign="id"/>
+                <Reference Local="change_state_id" Foreign="id" />
+                <Reference Local="category_id" Foreign="id" />
+                <Reference Local="impact_id" Foreign="id" />
+                <Reference Local="priority_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="change_manager_id" Foreign="id"/>
-                <Reference Local="change_builder_id" Foreign="id"/>
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
+                <Reference Local="change_manager_id" Foreign="id" />
+                <Reference Local="change_builder_id" Foreign="id" />
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_workorder">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="workorder_number" Required="true" Type="INTEGER"/>
-            <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="instruction" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="instruction_plain" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="report" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="report_plain" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
-            <Column Name="workorder_type_id" Required="true" Type="INTEGER"/>
-            <Column Name="workorder_agent_id" Required="false" Type="INTEGER"/>
-            <Column Name="planned_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
-            <Column Name="planned_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
-            <Column Name="actual_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
-            <Column Name="actual_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE"/>
-            <Column Name="planned_effort" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
-            <Column Name="accounted_time" Required="true" Default="0" Size="10,2" Type="DECIMAL"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="workorder_number" Required="true" Type="INTEGER" />
+            <Column Name="title" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="instruction" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="instruction_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="report" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="report_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="workorder_state_id" Required="true" Type="INTEGER" />
+            <Column Name="workorder_type_id" Required="true" Type="INTEGER" />
+            <Column Name="workorder_agent_id" Required="false" Type="INTEGER" />
+            <Column Name="planned_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="planned_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="actual_start_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="actual_end_time" Required="true" Default="9999-01-01 00:00:00" Type="DATE" />
+            <Column Name="planned_effort" Required="true" Default="0" Size="10,2" Type="DECIMAL" />
+            <Column Name="accounted_time" Required="true" Default="0" Size="10,2" Type="DECIMAL" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <Index Name="change_workorder_change_id">
-                <IndexColumn Name="change_id"/>
+                <IndexColumn Name="change_id" />
             </Index>
             <Index Name="change_workorder_title">
-                <IndexColumn Name="title"/>
+                <IndexColumn Name="title" />
             </Index>
             <Index Name="change_workorder_workorder_state_id">
-                <IndexColumn Name="workorder_state_id"/>
+                <IndexColumn Name="workorder_state_id" />
             </Index>
             <Index Name="change_workorder_workorder_type_id">
-                <IndexColumn Name="workorder_type_id"/>
+                <IndexColumn Name="workorder_type_id" />
             </Index>
             <Index Name="change_workorder_workorder_agent_id">
-                <IndexColumn Name="workorder_agent_id"/>
+                <IndexColumn Name="workorder_agent_id" />
             </Index>
             <Index Name="change_workorder_planned_start_time">
-                <IndexColumn Name="planned_start_time"/>
+                <IndexColumn Name="planned_start_time" />
             </Index>
             <Index Name="change_workorder_planned_end_time">
-                <IndexColumn Name="planned_end_time"/>
+                <IndexColumn Name="planned_end_time" />
             </Index>
             <Index Name="change_workorder_actual_start_time">
-                <IndexColumn Name="actual_start_time"/>
+                <IndexColumn Name="actual_start_time" />
             </Index>
             <Index Name="change_workorder_actual_end_time">
-                <IndexColumn Name="actual_end_time"/>
+                <IndexColumn Name="actual_end_time" />
             </Index>
             <Index Name="change_workorder_create_time">
-                <IndexColumn Name="create_time"/>
+                <IndexColumn Name="create_time" />
             </Index>
             <Index Name="change_workorder_change_time">
-                <IndexColumn Name="change_time"/>
+                <IndexColumn Name="change_time" />
             </Index>
             <ForeignKey ForeignTable="change_item">
-                <Reference Local="change_id" Foreign="id"/>
+                <Reference Local="change_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="workorder_state_id" Foreign="id"/>
-                <Reference Local="workorder_type_id" Foreign="id"/>
+                <Reference Local="workorder_state_id" Foreign="id" />
+                <Reference Local="workorder_type_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="workorder_agent_id" Foreign="id"/>
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
+                <Reference Local="workorder_agent_id" Foreign="id" />
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_cab">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="user_id" Required="false" Type="INTEGER"/>
-            <Column Name="customer_user_id" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="user_id" Required="false" Type="INTEGER" />
+            <Column Name="customer_user_id" Required="false" Size="250" Type="VARCHAR" />
             <Unique Name="change_cab_unique">
-                <UniqueColumn Name="change_id"/>
-                <UniqueColumn Name="user_id"/>
-                <UniqueColumn Name="customer_user_id"/>
+                <UniqueColumn Name="change_id" />
+                <UniqueColumn Name="user_id" />
+                <UniqueColumn Name="customer_user_id" />
             </Unique>
             <ForeignKey ForeignTable="change_item">
-                <Reference Local="change_id" Foreign="id"/>
+                <Reference Local="change_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="user_id" Foreign="id"/>
+                <Reference Local="user_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_history_type">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-            <Column Name="name" Required="true" Size="100" Type="VARCHAR"/>
-            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="100" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <Unique Name="change_history_type_name">
-                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="name" />
             </Unique>
             <Index Name="change_history_type_valid_id">
-                <IndexColumn Name="valid_id"/>
+                <IndexColumn Name="valid_id" />
             </Index>
             <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
+                <Reference Local="valid_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_history">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="workorder_id" Required="false" Type="BIGINT"/>
-            <Column Name="type_id" Required="true" Type="INTEGER"/>
-            <Column Name="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
-            <Column Name="fieldname" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="workorder_id" Required="false" Type="BIGINT" />
+            <Column Name="type_id" Required="true" Type="INTEGER" />
+            <Column Name="content_new" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="content_old" Required="false" Size="1800000" Type="VARCHAR" />
+            <Column Name="fieldname" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
             <Index Name="change_history_change_id">
-                <IndexColumn Name="change_id"/>
+                <IndexColumn Name="change_id" />
             </Index>
             <Index Name="change_history_workorder_id">
-                <IndexColumn Name="workorder_id"/>
+                <IndexColumn Name="workorder_id" />
             </Index>
             <Index Name="change_history_type_id">
-                <IndexColumn Name="type_id"/>
+                <IndexColumn Name="type_id" />
             </Index>
             <Index Name="change_history_create_time">
-                <IndexColumn Name="create_time"/>
+                <IndexColumn Name="create_time" />
             </Index>
             <ForeignKey ForeignTable="change_item">
-                <Reference Local="change_id" Foreign="id"/>
+                <Reference Local="change_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="change_history_type">
-                <Reference Local="type_id" Foreign="id"/>
+                <Reference Local="type_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
+                <Reference Local="create_by" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_template_type">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <Unique Name="change_template_type_name">
-                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="name" />
             </Unique>
             <Index Name="change_template_type_valid_id">
-                <IndexColumn Name="valid_id"/>
+                <IndexColumn Name="valid_id" />
             </Index>
             <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
+                <Reference Local="valid_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_template">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="content" Required="true" Type="LONGBLOB"/>
-            <Column Name="type_id" Required="true" Type="INTEGER"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="content" Required="true" Type="LONGBLOB" />
+            <Column Name="type_id" Required="true" Type="INTEGER" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <Unique Name="change_template_name_type_id">
-                <UniqueColumn Name="name"/>
-                <UniqueColumn Name="type_id"/>
+                <UniqueColumn Name="name" />
+                <UniqueColumn Name="type_id" />
             </Unique>
             <Index Name="change_template_valid_id">
-                <IndexColumn Name="valid_id"/>
+                <IndexColumn Name="valid_id" />
             </Index>
             <Index Name="change_template_type_id">
-                <IndexColumn Name="type_id"/>
+                <IndexColumn Name="type_id" />
             </Index>
             <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
+                <Reference Local="valid_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="change_template_type">
-                <Reference Local="type_id" Foreign="id"/>
+                <Reference Local="type_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_cip_allocate">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="category_id" Required="true" Type="INTEGER"/>
-            <Column Name="impact_id" Required="true" Type="INTEGER"/>
-            <Column Name="priority_id" Required="true" Type="INTEGER"/>
-            <Column Name="create_time" Required="false" Type="DATE"/>
-            <Column Name="create_by" Required="false" Type="INTEGER"/>
-            <Column Name="change_time" Required="false" Type="DATE"/>
-            <Column Name="change_by" Required="false" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="category_id" Required="true" Type="INTEGER" />
+            <Column Name="impact_id" Required="true" Type="INTEGER" />
+            <Column Name="priority_id" Required="true" Type="INTEGER" />
+            <Column Name="create_time" Required="false" Type="DATE" />
+            <Column Name="create_by" Required="false" Type="INTEGER" />
+            <Column Name="change_time" Required="false" Type="DATE" />
+            <Column Name="change_by" Required="false" Type="INTEGER" />
             <ForeignKey ForeignTable="general_catalog">
-                <Reference Local="category_id" Foreign="id"/>
-                <Reference Local="impact_id" Foreign="id"/>
-                <Reference Local="priority_id" Foreign="id"/>
+                <Reference Local="category_id" Foreign="id" />
+                <Reference Local="impact_id" Foreign="id" />
+                <Reference Local="priority_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_state_machine">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="state_id" Required="false" Type="INTEGER"/>
-            <Column Name="next_state_id" Required="false" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="state_id" Required="false" Type="INTEGER" />
+            <Column Name="next_state_id" Required="false" Type="INTEGER" />
             <Unique Name="change_state_machine_unique">
-                <UniqueColumn Name="state_id"/>
-                <UniqueColumn Name="next_state_id"/>
+                <UniqueColumn Name="state_id" />
+                <UniqueColumn Name="next_state_id" />
             </Unique>
         </TableCreate>
         <TableCreate Name="condition_object">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
             <Unique Name="condition_object_name">
-                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="name" />
             </Unique>
         </TableCreate>
         <TableCreate Name="condition_attribute">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
             <Unique Name="condition_attribute_name">
-                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="name" />
             </Unique>
         </TableCreate>
         <TableCreate Name="condition_operator">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
             <Unique Name="condition_operator_name">
-                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="name" />
             </Unique>
         </TableCreate>
         <TableCreate Name="change_condition">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="change_id" Required="true" Type="BIGINT"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="expression_conjunction" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="change_id" Required="true" Type="BIGINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="expression_conjunction" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <Index Name="change_condition_change_id">
-                <IndexColumn Name="change_id"/>
+                <IndexColumn Name="change_id" />
             </Index>
             <Index Name="change_condition_valid_id">
-                <IndexColumn Name="valid_id"/>
+                <IndexColumn Name="valid_id" />
             </Index>
             <Unique Name="condition_condition_change_id_name_unique">
-                <UniqueColumn Name="change_id"/>
-                <UniqueColumn Name="name"/>
+                <UniqueColumn Name="change_id" />
+                <UniqueColumn Name="name" />
             </Unique>
             <ForeignKey ForeignTable="change_item">
-                <Reference Local="change_id" Foreign="id"/>
+                <Reference Local="change_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
+                <Reference Local="valid_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="users">
-                <Reference Local="create_by" Foreign="id"/>
-                <Reference Local="change_by" Foreign="id"/>
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="condition_expression">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="condition_id" Required="true" Type="BIGINT"/>
-            <Column Name="object_id" Required="true" Type="SMALLINT"/>
-            <Column Name="attribute_id" Required="true" Type="SMALLINT"/>
-            <Column Name="operator_id" Required="true" Type="SMALLINT"/>
-            <Column Name="selector" Required="false" Size="20" Type="VARCHAR"/>
-            <Column Name="compare_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="condition_id" Required="true" Type="BIGINT" />
+            <Column Name="object_id" Required="true" Type="SMALLINT" />
+            <Column Name="attribute_id" Required="true" Type="SMALLINT" />
+            <Column Name="operator_id" Required="true" Type="SMALLINT" />
+            <Column Name="selector" Required="false" Size="20" Type="VARCHAR" />
+            <Column Name="compare_value" Required="false" Size="250" Type="VARCHAR" />
             <Index Name="condition_expression_condition_id">
-                <IndexColumn Name="condition_id"/>
+                <IndexColumn Name="condition_id" />
             </Index>
             <Index Name="condition_expression_object_id">
-                <IndexColumn Name="object_id"/>
+                <IndexColumn Name="object_id" />
             </Index>
             <Index Name="condition_expression_attribute_id">
-                <IndexColumn Name="attribute_id"/>
+                <IndexColumn Name="attribute_id" />
             </Index>
             <Index Name="condition_expression_operator_id">
-                <IndexColumn Name="operator_id"/>
+                <IndexColumn Name="operator_id" />
             </Index>
             <Index Name="condition_expression_selector">
-                <IndexColumn Name="selector"/>
+                <IndexColumn Name="selector" />
             </Index>
             <Index Name="condition_expression_compare_value">
-                <IndexColumn Name="compare_value"/>
+                <IndexColumn Name="compare_value" />
             </Index>
             <Unique Name="condition_expression_unique">
-                <UniqueColumn Name="condition_id"/>
-                <UniqueColumn Name="object_id"/>
-                <UniqueColumn Name="attribute_id"/>
-                <UniqueColumn Name="operator_id"/>
-                <UniqueColumn Name="selector"/>
-                <UniqueColumn Name="compare_value"/>
+                <UniqueColumn Name="condition_id" />
+                <UniqueColumn Name="object_id" />
+                <UniqueColumn Name="attribute_id" />
+                <UniqueColumn Name="operator_id" />
+                <UniqueColumn Name="selector" />
+                <UniqueColumn Name="compare_value" />
             </Unique>
             <ForeignKey ForeignTable="change_condition">
-                <Reference Local="condition_id" Foreign="id"/>
+                <Reference Local="condition_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="condition_object">
-                <Reference Local="object_id" Foreign="id"/>
+                <Reference Local="object_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="condition_attribute">
-                <Reference Local="attribute_id" Foreign="id"/>
+                <Reference Local="attribute_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="condition_operator">
-                <Reference Local="operator_id" Foreign="id"/>
+                <Reference Local="operator_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="condition_action">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="condition_id" Required="true" Type="BIGINT"/>
-            <Column Name="action_number" Required="true" Type="INTEGER"/>
-            <Column Name="object_id" Required="true" Type="SMALLINT"/>
-            <Column Name="attribute_id" Required="true" Type="SMALLINT"/>
-            <Column Name="operator_id" Required="true" Type="SMALLINT"/>
-            <Column Name="selector" Required="false" Size="20" Type="VARCHAR"/>
-            <Column Name="action_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="condition_id" Required="true" Type="BIGINT" />
+            <Column Name="action_number" Required="true" Type="INTEGER" />
+            <Column Name="object_id" Required="true" Type="SMALLINT" />
+            <Column Name="attribute_id" Required="true" Type="SMALLINT" />
+            <Column Name="operator_id" Required="true" Type="SMALLINT" />
+            <Column Name="selector" Required="false" Size="20" Type="VARCHAR" />
+            <Column Name="action_value" Required="false" Size="250" Type="VARCHAR" />
             <Index Name="condition_action_condition_id">
-                <IndexColumn Name="condition_id"/>
+                <IndexColumn Name="condition_id" />
             </Index>
             <Index Name="condition_action_action_number">
-                <IndexColumn Name="action_number"/>
+                <IndexColumn Name="action_number" />
             </Index>
             <Index Name="condition_action_object_id">
-                <IndexColumn Name="object_id"/>
+                <IndexColumn Name="object_id" />
             </Index>
             <Index Name="condition_action_attribute_id">
-                <IndexColumn Name="attribute_id"/>
+                <IndexColumn Name="attribute_id" />
             </Index>
             <Index Name="condition_action_operator_id">
-                <IndexColumn Name="operator_id"/>
+                <IndexColumn Name="operator_id" />
             </Index>
             <Index Name="condition_action_selector">
-                <IndexColumn Name="selector"/>
+                <IndexColumn Name="selector" />
             </Index>
             <Index Name="condition_action_action_value">
-                <IndexColumn Name="action_value"/>
+                <IndexColumn Name="action_value" />
             </Index>
             <Unique Name="condition_action_unique">
-                <UniqueColumn Name="condition_id"/>
-                <UniqueColumn Name="object_id"/>
-                <UniqueColumn Name="attribute_id"/>
-                <UniqueColumn Name="operator_id"/>
-                <UniqueColumn Name="selector"/>
-                <UniqueColumn Name="action_value"/>
+                <UniqueColumn Name="condition_id" />
+                <UniqueColumn Name="object_id" />
+                <UniqueColumn Name="attribute_id" />
+                <UniqueColumn Name="operator_id" />
+                <UniqueColumn Name="selector" />
+                <UniqueColumn Name="action_value" />
             </Unique>
             <Unique Name="condition_action_number_unique">
-                <UniqueColumn Name="condition_id"/>
-                <UniqueColumn Name="action_number"/>
+                <UniqueColumn Name="condition_id" />
+                <UniqueColumn Name="action_number" />
             </Unique>
             <ForeignKey ForeignTable="change_condition">
-                <Reference Local="condition_id" Foreign="id"/>
+                <Reference Local="condition_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="condition_object">
-                <Reference Local="object_id" Foreign="id"/>
+                <Reference Local="object_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="condition_attribute">
-                <Reference Local="attribute_id" Foreign="id"/>
+                <Reference Local="attribute_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="condition_operator">
-                <Reference Local="operator_id" Foreign="id"/>
+                <Reference Local="operator_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_notification">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="item_attribute" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="event_id" Required="true" Type="INTEGER"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="comments" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="notification_rule" Required="false" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="item_attribute" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="event_id" Required="true" Type="INTEGER" />
+            <Column Name="valid_id" Required="true" Type="SMALLINT" />
+            <Column Name="comments" Required="false" Size="250" Type="VARCHAR" />
+            <Column Name="notification_rule" Required="false" Size="250" Type="VARCHAR" />
             <Index Name="change_notification_event_id">
-                <IndexColumn Name="event_id"/>
+                <IndexColumn Name="event_id" />
             </Index>
             <Index Name="change_notification_valid_id">
-                <IndexColumn Name="valid_id"/>
+                <IndexColumn Name="valid_id" />
             </Index>
             <Index Name="change_notification_event_valid_id">
-                <IndexColumn Name="event_id"/>
-                <IndexColumn Name="valid_id"/>
+                <IndexColumn Name="event_id" />
+                <IndexColumn Name="valid_id" />
             </Index>
             <ForeignKey ForeignTable="change_history_type">
-                <Reference Local="event_id" Foreign="id"/>
+                <Reference Local="event_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="valid">
-                <Reference Local="valid_id" Foreign="id"/>
+                <Reference Local="valid_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <TableCreate Name="change_notification_message">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="notification_id" Required="true" Type="BIGINT"/>
-            <Column Name="subject" Required="true" Size="200" Type="VARCHAR"/>
-            <Column Name="text" Required="true" Size="4000" Type="VARCHAR"/>
-            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="language" Required="true" Size="60" Type="VARCHAR"/>
-            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="notification_id" Required="true" Type="BIGINT" />
+            <Column Name="subject" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="text" Required="true" Size="4000" Type="VARCHAR" />
+            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="language" Required="true" Size="60" Type="VARCHAR" />
+            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR" />
             <ForeignKey ForeignTable="change_notification">
-                <Reference Foreign="id" Local="notification_id"/>
+                <Reference Foreign="id" Local="notification_id" />
             </ForeignKey>
             <Index Name="change_notification_message_notification_id">
-                <IndexColumn Name="notification_id"/>
+                <IndexColumn Name="notification_id" />
             </Index>
             <Index Name="change_notification_message_language">
-                <IndexColumn Name="language"/>
+                <IndexColumn Name="language" />
             </Index>
             <Unique Name="change_notification_message_notification_id_language">
-                <UniqueColumn Name="notification_id"/>
-                <UniqueColumn Name="language"/>
-                <UniqueColumn Name="notification_type"/>
+                <UniqueColumn Name="notification_id" />
+                <UniqueColumn Name="language" />
+                <UniqueColumn Name="notification_type" />
             </Unique>
         </TableCreate>
         <TableCreate Name="change_notification_grps">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="name" Required="true" Size="250" Type="VARCHAR" />
         </TableCreate>
         <TableCreate Name="change_notification_rec">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="notification_id" Required="true" Type="BIGINT"/>
-            <Column Name="group_id" Required="true" Type="BIGINT"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="notification_id" Required="true" Type="BIGINT" />
+            <Column Name="group_id" Required="true" Type="BIGINT" />
             <Index Name="change_notification_rec_group_id">
-                <IndexColumn Name="group_id"/>
+                <IndexColumn Name="group_id" />
             </Index>
             <Index Name="change_notification_rec_notification_id">
-                <IndexColumn Name="notification_id"/>
+                <IndexColumn Name="notification_id" />
             </Index>
             <Index Name="change_notification_rec_group_notification">
-                <IndexColumn Name="group_id"/>
-                <IndexColumn Name="notification_id"/>
+                <IndexColumn Name="group_id" />
+                <IndexColumn Name="notification_id" />
             </Index>
             <ForeignKey ForeignTable="change_notification">
-                <Reference Local="notification_id" Foreign="id"/>
+                <Reference Local="notification_id" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="change_notification_grps">
-                <Reference Local="group_id" Foreign="id"/>
+                <Reference Local="group_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
         <Insert Table="general_catalog">
@@ -1644,12 +1644,12 @@
         </Insert>
 
         <TableAlter Name="change_item" Version="3.0.1">
-            <IndexDrop Name="change_item_description_plain"/>
-            <IndexDrop Name="change_item_justification_plain"/>
+            <IndexDrop Name="change_item_description_plain" />
+            <IndexDrop Name="change_item_justification_plain" />
         </TableAlter>
         <TableAlter Name="change_workorder" Version="3.0.1">
-            <IndexDrop Name="change_workorder_instruction_plain"/>
-            <IndexDrop Name="change_workorder_report_plain"/>
+            <IndexDrop Name="change_workorder_instruction_plain" />
+            <IndexDrop Name="change_workorder_report_plain" />
         </TableAlter>
 
         <TableAlter Name="change_item" Version="3.1.91">
@@ -1659,14 +1659,14 @@
             <ColumnChange NameOld="justification_plain" NameNew="justification_plain" Required="false" Size="1800000" Type="VARCHAR" />
         </TableAlter>
         <TableAlter Name="change_workorder" Version="3.1.91">
-            <ColumnChange NameOld="instruction" NameNew="instruction" Required="false" Size="1800000" Type="VARCHAR"/>
-            <ColumnChange NameOld="instruction_plain" NameNew="instruction_plain" Required="false" Size="1800000" Type="VARCHAR"/>
-            <ColumnChange NameOld="report" NameNew="report" Required="false" Size="1800000" Type="VARCHAR"/>
-            <ColumnChange NameOld="report_plain" NameNew="report_plain" Required="false" Size="1800000" Type="VARCHAR"/>
+            <ColumnChange NameOld="instruction" NameNew="instruction" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="instruction_plain" NameNew="instruction_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="report" NameNew="report" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="report_plain" NameNew="report_plain" Required="false" Size="1800000" Type="VARCHAR" />
         </TableAlter>
         <TableAlter Name="change_history" Version="3.1.91">
-            <ColumnChange NameOld="content_new" NameNew="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
-            <ColumnChange NameOld="content_old" NameNew="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
+            <ColumnChange NameOld="content_new" NameNew="content_new" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="content_old" NameNew="content_old" Required="false" Size="1800000" Type="VARCHAR" />
         </TableAlter>
 
         <Insert Table="change_history_type" Version="3.2.91">
@@ -1687,49 +1687,49 @@
         </Insert>
 
         <TableCreate Name="change_notification_message" Version="4.0.91">
-            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
-            <Column Name="notification_id" Required="true" Type="BIGINT"/>
-            <Column Name="subject" Required="true" Size="200" Type="VARCHAR"/>
-            <Column Name="text" Required="true" Size="4000" Type="VARCHAR"/>
-            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="language" Required="true" Size="60" Type="VARCHAR"/>
-            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR"/>
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="notification_id" Required="true" Type="BIGINT" />
+            <Column Name="subject" Required="true" Size="200" Type="VARCHAR" />
+            <Column Name="text" Required="true" Size="4000" Type="VARCHAR" />
+            <Column Name="content_type" Required="true" Size="250" Type="VARCHAR" />
+            <Column Name="language" Required="true" Size="60" Type="VARCHAR" />
+            <Column Name="notification_type" Required="true" Size="60" Type="VARCHAR" />
             <ForeignKey ForeignTable="change_notification">
-                <Reference Foreign="id" Local="notification_id"/>
+                <Reference Foreign="id" Local="notification_id" />
             </ForeignKey>
             <Index Name="change_notification_message_notification_id">
-                <IndexColumn Name="notification_id"/>
+                <IndexColumn Name="notification_id" />
             </Index>
             <Index Name="change_notification_message_language">
-                <IndexColumn Name="language"/>
+                <IndexColumn Name="language" />
             </Index>
             <Unique Name="change_notification_message_notification_id_language">
-                <UniqueColumn Name="notification_id"/>
-                <UniqueColumn Name="language"/>
-                <UniqueColumn Name="notification_type"/>
+                <UniqueColumn Name="notification_id" />
+                <UniqueColumn Name="language" />
+                <UniqueColumn Name="notification_type" />
             </Unique>
         </TableCreate>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
-        <TableDrop Name="change_notification_rec"/>
-        <TableDrop Name="change_notification_grps"/>
-        <TableDrop Name="change_notification_message"/>
-        <TableDrop Name="change_notification"/>
-        <TableDrop Name="change_cab"/>
-        <TableDrop Name="change_history"/>
-        <TableDrop Name="change_history_type"/>
-        <TableDrop Name="condition_expression"/>
-        <TableDrop Name="condition_action"/>
-        <TableDrop Name="condition_operator"/>
-        <TableDrop Name="condition_attribute"/>
-        <TableDrop Name="condition_object"/>
-        <TableDrop Name="change_condition"/>
-        <TableDrop Name="change_workorder"/>
-        <TableDrop Name="change_item"/>
-        <TableDrop Name="change_template"/>
-        <TableDrop Name="change_template_type"/>
-        <TableDrop Name="change_cip_allocate"/>
-        <TableDrop Name="change_state_machine"/>
+        <TableDrop Name="change_notification_rec" />
+        <TableDrop Name="change_notification_grps" />
+        <TableDrop Name="change_notification_message" />
+        <TableDrop Name="change_notification" />
+        <TableDrop Name="change_cab" />
+        <TableDrop Name="change_history" />
+        <TableDrop Name="change_history_type" />
+        <TableDrop Name="condition_expression" />
+        <TableDrop Name="condition_action" />
+        <TableDrop Name="condition_operator" />
+        <TableDrop Name="condition_attribute" />
+        <TableDrop Name="condition_object" />
+        <TableDrop Name="change_condition" />
+        <TableDrop Name="change_workorder" />
+        <TableDrop Name="change_item" />
+        <TableDrop Name="change_template" />
+        <TableDrop Name="change_template_type" />
+        <TableDrop Name="change_cip_allocate" />
+        <TableDrop Name="change_state_machine" />
     </DatabaseUninstall>
     <CodeInstall Type="post"><![CDATA[
 
