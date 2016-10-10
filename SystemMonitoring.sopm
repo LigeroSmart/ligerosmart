@@ -10,20 +10,20 @@
     <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Weitergehende Integration mit Nagios (Acknowledge on lock and Checkscript).</Description>
     <Description Lang="es">Interfaz de correo básico para sistema de monitorización. También proporciona una integración más profunda de Nagios (Reconocer el bloqueo y script de control).</Description>
     <Filelist>
-        <File Permission="644" Location="doc/en/SystemMonitoring.xml"/>
-        <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml"/>
-        <File Permission="644" Location="Kernel/Config/NagiosCheck.pm.example"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheck.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.pm"/>
-        <File Permission="644" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm"/>
-        <File Permission="644" Location="Kernel/System/Ticket/Event/NagiosAcknowledge.pm"/>
-        <File Permission="644" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheck.t"/>
-        <File Permission="644" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.t"/>
-        <File Permission="644" Location="scripts/test/SystemMonitoring.t"/>
-        <File Permission="644" Location="scripts/test/sample/NagiosCheckTesting.pm"/>
-        <File Permission="644" Location="scripts/test/sample/SystemMonitoring1.box"/>
-        <File Permission="644" Location="scripts/test/sample/SystemMonitoring2.box"/>
-        <File Permission="644" Location="var/packagesetup/SystemMonitoring.pm"/>
+        <File Permission="644" Location="doc/en/SystemMonitoring.xml" />
+        <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml" />
+        <File Permission="644" Location="Kernel/Config/NagiosCheck.pm.example" />
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheck.pm" />
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.pm" />
+        <File Permission="644" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm" />
+        <File Permission="644" Location="Kernel/System/Ticket/Event/NagiosAcknowledge.pm" />
+        <File Permission="644" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheck.t" />
+        <File Permission="644" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.t" />
+        <File Permission="644" Location="scripts/test/SystemMonitoring.t" />
+        <File Permission="644" Location="scripts/test/sample/NagiosCheckTesting.pm" />
+        <File Permission="644" Location="scripts/test/sample/SystemMonitoring1.box" />
+        <File Permission="644" Location="scripts/test/sample/SystemMonitoring2.box" />
+        <File Permission="644" Location="var/packagesetup/SystemMonitoring.pm" />
     </Filelist>
 
     <CodeInstall Type="post"><![CDATA[
