@@ -10,161 +10,161 @@
     <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
     <Description Lang="hu">Egy munkaidő nyilvántartás modul.</Description>
     <Filelist>
-        <File Permission="644" Location="doc/timeaccounting-database.png"/>
-        <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
-        <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/da_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_MX_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/gl_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/hu_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/it_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/ja_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/ms_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/pl_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/pt_BR_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/ru_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/sr_Cyrl_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/sv_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/sw_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/zh_CN_TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingEdit.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingOverview.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingReporting.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingSetting.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingView.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingDelete.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingEdit.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingOverview.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingReporting.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingReportingProject.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingSetting.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingView.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Notification/TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm"/>
-        <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm"/>
-        <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingEdit.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingOverview.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingReporting.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingSetting.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingView.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/Notification/TimeAccounting.t"/>
-        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/IncompleteWorkingDays.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Datepicker.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.html"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css"/>
-        <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
+        <File Permission="644" Location="doc/timeaccounting-database.png" />
+        <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml" />
+        <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/da_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/es_MX_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/es_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/gl_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/hu_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/it_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/ja_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/ms_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/pl_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/pt_BR_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/ru_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/sr_Cyrl_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/sv_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/sw_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Language/zh_CN_TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingEdit.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingOverview.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingReporting.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingSetting.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTimeAccountingView.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingDelete.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingEdit.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingOverview.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingReporting.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingReportingProject.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingSetting.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingView.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Notification/TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm" />
+        <File Permission="644" Location="Kernel/System/TimeAccounting.pm" />
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm" />
+        <File Permission="644" Location="scripts/test/TimeAccounting.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingEdit.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingOverview.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingReporting.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingSetting.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentTimeAccountingView.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/Notification/TimeAccounting.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Output/ToolBar/IncompleteWorkingDays.t" />
+        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Datepicker.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.html" />
+        <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.js" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css" />
+        <File Permission="644" Location="var/packagesetup/TimeAccounting.pm" />
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="time_accounting_action">
-            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="action" Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="status" Required="true" Type="VARCHAR" Size="15"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true" />
+            <Column Name="action" Required="false" Type="VARCHAR" Size="250" />
+            <Column Name="status" Required="true" Type="VARCHAR" Size="15" />
         </TableCreate>
         <TableCreate Name="time_accounting_project">
-            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="project" Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="description" Required="false" Type="VARCHAR" Size="500"/>
-            <Column Name="status" Required="true" Type="VARCHAR" Size="15"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true" />
+            <Column Name="project" Required="false" Type="VARCHAR" Size="250" />
+            <Column Name="description" Required="false" Type="VARCHAR" Size="500" />
+            <Column Name="status" Required="true" Type="VARCHAR" Size="15" />
         </TableCreate>
         <TableCreate Name="time_accounting_table">
-            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id" Required="true" Type="INTEGER"/>
-            <Column Name="project_id" Required="true" Type="BIGINT"/>
-            <Column Name="action_id" Required="true" Type="BIGINT"/>
-            <Column Name="remark" Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="time_start" Required="true" Type="DATE"/>
-            <Column Name="time_end" Required="true" Type="DATE"/>
-            <Column Name="period" Required="false" Type="DECIMAL" Size="10,3"/>
-            <Column Name="created" Required="true" Type="DATE"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true" />
+            <Column Name="user_id" Required="true" Type="INTEGER" />
+            <Column Name="project_id" Required="true" Type="BIGINT" />
+            <Column Name="action_id" Required="true" Type="BIGINT" />
+            <Column Name="remark" Required="false" Type="VARCHAR" Size="250" />
+            <Column Name="time_start" Required="true" Type="DATE" />
+            <Column Name="time_end" Required="true" Type="DATE" />
+            <Column Name="period" Required="false" Type="DECIMAL" Size="10,3" />
+            <Column Name="created" Required="true" Type="DATE" />
             <Index Name="time_accounting_table_user_id">
-                <IndexColumn Name="user_id"/>
+                <IndexColumn Name="user_id" />
             </Index>
             <Index Name="time_accounting_table_project_action_period_time_start_end">
-                <IndexColumn Name="project_id"/>
-                <IndexColumn Name="action_id"/>
-                <IndexColumn Name="period"/>
-                <IndexColumn Name="time_start"/>
-                <IndexColumn Name="time_end"/>
+                <IndexColumn Name="project_id" />
+                <IndexColumn Name="action_id" />
+                <IndexColumn Name="period" />
+                <IndexColumn Name="time_start" />
+                <IndexColumn Name="time_end" />
             </Index>
             <Index Name="time_accounting_table_user_id_time_start">
-                <IndexColumn Name="user_id"/>
-                <IndexColumn Name="time_start"/>
+                <IndexColumn Name="user_id" />
+                <IndexColumn Name="time_start" />
             </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user_period">
-            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id" Required="true" Type="INTEGER"/>
-            <Column Name="preference_period" Required="true" Type="INTEGER"/>
-            <Column Name="date_start" Required="true" Type="DATE"/>
-            <Column Name="date_end" Required="true" Type="DATE"/>
-            <Column Name="weekly_hours" Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="leave_days" Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="overtime" Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="status" Required="true" Type="VARCHAR" Size="15"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true" />
+            <Column Name="user_id" Required="true" Type="INTEGER" />
+            <Column Name="preference_period" Required="true" Type="INTEGER" />
+            <Column Name="date_start" Required="true" Type="DATE" />
+            <Column Name="date_end" Required="true" Type="DATE" />
+            <Column Name="weekly_hours" Required="false" Type="DECIMAL" Size="10,2" />
+            <Column Name="leave_days" Required="false" Type="DECIMAL" Size="10,2" />
+            <Column Name="overtime" Required="false" Type="DECIMAL" Size="10,2" />
+            <Column Name="status" Required="true" Type="VARCHAR" Size="15" />
             <Index Name="time_accounting_user_period_user_status_date_start_end">
-                <IndexColumn Name="status"/>
-                <IndexColumn Name="date_start"/>
-                <IndexColumn Name="date_end"/>
+                <IndexColumn Name="status" />
+                <IndexColumn Name="date_start" />
+                <IndexColumn Name="date_end" />
             </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user">
-            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id" Required="true" Type="INTEGER"/>
-            <Column Name="description" Required="true" Type="VARCHAR" Size="1020"/>
-            <Column Name="show_overtime" Required="false" Type="INTEGER"/>
-            <Column Name="create_project" Required="false" Type="INTEGER"/>
-            <Column Name="calendar" Required="false" Type="INTEGER"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true" />
+            <Column Name="user_id" Required="true" Type="INTEGER" />
+            <Column Name="description" Required="true" Type="VARCHAR" Size="1020" />
+            <Column Name="show_overtime" Required="false" Type="INTEGER" />
+            <Column Name="create_project" Required="false" Type="INTEGER" />
+            <Column Name="calendar" Required="false" Type="INTEGER" />
             <Index Name="time_accounting_user_user_id">
-                <IndexColumn Name="user_id"/>
+                <IndexColumn Name="user_id" />
             </Index>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUpgrade Type="post">
         <TableAlter Name="time_accounting_user" Version="1.2.2">
-            <ColumnAdd Name="calendar" Required="false" Type="INTEGER"/>
+            <ColumnAdd Name="calendar" Required="false" Type="INTEGER" />
         </TableAlter>
         <TableAlter Name="time_accounting_table" Version="1.4.2">
             <IndexCreate Name="time_accounting_table_user_id">
-                <IndexColumn Name="user_id"/>
+                <IndexColumn Name="user_id" />
             </IndexCreate>
             <IndexCreate Name="time_accounting_table_project_action_period_time_start_end">
-                <IndexColumn Name="project_id"/>
-                <IndexColumn Name="action_id"/>
-                <IndexColumn Name="period"/>
-                <IndexColumn Name="time_start"/>
-                <IndexColumn Name="time_end"/>
+                <IndexColumn Name="project_id" />
+                <IndexColumn Name="action_id" />
+                <IndexColumn Name="period" />
+                <IndexColumn Name="time_start" />
+                <IndexColumn Name="time_end" />
             </IndexCreate>
             <IndexCreate Name="time_accounting_table_user_id_time_start">
-                <IndexColumn Name="user_id"/>
-                <IndexColumn Name="time_start"/>
+                <IndexColumn Name="user_id" />
+                <IndexColumn Name="time_start" />
             </IndexCreate>
         </TableAlter>
         <TableAlter Name="time_accounting_user" Version="1.4.2">
             <IndexCreate Name="time_accounting_user_user_id">
-                <IndexColumn Name="user_id"/>
+                <IndexColumn Name="user_id" />
             </IndexCreate>
         </TableAlter>
         <TableAlter Name="time_accounting_user_period" Version="1.4.2">
             <IndexCreate Name="time_accounting_user_period_user_status_date_start_end">
-                <IndexColumn Name="status"/>
-                <IndexColumn Name="date_start"/>
-                <IndexColumn Name="date_end"/>
+                <IndexColumn Name="status" />
+                <IndexColumn Name="date_start" />
+                <IndexColumn Name="date_end" />
             </IndexCreate>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
-        <TableDrop Name="time_accounting_action"/>
-        <TableDrop Name="time_accounting_project"/>
-        <TableDrop Name="time_accounting_table"/>
-        <TableDrop Name="time_accounting_user"/>
-        <TableDrop Name="time_accounting_user_period"/>
+        <TableDrop Name="time_accounting_action" />
+        <TableDrop Name="time_accounting_project" />
+        <TableDrop Name="time_accounting_table" />
+        <TableDrop Name="time_accounting_user" />
+        <TableDrop Name="time_accounting_user_period" />
     </DatabaseUninstall>
     <CodeInstall Type="post"><![CDATA[
 
