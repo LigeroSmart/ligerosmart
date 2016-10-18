@@ -414,12 +414,7 @@ $Selenium->RunTest(
 
         # make sure the cache is correct
         for my $Cache (
-# ---
-# ITSM
-# ---
-#            qw (Ticket CustomerUser)
-            qw (Ticket CustomerUser Service)
-# ---
+            qw (Ticket CustomerUser)
             )
         {
             $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
@@ -427,7 +422,7 @@ $Selenium->RunTest(
             );
         }
 
-        }
+    }
 );
 
 1;
