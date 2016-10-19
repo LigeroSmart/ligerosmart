@@ -236,7 +236,7 @@
 # ---
 # ITSM
 # ---
-## show ticket dynamic fields
+# # show ticket dynamic fields
 #[% RenderBlockStart("TicketDynamicField") %]
 #                    <li>
 #                        <span class="Key">[% Translate(Data.Label) | html %]:</span>
