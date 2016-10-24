@@ -227,7 +227,7 @@ sub TableCreateComplex {
         'Criticality',
     );
 
-    # always show the incident state flag
+    # always show the incident state flag and the service name
     my @Headline = (
         {
             Content => 'Incident State',
