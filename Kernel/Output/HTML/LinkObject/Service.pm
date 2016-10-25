@@ -413,7 +413,7 @@ sub TableCreateComplex {
     # Define the block data.
     my %Block = (
         Object     => $Self->{ObjectData}->{Object},
-        Blockname  => $Self->{ObjectData}->{Realname},
+        Blockname  => $Self->{ObjectData}->{Object},
         ObjectName => $Self->{ObjectData}->{ObjectName},
         ObjectID   => $Param{ObjectID},
         Headline   => \@Headline,
