@@ -12,10 +12,14 @@ use strict;
 use warnings;
 
 use Kernel::Output::HTML::Layout;
+use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::Language',
+    'Kernel::System::JSON',
     'Kernel::System::Log',
+    'Kernel::System::User',
     'Kernel::System::Web::Request',
 );
 
@@ -49,14 +53,21 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
+    # check needed objects
+    for my $Needed (qw(UserLanguage UserID)) {
+        $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
+    }
+
+
     # We need our own LayoutObject instance to avoid blockdata collisions
     #   with the main page.
     $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
     # define needed variables
     $Self->{ObjectData} = {
-        Object   => 'ITSMWorkOrder',
-        Realname => 'Workorder',
+        Object     => 'ITSMWorkOrder',
+        Realname   => 'Workorder',
+        ObjectName => 'SourceObjectID',
     };
 
     # get config object
@@ -207,6 +218,147 @@ sub TableCreateComplex {
         }
     }
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $ComplexTableData = $ConfigObject->Get("LinkObject::ComplexTable");
+    my $DefaultColumns;
+    if (
+        $ComplexTableData
+        && IsHashRefWithData($ComplexTableData)
+        && $ComplexTableData->{ITSMWorkOrder}
+        && IsHashRefWithData( $ComplexTableData->{ITSMWorkOrder} )
+        )
+    {
+        $DefaultColumns = $ComplexTableData->{"ITSMWorkOrder"}->{"DefaultColumns"};
+    }
+
+    my @TimeLongTypes = (
+        'CreateTime',
+        'ChangeTime',
+        'PlannedStartTime',
+        'PlannedEndTime',
+        'ActualStartTime',
+        'ActualEndTime',
+    );
+
+    my @TranslateTypes = ();
+
+    # always show the change state flag and the change number
+    my @Headline = (
+        {
+            Content => 'WorkOrderState',
+        },
+        {
+            Content => $Self->{WorkOrderHook},
+        },
+    );
+
+    my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
+    # Load user preferences.
+    my %Preferences = $UserObject->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    if ( !$DefaultColumns || !IsHashRefWithData($DefaultColumns) ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Missing configuration for LinkObject::ComplexTable###ITSMWorkOrder!',
+        );
+        return;
+    }
+
+    # Get default column priority from SysConfig.
+    # Each column in table (Title, State,...) has defined Priority in SysConfig. System use this
+    #   priority to sort columns, if user doesn't have own settings.
+    my %SortOrder;
+    if (
+        $ComplexTableData->{"ITSMWorkOrder"}->{"Priority"}
+        && IsHashRefWithData( $ComplexTableData->{"ITSMWorkOrder"}->{"Priority"} )
+        )
+    {
+        %SortOrder = %{ $ComplexTableData->{"ITSMWorkOrder"}->{"Priority"} };
+    }
+
+    my %UserColumns = %{$DefaultColumns};
+
+    if ( $Preferences{'LinkObject::ComplexTable-ITSMWorkOrder'} ) {
+
+        my $ColumnsEnabled = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
+            Data => $Preferences{'LinkObject::ComplexTable-ITSMWorkOrder'},
+        );
+
+        if (
+            $ColumnsEnabled
+            && IsHashRefWithData($ColumnsEnabled)
+            && $ColumnsEnabled->{Order}
+            && IsArrayRefWithData( $ColumnsEnabled->{Order} )
+            )
+        {
+            # Clear sort order.
+            %SortOrder = ();
+
+            DEFAULTCOLUMN:
+            for my $DefaultColumn ( sort keys %UserColumns ) {
+                my $Index = 0;
+
+                for my $UserSetting ( @{ $ColumnsEnabled->{Order} } ) {
+                    $Index++;
+                    if ( $DefaultColumn eq $UserSetting ) {
+                        $UserColumns{$DefaultColumn} = 2;
+                        $SortOrder{$DefaultColumn}   = $Index;
+
+                        next DEFAULTCOLUMN;
+                    }
+                }
+
+                # Not found, means user chose to hide this item.
+                if ( $UserColumns{$DefaultColumn} == 2 ) {
+                    $UserColumns{$DefaultColumn} = 1;
+                }
+
+                if ( !$SortOrder{$DefaultColumn} ) {
+                    $SortOrder{$DefaultColumn} = 0;    # Set 0, it system will hide this item anyways
+                }
+            }
+        }
+    }
+    else {
+
+        # User has no own settings.
+        for my $Column ( sort keys %UserColumns ) {
+            if ( !$SortOrder{$Column} ) {
+                $SortOrder{$Column} = 0;               # Set 0, it system will hide this item anyways
+            }
+        }
+    }
+
+    # Define Headline columns.
+    COLUMN:
+    for my $Column ( sort { $SortOrder{$a} <=> $SortOrder{$b} } keys %UserColumns ) {
+
+        # if enabled by default.
+        if ( $UserColumns{$Column} == 2 ) {
+            my $ColumnName = '';
+
+            if ( $Column eq 'CreateTime' ) {
+                $ColumnName = 'Created';
+            }
+            elsif ( $Column eq 'ChangeTime' ) {
+                $ColumnName = 'Changed';
+            }
+
+            # all other fields
+            else {
+                $ColumnName = $Column;
+            }
+
+            push @Headline, {
+                Content => $ColumnName,
+            };
+        }
+    }
+
     # create the item list, sort by ChangeID Down, then by WorkOrderID Up
     my @ItemList;
     for my $WorkOrderID (
@@ -239,65 +391,49 @@ sub TableCreateComplex {
                     . $WorkOrder->{WorkOrderNumber} . ': '
                     . $WorkOrder->{WorkOrderTitle},
             },
-            {
-                Type      => 'Text',
-                Content   => $WorkOrder->{WorkOrderTitle},
-                MaxLength => 70,
-            },
-            {
-                Type      => 'Text',
-                Content   => $WorkOrder->{ChangeData}->{ChangeTitle},
-                MaxLength => 70,
-            },
-            {
-                Type    => 'Text',
-                Content => $WorkOrder->{WorkOrderState},
-            },
-            {
-                Type    => 'TimeLong',
-                Content => $WorkOrder->{ChangeTime},
-            },
         );
+
+        COLUMN:
+        for my $Column ( sort { $SortOrder{$a} <=> $SortOrder{$b} } keys %UserColumns ) {
+
+            # if enabled by default
+            if ( $UserColumns{$Column} == 2 ) {
+
+                my %Hash;
+                if ( grep { $_ eq $Column } @TimeLongTypes ) {
+                    $Hash{'Type'} = 'TimeLong';
+                }
+                else {
+                    $Hash{'Type'} = 'Text';
+                }
+
+                if ( grep { $_ eq $Column } @TranslateTypes ) {
+                    $Hash{'Translate'} = 1;
+                }
+
+                $Hash{'Content'} = $WorkOrder->{$Column};
+
+                push @ItemColumns, \%Hash;
+            }
+        }
 
         push @ItemList, \@ItemColumns;
     }
 
     return if !@ItemList;
 
-    # define the block data
+    # Define the block data.
     my %Block = (
-        Object    => $Self->{ObjectData}->{Object},
-        Blockname => $Self->{ObjectData}->{Realname},
-        Headline  => [
-            {
-                Content => '',
-                Width   => 20,
-            },
-            {
-                Content => $Self->{WorkOrderHook},
-                Width   => 200,
-            },
-            {
-                Content => 'WorkOrderTitle',
-                Width   => 200,
-            },
-            {
-                Content => 'ChangeTitle',
-                Width   => 200,
-            },
-            {
-                Content => 'WorkOrderState',
-                Width   => 100,
-            },
-            {
-                Content => 'Changed',
-                Width   => 150,
-            },
-        ],
-        ItemList => \@ItemList,
+        Object     => $Self->{ObjectData}->{Object},
+        Blockname  => $Self->{ObjectData}->{Object},
+        ObjectName => $Self->{ObjectData}->{ObjectName},
+        ObjectID   => $Param{ObjectID},
+        Headline   => \@Headline,
+        ItemList   => \@ItemList,
     );
 
     return ( \%Block );
+
 }
 
 =item TableCreateSimple()

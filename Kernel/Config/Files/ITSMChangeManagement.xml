@@ -494,12 +494,18 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
+                    <CSS>Core.AllocationList.css</CSS>
                     <CSS>ITSM.ChangeManagement.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.Responsive.css</CSS>
                     <CSS>ITSM.ChangeManagement.WorkorderGraph.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
                     <JavaScript>ITSM.Agent.ChangeManagement.WorkorderGraph.js</JavaScript>
                     <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
+                    <JavaScript>thirdparty/jquery-tablesorter-2.0.5/jquery.tablesorter.js</JavaScript>
+                    <JavaScript>Core.UI.AllocationList.js</JavaScript>
+                    <JavaScript>Core.UI.Table.Sort.js</JavaScript>
+                    <JavaScript>Core.Agent.TableFilters.js</JavaScript>
+                    <JavaScript>Core.Agent.LinkObject.js</JavaScript>
                     <JavaScript>ITSM.Agent.ConfirmDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -742,6 +748,11 @@
                     <CSS>ITSM.Agent.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
+                    <CSS>Core.AllocationList.css</CSS>
+                    <JavaScript>Core.UI.AllocationList.js</JavaScript>
+                    <JavaScript>Core.UI.Table.Sort.js</JavaScript>
+                    <JavaScript>Core.Agent.TableFilters.js</JavaScript>
+                    <JavaScript>Core.Agent.LinkObject.js</JavaScript>
                     <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
                     <JavaScript>ITSM.Agent.ConfirmDialog.js</JavaScript>
                 </Loader>
@@ -1242,6 +1253,104 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="LinkObject::ComplexTable::SettingsVisibility###ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::LinkObject</SubGroup>
+        <Setting>
+            <Array>
+                <Item>AgentITSMChangeZoom</Item>
+                <Item>AgentITSMWorkOrderZoom</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::ComplexTable###ITSMChange" Required="0" Valid="1">
+        <Description Translatable="1">Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::LinkObject::ITSMChange.pm</Item>
+                <Item Key="DefaultColumns">
+                    <Hash>
+                        <Item Key="ChangeTitle">2</Item>
+                        <Item Key="ChangeState">2</Item>
+                        <Item Key="Category">2</Item>
+                        <Item Key="Impact">2</Item>
+                        <Item Key="Priority">2</Item>
+                        <Item Key="PlannedStartTime">1</Item>
+                        <Item Key="PlannedEndTime">1</Item>
+                        <Item Key="ActualStartTime">1</Item>
+                        <Item Key="ActualEndTime">1</Item>
+                        <Item Key="PlannedEffort">1</Item>
+                        <Item Key="AccountedTime">1</Item>
+                        <Item Key="RequestedTime">1</Item>
+                        <Item Key="CreateTime">1</Item>
+                        <Item Key="ChangeTime">2</Item>
+                    </Hash>
+                </Item>
+                <Item Key="Priority">
+                    <Hash>
+                        <Item Key="ChangeTitle">100</Item>
+                        <Item Key="ChangeState">110</Item>
+                        <Item Key="Category">120</Item>
+                        <Item Key="Impact">130</Item>
+                        <Item Key="Priority">140</Item>
+                        <Item Key="PlannedStartTime">150</Item>
+                        <Item Key="PlannedEndTime">160</Item>
+                        <Item Key="ActualStartTime">170</Item>
+                        <Item Key="ActualEndTime">180</Item>
+                        <Item Key="PlannedEffort">190</Item>
+                        <Item Key="AccountedTime">200</Item>
+                        <Item Key="RequestedTime">210</Item>
+                        <Item Key="CreateTime">220</Item>
+                        <Item Key="ChangeTime">230</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="LinkObject::ComplexTable###ITSMWorkOrder" Required="0" Valid="1">
+        <Description Translatable="1">Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::LinkObject</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::LinkObject::ITSMWorkOrder.pm</Item>
+                <Item Key="DefaultColumns">
+                    <Hash>
+                        <Item Key="WorkOrderTitle">2</Item>
+                        <Item Key="WorkOrderState">2</Item>
+                        <Item Key="WorkOrderType">2</Item>
+                        <Item Key="PlannedStartTime">1</Item>
+                        <Item Key="PlannedEndTime">1</Item>
+                        <Item Key="ActualStartTime">1</Item>
+                        <Item Key="ActualEndTime">1</Item>
+                        <Item Key="PlannedEffort">1</Item>
+                        <Item Key="AccountedTime">1</Item>
+                        <Item Key="CreateTime">1</Item>
+                        <Item Key="ChangeTime">2</Item>
+                    </Hash>
+                </Item>
+                <Item Key="Priority">
+                    <Hash>
+                        <Item Key="WorkOrderTitle">100</Item>
+                        <Item Key="WorkOrderState">110</Item>
+                        <Item Key="WorkOrderType">120</Item>
+                        <Item Key="PlannedStartTime">130</Item>
+                        <Item Key="PlannedEndTime">140</Item>
+                        <Item Key="ActualStartTime">150</Item>
+                        <Item Key="ActualEndTime">160</Item>
+                        <Item Key="PlannedEffort">170</Item>
+                        <Item Key="AccountedTime">180</Item>
+                        <Item Key="CreateTime">190</Item>
+                        <Item Key="ChangeTime">200</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="DynamicField::EventModulePost###100-UpdateITSMChangeConditions" Required="0" Valid="1">
         <Description Translatable="1">DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.</Description>
         <Group>ITSM Change Management</Group>
