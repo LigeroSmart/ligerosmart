@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/5725ae11244e8ff0a9a53c4ec4e13856dfd37768/scripts/test/Ticket.t
+# $origin: https://github.com/OTRS/otrs/blob/bf2e6f602b9474d51ea6c65ec1e75bd4c417bfe3/scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -705,7 +705,10 @@ my $ChangeTime = $TicketData{Changed};
 $Helper->FixedTimeAddSeconds(5);
 
 my $TicketTitle = $TicketObject->TicketTitleUpdate(
-    Title    => 'Some Title 1234567',
+    Title => 'Very long title 01234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789',
     TicketID => $TicketID,
     UserID   => 1,
 );
@@ -741,7 +744,7 @@ $Self->Is(
 
 $Self->Is(
     $HistoryItem->{Name},
-    '%%Some Ticket_Title%%Some Title 1234567',
+    '%%Some Ticket_Title%%Very long title 0123456789012345678901234567890123...',
     "TicketTitleUpdate - Found new title",
 );
 
@@ -1319,7 +1322,10 @@ $Self->False(
 my %Ticket2 = $TicketObject->TicketGet( TicketID => $TicketID );
 $Self->Is(
     $Ticket2{Title},
-    'Some Title 1234567',
+    'Very long title 01234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789',
     'TicketGet() (Title)',
 );
 $Self->Is(
@@ -1346,7 +1352,10 @@ $Self->Is(
 %Article = $TicketObject->ArticleGet( ArticleID => $ArticleID );
 $Self->Is(
     $Article{Title},
-    'Some Title 1234567',
+    'Very long title 01234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789012345678901234567890123456789'
+        . '0123456789012345678901234567890123456789',
     'ArticleGet() (Title)',
 );
 $Self->Is(
@@ -1801,9 +1810,7 @@ for my $TicketIDDelete (
     );
 }
 
-# ---
 # avoid StateType and StateTypeID problems in TicketSearch()
-# ---
 
 my %StateTypeList = $StateObject->StateTypeList(
     UserID => 1,
