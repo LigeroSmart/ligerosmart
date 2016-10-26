@@ -120,7 +120,7 @@ my $ServiceName = 'Service_' . $RandomID;
 my $ServiceID   = $ServiceObject->ServiceAdd(
     Name    => $ServiceName,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID      => 1,
     Criticality => '3 normal',
@@ -139,7 +139,7 @@ my $NewServiceName = 'NewService_' . $RandomID;
 my $NewServiceID   = $ServiceObject->ServiceAdd(
     Name    => $NewServiceName,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID      => 1,
     Criticality => '3 normal',
@@ -213,7 +213,7 @@ my $SLAName = 'SLA_' . $RandomID;
 my $SLAID   = $SLAObject->SLAAdd(
     Name    => $SLAName,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID => 1,
 # ---
@@ -231,7 +231,7 @@ my $NewSLAName = 'NewSLA_' . $RandomID;
 my $NewSLAID   = $SLAObject->SLAAdd(
     Name    => $NewSLAName,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID => 1,
 # ---

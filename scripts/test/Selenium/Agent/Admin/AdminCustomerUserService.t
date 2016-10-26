@@ -67,7 +67,7 @@ $Selenium->RunTest(
             ValidID => 1,
             UserID  => 1,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
             TypeID      => 1,
             Criticality => '3 normal',

@@ -39,7 +39,7 @@ $Self->Is(
 
 # provide minimum options
 # ---
-# ITSM
+# GeneralCatalog
 # ---
 #$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
 $ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
@@ -52,7 +52,7 @@ $Self->Is(
 
 # same again (should fail because already exists)
 # ---
-# ITSM
+# GeneralCatalog
 # ---
 #$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName );
 $ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
@@ -65,7 +65,7 @@ $Self->Is(
 
 # invalid parent
 # ---
-# ITSM
+# GeneralCatalog
 # ---
 #$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName );
 $ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ChildServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
@@ -78,7 +78,7 @@ $Self->Is(
 
 # valid parent
 # ---
-# ITSM
+# GeneralCatalog
 # ---
 #$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
 $ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );

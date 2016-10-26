@@ -66,7 +66,7 @@ $Selenium->RunTest(
                 ValidID => 2,                 # invalid
                 Comment => 'Selenium Test',
 # ---
-# ITSM
+# GeneralCatalog
 # ---
                 TypeID      => 1,
                 Criticality => '3 normal',
@@ -88,7 +88,7 @@ $Selenium->RunTest(
             ParentID  => $ServiceIDs[0],
             ValidID   => 1,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
             TypeID      => 1,
             Criticality => '3 normal',

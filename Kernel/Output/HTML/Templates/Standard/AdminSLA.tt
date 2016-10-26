@@ -110,7 +110,7 @@
                         </div>
                         <div class="Clear"></div>
 # ---
-# ITSM
+# GeneralCatalog
 # ---
                         <label for="ServiceIDs">[% Translate("Type") | html %]:</label>
                         <div class="Field">
@@ -164,7 +164,7 @@
                         </div>
                         <div class="Clear"></div>
 # ---
-# ITSM
+# GeneralCatalog
 # ---
                         <label for="MinTimeBetweenIncidents">[% Translate("Minimum Time Between Incidents") | html %] ([% Translate("minutes") | html %]):</label>
                         <div class="Field">

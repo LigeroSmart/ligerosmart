@@ -58,7 +58,7 @@ my $ServiceID1   = $ServiceObject->ServiceAdd(
     ValidID => 1,
     UserID  => 1,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID      => 1,
     Criticality => '3 normal',
@@ -78,7 +78,7 @@ my $ServiceID2   = $ServiceObject->ServiceAdd(
     ValidID => 1,
     UserID  => 1,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID      => 1,
     Criticality => '3 normal',

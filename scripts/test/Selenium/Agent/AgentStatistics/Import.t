@@ -74,7 +74,7 @@ $Selenium->RunTest(
             my $ServiceID = $ServiceObject->ServiceAdd(
                 %{$Service},
 # ---
-# ITSM
+# GeneralCatalog
 # ---
                 TypeID      => 1,
                 Criticality => '3 normal',
@@ -113,7 +113,7 @@ $Selenium->RunTest(
             my $SLAID = $SLAObject->SLAAdd(
                 %{$SLA},
 # ---
-# ITSM
+# GeneralCatalog
 # ---
                 TypeID => 1,
 # ---

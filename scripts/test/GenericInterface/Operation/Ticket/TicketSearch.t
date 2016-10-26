@@ -102,7 +102,7 @@ my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 my $ServiceID = $ServiceObject->ServiceAdd(
     Name    => 'TestService' . $RandomID,
 # ---
-# ITSM
+# GeneralCatalog
 # ---
     TypeID      => 1,
     Criticality => '3 normal',
