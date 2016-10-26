@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/8e6156077ae26e77d5ccf811230c19a52227ec8f/scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: https://github.com/OTRS/otrs/blob/31853be746bd47813091a284b427a9550d922588/scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
