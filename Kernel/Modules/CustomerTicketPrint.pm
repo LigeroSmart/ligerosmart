@@ -69,14 +69,14 @@ sub Run {
     my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Self->{TicketID},
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #        DynamicFields => 0,
         DynamicFields => 1,
 # ---
     );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 
     # set criticality and impact
@@ -281,7 +281,7 @@ sub _PDFOutputTicketInfos {
 
     # add ticket data, respecting AttributesView configuration
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #    for my $Attribute (qw(State Priority Queue Owner)) {
     for my $Attribute (qw(State Queue Owner)) {
@@ -342,7 +342,7 @@ sub _PDFOutputTicketInfos {
         push( @{$TableLeft}, $RowSLA );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     my $TableLeftExtended = [
         {

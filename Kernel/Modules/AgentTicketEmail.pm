@@ -296,7 +296,7 @@ sub Run {
     # get Dynamic fields form ParamObject
     my %DynamicFieldValues;
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # to store the reference to the dynamic field for the impact
     my $ImpactDynamicFieldConfig;
@@ -318,7 +318,7 @@ sub Run {
             LayoutObject       => $LayoutObject,
         );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # impact field was found
         if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
@@ -340,7 +340,7 @@ sub Run {
     }
     $GetParam{DynamicField} = \%DynamicFieldACLParameters;
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # get needed stuff
     $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
@@ -1325,7 +1325,7 @@ sub Run {
             );
         }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         if ( $GetParam{ServiceID} && $Service{Criticality} ) {
 
@@ -1540,7 +1540,7 @@ sub Run {
             );
         }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
             # get the temporarily links
             my $TempLinkList = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
@@ -1614,7 +1614,7 @@ sub Run {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     elsif ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
 
@@ -2717,7 +2717,7 @@ sub _MaskEmailNew {
         }
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     if ( $Param{PriorityIDFromImpact} ) {
         $Param{PriorityID} = $Param{PriorityIDFromImpact};
@@ -2800,7 +2800,7 @@ sub _MaskEmailNew {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     my @IndividualDynamicFields;
 # ---
@@ -2820,7 +2820,7 @@ sub _MaskEmailNew {
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
 
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # remember dynamic fields that should be displayed individually
         if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
@@ -2848,7 +2848,7 @@ sub _MaskEmailNew {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # cycle trough dynamic fields that should be displayed individually
     DYNAMICFIELD:
@@ -2971,7 +2971,7 @@ sub _MaskEmailNew {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # make sure to show the options block so that the "Link Ticket" option is shown
     # even if spellchecker, address book and OptionCustomer is turned off

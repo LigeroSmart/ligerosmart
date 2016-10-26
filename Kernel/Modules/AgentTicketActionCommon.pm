@@ -243,7 +243,7 @@ sub Run {
     # get dynamic field values form http request
     my %DynamicFieldValues;
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # to store the reference to the dynamic field for the impact
     my $ImpactDynamicFieldConfig;
@@ -279,7 +279,7 @@ sub Run {
             LayoutObject       => $LayoutObject,
         );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # impact field was found
         if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
@@ -291,7 +291,7 @@ sub Run {
     }
 
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # get needed stuff
     $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
@@ -1031,7 +1031,7 @@ sub Run {
             );
         }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         if ( ($GetParam{ServiceID} && $Service{Criticality} ) || !$GetParam{ServiceID} ) {
 
@@ -1066,7 +1066,7 @@ sub Run {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     elsif ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
 
@@ -2085,7 +2085,7 @@ sub _Mask {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     my @IndividualDynamicFields;
 # ---
@@ -2105,7 +2105,7 @@ sub _Mask {
         # get the html strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # remember dynamic fields that should be displayed individually
         if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
@@ -2134,7 +2134,7 @@ sub _Mask {
         );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # cycle trough dynamic fields that should be displayed individually
     DYNAMICFIELD:

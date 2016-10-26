@@ -91,7 +91,7 @@ $Selenium->RunTest(
             Comment => 'Selenium Test Service',
             ValidID => 1,
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
             TypeID      => 1,
             Criticality => '3 normal',

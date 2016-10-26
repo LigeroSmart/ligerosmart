@@ -1170,7 +1170,7 @@ sub MaskAgentZoom {
     # ticket service
     if ( $ConfigObject->Get('Ticket::Service') && $Ticket{Service} ) {
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #        $LayoutObject->Block(
 #            Name => 'Service',
@@ -1573,7 +1573,7 @@ sub MaskAgentZoom {
     );
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     my @IndividualDynamicFields;
 
@@ -1600,7 +1600,7 @@ sub MaskAgentZoom {
         next DYNAMICFIELD if !defined $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
         next DYNAMICFIELD if $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq '';
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # remember dynamic fields that should be displayed individually
         if ( $ITSMDynamicFields{ $DynamicFieldConfig->{Name} } ) {
@@ -1822,7 +1822,7 @@ sub MaskAgentZoom {
         }
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # cycle trough dynamic fields that should be displayed individually
     DYNAMICFIELD:

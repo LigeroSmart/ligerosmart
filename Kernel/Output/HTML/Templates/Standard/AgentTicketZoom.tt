@@ -191,7 +191,7 @@
                         <div class="Clear"></div>
 
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #                        <label>[% Translate("Priority") | html %]:</label>
 #                        <p class="Value" title="[% Translate(Data.Priority) | html %]">[% Translate(Data.Priority) | html %]</p>
@@ -205,7 +205,7 @@
 [% RenderBlockStart("Service") %]
                         <label>[% Translate("Service") | html %]:</label>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #                        <p class="Value" title="[% Data.Service | html %]">[% Data.Service | html %]</p>
                         <p class="Value" title="[% Data.Service | html %]">
@@ -224,7 +224,7 @@
 [% RenderBlockStart("SLA") %]
                         <label>[% Translate("Service Level Agreement") | html %]:</label>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #                        <p class="Value" title="[% Data.SLA | html %]">[% Data.SLA | html %]</p>
                         <p class="Value" title="[% Data.SLA | html %]">
@@ -271,7 +271,7 @@
 [% RenderBlockEnd("SolutionTime") %]
                     </fieldset>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                     <fieldset class="TableLike FixedLabelSmall">
 

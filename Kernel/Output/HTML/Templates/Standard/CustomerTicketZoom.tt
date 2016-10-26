@@ -207,7 +207,7 @@
                     <li><span class="Key">[% Translate("State") | html %]:</span> <span title="[% Translate(Data.State) | html %]">[% Translate(Data.State) | html %]</span></li>
 [% RenderBlockEnd("State") %]
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 [% RenderBlockStart("TicketDynamicField") %]
                     <li>
@@ -234,7 +234,7 @@
 [% RenderBlockEnd("ProcessData") %]
 
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 # # show ticket dynamic fields
 #[% RenderBlockStart("TicketDynamicField") %]

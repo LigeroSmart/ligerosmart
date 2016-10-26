@@ -42,7 +42,7 @@
                 <input type="hidden" name="SelectedCustomerUser" id="SelectedCustomerUser" value="[% Data.CustomerUser | html %]"/>
                 <input type="hidden" name="TicketID" value="[% Data.TicketID | html %]"/>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                 <input type="hidden" name="ImpactRC" value="0"/>
                 <input type="hidden" name="PriorityRC" value="0"/>
@@ -344,7 +344,7 @@ $('#Dest').bind('change', function (Event) {
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewEmailTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #    });
 
@@ -361,7 +361,7 @@ $('#Dest').bind('change', function (Event) {
                     </div>
                     <div class="Clear"></div>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                     <label for="ServiceIncidentStateContainer" style="display:none;">[% Translate("Service Incident State") | html %]:</label>
                     <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
@@ -384,7 +384,7 @@ $('#Dest').bind('change', function (Event) {
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewEmailTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #    });
 
@@ -401,7 +401,7 @@ $('#Dest').bind('change', function (Event) {
                     </div>
                     <div class="Clear"></div>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                     <label for="ServiceIncidentStateContainer" style="display:none;">[% Translate("Service Incident State") | html %]:</label>
                     <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
@@ -532,7 +532,7 @@ $('#NewResponsibleID').bind('change', function (Event) {
                         <a href="#" id="OptionCustomer">[ [% Translate("Customer user") | html %] ]</a>
 [% RenderBlockEnd("OptionCustomer") %]
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                         <a href="[% Env("Baselink") %]Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=[% Data.FormID | uri %];TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ [% Translate("Link ticket") | html %] ]</a>
 # ---
@@ -646,7 +646,7 @@ $('#FileUpload').bind('change', function () {
                     <div class="Clear"></div>
 
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 
 # show the impact
@@ -736,7 +736,7 @@ $('#FileUpload').bind('change', function () {
 Core.Agent.TicketAction.Init();
 Core.Config.Set('Localization.Delete', [% Translate("Delete") | JSON %]);
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     $('a.AsPopup').bind('click', function (Event) { Core.UI.Popup.OpenPopup( $(this).attr('href'), 'Action'); return false; } );
 

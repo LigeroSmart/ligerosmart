@@ -42,7 +42,7 @@ $Selenium->RunTest(
             Valid => 1,
             Key   => 'Ticket::Service',
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #            Value => 0,
             Value => 1,
@@ -52,7 +52,7 @@ $Selenium->RunTest(
             Valid => 1,
             Key   => 'Ticket::Type',
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #            Value => 0,
             Value => 1,
@@ -62,7 +62,7 @@ $Selenium->RunTest(
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #            Groups => [ 'admin', 'users' ],
             Groups => [ 'admin', 'users', 'itsm-service' ],
@@ -108,7 +108,7 @@ $Selenium->RunTest(
             qw(FromCustomer CustomerID Dest Subject RichText FileUpload
             NextStateID PriorityID submitRichText)
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
             , qw(TypeID ServiceID OptionLinkTicket DynamicField_ITSMImpact)
 # ---
@@ -135,7 +135,7 @@ $Selenium->RunTest(
         # navigate to AgentTicketPhone screen again
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # get service object
         my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
@@ -176,7 +176,7 @@ $Selenium->RunTest(
         my $TicketSubject      = "Selenium Ticket";
         my $TicketBody         = "Selenium body test";
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         $Selenium->execute_script("\$('#TypeID').val('1').trigger('redraw.InputField').trigger('change');");
 # ---
@@ -184,7 +184,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteString']")->VerifiedClick();
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 
         $Selenium->WaitFor( JavaScript => "return \$('#ServiceID option[value=\"$ServiceID\"]').length;" );
@@ -265,7 +265,7 @@ $Selenium->RunTest(
             "$TestCustomer found on page",
         ) || die "$TestCustomer not found on page";
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # force sub menus to be visible in order to be able to click one of the links
         $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
@@ -370,7 +370,7 @@ $Selenium->RunTest(
             "Ticket with ticket ID $TicketID is deleted",
         );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         # delete test service - test customer connection
         $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(

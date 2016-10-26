@@ -43,7 +43,7 @@
                 <input type="hidden" name="FormID" value="[% Data.FormID | html %]"/>
                 <input type="hidden" name="ExpandCustomerName" id="ExpandCustomerName" value="0"/>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                 <input type="hidden" name="ImpactRC" value="0"/>
                 <input type="hidden" name="PriorityRC" value="0"/>
@@ -206,7 +206,7 @@
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #    });
 
@@ -223,7 +223,7 @@
                     </div>
                     <div class="Clear"></div>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                     <label for="ServiceIncidentStateContainer" style="display:none;">[% Translate("Service Incident State") | html %]:</label>
                     <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
@@ -246,7 +246,7 @@
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #    });
 
@@ -263,7 +263,7 @@
                     </div>
                     <div class="Clear"></div>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                     <label for="ServiceIncidentStateContainer" style="display:none;">[% Translate("Service Incident State") | html %]:</label>
                     <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
@@ -387,7 +387,7 @@
                         <a href="#" id="OptionCustomer">[ [% Translate("Customer user") | html %] ]</a>
 [% RenderBlockEnd("OptionCustomer") %]
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                         <a href="[% Env("Baselink") %]Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=[% Data.FormID | uri %];TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ [% Translate("Link ticket") | html %] ]</a>
 # ---
@@ -506,7 +506,7 @@
                         </div>
                         <div class="Clear"></div>
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 
 # show the impact
@@ -596,7 +596,7 @@
     Core.Agent.TicketAction.Init();
     Core.Config.Set('Localization.Delete', [% Translate("Delete") | JSON %]);
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     $('a.AsPopup').bind('click', function (Event) { Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action'); return false;});
 

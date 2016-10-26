@@ -114,14 +114,14 @@ sub Run {
     my %Ticket = $TicketObject->TicketGet(
         TicketID => $Self->{TicketID},
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
         DynamicFields => 1,
 # ---
         UserID   => $Self->{UserID},
     );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     # set criticality and impact
     $Ticket{Criticality} = $Ticket{DynamicField_ITSMCriticality} || '-';
@@ -376,7 +376,7 @@ sub _PDFOutputTicketInfos {
             Value => $LayoutObject->{LanguageObject}->Translate( $Ticket{State} ),
         },
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
 #        {
 #            Key   => $LayoutObject->{LanguageObject}->Translate('Priority'),
@@ -444,7 +444,7 @@ sub _PDFOutputTicketInfos {
         push( @{$TableLeft}, $RowSLA );
     }
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     my $TableLeftExtended = [
         {

@@ -582,7 +582,7 @@ sub _RenderAjax {
                 %{ $Param{GetParam} },
             );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
             # check if priority needs to be recalculated
             if (
@@ -909,7 +909,7 @@ sub _GetParam {
                 LayoutObject       => $LayoutObject,
             );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
             # set the criticality from the service
             if ( $DynamicFieldName eq 'ITSMCriticality' && $ParamObject->GetParam( Param => 'ServiceID' ) ) {
@@ -1079,7 +1079,7 @@ sub _GetParam {
     $GetParam{ResponsibleAll} = $ParamObject->GetParam( Param => 'ResponsibleAll' );
     $GetParam{OwnerAll}       = $ParamObject->GetParam( Param => 'OwnerAll' );
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
     $GetParam{ElementChanged} = $ParamObject->GetParam( Param => 'ElementChanged' );
 # ---
@@ -3410,7 +3410,7 @@ sub _StoreActivityDialog {
                     $TicketParam{$CurrentField} = $ActivityDialog->{Fields}{$CurrentField}{DefaultValue}
                         || '';
 # ---
-# ITSM
+# ITSMIncidentProblemManagement
 # ---
                     # make sure ITSMCriticality is stored, even if this field is invisible
                     if ( $DynamicFieldName eq 'ITSMCriticality' ) {
