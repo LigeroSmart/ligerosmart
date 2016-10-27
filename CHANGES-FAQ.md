@@ -1,4 +1,6 @@
-#5.0.7 2016-??-??
+#5.0.8 2016-??-??
+
+#5.0.7 2016-11-01
  - 2016-10-26 Updated translations, thanks to all translators.
  - 2016-10-26 Added language English (United Kingdom), thanks to all translators.
  - 2016-09-29 Added support to choose and sort FAQ attribute columns for linked FAQ items (complex table mode).
