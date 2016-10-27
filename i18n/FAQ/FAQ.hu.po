@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -649,8 +649,25 @@ msgid ""
 msgstr "A művelet paraméter alapértelmezett értéke a nyilvános előtétprogramnál. A művelet paramétert a rendszer parancsfájljaiban használják."
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr "Meghatározza, hogy a GyIK címét össze kell-e fűzni a bejegyzés tárgyával."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1225,6 +1242,10 @@ msgstr "GyIK bejegyzés megjelenítése HTML formázással."
 #. SysConfig
 msgid "Show FAQ path yes/no."
 msgstr "GyIK útvonal megjelenítése igen/nem."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."

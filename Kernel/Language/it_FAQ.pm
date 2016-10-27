@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Tipo predefinito dei ticket per l\'approvazione di articoli FAQ.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Il valore predefinito per il parametro Azione per il frontend pubblico. Il parametro Azione viene utilizzato negli script del sistema.';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Definisce se il titolo FAQ dovrebbe essere concatenato con l\'oggetto dell\'articolo.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Definisce un modulo panoramica per mostrare una vista abbreviata di una lista di FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -418,6 +422,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Mostra articolo FAQ con HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Mostra percorso FAQ sì/no.';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Mostra gli elementi delle sottocategorie.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '';

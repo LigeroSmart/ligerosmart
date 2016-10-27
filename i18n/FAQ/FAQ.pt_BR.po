@@ -1,6 +1,7 @@
 # 
 # Translators:
 # Felipe Braga <fbobraga@gmail.com>, 2015-2016
+# Glauber Caires <glaubercaires@gmail.com>, 2016
 # João Paulo Avelar de Araújo Pontes <meunomejoaopaulo@gmail.com>, 2016
 # José Ribeiro <joserribeiro26@gmail.com>, 2014
 # Leandro “Lê Corſetti van Utrecht” Guimarães Faria Corcete DUTRA <l@dutras.org>, 2015
@@ -10,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -280,7 +281,7 @@ msgstr "Gerenciamento de Idiomas FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Use esse recurso se você deseja trabalhar com múltiplos idiomas."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -554,23 +555,23 @@ msgstr "Nenhum resultado!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (FAQ-TextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Cliente (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - Cliente (FAQ-TextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Público (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - Público (FAQ-TextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -586,7 +587,7 @@ msgstr "Um filtro de saída HTML para adicionar links para trás uma seqüência
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "Adicionar Artigo de FAQ"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -602,19 +603,19 @@ msgstr "Gerenciamento de Categoria"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Imprimir FAQ de Cliente."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Zoom em FAQ de Cliente."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Busca em FAQ de Cliente."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "FAQ de Cliente."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -655,8 +656,25 @@ msgid ""
 msgstr "Valor padrão para o parâmetro de Recurso para a interface pública. O parâmetro de ação é usado nos scripts do sistema."
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr "Define se o título do FAQ deve ser concatenado ao assunto do artigo."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -888,27 +906,27 @@ msgstr "Permitir mecanismo de Avaliação no módulo FAQ."
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "FAQ AJAX Responder"
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "FAQ AJAX Responder em Richtext."
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "Área FAQ"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "Área FAQ."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "Deletar FAQ."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "Editar FAQ."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -920,7 +938,7 @@ msgstr "Limite da Visão Geral FAQ \"Pequeno\""
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "imprimir FAQ."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -948,7 +966,7 @@ msgstr "Frontend de registo do módulo para a interface pública."
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "FAQ completo"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1156,19 +1174,19 @@ msgstr "Imprimir este FAQ"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Imprimir FAQ público."
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "Zoom em FAQ público."
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Busca FAQ público."
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "FAQ público."
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1180,7 +1198,7 @@ msgstr "Condição para a avaliação. Chave deve ser em percentual."
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1231,6 +1249,10 @@ msgstr "Mostrar artigo FAQ com HTML."
 #. SysConfig
 msgid "Show FAQ path yes/no."
 msgstr "Mostrar caminho FAQ sim / não."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1290,7 +1312,7 @@ msgstr "Mostra um link no menu para imprimir um FAQ no modo de exibição amplia
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Apenas texto"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1334,4 +1356,4 @@ msgstr "Item da barra de ferramentas para um atalho. "
 
 #. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "público (público)"

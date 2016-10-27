@@ -236,7 +236,11 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = '等待審批常見問題文章的工單默許類別';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '設定顯示常見問題日誌小檢閱模式的概況模組';
@@ -418,6 +422,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = '以HTML格式顯示常見問題文章';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = '顯示常見問題路徑 (是/否)';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = '顯示子目錄分類項目';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '顯示指定介面的最近更新項目';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '顯示指定介面的最近創建項目';

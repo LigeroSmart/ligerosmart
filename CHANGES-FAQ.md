@@ -1,4 +1,6 @@
 #5.0.7 2016-??-??
+ - 2016-10-26 Updated translations, thanks to all translators.
+ - 2016-10-26 Added language English (United Kingdom), thanks to all translators.
  - 2016-09-29 Added support to choose and sort FAQ attribute columns for linked FAQ items (complex table mode).
  - 2016-09-22 Added new SysConfig setting "FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems" to show or hide invalid FAQ items (disabled by default).
  - 2016-09-22 Fixed bug#[11498](http://bugs.otrs.org/show_bug.cgi?id=11498)(PR#48) - FAQ items disappear from AgentFAQExplorer when invalid, thanks to S7.

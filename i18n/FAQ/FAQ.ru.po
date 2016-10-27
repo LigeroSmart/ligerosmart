@@ -2,12 +2,12 @@
 # Translators:
 # Alexandr <fatpiga@mail.ru>, 2015
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -276,7 +276,7 @@ msgstr "Управление языками FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Используйте эту функцию при необходимости работы с несколькими языками."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -550,23 +550,23 @@ msgstr "Нет результата/Решения!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (FAQFulltext)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Клиент (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - Клиент (FAQFulltext)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Общедоступный (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - Общедоступный (FAQFulltext)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -582,7 +582,7 @@ msgstr "Фильтр для HTML для добавления ссылки поз
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "Добавить статью FAQ"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -598,19 +598,19 @@ msgstr "Управление категориями"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Печать статьи FAQ клиентом"
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Просмотр статьи FAQ клиентом."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Поиск статьи FAQ клиентом."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "FAQ для клиентов."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -651,8 +651,25 @@ msgid ""
 msgstr "Значение по умолчанию параметра Action для общедоступного фронтенда. Параметр Action используется в скриптах системы."
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr "Задает, должен ли заголовок FAQ объединяться с темой статьи."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -884,27 +901,27 @@ msgstr "Разрешить функцию оценки в модуле FAQ."
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "FAQ AJAX ответчик"
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "FAQ AJAX ответчик для Richtext."
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "Область FAQ"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "Область FAQ."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "Удалить статью FAQ."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "Редактировать статью FAQ."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -916,7 +933,7 @@ msgstr "Количество статей, отображаемых при пр�
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "Печать статьи FAQ."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -944,7 +961,7 @@ msgstr "Frontend module registration для публичного/общедос�
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "Полный FAQ"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1152,19 +1169,19 @@ msgstr "Печать этого FAQ"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Печать публичной статьи FAQ."
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "Просмотр публичной статьи FAQ."
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Поиск статьи в публичном FAQ."
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "Общедоступный/публичный FAQ."
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1176,7 +1193,7 @@ msgstr "Оценки для голосования. Ключ должен быт
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1227,6 +1244,10 @@ msgstr "Показывать статью FAQ в HTML."
 #. SysConfig
 msgid "Show FAQ path yes/no."
 msgstr "Показывать путь FAQ да/нет."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1286,7 +1307,7 @@ msgstr "Показывает пункт меню Печать при просм�
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Только текст"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1330,4 +1351,4 @@ msgstr "Описание ярлыка(иконки) для навигацион�
 
 #. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "общедоступный (публичный)"

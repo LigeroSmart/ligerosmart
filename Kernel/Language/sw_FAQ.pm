@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Hali ya chaguo-msingi kwa tiketi za makala ya maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Thamani ya chaguo-msingi kwa patameta amilifu kwa ';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Eleza kama kichwa cha habari cha maswali yaliyoulizwa maranyingi kiunganishwe na somo la makala.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Inaeleza mapitio ya moduli kuonyesha  muonekano mdogo wa jarida la maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -418,6 +422,8 @@ sub Data {
         'Inaonyesha kitufe cha \'\' Ingiza matini ya maswali yanayoulizwa mara kwa mara\'\' / \'\'Ingiza maswali yanayoulizwa mara kwa mara yote\'\'  katika wakala  fifiza wa maswali yanayoulizwa mara kwa mara ';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Onyesha makala ya maswali na HTML';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Onyesha njia ya maswali ndio/hapana.';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Inaonyesha vipengele vya kategori.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Inaonyesha vipengele vilivyobadilishwa katika kiolesura kilichofafanuliwa.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Inaonyesha vipengele vilivyotengenezwa mwishoni katika kiolesura  kilichofafanuliwa.';

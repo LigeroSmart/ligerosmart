@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -655,8 +655,25 @@ msgid ""
 msgstr "Valor por omisión para el parámetro \"Action\" para la interfaz pública. El parámetro \"Action\" se usa en los \"scripts\" del sistema."
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr "Determina si el título de FAQ debe ser concatenado al asunto del artículo."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1231,6 +1248,10 @@ msgstr "¿Mostrar contenido HTML en los artículos FAQ?."
 #. SysConfig
 msgid "Show FAQ path yes/no."
 msgstr "¿Mostrar la ruta de la FAQ? sí/no."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."

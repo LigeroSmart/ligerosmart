@@ -98,7 +98,7 @@ sub Data {
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Управление языками FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
-        '';
+        'Используйте эту функцию при необходимости работы с несколькими языками.';
     $Self->{Translation}->{'Add language'} = 'Добавить язык';
     $Self->{Translation}->{'Delete Language %s'} = 'Удалить язык %s';
     $Self->{Translation}->{'Add Language'} = 'Добавить язык';
@@ -200,15 +200,15 @@ sub Data {
     $Self->{Translation}->{'No Result!'} = 'Нет результата/Решения!';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
-    $Self->{Translation}->{'%s (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s (FAQFulltext)'} = '%s (FAQFulltext)';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
-    $Self->{Translation}->{'%s - Customer (%s)'} = '';
-    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Customer (%s)'} = '%s - Клиент (%s)';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '%s - Клиент (FAQFulltext)';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
-    $Self->{Translation}->{'%s - Public (%s)'} = '';
-    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Public (%s)'} = '%s - Общедоступный (%s)';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - Общедоступный (FAQFulltext)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'This article is empty!'} = 'Эта статья пуста!';
@@ -216,14 +216,14 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Фильтр для HTML для добавления ссылки позади заданной строки. Элемент Image может быть введен двумя способами. Первый - это имя файла(т.е. faq.png). В этом случае используется путь к файлам изображений OTRS. Второй вариант в указании ссылки на изображение(например, http://otrs.org/faq.png).';
-    $Self->{Translation}->{'Add FAQ article'} = '';
+    $Self->{Translation}->{'Add FAQ article'} = 'Добавить статью FAQ';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS-цвет для результата голосования.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Время для выхода из редактирования FAQ пункта';
     $Self->{Translation}->{'Category Management'} = 'Управление категориями';
-    $Self->{Translation}->{'Customer FAQ Print.'} = '';
-    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Customer FAQ search.'} = '';
-    $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'Customer FAQ Print.'} = 'Печать статьи FAQ клиентом';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Просмотр статьи FAQ клиентом.';
+    $Self->{Translation}->{'Customer FAQ search.'} = 'Поиск статьи FAQ клиентом.';
+    $Self->{Translation}->{'Customer FAQ.'} = 'FAQ для клиентов.';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Десятичных знаков в результате голосования';
     $Self->{Translation}->{'Default category name.'} = 'Название категории по-умолчанию.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Язык статей FAQ по-умолчанию в одноязычном режиме.';
@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Тип заявок на одобрение статей FAQ по-умолчанию.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Значение по умолчанию параметра Action для общедоступного фронтенда. Параметр Action используется в скриптах системы.';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Задает, должен ли заголовок FAQ объединяться с темой статьи.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Задает модуль просмотра для отображения журнала FAQ в small формате';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -312,22 +316,22 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Изменить этот FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Разрешить многоязычность в модуле FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Разрешить функцию оценки в модуле FAQ.';
-    $Self->{Translation}->{'FAQ AJAX Responder'} = '';
-    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
-    $Self->{Translation}->{'FAQ Area'} = '';
-    $Self->{Translation}->{'FAQ Area.'} = '';
-    $Self->{Translation}->{'FAQ Delete.'} = '';
-    $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX ответчик';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = 'FAQ AJAX ответчик для Richtext.';
+    $Self->{Translation}->{'FAQ Area'} = 'Область FAQ';
+    $Self->{Translation}->{'FAQ Area.'} = 'Область FAQ.';
+    $Self->{Translation}->{'FAQ Delete.'} = 'Удалить статью FAQ.';
+    $Self->{Translation}->{'FAQ Edit.'} = 'Редактировать статью FAQ.';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Количество статей, отображаемых при просмотре Журнала FAQ в "Small" формате';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Количество статей, отображаемых при просмотре Обзора FAQ в "Small" формате';
-    $Self->{Translation}->{'FAQ Print.'} = '';
+    $Self->{Translation}->{'FAQ Print.'} = 'Печать статьи FAQ.';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Количество статей при просмотре Журнала FAQ в "Small" формате на страницу';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Количество статей, отображаемых при просмотре Журнала FAQ в "Small" формате на страницу';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Включить и настроить модуль поиска FAQ для интерфейса агента.';
     $Self->{Translation}->{'Field4'} = 'Поле4';
     $Self->{Translation}->{'Field5'} = 'Поле5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend module registration для публичного/общедоступного интерфейса.';
-    $Self->{Translation}->{'Full FAQ'} = '';
+    $Self->{Translation}->{'Full FAQ'} = 'Полный FAQ';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Группа для одобрения статей FAQ.';
     $Self->{Translation}->{'History of this FAQ'} = 'История этого FAQ';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Включить внутренние поля в заявку, основанную на статье FAQ.';
@@ -394,13 +398,13 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         'Параметры для страницы (на которой отображаются элементы FAQ) при обзоре FAQ в small формате.';
     $Self->{Translation}->{'Print this FAQ'} = 'Печать этого FAQ';
-    $Self->{Translation}->{'Public FAQ Print.'} = '';
-    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Public FAQ search.'} = '';
-    $Self->{Translation}->{'Public FAQ.'} = '';
+    $Self->{Translation}->{'Public FAQ Print.'} = 'Печать публичной статьи FAQ.';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = 'Просмотр публичной статьи FAQ.';
+    $Self->{Translation}->{'Public FAQ search.'} = 'Поиск статьи в публичном FAQ.';
+    $Self->{Translation}->{'Public FAQ.'} = 'Общедоступный/публичный FAQ.';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Очередь на одобрение статей FAQ.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Оценки для голосования. Ключ должен быть задан в процентах.';
-    $Self->{Translation}->{'S'} = '';
+    $Self->{Translation}->{'S'} = 'S';
     $Self->{Translation}->{'Search FAQ'} = 'Поиск в FAQ';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Задает высоту (в пикселах) по умолчанию для inline HTML полей в AgentFAQZoom.';
@@ -418,6 +422,8 @@ sub Data {
         'Показывать кнопку "Вставить текст FAQ! / "Вставить статью FAQ полностью" на экране AgentFAQZoomSmall.';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Показывать статью FAQ в HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Показывать путь FAQ да/нет.';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Показывать содержимое подразделов.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Показывать последние изменения в указаных интерфейсах.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Показывать новые пункты в указанных интерфейсах.';
@@ -435,7 +441,7 @@ sub Data {
         'Показывает пункт меню, позволяющий вернуться назад при просмотре статьи FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Показывает пункт меню Печать при просмотре статьи FAQ в интерфейсе агента.';
-    $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'Text Only'} = 'Только текст';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Идентификатор FAQ, например, FAQ#, KB#, MyFAQ#. По умолчанию - FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -449,7 +455,7 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Тело заявки на одобрение статьи FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Тема заявки на одобрение статьи FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Описание ярлыка(иконки) для навигационной панели.';
-    $Self->{Translation}->{'public (public)'} = '';
+    $Self->{Translation}->{'public (public)'} = 'общедоступный (публичный)';
 
 }
 

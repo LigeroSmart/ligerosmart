@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'FAQ 文章请求批准工单的默认类型。';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '公共前端界面指令参数的默认值，指令参数用于系统脚本。';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         '定义FAQ标题是否要加到文章主题中。';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '定义一个显示FAQ日志简洁视图的概览模块。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -418,6 +422,8 @@ sub Data {
         '在服务人员FAQ详情窗口中显示“插入FAQ文本”/“插入完整FAQ”按钮。';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = '以 HTML 格式显示 FAQ 文章。';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = '是/否显示 FAQ 路径。';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = '显示子目录的条目。';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '在定义的界面上显示最近更改的条目。';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '在定义的界面上显示最新创建的条目。';

@@ -220,10 +220,10 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = '„CSS” боја за резултат гласања.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Време ослобађања кеша за ЧПП ставке.';
     $Self->{Translation}->{'Category Management'} = 'Управљање категоријама';
-    $Self->{Translation}->{'Customer FAQ Print.'} = '';
-    $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Customer FAQ search.'} = '';
-    $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'Customer FAQ Print.'} = 'Штампање клијентских ЧПП.';
+    $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Детаљи клијентских ЧПП.';
+    $Self->{Translation}->{'Customer FAQ search.'} = 'Претрага клијентских ЧПП.';
+    $Self->{Translation}->{'Customer FAQ.'} = 'Клијентска ЧПП.';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Број децимала у резултату гласања.';
     $Self->{Translation}->{'Default category name.'} = 'Назив подразумеване категорије.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Подразумевани језик ЧПП чланака у једнојезичком начину рада.';
@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Подразумевани тип тикета за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Подразумевана вредност за Action параметар у јавном фронтенду. Овај параметар користе скрипте система. ';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Одређује да ли наслов ЧПП треба да буде додат на тему чланка.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Дефинише модул прегледа за мали приказ ЧПП дневника. ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -327,7 +331,7 @@ sub Data {
     $Self->{Translation}->{'Field4'} = 'Поље4';
     $Self->{Translation}->{'Field5'} = 'Поље5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Регистрација приступног модула за јавни интерфејс.';
-    $Self->{Translation}->{'Full FAQ'} = '';
+    $Self->{Translation}->{'Full FAQ'} = 'Kомплетан ЧПП';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Група за одобравање ЧПП чланака.';
     $Self->{Translation}->{'History of this FAQ'} = 'Историјат овог ЧПП';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Укључи интерна поља у ЧПП базиран тикет.';
@@ -394,9 +398,9 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
         'Параметри страница (на којима су видљиве ЧПП ставке) смањеног прегледа ЧПП.';
     $Self->{Translation}->{'Print this FAQ'} = 'Штампај ово ЧПП';
-    $Self->{Translation}->{'Public FAQ Print.'} = '';
-    $Self->{Translation}->{'Public FAQ Zoom.'} = '';
-    $Self->{Translation}->{'Public FAQ search.'} = '';
+    $Self->{Translation}->{'Public FAQ Print.'} = 'Штампање јавних ЧПП.';
+    $Self->{Translation}->{'Public FAQ Zoom.'} = 'Детаљи јавних ЧПП.';
+    $Self->{Translation}->{'Public FAQ search.'} = 'Претрага јавних ЧПП.';
     $Self->{Translation}->{'Public FAQ.'} = 'Јавно ЧПП.';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Ред за одобравање ЧПП чланака.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Оцене за гласање. Кључ мора бити у процентима.';
@@ -418,6 +422,8 @@ sub Data {
         'Прикажи "Убаци ЧПП текст" / "Убаци Цео ЧПП" дугме у AgentFAQZoomSmall.';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Приказ ЧПП чланка као „HTML”.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Прикажи путању до ЧПП да/не.';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Прикажи ставке у субкатегоријама.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Прикажи задње промењене ставке у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Прикажи задње креиране ставке у дефинисаним интерфејсима.';

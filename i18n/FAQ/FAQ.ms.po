@@ -1,11 +1,12 @@
 # 
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -274,7 +275,7 @@ msgstr "Pengurusan Bahasa FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "gunakan ciri ini jika anda mahu untuk bekerja dengan pelbagai bahasa"
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -548,23 +549,23 @@ msgstr "Tiada Keputusan!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (TekspenuhFAQ)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Pelanggan (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - Pelanggan (TekspenuhFAQ)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Umum (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - Umum (tekspenuhFAQ)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -580,7 +581,7 @@ msgstr "Asingan untuk hasil keluaran untuk menambah pautan dibelakang jaringan s
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "tambah artikel FAQ"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -596,19 +597,19 @@ msgstr "Pengurusan kategori"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Cetakan FAQ Pelanggan"
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Zum FAQ Pelanggan"
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "carian FAQ pelanggan"
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "FAQ Pelanggan"
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -649,8 +650,25 @@ msgid ""
 msgstr "Nilai sedia ada untuk tindakan parameter kepada depanakhir umum. Tindakan parameter digunakan dalam skrip sistem tersebut."
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr "Tentukan jika tajuk FAQ perlu dirangkaikan kepada artikel subjek."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -882,27 +900,27 @@ msgstr "Aktifkan undian mekanisma pada modul FAQ."
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "Pengulas AJAX FAQ"
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "Richtext untuk AJAX FAQ"
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "Bahagian FAQ"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "Bahagian FAQ."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "Buang FAQ"
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "Sunting FAQ"
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -914,7 +932,7 @@ msgstr "Lihat semula FAQ had \"kecil\""
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "Cetakan FAQ."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -942,7 +960,7 @@ msgstr "Frontend pendaftaran modul untuk antara muka awam."
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "FAQ penuh"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1150,19 +1168,19 @@ msgstr "Cetak halaman FAQ ini"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "cetakan FAQ umum"
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "zum FAQ umum"
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "carian FAQ umum"
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "FAQ Umum"
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1174,7 +1192,7 @@ msgstr "Kadar untuk mengundi. Kunci mestilah dalam peratus."
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1225,6 +1243,10 @@ msgstr "Papar FAQ Perkara dengan HTML."
 #. SysConfig
 msgid "Show FAQ path yes/no."
 msgstr "Papar FAQ jalan ya / tidak."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1284,7 +1306,7 @@ msgstr "Menunjukkan pautan di bar menu dalam pandangan dizum dalam antara muka e
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "hanya teks"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1328,4 +1350,4 @@ msgstr "Item Toolbar untuk jalan pintas."
 
 #. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "awam (awam)"

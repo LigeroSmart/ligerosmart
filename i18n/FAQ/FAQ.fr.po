@@ -1,14 +1,16 @@
 # 
 # Translators:
+# Gaudin vincent <vincent.gaudin@cprpsncf.fr>, 2016
 # Marc De Spiegeleer <marcds@scarlet.be>, 2016
 # Matthieu HUTIN, 2015
-# Richard BARET <richardbaret@gmail.com>, 2015
+# Richard BARET <inactive+rbaret@transifex.com>, 2015
 # ShevAbam, 2016
+# Vincent SAOUT <v.saout@atool-dev.fr>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -277,7 +279,7 @@ msgstr "Gestion Langue FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Utiliser cette fonction afin de travailler avec de multiples langues"
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -402,11 +404,11 @@ msgstr "p.ex égal à 25% ou supérieur à 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "Heure de création du ticket de FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "FAQ Article Date de modification"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -441,7 +443,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Pour ouvrir les liens dans les blocs de description suivantes, vous pourriez avoir besoin d'appuyer sur Ctrl ou Cmd ou Maj tout en cliquant sur le lien (en fonction de votre navigateur et OS)."
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -479,7 +481,7 @@ msgstr "Insérer Texte & Lien dans la FAQ"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "Insérer tout Texte et Lien dans la FAQ"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
@@ -495,7 +497,7 @@ msgstr "Restrictions de vote"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Uniquement les articles de FAQ avec des votes..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
@@ -515,7 +517,7 @@ msgstr "Uniquement les articles de FAQ créés entre"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Modèle de recherche en modèle ?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
@@ -555,7 +557,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Client (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
@@ -563,7 +565,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Publique (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
@@ -583,7 +585,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "Ajouter un article de FAQ"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -599,23 +601,23 @@ msgstr "Gestion des catégories"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Impression FAQ Client."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Zoom FAQ Client."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Recherche FAQ Client."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "FAQ Client."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
-msgstr ""
+msgstr "Positionnement décimal des résultats du vote"
 
 #. SysConfig
 msgid "Default category name."
@@ -652,7 +654,24 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -893,19 +912,19 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "Zone FAQ"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "Zone FAQ."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "Supprimer FAQ"
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "Editer FAQ"
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -917,7 +936,7 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "Impression FAQ."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -1153,19 +1172,19 @@ msgstr "Imprimer cette FAQ"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Imprimer FAQ publique."
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "Zoom FAQ publique."
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Recherche FAQ publique."
 
 #. SysConfig
 msgid "Public FAQ."
-msgstr ""
+msgstr "FAQ Publique."
 
 #. SysConfig
 msgid "Queue for the approval of FAQ articles."
@@ -1177,7 +1196,7 @@ msgstr ""
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1223,10 +1242,14 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr ""
+msgstr "Afficher l'article de FAQ en HTML."
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
+msgstr "Afficher le chemin FAQ oui/non."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -1287,7 +1310,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Texte uniquement"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
@@ -1327,8 +1350,8 @@ msgstr ""
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
-msgstr ""
+msgstr "Élément barre à outils pour raccourci."
 
 #. SysConfig
 msgid "public (public)"
-msgstr ""
+msgstr "public (public)"

@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'Tipe tiket default untuk persetujuan artikel FAQ';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Nilai default untuk parameter Aksi untuk frontend umum. Parameter aksi digunakan pada skrip dari Sistem.';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Tentukan jika judul FAQ harus tersambung ke subjek artikel';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Tentukan sebuah gambaran modul untuk menampilkan tampilan kecil dari sebuah jurnal FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -418,6 +422,8 @@ sub Data {
         'Tampilkan tombol "Masukan teks FAQ" / "Masukan FAQ lengkap" pada AgentFAQZoomSmall.';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Tampilkan artikel FAQ dengan HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Tampilkan Jalur FAQ iya/tidak.';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Tampilkan item dari subkategori.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Tampilkan item terakhir yang di ubah pada antarmuka yang di tentukan.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Tampilkan item terakhir yang di ciptakan pada antarmuka yang di tentukan.';

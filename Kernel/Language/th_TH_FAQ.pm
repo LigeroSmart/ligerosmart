@@ -236,8 +236,12 @@ sub Data {
     $Self->{Translation}->{'Default type of tickets for the approval of FAQ articles.'} = 'ประเภทตั๋วเริ่มต้นสำหรับการอนุมัติบทความ FAQ.';
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'ค่าเริ่มต้นสำหรับพารามิเตอร์การดำเนินการในหน้าสาธารณะ พารามิเตอร์การดำเนินการถูกนำมาใช้ในสคริปต์ของระบบ';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'กำหนดค่าถ้าหากหัวข้อFAQ ควรได้รับการตัดแบ่งข้อความไปยังบทความ';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของวารสาร FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -418,6 +422,8 @@ sub Data {
         'แสดงปุ่ม "แทรกข้อความ FAQ " ใน AgentFAQZoomSmall';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'แสดงบทความFAQ ด้วย HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'แสดง ใช่/ ไม่ใช่ พาธFAQ ';
+    $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Show items of subcategories.'} = 'แสดงรายการของหมวดหมู่ย่อย';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'แสดงรายการการเปลี่ยนแปลงที่ผ่านมาล่าสุดในอินเตอร์เฟซที่กำหนดไว้';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'แสดงรายการที่สร้างล่าสุดในอินเตอร์เฟซที่กำหนดไว้.';

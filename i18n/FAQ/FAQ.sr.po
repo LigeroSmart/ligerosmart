@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 18:28+0000\n"
-"PO-Revision-Date: 2016-09-14 23:30+0000\n"
+"POT-Creation-Date: 2016-10-26 21:25+0000\n"
+"PO-Revision-Date: 2016-10-27 02:27+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -597,19 +597,19 @@ msgstr "Управљање категоријама"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Штампање клијентских ЧПП."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Детаљи клијентских ЧПП."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Претрага клијентских ЧПП."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "Клијентска ЧПП."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -650,8 +650,25 @@ msgid ""
 msgstr "Подразумевана вредност за Action параметар у јавном фронтенду. Овај параметар користе скрипте система. "
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr "Одређује да ли наслов ЧПП треба да буде додат на тему чланка."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked FAQs widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
+"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
+"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -943,7 +960,7 @@ msgstr "Регистрација приступног модула за јавн
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "Kомплетан ЧПП"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1151,15 +1168,15 @@ msgstr "Штампај ово ЧПП"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Штампање јавних ЧПП."
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "Детаљи јавних ЧПП."
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Претрага јавних ЧПП."
 
 #. SysConfig
 msgid "Public FAQ."
@@ -1226,6 +1243,10 @@ msgstr "Приказ ЧПП чланка као „HTML”."
 #. SysConfig
 msgid "Show FAQ path yes/no."
 msgstr "Прикажи путању до ЧПП да/не."
+
+#. SysConfig
+msgid "Show invalid items in the FAQ Explorer result of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."
