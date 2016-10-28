@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/b7d23c19ddb0dea2ee56bc23425080096f0d9962/scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: https://github.com/OTRS/otrs/blob/fd62077ca81c58b01974ec042e1fc09548eafb28/scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -44,7 +44,8 @@ $Helper->ConfigSettingChange(
     Key   => 'Ticket::Type',
     Value => '1',
 );
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'Ticket::Type',
     Value => 1,
 );
@@ -53,7 +54,8 @@ $Helper->ConfigSettingChange(
     Key   => 'Ticket::Frontend::AccountTime',
     Value => '1',
 );
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'Ticket::Frontend::AccountTime',
     Value => 1,
 );
@@ -62,7 +64,8 @@ $Helper->ConfigSettingChange(
     Key   => 'Ticket::Frontend::NeedAccountedTime',
     Value => '1',
 );
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'Ticket::Frontend::NeedAccountedTime',
     Value => 1,
 );
@@ -73,7 +76,8 @@ $Helper->ConfigSettingChange(
     Key   => 'CheckMXRecord',
     Value => '0',
 );
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'CheckMXRecord',
     Value => 0,
 );
@@ -82,19 +86,22 @@ $Helper->ConfigSettingChange(
     Key   => 'CheckEmailAddresses',
     Value => '1',
 );
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'CheckEmailAddresses',
     Value => 1,
 );
 
 # disable SessionCheckRemoteIP setting
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'SessionCheckRemoteIP',
     Value => 0,
 );
 
 # enable customer groups support
-$ConfigObject->Set(
+$Helper->ConfigSettingChange(
+    Valid => 1,
     Key   => 'CustomerGroupSupport',
     Value => 1,
 );
