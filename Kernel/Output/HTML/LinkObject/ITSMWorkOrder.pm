@@ -58,7 +58,6 @@ sub new {
         $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
-
     # We need our own LayoutObject instance to avoid blockdata collisions
     #   with the main page.
     $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
