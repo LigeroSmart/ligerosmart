@@ -659,9 +659,9 @@ $Self->Is(
     "Cache for FAQ With ItemFields After FAQGet(): Complete cache ref",
 );
 
-# -------------------------
+#
 # FAQ State tests
-# -------------------------
+#
 my %States = $FAQObject->StateList(
     UserID => 1,
 );
@@ -768,8 +768,6 @@ $Self->Is(
     'internal',
     "StateTypeList() 1 is internal",
 );
-
-# -------------------------
 
 # ContentTypeSet() tests
 
