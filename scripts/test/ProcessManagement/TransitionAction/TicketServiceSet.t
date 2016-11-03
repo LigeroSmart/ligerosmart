@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: https://github.com/OTRS/otrs/blob/9ac998afba981bc4dea8c3cfb582b1e2159b6d07/scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
+# $origin: otrs - 9ac998afba981bc4dea8c3cfb582b1e2159b6d07 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -43,9 +43,9 @@ my $TestUserID    = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
     UserLogin => $TestUserLogin,
 );
 
-# ----------------------------------------
+#
 # Create new services
-# ----------------------------------------
+#
 my @Services = (
     {
         Name    => 'Service0' . $RandomID,
@@ -96,11 +96,11 @@ for my $ServiceData (@Services) {
     $ServiceData->{ServiceID} = $ServiceID;
 }
 
-# ----------------------------------------
+#
 
-# ----------------------------------------
+#
 # Assign services to customer (0 and 1)
-# ----------------------------------------
+#
 my $Success = $ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $TestCustomerUserLogin,
     ServiceID         => $Services[0]->{ServiceID},
@@ -129,11 +129,11 @@ $Self->True(
         . " with true",
 );
 
-# ----------------------------------------
+#
 
-# ----------------------------------------
+#
 # Create a test tickets
-# ----------------------------------------
+#
 my @TicketData;
 for my $Item ( 0 .. 1 ) {
     my $TicketID = $TicketObject->TicketCreate(
