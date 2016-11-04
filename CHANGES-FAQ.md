@@ -1,4 +1,5 @@
 #5.0.8 2016-??-??
+ - 2016-11-04 Fixed bug#[12201](http://bugs.otrs.org/show_bug.cgi?id=12201) - RSS Feeds don't work if HTTPS is forced in OTRS. Thanks to Michiel Beijen.
 
 #5.0.7 2016-11-01
  - 2016-10-26 Updated translations, thanks to all translators.

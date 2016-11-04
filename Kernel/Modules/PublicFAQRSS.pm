@@ -112,7 +112,11 @@ sub Run {
     }
 
     # create RSS object object
-    my $RSSObject = XML::RSS::SimpleGen->new( 'http://' . $ENV{HTTP_HOST} );
+    my $RSSObject = XML::RSS::SimpleGen->new(
+        $ConfigObject->Get("HttpType")
+            . '://'
+            . $ConfigObject->Get("FQDN")
+    );
 
     # generate the RSS title
     $Title = $ConfigObject->Get('ProductName') . ' ' . $Title;
@@ -144,7 +148,11 @@ sub Run {
 
         # build the RSS item
         $RSSObject->item(
-            "http://$ENV{HTTP_HOST}$LayoutObject->{Baselink}Action=PublicFAQZoom&ItemID=$ItemID",
+            $ConfigObject->Get('HttpType')
+                . "://"
+                . $ConfigObject->Get("FQDN")
+                . $LayoutObject->{Baselink}
+                . "Action=PublicFAQZoom;ItemID=$ItemID",
             $ItemData{Title},
             $Preview,
         );
