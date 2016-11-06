@@ -444,7 +444,6 @@ sub PopulateTargetStructuresPost {
     $Self->PrintWithTime("Creating structures in target database (phase 2/2)");
 
     for my $Statement ( @{ $Self->{SQLPost} } ) {
-        next STATEMENT if $Statement =~ m{^INSERT}smxi;
         my $Result = $Param{TargetDBObject}->Do( SQL => $Statement );
         print '.';
         if ( !$Result ) {
