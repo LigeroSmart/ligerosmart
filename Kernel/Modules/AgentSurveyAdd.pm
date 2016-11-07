@@ -11,6 +11,8 @@ package Kernel::Modules::AgentSurveyAdd;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -110,7 +112,7 @@ sub _SurveyAddMask {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     my $Output = $LayoutObject->Header(
-        Title => 'Add New Survey',
+        Title => Translatable('Add New Survey'),
     );
 
     $Output .= $LayoutObject->NavigationBar();

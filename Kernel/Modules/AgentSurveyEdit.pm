@@ -11,6 +11,8 @@ package Kernel::Modules::AgentSurveyEdit;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -49,7 +51,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey!',
+                Message    => Translatable('You have no permission for this survey!'),
                 WithHeader => 'yes',
             );
         }
@@ -70,8 +72,8 @@ sub Run {
         if ( !$SurveyID ) {
 
             return $LayoutObject->ErrorScreen(
-                Message => 'No SurveyID is given!',
-                Comment => 'Please contact the admin.',
+                Message => Translatable('No SurveyID is given!'),
+                Comment => Translatable('Please contact the admin.'),
             );
         }
 
@@ -146,7 +148,7 @@ sub _SurveyEditMask {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     my $Output = $LayoutObject->Header(
-        Title     => 'Survey Edit',
+        Title     => Translatable('Survey Edit'),
         Type      => 'Small',
         BodyClass => 'Popup',
     );

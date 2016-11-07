@@ -11,6 +11,8 @@ package Kernel::Modules::AgentSurveyOverview;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -74,7 +76,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title   => 'Overview',
+        Title   => Translatable('Overview'),
         Refresh => $Refresh,
     );
     $Output .= $LayoutObject->NavigationBar();
@@ -128,8 +130,8 @@ sub Run {
         Total       => scalar @SurveyIDs,
         View        => $View,
         FilterLink  => $LinkFilter,
-        TitleName   => $LayoutObject->{LanguageObject}->Get('Overview'),
-        TitleValue  => $LayoutObject->{LanguageObject}->Get('Survey'),
+        TitleName   => $LayoutObject->{LanguageObject}->Translate('Overview'),
+        TitleValue  => $LayoutObject->{LanguageObject}->Translate('Survey'),
         Env         => $Self,
         LinkPage    => $LinkPage,
         LinkSort    => $LinkSort,

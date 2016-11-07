@@ -11,6 +11,8 @@ package Kernel::Modules::AgentSurveyEditQuestions;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -86,7 +88,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey!',
+                Message    => Translatable('You have no permission for this survey!'),
                 WithHeader => 'yes',
             );
         }
@@ -123,7 +125,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or question!',
+                Message    => Translatable('You have no permission for this survey or question!'),
                 WithHeader => 'yes',
             );
         }
@@ -149,7 +151,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or question!',
+                Message    => Translatable('You have no permission for this survey or question!'),
                 WithHeader => 'yes',
             );
         }
@@ -175,7 +177,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or question!',
+                Message    => Translatable('You have no permission for this survey or question!'),
                 WithHeader => 'yes',
             );
         }
@@ -201,7 +203,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or question!',
+                Message    => Translatable('You have no permission for this survey or question!'),
                 WithHeader => 'yes',
             );
         }
@@ -231,7 +233,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or question!',
+                Message    => Translatable('You have no permission for this survey or question!'),
                 WithHeader => 'yes',
             );
         }
@@ -273,7 +275,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or question!',
+                Message    => Translatable('You have no permission for this survey or question!'),
                 WithHeader => 'yes',
             );
         }
@@ -312,7 +314,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' || $AnswerExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey, question or answer!',
+                Message    => Translatable('You have no permission for this survey, question or answer!'),
                 WithHeader => 'yes',
             );
         }
@@ -339,7 +341,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' || $AnswerExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey, question or answer!',
+                Message    => Translatable('You have no permission for this survey, question or answer!'),
                 WithHeader => 'yes',
             );
         }
@@ -366,7 +368,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' || $AnswerExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey, question or answer!',
+                Message    => Translatable('You have no permission for this survey, question or answer!'),
                 WithHeader => 'yes',
             );
         }
@@ -393,7 +395,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' || $AnswerExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey, question or answer!',
+                Message    => Translatable('You have no permission for this survey, question or answer!'),
                 WithHeader => 'yes',
             );
         }
@@ -416,7 +418,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $QuestionExists ne 'Yes' || $AnswerExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey, question or answer!',
+                Message    => Translatable('You have no permission for this survey, question or answer!'),
                 WithHeader => 'yes',
             );
         }
@@ -453,8 +455,8 @@ sub Run {
     if ( !$GetParam{SurveyID} ) {
 
         return $LayoutObject->ErrorScreen(
-            Message => 'No SurveyID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No SurveyID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
@@ -462,7 +464,7 @@ sub Run {
     if ( $SurveyExists ne 'Yes' ) {
 
         return $LayoutObject->NoPermission(
-            Message    => 'You have no permission for this survey!',
+            Message    => Translatable('You have no permission for this survey!'),
             WithHeader => 'yes',
         );
     }
@@ -488,14 +490,14 @@ sub _MaskQuestionOverview {
     if ( !$Param{SurveyID} ) {
 
         return $LayoutObject->ErrorScreen(
-            Message => 'No SurveyID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No SurveyID is given!'),
+            Comment => Translatable('Please contact the admin.'),
         );
     }
 
     # output header
     $Output = $LayoutObject->Header(
-        Title     => 'Survey Edit Questions',
+        Title     => Translatable('Survey Edit Questions'),
         Type      => 'Small',
         BodyClass => 'Popup',
     );
@@ -522,20 +524,20 @@ sub _MaskQuestionOverview {
         my $ArrayHashRef = [
             {
                 Key      => 'YesNo',
-                Value    => 'YesNo',
+                Value    => Translatable('Yes/No'),
                 Selected => 1,
             },
             {
                 Key   => 'Radio',
-                Value => 'Radio (List)',
+                Value => Translatable('Radio (List)'),
             },
             {
                 Key   => 'Checkbox',
-                Value => 'Checkbox (List)',
+                Value => Translatable('Checkbox (List)'),
             },
             {
                 Key   => 'Textarea',
-                Value => 'Textarea',
+                Value => Translatable('Textarea'),
             },
         ];
 
@@ -552,12 +554,12 @@ sub _MaskQuestionOverview {
         $ArrayHashRef = [
             {
                 Key      => 'Yes',
-                Value    => 'Yes',
+                Value    => Translatable('Yes'),
                 Selected => 1,
             },
             {
                 Key   => 'No',
-                Value => 'No',
+                Value => Translatable('No'),
             }
         ];
 
@@ -719,7 +721,7 @@ sub _MaskQuestionEdit {
 
     # output header
     $Output = $LayoutObject->Header(
-        Title     => 'Question Edit',
+        Title     => Translatable('Question Edit'),
         Type      => 'Small',
         BodyClass => 'Popup',
     );
@@ -737,11 +739,11 @@ sub _MaskQuestionEdit {
     my $ArrayHashRef = [
         {
             Key   => 'Yes',
-            Value => 'Yes',
+            Value => Translatable('Yes'),
         },
         {
             Key   => 'No',
-            Value => 'No',
+            Value => Translatable('No'),
         }
     ];
 
@@ -911,7 +913,7 @@ sub _MaskAnswerEdit {
 
     my $Output;
     $Output = $LayoutObject->Header(
-        Title     => 'Answer Edit',
+        Title     => Translatable('Answer Edit'),
         Type      => 'Small',
         BodyClass => 'Popup',
     );

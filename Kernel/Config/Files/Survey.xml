@@ -8,7 +8,7 @@
             <FrontendModuleReg>
                 <Description Translatable="1">A Survey Module.</Description>
                 <NavBarName>Survey</NavBarName>
-                <Title>Survey</Title>
+                <Title Translatable="1">Survey</Title>
                 <NavBar>
                     <Description Translatable="1">A Survey Module.</Description>
                     <Name Translatable="1">Survey</Name>
@@ -43,7 +43,7 @@
             <FrontendModuleReg>
                 <Description Translatable="1">Survey Add Module.</Description>
                 <NavBarName>Survey</NavBarName>
-                <Title>Survey</Title>
+                <Title Translatable="1">Survey</Title>
                 <NavBar>
                     <Description Translatable="1">New</Description>
                     <Name Translatable="1">New</Name>
@@ -138,8 +138,8 @@
         <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -157,8 +157,8 @@
         <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -168,8 +168,8 @@
         <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -280,7 +280,7 @@ Your OTRS-Team
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::Frontend::HTMLRichTextHeightMax" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default height for Richtext views for SurveyZoom elements.</Description>
+        <Description Translatable="1">Defines the maximum height for Richtext views for SurveyZoom elements.</Description>
         <Group>Survey</Group>
         <SubGroup>Frontend::Agent::SurveyZoom</SubGroup>
         <Setting>

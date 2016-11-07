@@ -11,6 +11,7 @@ package Kernel::Modules::AgentSurveyZoom;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -135,7 +136,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey!',
+                Message    => Translatable('You have no permission for this survey!'),
                 WithHeader => 'yes',
             );
         }
@@ -187,19 +188,19 @@ sub Run {
     if ( defined($Message) && $Message eq 'NoQuestion' ) {
         $Output .= $LayoutObject->Notify(
             Priority => 'Error',
-            Info     => 'Can\'t set new status! No questions defined.',
+            Info     => Translatable('Can\'t set new status! No questions defined.'),
         );
     }
     elsif ( defined($Message) && $Message eq 'IncompleteQuestion' ) {
         $Output .= $LayoutObject->Notify(
             Priority => 'Error',
-            Info     => 'Can\'t set new status! Questions incomplete.',
+            Info     => Translatable('Can\'t set new status! Questions incomplete.'),
         );
     }
     elsif ( defined($Message) && $Message eq 'StatusSet' ) {
         $Output .= $LayoutObject->Notify(
             Priority => 'Notice',
-            Info     => 'Status changed.',
+            Info     => Translatable('Status changed.'),
         );
     }
 
@@ -274,7 +275,7 @@ sub Run {
         my $TicketTypeListString = join q{, }, @TicketTypeList;
 
         if ( !$TicketTypeListString ) {
-            $TicketTypeListString = '- No ticket type selected -';
+            $TicketTypeListString = $LayoutObject->{LanguageObject}->Translate('- No ticket type selected -');
         }
 
         $LayoutObject->Block(
@@ -297,7 +298,7 @@ sub Run {
         my $ServiceListString = join q{, }, @ServiceList;
 
         if ( !$ServiceListString ) {
-            $ServiceListString = '- No ticket service selected -';
+            $ServiceListString = $LayoutObject->{LanguageObject}->Translate('- No ticket service selected -');
         }
 
         $LayoutObject->Block(
@@ -361,10 +362,10 @@ sub Run {
 
     # output the possible status menu
     my %NewStatus = (
-        ChangeStatus => '- Change Status -',
-        Master       => 'Master',
-        Valid        => 'Valid',
-        Invalid      => 'Invalid',
+        ChangeStatus => Translatable('- Change Status -'),
+        Master       => Translatable('master'),
+        Valid        => Translatable('valid'),
+        Invalid      => Translatable('invalid'),
 
     );
 
@@ -381,6 +382,7 @@ sub Run {
         Data       => \%NewStatus,
         SelectedID => 'ChangeStatus',
         Title      => $LayoutObject->{LanguageObject}->Translate('New Status'),
+        Class      => 'Modernize',
     );
 
     $LayoutObject->Block(
@@ -396,7 +398,7 @@ sub Run {
         $LayoutObject->Block(
             Name => 'SurveyBlock',
             Data => {
-                Title       => "Survey $Field",
+                Title       => $LayoutObject->{LanguageObject}->Translate( 'Survey %s', $Field ),
                 SurveyField => $Field,
             },
         );

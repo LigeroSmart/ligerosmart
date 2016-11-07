@@ -11,6 +11,8 @@ package Kernel::Modules::AgentSurveyStats;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -67,12 +69,12 @@ sub Run {
         if ( $SurveyExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey!',
+                Message    => Translatable('You have no permission for this survey!'),
                 WithHeader => 'yes',
             );
         }
         $Output = $LayoutObject->Header(
-            Title     => 'Stats Overview',
+            Title     => Translatable('Stats Overview'),
             Type      => 'Small',
             BodyClass => 'Popup',
         );
@@ -126,12 +128,12 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $RequestExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this survey or stats detail!',
+                Message    => Translatable('You have no permission for this survey or stats detail!'),
                 WithHeader => 'yes',
             );
         }
         $Output = $LayoutObject->Header(
-            Title     => 'Stats Detail',
+            Title     => Translatable('Stats Detail'),
             Type      => 'Small',
             BodyClass => 'Popup',
         );

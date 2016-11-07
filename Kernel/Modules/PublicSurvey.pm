@@ -11,6 +11,8 @@ package Kernel::Modules::PublicSurvey;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -194,9 +196,9 @@ sub Run {
                 $LayoutObject->Block(
                     Name => 'PublicSurveyMessage',
                     Data => {
-                        MessageType   => 'Survey Information',
-                        MessageHeader => 'Thank you for your feedback.',
-                        Message       => 'The survey is finished.',
+                        MessageType   => Translatable('Survey Information'),
+                        MessageHeader => Translatable('Thank you for your feedback.'),
+                        Message       => Translatable('The survey is finished.'),
                     },
                 );
 
@@ -224,10 +226,11 @@ sub Run {
             $LayoutObject->Block(
                 Name => 'PublicSurveyMessage',
                 Data => {
-                    MessageType   => 'Survey Message!',
-                    MessageHeader => 'Module not enabled.',
-                    Message =>
-                        'This functionality is not enabled, please contact your administrator.',
+                    MessageType   => Translatable('Survey Message!'),
+                    MessageHeader => Translatable('Module not enabled.'),
+                    Message       => Translatable(
+                        'This functionality is not enabled, please contact your administrator.'
+                    ),
                 },
             );
 
@@ -271,10 +274,11 @@ sub Run {
             $LayoutObject->Block(
                 Name => 'PublicSurveyMessage',
                 Data => {
-                    MessageType   => 'Survey Error!',
-                    MessageHeader => 'Invalid survey key.',
-                    Message =>
-                        'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.',
+                    MessageType   => Translatable('Survey Error!'),
+                    MessageHeader => Translatable('Invalid survey key.'),
+                    Message       => Translatable(
+                        'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'
+                    ),
                 },
             );
 
@@ -287,7 +291,7 @@ sub Run {
         }
 
         $Output = $LayoutObject->CustomerHeader(
-            Title => 'Survey Vote',
+            Title => Translatable('Survey Vote'),
         );
 
         my %Survey = $SurveyObject->SurveyGet(
@@ -313,7 +317,7 @@ sub Run {
             Name => 'PublicSurveyVoteData',
             Data => {
                 %Survey,
-                MessageType => 'Survey Vote Data',
+                MessageType => Translatable('Survey Vote Data'),
             },
         );
         my @QuestionList = $SurveyObject->QuestionList(
@@ -404,7 +408,7 @@ sub Run {
     # ------------------------------------------------------------ #
     my $PublicSurveyKey = $ParamObject->GetParam( Param => 'PublicSurveyKey' );
     $Output = $LayoutObject->CustomerHeader(
-        Title => 'Survey',
+        Title => Translatable('Survey'),
     );
 
     my $UsedSurveyKey = $SurveyObject->PublicSurveyGet(
@@ -422,9 +426,9 @@ sub Run {
         $LayoutObject->Block(
             Name => 'PublicSurveyMessage',
             Data => {
-                MessageType   => 'Survey Information',
-                MessageHeader => 'Thank you for your feedback.',
-                Message       => 'You have already answered the survey.',
+                MessageType   => Translatable('Survey Information'),
+                MessageHeader => Translatable('Thank you for your feedback.'),
+                Message       => Translatable('You have already answered the survey.'),
             },
         );
 
@@ -672,10 +676,11 @@ END
         $LayoutObject->Block(
             Name => 'PublicSurveyMessage',
             Data => {
-                MessageType   => 'Survey Error!',
-                MessageHeader => 'Invalid survey key.',
-                Message =>
-                    'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.',
+                MessageType   => Translatable('Survey Error!'),
+                MessageHeader => Translatable('Invalid survey key.'),
+                Message       => Translatable(
+                    'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'
+                ),
             },
         );
     }

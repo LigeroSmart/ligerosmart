@@ -9,6 +9,7 @@
     <Description Lang="en">A customer survey tool.</Description>
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
+    <Description Lang="hu">Egy ügyfélkérdőív eszköz.</Description>
     <Filelist>
         <File Permission="644" Location="doc/survey-database.png" />
         <File Permission="644" Location="Kernel/Config/Files/Survey.xml" />
@@ -273,6 +274,19 @@
         <br>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br>
+        <br>
+        Ön a Survey OTRS csomag telepítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br>
@@ -306,6 +320,19 @@
         <br>
         <br>
         Esta apunto de actualizar el módulo de encuestas de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br>
+        <br>
+        Ön a Survey OTRS csomag frissítésére készül.<br>
         <br>
         <br>
         ((enjoy))<br>
@@ -348,6 +375,20 @@
         <br>
         Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalación serán borradas.
         ¡Todos los datos de esas tablas serán irrevocablemente perdidos!.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+
+        <br>
+        <strong>FIGYELEM</strong>
+        <br>
+        <br>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
         <br>
         <br>
         ((enjoy))<br>

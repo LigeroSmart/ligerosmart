@@ -35,7 +35,7 @@
 [% RenderBlockStart("Introduction") %]
                 <label class="Mandatory" for="Introduction"><span class="Marker">*</span> [% Translate("Introduction") | html %]:</label>
                 <div class="RichTextField">
-                    <textarea id="Introduction" name="Introduction" name="Introduction" class="RichText Validate_Required [% Data.IntroductionServerError | html %]" title="Survey Introduction" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Introduction %]</textarea>
+                    <textarea id="Introduction" name="Introduction" name="Introduction" class="RichText Validate_Required [% Data.IntroductionServerError | html %]" title="[% Translate("Survey Introduction") | html %]" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Introduction %]</textarea>
                 </div>
                 <div class="Clear"></div>
 [% RenderBlockEnd("Introduction") %]
@@ -55,7 +55,7 @@
 [% RenderBlockStart("NotificationBody") %]
                 <label class="Mandatory" for="NotificationBody"><span class="Marker">*</span> [% Translate("Body") | html %]:</label>
                 <div class="RichTextField">
-                    <textarea id="NotificationBody" name="NotificationBody" class="RichText Validate_Required [% Data.NotificationBodyServerError | html %]" title="Notification Body" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.NotificationBody | html %]</textarea>
+                    <textarea id="NotificationBody" name="NotificationBody" class="RichText Validate_Required [% Data.NotificationBodyServerError | html %]" title="[% Translate("Notification Body") | html %]" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.NotificationBody | html %]</textarea>
                 </div>
                 <div class="Clear"></div>
 [% RenderBlockEnd("NotificationBody") %]
@@ -85,7 +85,7 @@
 [% RenderBlockStart("InternalDescription") %]
                 <label class="Mandatory" for="Description"><span class="Marker">*</span> [% Translate("Internal Description") | html %]:</label>
                 <div class="RichTextField">
-                    <textarea id="Description" name="Description" class="RichText Validate_Required [% Data.DescriptionServerError | html %]" title="Internal Description" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Description | html %]</textarea>
+                    <textarea id="Description" name="Description" class="RichText Validate_Required [% Data.DescriptionServerError | html %]" title="[% Translate("Internal Description") | html %]" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Description | html %]</textarea>
                 </div>
                 <div class="Clear"></div>
 [% RenderBlockEnd("InternalDescription") %]
