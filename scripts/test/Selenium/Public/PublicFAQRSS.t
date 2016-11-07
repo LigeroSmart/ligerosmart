@@ -59,7 +59,7 @@ $Selenium->RunTest(
             "$FAQTitle - found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Action=PublicFAQZoom&amp;ItemID=$FAQID" ) > -1,
+            index( $Selenium->get_page_source(), "Action=PublicFAQZoom;ItemID=$FAQID" ) > -1,
             "FAQ link - found",
         );
 
@@ -76,7 +76,7 @@ $Selenium->RunTest(
             "$FAQTitle - found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Action=PublicFAQZoom&amp;ItemID=$FAQID" ) > -1,
+            index( $Selenium->get_page_source(), "Action=PublicFAQZoom;ItemID=$FAQID" ) > -1,
             "FAQ link - found",
         );
 
