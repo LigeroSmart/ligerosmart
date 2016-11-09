@@ -11,6 +11,7 @@ package Kernel::Modules::AgentFAQSearchSmall;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -653,7 +654,7 @@ sub Run {
             LinkBack   => $LinkBack,
             Profile    => $Profile,
 
-            TitleName => 'Search Result',
+            TitleName => Translatable('Search Result'),
             Limit     => $SearchLimit,
 
             Filter     => $Filter,
@@ -797,11 +798,11 @@ sub _MaskForm {
     );
 
     my %VotingOperators = (
-        Equals            => 'Equals',
-        GreaterThan       => 'GreaterThan',
-        GreaterThanEquals => 'GreaterThanEquals',
-        SmallerThan       => 'SmallerThan',
-        SmallerThanEquals => 'SmallerThanEquals',
+        Equals            => Translatable('Equals'),
+        GreaterThan       => Translatable('Greater than'),
+        GreaterThanEquals => Translatable('Greater than equals'),
+        SmallerThan       => Translatable('Smaller than'),
+        SmallerThanEquals => Translatable('Smaller than equals'),
     );
 
     $Param{VoteSearchTypeSelectionStrg} = $LayoutObject->BuildSelection(
@@ -842,8 +843,8 @@ sub _MaskForm {
 
     $Param{ApprovedStrg} = $LayoutObject->BuildSelection(
         Data => {
-            No  => 'No',
-            Yes => 'Yes',
+            No  => Translatable('No'),
+            Yes => Translatable('Yes'),
         },
         Name         => 'ApprovedSearch',
         SelectedID   => $Param{ApprovedSearch} || '',
@@ -905,20 +906,20 @@ sub _MaskForm {
     );
     $Param{ItemCreateTimePointStartStrg} = $LayoutObject->BuildSelection(
         Data => {
-            'Last'   => 'within the last ...',
-            'Before' => 'more than ... ago',
+            'Last'   => Translatable('within the last ...'),
+            'Before' => Translatable('more than ... ago'),
         },
         Name       => 'ItemCreateTimePointStart',
         SelectedID => $Param{ItemCreateTimePointStart} || 'Last',
     );
     $Param{ItemCreateTimePointFormatStrg} = $LayoutObject->BuildSelection(
         Data => {
-            minute => 'minute(s)',
-            hour   => 'hour(s)',
-            day    => 'day(s)',
-            week   => 'week(s)',
-            month  => 'month(s)',
-            year   => 'year(s)',
+            minute => Translatable('minute(s)'),
+            hour   => Translatable('hour(s)'),
+            day    => Translatable('day(s)'),
+            week   => Translatable('week(s)'),
+            month  => Translatable('month(s)'),
+            year   => Translatable('year(s)'),
         },
         Name       => 'ItemCreateTimePointFormat',
         SelectedID => $Param{ItemCreateTimePointFormat},
@@ -942,20 +943,20 @@ sub _MaskForm {
     );
     $Param{ItemChangeTimePointStartStrg} = $LayoutObject->BuildSelection(
         Data => {
-            'Last'   => 'within the last ...',
-            'Before' => 'more than ... ago',
+            'Last'   => Translatable('within the last ...'),
+            'Before' => Translatable('more than ... ago'),
         },
         Name       => 'ItemChangeTimePointStart',
         SelectedID => $Param{ItemChangeTimePointStart} || 'Last',
     );
     $Param{ItemChangeTimePointFormatStrg} = $LayoutObject->BuildSelection(
         Data => {
-            minute => 'minute(s)',
-            hour   => 'hour(s)',
-            day    => 'day(s)',
-            week   => 'week(s)',
-            month  => 'month(s)',
-            year   => 'year(s)',
+            minute => Translatable('minute(s)'),
+            hour   => Translatable('hour(s)'),
+            day    => Translatable('day(s)'),
+            week   => Translatable('week(s)'),
+            month  => Translatable('month(s)'),
+            year   => Translatable('year(s)'),
         },
         Name       => 'ItemChangeTimePointFormat',
         SelectedID => $Param{ItemChangeTimePointFormat},

@@ -11,6 +11,7 @@ package Kernel::Modules::CustomerFAQZoom;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -72,7 +73,7 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
-            Message => 'Need ItemID!',
+            Message => Translatable('Need ItemID!'),
         );
     }
 
@@ -208,7 +209,9 @@ sub Run {
         # manage parameters
         $GetParam{FileID} = $ParamObject->GetParam( Param => 'FileID' );
         if ( !defined $GetParam{FileID} ) {
-            return $LayoutObject->CustomerFatalError( Message => 'Need FileID' );
+            return $LayoutObject->CustomerFatalError(
+                Message => Translatable('Need FileID!'),
+            );
         }
 
         # get attachments
@@ -283,7 +286,7 @@ sub Run {
         # customer can't use this subaction if is not enabled
         if ( !$Voting ) {
             $LayoutObject->CustomerFatalError(
-                Message => "The voting mechanism is not enabled!",
+                Message => Translatable('The voting mechanism is not enabled!'),
             );
         }
 
@@ -291,7 +294,7 @@ sub Run {
         if ($AlreadyVoted) {
             $Output .= $LayoutObject->Notify(
                 Priority => 'Error',
-                Info     => 'You have already voted!',
+                Info     => Translatable('You have already voted!'),
             );
         }
 
@@ -305,7 +308,7 @@ sub Run {
             # send error if rate is not defined in config
             if ( !$VotingRates->{$Rate} ) {
                 $LayoutObject->CustomerFatalError(
-                    Message => "The vote rate is not defined!"
+                    Message => Translatable('The vote rate is not defined!'),
                 );
             }
 
@@ -333,7 +336,9 @@ sub Run {
                     return $LayoutObject->CustomerFatalError();
                 }
 
-                $Output .= $LayoutObject->Notify( Info => 'Thanks for your vote!' );
+                $Output .= $LayoutObject->Notify(
+                    Info => Translatable('Thanks for your vote!'),
+                );
             }
         }
 
@@ -341,7 +346,7 @@ sub Run {
         else {
             $Output .= $LayoutObject->Notify(
                 Priority => 'Error',
-                Info     => 'No rate selected!',
+                Info     => Translatable('No rate selected!'),
             );
         }
     }

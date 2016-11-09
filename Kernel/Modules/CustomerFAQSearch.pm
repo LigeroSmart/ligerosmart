@@ -11,6 +11,7 @@ package Kernel::Modules::CustomerFAQSearch;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -1184,7 +1185,7 @@ sub Run {
                                 . ' 00:00:00', 'DateFormatShort'
                         );
 
-                        $Attribute      = 'Created between';
+                        $Attribute      = Translatable('Created between');
                         $AttributeValue = $StartDate . ' '
                             . $LayoutObject->{LanguageObject}->Translate('and') . ' '
                             . $StopDate;
@@ -1192,8 +1193,8 @@ sub Run {
                     else {
 
                         my $Mapping = {
-                            'Last'   => 'Created within the last',
-                            'Before' => 'Created more than ... ago',
+                            'Last'   => Translatable('Created within the last'),
+                            'Before' => Translatable('Created more than ... ago'),
                         };
 
                         $Attribute      = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
@@ -1287,8 +1288,8 @@ sub Run {
         $CSSSort{$CSSSortBy} = $SortClass;
 
         my %NewOrder = (
-            Down => 'Up',
-            Up   => 'Down',
+            Down => Translatable('Up'),
+            Up   => Translatable('Down'),
         );
 
         # show language header
@@ -1396,9 +1397,9 @@ sub MaskForm {
 
     # set output formats list
     my %ResultForm = (
-        Normal => 'Normal',
-        Print  => 'Print',
-        CSV    => 'CSV',
+        Normal => Translatable('Normal'),
+        Print  => Translatable('Print'),
+        CSV    => Translatable('CSV'),
     );
 
     # get layout object
@@ -1464,11 +1465,11 @@ sub MaskForm {
     );
 
     my %VotingOperators = (
-        Equals            => 'Equals',
-        GreaterThan       => 'GreaterThan',
-        GreaterThanEquals => 'GreaterThanEquals',
-        SmallerThan       => 'SmallerThan',
-        SmallerThanEquals => 'SmallerThanEquals',
+        Equals            => Translatable('Equals'),
+        GreaterThan       => Translatable('Greater than'),
+        GreaterThanEquals => Translatable('Greater than equals'),
+        SmallerThan       => Translatable('Smaller than'),
+        SmallerThanEquals => Translatable('Smaller than equals'),
     );
 
     $Param{VoteSearchTypeSelectionString} = $LayoutObject->BuildSelection(
@@ -1515,8 +1516,8 @@ sub MaskForm {
     );
     $Param{ItemCreateTimePointStart} = $LayoutObject->BuildSelection(
         Data => {
-            Last   => 'within the last ...',
-            Before => 'more than ... ago',
+            Last   => Translatable('within the last ...'),
+            Before => Translatable('more than ... ago'),
         },
         Translation => 1,
         Name        => 'ItemCreateTimePointStart',
@@ -1524,12 +1525,12 @@ sub MaskForm {
     );
     $Param{ItemCreateTimePointFormat} = $LayoutObject->BuildSelection(
         Data => {
-            minute => 'minute(s)',
-            hour   => 'hour(s)',
-            day    => 'day(s)',
-            week   => 'week(s)',
-            month  => 'month(s)',
-            year   => 'year(s)',
+            minute => Translatable('minute(s)'),
+            hour   => Translatable('hour(s)'),
+            day    => Translatable('day(s)'),
+            week   => Translatable('week(s)'),
+            month  => Translatable('month(s)'),
+            year   => Translatable('year(s)'),
         },
         Translation => 1,
         Name        => 'ItemCreateTimePointFormat',

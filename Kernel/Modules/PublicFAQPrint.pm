@@ -11,6 +11,7 @@ package Kernel::Modules::PublicFAQPrint;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -43,8 +44,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
-            Message => 'No ItemID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ItemID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

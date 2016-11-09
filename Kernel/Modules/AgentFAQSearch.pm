@@ -11,6 +11,7 @@ package Kernel::Modules::AgentFAQSearch;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -1020,7 +1021,7 @@ sub Run {
                 LinkBack   => $LinkBack,
                 Profile    => $Profile,
 
-                TitleName => 'Search Result',
+                TitleName => Translatable('Search Result'),
                 Limit     => $SearchLimit,
 
                 Filter     => $Filter,
@@ -1140,19 +1141,19 @@ sub _MaskForm {
     my @Attributes = (
         {
             Key   => 'Number',
-            Value => 'FAQ Number',
+            Value => Translatable('FAQ Number'),
         },
         {
             Key   => 'Fulltext',
-            Value => 'Fulltext',
+            Value => Translatable('Fulltext'),
         },
         {
             Key   => 'Title',
-            Value => 'Title',
+            Value => Translatable('Title'),
         },
         {
             Key   => 'Keyword',
-            Value => 'Keyword',
+            Value => Translatable('Keyword'),
         },
     );
 
@@ -1162,7 +1163,7 @@ sub _MaskForm {
         push @Attributes, (
             {
                 Key   => 'LanguageIDs',
-                Value => 'Language',
+                Value => Translatable('Language'),
             },
         );
     }
@@ -1170,51 +1171,51 @@ sub _MaskForm {
     push @Attributes, (
         {
             Key   => 'CategoryIDs',
-            Value => 'Category',
+            Value => Translatable('Category'),
         },
         {
             Key   => 'ValidIDs',
-            Value => 'Validity',
+            Value => Translatable('Validity'),
         },
         {
             Key   => 'StateIDs',
-            Value => 'State',
+            Value => Translatable('State'),
         },
         {
             Key   => 'VoteSearchType',
-            Value => 'Votes',
+            Value => Translatable('Votes'),
         },
         {
             Key   => 'RateSearchType',
-            Value => 'Rate',
+            Value => Translatable('Rate'),
         },
         {
             Key   => 'ApprovedSearch',
-            Value => 'Approved',
+            Value => Translatable('Approved'),
         },
         {
             Key   => 'CreatedUserIDs',
-            Value => 'Created by',
+            Value => Translatable('Created by'),
         },
         {
             Key   => 'LastChangedUserIDs',
-            Value => 'Last Changed by',
+            Value => Translatable('Last Changed by'),
         },
         {
             Key   => 'ItemCreateTimePoint',
-            Value => 'FAQ Item Create Time (before/after)',
+            Value => Translatable('FAQ Item Create Time (before/after)'),
         },
         {
             Key   => 'ItemCreateTimeSlot',
-            Value => 'FAQ Item Create Time (between)',
+            Value => Translatable('FAQ Item Create Time (between)'),
         },
         {
             Key   => 'ItemChangeTimePoint',
-            Value => 'FAQ Item Change Time (before/after)',
+            Value => Translatable('FAQ Item Change Time (before/after)'),
         },
         {
             Key   => 'ItemChangeTimeSlot',
-            Value => 'FAQ Item Change Time (between)',
+            Value => Translatable('FAQ Item Change Time (between)'),
         },
     );
 
@@ -1414,11 +1415,11 @@ sub _MaskForm {
     );
 
     my %VotingOperators = (
-        Equals            => 'Equals',
-        GreaterThan       => 'GreaterThan',
-        GreaterThanEquals => 'GreaterThanEquals',
-        SmallerThan       => 'SmallerThan',
-        SmallerThanEquals => 'SmallerThanEquals',
+        Equals            => Translatable('Equals'),
+        GreaterThan       => Translatable('Greater than'),
+        GreaterThanEquals => Translatable('Greater than equals'),
+        SmallerThan       => Translatable('Smaller than'),
+        SmallerThanEquals => Translatable('Smaller than equals'),
     );
 
     $Param{VoteSearchTypeSelectionStrg} = $LayoutObject->BuildSelection(
@@ -1459,8 +1460,8 @@ sub _MaskForm {
 
     $Param{ApprovedStrg} = $LayoutObject->BuildSelection(
         Data => {
-            No  => 'No',
-            Yes => 'Yes',
+            No  => Translatable('No'),
+            Yes => Translatable('Yes'),
         },
         Name        => 'ApprovedSearch',
         SelectedID  => $GetParam{ApprovedSearch} || 'Yes',
@@ -1521,20 +1522,20 @@ sub _MaskForm {
     );
     $Param{ItemCreateTimePointStartStrg} = $LayoutObject->BuildSelection(
         Data => {
-            'Last'   => 'within the last ...',
-            'Before' => 'more than ... ago',
+            'Last'   => Translatable('within the last ...'),
+            'Before' => Translatable('more than ... ago'),
         },
         Name       => 'ItemCreateTimePointStart',
         SelectedID => $GetParam{ItemCreateTimePointStart} || 'Last',
     );
     $Param{ItemCreateTimePointFormatStrg} = $LayoutObject->BuildSelection(
         Data => {
-            minute => 'minute(s)',
-            hour   => 'hour(s)',
-            day    => 'day(s)',
-            week   => 'week(s)',
-            month  => 'month(s)',
-            year   => 'year(s)',
+            minute => Translatable('minute(s)'),
+            hour   => Translatable('hour(s)'),
+            day    => Translatable('day(s)'),
+            week   => Translatable('week(s)'),
+            month  => Translatable('month(s)'),
+            year   => Translatable('year(s)'),
         },
         Name       => 'ItemCreateTimePointFormat',
         SelectedID => $GetParam{ItemCreateTimePointFormat},
@@ -1558,20 +1559,20 @@ sub _MaskForm {
     );
     $Param{ItemChangeTimePointStartStrg} = $LayoutObject->BuildSelection(
         Data => {
-            'Last'   => 'within the last ...',
-            'Before' => 'more than ... ago',
+            'Last'   => Translatable('within the last ...'),
+            'Before' => Translatable('more than ... ago'),
         },
         Name       => 'ItemChangeTimePointStart',
         SelectedID => $GetParam{ItemChangeTimePointStart} || 'Last',
     );
     $Param{ItemChangeTimePointFormatStrg} = $LayoutObject->BuildSelection(
         Data => {
-            minute => 'minute(s)',
-            hour   => 'hour(s)',
-            day    => 'day(s)',
-            week   => 'week(s)',
-            month  => 'month(s)',
-            year   => 'year(s)',
+            minute => Translatable('minute(s)'),
+            hour   => Translatable('hour(s)'),
+            day    => Translatable('day(s)'),
+            week   => Translatable('week(s)'),
+            month  => Translatable('month(s)'),
+            year   => Translatable('year(s)'),
         },
         Name       => 'ItemChangeTimePointFormat',
         SelectedID => $GetParam{ItemChangeTimePointFormat},
@@ -1610,9 +1611,9 @@ sub _MaskForm {
 
     $Param{ResultFormStrg} = $LayoutObject->BuildSelection(
         Data => {
-            Normal => 'Normal',
-            Print  => 'Print',
-            CSV    => 'CSV',
+            Normal => Translatable('Normal'),
+            Print  => Translatable('Print'),
+            CSV    => Translatable('CSV'),
         },
         Name       => 'ResultForm',
         SelectedID => $GetParam{ResultForm} || 'Normal',

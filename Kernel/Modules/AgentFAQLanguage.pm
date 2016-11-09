@@ -11,6 +11,8 @@ package Kernel::Modules::AgentFAQLanguage;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -32,7 +34,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRw} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need rw permission!',
+            Message    => Translatable('You need rw permission!'),
             WithHeader => 'yes',
         );
     }
@@ -56,8 +58,8 @@ sub Run {
         # check required parameters
         if ( !$LanguageID ) {
             return $LayoutObject->ErrorScreen(
-                Message => 'No LanguageID is given!',
-                Comment => 'Please contact the administrator.',
+                Message => Translatable('No LanguageID is given!'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -114,7 +116,7 @@ sub Run {
                 $Self->_Edit(
                     Action                 => 'Change',
                     NameServerError        => 'ServerError',
-                    NameServerErrorMessage => 'The name is required!',
+                    NameServerErrorMessage => Translatable('The name is required!'),
                     %GetParam,
                 );
                 $Output .= $LayoutObject->Output(
@@ -143,7 +145,7 @@ sub Run {
             $Self->_Edit(
                 Action                 => 'Change',
                 NameServerError        => 'ServerError',
-                NameServerErrorMessage => 'This language already exists!',
+                NameServerErrorMessage => Translatable('This language already exists!'),
                 %GetParam,
             );
             $Output .= $LayoutObject->Output(
@@ -171,7 +173,7 @@ sub Run {
         # show overview
         $Self->_Overview();
         $Output .= $LayoutObject->Notify(
-            Info => 'FAQ language updated!',
+            Info => Translatable('FAQ language updated!'),
         );
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQLanguage',
@@ -236,7 +238,7 @@ sub Run {
             $Self->_Edit(
                 Action                 => 'Add',
                 NameServerError        => 'ServerError',
-                NameServerErrorMessage => 'The name is required!',
+                NameServerErrorMessage => Translatable('The name is required!'),
                 %GetParam,
             );
             $Output .= $LayoutObject->Output(
@@ -261,7 +263,7 @@ sub Run {
             $Self->_Edit(
                 Action                 => 'Add',
                 NameServerError        => 'ServerError',
-                NameServerErrorMessage => "This language already exists!",
+                NameServerErrorMessage => Translatable('This language already exists!'),
                 %GetParam,
             );
             $Output .= $LayoutObject->Output(
@@ -288,7 +290,7 @@ sub Run {
 
         # show overview
         $Output .= $LayoutObject->Notify(
-            Info => 'FAQ language added!',
+            Info => Translatable('FAQ language added!'),
         );
         $Self->_Overview();
         $Output .= $LayoutObject->Output(
@@ -315,8 +317,8 @@ sub Run {
         # check required parameters
         if ( !$LanguageID ) {
             return $LayoutObject->ErrorScreen(
-                Message => 'No LanguageID is given!',
-                Comment => 'Please contact the administrator.',
+                Message => Translatable('No LanguageID is given!'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -418,8 +420,8 @@ sub Run {
         # check required parameters
         if ( !$LanguageID ) {
             return $LayoutObject->ErrorScreen(
-                Message => 'No LanguageID is given!',
-                Comment => 'Please contact the administrator.',
+                Message => Translatable('No LanguageID is given!'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -450,8 +452,11 @@ sub Run {
 
             # show error message, when delete failed
             return $LayoutObject->ErrorScreen(
-                Message => "Was not able to delete the language $LanguageID!",
-                Comment => 'Please contact the administrator.',
+                Message => $LayoutObject->{LanguageObject}->Translate(
+                    'Was not able to delete the language %s!',
+                    $LanguageID,
+                ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }

@@ -11,6 +11,8 @@ package Kernel::Modules::AgentFAQHistory;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -32,7 +34,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need ro permission!',
+            Message    => Translatable('You need ro permission!'),
             WithHeader => 'yes',
         );
     }
@@ -48,8 +50,8 @@ sub Run {
 
         # error page
         return $LayoutObject->ErrorScreen(
-            Message => "Can't show history, as no ItemID is given!",
-            Comment => 'Please contact the administrator.',
+            Message => Translatable('Can\'t show history, as no ItemID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -75,7 +77,7 @@ sub Run {
     # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You have no permission for this category!',
+            Message    => Translatable('You have no permission for this category!'),
             WithHeader => 'yes',
         );
     }
@@ -107,7 +109,7 @@ sub Run {
     # output header
     my $Output = $LayoutObject->Header(
         Type  => 'Small',
-        Title => 'FAQHistory',
+        Title => Translatable('FAQ History'),
     );
 
     # start template output

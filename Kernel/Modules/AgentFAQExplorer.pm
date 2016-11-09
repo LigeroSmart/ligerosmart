@@ -11,6 +11,8 @@ package Kernel::Modules::AgentFAQExplorer;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -32,7 +34,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need ro permission!',
+            Message    => Translatable('You need ro permission!'),
             WithHeader => 'yes',
         );
     }
@@ -127,8 +129,8 @@ sub Run {
         );
         if ( !%CategoryData ) {
             return $LayoutObject->ErrorScreen(
-                Message => "The CategoryID $CategoryID is invalid.",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'The CategoryID %s is invalid.', $CategoryID ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -141,7 +143,7 @@ sub Run {
         # show error message
         if ( !$Permission ) {
             return $LayoutObject->NoPermission(
-                Message    => 'You have no permission for this category!',
+                Message    => Translatable('You have no permission for this category!'),
                 WithHeader => 'yes',
             );
         }
@@ -323,7 +325,7 @@ sub Run {
         LinkSort   => $LinkSort,
         LinkFilter => $FilterLink,
 
-        TitleName  => 'FAQ Articles',
+        TitleName  => Translatable('FAQ Articles'),
         TitleValue => $Title,
 
         Limit        => $SearchLimit,

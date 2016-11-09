@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use MIME::Base64 qw();
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -38,8 +39,8 @@ sub Run {
         $GetParam{$Key} = $ParamObject->GetParam( Param => $Key );
         if ( !$GetParam{$Key} ) {
             return $LayoutObject->ErrorScreen(
-                Message => "No $Key is given!",
-                Comment => 'Please contact the admin.',
+                Message => $LayoutObject->{LanguageObject}->Translate( 'No %s is given!', $Key ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }
@@ -70,8 +71,8 @@ sub Run {
 
     if ( !$Loaded ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'Can not load LanguageObject!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('Can\'t load LanguageObject!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

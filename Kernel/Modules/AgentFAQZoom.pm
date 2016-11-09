@@ -11,6 +11,7 @@ package Kernel::Modules::AgentFAQZoom;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -47,7 +48,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need ro permission!',
+            Message    => Translatable('You need ro permission!'),
             WithHeader => 'yes',
         );
     }
@@ -66,8 +67,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ItemID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ItemID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -94,7 +95,7 @@ sub Run {
     # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You have no permission for this category!',
+            Message    => Translatable('You have no permission for this category!'),
             WithHeader => 'yes',
         );
     }
@@ -189,7 +190,9 @@ sub Run {
         $GetParam{FileID} = $ParamObject->GetParam( Param => 'FileID' );
 
         if ( !defined $GetParam{FileID} ) {
-            return $LayoutObject->FatalError( Message => 'Need FileID' );
+            return $LayoutObject->FatalError(
+                Message => Translatable('Need FileID!'),
+            );
         }
 
         # get attachments
@@ -232,15 +235,15 @@ sub Run {
     my %Notifications = (
         Thanks => {
             Priority => 'Info',
-            Info     => 'Thanks for your vote!'
+            Info     => Translatable('Thanks for your vote!'),
         },
         AlreadyVoted => {
             Priority => 'Error',
-            Info     => 'You have already voted!',
+            Info     => Translatable('You have already voted!'),
         },
         NoRate => {
             Priority => 'Error',
-            Info     => 'No rate selected!',
+            Info     => Translatable('No rate selected!'),
         },
     );
 
@@ -308,7 +311,9 @@ sub Run {
 
         # user can't use this sub-action if is not enabled
         if ( !$Voting ) {
-            $LayoutObject->FatalError( Message => "The voting mechanism is not enabled!" );
+            $LayoutObject->FatalError(
+                Message => Translatable('The voting mechanism is not enabled!'),
+            );
         }
 
         # user can vote only once per FAQ revision
@@ -331,7 +336,9 @@ sub Run {
 
             # send error if rate is not defined in config
             if ( !$VotingRates->{$Rate} ) {
-                $LayoutObject->FatalError( Message => "The vote rate is not defined!" );
+                $LayoutObject->FatalError(
+                    Message => Translatable('The vote rate is not defined!'),
+                );
             }
 
             # otherwise add the vote

@@ -11,6 +11,8 @@ package Kernel::Modules::AgentFAQCategory;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -32,7 +34,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRw} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need rw permission!',
+            Message    => Translatable('You need rw permission!'),
             WithHeader => 'yes',
         );
     }
@@ -65,7 +67,9 @@ sub Run {
 
         # check required parameters
         if ( !$GetParam{CategoryID} ) {
-            $LayoutObject->FatalError( Message => 'Need CategoryID!' );
+            $LayoutObject->FatalError(
+                Message => Translatable('Need CategoryID!'),
+            );
         }
 
         # get category data
@@ -117,7 +121,7 @@ sub Run {
             if ( !defined $GetParam{$ParamName} ) {
 
                 return $LayoutObject->FatalError(
-                    Message => "Need $ParamName!",
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'Need %s!', $ParamName ),
                 );
             }
         }
@@ -134,7 +138,7 @@ sub Run {
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
-                    $Error{NameServerErrorMessage} = 'A category should have a name!';
+                    $Error{NameServerErrorMessage} = Translatable('A category should have a name!');
                 }
             }
         }
@@ -172,7 +176,7 @@ sub Run {
 
             # set server errors
             $GetParam{NameServerError}        = 'ServerError';
-            $GetParam{NameServerErrorMessage} = 'This category already exists';
+            $GetParam{NameServerErrorMessage} = Translatable('This category already exists');
 
             # HTML output
             $Self->_Edit(
@@ -209,7 +213,9 @@ sub Run {
         );
 
         # show notification
-        $Output .= $LayoutObject->Notify( Info => 'FAQ category updated!' );
+        $Output .= $LayoutObject->Notify(
+            Info => Translatable('FAQ category updated!'),
+        );
 
         # show overview
         $Self->_Overview();
@@ -264,7 +270,9 @@ sub Run {
         # check required parameters
         for my $ParamName (qw(ParentID ValidID)) {
             if ( !defined $GetParam{$ParamName} ) {
-                return $LayoutObject->FatalError( Message => "Need $ParamName!" );
+                return $LayoutObject->FatalError(
+                    Message => $LayoutObject->{LanguageObject}->Translate( 'Need %s!', $ParamName ),
+                );
             }
         }
 
@@ -282,7 +290,7 @@ sub Run {
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
-                    $Error{NameServerErrorMessage} = 'A category should have a name!';
+                    $Error{NameServerErrorMessage} = Translatable('A category should have a name!');
                 }
             }
         }
@@ -320,7 +328,7 @@ sub Run {
 
             # set server errors
             $GetParam{NameServerError}        = 'ServerError';
-            $GetParam{NameServerErrorMessage} = 'This category already exists!';
+            $GetParam{NameServerErrorMessage} = Translatable('This category already exists!');
 
             # HTML output
             $Self->_Edit(
@@ -357,7 +365,9 @@ sub Run {
         );
 
         # show notification
-        $Output .= $LayoutObject->Notify( Info => 'FAQ category added!' );
+        $Output .= $LayoutObject->Notify(
+            Info => Translatable('FAQ category added!'),
+        );
 
         # show overview
         $Self->_Overview();
@@ -383,8 +393,8 @@ sub Run {
         # check required parameters
         if ( !$CategoryID ) {
             return $LayoutObject->ErrorScreen(
-                Message => 'No CategoryID is given!',
-                Comment => 'Please contact the administrator.',
+                Message => Translatable('No CategoryID is given!'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -541,8 +551,8 @@ sub Run {
         # check required parameters
         if ( !$CategoryID ) {
             return $LayoutObject->ErrorScreen(
-                Message => 'No CategoryID is given!',
-                Comment => 'Please contact the administrator.',
+                Message => Translatable('No CategoryID is given!'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -573,8 +583,11 @@ sub Run {
 
             # show error message, when delete failed
             return $LayoutObject->ErrorScreen(
-                Message => "Was not able to delete the category $CategoryID!",
-                Comment => 'Please contact the administrator.',
+                Message => $LayoutObject->{LanguageObject}->Translate(
+                    'Was not able to delete the category %s!',
+                    $CategoryID,
+                ),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }

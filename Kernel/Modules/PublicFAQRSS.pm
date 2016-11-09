@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use XML::RSS::SimpleGen qw();
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -40,15 +41,15 @@ sub Run {
     # check needed stuff
     if ( !$Type ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No Type is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No Type is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
     # check type
     if ( $Type !~ m{ Created | Changed | Top10 }xms ) {
         return $LayoutObject->FatalError(
-            Message => "Type must be either LastCreate or LastChange or Top10!",
+            Message => Translatable('Type must be either LastCreate or LastChange or Top10!'),
         );
     }
 
@@ -164,7 +165,7 @@ sub Run {
     # check error
     if ( !$Output ) {
         return $LayoutObject->FatalError(
-            Message => "Can't create RSS file!",
+            Message => Translatable('Can\'t create RSS file!'),
         );
     }
 

@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use MIME::Base64 qw();
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -45,7 +46,7 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
-            Message => 'Need ItemID!',
+            Message => Translatable('Need ItemID!'),
         );
     }
 
@@ -174,7 +175,7 @@ sub Run {
         $GetParam{FileID} = $ParamObject->GetParam( Param => 'FileID' );
         if ( !defined $GetParam{FileID} ) {
             return $LayoutObject->CustomerFatalError(
-                Message => 'Need FileID',
+                Message => Translatable('Need FileID!'),
             );
         }
 

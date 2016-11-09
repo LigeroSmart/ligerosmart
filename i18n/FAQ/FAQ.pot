@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2016-10-26 21:32+0000\n"
+"POT-Creation-Date: 2016-11-09 13:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -518,8 +518,80 @@ msgstr ""
 msgid "Back to FAQ Explorer"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -530,8 +602,88 @@ msgstr ""
 msgid "FAQ Dynamic Fields"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm

@@ -11,6 +11,7 @@ package Kernel::Modules::AgentFAQAdd;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -44,7 +45,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRw} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need rw permission!',
+            Message    => Translatable('You need rw permission!'),
             WithHeader => 'yes',
         );
     }
@@ -78,8 +79,8 @@ sub Run {
         )
     {
         return $LayoutObject->ErrorScreen(
-            Message => 'No categories found where user has read/write permissions!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No categories found where user has read/write permissions!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -279,9 +280,11 @@ sub Run {
 
                 if ( !IsHashRefWithData($ValidationResult) ) {
                     return $LayoutObject->ErrorScreen(
-                        Message =>
-                            "Could not perform validation on field $DynamicFieldConfig->{Label}!",
-                        Comment => 'Please contact the admin.',
+                        Message => $LayoutObject->{LanguageObject}->Translate(
+                            'Could not perform validation on field %s!',
+                            $DynamicFieldConfig->{Label},
+                        ),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 
@@ -634,8 +637,8 @@ sub _MaskNew {
 
                 # return with error screen
                 return $LayoutObject->ErrorScreen(
-                    Message => "No default language found and can't create a new one.",
-                    Comment => 'Please contact the admin.',
+                    Message => Translatable('No default language found and can\'t create a new one.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -675,8 +678,8 @@ sub _MaskNew {
             $Data{ApprovalOption} = $LayoutObject->BuildSelection(
                 Name => 'Approved',
                 Data => {
-                    0 => 'No',
-                    1 => 'Yes',
+                    0 => Translatable('No'),
+                    1 => Translatable('Yes'),
                 },
                 SelectedID => $Param{Approved} || 0,
                 Class => 'Modernize',

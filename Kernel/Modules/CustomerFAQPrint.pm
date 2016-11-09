@@ -11,6 +11,7 @@ package Kernel::Modules::CustomerFAQPrint;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -34,7 +35,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need ro permission!',
+            Message    => Translatable('You need ro permission!'),
             WithHeader => 'yes',
         );
     }
@@ -46,8 +47,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
-            Message => 'No ItemID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ItemID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

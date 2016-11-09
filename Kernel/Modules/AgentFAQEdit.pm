@@ -11,6 +11,7 @@ package Kernel::Modules::AgentFAQEdit;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -44,7 +45,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRw} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need rw permission!',
+            Message    => Translatable('You need rw permission!'),
             WithHeader => 'yes',
         );
     }
@@ -64,8 +65,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ItemID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ItemID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -94,7 +95,7 @@ sub Run {
     # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You have no permission for this category!',
+            Message    => Translatable('You have no permission for this category!'),
             WithHeader => 'yes',
         );
     }
@@ -422,9 +423,11 @@ sub Run {
 
                 if ( !IsHashRefWithData($ValidationResult) ) {
                     return $LayoutObject->ErrorScreen(
-                        Message =>
-                            "Could not perform validation on field $DynamicFieldConfig->{Label}!",
-                        Comment => 'Please contact the admin.',
+                        Message => $LayoutObject->{LanguageObject}->Translate(
+                            'Could not perform validation on field %s!',
+                            $DynamicFieldConfig->{Label},
+                        ),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 

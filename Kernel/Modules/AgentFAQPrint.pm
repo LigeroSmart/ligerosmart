@@ -11,6 +11,7 @@ package Kernel::Modules::AgentFAQPrint;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -34,7 +35,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need ro permission!',
+            Message    => Translatable('You need ro permission!'),
             WithHeader => 'yes',
         );
     }
@@ -48,8 +49,8 @@ sub Run {
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ItemID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ItemID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -75,7 +76,7 @@ sub Run {
     # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You have no permission for this category!',
+            Message    => Translatable('You have no permission for this category!'),
             WithHeader => 'yes',
         );
     }

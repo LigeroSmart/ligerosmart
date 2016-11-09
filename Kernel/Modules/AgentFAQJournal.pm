@@ -11,6 +11,8 @@ package Kernel::Modules::AgentFAQJournal;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -38,7 +40,7 @@ sub Run {
     # permission check
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
-            Message    => 'You need ro permission!',
+            Message    => Translatable('You need ro permission!'),
             WithHeader => 'yes',
         );
     }
@@ -70,7 +72,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Value => 'FAQ Journal',
+        Value => Translatable('FAQ Journal'),
     );
     $Output .= $LayoutObject->NavigationBar();
 
@@ -122,21 +124,21 @@ sub _FAQJournalShow {
     my $Backends = $ConfigObject->Get('FAQ::Frontend::JournalOverview');
     if ( !$Backends ) {
         return $LayoutObject->FatalError(
-            Message => 'Need config option FAQ::Frontend::Overview',
+            Message => Translatable('Need config option FAQ::Frontend::Overview'),
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
         return $LayoutObject->FatalError(
-            Message => 'Config option FAQ::Frontend::Overview needs to be a HASH ref!',
+            Message => Translatable('Config option FAQ::Frontend::Overview needs to be a HASH ref!'),
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
         return $LayoutObject->FatalError(
-            Message => "No config option found for the view '$View'!",
+            Message => $LayoutObject->{LanguageObject}->Translate( 'No config option found for the view "%s"!', $View ),
         );
     }
 
