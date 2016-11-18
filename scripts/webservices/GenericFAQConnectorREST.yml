@@ -3,7 +3,7 @@ Debugger:
   DebugThreshold: info
   TestMode: '0'
 Description: FAQ Connector REST Sample
-FrameworkVersion: 5.0.13
+FrameworkVersion: 5.0.x git
 Provider:
   Operation:
     LanguageList:
