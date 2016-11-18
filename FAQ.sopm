@@ -120,6 +120,7 @@
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm" />
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm" />
         <File Permission="644" Location="scripts/test/Console/Command/Admin/FAQ/Import.t" />
+        <File Permission="644" Location="scripts/webservices/GenericFAQConnectorREST.yml" />
         <File Permission="644" Location="scripts/webservices/GenericFAQConnectorSOAP.yml" />
         <File Permission="644" Location="scripts/test/Console/Command/Maint/FAQ/ContentTypeSet.t" />
         <File Permission="644" Location="scripts/test/FAQSearch/InConditionGet.t" />
