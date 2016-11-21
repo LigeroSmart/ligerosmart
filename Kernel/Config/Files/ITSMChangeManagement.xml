@@ -499,9 +499,9 @@
                     <CSS>ITSM.ChangeManagement.Responsive.css</CSS>
                     <CSS>ITSM.ChangeManagement.WorkorderGraph.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
+                    <JavaScript>thirdparty/jquery-tablesorter-2.0.5/jquery.tablesorter.js</JavaScript>
                     <JavaScript>ITSM.Agent.ChangeManagement.WorkorderGraph.js</JavaScript>
                     <JavaScript>ITSM.Agent.ChangeManagement.Zoom.js</JavaScript>
-                    <JavaScript>thirdparty/jquery-tablesorter-2.0.5/jquery.tablesorter.js</JavaScript>
                     <JavaScript>Core.UI.AllocationList.js</JavaScript>
                     <JavaScript>Core.UI.Table.Sort.js</JavaScript>
                     <JavaScript>Core.Agent.TableFilters.js</JavaScript>
