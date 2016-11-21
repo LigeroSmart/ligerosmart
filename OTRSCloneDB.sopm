@@ -8,6 +8,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The OTRS CloneDB package.</Description>
     <Description Lang="de">Das OTRS CloneDB Paket.</Description>
+    <Description Lang="hu">Az OTRS CloneDB csomag.</Description>
     <!--
         Note for module porting: please verify that the mysql UTF8 replacement in Base.pm
         is still needed in future versions of OTRS.
@@ -22,6 +23,7 @@
         <File Permission="644" Location="Kernel/System/Console/Command/Maint/Database/Clone.pm" />
         <File Permission="644" Location="scripts/test/Console/Command/Maint/Database/Clone.t" />
         <File Permission="644" Location="Kernel/Config/Files/OTRSCloneDB.xml" />
+        <File Permission="644" Location="Kernel/Language/hu_OTRSCloneDB.pm" />
     </Filelist>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
@@ -49,6 +51,19 @@
         <br/>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSCloneDB OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br/>
@@ -69,6 +84,19 @@
         <br/>
         <br/>
         Sie sind im Begriff das OTRS-Paket OTRSCloneDB zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSCloneDB OTRS csomag frissítésére készül.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>

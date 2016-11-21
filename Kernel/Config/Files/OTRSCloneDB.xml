@@ -40,7 +40,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CloneDB::CheckEncodingColumns" Required="0" Valid="1">
-        <Description Translatable="1">Specifies which columns should be checked for valid UTF8 source data.</Description>
+        <Description Translatable="1">Specifies which columns should be checked for valid UTF-8 source data.</Description>
         <Group>OTRSCloneDB</Group>
         <SubGroup>Configuration</SubGroup>
         <Setting>
@@ -51,7 +51,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CloneDB::LogFile" Required="1" Valid="1">
-        <Description Translatable="1">Log file for replacement of malformed utf8 data values.</Description>
+        <Description Translatable="1">Log file for replacement of malformed UTF-8 data values.</Description>
         <Group>OTRSCloneDB</Group>
         <SubGroup>Configuration</SubGroup>
         <Setting>

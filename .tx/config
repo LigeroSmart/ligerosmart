@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[OTRS.OTRSCloneDB]
+file_filter = i18n/OTRSCloneDB/OTRSCloneDB.<lang>.po
+source_file = i18n/OTRSCloneDB/OTRSCloneDB.pot
+source_lang = en
+type = PO
