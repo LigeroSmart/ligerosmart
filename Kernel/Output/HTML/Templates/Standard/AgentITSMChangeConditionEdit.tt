@@ -13,6 +13,9 @@
     <input type="hidden" name="ConditionID" value="[% Data.ConditionID | html %]"/>
     <input type="hidden" name="DeleteExpressionID" id="DeleteExpressionID" value=""/>
     <input type="hidden" name="DeleteActionID" id="DeleteActionID" value=""/>
+    <input type="hidden" name="AddExpression" id="AddExpression" value=""/>
+    <input type="hidden" name="AddAction" id="AddAction" value=""/>
+    <input type="hidden" name="Save" id="Save" value=""/>
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -171,7 +174,7 @@
                     <div class="Clear"></div>
 
                     <div class="W100pc Right SpacingTopSmall">
-                        <button type="submit" title="[% Translate("Add new expression") | html %]" value="[% Translate("Add new expression") | html %]" name="AddExpression" class="CallForAction Plus"><span>[% Translate("Add new expression") | html %]</span></button>
+                        <button type="submit" title="[% Translate("Add new expression") | html %]" value="[% Translate("Add new expression") | html %]" name="AddExpressionButton" id="AddExpressionButton" class="CallForAction Plus"><span>[% Translate("Add new expression") | html %]</span></button>
                     </div>
                 </div>
             </div>
@@ -271,14 +274,14 @@
                     <div class="Clear"></div>
 
                     <div class="W100pc Right SpacingTopSmall">
-                        <button type="submit" title="[% Translate("Add new action") | html %]" value="[% Translate("Add new action") | html %]" name="AddAction" class="CallForAction Plus"><span>[% Translate("Add new action") | html %]</span></button>
+                        <button type="submit" title="[% Translate("Add new action") | html %]" value="[% Translate("Add new action") | html %]" name="AddActionButton" id="AddActionButton" class="CallForAction Plus"><span>[% Translate("Add new action") | html %]</span></button>
                     </div>
                 </div>
             </div>
 
         </div>
         <div class="Footer">
-            <button class="Primary CallForAction" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" name="Save" value="[% Translate("Submit") | html %]">
+            <button class="Primary CallForAction" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" name="SaveButton" id="SaveButton" value="[% Translate("Submit") | html %]">
                 <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
             </button>
         </div>
@@ -289,6 +292,25 @@
 
     $('.CancelClosePopup').bind('click', function () {
         window.close();
+    });
+
+    $('#AddActionButton').on('click', function () {
+        $('input[name=AddExpression]').val('0');
+        $('input[name=AddAction]').val('1');
+        $('input[name=Save]').val('0');
+    });
+
+    $('#AddExpressionButton').on('click', function () {
+        $('input[name=AddAction]').val('0');
+        $('input[name=AddExpression]').val('1');
+        $('input[name=Save]').val('0');
+    });
+
+    $('#SaveButton').on('click', function () {
+        $('input[name=AddExpression]').val('0');
+        $('input[name=AddAction]').val('0');
+        $('input[name=Save]').val('1');
+
     });
 
     $('.DeleteExpression').unbind('click.DeleteExpression').bind('click.DeleteExpression', function(Event) {

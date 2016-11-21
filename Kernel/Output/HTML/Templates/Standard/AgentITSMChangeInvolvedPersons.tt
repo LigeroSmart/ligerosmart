@@ -20,9 +20,38 @@
         Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
     });
 
-    $('#AddCABMember').bind('click', function (Event) {
-        var $Form = $('#AddCABMember').closest('form');
+    $('#SubmitButton').bind('click', function (Event) {
+        $('input[name=Submit]').val('1');
+        $('input[name=AddCABTemplate]').val('0');
+        $('input[name=NewTemplate]').val('0');
+        $('input[name=AddCABMember]').val('0');
+    });
+
+    $('#AddCABTemplateButton').bind('click', function (Event) {
+        var $Form = $('#AddCABTemplateButton').closest('form');
         Core.Form.Validate.DisableValidation($Form);
+        $('input[name=Submit]').val('0');
+        $('input[name=AddCABTemplate]').val('1');
+        $('input[name=NewTemplate]').val('0');
+        $('input[name=AddCABMember]').val('0');
+    });
+
+    $('#NewTemplateButton').bind('click', function (Event) {
+        var $Form = $('#NewTemplateButton').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $('input[name=Submit]').val('0');
+        $('input[name=AddCABTemplate]').val('0');
+        $('input[name=NewTemplate]').val('1');
+        $('input[name=AddCABMember]').val('0');
+    });
+
+    $('#AddCABMemberButton').bind('click', function (Event) {
+        var $Form = $('#AddCABMemberButton').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $('input[name=Submit]').val('0');
+        $('input[name=AddCABTemplate]').val('0');
+        $('input[name=NewTemplate]').val('0');
+        $('input[name=AddCABMember]').val('1');
     });
 
 //]]></script>
@@ -30,9 +59,13 @@
 
 
 <form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate">
-    <input type="hidden" name="Action"            value="[% Env("Action") %]" />
-    <input type="hidden" name="Subaction"         value="Save" />
-    <input type="hidden" name="ChangeID"          value="[% Data.ChangeID | html %]" />
+    <input type="hidden" name="Action" value="[% Env("Action") %]" />
+    <input type="hidden" name="Subaction" value="Save" />
+    <input type="hidden" name="ChangeID" value="[% Data.ChangeID | html %]" />
+    <input type="hidden" name="Submit" value="" />
+    <input type="hidden" name="AddCABTemplate" value="" />
+    <input type="hidden" name="NewTemplate" value="" />
+    <input type="hidden" name="AddCABMember" value="" />
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -71,7 +104,7 @@
                             <div id="ChangeBuilderServerError" class="TooltipErrorMessage"><p>[% Translate("User invalid.") | html %]</p></div>
 
                         </div>
-                        <button class="Primary CallForAction" accesskey="g" name="Submit" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
+                        <button class="Primary CallForAction" accesskey="g" name="SubmitButton" id="SubmitButton" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
                             <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
                         </button>
                     </fieldset>
@@ -90,9 +123,9 @@
                         <label for="TemplateID"> [% Translate("CAB Template") | html %]: </label>
                         <div class="Field">
                             [% Data.CABTemplateStrg %]
-                            <button type="submit" name="AddCABTemplate" value="[% Translate("Apply Template") | html %]"> [% Translate("Apply Template") | html %] </button>
+                            <button type="submit" name="AddCABTemplateButton" id="AddCABTemplateButton" value="[% Translate("Apply Template") | html %]"> [% Translate("Apply Template") | html %] </button>
 [% RenderBlockStart("NewTemplateButton") %]
-                            <button type="submit" name="NewTemplate" value="[% Translate("NewTemplate") | html %]"> [% Translate("Save this CAB as template") | html %] </button>
+                            <button type="submit" name="NewTemplateButton" id="NewTemplateButton" value="[% Translate("NewTemplate") | html %]"> [% Translate("Save this CAB as template") | html %] </button>
 [% RenderBlockEnd("NewTemplateButton") %]
                         </div>
 [% RenderBlockEnd("CABTemplate") %]
@@ -105,7 +138,7 @@
 
                             <div id="NewCABMemberServerError" class="TooltipErrorMessage"><p>[% Translate("User invalid.") | html %]</p></div>
 
-                            <button type="submit" id="AddCABMember" name="AddCABMember" value="[% Translate("Add") | html %]">[% Translate("Add") | html %]</button>
+                            <button type="submit" id="AddCABMemberButton" name="AddCABMemberButton" value="[% Translate("Add") | html %]">[% Translate("Add") | html %]</button>
                         </div>
 
                         <div id="UserServerError" class="TooltipErrorMessage">
@@ -157,6 +190,7 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#[% Data.InternalUserType %]' + Core.App.EscapeSelector( '[% Data.UserID | html %]' ) ).bind('click', function(){
+        Core.Form.Validate.DisableValidation($(this).closest('form'));
         $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
     });
 //]]></script>
