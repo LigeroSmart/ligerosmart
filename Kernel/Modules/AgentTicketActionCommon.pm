@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - b37dd8b4130ece66185d0c61a040766a33ebaeb2 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - c27ada4e5e54e524f6c71e14a3dee42dbe09609e - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,7 +83,7 @@ sub Run {
     if ( !$Self->{TicketID} ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No TicketID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -653,7 +653,7 @@ sub Run {
                         Message =>
                             $LayoutObject->{LanguageObject}
                             ->Translate( 'Could not perform validation on field %s!', $DynamicFieldConfig->{Label} ),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - db75a2d93418b416ba351aa8c3aab9905b273890 - Kernel/Output/HTML/TicketOverview/Preview.pm
+# $origin: otrs - dd1da28bfd8e1893a512b08dd81f6deda403a26a - Kernel/Output/HTML/TicketOverview/Preview.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1031,7 +1031,47 @@ sub _Show {
 
         # otherwise display the last article in the list as expanded (default)
         else {
-            $ArticleBody[0]->{Class} = 'Active';
+            # find latest not seen article
+            my $ArticleSelected;
+            my $IgnoreSystemSender = $ConfigObject->Get('Ticket::NewArticleIgnoreSystemSender');
+
+            ARTICLE:
+            for my $ArticleItem (@ArticleBody) {
+
+                my %ArticleFlags = $TicketObject->ArticleFlagGet(
+                    ArticleID => $ArticleItem->{ArticleID},
+                    UserID    => $Self->{UserID},
+                );
+
+                # ignore system sender type
+                next ARTICLE
+                    if $IgnoreSystemSender
+                    && $ArticleItem->{SenderType} eq 'system';
+
+                # ignore already seen articles
+                next ARTICLE if $ArticleFlags{Seen};
+
+                $ArticleItem->{Class} = 'Active';
+                $ArticleSelected = 1;
+                last ARTICLE;
+            }
+
+            # set selected article
+            if ( !$ArticleSelected ) {
+
+                # set last customer article as selected article
+                ARTICLETMP:
+                for my $ArticleTmp (@ArticleBody) {
+                    if ( $ArticleTmp->{SenderType} eq 'customer' ) {
+                        $ArticleTmp->{Class} = 'Active';
+                        $ArticleSelected = 1;
+                        last ARTICLETMP;
+                    }
+                }
+                if ( !$ArticleSelected ) {
+                    $ArticleBody[0]->{Class} = 'Active';
+                }
+            }
         }
 
         $LayoutObject->Block(

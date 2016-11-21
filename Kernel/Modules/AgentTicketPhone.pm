@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - fd6b99f9bb7cedcadd005a46e3990fa17d049938 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - c27ada4e5e54e524f6c71e14a3dee42dbe09609e - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1011,7 +1011,7 @@ sub Run {
                         Message =>
                             $LayoutObject->{LanguageObject}
                             ->Translate( 'Could not perform validation on field %s!', $DynamicFieldConfig->{Label} ),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 
@@ -2157,7 +2157,7 @@ sub Run {
     else {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No Subaction!'),
-            Comment => Translatable('Please contact your administrator'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 }
