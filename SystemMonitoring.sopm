@@ -9,10 +9,12 @@
     <Description Lang="en">Basic mail interface to System Monitoring Suites. Also provides deeper integration to Nagios (Acknowledge on lock and check script).</Description>
     <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Weitergehende Integration mit Nagios (Acknowledge on lock and Checkscript).</Description>
     <Description Lang="es">Interfaz de correo básico para sistema de monitorización. También proporciona una integración más profunda de Nagios (Reconocer el bloqueo y script de control).</Description>
+    <Description Lang="hu">Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Mélyebb integrációt is biztosít a Nagios programmal (nyugtázás zároláskor és ellenőrző parancsfájl).</Description>
     <Filelist>
         <File Permission="644" Location="doc/en/SystemMonitoring.xml" />
         <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml" />
         <File Permission="644" Location="Kernel/Config/NagiosCheck.pm.example" />
+        <File Permission="644" Location="Kernel/Language/hu_SystemMonitoring.pm" />
         <File Permission="644" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheck.pm" />
         <File Permission="644" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.pm" />
         <File Permission="644" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm" />
@@ -108,6 +110,19 @@
         <br>
 
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>ÜDVÖZÖLJÜK</b>
+        <br>
+        <br>
+        Ön a SystemMonitoring OTRS csomag telepítésére készül.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
         <br>
@@ -147,6 +162,19 @@
         <br>
 
     ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>FIGYELMEZTETÉS</b>
+        <br>
+        <br>
+        A beállítási utasításokért nézze meg a mellékelt PDF-dokumentumot.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br>
@@ -180,6 +208,19 @@
         <br>
         <br>
         Ud. está a punto de actualizar el paquete de Monitorización del Sistema de OTRS.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+
+        <br>
+        <b>ÜDVÖZÖLJÜK</b>
+        <br>
+        <br>
+        Ön a SystemMonitoring OTRS csomag frissítésére készül.<br>
         <br>
         <br>
         ((enjoy))<br>

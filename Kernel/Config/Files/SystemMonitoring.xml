@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
     <ConfigItem Name="PostMaster::PreFilterModule###1-SystemMonitoring" Required="0" Valid="1">
         <Description Translatable="1">Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</Description>
@@ -54,8 +54,8 @@
         <SubGroup>Core::ConfigItem</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -65,8 +65,8 @@
         <SubGroup>Core::ConfigItem</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -93,8 +93,8 @@
         <Setting>
             <Option SelectedID="">
                 <Item Key="">-</Item>
-                <Item Key="pipe">pipe</Item>
-                <Item Key="http">http</Item>
+                <Item Key="pipe" Translatable="1">pipe</Item>
+                <Item Key="http" Translatable="1">HTTP</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -123,7 +123,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="1" Valid="1">
-        <Description Translatable="1">Ticket event module to send an acknowlage to Nagios.</Description>
+        <Description Translatable="1">Ticket event module to send an acknowledge to Nagios.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
@@ -134,7 +134,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::HTTP::URL" Required="0" Valid="1">
-        <Description Translatable="1">The http acknowledge url.</Description>
+        <Description Translatable="1">The HTTP acknowledge URL.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
@@ -142,7 +142,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::HTTP::User" Required="0" Valid="1">
-        <Description Translatable="1">The http acknowledge user.</Description>
+        <Description Translatable="1">The HTTP acknowledge user.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>
@@ -150,7 +150,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Nagios::Acknowledge::HTTP::Password" Required="0" Valid="1">
-        <Description Translatable="1">The http acknowledge password.</Description>
+        <Description Translatable="1">The HTTP acknowledge password.</Description>
         <Group>SystemMonitoring</Group>
         <SubGroup>Nagios::Acknowledge</SubGroup>
         <Setting>

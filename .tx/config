@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[OTRS.SystemMonitoring]
+file_filter = i18n/SystemMonitoring/SystemMonitoring.<lang>.po
+source_file = i18n/SystemMonitoring/SystemMonitoring.pot
+source_lang = en
+type = PO
