@@ -150,7 +150,7 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
 
         # check and input step 4 of 5 screen
-        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#MappingAddButton", 'css' )->VerifiedClick();
         for my $StepFourID (
             qw(Key Identifier)
             )
@@ -162,7 +162,7 @@ $Selenium->RunTest(
         }
 
         for my $StepFourClass (
-            qw(ArrowUp ArrowDown DeleteColomn)
+            qw(ArrowUp ArrowDown DeleteColumn)
             )
         {
             my $Element = $Selenium->find_element( ".$StepFourClass", 'css' );
@@ -177,17 +177,17 @@ $Selenium->RunTest(
         $Selenium->find_element(".//*[\@id='Object::0::Key']/option[2]")->click();
 
         # add and select 'Name' mapping element
-        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#MappingAddButton", 'css' )->VerifiedClick();
         $Selenium->find_element(".//*[\@id='Object::1::Key']/option[3]")->click();
 
         # add and select 'Deployment State' mapping element
-        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#MappingAddButton", 'css' )->VerifiedClick();
         $Selenium->find_element(".//*[\@id='Object::2::Key']/option[4]")->click();
 
         # add and select 'Incident State' mapping element
-        $Selenium->find_element( "#MappingAdd", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#MappingAddButton", 'css' )->VerifiedClick();
         $Selenium->find_element(".//*[\@id='Object::3::Key']/option[5]")->click();
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element( "#SubmitNextButton", 'css' )->VerifiedClick();
 
         # check step 5 of 5 screen
         for my $StepFourID (
@@ -279,7 +279,7 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Export file $ExportFileName is created",
+            "Export file $ExportFileName '$ExportLocation' is created",
         );
 
         # navigate to AdminImportExport screen
@@ -291,6 +291,7 @@ $Selenium->RunTest(
 
         # select Exported file and start importing
         $Selenium->find_element("//input[contains(\@name, \'SourceFile' )]")->send_keys($ExportLocation);
+
         $Selenium->find_element("//button[\@value='Start Import'][\@type='submit']")->VerifiedClick();
 
         # check for expected outcome
