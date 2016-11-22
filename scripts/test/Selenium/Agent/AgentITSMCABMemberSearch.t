@@ -105,7 +105,7 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCAB']")->click();
-        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
+        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMemberButton']")->click();
 
         # input change customer CAB
         my $AutoCompleteStringCustomer
@@ -113,7 +113,7 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestCustomerCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCustomer']")->click();
-        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMember']")->click();
+        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMemberButton']")->click();
 
         # search if data is in the table
         $Self->True(
