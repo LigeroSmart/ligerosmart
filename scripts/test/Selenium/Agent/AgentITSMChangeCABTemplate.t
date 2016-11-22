@@ -98,7 +98,7 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestCABUser') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteCABUser']")->click();
-        $Selenium->find_element( "#AddCABMember", 'css' )->click();
+        $Selenium->find_element( "#AddCABMemberButton", 'css' )->click();
 
         # verify CAB user
         $Self->True(
