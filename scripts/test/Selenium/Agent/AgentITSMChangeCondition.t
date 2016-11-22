@@ -151,7 +151,7 @@ $Selenium->RunTest(
             'css'
         )->click();
 
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element( "#SaveButton", 'css' )->VerifiedClick();
 
         # check screen
         $Selenium->find_element( "table",             'css' );

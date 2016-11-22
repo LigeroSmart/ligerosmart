@@ -105,7 +105,7 @@ $Selenium->RunTest(
 
         # add new expression
         # in change object for test change, look for priority value of '2 low'
-        $Selenium->find_element("//button[\@name='AddExpression'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@name='AddExpressionButton'][\@type='submit']")->click();
         $Selenium->find_element( "#ExpressionID-NEW-ObjectID option[value='1']", 'css' )->click();
 
         # wait for ajax response to fill next dropdown list with more than 1 value
@@ -127,7 +127,7 @@ $Selenium->RunTest(
             ->click();
 
         # add new action in change object for test change, set change state on 'Approved'
-        $Selenium->find_element("//button[\@name='AddAction'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@name='AddActionButton'][\@type='submit']")->VerifiedClick();
         $Selenium->find_element( "#ActionID-NEW-ObjectID option[value='1']", 'css' )->click();
 
         # wait for ajax response to fill next dropdown list with more than 1 value
@@ -149,7 +149,7 @@ $Selenium->RunTest(
             'css'
         )->click();
 
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element( "#SaveButton", 'css' )->VerifiedClick();
 
         # verify created condition name value
         $Self->True(
