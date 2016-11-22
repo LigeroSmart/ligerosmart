@@ -178,7 +178,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABTemplate']")->click();
+        $Selenium->find_element("//button[\@type='submit'][\@name='AddCABTemplateButton']")->click();
 
         # verify that both user and customer are loaded from edited test CAB template
         $Self->True(
