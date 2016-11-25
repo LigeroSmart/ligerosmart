@@ -13,14 +13,13 @@ use utf8;
 
 use vars (qw($Self));
 
-# get helper object
+# get needed objects
 $Kernel::OM->ObjectParamAdd(
     'Kernel::System::UnitTest::Helper' => {
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
+my $Helper        = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $CommandObject = $Kernel::OM->Get('Kernel::System::Console::Command::Admin::FAQ::Import');
 
 # test command without source argument
@@ -42,5 +41,7 @@ $Self->Is(
     0,
     "Option - with source argument",
 );
+
+# cleanup is done by restore database
 
 1;

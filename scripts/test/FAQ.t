@@ -12,15 +12,13 @@ use warnings;
 
 use vars qw($Self);
 
-use Kernel::System::FAQ;
-
+# get needed objects
 $Kernel::OM->ObjectParamAdd(
     'Kernel::System::UnitTest::Helper' => {
         RestoreDatabase => 1,
     },
 );
-my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
+my $Helper      = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
 my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
@@ -1047,14 +1045,6 @@ $Self->True(
     "Valid Items are less than Valid and Invalid ($ArticleCountValid < $ArticleCount) with true",
 );
 
-$FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQItemID1,
-    UserID => 1,
-);
-
-$Self->True(
-    $FAQDelete,
-    "FAQDelete(): with True ($FAQItemID1)",
-);
+# cleanup is done by restore database
 
 1;

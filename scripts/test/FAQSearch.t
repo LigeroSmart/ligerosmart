@@ -12,22 +12,27 @@ use warnings;
 
 use vars qw($Self);
 
+# get helper object
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreDatabase => 1,
+    },
+);
+my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+
 # set config options
 $Kernel::OM->Get('Kernel::Config')->Set(
     Key   => 'FAQ::ApprovalRequired',
     Value => 0,
 );
 
-# get helper object
-my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
 # generate a random string to help searches
-my $RandomID = $HelperObject->GetRandomID();
+my $RandomID = $Helper->GetRandomID();
 
 # create different users for CreatedUserIDs search
 my @AddedUsers;
 for my $Counter ( 1 .. 4 ) {
-    my $TestUserLogin = $HelperObject->TestUserCreate(
+    my $TestUserLogin = $Helper->TestUserCreate(
         Groups => [ 'admin', 'users', 'faq', 'faq_admin', 'faq_approval' ],
     );
     my $UserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
@@ -52,7 +57,7 @@ my %FAQAddTemplate = (
 );
 
 # freeze time
-$HelperObject->FixedTimeSet();
+$Helper->FixedTimeSet();
 
 # get FAQ object
 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
@@ -72,7 +77,7 @@ for my $Counter ( 1 .. 2 ) {
     push @AddedFAQs, $FAQID;
 
     # add 1 minute to frozen time
-    $HelperObject->FixedTimeAddSeconds(60);
+    $Helper->FixedTimeAddSeconds(60);
 }
 
 # add some votes
@@ -548,7 +553,7 @@ my %FAQUpdateTemplate = (
 );
 
 # add 1 minute to frozen time
-$HelperObject->FixedTimeAddSeconds(60);
+$Helper->FixedTimeAddSeconds(60);
 
 my $Success = $FAQObject->FAQUpdate(
     %FAQUpdateTemplate,
@@ -561,7 +566,7 @@ $Self->True(
     "FAQUpdate() FAQID:'$AddedFAQs[0]' for FAQSearch()",
 );
 
-$HelperObject->FixedTimeAddSeconds(60);
+$Helper->FixedTimeAddSeconds(60);
 
 $Success = $FAQObject->FAQUpdate(
     %FAQUpdateTemplate,
@@ -575,7 +580,7 @@ $Self->True(
 );
 
 # add 2 minutes to frozen time
-$HelperObject->FixedTimeAddSeconds(120);
+$Helper->FixedTimeAddSeconds(120);
 
 # get time object
 my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
@@ -869,21 +874,8 @@ for my $Test (@Tests) {
     );
 }
 
-# clean the system
-for my $FAQID (@AddedFAQs) {
-    my $Success = $FAQObject->FAQDelete(
-        ItemID => $FAQID,
-        UserID => 1,
-    );
-
-    $Self->True(
-        $Success,
-        "FAQDelete() for FAQID:'$FAQID' with True",
-    );
-}
-
 # restore time
-$HelperObject->FixedTimeUnset();
+$Helper->FixedTimeUnset();
 
 # execute old tests
 $Self->True(
@@ -897,13 +889,12 @@ $Self->True(
         LanguageID  => 2,
         Approved    => 1,
         Title       => 'Some Text2',
-        Keywords    => 'some keywords2',
+        Keywords    => "some$RandomID keywords2",
         Field1      => 'Problem...2',
         Field2      => 'Solution found...2',
         UserID      => 1,
         ContentType => 'text/html',
     );
-
     $Self->True(
         $FAQID1,
         "FAQAdd() - 1",
@@ -920,143 +911,78 @@ $Self->True(
         UserID      => 1,
         ContentType => 'text/html',
     );
-
     $Self->True(
         $FAQID2,
         "FAQAdd() - 2",
     );
 
-    my @FAQIDs = $FAQObject->FAQSearch(
-        Number           => '*',
-        What             => '*s*',
-        Keyword          => 'some*',
-        States           => [ 'public', 'internal' ],
-        OrderBy          => ['Votes'],
-        OrderByDirection => ['Up'],
-        Limit            => 150,
-        UserID           => 1,
+    @Tests = (
+        {
+            Name   => 'Keywords',
+            Config => {
+                What    => '*s*',
+                Keyword => "some$RandomID*",
+                OrderBy => ['Votes'],
+            },
+            ExpectedResults => [
+                $FAQID1
+            ],
+        },
+        {
+            Name   => 'Title',
+            Config => {
+                Title   => 'tITLe',
+                What    => 'l',
+                OrderBy => ['Created'],
+            },
+            ExpectedResults => [
+                $FAQID2
+            ],
+        },
+        {
+            Name   => 'What (Literal)',
+            Config => {
+                Title   => '',
+                What    => 'solution found',
+                OrderBy => ['Created'],
+            },
+            ExpectedResults => [
+                $FAQID1
+            ],
+        },
+        {
+            Name   => 'What (AND)',
+            Config => {
+                Title   => '',
+                What    => 'solution+found',
+                OrderBy => ['Created'],
+            },
+            ExpectedResults => [
+                $FAQID2,
+                $FAQID1
+            ],
+        },
     );
 
-    my $FAQSearchFound  = 0;
-    my $FAQSearchFound2 = 0;
-    for my $FAQIDSearch (@FAQIDs) {
-        if ( $FAQIDSearch eq $FAQID1 ) {
-            $FAQSearchFound = 1;
-        }
-        if ( $FAQIDSearch eq $FAQID2 ) {
-            $FAQSearchFound2 = 1;
-        }
-    }
-    $Self->True(
-        $FAQSearchFound,
-        "FAQSearch() - $FAQID1",
-    );
-    $Self->False(
-        $FAQSearchFound2,
-        "FAQSearch() - $FAQID2",
-    );
+    for my $Test (@Tests) {
 
-    @FAQIDs = $FAQObject->FAQSearch(
-        Number           => '*',
-        Title            => 'tITLe',
-        What             => 'l',
-        States           => [ 'public', 'internal' ],
-        OrderBy          => ['Created'],
-        OrderByDirection => ['Up'],
-        Limit            => 150,
-        UserID           => 1,
-    );
-
-    $FAQSearchFound  = 0;
-    $FAQSearchFound2 = 0;
-    for my $FAQIDSearch (@FAQIDs) {
-        if ( $FAQIDSearch eq $FAQID1 ) {
-            $FAQSearchFound = 1;
-        }
-        if ( $FAQIDSearch eq $FAQID2 ) {
-            $FAQSearchFound2 = 1;
-        }
-    }
-    $Self->False(
-        $FAQSearchFound,
-        "FAQSearch() - $FAQID1",
-    );
-    $Self->True(
-        $FAQSearchFound2,
-        "FAQSearch() - $FAQID2",
-    );
-
-    @FAQIDs = $FAQObject->FAQSearch(
-        Number           => '*',
-        Title            => '',
-        What             => 'solution found',
-        States           => [ 'public', 'internal' ],
-        OrderBy          => ['Created'],
-        OrderByDirection => ['Up'],
-        Limit            => 150,
-        UserID           => 1,
-    );
-
-    $FAQSearchFound  = 0;
-    $FAQSearchFound2 = 0;
-    for my $FAQIDSearch (@FAQIDs) {
-        if ( $FAQIDSearch eq $FAQID1 ) {
-            $FAQSearchFound = 1;
-        }
-        if ( $FAQIDSearch eq $FAQID2 ) {
-            $FAQSearchFound2 = 1;
-        }
-    }
-    $Self->True(
-        $FAQSearchFound,
-        "FAQSearch() literal text - $FAQID1",
-    );
-    $Self->False(
-        $FAQSearchFound2,
-        "FAQSearch() literal text - $FAQID2",
-    );
-
-    @FAQIDs = $FAQObject->FAQSearch(
-        Number           => '*',
-        Title            => '',
-        What             => 'solution+found',
-        States           => [ 'public', 'internal' ],
-        OrderBy          => ['Created'],
-        OrderByDirection => ['Up'],
-        Limit            => 150,
-        UserID           => 1,
-    );
-
-    $FAQSearchFound  = 0;
-    $FAQSearchFound2 = 0;
-    for my $FAQIDSearch (@FAQIDs) {
-        if ( $FAQIDSearch eq $FAQID1 ) {
-            $FAQSearchFound = 1;
-        }
-        if ( $FAQIDSearch eq $FAQID2 ) {
-            $FAQSearchFound2 = 1;
-        }
-    }
-    $Self->True(
-        $FAQSearchFound,
-        "FAQSearch() AND - $FAQID1",
-    );
-    $Self->True(
-        $FAQSearchFound2,
-        "FAQSearch() AND - $FAQID2",
-    );
-
-    # cleanup the system
-    for my $FAQID ( $FAQID1, $FAQID2 ) {
-        my $Success = $FAQObject->FAQDelete(
-            ItemID => $FAQID,
-            UserID => 1,
+        my @FAQIDs = $FAQObject->FAQSearch(
+            Number           => '*',
+            States           => [ 'public', 'internal' ],
+            OrderByDirection => ['Up'],
+            Limit            => 150,
+            UserID           => 1,
+            %{ $Test->{Config} },
         );
 
-        $Self->True(
-            $Success,
-            "FAQDelete() for FAQID:'$FAQID' with True",
+        $Self->IsDeeply(
+            \@FAQIDs,
+            $Test->{ExpectedResults},
+            "$Test->{Name}, FAQSearch()",
         );
     }
 }
+
+# cleanup is done by restore database
+
 1;
