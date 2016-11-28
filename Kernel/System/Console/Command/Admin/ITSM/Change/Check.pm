@@ -44,7 +44,7 @@ sub PreRun {
     # get PID object
     my $PIDObject = $Kernel::OM->Get('Kernel::System::PID');
 
-    # # create PID lock
+    # create PID lock
     my $PIDCreated = $PIDObject->PIDCreate(
         Name  => $Self->Name(),
         Force => $Self->GetOption('force-pid'),
