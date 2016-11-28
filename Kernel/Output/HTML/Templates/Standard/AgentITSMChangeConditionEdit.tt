@@ -13,9 +13,9 @@
     <input type="hidden" name="ConditionID" value="[% Data.ConditionID | html %]"/>
     <input type="hidden" name="DeleteExpressionID" id="DeleteExpressionID" value=""/>
     <input type="hidden" name="DeleteActionID" id="DeleteActionID" value=""/>
-    <input type="hidden" name="AddExpression" id="AddExpression" value=""/>
-    <input type="hidden" name="AddAction" id="AddAction" value=""/>
-    <input type="hidden" name="Save" id="Save" value=""/>
+    <input type="hidden" name="AddExpression" autocomplete="off" id="AddExpression" value=""/>
+    <input type="hidden" name="AddAction" autocomplete="off" id="AddAction" value=""/>
+    <input type="hidden" name="Save" autocomplete="off" id="Save" value=""/>
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -310,7 +310,6 @@
         $('input[name=AddExpression]').val('0');
         $('input[name=AddAction]').val('0');
         $('input[name=Save]').val('1');
-
     });
 
     $('.DeleteExpression').unbind('click.DeleteExpression').bind('click.DeleteExpression', function(Event) {
