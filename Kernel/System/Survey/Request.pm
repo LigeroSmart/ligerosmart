@@ -431,7 +431,7 @@ sub RequestSend {
     }
 
     # get charset
-    my $Charset = $ConfigObject->Get('DefaultCharset') || 'uft-8';
+    my $Charset = $ConfigObject->Get('DefaultCharset') || 'utf-8';
 
     # get HTMLUtils object
     my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
