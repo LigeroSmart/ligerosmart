@@ -539,7 +539,7 @@ sub Run {
                 $ErrorText = '<p>'
                     . (
                     join "</p>\n<p>",
-                    map { $LayoutObject->{LanguageObject}->Get($_) }
+                    map { $LayoutObject->{LanguageObject}->Translate($_) }
                         keys %{ $Errors{ $Question->{QuestionID} } }
                     )
                     . '</p>';
