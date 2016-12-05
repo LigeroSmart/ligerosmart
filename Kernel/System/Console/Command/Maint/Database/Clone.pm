@@ -93,6 +93,7 @@ sub Run {
     if ( !defined $Options{'dry-run'} ) {
         $CloneDBBackendObject->PopulateTargetStructuresPre(
             TargetDBObject => $TargetDBObject,
+            Force          => $Options{'force'} || '',
         );
     }
 

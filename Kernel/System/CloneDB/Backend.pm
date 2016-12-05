@@ -416,7 +416,7 @@ sub PopulateTargetStructuresPre {
         next STATEMENT if $Statement =~ m{^INSERT}smxi;
         my $Result = $Param{TargetDBObject}->Do( SQL => $Statement );
         print '.';
-        if ( !$Result ) {
+        if ( !$Result && !$Param{Force} ) {
             die
                 "ERROR: Could not generate structures in target database!\nPlease make sure the target database is empty.\n";
         }
