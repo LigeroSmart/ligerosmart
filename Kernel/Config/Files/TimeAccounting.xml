@@ -13,7 +13,7 @@
                 <Title Translatable="1">Edit</Title>
                 <NavBar>
                     <Description Translatable="1">Time accounting.</Description>
-                    <Name>Time Accounting</Name>
+                    <Name Translatable="1">Time Accounting</Name>
                     <Link>Action=AgentTimeAccountingEdit</Link>
                     <NavBar>TimeAccounting</NavBar>
                     <Type>Menu</Type>
@@ -24,7 +24,7 @@
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Edit time record.</Description>
-                    <Name>Edit</Name>
+                    <Name Translatable="1">Edit</Name>
                     <Link>Action=AgentTimeAccountingEdit</Link>
                     <Type></Type>
                     <Block></Block>
@@ -56,7 +56,7 @@
                 <NavBar>
                     <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Overview.</Description>
-                    <Name>Overview</Name>
+                    <Name Translatable="1">Overview</Name>
                     <Link>Action=AgentTimeAccountingOverview</Link>
                     <Type></Type>
                     <Block></Block>
@@ -85,7 +85,7 @@
                 <NavBar>
                     <Group>time_accounting</Group>
                     <Description Translatable="1">Edit time accounting settings.</Description>
-                    <Name>Settings</Name>
+                    <Name Translatable="1">Settings</Name>
                     <Link>Action=AgentTimeAccountingSetting</Link>
                     <Type></Type>
                     <Block></Block>
@@ -115,7 +115,7 @@
                 <NavBar>
                     <Group>time_accounting</Group>
                     <Description Translatable="1">Project time reporting.</Description>
-                    <Name>Reporting</Name>
+                    <Name Translatable="1">Reporting</Name>
                     <Link>Action=AgentTimeAccountingReporting</Link>
                     <Type></Type>
                     <Block></Block>

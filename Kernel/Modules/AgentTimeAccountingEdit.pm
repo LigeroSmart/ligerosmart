@@ -1309,9 +1309,8 @@ sub _FirstUserRedirect {
     }
 
     return $LayoutObject->ErrorScreen(
-        Message => Translatable(
-            'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'
-        ),
+        Message => Translatable('No time period configured, or the specified date is outside of the defined time periods.'),
+        Comment => Translatable('Please contact the time accounting administrator to update your time periods!'),
     );
 }
 

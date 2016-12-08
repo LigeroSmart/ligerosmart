@@ -88,7 +88,7 @@ sub Run {
 
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Unable to update user settings!'),
-                    Comment => Translatable('Please contact your administrator.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
             if ( $ParamObject->GetParam( Param => 'AddPeriod' ) ) {
@@ -673,7 +673,7 @@ sub Run {
 
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Unable to add time period!'),
-                    Comment => Translatable('Please contact your administrator.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }
