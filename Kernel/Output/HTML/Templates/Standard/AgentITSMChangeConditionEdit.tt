@@ -20,7 +20,7 @@
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
             <h1>
-                [% Translate("Edit") | html %] [% Translate("Condition") | html %]: [% Config("ITSMChange::Hook") %]: [% Data.ChangeNumber | html %] [% Data.ChangeTitle | truncate(70) | html %]
+                [% Translate("Edit Condition") | html %]: [% Config("ITSMChange::Hook") %]: [% Data.ChangeNumber | html %] [% Data.ChangeTitle | truncate(70) | html %]
             </h1>
             <p>
                 <a href="[% Env("Baselink") %]Action=AgentITSMChangeCondition;ChangeID=[% Data.ChangeID | uri %]">[% Translate("Back") | html %]</a>

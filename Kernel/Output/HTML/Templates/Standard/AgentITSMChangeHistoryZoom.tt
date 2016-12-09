@@ -13,6 +13,8 @@
             [% Translate("History of") | html %] [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber | html %]: [% Data.ChangeTitle | truncate(60) | html %]
         </h1>
         <p>
+            <a href="[% Env("Baselink") %]Action=AgentITSMChangeHistory;ChangeID=[% Data.ChangeID | uri %]">[% Translate("Back") | html %]</a>
+            [% Translate("or") | html %]
             <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
         </p>
     </div>
