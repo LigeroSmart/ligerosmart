@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 1f0278e76d3352f95826df2317e920bc03b866bb - Kernel/Modules/AgentTicketZoom.pm
+# $origin: otrs - 0f2d1365e7f120e5f9315530d40f5ecf48686f28 - Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1357,7 +1357,7 @@ sub MaskAgentZoom {
             # Default status is offline.
             $OnlineData{$Field}->{UserState} = Translatable('Offline');
             $OnlineData{$Field}->{UserStateDescription}
-                = $LayoutObject->{LanguageObject}->Translate('This user is currently offline');
+                = $LayoutObject->{LanguageObject}->Translate('User is currently offline.');
 
             # We also need to check if the receiving agent has chat permissions.
             my %UserGroups = $Kernel::OM->Get('Kernel::System::Group')->PermissionUserGet(
@@ -1385,19 +1385,19 @@ sub MaskAgentZoom {
                     $OnlineData{$Field}->{UserState}       = Translatable('Active');
                     $OnlineData{$Field}->{AgentEnableChat} = 1;
                     $OnlineData{$Field}->{UserStateDescription}
-                        = $LayoutObject->{LanguageObject}->Translate('This user is currently active');
+                        = $LayoutObject->{LanguageObject}->Translate('User is currently active.');
                     $OnlineData{$Field}->{VideoChatAvailable} = 1;
                 }
                 elsif ( $OnlineData{$Field}->{AgentChatAvailability} == 2 ) {
                     $OnlineData{$Field}->{UserState}       = Translatable('Away');
                     $OnlineData{$Field}->{AgentEnableChat} = 1;
                     $OnlineData{$Field}->{UserStateDescription}
-                        = $LayoutObject->{LanguageObject}->Translate('This user is currently away');
+                        = $LayoutObject->{LanguageObject}->Translate('User was inactive for a while.');
                 }
                 elsif ( $OnlineData{$Field}->{AgentChatAvailability} == 1 ) {
                     $OnlineData{$Field}->{UserState} = Translatable('Unavailable');
                     $OnlineData{$Field}->{UserStateDescription}
-                        = $LayoutObject->{LanguageObject}->Translate('This user is currently unavailable');
+                        = $LayoutObject->{LanguageObject}->Translate('User set their status to unavailable.');
                 }
             }
         }

@@ -233,10 +233,10 @@
                     <li><span class="Key">[% Translate("Activity") | html %]:</span> <span title="[% Data.Activity | html %]">[% Data.Activity | html %]</span></li>
 [% RenderBlockEnd("ProcessData") %]
 
+# show ticket dynamic fields
 # ---
 # ITSMIncidentProblemManagement
 # ---
-# # show ticket dynamic fields
 #[% RenderBlockStart("TicketDynamicField") %]
 #                    <li>
 #                        <span class="Key">[% Translate(Data.Label) | html %]:</span>
