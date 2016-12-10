@@ -76,7 +76,7 @@ $Selenium->RunTest(
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
             TypeID      => 1,
             Criticality => '3 normal',

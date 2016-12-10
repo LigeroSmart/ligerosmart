@@ -13,7 +13,7 @@ package Kernel::System::Console::Command::Admin::Service::Add;
 use strict;
 use warnings;
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 use Kernel::System::VariableCheck qw(:all);
 # ---
@@ -23,7 +23,7 @@ use base qw(Kernel::System::Console::BaseCommand);
 our @ObjectDependencies = (
     'Kernel::System::Service',
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     'Kernel::System::DynamicField',
     'Kernel::System::GeneralCatalog',
@@ -42,7 +42,7 @@ sub Configure {
         ValueRegex  => qr/.*/smx,
     );
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     $Self->AddOption(
         Name        => 'criticality',
@@ -103,7 +103,7 @@ sub PreRun {
         }
     }
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 
     # get the dynamic field config for ITSMCriticality
@@ -164,7 +164,7 @@ sub Run {
             Comment  => $Self->GetOption('comment'),
             ParentID => $Self->{ParentID},
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
             TypeID      => $Self->{TypeID},
             Criticality => $Self->{Criticality},

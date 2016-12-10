@@ -21,7 +21,7 @@ our @ObjectDependencies = (
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     'Kernel::System::DynamicField',
     'Kernel::System::GeneralCatalog',
@@ -68,7 +68,7 @@ sub new {
     $Self->{CacheType} = 'Service';
     $Self->{CacheTTL}  = 60 * 60 * 24 * 20;
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 
     # get the dynamic field for ITSMCriticality
@@ -242,7 +242,7 @@ return a list of services with the complete list of attributes for each service
             CreateBy   => 1,
             ChangeBy   => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
             TypeID           => 16,
             Type             => 'Backend',
@@ -264,7 +264,7 @@ return a list of services with the complete list of attributes for each service
             CreateBy   => 1,
             ChangeBy   => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
             TypeID           => 16,
             Type             => 'Backend',
@@ -307,7 +307,7 @@ sub ServiceListGet {
     # create SQL query
     my $SQL = 'SELECT id, name, valid_id, comments, create_time, create_by, change_time, change_by '
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         . ", type_id, criticality "
 # ---
@@ -339,7 +339,7 @@ sub ServiceListGet {
         $ServiceData{ChangeTime} = $Row[6];
         $ServiceData{ChangeBy}   = $Row[7];
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         $ServiceData{TypeID}      = $Row[8];
         $ServiceData{Criticality} = $Row[9] || '';
@@ -372,7 +372,7 @@ sub ServiceListGet {
             %{$ServiceData} = ( %{$ServiceData}, %Preferences );
         }
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         # get current incident state, calculated from related config items and child services
         my %NewServiceData = $Self->_ServiceGetCurrentIncidentState(
@@ -414,7 +414,7 @@ Return
     $ServiceData{ChangeTime}
     $ServiceData{ChangeBy}
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     $ServiceData{TypeID}
     $ServiceData{Type}
@@ -482,7 +482,7 @@ sub ServiceGet {
     # check cached results
     my $CacheKey = 'Cache::ServiceGet::' . $Param{ServiceID};
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     # add the IncidentState parameter to the cache key
     $Param{IncidentState} ||= 0;
@@ -499,7 +499,7 @@ sub ServiceGet {
         SQL =>
             'SELECT id, name, valid_id, comments, create_time, create_by, change_time, change_by '
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
             . ", type_id, criticality "
 # ---
@@ -520,7 +520,7 @@ sub ServiceGet {
         $ServiceData{ChangeTime} = $Row[6];
         $ServiceData{ChangeBy}   = $Row[7];
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         $ServiceData{TypeID}      = $Row[8];
         $ServiceData{Criticality} = $Row[9] || '';
@@ -558,7 +558,7 @@ sub ServiceGet {
         %ServiceData = ( %ServiceData, %Preferences );
     }
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     if ( $Param{IncidentState} ) {
         # get current incident state, calculated from related config items and child services
@@ -684,7 +684,7 @@ add a service
         Comment  => 'Comment',    # (optional)
         UserID   => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID      => 2,
         Criticality => '3 normal',
@@ -698,7 +698,7 @@ sub ServiceAdd {
 
     # check needed stuff
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #    for my $Argument (qw(Name ValidID UserID)) {
     for my $Argument (qw(Name ValidID UserID TypeID Criticality)) {
@@ -768,7 +768,7 @@ sub ServiceAdd {
 
     return if !$Self->{DBObject}->Do(
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #        SQL => 'INSERT INTO service '
 #            . '(name, valid_id, comments, create_time, create_by, change_time, change_by) '
@@ -819,7 +819,7 @@ update an existing service
         Comment   => 'Comment',    # (optional)
         UserID    => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID      => 2,
         Criticality => '3 normal',
@@ -833,7 +833,7 @@ sub ServiceUpdate {
 
     # check needed stuff
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #    for my $Argument (qw(ServiceID Name ValidID UserID)) {
     for my $Argument (qw(ServiceID Name ValidID UserID TypeID Criticality)) {
@@ -932,7 +932,7 @@ sub ServiceUpdate {
     # update service
     return if !$Self->{DBObject}->Do(
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #        SQL => 'UPDATE service SET name = ?, valid_id = ?, comments = ?, '
 #            . ' change_time = current_timestamp, change_by = ? WHERE id = ?',
@@ -992,7 +992,7 @@ return service ids as an array
         Limit  => 122,            # (optional) default 1000
         UserID => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeIDs       => 2,
         Criticalities => [ '2 low', '3 normal' ],
@@ -1036,7 +1036,7 @@ sub ServiceSearch {
         $SQL .= " AND name LIKE ?";
     }
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     # add type ids
     if ( $Param{TypeIDs} && ref $Param{TypeIDs} eq 'ARRAY' && @{ $Param{TypeIDs} } ) {
@@ -1489,7 +1489,7 @@ sub GetAllCustomServices {
     return @ServiceIDs;
 }
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 
 =item _ServiceGetCurrentIncidentState()

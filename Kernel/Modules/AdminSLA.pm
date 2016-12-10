@@ -33,7 +33,7 @@ sub Run {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $SLAObject    = $Kernel::OM->Get('Kernel::System::SLA');
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 # ---
@@ -69,7 +69,7 @@ sub Run {
         my %GetParam;
         for my $Param (
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #            qw(SLAID Name Calendar FirstResponseTime FirstResponseNotify SolutionTime SolutionNotify UpdateTime UpdateNotify ValidID Comment)
             qw(SLAID Name Calendar FirstResponseTime FirstResponseNotify SolutionTime SolutionNotify UpdateTime UpdateNotify ValidID Comment TypeID MinTimeBetweenIncidents)
@@ -365,7 +365,7 @@ sub _MaskNew {
         Class       => 'Modernize',
     );
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         # generate TypeOptionStrg
         my $TypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(

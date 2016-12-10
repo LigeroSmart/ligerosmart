@@ -890,7 +890,7 @@ my $ServiceID = $ServiceObject->ServiceAdd(
     ValidID => 1,
     Comment => 'Unit Test Comment',
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     TypeID      => 1,
     Criticality => '3 normal',
@@ -972,7 +972,7 @@ my $SLAID = $SLAObject->SLAAdd(
     ValidID => 1,
     Comment => 'Unit Test Comment',
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     TypeID => 1,
 # ---

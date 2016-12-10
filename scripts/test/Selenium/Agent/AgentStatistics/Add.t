@@ -74,7 +74,7 @@ $Selenium->RunTest(
             my $ServiceID = $ServiceObject->ServiceAdd(
                 Name    => "TestService - " . $Helper->GetRandomID(),
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
                 TypeID      => 1,
                 Criticality => '3 normal',
@@ -102,7 +102,7 @@ $Selenium->RunTest(
             my $SLAID = $SLAObject->SLAAdd(
                 Name    => "TestSLA - " . $Helper->GetRandomID(),
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
                 TypeID => 1,
 # ---

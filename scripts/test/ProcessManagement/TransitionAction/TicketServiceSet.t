@@ -50,7 +50,7 @@ my @Services = (
     {
         Name    => 'Service0' . $RandomID,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID      => 1,
         Criticality => '3 normal',
@@ -61,7 +61,7 @@ my @Services = (
     {
         Name    => 'Service1' . $RandomID,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID      => 1,
         Criticality => '3 normal',
@@ -72,7 +72,7 @@ my @Services = (
     {
         Name    => 'Service2' . $RandomID,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID      => 1,
         Criticality => '3 normal',

@@ -15,7 +15,7 @@ use warnings;
 
 our $ObjectManagerDisabled = 1;
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 use Kernel::System::VariableCheck qw(:all);
 # ---
@@ -37,7 +37,7 @@ sub Run {
     my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     my $DynamicFieldObject   = $Kernel::OM->Get('Kernel::System::DynamicField');
 
@@ -95,7 +95,7 @@ sub Run {
         # get params
         my %GetParam;
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #        for (qw(ServiceID ParentID Name ValidID Comment)) {
         for (qw(ServiceID ParentID Name ValidID Comment TypeID Criticality)) {
@@ -339,7 +339,7 @@ sub _MaskNew {
         Class          => 'Modernize',
     );
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     # generate TypeOptionStrg
     my $TypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(

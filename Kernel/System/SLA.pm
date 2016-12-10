@@ -19,7 +19,7 @@ our @ObjectDependencies = (
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     'Kernel::System::GeneralCatalog',
 # ---
@@ -175,7 +175,7 @@ Returns:
           'ValidID'             => '1',
           'Comment'             => 'Some Comment',
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
           'TypeID'                  => '5',
           'Type'                    => 'Incident',
@@ -225,7 +225,7 @@ sub SLAGet {
             . 'update_time, update_notify, solution_time, solution_notify, '
             . 'valid_id, comments, create_time, create_by, change_time, change_by '
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
             . ', type_id, min_time_bet_incidents '
 # ---
@@ -255,7 +255,7 @@ sub SLAGet {
         $SLAData{ChangeTime}          = $Row[13];
         $SLAData{ChangeBy}            = $Row[14];
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         $SLAData{TypeID}                  = $Row[15];
         $SLAData{MinTimeBetweenIncidents} = $Row[16] || 0;
@@ -271,7 +271,7 @@ sub SLAGet {
         return;
     }
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     # get sla type list
     my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
@@ -447,7 +447,7 @@ add a sla
         Comment             => 'Comment',    # (optional)
         UserID              => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID                  => 2,
         MinTimeBetweenIncidents => 3443,     # (optional)
@@ -461,7 +461,7 @@ sub SLAAdd {
 
     # check needed stuff
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #    for my $Argument (qw(Name ValidID UserID)) {
     for my $Argument (qw(Name ValidID UserID TypeID)) {
@@ -495,7 +495,7 @@ sub SLAAdd {
     $Param{SolutionTime}        ||= 0;
     $Param{SolutionNotify}      ||= 0;
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     $Param{MinTimeBetweenIncidents} ||= 0;
 # ---
@@ -540,7 +540,7 @@ sub SLAAdd {
     # add sla to database
     return if !$DBObject->Do(
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #        SQL => 'INSERT INTO sla '
 #            . '(name, calendar_name, first_response_time, first_response_notify, '
@@ -628,7 +628,7 @@ update a existing sla
         Comment             => 'Comment',    # (optional)
         UserID              => 1,
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
         TypeID                  => 2,
         MinTimeBetweenIncidents => 3443,  # (optional)
@@ -642,7 +642,7 @@ sub SLAUpdate {
 
     # check needed stuff
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #    for my $Argument (qw(SLAID Name ValidID UserID)) {
     for my $Argument (qw(SLAID Name ValidID UserID TypeID)) {
@@ -676,7 +676,7 @@ sub SLAUpdate {
     $Param{SolutionTime}        ||= 0;
     $Param{SolutionNotify}      ||= 0;
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
     $Param{MinTimeBetweenIncidents} ||= 0;
 # ---
@@ -737,7 +737,7 @@ sub SLAUpdate {
     # update service
     return if !$DBObject->Do(
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
 #        SQL => 'UPDATE sla SET name = ?, calendar_name = ?, '
 #            . 'first_response_time = ?, first_response_notify = ?, '

@@ -108,7 +108,7 @@
                         </div>
                         <div class="Clear"></div>
 # ---
-# GeneralCatalog
+# ITSMCore
 # ---
                         <label for="TypeID">[% Translate("Type") | html %]: </label>
                         <div class="Field">
