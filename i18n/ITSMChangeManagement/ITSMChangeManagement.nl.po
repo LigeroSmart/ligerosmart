@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-24 20:01+0000\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Dutch (http://www.transifex.com/otrs/OTRS/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -705,14 +705,6 @@ msgstr "Bewerken van statusovergangen voor"
 msgid "Do you really want to delete the state transition"
 msgstr "Wilt u deze statusovergang verwijderen"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "van"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "tot"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Change toevoegen"
@@ -776,6 +768,10 @@ msgstr "Verwijder conditie"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "Conditie toevoegen"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1100,10 +1096,6 @@ msgstr "Om de links in de omschrijvingen te openen, is het mogelijk dat u Ctrl o
 msgid "Download Attachment"
 msgstr "Download bijlage"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "Wilt u deze template echt verwijderen?"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr ""
@@ -1260,6 +1252,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr "Neem contact op met de beheerder."
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr ""
 
@@ -1337,10 +1333,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
@@ -1713,11 +1705,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr ""
+msgstr "Beheer van CIP-matrix"
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "Beheer van statusovergangen"
 
 #. SysConfig
 msgid ""
@@ -1828,7 +1820,32 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -2615,6 +2632,10 @@ msgid "Overview over all Changes."
 msgstr ""
 
 #. SysConfig
+msgid "PIR"
+msgstr ""
+
+#. SysConfig
 msgid "PSA"
 msgstr ""
 
@@ -2634,6 +2655,10 @@ msgstr ""
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability"
 msgstr ""
 
 #. SysConfig
@@ -2811,6 +2836,10 @@ msgstr ""
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Schedule"
 msgstr ""
 
 #. SysConfig

@@ -204,8 +204,6 @@ sub Data {
     $Self->{Translation}->{'Please select a next state!'} = 'Válasszon egy következő állapotot!';
     $Self->{Translation}->{'Edit a state transition for'} = 'Egy állapotátmenet szerkesztése ennél:';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Valóban törölni szeretné az állapotátmenetet';
-    $Self->{Translation}->{'from'} = 'ettől:';
-    $Self->{Translation}->{'to'} = 'eddig';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Változás hozzáadása';
@@ -232,6 +230,7 @@ sub Data {
     $Self->{Translation}->{'Add new condition'} = 'Új feltétel hozzáadása';
 
     # Template: AgentITSMChangeConditionEdit
+    $Self->{Translation}->{'Edit Condition'} = '';
     $Self->{Translation}->{'Need a valid name.'} = 'Egy érvényes név szükséges.';
     $Self->{Translation}->{'A valid name is needed.'} = 'Egy érvényes név szükséges.';
     $Self->{Translation}->{'Duplicate name:'} = 'Név kettőzése:';
@@ -336,9 +335,6 @@ sub Data {
         'A következő leírásblokkokban lévő hivatkozások megnyitásához lehet, hogy meg kell nyomnia a Ctrl vagy a Cmd vagy a Shift billentyűt, miközben a hivatkozásra kattint (a böngészőjétől és az operációs rendszerétől függően).';
     $Self->{Translation}->{'Download Attachment'} = 'Melléklet letöltése';
 
-    # Template: AgentITSMTemplateDelete
-    $Self->{Translation}->{'Do you really want to delete this template?'} = 'Valóban törölni szeretné ezt a sablont?';
-
     # Template: AgentITSMTemplateEditCAB
     $Self->{Translation}->{'Edit CAB Template'} = 'CAB sablon szerkesztése';
 
@@ -410,6 +406,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'A(z) %s jegyazonosítóval rendelkező jegy nem létezik!';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         'Hiányzó „ITSMChange::AddChangeLinkTicketTypes” rendszerbeállítási lehetőség!';
     $Self->{Translation}->{'Was not able to add change!'} = 'Nem sikerült a változás hozzáadása!';
@@ -439,7 +436,6 @@ sub Data {
     $Self->{Translation}->{'Could not delete ActionID %s!'} = 'Nem sikerült törölni a(z) %s műveletazonosítót!';
     $Self->{Translation}->{'Error: Unknown field type "%s"!'} = 'Hiba: ismeretlen „%s” mezőtípus!';
     $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = 'A(z) %s feltételazonosító nem tartozik a megadott %s változásazonosítóhoz!';
-    $Self->{Translation}->{'Please contact the administrator.'} = 'Vegye fel a kapcsolatot a rendszergazdával.';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
     $Self->{Translation}->{'Change "%s" does not have an allowed change state to be deleted!'} =
@@ -634,7 +630,13 @@ sub Data {
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'ITSM változásmenedzsment értesítések létrehozása és kezelése.';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Egy munkamegrendelés alapértelmezett típusa. Ennek a bejegyzésnek léteznie kell az „ITSM::ChangeManagement::WorkOrder::Type” általános katalógus osztályban.';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'A szignálok meghatározása minden munkamegrendelés-állapotnál.';
+    $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
         'Egy áttekintő modult határoz meg egy változáslista kis nézetének megjelenítéséhez.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
@@ -886,6 +888,7 @@ sub Data {
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Csak ezen csoportok felhasználóinak van jogosultsága az „ITSMChange::AddChangeLinkTicketTypes” beállításban meghatározott jegytípusok használatára, ha a „Ticket::Acl::Module###200-Ticket::Acl::Module” szolgáltatás engedélyezve van.';
     $Self->{Translation}->{'Overview over all Changes.'} = 'Az összes változás áttekintése.';
+    $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PSA'} = 'PSA';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'A UserCreateWorkOrderNextMask objektum paraméterei az ügyintézői felület beállítás nézetében.';
@@ -893,6 +896,7 @@ sub Data {
         'Paraméterek a kis változás áttekintő oldalaihoz (amelyekben a változások megjelennek).';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen.';
+    $Self->{Translation}->{'Projected Service Availability'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Tervezett szolgáltatáselérhetőség (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         'A változás tervezett szolgáltatáselérhetősége (PSA). A jóváhagyott változások és azok szolgáltatásainak áttekintése.';
@@ -944,6 +948,7 @@ sub Data {
     $Self->{Translation}->{'Reset change and its workorders'} = 'Változás és munkamegrendeléseinek visszaállítása';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         'Feladat futtatása annak ellenőrzéséhez, hogy a meghatározott időpontokat elérték-e a változásokban és a munkamegrendelésekben.';
+    $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Egy munkamegrendelés létrehozása utáni képernyő';
     $Self->{Translation}->{'Search Changes.'} = 'Változások keresése.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMChangeManagement\n"
-"POT-Creation-Date: 2016-06-03 17:56+0000\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -702,14 +702,6 @@ msgstr ""
 msgid "Do you really want to delete the state transition"
 msgstr ""
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr ""
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr ""
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr ""
@@ -772,6 +764,10 @@ msgstr ""
 
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
+msgstr ""
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
 msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
@@ -1094,10 +1090,6 @@ msgstr ""
 msgid "Download Attachment"
 msgstr ""
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr ""
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr ""
@@ -1243,6 +1235,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr ""
 
@@ -1320,10 +1316,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
@@ -1795,7 +1787,19 @@ msgid "Default type for a workorder. This entry must exist in general catalog cl
 msgstr ""
 
 #. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
+msgstr ""
+
+#. SysConfig
+msgid "Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid "Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -2423,6 +2427,10 @@ msgid "Overview over all Changes."
 msgstr ""
 
 #. SysConfig
+msgid "PIR"
+msgstr ""
+
+#. SysConfig
 msgid "PSA"
 msgstr ""
 
@@ -2436,6 +2444,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability"
 msgstr ""
 
 #. SysConfig
@@ -2604,6 +2616,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Run task to check if specific times have been reached in changes and workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Schedule"
 msgstr ""
 
 #. SysConfig

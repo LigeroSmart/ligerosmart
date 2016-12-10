@@ -204,8 +204,6 @@ sub Data {
     $Self->{Translation}->{'Please select a next state!'} = 'Bitte wählen sie den Folge-Status!';
     $Self->{Translation}->{'Edit a state transition for'} = 'Bearbeiten eines Status-Übergangs für';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Wollen Sie diesen Status-Übergang wirklich löschen?';
-    $Self->{Translation}->{'from'} = 'von';
-    $Self->{Translation}->{'to'} = 'bis';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Change hinzufügen';
@@ -232,6 +230,7 @@ sub Data {
     $Self->{Translation}->{'Add new condition'} = 'Bedingung hinzufügen';
 
     # Template: AgentITSMChangeConditionEdit
+    $Self->{Translation}->{'Edit Condition'} = '';
     $Self->{Translation}->{'Need a valid name.'} = 'Ein gültiger Name ist erforderlich.';
     $Self->{Translation}->{'A valid name is needed.'} = 'Ein gültiger Name ist erforderlich.';
     $Self->{Translation}->{'Duplicate name:'} = 'Doppelter Name:';
@@ -336,9 +335,6 @@ sub Data {
         'Um die Links im folgenden Beitrag zu öffnen, kann es notwendig sein Strg oder Shift zu drücken, während auf den Link geklickt wird (abhängig vom verwendeten Browser und Betriebssystem).';
     $Self->{Translation}->{'Download Attachment'} = 'Anhang herunterladen';
 
-    # Template: AgentITSMTemplateDelete
-    $Self->{Translation}->{'Do you really want to delete this template?'} = 'Möchten Sie diese Vorlage wirklich löschen?';
-
     # Template: AgentITSMTemplateEditCAB
     $Self->{Translation}->{'Edit CAB Template'} = 'CAB-Template bearbeiten';
 
@@ -410,6 +406,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'Ticket mit Ticket-Kennung %s ist nicht vorhanden!';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         '';
     $Self->{Translation}->{'Was not able to add change!'} = '';
@@ -439,7 +436,6 @@ sub Data {
     $Self->{Translation}->{'Could not delete ActionID %s!'} = '';
     $Self->{Translation}->{'Error: Unknown field type "%s"!'} = 'Fehler: Unbekannter Feldtyp "%s"!';
     $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = '';
-    $Self->{Translation}->{'Please contact the administrator.'} = 'Bitte kontaktieren Sie den Administrator.';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
     $Self->{Translation}->{'Change "%s" does not have an allowed change state to be deleted!'} =
@@ -634,7 +630,13 @@ sub Data {
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Standardtyp für einen Arbeitsauftrag. Dieser Eintrag muss in der General Catalog Klasse \'ITSM::ChangeManagement::WorkOrder::Type\' existieren.';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Definieren eines Signals für einen Arbeitsauftragsstatus.';
+    $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
         'Definiert das Übersichtsmodul um die Small-Ansicht einer Change-Liste anzuzeigen.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
@@ -886,6 +888,7 @@ sub Data {
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Nur die Mitglieder dieser Gruppen haben die Erlaubnis die Ticket-Typen zu verwenden, die in "ITSMChange::AddChangeLinkTicketTypes" definiert sind, wenn das Feature "Ticket::Acl::Module###200-Ticket::Acl::Module" aktiviert ist.';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
+    $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'Parameter für das UserCreateWorkOrderNextMask Objekt in den Benutzereinstellungen der Agenten-Oberfläche.';
@@ -893,6 +896,7 @@ sub Data {
         'Parameter für die Change Übersichts-Anzeige in der Anzeige-Variante "S".';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Zeigt in der "Change Zoom" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die eingebundenen Agenten anzuzeigen.';
+    $Self->{Translation}->{'Projected Service Availability'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         '';
@@ -944,6 +948,7 @@ sub Data {
     $Self->{Translation}->{'Reset change and its workorders'} = '';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         '';
+    $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Ansicht nach Workorder-Erstellung';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =

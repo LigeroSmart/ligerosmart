@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-24 20:01+0000\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -705,14 +705,6 @@ msgstr "ویرایش یک انتقال وضعیت برای"
 msgid "Do you really want to delete the state transition"
 msgstr "آیا از حذف انتقال وضعیت مطمئن هستید؟"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "از"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "تا"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "افزودن تغییر"
@@ -776,6 +768,10 @@ msgstr "حذف شرط"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "افزودن شرط جدید"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1100,10 +1096,6 @@ msgstr ""
 msgid "Download Attachment"
 msgstr "دریافت پیوست"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "آیا واقعا مایل به حذف این قالب هستید؟"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr ""
@@ -1260,6 +1252,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr ""
 
@@ -1337,10 +1333,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
@@ -1695,13 +1687,13 @@ msgstr ""
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
 "name. Content is 0 or 1."
-msgstr ""
+msgstr "فهرست کارشناسانی که اجازه دسترسی برای گرفتن دستور کار را دارا هستند. کلید یک نام برای ورود است. محتوا 0 یا 1 است."
 
 #. SysConfig
 msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
-msgstr ""
+msgstr "فهرستی از وضعیت‌های دستور کار که در صورتی در اینجا وارد نشود، به عنوان زمان واقعی آغاز مشخص خواهد شد."
 
 #. SysConfig
 msgid "Add a change from template."
@@ -1713,27 +1705,27 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr ""
+msgstr "مدیر ماتریس اهمیت <-> اثر <-> الویت"
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "مدیر ماشین وضعیت"
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of change advisory "
 "boards."
-msgstr ""
+msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد هیئت‌های مشاور تغییرات"
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of changes managed by "
 "the user."
-msgstr ""
+msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد تغییرات مدیریت شده توسط کاربر"
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes."
-msgstr ""
+msgstr "ماژول اعلان واسط کارشناس برای نمایش تعداد تغییرات"
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of workorders."
@@ -1769,7 +1761,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr ""
+msgstr "نمای کلی تغییر به صورت کوچک"
 
 #. SysConfig
 msgid "Change Overview."
@@ -1797,11 +1789,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
-msgstr ""
+msgstr "تغییر محدودیت برای هر صفحه برای نمای کوچک تغییر"
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
-msgstr ""
+msgstr "تغییر مسیریاب جستجو در رابط کاربری کارشناس"
 
 #. SysConfig
 msgid "Condition Overview"
@@ -1828,16 +1820,41 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
+msgstr "تعریف علائم برای هر وضعیت دستور کار"
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
-msgstr ""
+msgstr "تعریف ماژول نمای کلی برای نمایش نمای کوچک از فهرست تغییرات"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a template list."
-msgstr ""
+msgstr "تعریف ماژول نمای کلی برای نمایش نمای کوچک از فهرست قالب‌ها"
 
 #. SysConfig
 msgid "Defines if it will be possible to print the accounted time."
@@ -2615,6 +2632,10 @@ msgid "Overview over all Changes."
 msgstr ""
 
 #. SysConfig
+msgid "PIR"
+msgstr ""
+
+#. SysConfig
 msgid "PSA"
 msgstr ""
 
@@ -2634,6 +2655,10 @@ msgstr ""
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability"
 msgstr ""
 
 #. SysConfig
@@ -2811,6 +2836,10 @@ msgstr ""
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Schedule"
 msgstr ""
 
 #. SysConfig
@@ -3004,7 +3033,7 @@ msgstr ""
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "ماشین وضعیت"
 
 #. SysConfig
 msgid ""

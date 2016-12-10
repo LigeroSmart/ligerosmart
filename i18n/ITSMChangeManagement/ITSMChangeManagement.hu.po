@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-29 17:25+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -706,14 +706,6 @@ msgstr "Egy állapotátmenet szerkesztése ennél:"
 msgid "Do you really want to delete the state transition"
 msgstr "Valóban törölni szeretné az állapotátmenetet"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "ettől:"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "eddig"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Változás hozzáadása"
@@ -777,6 +769,10 @@ msgstr "Feltétel törlése"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "Új feltétel hozzáadása"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1101,10 +1097,6 @@ msgstr "A következő leírásblokkokban lévő hivatkozások megnyitásához le
 msgid "Download Attachment"
 msgstr "Melléklet letöltése"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "Valóban törölni szeretné ezt a sablont?"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "CAB sablon szerkesztése"
@@ -1261,6 +1253,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr "A(z) %s jegyazonosítóval rendelkező jegy nem létezik!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr "Vegye fel a kapcsolatot a rendszergazdával."
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr "Hiányzó „ITSMChange::AddChangeLinkTicketTypes” rendszerbeállítási lehetőség!"
 
@@ -1339,10 +1335,6 @@ msgstr "Hiba: ismeretlen „%s” mezőtípus!"
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
 msgstr "A(z) %s feltételazonosító nem tartozik a megadott %s változásazonosítóhoz!"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
-msgstr "Vegye fel a kapcsolatot a rendszergazdával."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Change \"%s\" does not have an allowed change state to be deleted!"
@@ -1829,8 +1821,33 @@ msgid ""
 msgstr "Egy munkamegrendelés alapértelmezett típusa. Ennek a bejegyzésnek léteznie kell az „ITSM::ChangeManagement::WorkOrder::Type” általános katalógus osztályban."
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr "Műveletek meghatározása, ahol egy beállítások gomb érhető el a kapcsolt objektumok felületi elemen (LinkObject::ViewMode = „összetett”). Ne feledje, hogy ezeknek a műveleteknek rendelkezniük kell a következő JS és CSS fájlok regisztrálásával: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js és Core.Agent.LinkObject.js."
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
 msgstr "A szignálok meghatározása minden munkamegrendelés-állapotnál."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
@@ -2616,6 +2633,10 @@ msgid "Overview over all Changes."
 msgstr "Az összes változás áttekintése."
 
 #. SysConfig
+msgid "PIR"
+msgstr "PIR"
+
+#. SysConfig
 msgid "PSA"
 msgstr "PSA"
 
@@ -2636,6 +2657,10 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen."
+
+#. SysConfig
+msgid "Projected Service Availability"
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
@@ -2813,6 +2838,10 @@ msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
 msgstr "Feladat futtatása annak ellenőrzéséhez, hogy a meghatározott időpontokat elérték-e a változásokban és a munkamegrendelésekben."
+
+#. SysConfig
+msgid "Schedule"
+msgstr ""
 
 #. SysConfig
 msgid "Screen after creating a workorder"

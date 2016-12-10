@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-25 11:47+0000\n"
-"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -707,14 +707,6 @@ msgstr "Редактировать состояние перехода для"
 msgid "Do you really want to delete the state transition"
 msgstr "Вы действительно хототе удалить состояние перехода"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "из"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "по"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Добавить изменение"
@@ -778,6 +770,10 @@ msgstr "Удалить условие"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "Добавить новое условие"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1102,10 +1098,6 @@ msgstr "Для открытия ссылки в следующем сообще�
 msgid "Download Attachment"
 msgstr "Загрузить вложение"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "Ва действительно желаете удалить этот шаблон"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "Редактировать шаблон CAB"
@@ -1262,6 +1254,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr "Заявка с таким TicketID %s не существует!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr "Свяжитесь с администратором"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr "Пропущен параметр конфигурации \"ITSMChange::AddChangeLinkTicketTypes\"!"
 
@@ -1340,10 +1336,6 @@ msgstr "Ошибка: Неизвестный тип поля \"%s\"!"
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
 msgstr "ConditionID %s не принадлежит заданному ChangeID %s!"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
-msgstr "Свяжитесь с администратором."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Change \"%s\" does not have an allowed change state to be deleted!"
@@ -1830,8 +1822,33 @@ msgid ""
 msgstr "Тип задачи по умолчанию. Он должен быть описан в качестве класса в Общем каталоге в ITSM::ChangeManagement::WorkOrder::Type"
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr "Задает Действия/Actions когда кнопка настройки доступна в связанном виджете (LinkObject::ViewMode = \"complex\"). Обратите внимание, что эти Действия/Actions должны иметь зарегистрированные JS или CSS файлы: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js."
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
 msgstr "Задает индикаторы для каждого состояния задачи."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
@@ -2617,6 +2634,10 @@ msgid "Overview over all Changes."
 msgstr "Обзор всех Изменений."
 
 #. SysConfig
+msgid "PIR"
+msgstr "PIR"
+
+#. SysConfig
 msgid "PSA"
 msgstr "PSA"
 
@@ -2637,6 +2658,10 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Показывает ссылку/элемент в меню для показа вовлеченных сотрудников для изменения при подробном просмотре изменения в интерфейсе агента."
+
+#. SysConfig
+msgid "Projected Service Availability"
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
@@ -2814,6 +2839,10 @@ msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
 msgstr "Запустить задание для проверки достижимости значений времени в Изменениях и Задачах."
+
+#. SysConfig
+msgid "Schedule"
+msgstr ""
 
 #. SysConfig
 msgid "Screen after creating a workorder"

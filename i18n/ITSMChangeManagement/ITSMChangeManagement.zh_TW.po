@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-24 20:01+0000\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -706,14 +706,6 @@ msgstr "編輯轉換狀態"
 msgid "Do you really want to delete the state transition"
 msgstr "你確定要删除這個狀態轉換嗎?"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "由"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "至"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "創建變更"
@@ -777,6 +769,10 @@ msgstr "删除條件"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "添加新的條件"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1101,10 +1097,6 @@ msgstr ""
 msgid "Download Attachment"
 msgstr "下載附件"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "你確定要删除這個模板嗎？"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr ""
@@ -1261,6 +1253,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr ""
 
@@ -1338,10 +1334,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
@@ -1714,11 +1706,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr ""
+msgstr "管理CIP矩陣"
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "管理狀態機"
 
 #. SysConfig
 msgid ""
@@ -1829,7 +1821,32 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -2616,6 +2633,10 @@ msgid "Overview over all Changes."
 msgstr ""
 
 #. SysConfig
+msgid "PIR"
+msgstr ""
+
+#. SysConfig
 msgid "PSA"
 msgstr ""
 
@@ -2635,6 +2656,10 @@ msgstr ""
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability"
 msgstr ""
 
 #. SysConfig
@@ -2815,8 +2840,12 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Screen after creating a workorder"
+msgid "Schedule"
 msgstr ""
+
+#. SysConfig
+msgid "Screen after creating a workorder"
+msgstr "創建工作指令後的視圖"
 
 #. SysConfig
 msgid "Search Changes."
@@ -2864,7 +2893,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show this screen after I created a new workorder"
-msgstr ""
+msgstr "創建工作指令後顯示的頁面"
 
 #. SysConfig
 msgid ""
@@ -3005,7 +3034,7 @@ msgstr ""
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "狀態機"
 
 #. SysConfig
 msgid ""

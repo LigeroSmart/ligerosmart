@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-24 20:01+0000\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -707,14 +707,6 @@ msgstr "Edytuj przejście stanu dla"
 msgid "Do you really want to delete the state transition"
 msgstr "Czy na pewno chcesz usunąć przejście stanu"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "od"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "do"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Dodaj zmianę"
@@ -778,6 +770,10 @@ msgstr "Usuń warunek"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "Dodaj nowy warunek"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1102,10 +1098,6 @@ msgstr ""
 msgid "Download Attachment"
 msgstr "Pobierz załącznik"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "Czy na pewno chcesz usunąć ten szablon?"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "Edytuj szablon CAB"
@@ -1262,6 +1254,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr "Proszę, skontaktuj się z administratorem."
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr ""
 
@@ -1339,10 +1335,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
@@ -1715,11 +1707,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr ""
+msgstr "Zarządzanie macierzą KWP"
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "Zarządzanie maszyną stanów"
 
 #. SysConfig
 msgid ""
@@ -1771,7 +1763,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr ""
+msgstr "Limit przeglądu zmian \"Małe\""
 
 #. SysConfig
 msgid "Change Overview."
@@ -1783,7 +1775,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr ""
+msgstr "Harmonogram zmiany."
 
 #. SysConfig
 msgid "Change Zoom."
@@ -1799,7 +1791,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
-msgstr ""
+msgstr "Limit zmian na stronie dla przeglądu zmian \"Małe\""
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
@@ -1830,7 +1822,32 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define the signals for each workorder state."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -2617,6 +2634,10 @@ msgid "Overview over all Changes."
 msgstr ""
 
 #. SysConfig
+msgid "PIR"
+msgstr ""
+
+#. SysConfig
 msgid "PSA"
 msgstr ""
 
@@ -2636,6 +2657,10 @@ msgstr ""
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Projected Service Availability"
 msgstr ""
 
 #. SysConfig
@@ -2813,6 +2838,10 @@ msgstr ""
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Schedule"
 msgstr ""
 
 #. SysConfig
@@ -3006,7 +3035,7 @@ msgstr ""
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "Maszyna stanów"
 
 #. SysConfig
 msgid ""
@@ -3052,7 +3081,7 @@ msgstr ""
 msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
-msgstr ""
+msgstr "Typy zgłoszeń dla których na ekranie szczegółów zgłoszenia wyświetlony będzie link tworzący zmianę"
 
 #. SysConfig
 msgid "User Search"

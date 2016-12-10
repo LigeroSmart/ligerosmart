@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 22:01+0000\n"
-"PO-Revision-Date: 2016-05-24 20:01+0000\n"
+"POT-Creation-Date: 2016-12-10 13:31+0000\n"
+"PO-Revision-Date: 2016-12-10 12:31+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -706,14 +706,6 @@ msgstr "Penyuntingan peralihan keadaan untuk"
 msgid "Do you really want to delete the state transition"
 msgstr "Adakah anda mahu memadam status peralihan ini benar-benar?"
 
-#. Template: AdminITSMStateMachine
-msgid "from"
-msgstr "von"
-
-#. Template: AdminITSMStateMachine
-msgid "to"
-msgstr "kepada"
-
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
 msgstr "Tukar Tambah"
@@ -777,6 +769,10 @@ msgstr "Padam keadaan"
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
 msgstr "Tambah keadaan"
+
+#. Template: AgentITSMChangeConditionEdit
+msgid "Edit Condition"
+msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1101,10 +1097,6 @@ msgstr "Untuk membuka pautan dalam keterangan blok berikut, anda mungkin perlu m
 msgid "Download Attachment"
 msgstr "memuat turun lampiran"
 
-#. Template: AgentITSMTemplateDelete
-msgid "Do you really want to delete this template?"
-msgstr "Adakah anda benar-benar mahu untuk memadam template ini?"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "Menyunting templat CAB"
@@ -1261,6 +1253,10 @@ msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
+msgid "Please contact the admin."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
 msgstr ""
 
@@ -1298,7 +1294,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "Tiada %s diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
@@ -1338,10 +1334,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "Please contact the administrator."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
@@ -1696,13 +1688,13 @@ msgstr ""
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
 "name. Content is 0 or 1."
-msgstr ""
+msgstr "Satu senarai agen yang mempunyai kebenaran untuk mengambil pesanan kerja. Utama adalah nama log masuk. Kandungan adalah 0 atau 1"
 
 #. SysConfig
 msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
-msgstr ""
+msgstr "Satu senarai status pesanan kerja, di mana Masa Mula sebenar perintah kerja akan ditetapkan jika ia adalah kosong pada ketika ini."
 
 #. SysConfig
 msgid "Add a change from template."
@@ -1714,27 +1706,27 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr ""
+msgstr "Admin matriks CIP."
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "Admin jentera kerajaan."
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of change advisory "
 "boards."
-msgstr ""
+msgstr "Agen antara muka modul pemberitahuan untuk melihat bilangan menukar lembaga penasihat."
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of changes managed by "
 "the user."
-msgstr ""
+msgstr "Agen antara muka modul pemberitahuan untuk melihat beberapa perubahan yang diuruskan oleh pengguna."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes."
-msgstr ""
+msgstr "Agen antara muka modul pemberitahuan untuk melihat beberapa perubahan."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of workorders."
@@ -1748,13 +1740,13 @@ msgstr ""
 msgid ""
 "Cache time in minutes for the change management toolbars. Default: 3 hours "
 "(180 minutes)."
-msgstr ""
+msgstr "Waktu cache dalam minit untuk bar alat pengurusan change. Lalai: 3 jam (180 minit)."
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management. Default: 5 days (7200 "
 "minutes)."
-msgstr ""
+msgstr "Waktu cache dalam minit untuk pengurusan change. Lalai: 5 hari (7200 minit)."
 
 #. SysConfig
 msgid "Change CAB Templates"
@@ -1770,7 +1762,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr ""
+msgstr "Tinjauan Change Had \"Kecil\""
 
 #. SysConfig
 msgid "Change Overview."
@@ -1790,7 +1782,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
-msgstr ""
+msgstr "Templat Change dan UrutanKerja diedit oleh pengguna ini."
 
 #. SysConfig
 msgid "Change area."
@@ -1798,11 +1790,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
-msgstr ""
+msgstr "Had Change untuk setiap muka surat untuk Tinjauan Change \"Kecil\""
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
-msgstr ""
+msgstr "Tukar router carian backend antara muka ejen."
 
 #. SysConfig
 msgid "Condition Overview"
@@ -1812,7 +1804,7 @@ msgstr ""
 msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
-msgstr ""
+msgstr "Dikonfigurasi berapa kerap pemberitahuan akan dihantar apabila merancang masa mula atau nilai masa lain telah mencapai / diluluskan."
 
 #. SysConfig
 msgid "Create a change (from template) from this ticket!"
@@ -1826,395 +1818,420 @@ msgstr ""
 msgid ""
 "Default type for a workorder. This entry must exist in general catalog class"
 " 'ITSM::ChangeManagement::WorkOrder::Type'."
-msgstr ""
+msgstr "Jenis lalai untuk perintah kerja. Entri ini mesti wujud di dalam kelas katalog am 'ITSM::Pengurusan Perubahan::Perintah Kerja::Jenis'."
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr "Takrifkan Tindakan dimana butang tetapan itu ada dalam widget objek bersambung (LinkObject::ViewMode = \"complex\"). Sila pastikan yang Tindakan ini perlu didaftarkan yang berikut fail-fail JS dan CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
+msgstr "Tentukan isyarat untuk setiap keadaan perintah kerja."
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
-msgstr ""
+msgstr "Mentakrifkan modul gambaran untuk menunjukkan pandangan yang kecil senarai perubahan."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a template list."
-msgstr ""
+msgstr "Mentakrifkan modul gambaran untuk menunjukkan pandangan yang kecil senarai templat."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the accounted time."
-msgstr ""
+msgstr "Mentakrifkan jika ia akan menjadi mustahil untuk mencetak masa yang diambilkira"
 
 #. SysConfig
 msgid "Defines if it will be possible to print the planned effort."
-msgstr ""
+msgstr "Mentakrifkan jika ia akan menjadi mustahil untuk mencetak usaha yang dirancang."
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) change end states "
 "should be allowed if a change is in a locked state."
-msgstr ""
+msgstr "Mentakrifkan jika dapat dihubungi (seperti yang ditakrifkan oleh keadaan mesin) keadaan change akhir harus dibenarkan jika change berada dalam keadaan yang berkunci."
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) workorder end states "
 "should be allowed if a workorder is in a locked state."
-msgstr ""
+msgstr "Mentakrifkan jika dapat dihubungi (seperti yang ditakrifkan oleh keadaan mesin) urutankerja keadaan change akhir harus dibenarkan jika urutankerja berada dalam keadaan yang berkunci."
 
 #. SysConfig
 msgid "Defines if the accounted time should be shown."
-msgstr ""
+msgstr "Mentakrifkan jika masa yang diambil kira hendaklah ditunjukkan."
 
 #. SysConfig
 msgid "Defines if the actual start and end times should be set."
-msgstr ""
+msgstr "Mentakrifkan jika permulaan sebenar dan akhir zaman harus ditetapkan."
 
 #. SysConfig
 msgid ""
 "Defines if the change search and the workorder search functions could use "
 "the mirror DB."
-msgstr ""
+msgstr "Mentakrifkan jika carian change dan urutankerja carian fungsi boleh menggunakan cermin DB."
 
 #. SysConfig
 msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr ""
+msgstr "Mentakrifkan jika keadaan perubahan boleh ditetapkan dalam AgentITSMChangeEdit."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
-msgstr ""
+msgstr "Mentakrifkan jika usaha yang dirancang hendaklah ditunjukkan."
 
 #. SysConfig
 msgid "Defines if the requested date should be print by customer."
-msgstr ""
+msgstr "Mentakrifkan jika tarikh yang diminta harus cetak oleh pelanggan"
 
 #. SysConfig
 msgid "Defines if the requested date should be searched by customer."
-msgstr ""
+msgstr "Mentakrifkan jika tarikh yang diminta perlu dicari oleh pelanggan."
 
 #. SysConfig
 msgid "Defines if the requested date should be set by customer."
-msgstr ""
+msgstr "Mentakrifkan jika tarikh yang diminta hendaklah ditetapkan oleh pelanggan"
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr ""
+msgstr "Mentakrifkan jika tarikh yang diminta hendaklah ditunjukkan oleh pelanggan."
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
-msgstr ""
+msgstr "Mentakrifkan jika keadaan perintah kerja hendaklah ditunjukkan."
 
 #. SysConfig
 msgid "Defines if the workorder title should be shown."
-msgstr ""
+msgstr "Mentakrifkan jika tajuk perintah kerja hendaklah ditunjukkan."
 
 #. SysConfig
 msgid "Defines shown graph attributes."
-msgstr ""
+msgstr "Mentakrifkan ciri-ciri graf ditunjukkan."
 
 #. SysConfig
 msgid ""
 "Defines that only changes containing Workorders linked with services, which "
 "the customer user has permission to use will be shown. Any other changes "
 "will not be displayed."
-msgstr ""
+msgstr "Mentakrifkan bahawa perubahan hanya mengandungi Workorders dikaitkan dengan perkhidmatan, pengguna pelanggan yang mempunyai kebenaran untuk menggunakan akan ditunjukkan. Sebarang perubahan lain tidak akan dipaparkan."
 
 #. SysConfig
 msgid "Defines the change states that will be allowed to delete."
-msgstr ""
+msgstr "Mentakrifkan keadaan change yang akan dibenarkan untuk memadam."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change PSA "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan keadaan perubahan yang akan digunakan sebagai penapis dalam gambaran PSA Perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change "
 "Schedule overview."
-msgstr ""
+msgstr "Mentakrifkan keadaan perubahan yang akan digunakan sebagai penapis dalam gambaran Jadual Perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyCAB "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan keadaan perubahan yang akan digunakan sebagai penapis dalam gambaran MyCAB."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyChanges "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan keadaan perubahan yang akan digunakan sebagai penapis dalam gambaran MyChanges."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change manager"
 " overview."
-msgstr ""
+msgstr "Mentakrifkan keadaan perubahan yang akan digunakan sebagai penapis dalam gambaran pengurus perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan keadaan perubahan yang akan digunakan sebagai penapis dalam gambaran perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the customer "
 "change schedule overview."
-msgstr ""
+msgstr "Mentakrifkan negeri perubahan yang akan digunakan sebagai penapis dalam perubahan jadual gambaran keseluruhan pelanggan."
 
 #. SysConfig
 msgid ""
 "Defines the default change title for a dummy change which is needed to edit "
 "a workorder template."
-msgstr ""
+msgstr "Mentakrifkan tajuk perubahan lalai untuk perubahan dummy yang diperlukan untuk mengedit templat UrutanKerja."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change PSA overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai dalam gambaran keseluruhan PSA perubahan."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change manager overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai dalam gambaran pengurus perubahan."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria apapun lalai dalam gambaran perubahan."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change schedule overview."
-msgstr ""
+msgstr "SMentakrifkan kriteria jenis lalai dalam gambaran keseluruhan jadual perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyCAB overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai perubahan dalam gambaran MyCAB."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyChanges overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai perubahan dalam gambaran MyChanges."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyWorkorders "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai perubahan dalam gambaran keseluruhan pesanan Kerja."
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai perubahan dalam gambaran PIR."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the customer change "
 "schedule overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria apapun lalai perubahan dalam perubahan jadual gambaran keseluruhan pelanggan."
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the template overview."
-msgstr ""
+msgstr "Mentakrifkan kriteria jenis lalai perubahan dalam gambaran templat."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyCAB overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam gambaran MyCAB."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyChanges overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam gambaran MyChanges."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyWorkorders overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam gambaran keseluruhan pesanan Kerja."
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam gambaran PIR."
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai jenis gambaran perubahan PSA."
 
 #. SysConfig
 msgid "Defines the default sort order in the change manager overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai jenis dalam gambaran pengurus perubahan."
 
 #. SysConfig
 msgid "Defines the default sort order in the change overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam gambaran perubahan."
 
 #. SysConfig
 msgid "Defines the default sort order in the change schedule overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai jenis dalam gambaran keseluruhan jadual perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the default sort order in the customer change schedule overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam perubahan jadual gambaran keseluruhan pelanggan."
 
 #. SysConfig
 msgid "Defines the default sort order in the template overview."
-msgstr ""
+msgstr "Mentakrifkan perintah lalai apapun dalam gambaran template."
 
 #. SysConfig
 msgid "Defines the default value for the category of a change."
-msgstr ""
+msgstr "Mentakrifkan nilai lalai bagi kategori perubahan."
 
 #. SysConfig
 msgid "Defines the default value for the impact of a change."
-msgstr ""
+msgstr "Mentakrifkan nilai lalai bagi kesan perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
 "AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
 "a type is not defined, the field will not be shown."
-msgstr ""
+msgstr "Mentakrifkan jenis bidang bidang Banding Nilai untuk sifat-sifat perubahan yang digunakan dalam AgentITSMChangeConditionEdit. Nilai yang sah Pemilihan, Teks dan Tarikh. Jika jenis tidak ditakrifkan, padang tidak akan ditunjukkan."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
 "in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
 "If a type is not defined, the field will not be shown."
-msgstr ""
+msgstr "Mentakrifkan jenis bidang bidang Banding Nilai untuk sifat-sifat perintah kerja yang digunakan dalam AgentITSMChangeConditionEdit. Nilai yang sah Pemilihan, Teks dan Tarikh. Jika jenis tidak ditakrifkan, padang tidak akan ditunjukkan."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for change objects in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan sifat-sifat objek yang dipilih untuk objek perubahan dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan sifat-sifat objek yang dipilih untuk objek perintah kerja dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang dipilih untuk AccountedTime atribut dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang dipilih untuk ActualEndTime atribut dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang dipilih untuk ActualStartTime atribut dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk ID Kategori atribut dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk atribut ChangeBuilderID dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk atribut ChangeManagerID dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk atribut ChangeStateID dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk Perubahan Tajuk atribut dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk sifat MedanDinamik dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ImpactID in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk atribut ImpactID dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk Usaha sifat yang dirancang dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang dipilih untuk atribut Dirancang Masa Tamat dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
 " in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang dipilih untuk atribut Dirancang Mula Masa dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk ID Keutamaan atribut dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang dipilih untuk atribut Diminta Masa dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
 " in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk atribut WorkOrderAgentID dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk Nombor atribut Perintah Kerja dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
 " in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk Kerja atribut ID Pesanan Keadaan dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk Tajuk atribut Perintah Kerja dalam AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
 "in AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mentakrifkan pengendali yang boleh dipilih untuk Kerja atribut Jenis ID Perintah AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the period (in years), in which start and end times can be selected."
-msgstr ""
+msgstr "Mentakrifkan tempoh (dalam tahun), di mana mula dan akhir kali boleh dipilih."
 
 #. SysConfig
 msgid ""
@@ -2222,104 +2239,104 @@ msgid ""
 "graph in the change zoom. To show workorder dynamic fields in the tooltip, "
 "they must be specified like DynamicField_WorkOrderFieldName1, "
 "DynamicField_WorkOrderFieldName2, etc."
-msgstr ""
+msgstr "Mentakrifkan sifat-sifat yang ditunjukkan daripada UrutanKerja dalam tooltip graf UrutanKerja di zum perubahan. Untuk menunjukkan medan dinamik UrutanKerja dalam tooltip , mereka mesti dinyatakan seperti MedanDinamik_UrutanKerjaNama1, MedanDinamik_UrutanKerjaNama2, dan lain-lain."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change PSA overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan lajur menunjukkan gambaran PSA Perubahan. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change Schedule overview. This option has "
 "no effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan lajur menunjukkan dalam gambaran Jadual Perubahan. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyCAB overview. This option has no effect "
 "on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan menunjukkan dalam gambaran MyCAB. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyChanges overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam gambaran MyChanges. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyWorkorders overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan lajur menunjukkan gambaran keseluruhan Pesanan Kerja Saya. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the PIR overview. This option has no effect on "
 "the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam gambaran PIR. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change manager overview. This option has no"
 " effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam gambaran keseluruhan pengurus perubahan. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change overview. This option has no effect "
 "on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam gambaran perubahan. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change search. This option has no effect on"
 " the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam carian perubahan. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the customer change schedule overview. This "
 "option has no effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam perubahan jadual gambaran keseluruhan pelanggan. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the template overview. This option has no "
 "effect on the position of the column."
-msgstr ""
+msgstr "Mentakrifkan ruangan yang ditunjukkan dalam gambaran template. Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang."
 
 #. SysConfig
 msgid "Defines the signals for each ITSMChange state."
-msgstr ""
+msgstr "Mentakrifkan isyarat untuk setiap keadaan Perubahan ITSM."
 
 #. SysConfig
 msgid ""
 "Defines the template types that will be used as filters in the template "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan jenis template yang akan digunakan sebagai penapis dalam gambaran template."
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the "
 "MyWorkorders overview."
-msgstr ""
+msgstr "Mentakrifkan status kerja perintah yang akan digunakan sebagai penapis dalam gambaran keseluruhan Kerja pesanan saya."
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the PIR "
 "overview."
-msgstr ""
+msgstr "Mentakrifkan status kerja perintah yang akan digunakan sebagai penapis dalam gambaran PIR."
 
 #. SysConfig
 msgid ""
 "Defines the workorder types that will be used to show the PIR overview."
-msgstr ""
+msgstr "Mentakrifkan jenis perintah kerja yang akan digunakan untuk menunjukkan gambaran PIR."
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
-msgstr ""
+msgstr "Mentakrifkan sama ada pemberitahuan hendaklah dihantar."
 
 #. SysConfig
 msgid "Delete Change"
@@ -2337,96 +2354,96 @@ msgstr ""
 msgid ""
 "Determines if an agent can exchange the X-axis of a stat if he generates "
 "one."
-msgstr ""
+msgstr "Menentukan jika ejen boleh bertukar-tukar X-paksi bintang jika dia menjana."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes done "
 "for config item classes."
-msgstr ""
+msgstr "Menentukan jika modul statistik biasa boleh menjana statistik tentang perubahan yang dilakukan bagi kelas item config."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding change state updates within a timeperiod."
-msgstr ""
+msgstr "Menentukan jika modul statistik biasa boleh menjana statistik tentang perubahan mengenai kemaskini negeri perubahan dalam tempoh masa yang."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding the relation between changes and incident tickets."
-msgstr ""
+msgstr "Menentukan jika modul statistik biasa boleh menjana statistik mengenai perubahan mengenai hubungan antara perubahan dan tiket kejadian."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes."
-msgstr ""
+msgstr "Menentukan jika modul statistik biasa boleh menjana statistik mengenai perubahan."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about the number of"
 " Rfc tickets a requester created."
-msgstr ""
+msgstr "Menentukan jika modul statistik biasa boleh menjana statistik mengenai bilangan tiket RFC peminta dicipta."
 
 #. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
 " of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Medan dinamik (utuk change dan urutankerja) ditunjukkan dalam cetak skrin change di antara muka ejen. Tetapan yang mungkin: 0 = Dilumpuhkan, 1 = Diaktifkan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change add screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Medan dinamik ditunjukkan dalam skrin tambah change dari paparan antara muka ejen. Tetapan yang mungkin: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan diperlukan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change edit screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Medan dinamik ditunjukkan dalam skrin edit change pada antara muka ejen. Tetapan yang mungkin: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan diperlukan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Medan Dinamik ditunjukkan dalam skrin carian search dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change zoom screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Medan Dinamik ditunjukkan dalam skrin zum change dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder add screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Medan Dinamik ditunjukkan dalam skrin tambah urutankerja dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder edit screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Medan dinamik ditunjukkan dalam skrin edit urutankerja dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder report screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr ""
+msgstr "Medan dinamik ditunjukkan dalam skrin laporan urutankerja dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder zoom screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
+msgstr "Medan Dinamik ditunjukkan dalam skrin zum urutankerja dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan."
 
 #. SysConfig
 msgid ""
 "DynamicField event module to handle the update of conditions if dynamic "
 "fields are added, updated or deleted."
-msgstr ""
+msgstr "Modul acara MedanDinamik untuk mengendalikan maklumat keadaan jika medan dinamik ditambah, dikemaskini atau dihapuskan."
 
 #. SysConfig
 msgid "Edit a change."
@@ -2502,11 +2519,11 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that cleans up conditions."
-msgstr ""
+msgstr "ITSM modul peristiwa yang membersihkan sehingga keadaan."
 
 #. SysConfig
 msgid "ITSM event module that deletes the cache for a toolbar."
-msgstr ""
+msgstr "ITSM modul peristiwa yang memadam cache untuk toolbar."
 
 #. SysConfig
 msgid "ITSM event module that deletes the history of changes."
@@ -2514,15 +2531,15 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM event module that matches conditions and executes actions."
-msgstr ""
+msgstr "ITSM modul acara yang sepadan dengan keadaan dan melaksanakan tindakan."
 
 #. SysConfig
 msgid "ITSM event module that sends notifications."
-msgstr ""
+msgstr "ITSM modul acara yang menghantar pemberitahuan."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of changes."
-msgstr ""
+msgstr "ITSM modul peristiwa yang mengemaskini sejarah perubahan."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of conditions."
@@ -2534,11 +2551,11 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM event module to recalculate the workorder numbers."
-msgstr ""
+msgstr "ITSM modul acara untuk mengira nombor pesanan kerja."
 
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
-msgstr ""
+msgstr "ITSM modul acara untuk menetapkan permulaan sebenar dan masa akhir pesanan kerja."
 
 #. SysConfig
 msgid ""
@@ -2550,7 +2567,7 @@ msgstr ""
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
-msgstr ""
+msgstr "Fail Log untuk kaunter perubahan ITSM. Fail ini digunakan untuk mewujudkan nombor perubahan."
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
@@ -2564,41 +2581,41 @@ msgstr ""
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
-msgstr ""
+msgstr "Modul untuk memeriksa jika WorkOrderAdd atau WorkOrderAddFromTemplate harus dibenarkan ."
 
 #. SysConfig
 msgid "Module to check the CAB members."
-msgstr ""
+msgstr "Modul untuk memeriksa ahli CAB."
 
 #. SysConfig
 msgid "Module to check the agent."
-msgstr ""
+msgstr "Modul untuk memeriksa ejen."
 
 #. SysConfig
 msgid "Module to check the change builder."
-msgstr ""
+msgstr "Modul untuk memeriksa pembina perubahan."
 
 #. SysConfig
 msgid "Module to check the change manager."
-msgstr ""
+msgstr "Modul untuk memeriksa pengurus perubahan."
 
 #. SysConfig
 msgid "Module to check the workorder agent."
-msgstr ""
+msgstr "Modul untuk memeriksa pesanan kerja ejen."
 
 #. SysConfig
 msgid "Module to check whether no workorder agent is set."
-msgstr ""
+msgstr "Modul untuk memeriksa sama ada tiada ejen kerja perintah ditetapkan."
 
 #. SysConfig
 msgid "Module to check whether the agent is contained in the configured list."
-msgstr ""
+msgstr "Modul untuk memeriksa sama ada ejen itu terkandung dalam senarai dikonfigurasikan."
 
 #. SysConfig
 msgid ""
 "Module to show a link to create a change from this ticket. The ticket will "
 "be automatically linked with the new change."
-msgstr ""
+msgstr "Modul untuk menunjukkan pautan untuk membuat perubahan dari tiket ini. Tiket akan secara automatik dikaitkan dengan perubahan baru."
 
 #. SysConfig
 msgid "Move Time Slot."
@@ -2609,10 +2626,14 @@ msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
-msgstr ""
+msgstr "Hanya pengguna kumpulan-kumpulan ini mempunyai kebenaran untuk menggunakan jenis tiket seperti yang ditakrifkan dalam \"ITSMChange :: AddChangeLinkTicketTypes\" jika ciri \"Tiket :: ACL :: Modul # # # 200-Tiket :: ACL :: Modul\" diaktifkan."
 
 #. SysConfig
 msgid "Overview over all Changes."
+msgstr ""
+
+#. SysConfig
+msgid "PIR"
 msgstr ""
 
 #. SysConfig
@@ -2623,18 +2644,22 @@ msgstr ""
 msgid ""
 "Parameters for the UserCreateWorkOrderNextMask object in the preference view"
 " of the agent interface."
-msgstr ""
+msgstr "Parameter untuk objek UserCreateWorkOrderNextMask dalam pandangan keutamaan bagi antara muka ejen."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
-msgstr ""
+msgstr "Parameter untuk halaman (di mana perubahan ditunjukkan) gambaran perubahan kecil."
 
 #. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
+msgstr "Hadir pautan dalam menu untuk menunjukkan orang-orang yang terlibat dalam perubahan, dalam pandangan zoom perubahan dalam antara muka ejen"
+
+#. SysConfig
+msgid "Projected Service Availability"
 msgstr ""
 
 #. SysConfig
@@ -2649,156 +2674,156 @@ msgstr ""
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
-msgstr ""
+msgstr "Keistimewaan Diperlukan dalam usaha untuk ejen untuk mengambil perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to access the overview of all changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengakses gambaran keseluruhan semua perubahan."
 
 #. SysConfig
 msgid "Required privileges to add a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk menambah perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to change the workorder agent."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk menukar pesanan kerja ejen."
 
 #. SysConfig
 msgid "Required privileges to create a template from a change."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mewujudkan template dari perubahan."
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk membuat template dari perubahan CAB."
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk membuat template dari perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to create changes from templates."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk membuat perubahan dari templat."
 
 #. SysConfig
 msgid "Required privileges to create changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mencipta perubahan."
 
 #. SysConfig
 msgid "Required privileges to delete a template."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk memadam template."
 
 #. SysConfig
 msgid "Required privileges to delete a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk memadam perintah kerja"
 
 #. SysConfig
 msgid "Required privileges to delete changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk memadam perubahan."
 
 #. SysConfig
 msgid "Required privileges to edit a template."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengedit template."
 
 #. SysConfig
 msgid "Required privileges to edit a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengedit perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to edit changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengedit perubahan."
 
 #. SysConfig
 msgid "Required privileges to edit the conditions of changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengedit syarat perubahan."
 
 #. SysConfig
 msgid "Required privileges to edit the content of a template."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengedit kandungan templat."
 
 #. SysConfig
 msgid "Required privileges to edit the involved persons of a change."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mengedit orang yang terlibat perubahan."
 
 #. SysConfig
 msgid "Required privileges to move changes in time."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk menggerakkan perubahan dalam masa.."
 
 #. SysConfig
 msgid "Required privileges to print a change."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk mencetak perubahan"
 
 #. SysConfig
 msgid "Required privileges to reset changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk menetapkan semula perubahan."
 
 #. SysConfig
 msgid "Required privileges to view a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to view changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat perubahan."
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is a CAB member."
-msgstr ""
+msgstr "Keistimewaan Diperlukan untuk melihat senarai perubahan di mana pengguna adalah ahli CAB."
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is the change "
 "manager."
-msgstr ""
+msgstr "Keistimewaan Diperlukan untuk melihat senarai perubahan di mana pengguna adalah pengurus perubahan."
 
 #. SysConfig
 msgid "Required privileges to view overview over all templates."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat gambaran atas semua template."
 
 #. SysConfig
 msgid "Required privileges to view the conditions of changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat keadaan perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the history of a change."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat sejarah perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the history of a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat sejarah perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a change."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat zum sejarah perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat sejarah zoom perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to view the list of Change Schedule."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat senarai Jadual Perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat senarai perubahan PSA."
 
 #. SysConfig
 msgid ""
 "Required privileges to view the list of changes with an upcoming PIR (Post "
 "Implementation Review)."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat senarai perubahan dengan PIR akan datang (Post Implementation Review)."
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat senarai perubahan sendiri."
 
 #. SysConfig
 msgid "Required privileges to view the list of own workorders."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk melihat senarai pesanan kerja sendiri."
 
 #. SysConfig
 msgid "Required privileges to write a report for the workorder."
-msgstr ""
+msgstr "Keistimewaan yang diperlukan untuk menulis laporan untuk mendapatkan perintah kerja."
 
 #. SysConfig
 msgid "Reset a change and its workorders."
@@ -2815,8 +2840,12 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Screen after creating a workorder"
+msgid "Schedule"
 msgstr ""
+
+#. SysConfig
+msgid "Screen after creating a workorder"
+msgstr "Skrin selepas mencipta urutankerja."
 
 #. SysConfig
 msgid "Search Changes."
@@ -2833,45 +2862,45 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
-msgstr ""
+msgstr "Memilih modul beberapa perubahan penjana. \"AutoIncrement\" menambah nombor perubahan, SistemID dan kaunter digunakan dengan format SystemID.counter (contoh: 100118 , 100119 ). Dengan \"Tarikh\", nombor perubahan akan dijana oleh tarikh dan kaunter; format ini kelihatan seperti Year.Month.Day.counter; contohnya 2010062400001 , 2010062400002. Dengan \"DateChecksum\", kaunter itu akan ditambah sebagai checksum kepada rentetan Tarikh ditambah ID Sistem. Checksum ini akan berputar setiap hari. Format ini kelihatan seperti Year.Month.Day.SystemID.Counter.CheckSum, contohnya 2010062410000017 , 2010062410000026 ."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr ""
+msgstr "Menetapkan ketinggian lalai (dalam piksel) bidang HTML sebaris dalam AgentITSMChangeZoom dan AgentITSMWorkOrderZoom."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr ""
+msgstr "Menetapkan ketinggian maksimum ( dalam piksel) bidang HTML sebaris dalam AgentITSMChangeZoom dan AgentITSMWorkOrderZoom."
 
 #. SysConfig
 msgid ""
 "Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
-msgstr ""
+msgstr "Set minimum saiz kaunter perubahan (jika \"AutoIncrement\" telah dipilih sebagai ITSMChange::NumberGenerator). Lalai adalah 5, ini bermakna kaunter bermula dari 10000."
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
-msgstr ""
+msgstr "Set up jentera kerajaan untuk perubahan."
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr ""
+msgstr "Set up jentera kerajaan untuk pesanan kerja."
 
 #. SysConfig
 msgid "Show this screen after I created a new workorder"
-msgstr ""
+msgstr "Tunjukkan skrin ini selepas saya mencipta satu urutankerja baru"
 
 #. SysConfig
 msgid ""
 "Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
 "the following workorders should also be moved if a workorder is modified and"
 " the planned end time has changed."
-msgstr ""
+msgstr "Menunjukkan kotak semak dalam skrin AgentITSMWorkOrderEdit yang mentakrifkan jika urutankerja berikut juga perlu dipindahkan jika urutankerja yang diubah suai dan masa akhir yang dirancang telah berubah."
 
 #. SysConfig
 msgid ""
@@ -2883,7 +2912,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu that allows defining a change as a template in the "
 "zoom view of the change, in the agent interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu yang membolehkan menentukan perubahan sebagai templat dalam paparan zum change, dalam antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2901,7 +2930,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu that allows linking a change with another object in"
 " the change zoom view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu yang membolehkan menghubungkan perubahan dengan objek lain dalam pandangan perubahan zum bagi antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2913,7 +2942,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu that allows moving the time slot of a change in its"
 " zoom view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu yang membolehkan pergerakan slot masa change dalam paparan zum antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2925,13 +2954,13 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to access the conditions of a change in the its "
 "zoom view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk masuk ke syarat-syarat perubahan dalam pandangan zum antara muka ejen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a change in the its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk masuk ke sejarah perubahan dalam pandangan zum antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2949,7 +2978,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to delete a change in its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk memadam perubahan dalam pandangan zum antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2961,7 +2990,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to edit a change in the its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk mengedit perubahan dalam pandangan zum antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2973,7 +3002,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to go back in the change zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk kembali dalam pandangan zum change bagi antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2985,7 +3014,7 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to print a change in the its zoom view of the agent"
 " interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk mencetak perubahan dalam pandangan zum antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -2997,21 +3026,21 @@ msgstr ""
 msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan pautan dalam menu untuk menetapkan semula perubahan dan urutankerja dalam pandangan zum antara muka ejen"
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
-msgstr ""
+msgstr "Tunjukkan sejarah change (perintah berbalik) dalam antara muka ejen."
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "Keadaan Mesin"
 
 #. SysConfig
 msgid ""
 "Stores change and workorder ids and their corresponding template id, while a"
 " user is editing a template."
-msgstr ""
+msgstr "Simpan change dan urutankerja ids dan id templat sepadan, sementara pengguna mengedit templat."
 
 #. SysConfig
 msgid "Take Workorder."
@@ -3025,13 +3054,13 @@ msgstr ""
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
-msgstr ""
+msgstr "Pengecam untuk perubahan, i. Perubahan# Perubahan Saya#. Lalai adalah Perubahan#."
 
 #. SysConfig
 msgid ""
 "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
 "is Workorder#."
-msgstr ""
+msgstr "Pengecam untuk mendapatkan perintah kerja, misalnya Workorder# Workorder#. Lalai adalah Perintah Kerja#."
 
 #. SysConfig
 msgid ""
@@ -3041,7 +3070,7 @@ msgid ""
 "this ACL could collide with other ACLs which are also related to the ticket "
 "type, this sysconfig option is disabled by default and should only be "
 "activated if needed."
-msgstr ""
+msgstr "Modul ACL menghadkan penggunaan jenis tiket yang ditakrifkan dalam pilihan sysconfig 'ITSMChange::AddChangeLinkTicketTypes', kepada pengguna daripada kumpulan seperti yang ditakrifkan dalam \"ITSMChange::RestrictTicketTypes::Kumpulan\". ACL ini boleh bertembung dengan Acls lain yang juga berkaitan dengan jenis tiket, pilihan sysconfig ini dilumpuhkan secara lalai dan hanya boleh diaktifkan jika diperlukan."
 
 #. SysConfig
 msgid "Time Slot"
@@ -3051,7 +3080,7 @@ msgstr ""
 msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
-msgstr ""
+msgstr "Jenis-jenis tiket, di mana dalam zoom tiket melihat pautan untuk menambah perubahan akan dipaparkan."
 
 #. SysConfig
 msgid "User Search"
