@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 9ac998afba981bc4dea8c3cfb582b1e2159b6d07 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
+# $origin: otrs - eb0669b62c665bfb2aa989215eb3de38437e989f - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -97,8 +97,6 @@ for my $ServiceData (@Services) {
 }
 
 #
-
-#
 # Assign services to customer (0 and 1)
 #
 my $Success = $ServiceObject->CustomerUserServiceMemberAdd(
@@ -128,8 +126,6 @@ $Self->True(
     "CustomerUserServiceMemberAdd() for user $TestCustomerUserLogin, and Service $Services[1]->{Name}"
         . " with true",
 );
-
-#
 
 #
 # Create a test tickets
