@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 17:12+0000\n"
-"PO-Revision-Date: 2016-06-03 15:16+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2016-12-10 12:54+0000\n"
+"PO-Revision-Date: 2016-06-23 06:39+0000\n"
+"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,11 +37,11 @@ msgstr "カタログクラス"
 
 #. SysConfig
 msgid "Admin."
-msgstr ""
+msgstr "管理"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "ジェネラルカタログの作成と管理"
+msgstr "一般カタログの作成と管理"
 
 #. SysConfig
 msgid ""
@@ -50,15 +51,15 @@ msgstr "管理エリアでのAdminGeneralCatalogのフロントエンドモジ�
 
 #. SysConfig
 msgid "General Catalog"
-msgstr "ジェネラルカタログ"
+msgstr "一般カタログ"
 
 #. SysConfig
 msgid ""
 "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "ジェネラルカタログ属性のコメント例 2　の設定値"
+msgstr "一般カタログ属性のコメント例 2　の設定値"
 
 #. SysConfig
 msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
-msgstr "ジェネラルカタログ属性のパーミッショングループ　の設定値"
+msgstr "一般カタログ属性のパーミッショングループ　の設定値"
