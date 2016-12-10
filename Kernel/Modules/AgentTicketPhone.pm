@@ -1844,7 +1844,7 @@ sub Run {
             # build the response
             %Response = (
                 CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                CurInciState  => $LayoutObject->{LanguageObject}->Get($Service{CurInciState}),
+                CurInciState  => $LayoutObject->{LanguageObject}->Translate($Service{CurInciState}),
             );
         }
 
