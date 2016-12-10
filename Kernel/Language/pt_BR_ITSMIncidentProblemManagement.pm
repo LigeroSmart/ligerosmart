@@ -38,10 +38,16 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Criticalidade';
     $Self->{Translation}->{'Impact'} = 'Impacto';
 
+    # Perl Module: Kernel/Modules/AgentTicketZoom.pm
+    $Self->{Translation}->{'This user is currently offline'} = '';
+    $Self->{Translation}->{'This user is currently active'} = '';
+    $Self->{Translation}->{'This user is currently away'} = '';
+    $Self->{Translation}->{'This user is currently unavailable'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Adicionar uma decisão!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Campos adicionais ITSM';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Campos adicionais de Ticket ITSM';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Permite adicionar notas na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -142,7 +148,7 @@ sub Data {
         'Mostra os campos de título na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Mostra os campos de título na tela de decisão da interface de atendente.';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = 'Decisão de Chamado.';
 
 }
 

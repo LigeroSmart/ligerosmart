@@ -1,11 +1,12 @@
 # 
 # Translators:
+# 汇民 王 <whuim@163.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:48+0000\n"
-"PO-Revision-Date: 2016-05-24 19:49+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2016-06-03 17:45+0000\n"
+"PO-Revision-Date: 2016-09-02 09:52+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,7 +84,7 @@ msgstr "额外的ITSM字段"
 
 #. SysConfig
 msgid "Additional ITSM ticket fields."
-msgstr ""
+msgstr "额外的ITSM工单字段。"
 
 #. SysConfig
 msgid ""
@@ -386,4 +387,4 @@ msgstr "在服务人员界面工单决定窗口显示工单标题字段。"
 
 #. SysConfig
 msgid "Ticket decision."
-msgstr ""
+msgstr "工单决定。"

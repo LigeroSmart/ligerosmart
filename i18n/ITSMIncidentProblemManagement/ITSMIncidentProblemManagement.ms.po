@@ -1,12 +1,13 @@
 # 
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:48+0000\n"
-"PO-Revision-Date: 2016-05-24 19:49+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2016-06-03 17:45+0000\n"
+"PO-Revision-Date: 2016-10-17 06:09+0000\n"
+"Last-Translator: OTRS SDN BHD <otrssdnbhd@gmail.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,7 +85,7 @@ msgstr "Tambahan ITSM Medan"
 
 #. SysConfig
 msgid "Additional ITSM ticket fields."
-msgstr ""
+msgstr "tambahan kawasan-kawasan tiket ITSM"
 
 #. SysConfig
 msgid ""
@@ -387,4 +388,4 @@ msgstr "Menunjukkan bidang tajuk dalam skrin keputusan bagi antara muka ejen."
 
 #. SysConfig
 msgid "Ticket decision."
-msgstr ""
+msgstr "keputusan tiket"

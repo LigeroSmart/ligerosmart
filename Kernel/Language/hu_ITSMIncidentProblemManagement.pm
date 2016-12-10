@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'Add decision to ticket'} = 'Döntés hozzáadása a jegyhez';
     $Self->{Translation}->{'Decision Date'} = 'Döntés dátuma';
     $Self->{Translation}->{'Decision Result'} = 'Döntés eredménye';
-    $Self->{Translation}->{'Due Date'} = 'Lejárat dátuma';
+    $Self->{Translation}->{'Due Date'} = 'Határidő';
     $Self->{Translation}->{'Reason'} = 'Ok';
     $Self->{Translation}->{'Recovery Start Time'} = 'Helyreállítás indítási ideje';
     $Self->{Translation}->{'Repair Start Time'} = 'Javítás indítási ideje';
@@ -37,6 +37,12 @@ sub Data {
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Kritikusság';
     $Self->{Translation}->{'Impact'} = 'Hatás';
+
+    # Perl Module: Kernel/Modules/AgentTicketZoom.pm
+    $Self->{Translation}->{'This user is currently offline'} = '';
+    $Self->{Translation}->{'This user is currently active'} = '';
+    $Self->{Translation}->{'This user is currently away'} = '';
+    $Self->{Translation}->{'This user is currently unavailable'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Adjon hozzá egy döntést!';

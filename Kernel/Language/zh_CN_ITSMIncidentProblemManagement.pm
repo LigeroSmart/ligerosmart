@@ -38,10 +38,16 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = '紧急度';
     $Self->{Translation}->{'Impact'} = '影响度';
 
+    # Perl Module: Kernel/Modules/AgentTicketZoom.pm
+    $Self->{Translation}->{'This user is currently offline'} = '';
+    $Self->{Translation}->{'This user is currently active'} = '';
+    $Self->{Translation}->{'This user is currently away'} = '';
+    $Self->{Translation}->{'This user is currently unavailable'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '添加决定!';
     $Self->{Translation}->{'Additional ITSM Fields'} = '额外的ITSM字段';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '额外的ITSM工单字段。';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '服务人员界面额外的ITSM字段窗口允许添加备注。';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -142,7 +148,7 @@ sub Data {
         '在服务人员界面工单额外的ITSM字段窗口显示工单标题字段。';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '在服务人员界面工单决定窗口显示工单标题字段。';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = '工单决定。';
 
 }
 

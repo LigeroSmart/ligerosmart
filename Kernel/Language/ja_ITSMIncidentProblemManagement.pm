@@ -38,10 +38,16 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = '重要度';
     $Self->{Translation}->{'Impact'} = '影響度';
 
+    # Perl Module: Kernel/Modules/AgentTicketZoom.pm
+    $Self->{Translation}->{'This user is currently offline'} = '';
+    $Self->{Translation}->{'This user is currently active'} = '';
+    $Self->{Translation}->{'This user is currently away'} = '';
+    $Self->{Translation}->{'This user is currently unavailable'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '決定を追加する！';
     $Self->{Translation}->{'Additional ITSM Fields'} = '追加のITSM項目';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '追加の ITSM チケット･フィールド';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'エージェントインターフェイスのアディショナルITSM項目画面で追加のノートを許可する';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -55,13 +61,13 @@ sub Data {
     $Self->{Translation}->{'Defines if the service incident state should be shown during service selection in the agent interface.'} =
         '担当者インターフェイスでサービス選択時にサービスインシデント状況を表示するか定義するする';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの追加のITSMのフィールド画面で用いるデフォルトのメモ本文を定義します。';
     $Self->{Translation}->{'Defines the default body of a note in the decision screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの決定画面で用いるデフォルトのメモ本文を定義します。';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの追加のITSMのフィールド画面で、メモ追加後の「次の状態」についてデフォルトの選択肢を定義します。';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの決定画面で、メモ追加後の「次の状態」についてデフォルトの選択肢を定義します。';
     $Self->{Translation}->{'Defines the default subject of a note in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default subject of a note in the decision screen of the agent interface.'} =
@@ -87,13 +93,13 @@ sub Data {
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスの追加 ITSMフィールド画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
+        '担当者インターフェイスの追加 ITSMフィールド画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスの決定画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効 さらに 必須';
+        '担当者インターフェイスの決定画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのチケット検索画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのチケット検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのチケットズーム画面で表示される動的領域。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのチケットズーム画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =

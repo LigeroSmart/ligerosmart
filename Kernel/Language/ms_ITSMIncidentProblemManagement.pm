@@ -38,10 +38,16 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritikal';
     $Self->{Translation}->{'Impact'} = 'Kesan';
 
+    # Perl Module: Kernel/Modules/AgentTicketZoom.pm
+    $Self->{Translation}->{'This user is currently offline'} = '';
+    $Self->{Translation}->{'This user is currently active'} = '';
+    $Self->{Translation}->{'This user is currently away'} = '';
+    $Self->{Translation}->{'This user is currently unavailable'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Tambah keputusan!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Tambahan ITSM Medan';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'tambahan kawasan-kawasan tiket ITSM';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Membenarkan penambahan catatan dalam skrin medan ITSM tambahan antara muka ejen.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -142,7 +148,7 @@ sub Data {
         'Menunjukkan bidang tajuk dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Menunjukkan bidang tajuk dalam skrin keputusan bagi antara muka ejen.';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = 'keputusan tiket';
 
 }
 
