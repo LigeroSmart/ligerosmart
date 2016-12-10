@@ -1,11 +1,12 @@
 # 
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 17:40+0000\n"
-"PO-Revision-Date: 2016-06-03 15:41+0000\n"
+"POT-Creation-Date: 2016-12-10 13:21+0000\n"
+"PO-Revision-Date: 2016-12-10 12:21+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -192,6 +193,23 @@ msgstr "Insiden status semasa"
 
 #. SysConfig
 msgid "Both"
+msgstr "Kedua-duanya"
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Services widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -238,23 +256,23 @@ msgstr "Frontend pendaftaran modul untuk objek AgentITSMServiceZoom dalam antara
 
 #. SysConfig
 msgid "ITSM SLA Overview."
-msgstr ""
+msgstr "tinjauan keseluruhan ITSM SLA"
 
 #. SysConfig
 msgid "ITSM Service Overview."
-msgstr ""
+msgstr "Tinjauan Servis ITSM"
 
 #. SysConfig
 msgid "Incident"
-msgstr ""
+msgstr "insiden"
 
 #. SysConfig
 msgid "Incident State Type"
-msgstr ""
+msgstr "Jenis Keadaan Kejadian"
 
 #. SysConfig
 msgid "Incident State Type."
-msgstr ""
+msgstr "Jenis Keadaan Kejadian."
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -282,7 +300,7 @@ msgstr "Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan."
 
 #. SysConfig
 msgid "Operational"
-msgstr ""
+msgstr "operasi"
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
@@ -290,19 +308,19 @@ msgstr "Parameter untuk keadaan insiden memandangkan keutamaan."
 
 #. SysConfig
 msgid "SLA Print."
-msgstr ""
+msgstr "Cetakan SLA."
 
 #. SysConfig
 msgid "SLA Zoom."
-msgstr ""
+msgstr "Zum SLA."
 
 #. SysConfig
 msgid "Service Print."
-msgstr ""
+msgstr "Cetakan Servis."
 
 #. SysConfig
 msgid "Service Zoom."
-msgstr ""
+msgstr "Zum Servis."
 
 #. SysConfig
 msgid ""

@@ -1,11 +1,11 @@
 # 
 # Translators:
-# João Ferro <fmthard@gmail.com>, 2015
+# Joao Ferro <fmthard@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 17:40+0000\n"
-"PO-Revision-Date: 2016-06-03 15:41+0000\n"
+"POT-Creation-Date: 2016-12-10 13:21+0000\n"
+"PO-Revision-Date: 2016-12-10 12:21+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -196,6 +196,23 @@ msgstr ""
 
 #. SysConfig
 msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Services widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Frontend module registration for the AdminITSMCIPAllocate configuration in "
 "the admin area."
 msgstr "Registo de módulo de interface para a configuração AdminITSMCIPAllocate na área de gestão."
@@ -246,7 +263,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Incident"
-msgstr ""
+msgstr "Incidente"
 
 #. SysConfig
 msgid "Incident State Type"
@@ -282,7 +299,7 @@ msgstr "Módulo para mostrar o link associar no menu serviço."
 
 #. SysConfig
 msgid "Operational"
-msgstr ""
+msgstr "Operativo"
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."

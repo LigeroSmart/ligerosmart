@@ -76,6 +76,10 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Usajili wa moduli za mazingira ya mbele kwa usanidi wa AdminITSMCIPAllocate katika eneo la kiongozi.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -92,7 +96,7 @@ sub Data {
         'Usajili wa moduli ya mazingira ya mbele kwa kipengee cha kukuzwa kwa huduma cha ITSMSLA cha wakala katika kiolesura cha wakala.';
     $Self->{Translation}->{'ITSM SLA Overview.'} = '';
     $Self->{Translation}->{'ITSM Service Overview.'} = '';
-    $Self->{Translation}->{'Incident'} = '';
+    $Self->{Translation}->{'Incident'} = 'Tukio';
     $Self->{Translation}->{'Incident State Type'} = '';
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Simamia matriki ya kipaumbele.';
@@ -101,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya huduma.';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya sla.';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma.';
-    $Self->{Translation}->{'Operational'} = '';
+    $Self->{Translation}->{'Operational'} = 'Uendeshaji';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Vigezo ya hali ya matukio katika mandhari ya mapendeleo.';
     $Self->{Translation}->{'SLA Print.'} = '';
     $Self->{Translation}->{'SLA Zoom.'} = '';

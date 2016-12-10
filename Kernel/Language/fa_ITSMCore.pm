@@ -76,33 +76,37 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
-        '';
+        'ثبت ماژول برای پیکربندی AdminITSMCIPAllocate در بخش مدیریت';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
-        '';
+        'ثبت ماژول برای پیکربندی آبجکت AgentITSMSLA در واسط کاربری کارشناس';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} =
-        '';
+        'ثبت ماژول برای پیکربندی آبجکت AgentITSMSLAPrint در واسط کاربری کارشناس';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} =
-        '';
+        'ثبت ماژول برای پیکربندی آبجکت AgentITSMSLAZoom در واسط کاربری کارشناس';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} =
-        '';
+        'ثبت ماژول برای پیکربندی آبجکت AgentITSMService در واسط کاربری کارشناس';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} =
-        '';
+        'ثبت ماژول برای پیکربندی آبجکت AgentITSMServicePrint در واسط کاربری کارشناس';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
-        '';
+        'ثبت ماژول برای پیکربندی آبجکت AgentITSMServiceZoom در واسط کاربری کارشناس';
     $Self->{Translation}->{'ITSM SLA Overview.'} = '';
     $Self->{Translation}->{'ITSM Service Overview.'} = '';
     $Self->{Translation}->{'Incident'} = '';
     $Self->{Translation}->{'Incident State Type'} = '';
     $Self->{Translation}->{'Incident State Type.'} = '';
-    $Self->{Translation}->{'Manage priority matrix.'} = '';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'مدیریت ماتریس الویت';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی سرویس';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی SLA';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی سرویس';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی SLA';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
-    $Self->{Translation}->{'Operational'} = '';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
+    $Self->{Translation}->{'Operational'} = 'عملیاتی';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'پارامترهایی برای وضعیت‌های رخداد در نمای تنظیمات شخصی';
     $Self->{Translation}->{'SLA Print.'} = '';
     $Self->{Translation}->{'SLA Zoom.'} = '';
     $Self->{Translation}->{'Service Print.'} = '';
@@ -165,7 +169,7 @@ sub Data {
         '';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         '';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = '';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'اندازه عرض کنترل‌های ورود متن ITSM';
 
 }
 

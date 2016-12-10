@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 17:40+0000\n"
-"PO-Revision-Date: 2016-06-03 15:41+0000\n"
+"POT-Creation-Date: 2016-12-10 13:21+0000\n"
+"PO-Revision-Date: 2016-12-10 12:21+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -192,6 +192,23 @@ msgstr "Jelenlegi incidensállapot"
 
 #. SysConfig
 msgid "Both"
+msgstr "Mindkettő"
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Define which columns are shown in the linked Services widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -238,23 +255,23 @@ msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő 
 
 #. SysConfig
 msgid "ITSM SLA Overview."
-msgstr ""
+msgstr "ITSM SLA áttekintés."
 
 #. SysConfig
 msgid "ITSM Service Overview."
-msgstr ""
+msgstr "ITSM szolgáltatás áttekintés."
 
 #. SysConfig
 msgid "Incident"
-msgstr ""
+msgstr "Incidens"
 
 #. SysConfig
 msgid "Incident State Type"
-msgstr ""
+msgstr "Incidensállapot típus"
 
 #. SysConfig
 msgid "Incident State Type."
-msgstr ""
+msgstr "Incidensállapot típus."
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -282,7 +299,7 @@ msgstr "Egy modul a hivatkozás megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
 msgid "Operational"
-msgstr ""
+msgstr "Üzemképes"
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
@@ -290,19 +307,19 @@ msgstr "Paraméterek az incidensállapotokhoz a beállítások nézetben."
 
 #. SysConfig
 msgid "SLA Print."
-msgstr ""
+msgstr "SLA nyomtatás."
 
 #. SysConfig
 msgid "SLA Zoom."
-msgstr ""
+msgstr "SLA nagyítás."
 
 #. SysConfig
 msgid "Service Print."
-msgstr ""
+msgstr "Szolgáltatás nyomtatás."
 
 #. SysConfig
 msgid "Service Zoom."
-msgstr ""
+msgstr "Szolgáltatás nagyítás."
 
 #. SysConfig
 msgid ""

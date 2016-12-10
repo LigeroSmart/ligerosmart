@@ -76,6 +76,10 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registo de módulo de interface para a configuração AdminITSMCIPAllocate na área de gestão.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -92,7 +96,7 @@ sub Data {
         'Registo de módulo de interface para o objeto AgentITSMServiceZoom para agente.';
     $Self->{Translation}->{'ITSM SLA Overview.'} = '';
     $Self->{Translation}->{'ITSM Service Overview.'} = '';
-    $Self->{Translation}->{'Incident'} = '';
+    $Self->{Translation}->{'Incident'} = 'Incidente';
     $Self->{Translation}->{'Incident State Type'} = '';
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Gerir a matriz de Prioridade';
@@ -101,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'Módulo para mostrar o link imprimir no menu serviço.';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Módulo para mostrar o link imprimir no menu SLA.';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Módulo para mostrar o link associar no menu serviço.';
-    $Self->{Translation}->{'Operational'} = '';
+    $Self->{Translation}->{'Operational'} = 'Operativo';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parâmetros para os estados de incidente nas preferências.';
     $Self->{Translation}->{'SLA Print.'} = '';
     $Self->{Translation}->{'SLA Zoom.'} = '';

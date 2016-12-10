@@ -76,6 +76,10 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Frontend module registration для параметров AdminITSMCIPAllocate в панели администратора.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -90,23 +94,23 @@ sub Data {
         'Frontend module registration для объекта AgentITSMServicePrint в панели администратора.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         'Frontend module registration для объекта AgentITSMServiceZoom в панели администратора.';
-    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
-    $Self->{Translation}->{'ITSM Service Overview.'} = '';
-    $Self->{Translation}->{'Incident'} = '';
-    $Self->{Translation}->{'Incident State Type'} = '';
-    $Self->{Translation}->{'Incident State Type.'} = '';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = 'Обзор ITSM SLA';
+    $Self->{Translation}->{'ITSM Service Overview.'} = 'Обзор ITSM сервисов.';
+    $Self->{Translation}->{'Incident'} = 'Инцидент';
+    $Self->{Translation}->{'Incident State Type'} = 'Тип состояния инцидента';
+    $Self->{Translation}->{'Incident State Type.'} = 'Тип состояния инцидента';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Управление матрицей приоритетов';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Показать кнопку "назад" в меню Сервис';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Показать кнопку "назад" в меню SLA';
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'Показать кнопку "Печать" в меню Сервис';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Показать кнопку "Печать" в меню SLA';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Показать кнопку Связать/Link в меню Сервис';
-    $Self->{Translation}->{'Operational'} = '';
+    $Self->{Translation}->{'Operational'} = 'В эксплуатации';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Параметры для состояния инцидента в preference view.';
-    $Self->{Translation}->{'SLA Print.'} = '';
-    $Self->{Translation}->{'SLA Zoom.'} = '';
-    $Self->{Translation}->{'Service Print.'} = '';
-    $Self->{Translation}->{'Service Zoom.'} = '';
+    $Self->{Translation}->{'SLA Print.'} = 'Печать SLA.';
+    $Self->{Translation}->{'SLA Zoom.'} = 'Подробности SLA.';
+    $Self->{Translation}->{'Service Print.'} = 'Печать сервиса.';
+    $Self->{Translation}->{'Service Zoom.'} = 'Подробности сервиса.';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         'Задает тип и направление связи для использования при вычислении состояния инцидента. Ключ это имя типа связи (как это задано в LinkObject::Type), а Значение это направление IncidentLinkType на основании которого вычисляется состояние инцидента. Например, если IncidentLinkType установлен в \'DependsOn\', и Направление - \'Source\', то только связи \'Depends on\' будут использоваться (а не противоположная \'Required for\') для вычисления состояния инцидента. Вы можете добавить другие дополнительные типы связи и направления по своему желанию, например,  \'Includes\' с направлением \'Target\'. допускаются все типы связи, заданные параметром LinkObject::Type и направления могут быть \'Source\', \'Target\', или \'Both\'. ВАЖНО: ПОСЛЕ ИЗМЕНЕНИЯ ЗНАЧЕНИЙ ЭТОГО ПАРАМЕТРАНЕОБХОДИМО ВЫПОЛНИТЬ СКРИПТ bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl ДЛЯ ПЕРЕРАСЧЕТА ВСЕХ СОСТОЯНИЙ ИНЦИДЕНТА НА ОСНОВЕ НОВЫХ ЗНАЧЕНИЙ!';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =

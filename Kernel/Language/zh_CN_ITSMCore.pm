@@ -75,7 +75,11 @@ sub Data {
     $Self->{Translation}->{'Current Incident State'} = '当前故障状态';
 
     # SysConfig
-    $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Both'} = '兼具';
+    $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
+        '';
+    $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+        '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         '为系统管理区中的 AdminITSMCIPAllocate 配置注册前端模块。';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -90,23 +94,23 @@ sub Data {
         '为服务人员界面中的 AgentITSMServicePrint 对象注册前端模块。';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         '为服务人员界面中的 AgentITSMServiceZoom 对象注册前端模块。';
-    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
-    $Self->{Translation}->{'ITSM Service Overview.'} = '';
-    $Self->{Translation}->{'Incident'} = '';
-    $Self->{Translation}->{'Incident State Type'} = '';
-    $Self->{Translation}->{'Incident State Type.'} = '';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA概览';
+    $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM服务概览';
+    $Self->{Translation}->{'Incident'} = '故障';
+    $Self->{Translation}->{'Incident State Type'} = '故障状态类型';
+    $Self->{Translation}->{'Incident State Type.'} = '故障状态类型。';
     $Self->{Translation}->{'Manage priority matrix.'} = '管理优先级矩阵。';
     $Self->{Translation}->{'Module to show back link in service menu.'} = '服务菜单中显示后退链接的模块。';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'SLA菜单中显示后退链接的模块。';
     $Self->{Translation}->{'Module to show print link in service menu.'} = '服务菜单中显示打印链接的模块。';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'SLA菜单中显示打印链接的模块。';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '服务菜单中显示当前链接的链接的模块。';
-    $Self->{Translation}->{'Operational'} = '';
+    $Self->{Translation}->{'Operational'} = '正常';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '选项视图中用于表示故障状态的参数。';
-    $Self->{Translation}->{'SLA Print.'} = '';
-    $Self->{Translation}->{'SLA Zoom.'} = '';
-    $Self->{Translation}->{'Service Print.'} = '';
-    $Self->{Translation}->{'Service Zoom.'} = '';
+    $Self->{Translation}->{'SLA Print.'} = 'SLA打印。';
+    $Self->{Translation}->{'SLA Zoom.'} = 'SLA详情。';
+    $Self->{Translation}->{'Service Print.'} = '服务打印。';
+    $Self->{Translation}->{'Service Zoom.'} = '服务详情。';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '设置链接的类型和方向以便计算故障状态。键是链接类型的名称（在LinkObject::Type中定义），值是IncidentLinkType（故障链接类型）的方向以计算故障状态。示例：如果IncidentLinkType（故障链接类型）设为“DependsOn（依赖）”，方向是Source（源），只有“依赖”链接（而不是链接类型为“被...需要”的链接）才用来计算故障状态。可以根据需要添加更多的链接类型和方向，如方向为“目标”的“Includes（包含）”链接。所有在系统配置选项的LinkObject::Type中定义的链接类型都可以使用，方向只可以是“Source（源）”、“Target（目标）”或“Both（源和目标都是）”。重要：在更改了系统配置选项后，需要运行脚本bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl，才能按新的设置重新计算故障状态。';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
