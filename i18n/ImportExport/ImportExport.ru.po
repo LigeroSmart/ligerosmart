@@ -1,12 +1,14 @@
 # 
 # Translators:
+# Alex Pelikh <alex.pelikh@icloud.com>, 2016
+# Shader <shader@dautkom.lv>, 2016
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2016-08-11 20:03+0000\n"
+"Last-Translator: Alex Pelikh <alex.pelikh@icloud.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +90,7 @@ msgstr "Начать экспорт"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr ""
+msgstr "Шаг 1 из 5 - Редактировать общую информацию"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -104,11 +106,11 @@ msgstr "Формат обязателен!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr ""
+msgstr "Шаг 2 из 5 - Редактировать информацию об объекте"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5"
-msgstr ""
+msgstr "Шаг 3 из 5"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -116,7 +118,7 @@ msgstr "обязателен!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr ""
+msgstr "Шаг 4 из 5 - Редактировать информацию сопоставления"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -128,7 +130,7 @@ msgstr "Добавьте элемент сопоставления"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr ""
+msgstr "Шаг 5 из 5 - Редактировать информацию поиска"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -172,51 +174,51 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
-msgstr ""
+msgstr "Шаблон не найден!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr ""
+msgstr "Невозможно добавить/обновить шаблон!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr ""
+msgstr "Требуется ID Шаблона!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr ""
+msgstr "Ошибка. Импорт невозможен! Смотри подробности в Syslog."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr ""
+msgstr "Ошибка. Экспорт невозможен! Смотри подробности в Syslog."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
-msgstr ""
+msgstr "номер"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number bigger than zero"
-msgstr ""
+msgstr "номер больше нуля"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer"
-msgstr ""
+msgstr "целое число"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer bigger than zero"
-msgstr ""
+msgstr "целое число больше нуля"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
-msgstr ""
+msgstr "Обязательные элемент, пожалуйста введите данные."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr ""
+msgstr "Неверные данные, пожалуйста, укажите верные %s"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
-msgstr ""
+msgstr "Формат не найден!"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

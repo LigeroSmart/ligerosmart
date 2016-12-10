@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crear una plantilla para importar y exportar informacion del objeto.';
     $Self->{Translation}->{'Start Import'} = 'Iniciar Importación';
     $Self->{Translation}->{'Start Export'} = 'Iniciar Exportación';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Paso 1 de 5 - Editar información común';
     $Self->{Translation}->{'Name is required!'} = 'El nombre es requerido';
     $Self->{Translation}->{'Object is required!'} = '¡Debe especificar Objeto!';
     $Self->{Translation}->{'Format is required!'} = '¡Debe especificar Formato!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Paso 2 de 5 - Editar información de objeto';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = '¡es requerido!';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Paso 4 de 5 - Editar información de mapeo';
     $Self->{Translation}->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Añadir Mapeo de Elementos';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Paso 5 de 5 - Editar información de búsqueda';
     $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportación por búsqueda';
     $Self->{Translation}->{'Import information'} = 'Importar información';
     $Self->{Translation}->{'Source File'} = 'Archivo origen';
@@ -59,18 +59,18 @@ sub Data {
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
     $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'Template not found!'} = 'Plantilla no encontrada!';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = 'No se puede insertar/actualizar la plantilla!';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'Se necesita IDPlantilla!';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ocurrió un error!. Imposible importar! Vea Syslog para detalles.';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Ocurrió un error!. Imposible exportar! Vea Syslog para detalles.';
+    $Self->{Translation}->{'number'} = 'Número';
+    $Self->{Translation}->{'number bigger than zero'} = 'Número mayor que cero';
+    $Self->{Translation}->{'integer'} = 'Entero';
+    $Self->{Translation}->{'integer bigger than zero'} = 'Entero mayo que cero';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Elemento requerido, por favor insertar datos';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Datos inválidos, por favor insertar un válido %s';
+    $Self->{Translation}->{'Format not found!'} = 'Formato no encontrado!';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

@@ -17,7 +17,7 @@ sub Data {
 
     # Template: AAAImportExport
     $Self->{Translation}->{'Add mapping template'} = 'Dodaj szablon mapowania';
-    $Self->{Translation}->{'Charset'} = 'Kodowanie';
+    $Self->{Translation}->{'Charset'} = 'Kodowanie ';
     $Self->{Translation}->{'Colon (:)'} = 'Dwukropek (:)';
     $Self->{Translation}->{'Column'} = 'Kolumna';
     $Self->{Translation}->{'Column Separator'} = 'Separator kolumny';
@@ -37,12 +37,12 @@ sub Data {
     $Self->{Translation}->{'Start Import'} = 'Rozpocznij import';
     $Self->{Translation}->{'Start Export'} = 'Rozpocznij eksport';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
-    $Self->{Translation}->{'Name is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Nazwa jest wymagana!';
     $Self->{Translation}->{'Object is required!'} = 'Obiekt jest wymagany!';
     $Self->{Translation}->{'Format is required!'} = 'Format jest wymagany!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'is required!'} = 'jest wymagana(y)!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
     $Self->{Translation}->{'No map elements found.'} = 'Nie znaleziono elementów mapy.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Dodaj element mapowania';

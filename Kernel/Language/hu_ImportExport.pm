@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Sablon létrehozása objektuminformációk importálásához és exportálásához.';
     $Self->{Translation}->{'Start Import'} = 'Importálás indítása';
     $Self->{Translation}->{'Start Export'} = 'Exportálás indítása';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '1. lépés az 5-ből - közös információk szerkesztése';
     $Self->{Translation}->{'Name is required!'} = 'A név kötelező!';
     $Self->{Translation}->{'Object is required!'} = 'Az objektum kötelező!';
     $Self->{Translation}->{'Format is required!'} = 'A formátum kötelező!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '2. lépés az 5-ből - objektuminformációk szerkesztése';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = 'kötelező!';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '4. lépés az 5-ből - leképezési információk szerkesztése';
     $Self->{Translation}->{'No map elements found.'} = 'Nem találhatók térképelemek.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Leképezési elemek hozzáadása';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '5. lépés az 5-ből - keresési információk szerkesztése';
     $Self->{Translation}->{'Restrict export per search'} = 'Exportálás korlátozása keresésenként';
     $Self->{Translation}->{'Import information'} = 'Importálási információk';
     $Self->{Translation}->{'Source File'} = 'Forrásfájl';
@@ -57,20 +57,20 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'OK';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
-    $Self->{Translation}->{'No object backend found!'} = '';
-    $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'No object backend found!'} = 'Nem található objektum-háttérprogram!';
+    $Self->{Translation}->{'No format backend found!'} = 'Nem található formátum-háttérprogram!';
+    $Self->{Translation}->{'Template not found!'} = 'Sablon nem található!';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = 'Nem lehet beszúrni vagy frissíteni a sablont!';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'Sablon-azonosító szükséges!';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Hiba történt. Az importálás lehetetlen! Nézze meg a rendszernaplót a részletekért.';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Hiba történt. Az exportálás lehetetlen! Nézze meg a rendszernaplót a részletekért.';
+    $Self->{Translation}->{'number'} = 'szám';
+    $Self->{Translation}->{'number bigger than zero'} = 'nullánál nagyobb szám';
+    $Self->{Translation}->{'integer'} = 'egész';
+    $Self->{Translation}->{'integer bigger than zero'} = 'nullánál nagyobb egész';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Elem szükséges, szúrjon be adatokat';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Érvénytelen adatok, egy érvényes %s beszúrása szükséges';
+    $Self->{Translation}->{'Format not found!'} = 'Formátum nem található!';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

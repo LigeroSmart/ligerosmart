@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
+"POT-Creation-Date: 2016-12-10 13:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,7 +103,7 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
+msgid "Step 3 of 5 - Edit format information"
 msgstr ""
 
 #. Template: AdminImportExport

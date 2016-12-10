@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'オブジェクトのインポート・エクスポート用のテンプレートを作成する';
     $Self->{Translation}->{'Start Import'} = 'インポート開始';
     $Self->{Translation}->{'Start Export'} = 'エクスポート開始';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Step 1 of 5 - 基本情報の設定';
     $Self->{Translation}->{'Name is required!'} = '名称は必須です!';
     $Self->{Translation}->{'Object is required!'} = 'オブジェクトは必須です!';
     $Self->{Translation}->{'Format is required!'} = 'フォーマットは必須です!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Step 2 of 5 - オブジェクト情報の設定';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = '必須です';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Step 4 of 5 - マッピング情報の設定';
     $Self->{Translation}->{'No map elements found.'} = 'マッピング要素が見つかりませんでした';
     $Self->{Translation}->{'Add Mapping Element'} = 'マッピング要素の追加';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Step 5 of 5 - 検索情報の設定';
     $Self->{Translation}->{'Restrict export per search'} = '検索あたりの出力を制限';
     $Self->{Translation}->{'Import information'} = '情報の読み込み';
     $Self->{Translation}->{'Source File'} = 'ソースファイル';
@@ -57,20 +57,20 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
-    $Self->{Translation}->{'No object backend found!'} = '';
-    $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'No object backend found!'} = '指定されたオブジェクトのバックエンドが見つかりません！';
+    $Self->{Translation}->{'No format backend found!'} = '指定されたフォーマットのバックエンドが見つかりません！';
+    $Self->{Translation}->{'Template not found!'} = 'テンプレートが見つかりません！';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = 'テンプレートの挿入・更新ができません！';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'テンプレートIDの入力が必要です！';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'インポートが出来ません（エラーが発生しました。詳細はシステムログをご確認ください）！';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'エクスポートが出来ません（エラーが発生しました。詳細はシステムログをご確認ください）！';
+    $Self->{Translation}->{'number'} = '数値';
+    $Self->{Translation}->{'number bigger than zero'} = '0以上の数値';
+    $Self->{Translation}->{'integer'} = '整数値';
+    $Self->{Translation}->{'integer bigger than zero'} = '0以上の整数値';
+    $Self->{Translation}->{'Element required, please insert data'} = 'データを入力する必要があります。';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '無効なデータです。有効な %s を入力してください。';
+    $Self->{Translation}->{'Format not found!'} = '指定されたフォーマットが見つかりません！';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

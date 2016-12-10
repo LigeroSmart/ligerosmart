@@ -36,6 +36,7 @@
         <File Permission="644" Location="Kernel/Language/ro_ImportExport.pm" />
         <File Permission="644" Location="Kernel/Language/pt_ImportExport.pm" />
         <File Permission="644" Location="Kernel/Language/ru_ImportExport.pm" />
+        <File Permission="644" Location="Kernel/Language/sr_Cyrl_ImportExport.pm" />
         <File Permission="644" Location="Kernel/Language/sr_ImportExport.pm" />
         <File Permission="644" Location="Kernel/Language/sv_ImportExport.pm" />
         <File Permission="644" Location="Kernel/Language/sw_ImportExport.pm" />

@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = '创建模板导入和导出对象信息。';
     $Self->{Translation}->{'Start Import'} = '开始导入';
     $Self->{Translation}->{'Start Export'} = '开始导出';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '步骤 1/5 - 编辑通用信息';
     $Self->{Translation}->{'Name is required!'} = '命名是必需的！';
     $Self->{Translation}->{'Object is required!'} = '对象是必需的！';
     $Self->{Translation}->{'Format is required!'} = '格式是必需的！';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '步骤 2/5 - 编辑目标信息';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = '是必需的！';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '步骤 4/5 - 编辑映射信息';
     $Self->{Translation}->{'No map elements found.'} = '没有找到映射的字段';
     $Self->{Translation}->{'Add Mapping Element'} = '添加映射字段';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '步骤 5/5 - 编辑搜索信息';
     $Self->{Translation}->{'Restrict export per search'} = '按搜索限制导出';
     $Self->{Translation}->{'Import information'} = '导入信息';
     $Self->{Translation}->{'Source File'} = '源文件';
@@ -57,20 +57,20 @@ sub Data {
     $Self->{Translation}->{'Ok'} = '确定';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
-    $Self->{Translation}->{'No object backend found!'} = '';
-    $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'No object backend found!'} = '没有找到对象的后端！';
+    $Self->{Translation}->{'No format backend found!'} = '没有找到格式的后端！';
+    $Self->{Translation}->{'Template not found!'} = '没有找到模板！';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = '不能插入/更新模板！';
+    $Self->{Translation}->{'Needed TemplateID!'} = '需要TemplateID！';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '出现错误。不能导入！查看Syslog获取详细信息。';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '出现错误。不能导出！查看Syslog获取详细信息。';
+    $Self->{Translation}->{'number'} = '数字';
+    $Self->{Translation}->{'number bigger than zero'} = '数字大于0';
+    $Self->{Translation}->{'integer'} = '整数';
+    $Self->{Translation}->{'integer bigger than zero'} = '整数大于0';
+    $Self->{Translation}->{'Element required, please insert data'} = '需要元素，请插入数据';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '无效的数据，请插入一个有效的%s';
+    $Self->{Translation}->{'Format not found!'} = '没有找到格式！';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

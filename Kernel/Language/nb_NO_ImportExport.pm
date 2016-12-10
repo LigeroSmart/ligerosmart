@@ -41,7 +41,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = 'Objekt er påkrevd!';
     $Self->{Translation}->{'Format is required!'} = 'Format er påkrevd!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = 'er påkrevd!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
     $Self->{Translation}->{'No map elements found.'} = 'Ingen elementer funnet.';

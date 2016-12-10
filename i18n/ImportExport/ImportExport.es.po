@@ -1,12 +1,14 @@
 # 
 # Translators:
+# Anatoli F. Peña Castillo <anatoli1993@yahoo.com>, 2016
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# juanman <juanma@gnutn.org.ar>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2016-10-12 05:24+0000\n"
+"Last-Translator: juanman <juanma@gnutn.org.ar>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +90,7 @@ msgstr "Iniciar Exportación"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr ""
+msgstr "Paso 1 de 5 - Editar información común"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -104,11 +106,11 @@ msgstr "¡Debe especificar Formato!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr ""
+msgstr "Paso 2 de 5 - Editar información de objeto"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5"
-msgstr ""
+msgstr "Paso 3 de 5"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -116,7 +118,7 @@ msgstr "¡es requerido!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr ""
+msgstr "Paso 4 de 5 - Editar información de mapeo"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -128,7 +130,7 @@ msgstr "Añadir Mapeo de Elementos"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr ""
+msgstr "Paso 5 de 5 - Editar información de búsqueda"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -172,51 +174,51 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
-msgstr ""
+msgstr "Plantilla no encontrada!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr ""
+msgstr "No se puede insertar/actualizar la plantilla!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr ""
+msgstr "Se necesita IDPlantilla!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr ""
+msgstr "Ocurrió un error!. Imposible importar! Vea Syslog para detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr ""
+msgstr "Ocurrió un error!. Imposible exportar! Vea Syslog para detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
-msgstr ""
+msgstr "Número"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number bigger than zero"
-msgstr ""
+msgstr "Número mayor que cero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer"
-msgstr ""
+msgstr "Entero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer bigger than zero"
-msgstr ""
+msgstr "Entero mayo que cero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
-msgstr ""
+msgstr "Elemento requerido, por favor insertar datos"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr ""
+msgstr "Datos inválidos, por favor insertar un válido %s"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
-msgstr ""
+msgstr "Formato no encontrado!"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Créer un modèle pour importer et exporter les informations d\'objet';
     $Self->{Translation}->{'Start Import'} = 'Démarrer Import';
     $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Etape 1 sur 5 - Editer l\'information commune';
     $Self->{Translation}->{'Name is required!'} = 'Un Nom est requis!';
     $Self->{Translation}->{'Object is required!'} = 'Un Objet est requis!';
     $Self->{Translation}->{'Format is required!'} = 'Un Format est requis!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Etape 2 sur 5 - Editer l\'information d\'objet';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = 'est requis !';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Etape 4 sur 5 - Editer l\'information de mappage';
     $Self->{Translation}->{'No map elements found.'} = 'Aucun élément de mappage trouvé';
     $Self->{Translation}->{'Add Mapping Element'} = 'Ajouter un élément de mappage';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Etape 5 sur 5 - Editer l\'information de recherche';
     $Self->{Translation}->{'Restrict export per search'} = 'Restreindre l\'export par recherche';
     $Self->{Translation}->{'Import information'} = 'Informations d\'import';
     $Self->{Translation}->{'Source File'} = 'Fichier Source';
@@ -59,18 +59,18 @@ sub Data {
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
     $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
+    $Self->{Translation}->{'Template not found!'} = 'Template non trouvé!';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = 'Impossible d\'insérer/mettre à jour le template!';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'Identifiant de template requis!';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Une erreur est survenue. Import impossible! Voyez le log système pour les détails.';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Une erreur est survenue. Export impossible! Voyez le log système pour les détails.';
+    $Self->{Translation}->{'number'} = 'nombre';
+    $Self->{Translation}->{'number bigger than zero'} = 'nombre plus grand que zéro';
+    $Self->{Translation}->{'integer'} = 'entier';
+    $Self->{Translation}->{'integer bigger than zero'} = 'entier plus grand que zéro';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Elément requis, veuillez entrer une donnée';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'Format not found!'} = 'Format non trouvé!';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

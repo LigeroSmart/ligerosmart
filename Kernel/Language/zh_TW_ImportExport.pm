@@ -41,7 +41,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = '對象是必需的！';
     $Self->{Translation}->{'Format is required!'} = '格式是必需的';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = '必需的';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
     $Self->{Translation}->{'No map elements found.'} = '沒有找到映射的字段';

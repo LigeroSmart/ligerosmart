@@ -1,12 +1,13 @@
 # 
 # Translators:
-# Милорад Јовановић <j.milorad@gmail.com>, 2015
+# Dusan Vuckovic, 2016
+# Милорад Јовановић <j.milorad@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2016-11-29 08:36+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +89,7 @@ msgstr "Почни извоз"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr ""
+msgstr "Корак 1 од 5 - Уреди заједничке информације"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -104,11 +105,11 @@ msgstr "Формат је обавезан!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr ""
+msgstr "Корак 2 од 5 - Уреди информације о објекту"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5"
-msgstr ""
+msgstr "Корак 3 од 5"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -116,7 +117,7 @@ msgstr "је обавезно!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr ""
+msgstr "Корак 4 од 5 - Уреди информације о мапирању"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -128,7 +129,7 @@ msgstr "Додај елемент за мапирање"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr ""
+msgstr "Корак 5 од 5 - Уреди информације за претрагу"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -164,59 +165,59 @@ msgstr "У реду"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
-msgstr ""
+msgstr "Није пронађен позадински модул објекта!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No format backend found!"
-msgstr ""
+msgstr "Није пронађен позадински модул формата!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
-msgstr ""
+msgstr "Шаблон није пронађен!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr ""
+msgstr "Шаблон се не може унети/ажурирати!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr ""
+msgstr "Потребан ИД шаблона!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr ""
+msgstr "Догодила се грешка. Увоз је немогућ! За детаље погледајте у системски дневник."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr ""
+msgstr "Догодила се грешка. Извоз је немогућ! За детаље погледајте у системски дневник."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
-msgstr ""
+msgstr "број"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number bigger than zero"
-msgstr ""
+msgstr "број већи од нула"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer"
-msgstr ""
+msgstr "цео број"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer bigger than zero"
-msgstr ""
+msgstr "цео број већи од нула"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
-msgstr ""
+msgstr "Неопходан елемент, молимо унесите податке"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr ""
+msgstr "Неисправни подаци, унесете важећи %s"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
-msgstr ""
+msgstr "Формат није пронађен!"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

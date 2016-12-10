@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Criar um modelo para importar e exportar informações de objeto.';
     $Self->{Translation}->{'Start Import'} = 'Iniciar Importação';
     $Self->{Translation}->{'Start Export'} = 'Iniciar Exportação';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Passo 1 de 5 - Editar informações comuns';
     $Self->{Translation}->{'Name is required!'} = 'Nome é obrigatório!';
     $Self->{Translation}->{'Object is required!'} = 'Objeto é obrigatório!';
     $Self->{Translation}->{'Format is required!'} = 'O formato é obrigatório!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Passo 2 de 5 - Editar informações do objeto';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = 'é obrigatório!';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Passo 4 de 5 - Editar informações de mapeamento';
     $Self->{Translation}->{'No map elements found.'} = 'Não há elementos mapa encontrado.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Adicionar elemento de mapeamento';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Passo 5 de 5 - Editar informações de pesquisa';
     $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportação por pesquisa';
     $Self->{Translation}->{'Import information'} = 'Informações de importação';
     $Self->{Translation}->{'Source File'} = 'Arquivo de Origem';
@@ -57,10 +57,10 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
-    $Self->{Translation}->{'No object backend found!'} = '';
-    $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
+    $Self->{Translation}->{'No object backend found!'} = 'Nenhum objeto backend encontrado!';
+    $Self->{Translation}->{'No format backend found!'} = 'Nenhum formato backend encontrado!';
+    $Self->{Translation}->{'Template not found!'} = 'Modelo não encontrado!';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = 'Não é possível inserir/atualizar modelo!';
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
@@ -70,7 +70,7 @@ sub Data {
     $Self->{Translation}->{'integer bigger than zero'} = '';
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'Format not found!'} = 'Formato não encontrado!';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

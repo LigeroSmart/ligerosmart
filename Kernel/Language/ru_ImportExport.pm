@@ -36,17 +36,17 @@ sub Data {
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Создайте шаблон для импорта и экспорта информации объектов';
     $Self->{Translation}->{'Start Import'} = 'Начать импорт';
     $Self->{Translation}->{'Start Export'} = 'Начать экспорт';
-    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
+    $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Шаг 1 из 5 - Редактировать общую информацию';
     $Self->{Translation}->{'Name is required!'} = 'Требуется имя!';
     $Self->{Translation}->{'Object is required!'} = 'Объект обязателен!';
     $Self->{Translation}->{'Format is required!'} = 'Формат обязателен!';
-    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
+    $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Шаг 2 из 5 - Редактировать информацию об объекте';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
     $Self->{Translation}->{'is required!'} = 'обязателен!';
-    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
+    $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Шаг 4 из 5 - Редактировать информацию сопоставления';
     $Self->{Translation}->{'No map elements found.'} = 'Нет элементов сопоставления.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Добавьте элемент сопоставления';
-    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
+    $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = 'Шаг 5 из 5 - Редактировать информацию поиска';
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
     $Self->{Translation}->{'Import information'} = 'Информация об импорте';
     $Self->{Translation}->{'Source File'} = 'Исходный файл';
@@ -59,18 +59,18 @@ sub Data {
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
     $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'Template not found!'} = 'Шаблон не найден!';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = 'Невозможно добавить/обновить шаблон!';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'Требуется ID Шаблона!';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ошибка. Импорт невозможен! Смотри подробности в Syslog.';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Ошибка. Экспорт невозможен! Смотри подробности в Syslog.';
+    $Self->{Translation}->{'number'} = 'номер';
+    $Self->{Translation}->{'number bigger than zero'} = 'номер больше нуля';
+    $Self->{Translation}->{'integer'} = 'целое число';
+    $Self->{Translation}->{'integer bigger than zero'} = 'целое число больше нуля';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Обязательные элемент, пожалуйста введите данные.';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Неверные данные, пожалуйста, укажите верные %s';
+    $Self->{Translation}->{'Format not found!'} = 'Формат не найден!';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

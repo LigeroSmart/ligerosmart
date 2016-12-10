@@ -16,44 +16,44 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Tilføj Mapping-Template';
-    $Self->{Translation}->{'Charset'} = 'Tegnsæt';
-    $Self->{Translation}->{'Colon (:)'} = 'Kolon (:)';
-    $Self->{Translation}->{'Column'} = 'Kolonne';
-    $Self->{Translation}->{'Column Separator'} = '';
-    $Self->{Translation}->{'Dot (.)'} = 'Punktum (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Add mapping template'} = 'Tambahkan template pemetaan';
+    $Self->{Translation}->{'Charset'} = 'Karakter';
+    $Self->{Translation}->{'Colon (:)'} = 'Titikdua (:)';
+    $Self->{Translation}->{'Column'} = 'Kolom';
+    $Self->{Translation}->{'Column Separator'} = 'Pemisah Kolom';
+    $Self->{Translation}->{'Dot (.)'} = 'Titik (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Titikkoma (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tab (TAB)';
+    $Self->{Translation}->{'Include Column Headers'} = 'Sertakan Kepala Kolom';
+    $Self->{Translation}->{'Import summary for'} = 'Impor ringkasan untuk';
+    $Self->{Translation}->{'Imported records'} = 'Data terimpor';
+    $Self->{Translation}->{'Exported records'} = 'Data ter-ekspor';
+    $Self->{Translation}->{'Records'} = 'Data';
+    $Self->{Translation}->{'Skipped'} = 'Dilewati';
 
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = 'Import/Ekport styring';
-    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
-    $Self->{Translation}->{'Start Import'} = 'Start import';
-    $Self->{Translation}->{'Start Export'} = 'Start ekport';
+    $Self->{Translation}->{'Import/Export Management'} = 'Manajamen Impor/Ekspor';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Buat sebuah template untuk mengimpor dan ekspor obyek informasi.';
+    $Self->{Translation}->{'Start Import'} = 'Mulai Impor';
+    $Self->{Translation}->{'Start Export'} = 'Mulai Ekspor';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
-    $Self->{Translation}->{'Name is required!'} = '';
-    $Self->{Translation}->{'Object is required!'} = '';
-    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Name is required!'} = 'Nama dibutuhkan!';
+    $Self->{Translation}->{'Object is required!'} = 'Obyek dibutuhkan!';
+    $Self->{Translation}->{'Format is required!'} = 'Format dibutuhkan!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
-    $Self->{Translation}->{'is required!'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'is required!'} = 'dibutuhkan!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
-    $Self->{Translation}->{'No map elements found.'} = '';
-    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'No map elements found.'} = 'Tidak ditemukan elemen peta.';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Tambah Elemen Pemetaan';
     $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
-    $Self->{Translation}->{'Restrict export per search'} = 'Begræns ekport pr. søgning';
-    $Self->{Translation}->{'Import information'} = 'Import information';
-    $Self->{Translation}->{'Source File'} = 'Kilde fil';
-    $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
-    $Self->{Translation}->{'Duplicate names'} = '';
-    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Restrict export per search'} = 'Batas ekspor per pencarian';
+    $Self->{Translation}->{'Import information'} = 'Informasi impor ';
+    $Self->{Translation}->{'Source File'} = 'Berkas Sumber';
+    $Self->{Translation}->{'Success'} = 'Berhasil';
+    $Self->{Translation}->{'Failed'} = 'Gagal';
+    $Self->{Translation}->{'Duplicate names'} = 'Nama duplikat';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Nomor baris terakhir berkas impor yang diproses';
     $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
@@ -74,9 +74,9 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
-        '';
-    $Self->{Translation}->{'Import and export object information.'} = '';
-    $Self->{Translation}->{'Import/Export'} = 'Import/Ekport';
+        'Format modul pendaftaran backend untuk modul impor/ekspor.';
+    $Self->{Translation}->{'Import and export object information.'} = 'Informasi obyek impor dan ekspor.';
+    $Self->{Translation}->{'Import/Export'} = 'Impor/Ekspor';
 
 }
 

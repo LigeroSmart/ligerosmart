@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014
+# Balázs Úr <urbalazs@gmail.com>, 2014,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2016-10-31 17:05+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +88,7 @@ msgstr "Exportálás indítása"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr ""
+msgstr "1. lépés az 5-ből - közös információk szerkesztése"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -104,11 +104,11 @@ msgstr "A formátum kötelező!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr ""
+msgstr "2. lépés az 5-ből - objektuminformációk szerkesztése"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5"
-msgstr ""
+msgstr "3. lépés az 5-ből - formátuminformációk szerkesztése"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -116,7 +116,7 @@ msgstr "kötelező!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr ""
+msgstr "4. lépés az 5-ből - leképezési információk szerkesztése"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -128,7 +128,7 @@ msgstr "Leképezési elemek hozzáadása"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr ""
+msgstr "5. lépés az 5-ből - keresési információk szerkesztése"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -164,59 +164,59 @@ msgstr "OK"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
-msgstr ""
+msgstr "Nem található objektum-háttérprogram!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No format backend found!"
-msgstr ""
+msgstr "Nem található formátum-háttérprogram!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
-msgstr ""
+msgstr "Sablon nem található!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr ""
+msgstr "Nem lehet beszúrni vagy frissíteni a sablont!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr ""
+msgstr "Sablon-azonosító szükséges!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr ""
+msgstr "Hiba történt. Az importálás lehetetlen! Nézze meg a rendszernaplót a részletekért."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr ""
+msgstr "Hiba történt. Az exportálás lehetetlen! Nézze meg a rendszernaplót a részletekért."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
-msgstr ""
+msgstr "szám"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number bigger than zero"
-msgstr ""
+msgstr "nullánál nagyobb szám"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer"
-msgstr ""
+msgstr "egész"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer bigger than zero"
-msgstr ""
+msgstr "nullánál nagyobb egész"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
-msgstr ""
+msgstr "Elem szükséges, szúrjon be adatokat"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr ""
+msgstr "Érvénytelen adatok, egy érvényes %s beszúrása szükséges"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
-msgstr ""
+msgstr "Formátum nem található!"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
