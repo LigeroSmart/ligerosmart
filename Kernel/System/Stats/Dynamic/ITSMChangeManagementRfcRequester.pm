@@ -137,9 +137,13 @@ sub GetStatElement {
 
     # check what type of requester we have
     # ticket search criteria differ for agents and customers
-    my ( $Type, $ID ) = split /_/, $Param{Requester}->[0];
-    my $Key = $Type eq 'agent' ? 'OwnerIDs' : 'CustomerUserLogin';
-    $Param{$Key} = [$ID];
+    my $Type = '';
+    my $ID;
+    if ( $Param{Requester} && $Param{Requester}->[0] ) {
+        ( $Type, $ID ) = split /_/, $Param{Requester}->[0];
+        my $Key = $Type eq 'agent' ? 'OwnerIDs' : 'CustomerUserLogin';
+        $Param{$Key} = [$ID];
+    }
 
     # get ticket types that are handled as RfCs
     my $RfCTypes = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::AddChangeLinkTicketTypes');
