@@ -9,7 +9,7 @@
 # --
 
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
 
 # This module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
@@ -51,7 +51,7 @@
 [% Translate("Change Responsible of %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
 [% RenderBlockEnd("HeaderAgentTicketResponsible") %]
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
 [% RenderBlockStart("HeaderAgentTicketMasterSlave") %]
 [% Translate("Manage Master/Slave status for %s%s%s", Config('Ticket::Hook'), Config('Ticket::HookDivider'), Data.TicketNumber) | html %]
@@ -298,7 +298,7 @@ $('#TypeID').bind('change', function (Event) {
                             <a href="#" title="[% Translate("Toggle this widget") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                         </div>
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
 #                        <h2>[% Translate("Dynamic Fields") | html %]</h2>
                         <h2>[% Translate("Set Master/Slave Value") | html %]</h2>

@@ -9,7 +9,7 @@
 # --
 
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
 #package Kernel::Modules::AgentTicketActionCommon;
 
@@ -255,7 +255,7 @@ sub Run {
     # define the dynamic fields to show based on the object type
     my $ObjectType = ['Ticket'];
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
     # get master/slave dynamic field
     my $MasterSlaveDynamicField = $ConfigObject->Get('MasterSlave::DynamicField') || '';
@@ -266,7 +266,7 @@ sub Run {
     if ( $Config->{Note} ) {
         $ObjectType = [ 'Ticket', 'Article' ];
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
         if ($MasterSlaveAdvancedEnabled) {
             $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
@@ -518,7 +518,7 @@ sub Run {
         for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
             if (
                 !$MasterSlaveAdvancedEnabled
@@ -572,7 +572,7 @@ sub Run {
 
             my $ValidationResult;
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
             if ( $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField ) {
                $PossibleValuesFilter = $Self->_GetMasterSlaveData(
@@ -964,7 +964,7 @@ sub Run {
         for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
             if (
                 !$MasterSlaveAdvancedEnabled
@@ -1391,7 +1391,7 @@ sub Run {
         for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
             if (
                 !$MasterSlaveAdvancedEnabled
@@ -1443,7 +1443,7 @@ sub Run {
                 }
             }
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
             if ( $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField ) {
                $PossibleValuesFilter =  $Self->_GetMasterSlaveData(
@@ -2846,7 +2846,7 @@ sub _GetTypes {
     return \%Type;
 }
 # ---
-# MasterSlave
+# OTRSMasterSlave
 # ---
 sub _GetMasterSlaveData {
     my ($Self, %Param) = @_;
