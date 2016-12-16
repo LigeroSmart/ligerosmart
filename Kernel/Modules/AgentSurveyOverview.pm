@@ -124,7 +124,7 @@ sub Run {
         . ';View=' . $LayoutObject->Ascii2Html( Text => $View )
         . ';';
 
-    # show config item list
+    # show survey list
     $Output .= $LayoutObject->SurveyListShow(
         SurveyIDs   => \@SurveyIDs,
         Total       => scalar @SurveyIDs,
