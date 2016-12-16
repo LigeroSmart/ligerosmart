@@ -1,4 +1,5 @@
 #5.0.3 2016-??-??
+ - 2016-12-16 Fix ChangeBy handling in SurveySearch, thanks to straubr.
  - 2016-11-29 Fixed typo in charset name. Thanks to Paweł Bogusławski (PR#23).
  - 2016-11-29 Replaced old Get() call with Translate(). Thanks to Paweł Bogusławski (PR#22).
  - 2016-11-07 Marked additional strings as translatable, thanks to Balázs Úr (PR#20).

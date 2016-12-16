@@ -726,12 +726,12 @@ sub SurveySearch {
         $Ext .= " s.create_by = " . $Param{CreateBy};
     }
 
-    # search for the create by
+    # search for the change by
     if ( $Param{ChangeBy} ) {
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= " s.create_by = " . $Param{ChangeBy};
+        $Ext .= " s.change_by = " . $Param{ChangeBy};
     }
 
     # set time params
