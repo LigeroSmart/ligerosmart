@@ -949,8 +949,13 @@ $Self->True(
         ContentType => 'text/html',
     );
 
+    $Self->True(
+        $FAQID4,
+        "FAQAdd() - 4",
+    );
+
     my $FAQID5 = $FAQObject->FAQAdd(
-        Title      => 'Test FAQ-4',
+        Title      => 'Test FAQ-5',
         CategoryID => 1,
         StateID    => 1,
         LanguageID => 1,
@@ -961,7 +966,7 @@ $Self->True(
     );
 
     $Self->True(
-        $FAQID4,
+        $FAQID5,
         "FAQAdd() - 4",
     );
 
