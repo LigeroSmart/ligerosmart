@@ -492,29 +492,22 @@ sub FAQSearch {
 
     # search for keywords
     if ( $Param{Keyword} ) {
+
+        $Param{Keyword} =~ s/,/&&/g;
+        $Param{Keyword} =~ s/;/&&/g;
+        $Param{Keyword} =~ s/ /&&/g;
+
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Param{Keyword} = "\%$Param{Keyword}\%";
-        $Param{Keyword} =~ s/\*/%/g;
-        $Param{Keyword} =~ s/%%/%/g;
-        $Param{Keyword} = $DBObject->Quote( $Param{Keyword}, 'Like' );
 
-        if ( $DBObject->GetDatabaseFunction('NoLowerInLargeText') ) {
-            $Ext .= " i.f_keywords LIKE '" . $Param{Keyword} . "' $Self->{LikeEscapeString}";
-        }
-        elsif ( $DBObject->GetDatabaseFunction('LcaseLikeInLargeText') ) {
-            $Ext
-                .= " LCASE(i.f_keywords) LIKE LCASE('"
-                . $Param{Keyword}
-                . "') $Self->{LikeEscapeString}";
-        }
-        else {
-            $Ext
-                .= " LOWER(i.f_keywords) LIKE LOWER('"
-                . $Param{Keyword}
-                . "') $Self->{LikeEscapeString}";
-        }
+        # add the SQL for the keyword search
+        $Ext .= $DBObject->QueryCondition(
+            Key          => 'i.f_keywords',
+            Value        => $Param{Keyword},
+            SearchPrefix => '*',
+            SearchSuffix => '*',
+        );
     }
 
     # show only approved FAQ articles for public and customer interface

@@ -1,4 +1,5 @@
 #5.0.8 2016-??-??
+ - 2016-12-17 Fixed bug#[12406](https://bugs.otrs.org/show_bug.cgi?id=12406)(PR#12406) - Searching for keywords is not useful.
  - 2016-11-25 Updated unit tests to use Restore Database, thanks to S7 (PR#59).
  - 2016-11-04 Fixed bug#[12201](http://bugs.otrs.org/show_bug.cgi?id=12201) - RSS Feeds don't work if HTTPS is forced in OTRS. Thanks to Michiel Beijen.
 

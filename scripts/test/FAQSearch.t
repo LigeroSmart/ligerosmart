@@ -916,6 +916,55 @@ $Self->True(
         "FAQAdd() - 2",
     );
 
+    my %Keywords = (
+        Keyword1 => "some1$RandomID",
+        Keyword2 => "some2$RandomID",
+        Keyword3 => "some3$RandomID",
+        Keyword4 => "some4$RandomID",
+        Keyword5 => "some5$RandomID",
+    );
+
+    my $FAQID3 = $FAQObject->FAQAdd(
+        Title       => 'Test FAQ-3',
+        CategoryID  => 1,
+        StateID     => 1,
+        LanguageID  => 1,
+        Keywords    => "$Keywords{Keyword1} $Keywords{Keyword2} $Keywords{Keyword3} $Keywords{Keyword5}",
+        UserID      => 1,
+        ContentType => 'text/html',
+    );
+    $Self->True(
+        $FAQID3,
+        "FAQAdd() - 3",
+    );
+
+    my $FAQID4 = $FAQObject->FAQAdd(
+        Title      => 'Test FAQ-4',
+        CategoryID => 1,
+        StateID    => 1,
+        LanguageID => 1,
+        Keywords   => "$Keywords{Keyword1},$Keywords{Keyword2},$Keywords{Keyword3},$Keywords{Keyword4}",
+        ,
+        UserID      => 1,
+        ContentType => 'text/html',
+    );
+
+    my $FAQID5 = $FAQObject->FAQAdd(
+        Title      => 'Test FAQ-4',
+        CategoryID => 1,
+        StateID    => 1,
+        LanguageID => 1,
+        Keywords   => "$Keywords{Keyword1};$Keywords{Keyword2};$Keywords{Keyword3};$Keywords{Keyword4}",
+        ,
+        UserID      => 1,
+        ContentType => 'text/html',
+    );
+
+    $Self->True(
+        $FAQID4,
+        "FAQAdd() - 4",
+    );
+
     @Tests = (
         {
             Name   => 'Keywords',
@@ -926,6 +975,132 @@ $Self->True(
             },
             ExpectedResults => [
                 $FAQID1
+            ],
+        },
+        {
+            Name   => 'Keywords with spaces - all',
+            Config => {
+                Keyword => "$Keywords{Keyword1} $Keywords{Keyword2}",
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords with comma - all',
+            Config => {
+                Keyword => "$Keywords{Keyword2},$Keywords{Keyword1}",
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords with semicolon - all',
+            Config => {
+                Keyword => "$Keywords{Keyword1};$Keywords{Keyword2}",
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords1 Keywords3  with spaces - all',
+            Config => {
+                Keyword => "$Keywords{Keyword1} $Keywords{Keyword3}",
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords1 Keywords3 with comma - all',
+            Config => {
+                Keyword => "$Keywords{Keyword1},$Keywords{Keyword3}",
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords1 Keywords3 with semicolon - all',
+            Config => {
+                Keyword => "$Keywords{Keyword1};$Keywords{Keyword3}",
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords common keyword',
+            Config => {
+                Keyword => $Keywords{Keyword3},
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords common keyword with wildcards',
+            Config => {
+                Keyword => '*' . $Keywords{Keyword3} . '*',
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4,
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords only Keyword5',
+            Config => {
+                Keyword => $Keywords{Keyword5},
+            },
+            ExpectedResults => [
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords only Keyword4',
+            Config => {
+                Keyword => $Keywords{Keyword4},
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4
+            ],
+        },
+        {
+            Name   => 'Keywords only Keyword5 - uppercase string',
+            Config => {
+                Keyword => uc $Keywords{Keyword5},
+            },
+            ExpectedResults => [
+                $FAQID3
+            ],
+        },
+        {
+            Name   => 'Keywords only Keyword4 - first character uppercase',
+            Config => {
+                Keyword => ucfirst $Keywords{Keyword4},
+            },
+            ExpectedResults => [
+                $FAQID5,
+                $FAQID4
             ],
         },
         {
