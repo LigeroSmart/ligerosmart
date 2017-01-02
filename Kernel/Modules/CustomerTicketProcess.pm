@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - 71337b9f76c30c4e41617806bfcb35828ff95437 - Kernel/Modules/CustomerTicketProcess.pm
 # --
