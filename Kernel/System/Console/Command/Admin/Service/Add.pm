@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - 3cda7fa833f7c1ea5523b79f6b1047a59b712f75 - Kernel/System/Console/Command/Admin/Service/Add.pm
 # --

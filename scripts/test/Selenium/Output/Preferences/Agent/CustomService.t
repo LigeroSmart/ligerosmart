@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - 23940bb5604a2bc19e3709790334b92bde34af22 - scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
 # --

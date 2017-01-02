@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - ffac5e2b8ea4f12bd8cb20e0fedf34fde0a43192 - scripts/test/SLA.t
 # --

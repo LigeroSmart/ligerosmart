@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - eb0669b62c665bfb2aa989215eb3de38437e989f - scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
 # --

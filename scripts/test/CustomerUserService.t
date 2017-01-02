@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2016 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - b713354c504d4913294a34adfdfc6bf3260d3890 - scripts/test/CustomerUserService.t
 # --
