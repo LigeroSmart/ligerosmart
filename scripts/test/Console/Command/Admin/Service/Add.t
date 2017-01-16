@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 18451e1039eeb1362462e5b325e788babc51f7fd - scripts/test/Console/Command/Admin/Service/Add.t
+# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Console/Command/Admin/Service/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 23940bb5604a2bc19e3709790334b92bde34af22 - scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
+# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

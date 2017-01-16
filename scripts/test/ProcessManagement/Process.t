@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - d89296d68bf77580f23919c8654685ea4ea9e878 - scripts/test/ProcessManagement/Process.t
+# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/ProcessManagement/Process.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

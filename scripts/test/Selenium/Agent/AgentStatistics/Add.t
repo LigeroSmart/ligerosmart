@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 23940bb5604a2bc19e3709790334b92bde34af22 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: otrs - 1ed1e1a41778f1f5191d2cc2dfe4c2f4cd83c3c3 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -157,6 +157,16 @@ $Selenium->RunTest(
                 Restrictionvalue => 3,
             },
             {
+                Title             => 'Statistic DynamicMatrix' . $Helper->GetRandomID(),
+                Object            => 'Kernel::System::Stats::Dynamic::Ticket',
+                Type              => 'DynamicMatrix',
+                XAxis             => 'XAxisCreateTime',
+                YAxis             => 'YAxisSLAIDs',
+                RestrictionID     => 'RestrictionsQueueIDs',
+                Restrictionvalue  => 3,
+                SelectedTimeField => 1,
+            },
+            {
                 Title            => 'Statistic - TicketAccountedTime' . $Helper->GetRandomID(),
                 Object           => 'Kernel::System::Stats::Dynamic::TicketAccountedTime',
                 Type             => 'DynamicList',
@@ -183,7 +193,6 @@ $Selenium->RunTest(
                 RestrictionID    => 'RestrictionsServiceIDs',
                 Restrictionvalue => $ServiceIDs[0],
             },
-
         );
 
         my @StatsFormatDynamicMatrix = (
@@ -301,6 +310,24 @@ $Selenium->RunTest(
                 $Self->True(
                     $Selenium->execute_script("return \$('#$StatsFormat->{PreviewContent}').css('display')") eq 'block',
                     "StackedArea format is displayed",
+                );
+            }
+
+            # Check the options for the cache field in the general section.
+            if ( $StatsData->{SelectedTimeField} ) {
+
+                $Self->True(
+                    $Selenium->execute_script(
+                        "return \$('#Cache option[value=\"1\"]').val() == 1 && \$('#Cache option[value=\"1\"]')[0].innerHTML == 'Yes'"
+                    ),
+                    'Found element "Yes" in Cache the select field.',
+                );
+            }
+            else {
+
+                $Self->False(
+                    $Selenium->execute_script("return \$('#Cache option[value=\"1\"]').val() == 1"),
+                    'Found no element "Yes" in the Cache select field.',
                 );
             }
 
