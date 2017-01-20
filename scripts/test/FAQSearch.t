@@ -900,6 +900,10 @@ $Self->True(
         "FAQAdd() - 1",
     );
 
+    # sleep here to add a difference to the create time
+    # this may be needed for a search test
+    sleep 1;
+
     my $FAQID2 = $FAQObject->FAQAdd(
         Title       => 'Title',
         CategoryID  => 1,
@@ -1138,8 +1142,8 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
+                $FAQID1,
                 $FAQID2,
-                $FAQID1
             ],
         },
     );
