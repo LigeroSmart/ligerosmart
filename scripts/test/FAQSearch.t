@@ -983,7 +983,7 @@ $Self->True(
                 OrderBy => ['Votes'],
             },
             ExpectedResults => [
-                $FAQID1
+                $FAQID1,
             ],
         },
         {
@@ -994,7 +994,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1005,7 +1005,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1016,7 +1016,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1027,7 +1027,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1038,7 +1038,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1049,7 +1049,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1060,7 +1060,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1071,7 +1071,7 @@ $Self->True(
             ExpectedResults => [
                 $FAQID5,
                 $FAQID4,
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1080,7 +1080,7 @@ $Self->True(
                 Keyword => $Keywords{Keyword5},
             },
             ExpectedResults => [
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1090,7 +1090,7 @@ $Self->True(
             },
             ExpectedResults => [
                 $FAQID5,
-                $FAQID4
+                $FAQID4,
             ],
         },
         {
@@ -1099,7 +1099,7 @@ $Self->True(
                 Keyword => uc $Keywords{Keyword5},
             },
             ExpectedResults => [
-                $FAQID3
+                $FAQID3,
             ],
         },
         {
@@ -1109,7 +1109,7 @@ $Self->True(
             },
             ExpectedResults => [
                 $FAQID5,
-                $FAQID4
+                $FAQID4,
             ],
         },
         {
@@ -1120,7 +1120,7 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $FAQID2
+                $FAQID2,
             ],
         },
         {
@@ -1131,7 +1131,7 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $FAQID1
+                $FAQID1,
             ],
         },
         {
