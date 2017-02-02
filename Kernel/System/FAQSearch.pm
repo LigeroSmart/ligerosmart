@@ -133,7 +133,7 @@ search in FAQ articles
         # The pairing is made by the array indexes.
 
         OrderByDirection => [ 'Down', 'Up' ],                         # (optional)
-        # default: [ 'Down' ]
+        # default: [ 'UP' ]
         # (Down | Up)
 
         Limit     => 150,
@@ -1004,7 +1004,27 @@ sub FAQSearch {
         if ( $#{ $Param{OrderBy} } >= 0 ) {
             $Ext .= ',';
         }
-        $Ext .= ' ' . $OrderByTable{FAQID} . ' DESC';
+
+        # set default order by direction
+        my $OrderByDirection = 'ASC';
+
+        # try to get the order by direction of the last
+        # used 'Created' or 'Changed' OrderBy parameters
+        my $Count = 0;
+        for my $OrderBy ( @{ $Param{OrderBy} } ) {
+            if ( $OrderBy eq 'Created' || $OrderBy eq 'Changed' ) {
+
+                if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+                    $OrderByDirection = 'ASC';
+                }
+                else {
+                    $OrderByDirection = 'DESC';
+                }
+            }
+            $Count++;
+        }
+
+        $Ext .= ' ' . $OrderByTable{FAQID} . ' ' . $OrderByDirection;
     }
 
     # add extended SQL
@@ -1013,7 +1033,7 @@ sub FAQSearch {
     # ask database
     return if !$DBObject->Prepare(
         SQL   => $SQL,
-        Limit => $Param{Limit} || 500
+        Limit => $Param{Limit} || 500,
     );
 
     # fetch the result

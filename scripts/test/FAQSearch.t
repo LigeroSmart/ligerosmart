@@ -1000,9 +1000,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1} $Keywords{Keyword2}",
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1011,9 +1011,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword2},$Keywords{Keyword1}",
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1022,9 +1022,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1};$Keywords{Keyword2}",
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1033,9 +1033,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1} $Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1044,9 +1044,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1},$Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1055,9 +1055,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1};$Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1066,9 +1066,9 @@ $Self->True(
                 Keyword => $Keywords{Keyword3},
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1077,9 +1077,9 @@ $Self->True(
                 Keyword => '*' . $Keywords{Keyword3} . '*',
             },
             ExpectedResults => [
-                $FAQID5,
-                $FAQID4,
                 $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1097,8 +1097,8 @@ $Self->True(
                 Keyword => $Keywords{Keyword4},
             },
             ExpectedResults => [
-                $FAQID5,
                 $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1116,8 +1116,8 @@ $Self->True(
                 Keyword => ucfirst $Keywords{Keyword4},
             },
             ExpectedResults => [
-                $FAQID5,
                 $FAQID4,
+                $FAQID5,
             ],
         },
         {
