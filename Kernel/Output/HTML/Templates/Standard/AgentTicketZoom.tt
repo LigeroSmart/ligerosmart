@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - ec995c10a3c9ea8408e7d06a026009487e2f4673 - Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: otrs - 153b251a2beb77eb9228e1a32e0f5e35f64922ae - Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -621,7 +621,9 @@ $('#[% Data.FormID | html %] select[name=[% Data.PhoneElementID | html %]]').bin
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
     $('#DestQueueID').bind('change', function (Event) {
-        $(this).closest('form').submit();
+        if ($('#DestQueueID option:selected').val()) {
+            $(this).closest('form').submit();
+        }
     });
 //]]></script>
 [% END %]
