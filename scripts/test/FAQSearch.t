@@ -874,9 +874,6 @@ for my $Test (@Tests) {
     );
 }
 
-# restore time
-$Helper->FixedTimeUnset();
-
 # execute old tests
 $Self->True(
     1,
@@ -900,9 +897,8 @@ $Self->True(
         "FAQAdd() - 1",
     );
 
-    # sleep here to add a difference to the create time
-    # this may be needed for a search test
-    sleep 1;
+    # add 1 minute to frozen time
+    $Helper->FixedTimeAddSeconds(60);
 
     my $FAQID2 = $FAQObject->FAQAdd(
         Title       => 'Title',
@@ -919,6 +915,9 @@ $Self->True(
         $FAQID2,
         "FAQAdd() - 2",
     );
+
+    # add 1 minute to frozen time
+    $Helper->FixedTimeAddSeconds(60);
 
     my %Keywords = (
         Keyword1 => "some1$RandomID",
@@ -942,6 +941,9 @@ $Self->True(
         "FAQAdd() - 3",
     );
 
+    # add 1 minute to frozen time
+    $Helper->FixedTimeAddSeconds(60);
+
     my $FAQID4 = $FAQObject->FAQAdd(
         Title      => 'Test FAQ-4',
         CategoryID => 1,
@@ -958,6 +960,9 @@ $Self->True(
         "FAQAdd() - 4",
     );
 
+    # add 1 minute to frozen time
+    $Helper->FixedTimeAddSeconds(60);
+
     my $FAQID5 = $FAQObject->FAQAdd(
         Title      => 'Test FAQ-5',
         CategoryID => 1,
@@ -973,6 +978,9 @@ $Self->True(
         $FAQID5,
         "FAQAdd() - 4",
     );
+
+    # restore time
+    $Helper->FixedTimeUnset();
 
     @Tests = (
         {
