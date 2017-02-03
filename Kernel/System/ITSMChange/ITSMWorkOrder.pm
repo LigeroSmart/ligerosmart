@@ -758,8 +758,8 @@ sub WorkOrderGet {
             $WorkOrderData{CreateBy}         = $Row[16];
             $WorkOrderData{ChangeTime}       = $Row[17];
             $WorkOrderData{ChangeBy}         = $Row[18];
-            $WorkOrderData{PlannedEffort}    = $Row[19];
-            $WorkOrderData{AccountedTime}    = $Row[20];
+            $WorkOrderData{PlannedEffort}    = $Row[19] // '0.00';
+            $WorkOrderData{AccountedTime}    = $Row[20] // '0.00';
         }
 
         # check error
