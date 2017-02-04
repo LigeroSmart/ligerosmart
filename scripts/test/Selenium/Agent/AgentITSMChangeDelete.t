@@ -115,7 +115,9 @@ $Selenium->RunTest(
         sleep 2;
 
         # wait for confirm button to show up and confirm delete action
-        $Selenium->WaitFor( JavaScript => "return (\$('.Dialog button.Primary.CallForAction:visible').length && \$('fieldset.TableLike').length);" );
+        $Selenium->WaitFor( JavaScript =>
+                "return (\$('.Dialog button.Primary.CallForAction:visible').length && \$('fieldset.TableLike').length);"
+        );
 
         # waiting for javascript bindings
         sleep 1;
