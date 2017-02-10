@@ -4586,7 +4586,7 @@
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
                 <Item Key="Column">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Screen after creating a workorder</Item>
-                <Item Key="Key" Translatable="1">Show this screen after I created a new workorder</Item>
+                <Item Key="Key" Translatable="1">Configure which screen should be shown after a new workorder has been created.</Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="AgentITSMWorkOrderZoom">WorkorderZoom</Item>
