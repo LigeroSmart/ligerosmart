@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Modules/CustomerTicketProcess.pm
+# $origin: otrs - 97dfae55c044b3df5bbdefd7ca995bd2f87814c1 - Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -151,6 +151,7 @@ sub Run {
                 TicketID               => $TicketID,
                 ReturnType             => 'ActivityDialog',
                 ReturnSubType          => '-',
+                Action                 => $Self->{Action},
                 CustomerUserID         => $Self->{UserID},
             );
 
@@ -213,6 +214,7 @@ sub Run {
         ReturnType     => 'Process',
         ReturnSubType  => '-',
         Data           => \%ProcessListACL,
+        Action         => $Self->{Action},
         CustomerUserID => $Self->{UserID},
     );
 
@@ -504,6 +506,7 @@ sub _RenderAjax {
                 ReturnType     => 'Ticket',
                 ReturnSubType  => 'DynamicField_' . $DynamicFieldConfig->{Name},
                 Data           => \%AclData,
+                Action         => $Self->{Action},
                 CustomerUserID => $Self->{UserID},
             );
 

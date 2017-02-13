@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 3cef05a81e6f5fe25955a428d85f26ace2d53e47 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - 64ce969a74d7e8cc92b94a9340003eb191419256 - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1509,6 +1509,13 @@ sub Run {
             my $ChatArticleID;
 
             if (@ChatMessageList) {
+                for my $Message (@ChatMessageList) {
+                    $Message->{MessageText} = $LayoutObject->Ascii2Html(
+                        Text        => $Message->{MessageText},
+                        LinkFeature => 1,
+                    );
+                }
+
                 my $JSONBody = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
                     Data => \@ChatMessageList,
                 );
@@ -3015,6 +3022,14 @@ sub _MaskPhoneNew {
         my @ChatMessages = $Kernel::OM->Get('Kernel::System::Chat')->ChatMessageList(
             ChatID => $Param{FromChatID},
         );
+
+        for my $Message (@ChatMessages) {
+            $Message->{MessageText} = $LayoutObject->Ascii2Html(
+                Text        => $Message->{MessageText},
+                LinkFeature => 1,
+            );
+        }
+
         $LayoutObject->Block(
             Name => 'ChatArticlePreview',
             Data => {
