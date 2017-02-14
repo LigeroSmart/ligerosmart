@@ -11,6 +11,8 @@ package Kernel::Output::HTML::Layout::ITSMChange;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 =over 4
@@ -400,21 +402,30 @@ sub ITSMChangeListShow {
     my $Backends = $ConfigObject->Get('ITSMChange::Frontend::Overview');
     if ( !$Backends ) {
         return $LayoutObject->FatalError(
-            Message => 'Need config option ITSMChange::Frontend::Overview',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'Need config option %s!',
+                'ITSMChange::Frontend::Overview',
+            ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
         return $LayoutObject->FatalError(
-            Message => 'Config option ITSMChange::Frontend::Overview needs to be a HASH ref!',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'Config option %s needs to be a HASH ref!',
+                'ITSMChange::Frontend::Overview',
+            ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
         return $LayoutObject->FatalError(
-            Message => "No config option found for the view '$View'!",
+            Message => $LayoutObject->{LanguageObject}->Translate( 'No config option found for the view "%s"!', $View ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -761,7 +772,11 @@ sub _ITSMChangeGetWorkOrderGraph {
     $WorkOrder->{TranslatedWorkOrderType} = $Self->{LanguageObject}->Translate( $WorkOrder->{WorkOrderType} );
 
     # build label for link in graph
-    $WorkOrder->{WorkOrderLabel} = "Title: $WorkOrder->{WorkOrderTitle} | Type: $WorkOrder->{TranslatedWorkOrderType}";
+    $WorkOrder->{WorkOrderLabel} = $Self->{LanguageObject}->Translate(
+        'Title: %s | Type: %s',
+        $WorkOrder->{WorkOrderTitle},
+        $WorkOrder->{TranslatedWorkOrderType},
+    );
 
     # create workorder item
     $Self->Block(

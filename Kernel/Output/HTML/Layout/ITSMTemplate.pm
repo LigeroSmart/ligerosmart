@@ -11,6 +11,7 @@ package Kernel::Output::HTML::Layout::ITSMTemplate;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use POSIX qw(ceil);
 
 our $ObjectManagerDisabled = 1;
@@ -55,22 +56,30 @@ sub ITSMTemplateListShow {
     my $Backends = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::Frontend::TemplateOverview');
     if ( !$Backends ) {
         return $LayoutObject->FatalError(
-            Message => 'Need config option ITSMChange::Frontend::TemplateOverview',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'Need config option %s!',
+                'ITSMChange::Frontend::TemplateOverview',
+            ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
         return $LayoutObject->FatalError(
-            Message =>
-                'Config option ITSMChange::Frontend::TemplateOverview needs to be a HASH ref!',
+            Message => $LayoutObject->{LanguageObject}->Translate(
+                'Config option %s needs to be a HASH ref!',
+                'ITSMChange::Frontend::TemplateOverview',
+            ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
         return $LayoutObject->FatalError(
-            Message => "No config option found for the view '$View'!",
+            Message => $LayoutObject->{LanguageObject}->Translate( 'No config option found for the view "%s"!', $View ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
