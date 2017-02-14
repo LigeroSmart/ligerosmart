@@ -8,6 +8,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The FAQ/knowledge base.</Description>
     <Description Lang="de">Die FAQ-/Wissensdatenbank.</Description>
+    <Description Lang="hu">A GyIK/tudásbázis csomag.</Description>
     <Filelist>
         <File Permission="755" Location="bin/cgi-bin/faq.pl" />
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl" />
@@ -564,6 +565,17 @@
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az FAQ OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
         <br/>
         <strong>NOTICE</strong>
@@ -627,6 +639,27 @@
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>FIGYELMEZTETÉS</strong>
+        <br/>
+        <br/>
+        Annak érdekében, hogy hozzáférést adjon a felhasználók számára a GyIK menühöz, hozzá kell adnia őket az „faq” csoporthoz tagként.
+        <br/>
+        <br/>
+        Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
+        <br/>
+        <br/>
+        Egy új GyIK bejegyzés létrehozásához kategóriákat kell létrehoznia, és meg kell határoznia a jogosultságokat, hogy ki férhet hozzá a kategóriákhoz.
+        <br/>
+        <br/>
+        Ha használja a GyIK jóváhagyás szolgáltatást, akkor létre kell hoznia egy csoportot, és meg kell határoznia egy várólistát.
+        További információkat fog találni a rendszerbeállításokban a FAQ -> Core::Approval alcsoportban.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
         <br/>
         <strong>WELCOME</strong>
@@ -655,6 +688,17 @@
         <br/>
         <br/>
         Usted est&aacute; apunto de actualizar el paquete FAQ de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az FAQ OTRS csomag frissítésére készül.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -712,6 +756,25 @@
         <br/>
         Los grupos 'faq' y 'faq_admin' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
         Usted puede activar estos grupos nuevamente en el &aacute;rea de admin.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a telepítés során létrehozott összes adatbázistábla törlésre kerül.
+        Az ezekben a táblákban lévő összes adat visszavonhatatlanul el fog veszni!
+        <br/>
+        <br/>
+        A csomaghoz létrehozott összes dinamikus mező és azok adatai véglegesen törölve lesznek.
+        <br/>
+        <br/>
+        A csomagtelepítés során létrehozott „faq” és „faq_admin” csoport ki lesz kapcsolva.
+        Ezeket a csoportokat az adminisztrációs területen tudja ismét bekapcsolni.
         <br/>
         <br/>
         ((enjoy))<br/>
