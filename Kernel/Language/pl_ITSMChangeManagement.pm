@@ -406,7 +406,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = 'Proszę, skontaktuj się z administratorem.';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         '';
     $Self->{Translation}->{'Was not able to add change!'} = '';
@@ -586,6 +586,12 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '';
 
+    # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+    $Self->{Translation}->{'Need config option %s!'} = '';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
 
@@ -596,8 +602,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
-    $Self->{Translation}->{'Admin of the state machine.'} = '';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Zarządzanie macierzą KWP';
+    $Self->{Translation}->{'Admin of the state machine.'} = 'Zarządzanie maszyną stanów';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
         '';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} =
@@ -614,16 +620,18 @@ sub Data {
     $Self->{Translation}->{'Change CAB Templates'} = '';
     $Self->{Translation}->{'Change History.'} = '';
     $Self->{Translation}->{'Change Involved Persons.'} = '';
-    $Self->{Translation}->{'Change Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Limit przeglądu zmian "Małe"';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
-    $Self->{Translation}->{'Change Schedule.'} = '';
+    $Self->{Translation}->{'Change Schedule.'} = 'Harmonogram zmiany.';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Limit zmian na stronie dla przeglądu zmian "Małe"';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Condition Overview'} = '';
+    $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
+        '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
@@ -961,7 +969,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = '';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = '';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = '';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
@@ -1008,7 +1015,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         '';
-    $Self->{Translation}->{'State Machine'} = '';
+    $Self->{Translation}->{'State Machine'} = 'Maszyna stanów';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
     $Self->{Translation}->{'Take Workorder.'} = '';
@@ -1021,7 +1028,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Time Slot'} = '';
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
-        '';
+        'Typy zgłoszeń dla których na ekranie szczegółów zgłoszenia wyświetlony będzie link tworzący zmianę';
     $Self->{Translation}->{'User Search'} = '';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
     $Self->{Translation}->{'Workorder Add.'} = '';

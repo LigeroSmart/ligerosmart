@@ -8,12 +8,12 @@
 # Sascha Lewandowski <S.Lewandowski@it-lew.de>, 2015
 # Stefan Simmerstatter <stefan.simmerstatter@gmx.net>, 2015
 # Udo Bretz, 2014
-# Udo Bretz, 2014,2016
+# Udo Bretz, 2014,2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-12-10 13:31+0000\n"
-"PO-Revision-Date: 2016-12-10 12:31+0000\n"
+"PO-Revision-Date: 2017-01-24 09:00+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -272,7 +272,7 @@ msgstr "Bedingung"
 
 #. Template: AAAITSMChangeManagement
 msgid "ITSMWorkOrder"
-msgstr "ITSMArbeitsauftrag"
+msgstr "Arbeitsauftrag"
 
 #. Template: AAAITSMChangeManagement
 msgid "Link another object to the change"
@@ -780,7 +780,7 @@ msgstr "Bedingung hinzufügen"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Edit Condition"
-msgstr ""
+msgstr "Bedingung bearbeiten"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -3052,7 +3052,7 @@ msgstr "Speichert Change und Workorder ID und die zugehörige Vorlagen ID währe
 
 #. SysConfig
 msgid "Take Workorder."
-msgstr ""
+msgstr "Arbeitsauftrag übernehmen."
 
 #. SysConfig
 msgid "Template."
@@ -3100,7 +3100,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Add."
-msgstr ""
+msgstr "Arbeitsauftrag hinzufügen."
 
 #. SysConfig
 msgid "Workorder Agent."
@@ -3108,11 +3108,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Delete."
-msgstr ""
+msgstr "Arbeitsauftrag löschen."
 
 #. SysConfig
 msgid "Workorder Edit."
-msgstr ""
+msgstr "Arbeitsauftrag bearbeiten."
 
 #. SysConfig
 msgid "Workorder History Zoom."
@@ -3132,8 +3132,8 @@ msgstr ""
 
 #. SysConfig
 msgid "once"
-msgstr ""
+msgstr "einmalig"
 
 #. SysConfig
 msgid "regularly"
-msgstr ""
+msgstr "regelmäßig"

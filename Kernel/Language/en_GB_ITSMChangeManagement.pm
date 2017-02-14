@@ -406,7 +406,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'Ticket with TicketID %s does not exist!';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = 'Please contact the admin.';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!';
     $Self->{Translation}->{'Was not able to add change!'} = 'Was not able to add change!';
@@ -586,6 +586,12 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = 'The workorder "%s" could not be serialized.';
 
+    # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+    $Self->{Translation}->{'Need config option %s!'} = '';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'My Work Orders';
 
@@ -624,6 +630,8 @@ sub Data {
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Change limit per page for Change Overview "Small"';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Change search backend router of the agent interface.';
     $Self->{Translation}->{'Condition Overview'} = 'Condition Overview';
+    $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
+        '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = 'Create a change (from template) from this ticket!';
@@ -961,7 +969,6 @@ sub Data {
         'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Sets up the state machine for changes.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Sets up the state machine for workorders.';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = 'Show this screen after I created a new workorder';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =

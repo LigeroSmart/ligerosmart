@@ -586,6 +586,12 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '';
 
+    # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+    $Self->{Translation}->{'Need config option %s!'} = '';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
 
@@ -624,6 +630,8 @@ sub Data {
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Had Change untuk setiap muka surat untuk Tinjauan Change "Kecil"';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Tukar router carian backend antara muka ejen.';
     $Self->{Translation}->{'Condition Overview'} = '';
+    $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
+        '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Dikonfigurasi berapa kerap pemberitahuan akan dihantar apabila merancang masa mula atau nilai masa lain telah mencapai / diluluskan.';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
@@ -631,7 +639,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Jenis lalai untuk perintah kerja. Entri ini mesti wujud di dalam kelas katalog am \'ITSM::Pengurusan Perubahan::Perintah Kerja::Jenis\'.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Takrifkan Tindakan dimana butang tetapan itu ada dalam widget objek bersambung (LinkObject::ViewMode = "complex"). Sila pastikan yang Tindakan ini perlu didaftarkan yang berikut fail-fail JS dan CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Tentukan isyarat untuk setiap keadaan perintah kerja.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
@@ -961,7 +969,6 @@ sub Data {
         'Set minimum saiz kaunter perubahan (jika "AutoIncrement" telah dipilih sebagai ITSMChange::NumberGenerator). Lalai adalah 5, ini bermakna kaunter bermula dari 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Set up jentera kerajaan untuk perubahan.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Set up jentera kerajaan untuk pesanan kerja.';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = 'Tunjukkan skrin ini selepas saya mencipta satu urutankerja baru';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Menunjukkan kotak semak dalam skrin AgentITSMWorkOrderEdit yang mentakrifkan jika urutankerja berikut juga perlu dipindahkan jika urutankerja yang diubah suai dan masa akhir yang dirancang telah berubah.';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =

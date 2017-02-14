@@ -80,7 +80,7 @@ sub Data {
     $Self->{Translation}->{'Expression'} = 'Logischer Ausdruck';
     $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Volltextsuche in Änderung und Arbeitsauftrag';
     $Self->{Translation}->{'ITSMCondition'} = 'Bedingung';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMArbeitsauftrag';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'Arbeitsauftrag';
     $Self->{Translation}->{'Link another object to the change'} = 'Verknüpfe ein anderes Objekt mit diesem Change';
     $Self->{Translation}->{'Link another object to the workorder'} = 'Verknüpfe ein anderes Objekt mit diesem Arbeitsauftrag';
     $Self->{Translation}->{'Move all workorders in time'} = 'Verschiebe alle Arbeitsaufträge um eine neue zeitliche Differenz';
@@ -230,7 +230,7 @@ sub Data {
     $Self->{Translation}->{'Add new condition'} = 'Bedingung hinzufügen';
 
     # Template: AgentITSMChangeConditionEdit
-    $Self->{Translation}->{'Edit Condition'} = '';
+    $Self->{Translation}->{'Edit Condition'} = 'Bedingung bearbeiten';
     $Self->{Translation}->{'Need a valid name.'} = 'Ein gültiger Name ist erforderlich.';
     $Self->{Translation}->{'A valid name is needed.'} = 'Ein gültiger Name ist erforderlich.';
     $Self->{Translation}->{'Duplicate name:'} = 'Doppelter Name:';
@@ -406,7 +406,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'Ticket mit Ticket-Kennung %s ist nicht vorhanden!';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = 'Bitte kontaktieren Sie einen Administrator.';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         '';
     $Self->{Translation}->{'Was not able to add change!'} = '';
@@ -586,6 +586,12 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '';
 
+    # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+    $Self->{Translation}->{'Need config option %s!'} = '';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Meine Arbeitsaufträge';
 
@@ -624,6 +630,8 @@ sub Data {
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Anzeige Limit pro Seite für Changes in der kleinen Ansicht "S"';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Such-Backend-Router für die Change-Suche in der Agenten-Ansicht.';
     $Self->{Translation}->{'Condition Overview'} = '';
+    $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
+        '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Konfiguration wie häufig Benachrichtungen verschickt werden wenn die geplante Startzeit oder andere Zeiten erreicht wurden bzw. schon vorbei sind.';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
@@ -961,7 +969,6 @@ sub Data {
         'Definiert die minimale Zählergröße für Changes (wenn "AutoIncrement" unter ITSMChange::NumberGenerator ausgewählt wurde). Standard ist 5, d.h. der Zähler startet mit 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Konfiguration für die State Machine für Changes.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Konfiguration für die State Machine für Workorders.';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = 'Diese Ansicht nach dem Erstellen einer Workorder anzeigen';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Zeigt in der "Workorder bearbeiten" Ansicht der Agenten-Oberfläche einen  Checkbox die es erlaubt die nachfolgenden Workorder zu verschieben falls die bearbeitete Workorder verändert wurde und der geplante Fertigstellungstermin sich geändert hat.';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
@@ -1011,7 +1018,7 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'State Machine';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Speichert Change und Workorder ID und die zugehörige Vorlagen ID während ein Benutzer das Template bearbeitet.';
-    $Self->{Translation}->{'Take Workorder.'} = '';
+    $Self->{Translation}->{'Take Workorder.'} = 'Arbeitsauftrag übernehmen.';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Change-Identifikator, z. B. Change#, MeinChange#. Als Standard wird Change# verwendet.';
@@ -1024,16 +1031,16 @@ sub Data {
         'Typen der Tickets, in denen im Ticket-Zoom ein Link angezeigt wird, um einen Change zu erstellen.';
     $Self->{Translation}->{'User Search'} = '';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
-    $Self->{Translation}->{'Workorder Add.'} = '';
+    $Self->{Translation}->{'Workorder Add.'} = 'Arbeitsauftrag hinzufügen.';
     $Self->{Translation}->{'Workorder Agent.'} = '';
-    $Self->{Translation}->{'Workorder Delete.'} = '';
-    $Self->{Translation}->{'Workorder Edit.'} = '';
+    $Self->{Translation}->{'Workorder Delete.'} = 'Arbeitsauftrag löschen.';
+    $Self->{Translation}->{'Workorder Edit.'} = 'Arbeitsauftrag bearbeiten.';
     $Self->{Translation}->{'Workorder History Zoom.'} = '';
     $Self->{Translation}->{'Workorder History.'} = '';
     $Self->{Translation}->{'Workorder Report.'} = '';
     $Self->{Translation}->{'Workorder Zoom.'} = '';
-    $Self->{Translation}->{'once'} = '';
-    $Self->{Translation}->{'regularly'} = '';
+    $Self->{Translation}->{'once'} = 'einmalig';
+    $Self->{Translation}->{'regularly'} = 'regelmäßig';
 
 }
 

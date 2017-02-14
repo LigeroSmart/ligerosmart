@@ -586,255 +586,263 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '';
 
+    # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+    $Self->{Translation}->{'Need config option %s!'} = '';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
-        '';
+        'Orodha ya mawakala wenye ruhusa ya kuchukua oda za kazi. Muhimu ni jina la kuingia. Iliyomo ni 0 au 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
-        '';
+        'Orodha ya hali za oda ya kazi, ambapo MudaHalisiKuanza wa oda ya kazi utasetiwa kama ulikuwa wazi katika pointi hii.';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
-    $Self->{Translation}->{'Admin of the state machine.'} = '';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Msimamizi wa matriki ya CIP.';
+    $Self->{Translation}->{'Admin of the state machine.'} = 'Msimamizi wa mashine ya hali.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
-        '';
+        'Moduli taarifa ya kiolesura cha wakala kuonyesha idadi ya bodi za ushauri wa mabadiliko.';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} =
-        '';
+        'Moduli taarifa ya kiolesura cha wakala kuona idadi ya mabadiliko yanayosimamiwa na mtumiaji.';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes.'} =
-        '';
+        'Moduli taarifa ya kiolesura cha wakala kuona idadi ya mabadiliko.';
     $Self->{Translation}->{'Agent interface notification module to see the number of workorders.'} =
         '';
     $Self->{Translation}->{'CAB Member Search'} = '';
     $Self->{Translation}->{'Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes).'} =
-        '';
+        'Muda wa hifadhi muda kwa dakika kwa ajili ya mwambaa zana za usimamizi wa mabadiliko. Chaguo-msingi: Masaa 3 (Dakika 180).';
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
-        '';
+        'Muda wa hifadhi muda kwa dakika kwa ajili ya usimamizi wa mabadiliko. Chaguo-msingi: Siku 5 (Dakika 7200).';
     $Self->{Translation}->{'Change CAB Templates'} = '';
     $Self->{Translation}->{'Change History.'} = '';
     $Self->{Translation}->{'Change Involved Persons.'} = '';
-    $Self->{Translation}->{'Change Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Mapitio ya Mabadiliko Kikomo "cha chini"';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '';
+    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Violezo vya mabadiliko na Oda za Kazi vilivyohaririwa na mtumijai huyu.';
     $Self->{Translation}->{'Change area.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '';
-    $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Kikomo "cha chini" cha mabadiliko kwa kurasa kwa Mapitio ya Mabadiliko ';
+    $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko.';
     $Self->{Translation}->{'Condition Overview'} = '';
-    $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
+    $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
+    $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
+        'Ina sanidi ni kwa mara ngapi taarifa zinatumwa pale muda uliopangwa wa kuanza au mida mingine inapofikiwa/kupitwa.';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
-        '';
+        'Chaguo-msingi la aina ya oda ya kazi. Hili ingizo lazima liwepo katika tabaka la katalogi la ujumla \'ITSM::UsimamiziMabadiliko::Oda ya Kazi::Aina\' .';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         '';
-    $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
+    $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Fafanua ishara kwa kila hali ya oda ya kazi.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
     $Self->{Translation}->{'Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
-        '';
+        'Inafafanua moduli ya mapitio kuonyesha muonekano mdogo wa orodha ya mabadiliko.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
-        '';
-    $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = '';
-    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = '';
+        'Inafafanua moduli ya mapitio kuonyesha muonekano mdogo wa orodha ya kiolezo.';
+    $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = 'Inafafanua kama itawezekana kufafanua muda wa uhasibu.';
+    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = 'Inafafanua kama itawezekana kuchapisha juhudi zilizopangwa.';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.'} =
-        '';
+        'Inafafanua kama hali za mwisho za mabadiliko zinazopatikana (kama ilivyofafanuliwa na mashine ya hali) ziruhusiwe kama mabadiliko yako kwenye hali iliyofungwa.';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state.'} =
-        '';
-    $Self->{Translation}->{'Defines if the accounted time should be shown.'} = '';
-    $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = '';
+        'Inafafanua kama hali za mwisho za oda za kazi zinazopatikana (kama ilivyofafanuliwa na mashine ya hali) ziruhusiwe kama oda ya kazi iko kwenye hali iliyofungwa.';
+    $Self->{Translation}->{'Defines if the accounted time should be shown.'} = 'Inafafanua kama muda uliohesabiwa uonyeshwe.';
+    $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Inafafanua kama muda halisi wa kuanza na kumaliza usetiwe.';
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
-        '';
+        'Amefafanua kama Change utafutaji na Workorder tafuta kazi inaweza kutumia kioo DB.';
     $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        '';
-    $Self->{Translation}->{'Defines if the planned effort should be shown.'} = '';
-    $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = '';
+        'Inafafanua kama hali ya mabadiliko inaweza kusetiwa katika WakalaITSMHaririMabadiliko.';
+    $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Inafafanua kama juhudi zilizopangwa zionyeshwe.';
+    $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Inafafanua kama tarehe iliyoombwa ichapishwe na mteja.';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
-        '';
-    $Self->{Translation}->{'Defines if the requested date should be set by customer.'} = '';
-    $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = '';
-    $Self->{Translation}->{'Defines if the workorder state should be shown.'} = '';
-    $Self->{Translation}->{'Defines if the workorder title should be shown.'} = '';
-    $Self->{Translation}->{'Defines shown graph attributes.'} = '';
+        'Inafafanua kama tarehe iliyoombwa itafutwe na mteja.';
+    $Self->{Translation}->{'Defines if the requested date should be set by customer.'} = 'Inafafanua kama tarehe iliyoombwa isetiwe na mteja.';
+    $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = 'Inafafanua kama tarehe iliyoombwa ionyeshwe na mteja.';
+    $Self->{Translation}->{'Defines if the workorder state should be shown.'} = 'Inafafanua kama hali ya oda ya kazi ionyeshwe.';
+    $Self->{Translation}->{'Defines if the workorder title should be shown.'} = 'Inafafanua kama kichwa cha habari cha oda ya kazi kionyeshwe.';
+    $Self->{Translation}->{'Defines shown graph attributes.'} = 'Inafafanua sifa za jedwali lililoonyeshwa.';
     $Self->{Translation}->{'Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.'} =
-        '';
-    $Self->{Translation}->{'Defines the change states that will be allowed to delete.'} = '';
+        'Inafafanua kwamba mabadiliko yenye oda za kazi zilizounganishwa na huduma, ambazo mteja ana ruhusa ya kutumia zitaonyeshwa. Mabadiliko mengine yoyote hayataonyeshwa.';
+    $Self->{Translation}->{'Defines the change states that will be allowed to delete.'} = 'Inafafanua hali za mabadiliko zinazoruhusiwa kufuta.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change PSA overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika Mapitio ya Mabadiliko ya PSA.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change Schedule overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya Ratiba za Mabadiliko.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the MyCAB overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya MyCAB.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the MyChanges overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya MabadilikoYangu.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change manager overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya meneja mabadiliko.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya mabadiliko.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
-        '';
+        'Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya ratiba za mabadiliko ya mteja.';
     $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
-        '';
+        'Inafafanua chaguo-msingi la kichwa cha habari cha mabadiliko kwa ajili ya mabadiliko ya mfano ambayo yanahitajika kuhariri kiolezo cha oda ya kazi.';
     $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya PSA.';
     $Self->{Translation}->{'Defines the default sort criteria in the change manager overview.'} =
-        '';
-    $Self->{Translation}->{'Defines the default sort criteria in the change overview.'} = '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya meneja mabadiliko. ';
+    $Self->{Translation}->{'Defines the default sort criteria in the change overview.'} = 'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko.';
     $Self->{Translation}->{'Defines the default sort criteria in the change schedule overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya ratiba.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya CABYangu.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyChanges overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya MabadilikoYangu.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyWorkorders overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya OdaZanguzzaKazi.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya PIR.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya ratiba ya mabadiliko ya mteja.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
-        '';
-    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = '';
-    $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = '';
+        'Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya kiolezo.';
+    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya CABYangu.';
+    $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = 'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya MabadilikoYangu.';
     $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} =
-        '';
-    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = '';
-    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = '';
+        'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya OdaZanguzaKazi.';
+    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya PIR.';
+    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya PSA.';
     $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} =
-        '';
-    $Self->{Translation}->{'Defines the default sort order in the change overview.'} = '';
+        'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya meneja..';
+    $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko.';
     $Self->{Translation}->{'Defines the default sort order in the change schedule overview.'} =
-        '';
+        'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya ratiba.';
     $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} =
-        '';
-    $Self->{Translation}->{'Defines the default sort order in the template overview.'} = '';
-    $Self->{Translation}->{'Defines the default value for the category of a change.'} = '';
-    $Self->{Translation}->{'Defines the default value for the impact of a change.'} = '';
+        'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya ratiba ya mteja.';
+    $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya kiolezo.';
+    $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Inafafanua thamani ya chaguo-msingi la kategoria ya mabadiliko.';
+    $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Inafafanua thamani ya chaguo-msingi la athari ya mabadiliko.';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        '';
+        'Inafafanua aina ya sehemu ya LinganishaThamani kwa ajili ya sifa za mabadiliko zinazotumika kwenye WakalaITSMMabadilikoShartiHariri. Thamani halali ni Chaguo, Nakala na Tarehe. Kama aina haijafafanuliwa, sehemu haitaonyeshwa.';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        '';
+        'Inafafanua aina ya sehemu ya LinganishaThamani kwa ajili ya sifa za oda za kazi zinazotumika kwenye WakalaITSMMabadilikoShartiHariri. Thamani halali ni Chaguo, Nakala na Tarehe. Kama aina haijafafanuliwa, sehemu haitaonyeshwa.';
     $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua sifa za kitu ambacho kinaweza kuchaguliwa kwa ajili ya vitu vya mabadiliko katika WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua sifa za kitu ambacho kinaweza kuchaguliwa kwa ajili ya vitu vya oda za kazi katika WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa MudaUliohesabiwa katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa MudaHalisiKumaliza katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa MudaHalisiKuanza katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaKategoria katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaMjenziMabadiliko katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaMenejaMabadiliko katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaMabadilikoHali katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa BadiliKichwaChaHabari katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa SehemuInayobadilika katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaAthari katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa JuhudiZilizopangwa katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa MudaKumalizaUliopangwa katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa MudaKuanzaUliopangwa katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaKipaumbele katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa MudaUlioombwa katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaWakalaOdaZaKazi katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa NambariOdaYaKazi katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaHaliOdaYaKazi katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KichwaChaHahariChaOdaYaKazi katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        '';
+        'Inafafanua opereta ambazo zinaweza kuchaguliwa kwa ajili ya sifa KitambulishoChaAinaOdaYaKazi katika  WakalaITSMMabadilikoShartiHariri.';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
-        '';
+        'Inafafanua kipindi (kwa miaka), ambapo muda wa kuanza na kumaliza inaweza kuchaguliwa.';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
-        '';
+        'Inafafanua sifa zilizoonyeshwa za oda ya kazi katika kidokezozana cha jedwali la oda za kazi katika kuza mabadiliko. Kuonyesha sehemu zinazobadilika za oda ya kazi kwenye kidokezozana, lazima ziwekwe bayana mfano SehemuInayobadilika_OdaYaKaziJinaSehemu1, SehemuInayobadilika_OdaYaKaziJinaSehemu2, na kadh.';
     $Self->{Translation}->{'Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya Mabadiliko ya PSA. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya Mabadiliko ya Ratiba. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya CABZangu. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya MabadilikoYangu. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya OdaZanguZaKazi. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the PIR overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya PIR. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the change manager overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya meneja mabadiliko. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the change overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya mabadiliko. Hili chaguo halina athari kwa nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the change search. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mabadiliko ya utafutaji. Hili chaguo halina athari kwenye nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column.'} =
-        '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya ratiba ya mabadiliko ya mteja. Hili chaguo halina athari kwenye nafasi ya safuwima.';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
-        '';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = '';
+        'Inafafanua safuwima zilizoonyeshwa katika mapitio ya kiolezo. Hili chaguo halina athari kwenye nafasi ya safuwima.';
+    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Inafafanua ishara kwa kila MabadilikoITSM ya hali.';
     $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
-        '';
+        'Inafafanua aina ya violezo ambavyo vitatumika kama vichujio katika mapitio ya kiolezo.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
-        '';
+        'Inafafanua hali za oda ya kazi ambazo zitatumika kama vichujio katika mapitio ya Oda zangu za kazi.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the PIR overview.'} =
-        '';
+        'Inafafanua hali ya oda za kazi ambazo zitatumika kama vichujio katika mapitio ya PIR.';
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
-        '';
-    $Self->{Translation}->{'Defines whether notifications should be sent.'} = '';
+        'Inafafanua aina za oda za kazi ambazo zitatumika kuonyesha mapitio ya PIR.';
+    $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Inafafanua kama taarifa zitumwe.';
     $Self->{Translation}->{'Delete Change'} = '';
     $Self->{Translation}->{'Delete a change.'} = '';
     $Self->{Translation}->{'Details of a change history entry.'} = '';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
-        '';
+        'Inaamua kama wakala anaweza kubadilisha jira-X la takwimu kama akitengeneza.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes done for config item classes.'} =
-        '';
+        'Inaamua kama moduli ya kawaida ya takwimu inaweza kutengeneza takwimu kuhusu mabadiliko yaliyofanywa kwenye matabaka ya vipengenele vya usanidi.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod.'} =
-        '';
+        'Inaamua kama moduli ya takwimu ya kawaida inaweza kuzalisha takwimu kuhusu mabadiliko kwa kuangalia kisasisho cha mabadiliko ya hali kwa kipindi cha muda.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes regarding the relation between changes and incident tickets.'} =
-        '';
+        'Inaamua kama moduli ya takwimu ya kawaida inaweza kuzalisha takwimu kuhusu mabadiliko kwa kuangalia uhusiano kati ya mabadiliko na tiketi za matukio.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes.'} =
-        '';
+        'Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu mabadiliko.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
-        '';
+        'Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu idadi ya tiketi za Rfc zilizotengenezwa na muombaji.';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Sehemu zinazobadilika (kwa mabadiliko na oda za kazi) zilizoonyeshwa kwenye skrini iliyochapishwa ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa.';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ongeza mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya hariri mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya tafuta mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa.';
     $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ongeza oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya hariri oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ripoti ya oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
+        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza oda za kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
-        '';
+        'Moduli ya matukio ya SehemuZinazobadilika kushughulikia usasishaji wa masharti kama sehemu zinazobadilika zimeongezwa, zimesasishwa au kufutwa.';
     $Self->{Translation}->{'Edit a change.'} = '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
@@ -854,174 +862,173 @@ sub Data {
     $Self->{Translation}->{'ITSM Template Edit Content.'} = '';
     $Self->{Translation}->{'ITSM Template Edit.'} = '';
     $Self->{Translation}->{'ITSM Template Overview.'} = '';
-    $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = '';
-    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
+    $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'Moduli ya matukio ya ITSM inaondoa masharti.';
+    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = 'Moduli ya matukio ya ITSM inafuta hifadhi muda ya mwambaa zana.';
     $Self->{Translation}->{'ITSM event module that deletes the history of changes.'} = '';
     $Self->{Translation}->{'ITSM event module that matches conditions and executes actions.'} =
-        '';
-    $Self->{Translation}->{'ITSM event module that sends notifications.'} = '';
-    $Self->{Translation}->{'ITSM event module that updates the history of changes.'} = '';
+        'Moduli ya matukio ya ITSM inayolandanisha masharti na kutekeleza vitendo. ';
+    $Self->{Translation}->{'ITSM event module that sends notifications.'} = 'Moduli ya matukio ya ITSM inayotuma taarifa.';
+    $Self->{Translation}->{'ITSM event module that updates the history of changes.'} = 'Moduli ya matukio ya ITSM inayosasisha historia ya mabadiliko.';
     $Self->{Translation}->{'ITSM event module that updates the history of conditions.'} = '';
     $Self->{Translation}->{'ITSM event module that updates the history of workorders.'} = '';
-    $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '';
+    $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'Moduli ya matukio ya ITSM inayopiga upya hesabu ya nambari ya oda za kazi.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
-        '';
+        'Moduli ya matukio ya ITSM inayoseti muda halisi wa kuanza na kumaliza oda za kazi.';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
-        '';
+        'Failibatli la hesabu ya mabadiliko ya ITSM. Hili faili linatumika kutengeneza nambari za mabadiliko. ';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
-        '';
-    $Self->{Translation}->{'Module to check the CAB members.'} = '';
-    $Self->{Translation}->{'Module to check the agent.'} = '';
-    $Self->{Translation}->{'Module to check the change builder.'} = '';
-    $Self->{Translation}->{'Module to check the change manager.'} = '';
-    $Self->{Translation}->{'Module to check the workorder agent.'} = '';
-    $Self->{Translation}->{'Module to check whether no workorder agent is set.'} = '';
+        'Moduli ya kukagua kama OngezaOdaYaKazi au OngezaOdaYaKaziKutokaKwenyeKiolezo iruhusiwe.';
+    $Self->{Translation}->{'Module to check the CAB members.'} = 'Moduli ya kukagua washiriki wa CAB.';
+    $Self->{Translation}->{'Module to check the agent.'} = 'Moduli ya kukagua wakala';
+    $Self->{Translation}->{'Module to check the change builder.'} = 'Moduli ya kukagua mjenzi wa mabadiliko.';
+    $Self->{Translation}->{'Module to check the change manager.'} = 'Moduli ya kukagua meneja mabadiliko.';
+    $Self->{Translation}->{'Module to check the workorder agent.'} = 'Moduli ya kukagua wakala wa oda za kazi.';
+    $Self->{Translation}->{'Module to check whether no workorder agent is set.'} = 'Moduli ya kukagua kama hakuna wakala wa oda ya kzi aliyesetiwa.';
     $Self->{Translation}->{'Module to check whether the agent is contained in the configured list.'} =
-        '';
+        'Moduli ya kukagua kama wakala yumo kwenye orodha ya usanidi.';
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
-        '';
+        'Moduli ya kuonyesha kiungo cha kutengeneza mabadiliko kutoka kwenye hii tiketi. Tiketi itaunganishwa kiotomatiki na mabadiliko mapya.';
     $Self->{Translation}->{'Move Time Slot.'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
-        '';
+        'Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika "Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko" kama kipengele "Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli" kimewezeshwa.';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
-        '';
+        'Vigezo kwa ajili ya kipengele Barakoa ijayo ya mpangilio kazi wa kutengenezwa na mtumiaji katika mandhari ya mapendeleo ya kiolesura cha wakala.';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
-        '';
+        'Vigezo kwa ajili vya kurasa(ambapo tiketi zinaonyeshwa) za mapitio ya mabadiliko madogo.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        '';
+        'Inawasilisha kiunganishi katika menyu kuonyesha watu wanaohusika katika badiliko, katika mandhari iliyokuzwa ya badiliko hilo katika kiolesura cha wakala.';
     $Self->{Translation}->{'Projected Service Availability'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
-        '';
-    $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = '';
-    $Self->{Translation}->{'Required privileges to add a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to change the workorder agent.'} = '';
-    $Self->{Translation}->{'Required privileges to create a template from a change.'} = '';
+        'Upendeleo unaotakiwa ili wakala achukue oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Upendeleo unaotakiwa ili kufikia mapitio ya mabadiliko yote.';
+    $Self->{Translation}->{'Required privileges to add a workorder.'} = 'Upendeleo unaotakiwa ili kuongeza oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to change the workorder agent.'} = 'Upendeleo unaotakiwa ili kubadili wakala wa oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to create a template from a change.'} = 'Upendeleo unaotakiwa ili kutengeneza kiolezo kutoka kwenye mabadiliko. ';
     $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} =
-        '';
-    $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to create changes from templates.'} = '';
-    $Self->{Translation}->{'Required privileges to create changes.'} = '';
-    $Self->{Translation}->{'Required privileges to delete a template.'} = '';
-    $Self->{Translation}->{'Required privileges to delete a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to delete changes.'} = '';
-    $Self->{Translation}->{'Required privileges to edit a template.'} = '';
-    $Self->{Translation}->{'Required privileges to edit a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to edit changes.'} = '';
-    $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = '';
-    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = '';
+        'Upendeleo unaotakiwa ili kutengeneza kiolezo kutoka kwenye CAB ya mabadiliko.';
+    $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'Upendeleo unaotakiwa ili kutengeneza kiolezo kutoka kwenye oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to create changes from templates.'} = 'Upendeleo unaotakiwa ili kutengeneza mabadiliko kutoka kwenye violezo.';
+    $Self->{Translation}->{'Required privileges to create changes.'} = 'Upendeleo unaotakiwa ili kutengeneza mabadiliko.';
+    $Self->{Translation}->{'Required privileges to delete a template.'} = 'Upendeleo unaotakiwa ili kufuta kiolezo.';
+    $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Upendeleo unaotakiwa ili kufuta oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to delete changes.'} = 'Upendeleo unaotakiwa ili kufuta mabadiliko.';
+    $Self->{Translation}->{'Required privileges to edit a template.'} = 'Upendeleo unaotakiwa ili kuhariri kiolezo.';
+    $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Upendeleo unaotakiwa ili kuhariri oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to edit changes.'} = 'Upendeleo unaotakiwa ili kuhariri mabadiliko.';
+    $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Upendeleo unaotakiwa ili kuhariri masharti ya mabadiliko.';
+    $Self->{Translation}->{'Required privileges to edit the content of a template.'} = 'Upendeleo unaotakiwa ili kuhariri maudhui ya kiolezo.';
     $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} =
-        '';
-    $Self->{Translation}->{'Required privileges to move changes in time.'} = '';
-    $Self->{Translation}->{'Required privileges to print a change.'} = '';
-    $Self->{Translation}->{'Required privileges to reset changes.'} = '';
-    $Self->{Translation}->{'Required privileges to view a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to view changes.'} = '';
+        'Upendeleo unaotakiwa ili kuhaririri watu wanaohusika na mabadiliko.';
+    $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Upendeleo unaotakiwa ili kuhamisha mabadiliko kwa muda.';
+    $Self->{Translation}->{'Required privileges to print a change.'} = 'Upendeleo unaotakiwa ili kuchapisha mabadiliko.';
+    $Self->{Translation}->{'Required privileges to reset changes.'} = 'Upendeleo unaotakiwa ili kuweka upya mabadiliko.';
+    $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Upendeleo unaotakiwa ili kuona oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to view changes.'} = 'Upendeleo unaotakiwa ili kuona mabadiliko.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} =
-        '';
+        'Upendeleo unaotakiwa ili kuona orodha ya mabadiliko ambapo mtumiaji ni mshirika wa CAB.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is the change manager.'} =
-        '';
-    $Self->{Translation}->{'Required privileges to view overview over all templates.'} = '';
-    $Self->{Translation}->{'Required privileges to view the conditions of changes.'} = '';
-    $Self->{Translation}->{'Required privileges to view the history of a change.'} = '';
-    $Self->{Translation}->{'Required privileges to view the history of a workorder.'} = '';
-    $Self->{Translation}->{'Required privileges to view the history zoom of a change.'} = '';
+        'Upendeleo unaotakiwa ili kuona orodha ya mabadiliko ambapo mtumiaji ni meneja mabadiliko.';
+    $Self->{Translation}->{'Required privileges to view overview over all templates.'} = 'Upendeleo unaotakiwa ili kuona mapitio ya violezo vyote.';
+    $Self->{Translation}->{'Required privileges to view the conditions of changes.'} = 'Upendeleo unaotakiwa ili kuona masharti ya mabadiliko yote.';
+    $Self->{Translation}->{'Required privileges to view the history of a change.'} = 'Upendeleo unaotakiwa ili kuona historia ya mabadiliko.';
+    $Self->{Translation}->{'Required privileges to view the history of a workorder.'} = 'Upendeleo unaotakiwa ili kuona historia ya oda ya kazi.';
+    $Self->{Translation}->{'Required privileges to view the history zoom of a change.'} = 'Upendeleo unaotakiwa ili kuona historia iliyokuzwa  ya mabadiliko.';
     $Self->{Translation}->{'Required privileges to view the history zoom of a workorder.'} =
-        '';
-    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = '';
-    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = '';
+        'Upendeleo unaotakiwa ili kuona historia iliyokuzwa ya oda ya kazi. ';
+    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'Upendeleo unaotakiwa ili kuona orodha ya Ratiba ya Mabadiliko.';
+    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Upendeleo unaotakiwa ili kuona orodha ya mabadiliko ya PSA.';
     $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} =
-        '';
-    $Self->{Translation}->{'Required privileges to view the list of own changes.'} = '';
-    $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = '';
-    $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '';
+        'Upendeleo unaotakiwa ili kuona orodha ya mabadiliko violezo vyote.';
+    $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Upendeleo unaotakiwa ili kuona orodha ya mabadiliko yako.';
+    $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Upendeleo unaotakiwa ili kuona orodha ya oda zako za kazi.';
+    $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Upendeleo unaotakiwa ili kuandika ripoti ya oda ya kazi.';
     $Self->{Translation}->{'Reset a change and its workorders.'} = '';
     $Self->{Translation}->{'Reset change and its workorders'} = '';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         '';
     $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen after creating a workorder'} = '';
+    $Self->{Translation}->{'Screen after creating a workorder'} = 'Skrini baada ya kutengeneza oda ya kazi.';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
-        '';
+        'Chagua module ya kutengeneza namba ya badiliko. "Kuongezeka kwa otomatiki" inaongeza namba ya badiliko, kitambulisho cha mfumo na kihesabuji zinatumika na kitambulisho cha mfumo.umbizo la kihesabuji (mfano 100118, 100119). Na "Tarehe" namba za mabadiliko zitatengenezwa na tarehe ya sasa na kihesabuji; Umbizo linafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062400001, 2010062400002. Na "Kuangalia jumla kwa tarehe"  kihesabuji kitaambatanishwa kama kiangaliaji jumla kwenye tungo ya tarehe na kitambulisho. Kiangalia jumla kitazungushwa kwa mishingi ya kila siku. Umbizo litafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062410000017, 2010062410000026.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
-        '';
-    $Self->{Translation}->{'Sets up the state machine for changes.'} = '';
-    $Self->{Translation}->{'Sets up the state machine for workorders.'} = '';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = '';
+        'Inaweka upeo wa chini wa ukubwa wa kihesabuji tiketi (Kama "Inaongezeka otomatiki" imechaguliwa kama Badiliko la ITSM::Kitengeneza namaba za tiketi). Chaguo-msingi ni 5, hii inamaanisha kihesabuji kinaanzia 10000';
+    $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Inaseti hali ya mashine kwa mabadiliko.';
+    $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Inaseti hali ya mashine kwa oda za kazi.';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        '';
+        'Inaonyesha kisanduku tiki katika skrini ya kuhariri mpangilio wa kazi wa OTRS wa ITSM ya wakala ambayo inafafanua kama mipangilio ifuatayo ya kazi pia itaondolewa kama mpangilio kazi ukirekebishwa na muda wa kuisha uliopangwa umebadilika.';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu kinachoruhusu kufafanua mabadiliko kama kiolezo katika muonekano uliokuzwa wa mabadiliko, katika kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu  kinachoruhusu kuunganisha mabadiliko na kitu kingine katika muonekano uliokuzwa kiolesura cha wakala.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu  kinachoruhusu kuhamisha kipengele cha muda wa mabadiliko katika muonekano uliokuzwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kufikia masharti ya mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu to access the history of a change in the its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kufikia masharti ya historia ya mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu to access the history of a workorder in the its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to add a workorder in the change zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to delete a change in its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kufuta mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu to delete a workorder in its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to edit a change in the its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kuhariri mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu to edit a workorder in the its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to go back in the change zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kurudi nyuma kwenye muonekano wa mabadiliko uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu to go back in the workorder zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to print a change in the its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kuchapisha mabadiliko kwenye muonekano wake uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu to print a workorder in the its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
-        '';
+        'Inaonyesha kiungo kwenye menyu ili kweka upya mabadiliko na oda zake za kazi katika muonekano wake uliokuzwa wa kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
-        '';
-    $Self->{Translation}->{'State Machine'} = '';
+        'Inaonyesha badili historia (utaratibu uliogeuzwa) katika kiolesura cha wakala.';
+    $Self->{Translation}->{'State Machine'} = 'Mashine ya Hali';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
-        '';
+        'Inahifadhi vitambulisho vya mabadiliko na oda za kazi sambamba na kitambulisho cha kiolezo, wakati mtumiaji anahariri kiolezo.';
     $Self->{Translation}->{'Take Workorder.'} = '';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
-        '';
+        'Kitambulisho cha mabadiliko, mf. Mabadiliko#, MabadilikoYangu#. Chaguo-msingi ni Mabadiliko#.';
     $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =
-        '';
+        'Kitambulisho cha oda ya kazi, mf. OdaYakazi#, OdaYanguYaKazi#. Chaguo-msingi ni OdaYakazi#.';
     $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed.'} =
-        '';
+        'Aina hii ya ACL inazuia matumizi ya aina za tiketi ambazo zimefafanuliwa katika chaguo la sysconfig \'MabadilikoITSM::OngezaKiungoMabadilikoAinaTiketi\', kwa watumiaji wa makundi kama ilivyofafanuliwa kwenye "MabadilikoITSM::ZuiaAinaTiketi::Makundi". Hii ACL inaweza kuingiliana na  ACL nyingine ambazo pia zina uhusiano na aina ya tiketi, hili chaguo la sysconfig lime lemazwa kwa kawaida na linaweza kuamilishwa kama itahitajika.';
     $Self->{Translation}->{'Time Slot'} = '';
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
-        '';
+        'Aina za tiketi, ambazo kwenye muonekano uliokuzwa wa tiketi kiungo cha kuongeza mabadiliko kitaonyeshwa.';
     $Self->{Translation}->{'User Search'} = '';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
     $Self->{Translation}->{'Workorder Add.'} = '';

@@ -586,24 +586,30 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '';
 
+    # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+    $Self->{Translation}->{'Need config option %s!'} = '';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
-        '';
+        'فهرست کارشناسانی که اجازه دسترسی برای گرفتن دستور کار را دارا هستند. کلید یک نام برای ورود است. محتوا 0 یا 1 است.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
-        '';
+        'فهرستی از وضعیت‌های دستور کار که در صورتی در اینجا وارد نشود، به عنوان زمان واقعی آغاز مشخص خواهد شد.';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
-    $Self->{Translation}->{'Admin of the state machine.'} = '';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت <-> اثر <-> الویت';
+    $Self->{Translation}->{'Admin of the state machine.'} = 'مدیر ماشین وضعیت';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
-        '';
+        'ماژول اعلان واسط کارشناس برای نمایش تعداد هیئت‌های مشاور تغییرات';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} =
-        '';
+        'ماژول اعلان واسط کارشناس برای نمایش تعداد تغییرات مدیریت شده توسط کاربر';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes.'} =
-        '';
+        'ماژول اعلان واسط کارشناس برای نمایش تعداد تغییرات';
     $Self->{Translation}->{'Agent interface notification module to see the number of workorders.'} =
         '';
     $Self->{Translation}->{'CAB Member Search'} = '';
@@ -614,16 +620,18 @@ sub Data {
     $Self->{Translation}->{'Change CAB Templates'} = '';
     $Self->{Translation}->{'Change History.'} = '';
     $Self->{Translation}->{'Change Involved Persons.'} = '';
-    $Self->{Translation}->{'Change Overview "Small" Limit'} = '';
+    $Self->{Translation}->{'Change Overview "Small" Limit'} = 'نمای کلی تغییر به صورت کوچک';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '';
-    $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'تغییر محدودیت برای هر صفحه برای نمای کوچک تغییر';
+    $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'تغییر مسیریاب جستجو در رابط کاربری کارشناس';
     $Self->{Translation}->{'Condition Overview'} = '';
+    $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
+        '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
@@ -632,15 +640,15 @@ sub Data {
         '';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         '';
-    $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
+    $Self->{Translation}->{'Define the signals for each workorder state.'} = 'تعریف علائم برای هر وضعیت دستور کار';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
     $Self->{Translation}->{'Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
-        '';
+        'تعریف ماژول نمای کلی برای نمایش نمای کوچک از فهرست تغییرات';
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
-        '';
+        'تعریف ماژول نمای کلی برای نمایش نمای کوچک از فهرست قالب‌ها';
     $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = '';
     $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = '';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.'} =
@@ -961,7 +969,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = '';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = '';
-    $Self->{Translation}->{'Show this screen after I created a new workorder'} = '';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
@@ -1008,7 +1015,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         '';
-    $Self->{Translation}->{'State Machine'} = '';
+    $Self->{Translation}->{'State Machine'} = 'ماشین وضعیت';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
     $Self->{Translation}->{'Take Workorder.'} = '';

@@ -2,14 +2,15 @@
 # Translators:
 # Anatoli F. Peña Castillo <anatoli1993@yahoo.com>, 2016
 # Arturo Mondelo <arturo.mondelo@hotmail.es>, 2015
+# David B <link.bigpoint@outlook.com>, 2017
 # Deiry Arias <mailimarias@gmail.com>, 2015
 # Pablo Ascencio <pabloascencio77@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-12-10 13:31+0000\n"
-"PO-Revision-Date: 2016-12-10 12:31+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-02-08 23:51+0000\n"
+"Last-Translator: David B <link.bigpoint@outlook.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -331,7 +332,7 @@ msgstr "Guardar el cambio como plantilla"
 
 #. Template: AAAITSMChangeManagement
 msgid "Save workorder as a template"
-msgstr "Guardar orden de trabajo como plantilla"
+msgstr "Guardar la orden de trabajo como plantilla"
 
 #. Template: AAAITSMChangeManagement
 msgid "Search Changes"
@@ -355,11 +356,11 @@ msgstr "Resumen de Plantillas"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned end time is invalid!"
-msgstr "¡La fecha de finalización planeada es inválida!"
+msgstr "¡La fecha de finalización planeada no es válida!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned start time is invalid!"
-msgstr "¡La fecha de inicio planeada es inválida!"
+msgstr "¡La fecha de inicio planeada no es válida!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The planned time is invalid!"
@@ -367,7 +368,7 @@ msgstr "¡El periodo de tiempo planeado es inválido!"
 
 #. Template: AAAITSMChangeManagement
 msgid "The requested time is invalid!"
-msgstr "¡La fecha solicitada es inválida!"
+msgstr "¡La fecha solicitada no es válida!"
 
 #. Template: AAAITSMChangeManagement
 msgid "New (from template)"
@@ -467,11 +468,11 @@ msgstr "(ID=%s) Vínculo a %s (ID=%s) eliminado"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr ""
+msgstr "Envió de notificación"
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr ""
+msgstr "Se ha enviado la notificación de orden de trabajo con ID de la orden de trabajo."
 
 #. Template: AAAITSMChangeManagement
 msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
@@ -535,7 +536,7 @@ msgstr "contiene"
 
 #. Template: AAAITSMChangeManagement
 msgid "created"
-msgstr "creada"
+msgstr "creado"
 
 #. Template: AAAITSMChangeManagement
 msgid "decision"
@@ -631,7 +632,7 @@ msgstr "Categoría <-> Impacto <-> Prioridad"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr ""
+msgstr "Administrar la prioridad resultante al combinar Categoría <-> Impacto."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -707,7 +708,7 @@ msgstr "Editar un estado de transición para"
 
 #. Template: AdminITSMStateMachine
 msgid "Do you really want to delete the state transition"
-msgstr "Realmente desea eliminar esta transición de estado?"
+msgstr "¿Realmente desea eliminar esta transición de estado?"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
@@ -759,7 +760,7 @@ msgstr "volver a pantalla de personas involucradas"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
-msgstr "Nombre inválido"
+msgstr "Nombre no válido"
 
 #. Template: AgentITSMChangeCondition
 msgid "Conditions and Actions"
@@ -779,7 +780,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
-msgstr "Se requiere un Nombre válido"
+msgstr "Se requiere un nombre válido"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "A valid name is needed."
@@ -887,7 +888,7 @@ msgstr "Administrador de Cambios"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "User invalid."
-msgstr "Usuario inválido"
+msgstr "El usuario no es válido."
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeBuilder"
@@ -1146,19 +1147,19 @@ msgstr "Editar Contenido"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "CreateBy"
-msgstr "Creado Por"
+msgstr "Creado por"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "CreateTime"
-msgstr "Fecha de Creación"
+msgstr "Fecha de creación"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "ChangeBy"
-msgstr "Modificado Por"
+msgstr "Modificado por"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "ChangeTime"
-msgstr "Fecha del Cambio"
+msgstr "Fecha del cambio"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Template Content"
@@ -1182,7 +1183,7 @@ msgstr "¡La fecha planeada de inicio debe ser anterior a la de finalización!"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid format."
-msgstr "Formato inválido."
+msgstr "Formato no válido."
 
 #. Template: AgentITSMWorkOrderAddFromTemplate
 msgid "Select Workorder Template"
@@ -1241,7 +1242,7 @@ msgstr "Información de la Orden de Trabajo"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
-msgstr "Notificación desconocida %s!"
+msgstr "¡Notificación desconocida %s!"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "There was an error creating the notification."
@@ -1253,11 +1254,11 @@ msgstr "Resumen: Cambios ITSM"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
-msgstr "Ticket con TicketID %s no existe!"
+msgstr "¡El Ticket con la ID %s no existe!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Please contact the admin."
-msgstr ""
+msgstr "Por favor, póngase en contacto con el administrador."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
@@ -1285,7 +1286,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "Could not add the template."
-msgstr ""
+msgstr "No se pudo agregar la plantilla."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Change \"%s\" not found in database!"
@@ -1389,23 +1390,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
 msgid "Overview: My CAB"
-msgstr ""
+msgstr "Resumen: Mi CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
 msgid "Overview: My Changes"
-msgstr ""
+msgstr "Resumen: Mis Cambios"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
 msgid "Overview: My Workorders"
-msgstr ""
+msgstr "Resumen: Mis ordenes de trabajo"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "Overview: PIR"
-msgstr ""
+msgstr "Resumen: PIR"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "Overview: PSA"
-msgstr ""
+msgstr "Resumen: PSA"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrder \"%s\" not found in database!"
@@ -1469,11 +1470,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "CAB Agent"
-msgstr ""
+msgstr "Agente del CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "CAB Customer"
-msgstr ""
+msgstr "Cliente del CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Description"
@@ -1505,7 +1506,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Created By"
-msgstr ""
+msgstr "Creador por"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder State"
@@ -1541,7 +1542,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "before"
-msgstr "Antes "
+msgstr "antes "
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
 msgid "The change \"%s\" could not be serialized."
@@ -1549,7 +1550,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
 msgid "Could not update the template \"%s\"."
-msgstr ""
+msgstr "No se pudo actualizar la plantilla. \"%s\"."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
 msgid "Could not delete change \"%s\"."
@@ -1585,7 +1586,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "You need %s permission!"
-msgstr "Necesita permiso %s!"
+msgstr "¡Necesita permiso %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "No TemplateID is given!"
@@ -1685,13 +1686,13 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
-msgstr ""
+msgstr "Mis Órdenes de Trabajo"
 
 #. SysConfig
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
 "name. Content is 0 or 1."
-msgstr "Una lista de los agentes que tienen permiso para tomar órdenes de trabajo. Key es un nombre de inicio de sesión y Content puede ser 0 ó 1."
+msgstr "Una lista de los agentes que tienen permiso para tomar órdenes de trabajo. Key es un nombre de inicio de sesión. Content puede ser 0 ó 1."
 
 #. SysConfig
 msgid ""
@@ -1701,11 +1702,11 @@ msgstr "Una lista de estados para las órdenes de trabajo, misma que será asign
 
 #. SysConfig
 msgid "Add a change from template."
-msgstr ""
+msgstr "Agregar un cambio desde una plantilla."
 
 #. SysConfig
 msgid "Add a change."
-msgstr ""
+msgstr "Añadir un cambio."
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1761,7 +1762,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Involved Persons."
-msgstr ""
+msgstr "Cambiar personas involucradas."
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
@@ -1781,7 +1782,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Zoom."
-msgstr ""
+msgstr "Ampliación del Cambio."
 
 #. SysConfig
 msgid "Change and WorkOrder templates edited by this user."
@@ -1830,7 +1831,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Definir acciones donde está disponible un botón de configuración en el widget de objetos vinculados (LinkObject::ViewMode = \"complex\"). Tenga en cuenta que estas acciones deben haber registrado los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
@@ -1904,19 +1905,19 @@ msgstr "Determina si el esfuerzo planeado debe mostrarse."
 
 #. SysConfig
 msgid "Defines if the requested date should be print by customer."
-msgstr "Define si la fecha solicitada debe imprimirse por cliente."
+msgstr "Define si la fecha solicitada debe ser impresa por el cliente."
 
 #. SysConfig
 msgid "Defines if the requested date should be searched by customer."
-msgstr "Define si la fecha solicitada debe buscarse por cliente."
+msgstr "Define si la fecha solicitada debe ser buscada por el cliente."
 
 #. SysConfig
 msgid "Defines if the requested date should be set by customer."
-msgstr "Define si la fecha solicitada debe registrarse para cada cliente."
+msgstr "Define si la fecha solicitada debe ser establecida por el cliente."
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr "Define si la fecha solicitada debe mostrarse por cliente."
+msgstr "Define si la fecha solicitada debe ser mostrada por el cliente."
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
@@ -2641,7 +2642,7 @@ msgstr ""
 
 #. SysConfig
 msgid "PSA"
-msgstr ""
+msgstr "PSA"
 
 #. SysConfig
 msgid ""
@@ -2667,7 +2668,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
-msgstr ""
+msgstr "Disponibilidad Proyectada del Servicio (PSA)"
 
 #. SysConfig
 msgid ""
@@ -2896,7 +2897,7 @@ msgstr "Configura la máquina de estados para las órdenes de trabajo"
 
 #. SysConfig
 msgid "Show this screen after I created a new workorder"
-msgstr "Mostrar esta pantalla después de crear una nueva orden de trabajo"
+msgstr "Mostrar esta ventana después de crear una nueva orden de trabajo"
 
 #. SysConfig
 msgid ""
@@ -3077,7 +3078,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Time Slot"
-msgstr ""
+msgstr "Periodo de tiempo"
 
 #. SysConfig
 msgid ""
@@ -3111,7 +3112,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder History Zoom."
-msgstr ""
+msgstr "Vista detallada del Historial de la Orden de trabajo."
 
 #. SysConfig
 msgid "Workorder History."
@@ -3123,7 +3124,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Zoom."
-msgstr ""
+msgstr "Vista detallada de la Orden de trabajo."
 
 #. SysConfig
 msgid "once"
