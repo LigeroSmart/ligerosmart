@@ -26,8 +26,8 @@
                             <input type="hidden" name="Subaction" value="ItemEdit"/>
                             <input type="hidden" name="Class" value="[% Data.Class | html %]"/>
                             <input type="hidden" name="ItemID" value="NEW"/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]">
-                                <span>[% Translate("Add Catalog Item") | html %]</span>
+                            <button class="CallForAction Fullsize Center Create" type="submit" value="[% Translate("Add") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add Catalog Item") | html %]</span>
                             </button>
                         </form>
                     </li>
@@ -39,15 +39,15 @@
                             <input type="hidden" name="Subaction" value="ItemEdit"/>
                             <input type="hidden" name="ItemID" value="NEW"/>
                             <input type="hidden" name="Class" value="NEW"/>
-                            <button class="CallForAction Plus" type="submit" value="[% Translate("Add") | html %]">
-                                <span>[% Translate("Add Catalog Class") | html %]</span>
+                            <button class="CallForAction Fullsize Center Create" type="submit" value="[% Translate("Add") | html %]">
+                                <span><i class="fa fa-plus-square"></i>[% Translate("Add Catalog Class") | html %]</span>
                             </button>
                         </form>
                     </li>
 [% RenderBlockEnd("ActionAddClass") %]
 [% RenderBlockStart("ActionOverview") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionOverview") %]
                 </ul>
@@ -206,7 +206,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" id="Submit" value="[% Translate("Submit") | html %]">[% Translate("Submit") | html %]</button>
+                            <button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Submit") | html %]"><span>[% Translate("Submit") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
