@@ -37,6 +37,8 @@ $Selenium->RunTest(
         );
         my $TestCustomerID = $User[0];
 
+        my $TypeID = $Kernel::OM->Get('Kernel::System::Type')->TypeLookup( Type => 'Incident' );
+
         # create test service
         my $ServiceName     = "Service" . $Helper->GetRandomID();
         my $ITSMCriticality = '5 very high';
@@ -44,7 +46,7 @@ $Selenium->RunTest(
             Name        => $ServiceName,
             ValidID     => 1,
             Comment     => 'Selenium Test Service',
-            TypeID      => 2,
+            TypeID      => $TypeID,
             Criticality => $ITSMCriticality,
             UserID      => 1,
         );
@@ -73,7 +75,7 @@ $Selenium->RunTest(
             PriorityID   => $PriorityID,
             Lock         => 'unlock',
             State        => 'open',
-            TypeID       => 2,
+            TypeID       => $TypeID,
             ServiceID    => $ServiceID,
             CustomerID   => $TestCustomerID,
             CustomerUser => "$TestCustomerUserLogin\@localhost.com",
