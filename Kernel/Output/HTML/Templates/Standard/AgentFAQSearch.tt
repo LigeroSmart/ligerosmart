@@ -24,9 +24,9 @@
                 </div>
             </div>
             <div class="Field">
-                <button id="SearchProfileNew" value="[% Translate("Create New") | html %]">[% Translate("Create New") | html %]</button>
+                <button id="SearchProfileNew" class="CallForAction" value="[% Translate("Create New") | html %]"><span>[% Translate("Create New") | html %]</span></button>
 
-                <button id="SearchProfileDelete" class="Hidden" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
+                <button id="SearchProfileDelete" class="CallForAction Hidden" value="[% Translate("Delete") | html %]"><span>[% Translate("Delete") | html %]</span></button>
             </div>
             <div class="Clear"></div>
             <label>[% Translate("Save changes in template") | html %]:</label>

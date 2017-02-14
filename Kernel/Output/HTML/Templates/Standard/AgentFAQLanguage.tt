@@ -31,7 +31,7 @@
                         </p>
                         <div class="Field SpacingTop">
                             <button class="CallForAction FullSize Center" type="submit" value="[% Translate("Enable it here!") | html %]">
-                                <span>[% Translate("Enable it here!") | html %]</span>
+                                <span><i class="fa fa-unlock-alt"></i> [% Translate("Enable it here!") | html %]</span>
                             </button>
                         </div>
                         <div class="Clear"></div>
