@@ -1199,17 +1199,17 @@ sub Run {
 
                         $Attribute      = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
                         $AttributeValue = $GetParam{ItemCreateTimePoint} . ' '
-                            . $LayoutObject->{LanguageObject}->Get( $GetParam{ItemCreateTimePointFormat} . '(s)' );
+                            . $LayoutObject->{LanguageObject}->Translate( $GetParam{ItemCreateTimePointFormat} . '(s)' );
                     }
                 }
                 elsif ( $Attribute eq 'VoteSearchType' ) {
                     next ATTRIBUTE if !$GetParam{VoteSearchOption};
-                    $AttributeValue = $LayoutObject->{LanguageObject}->Get( $GetParam{VoteSearchType} ) . ' '
+                    $AttributeValue = $LayoutObject->{LanguageObject}->Translate( $GetParam{VoteSearchType} ) . ' '
                         . $GetParam{VoteSearch};
                 }
                 elsif ( $Attribute eq 'RateSearchType' ) {
                     next ATTRIBUTE if !$GetParam{RateSearchOption};
-                    $AttributeValue = $LayoutObject->{LanguageObject}->Get( $GetParam{RateSearchType} ) . ' '
+                    $AttributeValue = $LayoutObject->{LanguageObject}->Translate( $GetParam{RateSearchType} ) . ' '
                         . $GetParam{RateSearch} . '%';
                 }
 
