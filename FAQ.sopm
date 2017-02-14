@@ -78,7 +78,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Layout/FAQ.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/LinkObject/FAQ.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/FAQ.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAFAQ.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQAdd.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardFAQOverview.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQCategory.tt" />
