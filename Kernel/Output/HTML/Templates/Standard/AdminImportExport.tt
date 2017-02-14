@@ -21,12 +21,12 @@
                 <ul class="ActionList">
 [% RenderBlockStart("ActionOverview") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction"><span>[% Translate("Go to overview") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]" class="CallForAction Fullsize Center"><span><i class="fa fa-caret-left"></i>[% Translate("Go to overview") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionOverview") %]
 [% RenderBlockStart("ActionAdd") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=TemplateEdit1" class="CallForAction Plus"><span>[% Translate("Add template") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=TemplateEdit1" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square"></i>[% Translate("Add template") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionAdd") %]
                 </ul>
@@ -191,7 +191,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">[% Translate("Next") | html %]</button>
+                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext"><span>[% Translate("Next") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction='Overview'">[% Translate("Cancel") | html %] </a>
                         </div>
@@ -237,8 +237,8 @@
                         </div>
 [% RenderBlockEnd("TemplateEdit2Element") %]
                         <div class="Field SpacingTop">
-                            <button class="Back" type="button" name="Back" >[% Translate("Back") | html %]</button>
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >[% Translate("Next") | html %]</button>
+                            <button class="Back CallForAction" type="button" name="Back" ><span>[% Translate("Back") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext" ><span>[% Translate("Next") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -284,8 +284,8 @@
                         </div>
 [% RenderBlockEnd("TemplateEdit3Element") %]
                         <div class="Field SpacingTop">
-                            <button class="Back" type="button" name="Back" >[% Translate("Back") | html %]</button>
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">[% Translate("Next") | html %]</button>
+                            <button class="Back CallForAction" type="button" name="Back" ><span>[% Translate("Back") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext"><span>[% Translate("Next") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -385,12 +385,12 @@
                         </tbody>
                     </table>
                     <div class="W100pc SpacingTopSmall Left">
-                        <button class="CallForAction Plus" id="MappingAddButton" type="submit" name="MappingAddButton" value="[% Translate("Add") | html %]"><span> [% Translate("Add Mapping Element") | html %]</span> </button>
+                        <button class="CallForAction Plus" id="MappingAddButton" type="submit" name="MappingAddButton" value="[% Translate("Add") | html %]"><span><i class="fa fa-plus-square"></i>[% Translate("Add Mapping Element") | html %]</span> </button>
                     </div>
 
                     <div class="SpacingTop">
-                        <button type="submit" name="SubmitBack" value="SubmitBack">[% Translate("Back") | html %]</button>
-                        <button class="Primary" type="submit" name="SubmitNextButton" id="SubmitNextButton" value="1">[% Translate("Next") | html %]</button>
+                        <button class="Back CallForAction" type="submit" name="SubmitBack" value="SubmitBack"><span>[% Translate("Back") | html %]</span></button>
+                        <button class="Primary CallForAction" type="submit" name="SubmitNextButton" id="SubmitNextButton" value="1"><span>[% Translate("Next") | html %]</span></button>
                     </div>
                 </form>
             </div>
@@ -469,8 +469,8 @@
 [% RenderBlockEnd("TemplateEdit5Element") %]
 
                         <div class="Field SpacingTop">
-                            <button type="submit" name="SubmitBack" value="SubmitBack">[% Translate("Back") | html %]</button>
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">[% Translate("Finish") | html %]</button>
+                            <button class="Back CallForAction" type="submit" name="SubmitBack" value="SubmitBack"><span>[% Translate("Back") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext"><span>[% Translate("Finish") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -502,7 +502,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" value="[% Translate("Start Import") | html %]">[% Translate("Start Import") | html %]</button>
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Start Import") | html %]"><span>[% Translate("Start Import") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -596,7 +596,7 @@
                     </fieldset>
 
                     <p class="Center SpacingTopSmall">
-                        <button type="submit" name="Ok" value="[% Translate("Ok") | html %]">[% Translate("Ok") | html %]</button>
+                        <button class="Primary CallForAction" type="submit" name="Ok" value="[% Translate("Ok") | html %]"><span>[% Translate("Ok") | html %]</span></button>
                     </p>
                 </form>
             </div>
