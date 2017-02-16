@@ -63,8 +63,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
         # click on 'Conditions' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
-            ->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -114,8 +113,7 @@ $Selenium->RunTest(
 
         # wait for ajax response to fill next dropdown list with more than 1 value
         $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-AttributeID option').length > 1;" );
-        $Selenium->find_element( "#ExpressionID-NEW-AttributeID option[value='$ExpresionAttributeID']", 'css' )
-            ->click();
+        $Selenium->find_element( "#ExpressionID-NEW-AttributeID option[value='$ExpresionAttributeID']", 'css' )->click();
 
         # wait for ajax response to fill next dropdown list with more than 1 value
         $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-OperatorID option').length > 1;" );
@@ -123,8 +121,7 @@ $Selenium->RunTest(
 
         # wait for ajax response to fill next dropdown list with more than 1 value
         $Selenium->WaitFor( JavaScript => "return \$('#ExpressionID-NEW-CompareValue option').length > 1;" );
-        $Selenium->find_element( "#ExpressionID-NEW-CompareValue option[value='$ImpactDataRef->{ItemID}']", 'css' )
-            ->click();
+        $Selenium->find_element( "#ExpressionID-NEW-CompareValue option[value='$ImpactDataRef->{ItemID}']", 'css' )->click();
 
         # add new action
         # in change object for test change, set change state on successful
@@ -170,10 +167,11 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
+        sleep 1;
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+        );
 
         # check test change state
         $Self->True(
@@ -207,7 +205,11 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
+        sleep 1;
+
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+        );
 
         # check for expected change state to verify test condition
 
@@ -217,16 +219,17 @@ $Selenium->RunTest(
         );
 
         # click on 'Conditions' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
-            ->click();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+
         # click to delete test condition
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")
-            ->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeCondition;ChangeID=$ChangeID' )]")->VerifiedClick();
 
         # delete test created change
         my $Success = $ChangeObject->ChangeDelete(
