@@ -1199,7 +1199,9 @@ sub Run {
 
                         $Attribute      = $Mapping->{ $GetParam{ItemCreateTimePointStart} };
                         $AttributeValue = $GetParam{ItemCreateTimePoint} . ' '
-                            . $LayoutObject->{LanguageObject}->Translate( $GetParam{ItemCreateTimePointFormat} . '(s)' );
+                            . $LayoutObject->{LanguageObject}->Translate(
+                            $GetParam{ItemCreateTimePointFormat} . '(s)'
+                            );
                     }
                 }
                 elsif ( $Attribute eq 'VoteSearchType' ) {
