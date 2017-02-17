@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 0ad16a74c74bd97ecf136c44011cea4ea9ca9e95 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -289,7 +289,6 @@ sub Run {
         }
 # ---
     }
-
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -373,6 +372,7 @@ sub Run {
     $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
 
 # ---
+
     # convert dynamic field values into a structure for ACLs
     my %DynamicFieldACLParameters;
     DYNAMICFIELD:
@@ -2747,6 +2747,7 @@ sub _GetSLAs {
         %SLA = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSLAList(
             %Param,
             Action => $Self->{Action},
+            UserID => $Self->{UserID},
         );
     }
     return \%SLA;
