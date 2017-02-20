@@ -589,7 +589,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Не настроен обзор "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm

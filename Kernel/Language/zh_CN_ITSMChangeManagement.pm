@@ -589,7 +589,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '没有找到视图“%s”的配置选项！';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm

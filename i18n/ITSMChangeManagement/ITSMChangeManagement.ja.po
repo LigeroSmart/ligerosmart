@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:31+0000\n"
-"PO-Revision-Date: 2016-12-10 12:31+0000\n"
+"POT-Creation-Date: 2017-02-14 17:23+0000\n"
+"PO-Revision-Date: 2017-02-14 16:25+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -773,7 +773,7 @@ msgstr "新しい条件を追加する"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Edit Condition"
-msgstr ""
+msgstr "条件を編集する"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -781,7 +781,7 @@ msgstr "有効な名称が必要です"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "A valid name is needed."
-msgstr ""
+msgstr "有効な名前が必要です。"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
@@ -1017,11 +1017,11 @@ msgstr "カテゴリを変更"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
-msgstr "(前／後)"
+msgstr "(以前/以後)"
 
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
-msgstr "(期間中)"
+msgstr "(期間指定)"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
@@ -1681,6 +1681,22 @@ msgstr ""
 msgid "The workorder \"%s\" could not be serialized."
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Need config option %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Config option %s needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Title: %s | Type: %s"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr ""
@@ -1800,6 +1816,12 @@ msgstr ""
 #. SysConfig
 msgid "Condition Overview"
 msgstr "条件の概要"
+
+#. SysConfig
+msgid ""
+"Configure which screen should be shown after a new workorder has been "
+"created."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2890,10 +2912,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr ""
-
-#. SysConfig
-msgid "Show this screen after I created a new workorder"
 msgstr ""
 
 #. SysConfig

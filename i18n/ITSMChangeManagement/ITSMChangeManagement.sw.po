@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:31+0000\n"
-"PO-Revision-Date: 2016-12-10 12:31+0000\n"
+"POT-Creation-Date: 2017-02-14 17:23+0000\n"
+"PO-Revision-Date: 2017-02-14 16:25+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -1682,6 +1682,22 @@ msgstr ""
 msgid "The workorder \"%s\" could not be serialized."
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Need config option %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Config option %s needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Title: %s | Type: %s"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr ""
@@ -1800,6 +1816,12 @@ msgstr "Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta
 
 #. SysConfig
 msgid "Condition Overview"
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Configure which screen should be shown after a new workorder has been "
+"created."
 msgstr ""
 
 #. SysConfig
@@ -2892,10 +2914,6 @@ msgstr "Inaseti hali ya mashine kwa mabadiliko."
 #. SysConfig
 msgid "Sets up the state machine for workorders."
 msgstr "Inaseti hali ya mashine kwa oda za kazi."
-
-#. SysConfig
-msgid "Show this screen after I created a new workorder"
-msgstr "Onyesha skrini hii baada ya kutengeneza oda mpya ya kazi."
 
 #. SysConfig
 msgid ""

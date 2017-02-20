@@ -230,9 +230,9 @@ sub Data {
     $Self->{Translation}->{'Add new condition'} = '新しい条件を追加する';
 
     # Template: AgentITSMChangeConditionEdit
-    $Self->{Translation}->{'Edit Condition'} = '';
+    $Self->{Translation}->{'Edit Condition'} = '条件を編集する';
     $Self->{Translation}->{'Need a valid name.'} = '有効な名称が必要です';
-    $Self->{Translation}->{'A valid name is needed.'} = '';
+    $Self->{Translation}->{'A valid name is needed.'} = '有効な名前が必要です。';
     $Self->{Translation}->{'Duplicate name:'} = '名前を複製';
     $Self->{Translation}->{'This name is already used by another condition.'} = 'この名前はすでに他の条件で使われています。';
     $Self->{Translation}->{'Matching'} = '一致';
@@ -307,8 +307,8 @@ sub Data {
     $Self->{Translation}->{'Instruction'} = '';
     $Self->{Translation}->{'Report'} = 'レポート';
     $Self->{Translation}->{'Change Category'} = 'カテゴリを変更';
-    $Self->{Translation}->{'(before/after)'} = '(前／後)';
-    $Self->{Translation}->{'(between)'} = '(期間中)';
+    $Self->{Translation}->{'(before/after)'} = '(以前/以後)';
+    $Self->{Translation}->{'(between)'} = '(期間指定)';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = '変更をテンプレートとして保存する';

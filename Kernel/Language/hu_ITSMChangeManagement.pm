@@ -37,7 +37,7 @@ sub Data {
     $Self->{Translation}->{'CABAgents'} = 'CAB ügyintézők';
     $Self->{Translation}->{'CABCustomers'} = 'CAB ügyfelek';
     $Self->{Translation}->{'Change Overview'} = 'Változás áttekintő';
-    $Self->{Translation}->{'Change Schedule'} = 'Változásütemezés';
+    $Self->{Translation}->{'Change Schedule'} = 'Változtatási ütemterv';
     $Self->{Translation}->{'Change involved persons of the change'} = 'A változás résztvevő személyeinek módosítása';
     $Self->{Translation}->{'ChangeHistory::ActionAdd'} = 'Változás előzmények::Hozzáadás művelet';
     $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Változás előzmények::Azonosító hozzáadása művelet';
@@ -89,7 +89,7 @@ sub Data {
     $Self->{Translation}->{'My Workorders'} = 'Saját munkamegrendelések';
     $Self->{Translation}->{'No XXX settings'} = 'Nincsenek XXX beállítások';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (megvalósítás utáni vizsgálat)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (vetített szolgáltatás elérhetőség)';
+    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (tervezett szolgáltatáselérhetőség)';
     $Self->{Translation}->{'Please select first a catalog class!'} = 'Először válasszon egy katalógusosztályt!';
     $Self->{Translation}->{'Print the change'} = 'A változás nyomtatása';
     $Self->{Translation}->{'Print the workorder'} = 'A munkamegrendelés nyomtatása';
@@ -230,7 +230,7 @@ sub Data {
     $Self->{Translation}->{'Add new condition'} = 'Új feltétel hozzáadása';
 
     # Template: AgentITSMChangeConditionEdit
-    $Self->{Translation}->{'Edit Condition'} = '';
+    $Self->{Translation}->{'Edit Condition'} = 'Feltétel szerkesztése';
     $Self->{Translation}->{'Need a valid name.'} = 'Egy érvényes név szükséges.';
     $Self->{Translation}->{'A valid name is needed.'} = 'Egy érvényes név szükséges.';
     $Self->{Translation}->{'Duplicate name:'} = 'Név kettőzése:';
@@ -491,7 +491,7 @@ sub Data {
     $Self->{Translation}->{'Was not able to reset Change %s!'} = 'Nem sikerült a(z) %s változás visszaállítása!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
-    $Self->{Translation}->{'Overview: Change Schedule'} = 'Áttekintés: változásütemezés';
+    $Self->{Translation}->{'Overview: Change Schedule'} = 'Áttekintés: változtatási ütemterv';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
     $Self->{Translation}->{'Change Search'} = 'Változáskeresés';
@@ -587,10 +587,10 @@ sub Data {
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = 'A(z) „%s” munkamegrendelést nem sikerült sorosítani.';
 
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
-    $Self->{Translation}->{'Need config option %s!'} = '';
-    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
-    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+    $Self->{Translation}->{'Need config option %s!'} = 'A(z) %s konfigurációs beállítás szükséges!';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = 'A(z) %s konfigurációs beállításnak kivonat-hivatkozásnak kell lennie!';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Nem található konfigurációs beállítás a(z) „%s” nézethez!';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = 'Cím: %s | Típus: %s';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Saját munkamegrendelések';
@@ -623,7 +623,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Változás áttekintő „kis” korlát';
     $Self->{Translation}->{'Change Overview.'} = 'Változás áttekintés.';
     $Self->{Translation}->{'Change Print.'} = 'Változásnyomtatás.';
-    $Self->{Translation}->{'Change Schedule.'} = 'Változásütemezés.';
+    $Self->{Translation}->{'Change Schedule.'} = 'Változtatási ütemterv.';
     $Self->{Translation}->{'Change Zoom.'} = 'Változásnagyítás.';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'A felhasználó által szerkesztett változás és munkamegrendelés sablonok.';
     $Self->{Translation}->{'Change area.'} = 'Változásterület.';
@@ -631,7 +631,7 @@ sub Data {
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Az ügyintézői felület változás keresési háttérprogram útválasztója.';
     $Self->{Translation}->{'Condition Overview'} = 'Feltétel áttekintés';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
-        '';
+        'Annak beállítása, hogy mely képernyő legyen megjelenítve, miután egy új munkamegrendelést létrehoztak.';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Beállítja, hogy milyen gyakran legyenek elküldve az értesítések, amikor elérik/átadják a tervezett kezdési időt vagy más időértékeket.';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = 'Változás létrehozása (sablonból) ebből a jegyből!';
@@ -642,9 +642,9 @@ sub Data {
         'Műveletek meghatározása, ahol egy beállítások gomb érhető el a kapcsolt objektumok felületi elemen (LinkObject::ViewMode = „összetett”). Ne feledje, hogy ezeknek a műveleteknek rendelkezniük kell a következő JS és CSS fájlok regisztrálásával: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js és Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'A szignálok meghatározása minden munkamegrendelés-állapotnál.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt változások felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak változás attribútumok engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
     $Self->{Translation}->{'Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt munkamegrendelés felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak munkamegrendelés attribútumok engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
         'Egy áttekintő modult határoz meg egy változáslista kis nézetének megjelenítéséhez.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
@@ -676,7 +676,7 @@ sub Data {
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change PSA overview.'} =
         'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változás PSA áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change Schedule overview.'} =
-        'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változásütemezés áttekintőjében.';
+        'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változtatási ütemterv áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the MyCAB overview.'} =
         'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a saját CAB áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the MyChanges overview.'} =
@@ -686,7 +686,7 @@ sub Data {
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change overview.'} =
         'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változás áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
-        'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva az ügyfél változásütemezés áttekintőjében.';
+        'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva az ügyfél változtatási ütemterv áttekintőjében.';
     $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
         'Meghatározza egy üres változás alapértelmezett változáscímét, amely egy munkamegrendelés-sablon szerkesztéséhez szükséges.';
     $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
@@ -695,7 +695,7 @@ sub Data {
         'Meghatározza az alapértelmezett rendezési feltételt a változásmenedzser áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort criteria in the change overview.'} = 'Meghatározza az alapértelmezett rendezési feltételt a változás áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort criteria in the change schedule overview.'} =
-        'Meghatározza az alapértelmezett rendezési feltételt a változásütemezés áttekintőjében.';
+        'Meghatározza az alapértelmezett rendezési feltételt a változtatási ütemterv áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} =
         'Meghatározza a változások alapértelmezett rendezési feltételét a saját CAB áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyChanges overview.'} =
@@ -705,7 +705,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
         'Meghatározza a változások alapértelmezett rendezési feltételét a PIR áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
-        'Meghatározza a változások alapértelmezett rendezési feltételét az ügyfél változásütemezés áttekintőjében.';
+        'Meghatározza a változások alapértelmezett rendezési feltételét az ügyfél változtatási ütemterv áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
         'Meghatározza a változások alapértelmezett rendezési feltételét a sablon áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Meghatározza az alapértelmezett rendezési sorrendet a saját CAB áttekintőjében.';
@@ -718,9 +718,9 @@ sub Data {
         'Meghatározza az alapértelmezett rendezési sorrendet a változásmenedzser áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Meghatározza az alapértelmezett rendezési sorrendet a változás áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort order in the change schedule overview.'} =
-        'Meghatározza az alapértelmezett rendezési sorrendet a változásütemezés áttekintőjében.';
+        'Meghatározza az alapértelmezett rendezési sorrendet a változtatási ütemterv áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} =
-        'Meghatározza az alapértelmezett rendezési sorrendet az ügyfél változásütemezés áttekintőjében.';
+        'Meghatározza az alapértelmezett rendezési sorrendet az ügyfél változtatási ütemterv áttekintőjében.';
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Meghatározza az alapértelmezett rendezési sorrendet a sablon áttekintőjében.';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Meghatározza egy változás kategóriájának alapértelmezett értékét.';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Meghatározza egy változás hatásának alapértelmezett értékét.';
@@ -779,7 +779,7 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.'} =
         'Meghatározza a megjelenített oszlopokat a változás PSA áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.'} =
-        'Meghatározza a megjelenített oszlopokat a változásütemezés áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
+        'Meghatározza a megjelenített oszlopokat a változtatási ütemterv áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.'} =
         'Meghatározza a megjelenített oszlopokat a saját CAB áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.'} =
@@ -795,7 +795,7 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the change search. This option has no effect on the position of the column.'} =
         'Meghatározza a megjelenített oszlopokat a változáskeresőben. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column.'} =
-        'Meghatározza a megjelenített oszlopokat az ügyfél változásütemezés áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
+        'Meghatározza a megjelenített oszlopokat az ügyfél változtatási ütemterv áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'Meghatározza a megjelenített oszlopokat a sablon áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Meghatározza a szignálokat minden egyes ITSMChange állapothoz.';
@@ -845,7 +845,7 @@ sub Data {
         'Dinamikus mező eseménymodul a feltételek frissítésének kezeléséhez, ha dinamikus mezők kerülnek hozzáadásra, frissítésre vagy törlésre.';
     $Self->{Translation}->{'Edit a change.'} = 'Egy változás szerkesztése.';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
-        'Változások előre ütemezése. A jóváhagyott változások áttekintése.';
+        'Változások előjegyzési terve. A jóváhagyott változások áttekintése.';
     $Self->{Translation}->{'History Zoom'} = 'Előzménynagyítás';
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = 'ITSM változás CAB sablonok.';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = 'ITSM változásfeltétel szerkesztés.';
@@ -904,7 +904,7 @@ sub Data {
         'Paraméterek a kis változás áttekintő oldalaihoz (amelyekben a változások megjelennek).';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen.';
-    $Self->{Translation}->{'Projected Service Availability'} = '';
+    $Self->{Translation}->{'Projected Service Availability'} = 'Tervezett szolgáltatáselérhetőség';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Tervezett szolgáltatáselérhetőség (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         'A változás tervezett szolgáltatáselérhetősége (PSA). A jóváhagyott változások és azok szolgáltatásainak áttekintése.';
@@ -945,7 +945,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the history zoom of a change.'} = 'A szükséges jogosultságok egy változás előzményei nagyításának megtekintéséhez.';
     $Self->{Translation}->{'Required privileges to view the history zoom of a workorder.'} =
         'A szükséges jogosultságok egy munkamegrendelés előzményei nagyításának megtekintéséhez.';
-    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'A szükséges jogosultságok a változásütemezés listájának megtekintéséhez.';
+    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'A szükséges jogosultságok a változtatási ütemterv listájának megtekintéséhez.';
     $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'A szükséges jogosultságok a változás PSA listájának megtekintéséhez.';
     $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} =
         'A szükséges jogosultságok egy közelgő PIR-rel (megvalósítás utáni vizsgálattal) rendelkező változások listájának megtekintéséhez.';
@@ -956,7 +956,7 @@ sub Data {
     $Self->{Translation}->{'Reset change and its workorders'} = 'Változás és munkamegrendeléseinek visszaállítása';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         'Feladat futtatása annak ellenőrzéséhez, hogy a meghatározott időpontokat elérték-e a változásokban és a munkamegrendelésekben.';
-    $Self->{Translation}->{'Schedule'} = '';
+    $Self->{Translation}->{'Schedule'} = 'Ütemterv';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Egy munkamegrendelés létrehozása utáni képernyő';
     $Self->{Translation}->{'Search Changes.'} = 'Változások keresése.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =

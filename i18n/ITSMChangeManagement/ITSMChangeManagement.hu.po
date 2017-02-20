@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2016
+# Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:31+0000\n"
-"PO-Revision-Date: 2016-12-10 12:31+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-02-14 17:23+0000\n"
+"PO-Revision-Date: 2017-02-15 00:10+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,7 +92,7 @@ msgstr "Változás áttekintő"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change Schedule"
-msgstr "Változásütemezés"
+msgstr "Változtatási ütemterv"
 
 #. Template: AAAITSMChangeManagement
 msgid "Change involved persons of the change"
@@ -300,7 +300,7 @@ msgstr "PIR (megvalósítás utáni vizsgálat)"
 
 #. Template: AAAITSMChangeManagement
 msgid "PSA (Projected Service Availability)"
-msgstr "PSA (vetített szolgáltatás elérhetőség)"
+msgstr "PSA (tervezett szolgáltatáselérhetőség)"
 
 #. Template: AAAITSMChangeManagement
 msgid "Please select first a catalog class!"
@@ -772,7 +772,7 @@ msgstr "Új feltétel hozzáadása"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Edit Condition"
-msgstr ""
+msgstr "Feltétel szerkesztése"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
@@ -1438,7 +1438,7 @@ msgstr "Nem sikerült a(z) %s változás visszaállítása!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
 msgid "Overview: Change Schedule"
-msgstr "Áttekintés: változásütemezés"
+msgstr "Áttekintés: változtatási ütemterv"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search"
@@ -1680,6 +1680,22 @@ msgstr "Nem sikerült a(z) %s munkamegrendelés felvétele!"
 msgid "The workorder \"%s\" could not be serialized."
 msgstr "A(z) „%s” munkamegrendelést nem sikerült sorosítani."
 
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Need config option %s!"
+msgstr "A(z) %s konfigurációs beállítás szükséges!"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Config option %s needs to be a HASH ref!"
+msgstr "A(z) %s konfigurációs beállításnak kivonat-hivatkozásnak kell lennie!"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "Nem található konfigurációs beállítás a(z) „%s” nézethez!"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "Title: %s | Type: %s"
+msgstr "Cím: %s | Típus: %s"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr "Saját munkamegrendelések"
@@ -1774,7 +1790,7 @@ msgstr "Változásnyomtatás."
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr "Változásütemezés."
+msgstr "Változtatási ütemterv."
 
 #. SysConfig
 msgid "Change Zoom."
@@ -1799,6 +1815,12 @@ msgstr "Az ügyintézői felület változás keresési háttérprogram útválas
 #. SysConfig
 msgid "Condition Overview"
 msgstr "Feltétel áttekintés"
+
+#. SysConfig
+msgid ""
+"Configure which screen should be shown after a new workorder has been "
+"created."
+msgstr "Annak beállítása, hogy mely képernyő legyen megjelenítve, miután egy új munkamegrendelést létrehoztak."
 
 #. SysConfig
 msgid ""
@@ -1839,7 +1861,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt változások felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak változás attribútumok engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett."
 
 #. SysConfig
 msgid ""
@@ -1847,7 +1869,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt munkamegrendelés felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak munkamegrendelés attribútumok engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
@@ -1948,7 +1970,7 @@ msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként les
 msgid ""
 "Defines the change states that will be used as filters in the Change "
 "Schedule overview."
-msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változásütemezés áttekintőjében."
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változtatási ütemterv áttekintőjében."
 
 #. SysConfig
 msgid ""
@@ -1978,7 +2000,7 @@ msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként les
 msgid ""
 "Defines the change states that will be used as filters in the customer "
 "change schedule overview."
-msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva az ügyfél változásütemezés áttekintőjében."
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva az ügyfél változtatási ütemterv áttekintőjében."
 
 #. SysConfig
 msgid ""
@@ -2000,7 +2022,7 @@ msgstr "Meghatározza az alapértelmezett rendezési feltételt a változás át
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change schedule overview."
-msgstr "Meghatározza az alapértelmezett rendezési feltételt a változásütemezés áttekintőjében."
+msgstr "Meghatározza az alapértelmezett rendezési feltételt a változtatási ütemterv áttekintőjében."
 
 #. SysConfig
 msgid ""
@@ -2026,7 +2048,7 @@ msgstr "Meghatározza a változások alapértelmezett rendezési feltételét a 
 msgid ""
 "Defines the default sort criteria of the changes in the customer change "
 "schedule overview."
-msgstr "Meghatározza a változások alapértelmezett rendezési feltételét az ügyfél változásütemezés áttekintőjében."
+msgstr "Meghatározza a változások alapértelmezett rendezési feltételét az ügyfél változtatási ütemterv áttekintőjében."
 
 #. SysConfig
 msgid ""
@@ -2063,12 +2085,12 @@ msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változás átt
 
 #. SysConfig
 msgid "Defines the default sort order in the change schedule overview."
-msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változásütemezés áttekintőjében."
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet a változtatási ütemterv áttekintőjében."
 
 #. SysConfig
 msgid ""
 "Defines the default sort order in the customer change schedule overview."
-msgstr "Meghatározza az alapértelmezett rendezési sorrendet az ügyfél változásütemezés áttekintőjében."
+msgstr "Meghatározza az alapértelmezett rendezési sorrendet az ügyfél változtatási ütemterv áttekintőjében."
 
 #. SysConfig
 msgid "Defines the default sort order in the template overview."
@@ -2251,7 +2273,7 @@ msgstr "Meghatározza a megjelenített oszlopokat a változás PSA áttekintőj�
 msgid ""
 "Defines the shown columns in the Change Schedule overview. This option has "
 "no effect on the position of the column."
-msgstr "Meghatározza a megjelenített oszlopokat a változásütemezés áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
+msgstr "Meghatározza a megjelenített oszlopokat a változtatási ütemterv áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
@@ -2299,7 +2321,7 @@ msgstr "Meghatározza a megjelenített oszlopokat a változáskeresőben. Ennek 
 msgid ""
 "Defines the shown columns in the customer change schedule overview. This "
 "option has no effect on the position of the column."
-msgstr "Meghatározza a megjelenített oszlopokat az ügyfél változásütemezés áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
+msgstr "Meghatározza a megjelenített oszlopokat az ügyfél változtatási ütemterv áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
 msgid ""
@@ -2451,7 +2473,7 @@ msgstr "Egy változás szerkesztése."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
-msgstr "Változások előre ütemezése. A jóváhagyott változások áttekintése."
+msgstr "Változások előjegyzési terve. A jóváhagyott változások áttekintése."
 
 #. SysConfig
 msgid "History Zoom"
@@ -2660,7 +2682,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett sze
 
 #. SysConfig
 msgid "Projected Service Availability"
-msgstr ""
+msgstr "Tervezett szolgáltatáselérhetőség"
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
@@ -2801,7 +2823,7 @@ msgstr "A szükséges jogosultságok egy munkamegrendelés előzményei nagyít�
 
 #. SysConfig
 msgid "Required privileges to view the list of Change Schedule."
-msgstr "A szükséges jogosultságok a változásütemezés listájának megtekintéséhez."
+msgstr "A szükséges jogosultságok a változtatási ütemterv listájának megtekintéséhez."
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
@@ -2841,7 +2863,7 @@ msgstr "Feladat futtatása annak ellenőrzéséhez, hogy a meghatározott időpo
 
 #. SysConfig
 msgid "Schedule"
-msgstr ""
+msgstr "Ütemterv"
 
 #. SysConfig
 msgid "Screen after creating a workorder"
@@ -2890,10 +2912,6 @@ msgstr "Beállítja az állapotgépet a változásoknál."
 #. SysConfig
 msgid "Sets up the state machine for workorders."
 msgstr "Beállítja az állapotgépet a munkamegrendeléseknél."
-
-#. SysConfig
-msgid "Show this screen after I created a new workorder"
-msgstr "Ezen képernyő megjelenítése egy új munkamegrendelés létrehozása után"
 
 #. SysConfig
 msgid ""
