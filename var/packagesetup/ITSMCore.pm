@@ -29,7 +29,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-ITSMCore.pm - code to excecute during package installation
+ITSMCore.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
@@ -91,13 +91,13 @@ sub CodeInstall {
         Description => 'Group for ITSM Service mask access in the agent interface.',
     );
 
-    # fillup empty type_id rows in service table
+    # fill up empty type_id rows in service table
     $Self->_FillupEmptyServiceTypeID();
 
-    # fillup empty criticality rows in service table
+    # fill up empty criticality rows in service table
     $Self->_FillupEmptyServiceCriticality();
 
-    # fillup empty type_id rows in sla table
+    # fill up empty type_id rows in sla table
     $Self->_FillupEmptySLATypeID();
 
     # set preferences for some GeneralCatalog entries
@@ -128,13 +128,13 @@ sub CodeReinstall {
         Description => 'Group for ITSM Service mask access in the agent interface.',
     );
 
-    # fillup empty type_id rows in service table
+    # fill up empty type_id rows in service table
     $Self->_FillupEmptyServiceTypeID();
 
-    # fillup empty criticality rows in service table
+    # fill up empty criticality rows in service table
     $Self->_FillupEmptyServiceCriticality();
 
-    # fillup empty type_id rows in sla table
+    # fill up empty type_id rows in sla table
     $Self->_FillupEmptySLATypeID();
 
     return 1;
@@ -205,13 +205,13 @@ sub CodeUpgrade {
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
 
-    # fillup empty type_id rows in service table
+    # fill up empty type_id rows in service table
     $Self->_FillupEmptyServiceTypeID();
 
-    # fillup empty criticality rows in service table
+    # fill up empty criticality rows in service table
     $Self->_FillupEmptyServiceCriticality();
 
-    # fillup empty type_id rows in sla table
+    # fill up empty type_id rows in sla table
     $Self->_FillupEmptySLATypeID();
 
     # make dynamic fields internal
@@ -410,7 +410,7 @@ sub _CreateITSMDynamicFields {
 
 =item _MigrateCriticalityAndImpactToDynamicFields()
 
-This function migrates the values for Criticality and the Impact from GeneralCatalog to DynamicFields.
+This function migrates the values for C<Criticality> and the Impact from GeneralCatalog to DynamicFields.
 
 my $Result = $CodeObject->_MigrateCriticalityAndImpactToDynamicFields();
 
@@ -674,7 +674,7 @@ sub _SetPreferences {
 
 =item _CIPDefaultMatrixSet()
 
-set the default CIP matrix
+set the default C<CIP> matrix
 
     my $Result = $CodeObject->_CIPDefaultMatrixSet();
 
@@ -933,7 +933,7 @@ sub _GroupDeactivate {
 
 =item _FillupEmptyServiceTypeID()
 
-fillup empty entries in the type_id column of the service table
+fill up empty entries in the type_id column of the service table
 
     my $Result = $CodeObject->_FillupEmptyServiceTypeID();
 
@@ -971,7 +971,7 @@ sub _FillupEmptyServiceTypeID {
 
 =item _FillupEmptyServiceCriticality()
 
-fillup empty entries in the criticality column of the service table
+fill up empty entries in the C<criticality> column of the service table
 
     my $Result = $CodeObject->_FillupEmptyServiceCriticality();
 
@@ -1024,7 +1024,7 @@ sub _FillupEmptyServiceCriticality {
 
 =item _FillupEmptySLATypeID()
 
-fillup empty entries in the type_id column of the sla table
+fill up empty entries in the type_id column of the sla table
 
     my $Result = $CodeObject->_FillupEmptySLATypeID();
 
@@ -1091,7 +1091,7 @@ sub _MakeDynamicFieldsInternal {
 
 =item _MigrateDTLInSysConfig()
 
-Converts DTL settings in sysconfig to TT.
+Converts C<DTL> settings in sysconfig to C<TT>.
 
     my $Result = $CodeObject->_MigrateDTLInSysConfig();
 

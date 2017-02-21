@@ -18,11 +18,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::ITSMCIPAllocate - criticality, impact and priority allocation lib
+Kernel::System::ITSMCIPAllocate - C<criticality>, impact and priority allocation lib
 
 =head1 SYNOPSIS
 
-All criticality, impact and priority allocation functions.
+All C<criticality>, impact and priority allocation functions.
 
 =head1 PUBLIC INTERFACE
 
@@ -52,7 +52,7 @@ sub new {
 
 =item AllocateList()
 
-return a 2d hash reference of allocations
+return a two dimensional hash reference of allocations
 
     my $ListRef = $CIPAllocateObject->AllocateList(
         UserID => 1,
@@ -73,7 +73,7 @@ C<$ListRef> is something like
         },
     };
 
-meaning that the Criticality '3 normal' and the Impact '1 very low' suggest the PriorityID '1'.
+meaning that the C<Criticality> '3 normal' and the Impact '1 very low' suggest the PriorityID '1'.
 
 =cut
 
@@ -105,7 +105,7 @@ sub AllocateList {
 
 =item AllocateUpdate()
 
-update the allocation of criticality, impact and priority
+update the allocation of C<criticality>, impact and priority
 
     my $True = $CIPAllocateObject->AllocateUpdate(
         AllocateData => $DataRef,  # 2D hash reference
@@ -180,7 +180,7 @@ sub AllocateUpdate {
 
 =item PriorityAllocationGet()
 
-return the priority id of a criticality and an impact
+return the priority id of a C<criticality> and an impact
 
     my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
         Criticality => '1 very low',
