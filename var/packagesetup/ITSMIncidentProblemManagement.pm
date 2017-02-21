@@ -27,7 +27,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-ITSMIncidentProblemManagement.pm - code to excecute during package installation
+ITSMIncidentProblemManagement.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
