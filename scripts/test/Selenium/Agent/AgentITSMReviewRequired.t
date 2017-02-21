@@ -50,7 +50,7 @@ $Selenium->RunTest(
         # create two test tickets
         my @TicketIDs;
         my @TicketNumbers;
-        my $TicketTitle = "Selenium Ticket" . int( rand(1000) );
+        my $TicketTitle = "Selenium Ticket" . $Helper->GetRandomID();
         for my $Ticket ( 1 .. 2 ) {
             my $TicketNumber = $TicketObject->TicketCreateNumber();
             my $TicketID     = $TicketObject->TicketCreate(
