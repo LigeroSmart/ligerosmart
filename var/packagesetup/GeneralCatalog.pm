@@ -19,7 +19,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-GeneralCatalog.pm - code to excecute during package installation
+GeneralCatalog.pm - code to execute during package installation
 
 =head1 SYNOPSIS
 
