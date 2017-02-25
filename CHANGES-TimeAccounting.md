@@ -1,4 +1,10 @@
-#5.0.5 2016-??-??
+#5.0.7 2016-??-??
+
+#5.0.6 2017-01-01
+ - 2017-01-01 Updated copyright.
+
+#5.0.5 2016-12-11
+ - 2016-12-08 Marked strings as translatable and fixed typos, thanks to Balazs Ur.
 
 #5.0.4 2016-09-20
  - 2016-09-14 Updated translations, thanks to all translators.
