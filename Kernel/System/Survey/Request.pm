@@ -568,11 +568,11 @@ sub _GetRequestRecipient {
         my %Article = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleLastCustomerArticle(
             TicketID => $Param{TicketID},
         );
-        if ( %Article && $Article{SenderType} eq 'agent' ) {
-            $ToString = $Article{To};
+        if ( %Article && $Article{SenderType} eq 'customer' ) {
+            $ToString = $Article{From};
         }
         else {
-            $ToString = $Article{From};
+            $ToString = $Article{To};
         }
     }
 
