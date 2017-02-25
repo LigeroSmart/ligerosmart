@@ -12,7 +12,7 @@
 [% RenderBlockStart("InfoBoxFAQMiniListItemRow") %]
         <tr>
             <td>
-                <a href="[% Env("Baselink") %]Action=AgentFAQZoom;ItemID=[% Data.ItemID | uri %]" class="AsBlock" title="[% Data.Title | html %] ([% Data.CategoryName | uri %])">
+                <a href="[% Env("Baselink") %]Action=AgentFAQZoom;ItemID=[% Data.ItemID | uri %]" class="AsBlock" title="[% Data.Title | html %] ([% Data.CategoryName | html %])">
                     [% Data.Title | truncate(50) | html %]
                 </a>
                 <span>
