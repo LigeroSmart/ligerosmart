@@ -222,6 +222,10 @@ sub PossibleValuesGet {
     # set dynamic field possible values
     $PossibleValues{Master} = $LayoutObject->{LanguageObject}->Translate('New Master Ticket');
 
+    my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
+    my $TicketHook        = $ConfigObject->Get('Ticket::Hook');
+    my $TicketHookDivider = $ConfigObject->Get('Ticket::HookDivider');
+
     TICKET:
     for my $TicketID (@TicketIDs) {
         my %CurrentTicket = $TicketObject->TicketGet(
@@ -232,9 +236,13 @@ sub PossibleValuesGet {
         next TICKET if !%CurrentTicket;
 
         # set dynamic field possible values
-        $PossibleValues{"SlaveOf:$CurrentTicket{TicketNumber}"}
-            = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
-            . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+        $PossibleValues{"SlaveOf:$CurrentTicket{TicketNumber}"} = $LayoutObject->{LanguageObject}->Translate(
+            'Slave of %s%s%s: %s',
+            $TicketHook,
+            $TicketHookDivider,
+            $CurrentTicket{TicketNumber},
+            $CurrentTicket{Title},
+        );
     }
 
     # return the possible values hash as a reference
@@ -538,6 +546,10 @@ sub SearchFieldRender {
 
     if ( IsHashRefWithData($HistoricalValues) ) {
 
+        my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
+        my $TicketHook        = $ConfigObject->Get('Ticket::Hook');
+        my $TicketHookDivider = $ConfigObject->Get('Ticket::HookDivider');
+
         # Recreate the display value from the already set tickets.
         VALUE:
         for my $ValueKey ( sort keys %{$HistoricalValues} ) {
@@ -556,8 +568,13 @@ sub SearchFieldRender {
 
                 next VALUE if !%Ticket;
 
-                $HistoricalValues->{$ValueKey} = $LanguageObject->Translate('Slave of Ticket#')
-                    . "$Ticket{TicketNumber}: $Ticket{Title}";
+                $HistoricalValues->{$ValueKey} = $LanguageObject->Translate(
+                    'Slave of %s%s%s: %s',
+                    $TicketHook,
+                    $TicketHookDivider,
+                    $Ticket{TicketNumber},
+                    $Ticket{Title},
+                );
             }
         }
     }

@@ -148,7 +148,6 @@ sub Store {
 sub _GetMasterSlaveData {
     my ( $Self, %Param ) = @_;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
@@ -185,6 +184,9 @@ sub _GetMasterSlaveData {
             Permission => 'ro',
         );
 
+        my $TicketHook        = $ConfigObject->Get('Ticket::Hook');
+        my $TicketHookDivider = $ConfigObject->Get('Ticket::HookDivider');
+
         TICKETID:
         for my $TicketID (@TicketIDs) {
 
@@ -194,9 +196,13 @@ sub _GetMasterSlaveData {
             );
             next TICKETID if !%CurrentTicket;
 
-            $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
-                = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
-                . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+            $Data{"SlaveOf:$CurrentTicket{TicketNumber}"} = $LayoutObject->{LanguageObject}->Translate(
+                'Slave of %s%s%s: %s',
+                $TicketHook,
+                $TicketHookDivider,
+                $CurrentTicket{TicketNumber},
+                $CurrentTicket{Title},
+            );
         }
     }
     return \%Data;

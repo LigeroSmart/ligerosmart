@@ -2880,7 +2880,9 @@ sub _GetMasterSlaveData {
     }
 
     # get ticket object
-    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $TicketObject      = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $TicketHook        = $ConfigObject->Get('Ticket::Hook');
+    my $TicketHookDivider = $ConfigObject->Get('Ticket::HookDivider');
 
     if ( $UpdateMasterSlave ) {
         my @TicketIDs = $TicketObject->TicketSearch(
@@ -2907,9 +2909,13 @@ sub _GetMasterSlaveData {
             next TICKETID if $FieldValue eq "SlaveOf:$CurrentTicket{TicketNumber}";
             next TICKETID if $FieldValue && $Ticket{TicketID} eq $CurrentTicket{TicketID};
 
-            $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
-                = $LayoutObject->{LanguageObject}->Translate('Slave of Ticket#')
-                ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+            $Data{"SlaveOf:$CurrentTicket{TicketNumber}"} = $LayoutObject->{LanguageObject}->Translate(
+                'Slave of %s%s%s: %s',
+                $TicketHook,
+                $TicketHookDivider,
+                $CurrentTicket{TicketNumber},
+                $CurrentTicket{Title},
+            );
         }
     }
 
