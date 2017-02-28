@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '创建新的调查';
     $Self->{Translation}->{'Introduction'} = '介绍';
+    $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Internal Description'} = '内部描述';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = '通知发件人';
     $Self->{Translation}->{'Notification Subject'} = '通知主题';
-    $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Changed By'} = '修改人';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = '这些是你的回答';
     $Self->{Translation}->{'Survey Title'} = '调查标题';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = '你没有权限使用此调查！';
+    $Self->{Translation}->{'No SurveyID is given!'} = '没有指定SurveyID ！';
+    $Self->{Translation}->{'Please contact the admin.'} = '请联系系统管理员。';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = '你没有权限使用此调查或问卷！';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '你没有权限使用此调查、问卷或答案！';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '你没有权限使用此调查或详细统计！';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '无法设置新的状态！问题不完整。';
+    $Self->{Translation}->{'- No ticket type selected -'} = '-没有选择工单类型-';
+    $Self->{Translation}->{'- No ticket service selected -'} = '-没有选择工单服务-';
+    $Self->{Translation}->{'master'} = '主';
+    $Self->{Translation}->{'Survey %s'} = '调查%s';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = '调查的消息！';
+    $Self->{Translation}->{'Module not enabled.'} = '没有启用本模块。';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        '这个功能没有启用，请联系系统管理员。';
+    $Self->{Translation}->{'Survey Error!'} = '调查模块错误！';
+    $Self->{Translation}->{'Invalid survey key.'} = '无效的调查键。';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        '插入的调查键无效，如果你是通过链接打开，可能链接失效或中断。';
+    $Self->{Translation}->{'Survey Vote'} = '调查投票';
+    $Self->{Translation}->{'Survey Vote Data'} = '调查投票数据';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = '一个调查模块。';
     $Self->{Translation}->{'A module to edit survey questions.'} = '编辑调查问题的模块。';
@@ -133,9 +164,11 @@ sub Data {
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '定义每30天发送给一个客户的最大调查数（ 0 代表没有最大数限制，将发送所有的调查请求）。';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        '';
+        '定义一个工单关闭后触发发送一个调查的小时数（ 0 代表在工单关闭后立即发送调查请求）。注意：延迟发送的调查由OTRS守护程序（即先前激活的设置\'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\'）完成。';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         '调查详情窗口富文本查看的默认高度。';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        '定义调查详情窗口富文本查看视图的默认高度。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '定义调查概览中显示的字段。这个选项不会影响字段的位置。';
     $Self->{Translation}->{'Edit Survey General Information'} = '编辑调查一般信息';

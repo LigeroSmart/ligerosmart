@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
     $Self->{Translation}->{'Introduction'} = 'Introducción';
+    $Self->{Translation}->{'Notification Body'} = 'Cuerpo de Notificación';
     $Self->{Translation}->{'Internal Description'} = 'Descripción Interna';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Remitente de Notificacion';
     $Self->{Translation}->{'Notification Subject'} = 'Asunto de Notificación';
-    $Self->{Translation}->{'Notification Body'} = 'Cuerpo de Notificación';
     $Self->{Translation}->{'Changed By'} = 'Modificaco por';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Estas son sus respuestas';
     $Self->{Translation}->{'Survey Title'} = 'Título de la Encuesta';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = '';
+    $Self->{Translation}->{'No SurveyID is given!'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'master'} = '';
+    $Self->{Translation}->{'Survey %s'} = '';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = '';
+    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        '';
+    $Self->{Translation}->{'Survey Error!'} = '';
+    $Self->{Translation}->{'Invalid survey key.'} = '';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        '';
+    $Self->{Translation}->{'Survey Vote'} = '';
+    $Self->{Translation}->{'Survey Vote Data'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Un Módulo de Encuestas.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Un módulo para editar las preguntas de una encuesta.';
@@ -136,6 +167,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Define la altura predefinida para la vista de texto enriquecido para los elementos de la pantall de detalle de estadisticas.';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Define las columnas que se mostrarán en el resumen de encuestas. Esta opción no tienen ningún efecto en la posición de las columnas.';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Editar Información General de la Encuesta';

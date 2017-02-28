@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2015
+# Balázs Úr <urbalazs@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:23+0000\n"
-"PO-Revision-Date: 2016-09-15 00:25+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2016-11-07 14:57+0000\n"
+"PO-Revision-Date: 2016-11-07 16:07+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -143,6 +143,10 @@ msgid "Introduction"
 msgstr "Bevezetés"
 
 #. Template: AgentSurveyAdd
+msgid "Notification Body"
+msgstr "Értesítés törzse"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "Belső leírás"
 
@@ -249,10 +253,6 @@ msgid "Notification Subject"
 msgstr "Értesítés tárgya"
 
 #. Template: AgentSurveyOverviewSmall
-msgid "Notification Body"
-msgstr "Értesítés törzse"
-
-#. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
 msgstr "Módosította"
 
@@ -332,6 +332,84 @@ msgstr "Ezek az Ön válaszai"
 msgid "Survey Title"
 msgstr "Kérdőív címe"
 
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "You have no permission for this survey!"
+msgstr "Nincs jogosultsága ehhez a kérdőívhez!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "No SurveyID is given!"
+msgstr "Nincs kérdőív-azonosító megadva!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "Please contact the admin."
+msgstr "Vegye fel a kapcsolatot a rendszergazdával."
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey or question!"
+msgstr "Nincs jogosultsága ehhez a kérdőívhez vagy kérdéshez!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey, question or answer!"
+msgstr "Nincs jogosultsága ehhez a kérdőívhez, kérdéshez vagy válaszhoz!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr "Nincs jogosultsága ehhez a kérdőívhez vagy a statisztikák részleteihez!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr "Nem állítható be új állapot! A kérdések nincsenek befejezve."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr "- Nincs jegytípus kiválasztva -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr "- Nincs jegyszolgáltatás kiválasztva -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "master"
+msgstr "mester"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey %s"
+msgstr "Kérdőív %s"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Message!"
+msgstr "Kérdőív üzenet!"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Module not enabled."
+msgstr "A modul nincs engedélyezve."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "This functionality is not enabled, please contact your administrator."
+msgstr "Ez a funkcionalitás nincs engedélyezve. Vegye fel a kapcsolatot a rendszergazdával."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Error!"
+msgstr "Kérdőív hiba!"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Invalid survey key."
+msgstr "Érvénytelen kérdőívkulcs."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
+msgstr "A beszúrt kérdőívkulcs érvénytelen. Ha egy hivatkozást követett, akkor az talán elavult vagy sérült lehet."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote"
+msgstr "Kérdőív szavazás"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote Data"
+msgstr "Kérdőív szavazás adatok"
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "Egy kérdőív modul."
@@ -380,11 +458,15 @@ msgid ""
 " of a survey, ( 0 means send immediately after close ). Note: delayed survey"
 " sending is done by the OTRS Daemon, prior activation of "
 "'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr ""
+msgstr "Meghatározza azt a mennyiséget órában, amíg a jegyet le kell zárni, hogy aktiválja a kérdőív kiküldését (a 0 jelentése, hogy azonnal küldje a lezárás után). Megjegyzés: a késleltetett kérdőív kiküldését az OTRS démon végzi el a „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” beállítás előzetes bekapcsolása után."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "Meghatározza a Richtext nézetek alapértelmezett magasságát a SurveyZoom elemeknél."
+msgstr "Meghatározza a Rich Text nézetek alapértelmezett magasságát a kérdőív nagyítás elemeknél."
+
+#. SysConfig
+msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
+msgstr "Meghatározza a Rich Text nézetek legnagyobb magasságát a kérdőív nagyítás elemeknél."
 
 #. SysConfig
 msgid ""
@@ -405,7 +487,7 @@ msgid ""
 "Enable or disable the ShowVoteData screen in the public interface to show "
 "data of a specific survey result when the customer tries to answer a survey "
 "the second time."
-msgstr "A ShowVoteData képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre."
+msgstr "A szavazási adatok megjelenítése képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -435,7 +517,7 @@ msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő 
 msgid ""
 "Frontend module registration for the PublicSurvey object in the public "
 "Survey area."
-msgstr "Előtétprogram modul regisztráció a PublicSurvey objektumhoz a nyilvános kérdőív területen."
+msgstr "Előtétprogram modul regisztráció a nyilvános kérdőív objektumhoz a nyilvános kérdőív területen."
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."

@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:23+0000\n"
-"PO-Revision-Date: 2016-09-15 00:25+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2016-11-07 14:57+0000\n"
+"PO-Revision-Date: 2016-11-07 14:00+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -144,6 +144,10 @@ msgid "Introduction"
 msgstr "紹介文"
 
 #. Template: AgentSurveyAdd
+msgid "Notification Body"
+msgstr "通知の本文"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "内部向け説明"
 
@@ -250,10 +254,6 @@ msgid "Notification Subject"
 msgstr "通知の件名"
 
 #. Template: AgentSurveyOverviewSmall
-msgid "Notification Body"
-msgstr "通知の本文"
-
-#. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
 msgstr "更新者"
 
@@ -333,6 +333,84 @@ msgstr "これらは過去に回答されたものです。"
 msgid "Survey Title"
 msgstr "調査のタイトル"
 
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "You have no permission for this survey!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "No SurveyID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "Please contact the admin."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey or question!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey, question or answer!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "master"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey %s"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Message!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Module not enabled."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "This functionality is not enabled, please contact your administrator."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Error!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Invalid survey key."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote Data"
+msgstr ""
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "調査モジュール"
@@ -386,6 +464,10 @@ msgstr ""
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
 msgstr "調査拡大画面の要素に対してリッチテキストに対するデフォルトの高さを定義します。"
+
+#. SysConfig
+msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
+msgstr ""
 
 #. SysConfig
 msgid ""

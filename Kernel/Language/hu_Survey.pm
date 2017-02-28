@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Új kérdőív létrehozása';
     $Self->{Translation}->{'Introduction'} = 'Bevezetés';
+    $Self->{Translation}->{'Notification Body'} = 'Értesítés törzse';
     $Self->{Translation}->{'Internal Description'} = 'Belső leírás';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Értesítés küldője';
     $Self->{Translation}->{'Notification Subject'} = 'Értesítés tárgya';
-    $Self->{Translation}->{'Notification Body'} = 'Értesítés törzse';
     $Self->{Translation}->{'Changed By'} = 'Módosította';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Ezek az Ön válaszai';
     $Self->{Translation}->{'Survey Title'} = 'Kérdőív címe';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = 'Nincs jogosultsága ehhez a kérdőívhez!';
+    $Self->{Translation}->{'No SurveyID is given!'} = 'Nincs kérdőív-azonosító megadva!';
+    $Self->{Translation}->{'Please contact the admin.'} = 'Vegye fel a kapcsolatot a rendszergazdával.';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = 'Nincs jogosultsága ehhez a kérdőívhez vagy kérdéshez!';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = 'Nincs jogosultsága ehhez a kérdőívhez, kérdéshez vagy válaszhoz!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Nincs jogosultsága ehhez a kérdőívhez vagy a statisztikák részleteihez!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Nem állítható be új állapot! A kérdések nincsenek befejezve.';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nincs jegytípus kiválasztva -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Nincs jegyszolgáltatás kiválasztva -';
+    $Self->{Translation}->{'master'} = 'mester';
+    $Self->{Translation}->{'Survey %s'} = 'Kérdőív %s';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = 'Kérdőív üzenet!';
+    $Self->{Translation}->{'Module not enabled.'} = 'A modul nincs engedélyezve.';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        'Ez a funkcionalitás nincs engedélyezve. Vegye fel a kapcsolatot a rendszergazdával.';
+    $Self->{Translation}->{'Survey Error!'} = 'Kérdőív hiba!';
+    $Self->{Translation}->{'Invalid survey key.'} = 'Érvénytelen kérdőívkulcs.';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        'A beszúrt kérdőívkulcs érvénytelen. Ha egy hivatkozást követett, akkor az talán elavult vagy sérült lehet.';
+    $Self->{Translation}->{'Survey Vote'} = 'Kérdőív szavazás';
+    $Self->{Translation}->{'Survey Vote Data'} = 'Kérdőív szavazás adatok';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Egy kérdőív modul.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Egy modul a kérdőív kérdéseinek szerkesztéséhez.';
@@ -133,15 +164,17 @@ sub Data {
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Meghatározza a kérdőívek legnagyobb mennyiségét, amelyet 30 naponta elküldhetnek egy ügyfélnek (a 0 azt jelenti, hogy nincs maximum, minden kérdőív kérés elküldésre kerül).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        '';
+        'Meghatározza azt a mennyiséget órában, amíg a jegyet le kell zárni, hogy aktiválja a kérdőív kiküldését (a 0 jelentése, hogy azonnal küldje a lezárás után). Megjegyzés: a késleltetett kérdőív kiküldését az OTRS démon végzi el a „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” beállítás előzetes bekapcsolása után.';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
-        'Meghatározza a Richtext nézetek alapértelmezett magasságát a SurveyZoom elemeknél.';
+        'Meghatározza a Rich Text nézetek alapértelmezett magasságát a kérdőív nagyítás elemeknél.';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        'Meghatározza a Rich Text nézetek legnagyobb magasságát a kérdőív nagyítás elemeknél.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. Ennek a beállításnak nincs hatása az oszlopok helyzetére.';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Kérdőív általános információinak szerkesztése';
     $Self->{Translation}->{'Edit Survey Questions'} = 'Kérdőív kérdések szerkesztése';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
-        'A ShowVoteData képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre.';
+        'A szavazási adatok megjelenítése képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'A küldési feltétel ellenőrzésének engedélyezése vagy letiltása a szolgáltatásnál.';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
         'A küldési feltétel ellenőrzésének engedélyezése vagy letiltása a jegytípusnál.';
@@ -154,7 +187,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         'Előtétprogram modul regisztráció az ügyintézői felületen lévő kérdőív nagyításához.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
-        'Előtétprogram modul regisztráció a PublicSurvey objektumhoz a nyilvános kérdőív területen.';
+        'Előtétprogram modul regisztráció a nyilvános kérdőív objektumhoz a nyilvános kérdőív területen.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Ha ez a reguláris kifejezés illeszkedik, akkor az ügyfélkérdőív nem kerül kiküldésre.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Paraméterek a kis kérdőív áttekintő oldalaihoz (amelyekben a kérdőívek megjelennek).';

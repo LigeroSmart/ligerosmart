@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '創建新的調查';
     $Self->{Translation}->{'Introduction'} = '介紹';
+    $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Internal Description'} = '内部描述';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = '通知發送者';
     $Self->{Translation}->{'Notification Subject'} = '通知主題';
-    $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Changed By'} = '修改人';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = '這些是你的回答';
     $Self->{Translation}->{'Survey Title'} = '調查標題';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = '';
+    $Self->{Translation}->{'No SurveyID is given!'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'master'} = '';
+    $Self->{Translation}->{'Survey %s'} = '';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = '';
+    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        '';
+    $Self->{Translation}->{'Survey Error!'} = '';
+    $Self->{Translation}->{'Invalid survey key.'} = '';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        '';
+    $Self->{Translation}->{'Survey Vote'} = '';
+    $Self->{Translation}->{'Survey Vote Data'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = '調查模組';
     $Self->{Translation}->{'A module to edit survey questions.'} = '';
@@ -135,6 +166,8 @@ sub Data {
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
+        '';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';

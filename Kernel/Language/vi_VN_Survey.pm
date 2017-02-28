@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Tạo khảo sát mới';
     $Self->{Translation}->{'Introduction'} = 'Giới thiệu';
+    $Self->{Translation}->{'Notification Body'} = 'Nội dung thông báo';
     $Self->{Translation}->{'Internal Description'} = 'Mô tả nội bộ';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Người gửi thông báo';
     $Self->{Translation}->{'Notification Subject'} = 'Chủ đề thông báo';
-    $Self->{Translation}->{'Notification Body'} = 'Nội dung thông báo';
     $Self->{Translation}->{'Changed By'} = 'Thay đổi bởi';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Đây là đáp án của bạn';
     $Self->{Translation}->{'Survey Title'} = 'Tiêu đề khảo sát';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = '';
+    $Self->{Translation}->{'No SurveyID is given!'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'master'} = '';
+    $Self->{Translation}->{'Survey %s'} = '';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = '';
+    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        '';
+    $Self->{Translation}->{'Survey Error!'} = '';
+    $Self->{Translation}->{'Invalid survey key.'} = '';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        '';
+    $Self->{Translation}->{'Survey Vote'} = '';
+    $Self->{Translation}->{'Survey Vote Data'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Một mô-đun khảo sát';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Một mô-đun để sửa câu hỏi khảo sát';
@@ -136,6 +167,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Định nghĩa chiều cao ngầm định của khung Richtext cho đối tượng xem khảo sát.';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Định nghĩa số cột hiển thị trong màn hình tổng quát. Tuỳ chọn này không ảnh hưởng đến vị trí của cột.';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Sửa thông tin khảo sát chung';

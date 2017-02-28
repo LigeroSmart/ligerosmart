@@ -1,11 +1,12 @@
 # 
 # Translators:
+# 汇民 王 <whuim@163.com>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:23+0000\n"
-"PO-Revision-Date: 2016-09-15 00:25+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2016-11-07 14:57+0000\n"
+"PO-Revision-Date: 2017-02-09 15:00+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -142,6 +143,10 @@ msgid "Introduction"
 msgstr "介绍"
 
 #. Template: AgentSurveyAdd
+msgid "Notification Body"
+msgstr "通知正文"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "内部描述"
 
@@ -248,10 +253,6 @@ msgid "Notification Subject"
 msgstr "通知主题"
 
 #. Template: AgentSurveyOverviewSmall
-msgid "Notification Body"
-msgstr "通知正文"
-
-#. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
 msgstr "修改人"
 
@@ -331,6 +332,84 @@ msgstr "这些是你的回答"
 msgid "Survey Title"
 msgstr "调查标题"
 
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "You have no permission for this survey!"
+msgstr "你没有权限使用此调查！"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "No SurveyID is given!"
+msgstr "没有指定SurveyID ！"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "Please contact the admin."
+msgstr "请联系系统管理员。"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey or question!"
+msgstr "你没有权限使用此调查或问卷！"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey, question or answer!"
+msgstr "你没有权限使用此调查、问卷或答案！"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr "你没有权限使用此调查或详细统计！"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr "无法设置新的状态！问题不完整。"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr "-没有选择工单类型-"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr "-没有选择工单服务-"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "master"
+msgstr "主"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey %s"
+msgstr "调查%s"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Message!"
+msgstr "调查的消息！"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Module not enabled."
+msgstr "没有启用本模块。"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "This functionality is not enabled, please contact your administrator."
+msgstr "这个功能没有启用，请联系系统管理员。"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Error!"
+msgstr "调查模块错误！"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Invalid survey key."
+msgstr "无效的调查键。"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
+msgstr "插入的调查键无效，如果你是通过链接打开，可能链接失效或中断。"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote"
+msgstr "调查投票"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote Data"
+msgstr "调查投票数据"
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "一个调查模块。"
@@ -379,11 +458,15 @@ msgid ""
 " of a survey, ( 0 means send immediately after close ). Note: delayed survey"
 " sending is done by the OTRS Daemon, prior activation of "
 "'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr ""
+msgstr "定义一个工单关闭后触发发送一个调查的小时数（ 0 代表在工单关闭后立即发送调查请求）。注意：延迟发送的调查由OTRS守护程序（即先前激活的设置'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'）完成。"
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
 msgstr "调查详情窗口富文本查看的默认高度。"
+
+#. SysConfig
+msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
+msgstr "定义调查详情窗口富文本查看视图的默认高度。"
 
 #. SysConfig
 msgid ""

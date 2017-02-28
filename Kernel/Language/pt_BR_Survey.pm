@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Criar Nova Pesquisa';
     $Self->{Translation}->{'Introduction'} = 'Introdução';
+    $Self->{Translation}->{'Notification Body'} = 'Corpo da Notificação';
     $Self->{Translation}->{'Internal Description'} = 'Descrição Interna';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Remetente da Notificação';
     $Self->{Translation}->{'Notification Subject'} = 'Assunto da Notificação';
-    $Self->{Translation}->{'Notification Body'} = 'Corpo da Notificação';
     $Self->{Translation}->{'Changed By'} = 'Modificado por';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Estas são suas respostas';
     $Self->{Translation}->{'Survey Title'} = 'Título da Pesquisa';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = 'Você não tem permissão para esta pesquisa!';
+    $Self->{Translation}->{'No SurveyID is given!'} = 'Nenhum ID da Pesquisa informado!';
+    $Self->{Translation}->{'Please contact the admin.'} = 'Por favor entre em contato com o administrador.';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = 'Você não tem permissão para esta pesquisa ou pergunta!';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = 'Você não tem permissão para esta pesquisa, pergunta ou resposta!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Você não tem permissão para esta pesquisa ou detalhes de estatísticas!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Não é possível definir novo status! Perguntas incompletas.';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nenhum tipo de chamado selecionado -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Nenhum serviço de chamado selecionado -';
+    $Self->{Translation}->{'master'} = 'mestre';
+    $Self->{Translation}->{'Survey %s'} = 'Pesquisa %s';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = 'Mensagem da Pesquisa!';
+    $Self->{Translation}->{'Module not enabled.'} = 'Módulo não habilitado.';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        'Esta funcionalidade não está ativa, por favor contate seu administrador.';
+    $Self->{Translation}->{'Survey Error!'} = 'Erro na Pesquisa!';
+    $Self->{Translation}->{'Invalid survey key.'} = 'Chave da pesquisa inválida.';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        'A chave da pesquisa inserida é inválida, se você acessou um link, talvez ele esteja obsoleto ou quebrado.';
+    $Self->{Translation}->{'Survey Vote'} = 'Voto da Pesquisa';
+    $Self->{Translation}->{'Survey Vote Data'} = 'Dados do voto da pesquisa';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Um Módulo de Pesquisa.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Um módulo para editar perguntas de pesquisa.';
@@ -133,9 +164,11 @@ sub Data {
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Define a máxima quantidade de pesquisas que são enviadas para um cliente a cada 30 dias (0 significa que não há máximo; todas as requisições de pesquisa serão enviadas).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        '';
+        'Define a quantidade de horas que um chamado deve estar fechado para envio de uma pesquisa (0 significa enviar imediatamente após fechamento). Nota: um envio tardio de pesquisa é feito pelo OTRS Daemon, sob ativação da configuração  \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' .';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Define a altura padrão para Richtext nos elementos da SurveyZoom';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        'Define a altura máxima para visualizações do Richtext nos elementos do SurveyZoom.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem efeito sobre a posição das colunas.';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Editar Informações Gerais da Pesquisa';

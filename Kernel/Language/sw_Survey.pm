@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Tengeneza tafiti mpya';
     $Self->{Translation}->{'Introduction'} = 'Utangulizi';
+    $Self->{Translation}->{'Notification Body'} = 'Kiini cha taarifa';
     $Self->{Translation}->{'Internal Description'} = 'Maelezo ya ndani';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Mtumaji taarifa';
     $Self->{Translation}->{'Notification Subject'} = 'Somo la taafifa';
-    $Self->{Translation}->{'Notification Body'} = 'Kiini cha taarifa';
     $Self->{Translation}->{'Changed By'} = 'Imebadilishwa na';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Haya ni majibu yako';
     $Self->{Translation}->{'Survey Title'} = 'Kichwa cha habari cha utafiti';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = '';
+    $Self->{Translation}->{'No SurveyID is given!'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'master'} = '';
+    $Self->{Translation}->{'Survey %s'} = '';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = '';
+    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        '';
+    $Self->{Translation}->{'Survey Error!'} = '';
+    $Self->{Translation}->{'Invalid survey key.'} = '';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        '';
+    $Self->{Translation}->{'Survey Vote'} = '';
+    $Self->{Translation}->{'Survey Vote Data'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Moduli ya utafiti';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Moduli ya kuhariri maswali ya utafiti';
@@ -136,6 +167,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Inafafanua chaguo-msingi la urefu wa muonekano wa Richtext kwa elementi za UtafitiKuzwa.';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Inafafanua safu iliyoonyeshwa kwenye mapitio ya utafiti. Hili chaguo halina athari kwa nafasi ya safu. ';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Haririr taarifa za ujumla za savei';

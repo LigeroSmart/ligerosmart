@@ -1,15 +1,17 @@
 # 
 # Translators:
+# Edicarlos Lopes <edicarlos.lds@gmail.com>, 2017
 # Felipe Braga <fbobraga@gmail.com>, 2015
+# Glauber Caires <glaubercaires@gmail.com>, 2016
 # José Ribeiro <joserribeiro26@gmail.com>, 2014
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014,2016
 # Ronaldo Richieri <ronaldo@complemento.net.br>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:23+0000\n"
-"PO-Revision-Date: 2016-09-15 00:25+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2016-11-07 14:57+0000\n"
+"PO-Revision-Date: 2017-02-15 13:08+0000\n"
+"Last-Translator: Edicarlos Lopes <edicarlos.lds@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -146,6 +148,10 @@ msgid "Introduction"
 msgstr "Introdução"
 
 #. Template: AgentSurveyAdd
+msgid "Notification Body"
+msgstr "Corpo da Notificação"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "Descrição Interna"
 
@@ -252,10 +258,6 @@ msgid "Notification Subject"
 msgstr "Assunto da Notificação"
 
 #. Template: AgentSurveyOverviewSmall
-msgid "Notification Body"
-msgstr "Corpo da Notificação"
-
-#. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
 msgstr "Modificado por"
 
@@ -335,6 +337,84 @@ msgstr "Estas são suas respostas"
 msgid "Survey Title"
 msgstr "Título da Pesquisa"
 
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "You have no permission for this survey!"
+msgstr "Você não tem permissão para esta pesquisa!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "No SurveyID is given!"
+msgstr "Nenhum ID da Pesquisa informado!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+msgid "Please contact the admin."
+msgstr "Por favor entre em contato com o administrador."
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey or question!"
+msgstr "Você não tem permissão para esta pesquisa ou pergunta!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "You have no permission for this survey, question or answer!"
+msgstr "Você não tem permissão para esta pesquisa, pergunta ou resposta!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr "Você não tem permissão para esta pesquisa ou detalhes de estatísticas!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr "Não é possível definir novo status! Perguntas incompletas."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr "- Nenhum tipo de chamado selecionado -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr "- Nenhum serviço de chamado selecionado -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "master"
+msgstr "mestre"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey %s"
+msgstr "Pesquisa %s"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Message!"
+msgstr "Mensagem da Pesquisa!"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Module not enabled."
+msgstr "Módulo não habilitado."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "This functionality is not enabled, please contact your administrator."
+msgstr "Esta funcionalidade não está ativa, por favor contate seu administrador."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Error!"
+msgstr "Erro na Pesquisa!"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Invalid survey key."
+msgstr "Chave da pesquisa inválida."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid ""
+"The inserted survey key is invalid, if you followed a link maybe this is "
+"obsolete or broken."
+msgstr "A chave da pesquisa inserida é inválida, se você acessou um link, talvez ele esteja obsoleto ou quebrado."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote"
+msgstr "Voto da Pesquisa"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Survey Vote Data"
+msgstr "Dados do voto da pesquisa"
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "Um Módulo de Pesquisa."
@@ -383,11 +463,15 @@ msgid ""
 " of a survey, ( 0 means send immediately after close ). Note: delayed survey"
 " sending is done by the OTRS Daemon, prior activation of "
 "'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr ""
+msgstr "Define a quantidade de horas que um chamado deve estar fechado para envio de uma pesquisa (0 significa enviar imediatamente após fechamento). Nota: um envio tardio de pesquisa é feito pelo OTRS Daemon, sob ativação da configuração  'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' ."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
 msgstr "Define a altura padrão para Richtext nos elementos da SurveyZoom"
+
+#. SysConfig
+msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
+msgstr "Define a altura máxima para visualizações do Richtext nos elementos do SurveyZoom."
 
 #. SysConfig
 msgid ""

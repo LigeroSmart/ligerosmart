@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Creazione nuovo sondaggio';
     $Self->{Translation}->{'Introduction'} = 'Introduzione';
+    $Self->{Translation}->{'Notification Body'} = 'Corpo del sondaggio';
     $Self->{Translation}->{'Internal Description'} = 'Descrizione ad uso interno';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Mittente del sondaggio';
     $Self->{Translation}->{'Notification Subject'} = 'Oggetto del sondaggio';
-    $Self->{Translation}->{'Notification Body'} = 'Corpo del sondaggio';
     $Self->{Translation}->{'Changed By'} = 'Modificato da';
 
     # Template: AgentSurveyStats
@@ -115,13 +115,44 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Queste sono le tue risposte';
     $Self->{Translation}->{'Survey Title'} = 'Titolo del sondaggio';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = '';
+    $Self->{Translation}->{'No SurveyID is given!'} = '';
+    $Self->{Translation}->{'Please contact the admin.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'master'} = '';
+    $Self->{Translation}->{'Survey %s'} = '';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = '';
+    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        '';
+    $Self->{Translation}->{'Survey Error!'} = '';
+    $Self->{Translation}->{'Invalid survey key.'} = '';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        '';
+    $Self->{Translation}->{'Survey Vote'} = '';
+    $Self->{Translation}->{'Survey Vote Data'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Un modulo per i sondaggi.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Un modulo per modificare le domande dei sondaggi.';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
         'Tutti i parametri del sondaggio nell\'interfaccia Agente.';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
-        '';
+        'Numero di giorni dopo l\'invio di un songgio in cui non verranno inviate nuove richieste allo stesso cliente (0 invierà i sondaggi sempre).';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
         'Corpo del testo di default per la notifica via email al cliente riguardo un nuovo sondaggio.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
@@ -131,11 +162,13 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Definisce il modulo per mostrare la visualizzazione compatta di una lista di sondaggi.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
-        '';
+        'Definisci il numero massimo di sondaggi che possono essere inviati al cliente in un intervallo di 30 giorni (0 indica un numero illimitato, tutti i sondaggi saranno inviati).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        '';
+        'Definisci il numero di ore dopo la chiusura del ticket per l\'invio del sondaggio (0 indica l\'invio immediato dopo la chiusura). Nota: l\'invio ritardato dei sondaggi viene eseguito dal Daemon OTRS con l\'attivazione della preferenza  \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\'.';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Definisce l\'altezza di default per la vista completa per gli elementi SurveyZoom.';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Modifica informazioni generali del sondaggio';

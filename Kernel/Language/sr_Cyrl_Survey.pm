@@ -50,6 +50,7 @@ sub Data {
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Направи нову анкету';
     $Self->{Translation}->{'Introduction'} = 'Увод';
+    $Self->{Translation}->{'Notification Body'} = 'Сарджај обавештења';
     $Self->{Translation}->{'Internal Description'} = 'Интерни опис';
 
     # Template: AgentSurveyEdit
@@ -87,7 +88,6 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Пошиљаоц обавештења';
     $Self->{Translation}->{'Notification Subject'} = 'Предмет обавештења';
-    $Self->{Translation}->{'Notification Body'} = 'Сарджај обавештења';
     $Self->{Translation}->{'Changed By'} = 'Мењао';
 
     # Template: AgentSurveyStats
@@ -115,6 +115,37 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Ово су ваши одговори';
     $Self->{Translation}->{'Survey Title'} = 'Наслов анкете';
 
+    # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
+    $Self->{Translation}->{'You have no permission for this survey!'} = 'Немате дозволу за ову анкету!';
+    $Self->{Translation}->{'No SurveyID is given!'} = 'Није дат ИД Анкете!';
+    $Self->{Translation}->{'Please contact the admin.'} = 'Молимо контактирајте администратора!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = 'Немате дозволу за ову анкету или питање!';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = 'Немате дозволу за ову анкету, питање или одговор!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Немате дозволу за ову анкету или детаље статистике!';
+
+    # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Не може се поставити нови статус! Питања су непотпуна.';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Није изабран тип тикета -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Није изабран сервис тикета -';
+    $Self->{Translation}->{'master'} = 'главни';
+    $Self->{Translation}->{'Survey %s'} = 'Анкета %s';
+
+    # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Survey Message!'} = 'Порука анкете!';
+    $Self->{Translation}->{'Module not enabled.'} = 'Модул није активиран.';
+    $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
+        'Ова фунционалност није омогућена, молимо контактирајте вашег администратора.';
+    $Self->{Translation}->{'Survey Error!'} = 'Грешка у анкети!';
+    $Self->{Translation}->{'Invalid survey key.'} = 'Неисправан кључ анкете.';
+    $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
+        'Унети кључ анкете је неисправан, ако сте пратили везу можда је она неважећа или оштећена.';
+    $Self->{Translation}->{'Survey Vote'} = 'Гласање у анкети';
+    $Self->{Translation}->{'Survey Vote Data'} = 'Подаци о гласању у анкети';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Анкетни модул.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Модул за уређивање анкетних питања.';
@@ -133,9 +164,11 @@ sub Data {
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Дефинише максимални број анкета који ће бити послат кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        '';
+        'Дефинише број сати од затварања тикета за покретање слања анкете. (0 значи да се шаље одмах по затварању). Напомена: одлагање слања анкете обавља „OTRS ” сервис пре активирања „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” поставке.';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Дефинише подразумевану висину оквира за приказ текста  за детаљни приказ елемената анкете.';
+    $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
+        'Одређује максималну висину „Richtext” приказа текста  за детаљни приказ елемената анкете.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Дефинише приказане колоне у прегледу анкете. Ова опције нема утицај на позиције колона.';
     $Self->{Translation}->{'Edit Survey General Information'} = 'Уреди опште информације о истраживању';
