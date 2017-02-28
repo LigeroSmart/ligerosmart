@@ -1,11 +1,12 @@
 # 
 # Translators:
 # 张梦 <adoeh@sina.com>, 2014
+# 汇民 王 <whuim@163.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-06 14:07+0000\n"
+"POT-Creation-Date: 2016-12-10 13:36+0000\n"
+"PO-Revision-Date: 2017-02-09 14:41+0000\n"
 "Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -107,8 +108,8 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr "步骤 2/5 - 编辑目标信息"
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
-msgstr "步骤 3/5"
+msgid "Step 3 of 5 - Edit format information"
+msgstr "步骤 3/5 - 编辑格式信息"
 
 #. Template: AdminImportExport
 msgid "is required!"

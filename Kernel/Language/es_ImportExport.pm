@@ -37,11 +37,11 @@ sub Data {
     $Self->{Translation}->{'Start Import'} = 'Iniciar Importación';
     $Self->{Translation}->{'Start Export'} = 'Iniciar Exportación';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Paso 1 de 5 - Editar información común';
-    $Self->{Translation}->{'Name is required!'} = 'El nombre es requerido';
+    $Self->{Translation}->{'Name is required!'} = '¡El nombre es requerido!';
     $Self->{Translation}->{'Object is required!'} = '¡Debe especificar Objeto!';
     $Self->{Translation}->{'Format is required!'} = '¡Debe especificar Formato!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Paso 2 de 5 - Editar información de objeto';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Paso 3 de 5 - Editar información de formato';
     $Self->{Translation}->{'is required!'} = '¡es requerido!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Paso 4 de 5 - Editar información de mapeo';
     $Self->{Translation}->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
@@ -57,20 +57,20 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
-    $Self->{Translation}->{'No object backend found!'} = '';
-    $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = 'Plantilla no encontrada!';
-    $Self->{Translation}->{'Can\'t insert/update template!'} = 'No se puede insertar/actualizar la plantilla!';
+    $Self->{Translation}->{'No object backend found!'} = '¡No se encontró ningún objeto backend!';
+    $Self->{Translation}->{'No format backend found!'} = 'No se encontró ningún formato backend!';
+    $Self->{Translation}->{'Template not found!'} = '¡Plantilla no encontrada!';
+    $Self->{Translation}->{'Can\'t insert/update template!'} = '¡No se puede insertar/actualizar la plantilla!';
     $Self->{Translation}->{'Needed TemplateID!'} = 'Se necesita IDPlantilla!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ocurrió un error!. Imposible importar! Vea Syslog para detalles.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Ocurrió un error!. Imposible exportar! Vea Syslog para detalles.';
     $Self->{Translation}->{'number'} = 'Número';
-    $Self->{Translation}->{'number bigger than zero'} = 'Número mayor que cero';
-    $Self->{Translation}->{'integer'} = 'Entero';
+    $Self->{Translation}->{'number bigger than zero'} = 'número mayor que cero';
+    $Self->{Translation}->{'integer'} = 'entero';
     $Self->{Translation}->{'integer bigger than zero'} = 'Entero mayo que cero';
     $Self->{Translation}->{'Element required, please insert data'} = 'Elemento requerido, por favor insertar datos';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Datos inválidos, por favor insertar un válido %s';
-    $Self->{Translation}->{'Format not found!'} = 'Formato no encontrado!';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Datos no válido, por favor inserte un %s válido ';
+    $Self->{Translation}->{'Format not found!'} = '¡Formato no encontrado!';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
