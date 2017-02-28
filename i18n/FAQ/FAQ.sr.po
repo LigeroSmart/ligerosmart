@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -14,146 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "интерно"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "јавно"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "екстерно"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "ЧПП број"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "Последње ажурирани ЧПП чланци"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "Последње креирани ЧПП чланци"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "Првих 10 ЧПП чланака"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "Подкатегорија од"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "Није изабрана ни једна оцена!"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "Истраживач"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "јавно (све)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "екстерно (клијент)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "интерно (оператер)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "Дан почетка"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "Месец почетка"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "Година почетка"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "Дан завршетка"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "Месец завршетка"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "Година завршетка"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "Хвала на вашем гласу!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "Већ сте гласали!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "Штампа ЧПП чланка"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "ЧПП чланци (првих 10)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "ЧПП чланци (новокреирани)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "ЧПП чланци (недавно мењани)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "ЧПП категорија ажурирана!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "ЧПП категорија додата!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "Категорија треба да има име!"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "Ова категорија већ постоји"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "Додат ЧПП језик!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "Ажуриран ЧПП језик!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "Име је обавезно!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "Овај језик већ постоји!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "Симптом"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "Решење"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -196,6 +56,10 @@ msgid "Edit Category"
 msgstr "Уреди категорију"
 
 #. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "Подкатегорија од"
+
+#. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
 msgstr "Молимо да изаберете бар једну групу дозвола."
 
@@ -215,7 +79,7 @@ msgstr "Да ли стварно желите да обришете ову ка�
 msgid ""
 "You can not delete this category. It is used in at least one FAQ article "
 "and/or is parent of at least one other category"
-msgstr "Не можете обрисати овау категорију. Употребљена је у бар једном ЧПП чланку и/или је родитељ најмање једној другој категорији"
+msgstr "Не можете обрисати овау категорију. Употребљена је у бар једном ЧПП чланку и/или је надређена најмање једној другој категорији"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
@@ -223,7 +87,7 @@ msgstr "Ова категорија је употребљена у следећ�
 
 #. Template: AgentFAQCategory
 msgid "This category is parent of the following subcategories"
-msgstr "Ова категорија је родитељ следећим подкатегоријама"
+msgstr "Ова категорија је надређена следећим подкатегоријама"
 
 #. Template: AgentFAQDelete
 msgid "Do you really want to delete this FAQ article?"
@@ -529,11 +393,115 @@ msgstr "Јавно"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr "Нназад на ЧПП Истраживач"
+msgstr "Назад на ЧПП Истраживач"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr "Потребна вам је „rw” дозвола!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr "Није пронађен подразумевани језик и не може се креирати нов."
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr "Потребан ИД Категорије!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "Категорија треба да има име!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "Ова категорија већ постоји"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "ЧПП категорија ажурирана!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr "Ова категорија већ постоји!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "ЧПП категорија додата!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr "Није дат ИД Категорије!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr "Није било могуће обрисати категорију %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr "Није дат ИД Ставке!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr "Немате дозволу за ову категорију!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr "Није било могуће обрисати ЧПП чланак %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr "ИД Категорије %s је неисправан!"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr "Не може се приказати историјат, јер није дат ИД Ставке!"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr "ЧПП историја"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "ЧПП дневник"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "Није пронађена конфигурациона ставка за преглед \"%s\"!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr "Није дат ИД Језика!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "Име је обавезно!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "Овај језик већ постоји!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "Ажуриран ЧПП језик!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "Додат ЧПП језик!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Није било могуће обрисати језик %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -543,9 +511,121 @@ msgstr "Последње ажурирање"
 msgid "FAQ Dynamic Fields"
 msgstr "ЧПП динамичка поља"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr "Није дат %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr "Језички објект се не може учитати!"
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "Нема резултата!"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "ЧПП број"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr "Последњи је мењао"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "Време креирања ЧПП ставке (пре/после)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "Време креирања ЧПП ставке (између)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "Време измене ЧПП ставке (пре/после)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "Време измене ЧПП ставке (између)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr "Једнако"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr "Веће од"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr "Мање од"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr "Потребан ИД Поља!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "Хвала на вашем гласу!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "Већ сте гласали!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "Није изабрана ни једна оцена!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr "Механизам за гласање није активиран!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "Штампа ЧПП чланка"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr "Креиран између"
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr "Потребан ИД Ставке!"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "ЧПП чланци (нови креирани)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "ЧПП чланци (недавно мењани)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "ЧПП чланци (првих 10)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr "Није дат Тип!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -577,7 +657,7 @@ msgid ""
 "Image allows two input kinds. First the name of an image (e.g. faq.png). In "
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
-msgstr "Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике."
+msgstr "Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент Слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике."
 
 #. SysConfig
 msgid "Add FAQ article"
@@ -633,7 +713,7 @@ msgstr "Подразумевани приоритет тикета за одоб
 
 #. SysConfig
 msgid "Default state for FAQ entry."
-msgstr "Подразумевани статус ЧПП уноса."
+msgstr "Подразумевано стање ЧПП уноса."
 
 #. SysConfig
 msgid "Default state of tickets for the approval of FAQ articles."
@@ -647,7 +727,7 @@ msgstr "Подразумевани тип тикета за одобравање
 msgid ""
 "Default value for the Action parameter for the public frontend. The Action "
 "parameter is used in the scripts of the system."
-msgstr "Подразумевана вредност за Action параметар у јавном фронтенду. Овај параметар користе скрипте система. "
+msgstr "Подразумевана вредност за „Action” параметар у јавном фронтенду. Овај параметар користе скрипте система. "
 
 #. SysConfig
 msgid ""
@@ -656,7 +736,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Дефинише Акције где је дугме поставки доступно у повезаном графичком елементу објекта (LinkObject::ViewMode = \"complex\"). Молимо да имате на уму да ове Акције морају да буду регистроване у следећим JS и CSS датотекама: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -668,7 +748,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Дефинише које колоне су приказане у повезаном ЧПП графичком елементу (LinkObject::ViewMode = \"complex\"). Напомена: Само ЧПП атрибути и Динамичка поља (DynamicField_NameX) су дозвољени за подразумеване колоне. Могуће поставке: 0 = онемогућено, 1 = доступно, 2 = подразумевано активирано."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -899,6 +979,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Активирање механизма за гласање на ЧПП модулу."
 
 #. SysConfig
+msgid "Explorer"
+msgstr "Истраживач"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr "ЧПП „AJAX” одговарач"
 
@@ -924,7 +1008,7 @@ msgstr "Уреди ЧПП."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
-msgstr "Ограничење прегледа ЧПП журнала - \"мало\""
+msgstr "Ограничење прегледа ЧПП дневника - \"мало\""
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
@@ -991,20 +1075,28 @@ msgid "Language Management"
 msgstr "Управљање језицима"
 
 #. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "Последње креирани ЧПП чланци"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "Последње ажурирани ЧПП чланци"
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
-msgstr "Повежи објекат са овом ставком ЧПП"
+msgstr "Повежи други објекат са овом ставком ЧПП"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr "Листа типова статуса који се могу користити у интерфејсу оператера."
+msgstr "Листа типова стања који се могу користити у интерфејсу оператера."
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
-msgstr "Листа типова статуса који се могу користити у интерфејсу корисника."
+msgstr "Листа типова стања који се могу користити у интерфејсу корисника."
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
-msgstr "Листа типова статуса који се могу користити у јавном интерфејсу."
+msgstr "Листа типова стања који се могу користити у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
@@ -1192,7 +1284,7 @@ msgstr "Оцене за гласање. Кључ мора бити у проце
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "С"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1246,11 +1338,11 @@ msgstr "Прикажи путању до ЧПП да/не."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Приказ неиспрвних ставки у резултатима ЧПП истраживача на интерфејсу оператера"
 
 #. SysConfig
 msgid "Show items of subcategories."
-msgstr "Прикажи ставке у субкатегоријама."
+msgstr "Прикажи ставке субкатегорија."
 
 #. SysConfig
 msgid "Show last change items in defined interfaces."
@@ -1305,6 +1397,14 @@ msgid ""
 msgstr "У менију приказује везу за штампање ЧПП у детаљном приказу оператерског интерфејса."
 
 #. SysConfig
+msgid "Solution"
+msgstr "Решење"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "Симптом"
+
+#. SysConfig
 msgid "Text Only"
 msgstr "Само текст"
 
@@ -1347,6 +1447,14 @@ msgstr "Предмет тикета за одобравање ЧПП члана�
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Ставка алатне линије за скраћеницу."
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "екстерно (клијент)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "интерно (оператер)"
 
 #. SysConfig
 msgid "public (public)"

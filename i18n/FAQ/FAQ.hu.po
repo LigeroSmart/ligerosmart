@@ -1,11 +1,11 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2016
+# Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -13,146 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "belső"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "nyilvános"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "külső"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "GyIK szám"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "Legutóbb frissített GyIK bejegyzések"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "Legutóbb létrehozott GyIK bejegyzések"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "Legjobb 10 GyIK bejegyzés"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "A következő alkategóriája:"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "Nincs értékelés kiválasztva!"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "Böngésző"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "nyilvános (összes)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "külső (ügyfél)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "belső (ügyintéző)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "Kezdő nap"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "Kezdő hónap"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "Kezdő év"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "Záró nap"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "Záró hónap"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "Záró év"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "Köszönjük a szavazatát!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "Már szavazott!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "GyIK bejegyzés nyomtatása"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "GyIK bejegyzések (legjobb 10)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "GyIK bejegyzések (újonnan létrehozva)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "GyIK bejegyzések (legutóbb módosítva)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "GyIK kategória frissítve!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "GyIK kategória hozzáadva!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "Egy kategóriának rendelkeznie kell névvel!"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "Ez a kategória már létezik"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "GyIK nyelv hozzáadva!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "GyIK nyelv frissítve!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "A név kötelező!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "Ez a nyelv már létezik!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "Jelenség"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "Megoldás"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -193,6 +53,10 @@ msgstr "Kategória hozzáadása"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "Kategória szerkesztése"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "A következő alkategóriája:"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -530,9 +394,113 @@ msgstr "Nyilvános"
 msgid "Back to FAQ Explorer"
 msgstr "Vissza a GyIK böngészőhöz"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr "Írás, olvasás jogosultságra van szüksége!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr "Nem találhatók olyan kategóriák, ahol a felhasználónak írási/olvasási jogosultságai vannak!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr "Nem található alapértelmezett nyelv, és nem lehet újat létrehozni."
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr "Kategória-azonosító szükséges!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "Egy kategóriának rendelkeznie kell névvel!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "Ez a kategória már létezik"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "GyIK kategória frissítve!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr "Ez a kategória már létezik!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "GyIK kategória hozzáadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr "Nincs kategória-azonosító megadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr "Nem sikerült a(z) %s kategória törlése!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr "Nincs elemazonosító megadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr "Nincs jogosultsága ehhez a kategóriához!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr "Nem sikerült a(z) %s GyIK bejegyzés törlése!"
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr "A(z) %s kategória-azonosító érvénytelen."
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr "Nem lehet megjeleníteni az előzményeket, mivel nincs elemazonosító megadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr "GyIK előzmények"
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "GyIK napló"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr "A FAQ::Frontend::Overview konfigurációs beállítás szükséges"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr "A FAQ::Frontend::Overview konfigurációs beállításnak kivonat-hivatkozásnak kell lennie!"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "Nem található konfigurációs beállítás a(z) „%s” nézethez!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr "Nincs nyelvazonosító megadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "A név kötelező!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "Ez a nyelv már létezik!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "GyIK nyelv frissítve!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "GyIK nyelv hozzáadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Nem sikerült a(z) %s nyelv törlése!"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -542,9 +510,121 @@ msgstr "Utolsó frissítés"
 msgid "FAQ Dynamic Fields"
 msgstr "GyIK dinamikus mezők"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr "Nincs %s megadva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr "Nem lehet betölteni a nyelvobjektumot!"
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "Nincs találat!"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "GyIK szám"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr "Utoljára módosította:"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "GyIK elem létrehozási ideje (előtt/után)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "GyIK elem létrehozási ideje (között)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "GyIK elem módosítási ideje (előtt/után)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "GyIK elem módosítási ideje (között)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr "Egyenlő"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr "Nagyobb mint"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr "Nagyobb mint vagy egyenlő"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr "Kisebb mint"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr "Kisebb mint vagy egyenlő"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr "Fájlazonosító szükséges!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "Köszönjük a szavazatát!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "Már szavazott!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "Nincs értékelés kiválasztva!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr "A szavazási mechanizmus nincs engedélyezve!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr "A szavazásértékelés nincs meghatározva!"
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "GyIK bejegyzés nyomtatása"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr "Létrehozva ezek között"
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr "Elemazonosító szükséges!"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "GyIK bejegyzések (újonnan létrehozva)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "GyIK bejegyzések (legutóbb módosítva)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "GyIK bejegyzések (legjobb 10)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr "Nincs típus megadva!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr "A típus csak LastCreate, LastChange vagy Top10 lehet!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr "Nem lehet létrehozni RSS-fájlt!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -655,7 +735,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Műveletek meghatározása, ahol egy beállítások gomb érhető el a kapcsolt objektumok felületi elemen (LinkObject::ViewMode = „összetett”). Ne feledje, hogy ezeknek a műveleteknek rendelkezniük kell a következő JS és CSS fájlok regisztrálásával: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js és Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -667,7 +747,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt GyIK-ok felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak GyIK attribútumok és dinamikus mezők (DynamicField_NévX) engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -757,7 +837,7 @@ msgstr "Meghatározza az alapértelmezetten megjelenített GyIK keresési attrib
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr "Meghatározza egy GyIK-alapú jegybe beszúrandó információkat. A „Teljes GyIK” szöveget, mellékleteket és sorközi képeket tartalmaz."
+msgstr "Meghatározza egy GyIK-alapú jegybe beszúrandó információkat. A „Teljes GyIK” szöveget, mellékleteket és beágyazott képeket tartalmaz."
 
 #. SysConfig
 msgid ""
@@ -898,6 +978,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Szavazási mechanizmus engedélyezése a GyIK modulban."
 
 #. SysConfig
+msgid "Explorer"
+msgstr "Böngésző"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr "GyIK AJAX válaszadó"
 
@@ -988,6 +1072,14 @@ msgstr "Napló"
 #. SysConfig
 msgid "Language Management"
 msgstr "Nyelvkezelés"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "Legutóbb létrehozott GyIK bejegyzések"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "Legutóbb frissített GyIK bejegyzések"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1200,40 +1292,40 @@ msgstr "GyIK keresése"
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr "A sorközi HTML mezők alapértelmezett magasságának beállítása (képpontban) az AgentFAQZoom elemben."
+msgstr "A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az ügyintézői GyIK-nagyítás nézeten."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr "A sorközi HTML mezők alapértelmezett magasságának beállítása (képpontban) a CustomerFAQZoom (és PublicFAQZoom) elemben."
+msgstr "A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az ügyfél GyIK-nagyítás (és nyilvános GyIK-nagyítás) nézeten."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr "A sorközi HTML mezők legnagyobb magasságának beállítása (képpontban) az AgentFAQZoom elemben."
+msgstr "A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az ügyintézői GyIK-nagyítás nézeten."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr "A sorközi HTML mezők legnagyobb magasságának beállítása (képpontban) a CustomerFAQZoom (és PublicFAQZoom) elemben."
+msgstr "A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az ügyfél GyIK-nagyítás (és nyilvános GyIK-nagyítás) nézeten."
 
 #. SysConfig
 msgid ""
 "Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
 "Articles."
-msgstr "A „GyIK hivatkozás beszúrása” gomb megjelenítése az AgentFAQZoomSmall nézetben a nyilvános GyIK bejegyzéseknél."
+msgstr "A „GyIK hivatkozás beszúrása” gomb megjelenítése az ügyintézői GyIK-nagyítás kis nézetében a nyilvános GyIK bejegyzéseknél."
 
 #. SysConfig
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr "A „GyIK szöveg és hivatkozás beszúrása” / „Teljes GyIK és hivatkozás beszúrása” gomb megjelenítése az AgentFAQZoomSmall nézetben a nyilvános GyIK bejegyzéseknél."
+msgstr "A „GyIK szöveg és hivatkozás beszúrása” / „Teljes GyIK és hivatkozás beszúrása” gomb megjelenítése az ügyintézői GyIK-nagyítás kis nézetében a nyilvános GyIK bejegyzéseknél."
 
 #. SysConfig
 msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr "A „GyIK szöveg beszúrása” / „Teljes GyIK beszúrása” gomb megjelenítése a AgentFAQZoomSmall nézetnél."
+msgstr "A „GyIK szöveg beszúrása” / „Teljes GyIK beszúrása” gomb megjelenítése az ügyintézői GyIK-nagyítás kis nézetében."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
@@ -1245,7 +1337,7 @@ msgstr "GyIK útvonal megjelenítése igen/nem."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Érvénytelen elemek megjelenítése az ügyintézői felület GyIK böngészőjének eredményében."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1261,7 +1353,7 @@ msgstr "Az utoljára létrehozott elemek megjelenítése a meghatározott felül
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
-msgstr "Az legjobb 10 elem megjelenítése a meghatározott felületeken."
+msgstr "A legjobb 10 elem megjelenítése a meghatározott felületeken."
 
 #. SysConfig
 msgid "Show voting in defined interfaces."
@@ -1304,6 +1396,14 @@ msgid ""
 msgstr "Egy hivatkozást jelenít meg a menüben egy GyIK nyomtatásához az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
+msgid "Solution"
+msgstr "Megoldás"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "Jelenség"
+
+#. SysConfig
 msgid "Text Only"
 msgstr "Csak szöveg"
 
@@ -1315,25 +1415,25 @@ msgstr "Egy GyIK azonosítója, például FAQ#, KB#, MyFAQ#. Az alapértelmezett
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr "Ez a beállítás határozza meg, hogy egy „FAQ” objektum összeköthető-e más „FAQ” objektumokkal a „Normal” hivatkozástípus használatával."
+msgstr "Ez a beállítás határozza meg, hogy egy „GyIK” objektum összeköthető-e más „GyIK” objektumokkal a „Normál” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr "Ez a beállítás határozza meg, hogy egy „FAQ” objektum összeköthető-e más „FAQ” objektumokkal a „ParentChild” hivatkozástípus használatával."
+msgstr "Ez a beállítás határozza meg, hogy egy „GyIK” objektum összeköthető-e más „GyIK” objektumokkal a „Szülő-gyermek” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr "Ez a beállítás határozza meg, hogy egy „FAQ” objektum összeköthető-e más „Ticket” objektumokkal a „Normal” hivatkozástípus használatával."
+msgstr "Ez a beállítás határozza meg, hogy egy „GyIK” objektum összeköthető-e más „Jegy” objektumokkal a „Normál” hivatkozástípus használatával."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'ParentChild' link type."
-msgstr "Ez a beállítás határozza meg, hogy egy „FAQ” objektum összeköthető-e más „Ticket” objektumokkal a „ParentChild” hivatkozástípus használatával."
+msgstr "Ez a beállítás határozza meg, hogy egy „GyIK” objektum összeköthető-e más „Jegy” objektumokkal a „Szülő-gyermek” hivatkozástípus használatával."
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."
@@ -1346,6 +1446,14 @@ msgstr "Jegy tárgya egy GyIK bejegyzés jóváhagyásához."
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Eszköztárelem egy gyorsbillentyűhöz."
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "külső (ügyfél)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "belső (ügyintéző)"
 
 #. SysConfig
 msgid "public (public)"

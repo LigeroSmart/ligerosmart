@@ -1,15 +1,16 @@
 # 
 # Translators:
+# Chenry Lee <chenrylee@qq.com>, 2016
 # 文浩坚 <never.min@gmail.com>, 2015
 # 光中 杨 <yangkwch@163.com>, 2016
 # 文浩坚 <never.min@gmail.com>, 2015
-# 汇民 王 <whuim@163.com>, 2016
+# 汇民 王 <whuim@163.com>, 2016-2017
 # 陈德文 <sggggy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -17,146 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "内部"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "公开"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "外部"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "FAQ编号"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "最近修改的FAQ文章"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "最近创建的FAQ文章"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "最常用的文章"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "子类别于"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "没有选择投票!"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "浏览"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "公开(内外)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "外部(用户)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "内部(服务人员)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "开始日期"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "开始月份"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "开始年份"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "结束日期"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "开始月份"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "结束年份"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "感谢您的投票!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "您已经投票!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "FAQ文章打印"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "FAQ文章(前10名)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "FAQ文章(新创建的)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "FAQ文章(最近修改的)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "FAQ类别已更新!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "FAQ类别已添加!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "必须输入类别名称!"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "类别已存在"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "FAQ语言已添加!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "FAQ语言已更新!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "名称是必需的!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "该语言已经存在!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "症状"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "解决方案"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -197,6 +58,10 @@ msgstr "添加类别"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "编辑类别"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "子类别于"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -534,9 +399,113 @@ msgstr "公开"
 msgid "Back to FAQ Explorer"
 msgstr "返回FAQ浏览器"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr "你需要rw权限！"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr "没有找到用户有读写权限的类别。"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr "没有找到默认语言且无法创建新的语言。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr "需要CategoryID！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "必须输入类别名称!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "类别已存在"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "FAQ类别已更新!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr "该类别已存在！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "FAQ类别已添加!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr "没有指定CategoryID ！"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr "不能删除类别%s！"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr "没有指定ItemID！"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr "你没有权限使用此类别！"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr "不能删除知识库文章%s！"
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr "CategoryID %s无效。"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr "不能显示历史信息，因为没有指定ItemID！"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr "FAQ历史"
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "FAQ日志"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr "需要配置选项FAQ::Frontend::Overview。"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr "配置选项FAQ::Frontend::Overview需要是一个哈希引用！"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "没有找到视图“%s”的配置选项！"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr "没有指定LanguageID！"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "名称是必需的!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "该语言已经存在!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "FAQ语言已更新!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "FAQ语言已添加!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "不能删除语言%s！"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -546,9 +515,121 @@ msgstr "上次更新"
 msgid "FAQ Dynamic Fields"
 msgstr "FAQ动态字段"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr "没有指定%s！"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr "不能载入语言对象！"
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "无结果！"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "FAQ编号"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr "最后修改人"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "知识库条目创建时间（在...之前/之后）"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "知识库条目创建时间（在...之间）"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "知识库条目修改时间（在...之前/之后）"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "知识库条目修改时间（在...之间）"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr "等于"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr "大于"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr "大于等于"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr "小于"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr "小于等于"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr "需要FileID！"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "感谢您的投票!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "您已经投票!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "没有选择投票!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr "投票机制没有启用！"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr "没有定义投票的最大评分数！"
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "FAQ文章打印"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr "在...之间创建"
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr "需要ItemID！"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "FAQ文章(新创建的)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "FAQ文章(最近修改的)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "FAQ文章(前10名)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr "没有指定类型！"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr "类型必须是最后创建、最后修改或Top10！"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr "不能创建RSS文件！"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -659,7 +740,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "定义链接对象小部件(LinkObject::ViewMode = \\\"complex\\\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和CSS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。"
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -671,7 +752,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "定义链接的知识库小部件(LinkObject::ViewMode = \"complex\")要显示的列。注意：只有知识库属性和动态字段（DynamicField_NameX）才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -902,6 +983,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "在FAQ模块中启用投票机制。"
 
 #. SysConfig
+msgid "Explorer"
+msgstr "浏览"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr "FAQ AJAX Responder"
 
@@ -992,6 +1077,14 @@ msgstr "日志"
 #. SysConfig
 msgid "Language Management"
 msgstr "管理语言"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "最近创建的FAQ文章"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "最近修改的FAQ文章"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1249,7 +1342,7 @@ msgstr "是/否显示 FAQ 路径。"
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "在服务人员界面中，在FAQ浏览器结果中显示无效条目。"
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1308,6 +1401,14 @@ msgid ""
 msgstr "在服务人员界面的详情窗口菜单中，显示打印FAQ的链接。"
 
 #. SysConfig
+msgid "Solution"
+msgstr "解决方案"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "症状"
+
+#. SysConfig
 msgid "Text Only"
 msgstr "仅文本"
 
@@ -1350,6 +1451,14 @@ msgstr "FAQ 文章审批请求的工单标题。"
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "快捷键的工具栏条目。"
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "外部(用户)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "内部(服务人员)"
 
 #. SysConfig
 msgid "public (public)"

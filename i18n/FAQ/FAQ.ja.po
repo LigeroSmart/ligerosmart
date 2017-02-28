@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -15,146 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "内部向"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "公開"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "外部向"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "FAQナンバー"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "最後に更新されたFAQ項目"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "最後に作成されたFAQ項目"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "Top 10 FAQ項目"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "親カテゴリ"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "評価が選択されていません。"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "一覧"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "公開 (全員)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "外部 (顧客)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "内部 (担当者)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "開始日"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "開始月"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "開始年"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "終了日"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "終了月"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "終了年"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "評価をいただきありがとうございます。"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "あなたはすでに評価済です。"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "記事印刷"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "上位10件の記事"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "新着記事"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "最近更新された記事"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "カテゴリが更新されました。"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "新しいカテゴリが追加されました。"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "「名前」は必須項目です。"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "このカテゴリはすでに存在しています。"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "言語が追加されました。"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "言語が更新されました。"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "「名前」は必須項目です。"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "この言語は設定済です。"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "症状"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "解決"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -195,6 +55,10 @@ msgstr "カテゴリを追加"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "カテゴリを編集"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "親カテゴリ"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -341,7 +205,7 @@ msgstr "最終更新者"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr "FAQ項目作成日時 (範囲指定)"
+msgstr "FAQ項目作成日時 (以前/以後)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
@@ -349,7 +213,7 @@ msgstr "FAQ項目作成日時 (期間指定)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr "FAQ項目変更日時 (範囲指定)"
+msgstr "FAQ項目変更日時 (以前/以後)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
@@ -401,7 +265,7 @@ msgstr "例. 25%に等しい あるいは 75%以上"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr "FAQ項目作成時間"
+msgstr "FAQ項目作成日時"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
@@ -532,9 +396,113 @@ msgstr "公開"
 msgid "Back to FAQ Explorer"
 msgstr "FAQエクスプローラーに戻る"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "「名前」は必須項目です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "このカテゴリはすでに存在しています。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "カテゴリが更新されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "新しいカテゴリが追加されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "FAQ ジャーナル"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "「名前」は必須項目です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "この言語は設定済です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "言語が更新されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "言語が追加されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -544,9 +512,121 @@ msgstr "最終更新日"
 msgid "FAQ Dynamic Fields"
 msgstr "FAQ 動的フィールド"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "結果がありません。"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "FAQナンバー"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "FAQ項目作成日時 (以前/以後)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "FAQ項目作成日時 (期間指定)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "FAQ項目変更日時 (以前/以後)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "FAQ項目変更日時 (期間指定)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "評価をいただきありがとうございます。"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "あなたはすでに評価済です。"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "評価が選択されていません。"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "記事印刷"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "新着記事"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "最近更新された記事"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "上位10件の記事"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -900,6 +980,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "評価の機能を有効にする"
 
 #. SysConfig
+msgid "Explorer"
+msgstr "一覧"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr ""
 
@@ -990,6 +1074,14 @@ msgstr "ジャーナル"
 #. SysConfig
 msgid "Language Management"
 msgstr "言語管理"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "最後に作成されたFAQ項目"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "最後に更新されたFAQ項目"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1306,6 +1398,14 @@ msgid ""
 msgstr "担当者インターフェイスのズームビューでFAQを印刷リンクを表示する。"
 
 #. SysConfig
+msgid "Solution"
+msgstr "解決"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "症状"
+
+#. SysConfig
 msgid "Text Only"
 msgstr "テキストのみ"
 
@@ -1348,6 +1448,14 @@ msgstr "FAQ承認チケット用　チケット件名 "
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "ショートカットのためのツールバー・アイテムです。"
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "外部 (顧客)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "内部 (担当者)"
 
 #. SysConfig
 msgid "public (public)"

@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -17,146 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "ndani"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "umma"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "nje"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "idadi ya maswali"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "Marekebisho mapya ya makala ya maswali"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "Makala mpya ya maswali"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "Makala 10 bora ya Maswali"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "Kijisehemu cha"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "Hakuna chaguo la kiwango"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "Kichunguzaji"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "Umma (wote)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "nje (mteja)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "ndani (wakala)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "Siku ya kuanza"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "Mwezi wa kuanza"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "Mwaka wa kuanza"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "Siku ya kuisha"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "Mwezi wa kuisha"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "Mwaka wa kuisha"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "Asante kwa Kura yako!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "Umeshapiga kura tayari!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "Chapisha makala ya maswali"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "Makala ya maswali (10 bora)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "Makala ya maswali (Mpya iliyotengenezwa)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "Makala ya maswali (Iliyobadilishwa hivi karibuni)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "Sehemu ya maswali iliyobadilishwa!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "Sehemu ya maswali iliyoongezwa!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "sehemu iwe na jina"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "Hii sehemu tayari ipo"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "Lugha ya maswali  imeongezwa!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "Lugha ya maswali imebadilishwa!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "Jina linahitajika!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "Lugha ipo tayari!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr ""
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -197,6 +57,10 @@ msgstr "Ongeza sehemu"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "Hariri sehemu"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "Kijisehemu cha"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -534,9 +398,113 @@ msgstr "Umma"
 msgid "Back to FAQ Explorer"
 msgstr "Back to FAQ mchunguzi"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "sehemu iwe na jina"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "Hii sehemu tayari ipo"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "Sehemu ya maswali iliyobadilishwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "Sehemu ya maswali iliyoongezwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "Jarida la maswali"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "Jina linahitajika!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "Lugha ipo tayari!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "Lugha ya maswali imebadilishwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "Lugha ya maswali  imeongezwa!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -546,8 +514,120 @@ msgstr "Mabadiliko ya mwisho"
 msgid "FAQ Dynamic Fields"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "idadi ya maswali"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "Asante kwa Kura yako!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "Umeshapiga kura tayari!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "Hakuna chaguo la kiwango"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "Chapisha makala ya maswali"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "Makala ya maswali (Mpya iliyotengenezwa)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "Makala ya maswali (Iliyobadilishwa hivi karibuni)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "Makala ya maswali (10 bora)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
@@ -902,6 +982,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Wezesha "
 
 #. SysConfig
+msgid "Explorer"
+msgstr "Kichunguzaji"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr ""
 
@@ -992,6 +1076,14 @@ msgstr "Jarida"
 #. SysConfig
 msgid "Language Management"
 msgstr "Menejimenti ya lugha"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "Makala mpya ya maswali"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "Marekebisho mapya ya makala ya maswali"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1308,6 +1400,14 @@ msgid ""
 msgstr "Inaonyesha kiunganishi katika orodha kuchapisha maswali yanayoulizwa mara kwa mara katika mandhari iliyokuzwa ya wakala wa kiolesura."
 
 #. SysConfig
+msgid "Solution"
+msgstr ""
+
+#. SysConfig
+msgid "Symptom"
+msgstr ""
+
+#. SysConfig
 msgid "Text Only"
 msgstr ""
 
@@ -1350,6 +1450,14 @@ msgstr "Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mar
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Kipengele cha mwambaa zana kwa ajili ya mkato."
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "nje (mteja)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "ndani (wakala)"
 
 #. SysConfig
 msgid "public (public)"

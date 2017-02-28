@@ -15,43 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'internal';
-    $Self->{Translation}->{'public'} = 'umum';
-    $Self->{Translation}->{'external'} = 'eksternal';
-    $Self->{Translation}->{'FAQ Number'} = 'Nomor FAQ';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Artikel FAQ paling baru';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Artikel FAQ terakhir dibuat';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Artikel FAQ 10 teratas';
-    $Self->{Translation}->{'Subcategory of'} = 'Sub-kategori dari';
-    $Self->{Translation}->{'No rate selected!'} = 'Tidak ada peringkat yang dipilih';
-    $Self->{Translation}->{'Explorer'} = 'Eksplorer';
-    $Self->{Translation}->{'public (all)'} = 'umum';
-    $Self->{Translation}->{'external (customer)'} = 'eksternal (pelanggan)';
-    $Self->{Translation}->{'internal (agent)'} = 'internal (agen)';
-    $Self->{Translation}->{'Start day'} = 'Awal hari';
-    $Self->{Translation}->{'Start month'} = 'Awal bulan';
-    $Self->{Translation}->{'Start year'} = 'Awal tahun';
-    $Self->{Translation}->{'End day'} = 'Akhir hari';
-    $Self->{Translation}->{'End month'} = 'Akhir bulan';
-    $Self->{Translation}->{'End year'} = 'Akhir tahun';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Terima kasih atas pilihannya!';
-    $Self->{Translation}->{'You have already voted!'} = 'Anda sudah pernah memilih!';
-    $Self->{Translation}->{'FAQ Article Print'} = 'Cetak Artikel FAQ';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artikel FAQ (10 teratas)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artikel FAQ (terbaru)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Artikel FAQ (terakhir dirubah)';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Kategori FAQ diupdate!';
-    $Self->{Translation}->{'FAQ category added!'} = 'Kategori FAQ ditambahkan!';
-    $Self->{Translation}->{'A category should have a name!'} = 'Sebuah kategori harus memiliki nama!';
-    $Self->{Translation}->{'This category already exists'} = 'Kategori ini sudah ada';
-    $Self->{Translation}->{'FAQ language added!'} = 'Bahasa FAQ ditambahkan!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'Bahasa FAQ diperbarui!';
-    $Self->{Translation}->{'The name is required!'} = 'Nama dibutuhkan!';
-    $Self->{Translation}->{'This language already exists!'} = 'Bahasa ini sudah ada!';
-    $Self->{Translation}->{'Symptom'} = 'Gejala';
-    $Self->{Translation}->{'Solution'} = 'Solusi';
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Tambah Artikel FAQ';
     $Self->{Translation}->{'Keywords'} = 'Katakunci';
@@ -65,6 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Tambah Kategori';
     $Self->{Translation}->{'Edit Category'} = 'Edit Kategori';
+    $Self->{Translation}->{'Subcategory of'} = 'Sub-kategori dari';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Silahkan pilih setidaknya satu izin grup';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Grup Agen yang dapat mengakses artikel dalam kategori ini';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Akan ditampilkan sebagai komentar di Explorer';
@@ -189,15 +153,96 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Kembali ke Eksplorer FAQ';
 
+    # Perl Module: Kernel/Modules/AgentFAQAdd.pm
+    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQCategory.pm
+    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = 'Sebuah kategori harus memiliki nama!';
+    $Self->{Translation}->{'This category already exists'} = 'Kategori ini sudah ada';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Kategori FAQ diupdate!';
+    $Self->{Translation}->{'This category already exists!'} = '';
+    $Self->{Translation}->{'FAQ category added!'} = 'Kategori FAQ ditambahkan!';
+    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQDelete.pm
+    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = '';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'FAQ History'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Jurnal FAQ';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
+        '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'The name is required!'} = 'Nama dibutuhkan!';
+    $Self->{Translation}->{'This language already exists!'} = 'Bahasa ini sudah ada!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'Bahasa FAQ diperbarui!';
+    $Self->{Translation}->{'FAQ language added!'} = 'Bahasa FAQ ditambahkan!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Perbaruan terakhir';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'Bidang dinamis FAQ';
 
+    # Perl Module: Kernel/Modules/AgentFAQRichText.pm
+    $Self->{Translation}->{'No %s is given!'} = 'Tidak ada %s diberikan!';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Tidak ada hasil!';
+    $Self->{Translation}->{'FAQ Number'} = 'Nomor FAQ';
+    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Greater than'} = '';
+    $Self->{Translation}->{'Greater than equals'} = '';
+    $Self->{Translation}->{'Smaller than'} = '';
+    $Self->{Translation}->{'Smaller than equals'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQZoom.pm
+    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Terima kasih atas pilihannya!';
+    $Self->{Translation}->{'You have already voted!'} = 'Anda sudah pernah memilih!';
+    $Self->{Translation}->{'No rate selected!'} = 'Tidak ada peringkat yang dipilih';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+    $Self->{Translation}->{'FAQ Article Print'} = 'Cetak Artikel FAQ';
+
+    # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+    $Self->{Translation}->{'Created between'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+    $Self->{Translation}->{'Need ItemID!'} = '';
+
+    # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artikel FAQ (terbaru)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Artikel FAQ (terakhir dirubah)';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artikel FAQ (10 teratas)';
+
+    # Perl Module: Kernel/Modules/PublicFAQRSS.pm
+    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '';
@@ -316,6 +361,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'ubah FAQ ini.';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Aktifkan multibahasa pada modul FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Aktifkan mekanisme voting pada modul FA';
+    $Self->{Translation}->{'Explorer'} = 'Eksplorer';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
@@ -339,6 +385,8 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Antarmuka dimana pencarian cepat harus di tampilkan';
     $Self->{Translation}->{'Journal'} = 'Jurnal';
     $Self->{Translation}->{'Language Management'} = 'Manajemen Bahasa';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Artikel FAQ terakhir dibuat';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Artikel FAQ paling baru';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Tautkan objek lainnya ke item FAQ ini';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Daftar jenis status yang dapat digunakan pada antarmuka agen.';
@@ -441,6 +489,8 @@ sub Data {
         'Tampilkan tautan pada menu untuk kembali pada FAQ pada tampilan zoom di antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Tampilkan tautan pada menu untuk mencetak FAQ pada tampilan zoomnya di antarmuka agen.';
+    $Self->{Translation}->{'Solution'} = 'Solusi';
+    $Self->{Translation}->{'Symptom'} = 'Gejala';
     $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Pengidentifikasi untuk FAQ, Misalnya FAQ#, KB#, MyFAQ#. Standarnya adalah FAQ#.';
@@ -455,6 +505,8 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Isi tiket untuk persetujuan artikel FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Subjek tiket untuk persetujuan artikel FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Item toolbar untuk jalan pintas';
+    $Self->{Translation}->{'external (customer)'} = 'eksternal (pelanggan)';
+    $Self->{Translation}->{'internal (agent)'} = 'internal (agen)';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -14,146 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "dalaman"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "umum"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "luaran"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "Nombor FAQ"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "Kemaskini Artikel FAQ terbaru"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "Mencipta aritkel FAQ terbaru"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "Aritkel FAQ 10 terbaik"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "Sub-kategori daripada"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "Tiada kadar dipilih!"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "Peneroka"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "Umum (Semua)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "luaran (pelanggan)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "dalaman (ejen)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "Hari mula"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "Bulan mula"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "Tahun mula"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "Hari akhir"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "Bulan akhir"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "Tahun akhir"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "Terima kasih untuk undian anda!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "And sudah mengundi!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "Artikel FAQ dicetak"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "Artikel FAQ (10 terbaik)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "Artikel FAQ (baru dicipta)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "Artikel FAQ (baru diubah)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "Kategori FAQ dikemaskini!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "kategori FAQ ditambah!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "Kategori perlu mempunyai nama!"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "kategori ini sudah wujud!"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "Bahasa FAQ ditambah!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "Bahasa FAQ dikemaskini!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "Nama diperlukan!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "Bahasa ini sudah wujud!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "Simptom"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "Penyelesaian"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -194,6 +54,10 @@ msgstr "Tambah kategori"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "Audit Kategori"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "Sub-kategori daripada"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -531,9 +395,113 @@ msgstr "Umum"
 msgid "Back to FAQ Explorer"
 msgstr "Balik kepada peneroka FAQ"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr "Anda perlukan keizinan rw!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr "Tiada kategori yang dijumpai dimana pengguna perlu ada keizinan baca/tulis!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr "Tiada bahasa lazim yang dijumpai dan tidak boleh membuat yang baru."
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr "Perlukan CategoryID!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "Kategori perlu mempunyai nama!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "kategori ini sudah wujud!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "Kategori FAQ dikemaskini!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr "Kategori ini telah wujud!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "kategori FAQ ditambah!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr "Tiada CategoryID yang diberikan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr "Tidak mampu untuk membuang kategori %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr "Tiada ItemID diberikan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr "Anda tidak mempunyai keizinan untuk kategori ini!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr "tidak mampu untuk membuang artikel FAQ %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr "CategoryID %s itu tidak sah."
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr "Tidak boleh menunjukkan sejarah, sebagai tiada ItemID yang diberikan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr "Sejarah FAQ"
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "jurnal FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr "Perlukan pilihan FAQ::Frontend::Overview config"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr "pilihan FAQ::Frontend::Overview config memerlukan untuk menjadi suatu ruj HASH!"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "Tiada pilihan config dijumpai untuk pandangan \"%s\"!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr "Tiada LanguageID diberikan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "Nama diperlukan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "Bahasa ini sudah wujud!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "Bahasa FAQ dikemaskini!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "Bahasa FAQ ditambah!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Tidak mampu untuk membuang bahasa %s itu!"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -543,9 +511,121 @@ msgstr "Kemaskini kali terakhir"
 msgid "FAQ Dynamic Fields"
 msgstr "Medan Dinamik FAQ"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr "Tiada %s diberikan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr "Tidak boleh memuatkan ObjekBahasa!"
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "Tiada Keputusan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "Nombor FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr "Pertukaran Akhir oleh"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "FAQ Item Cipta Masa (sebelum/selepas)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "FAQ Item Cipta Masa (di antara)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "FAQ Item Ubah Masa (sebelum/selepas)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "FAQ Item Ubah Masa (di antara)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr "Sama Dengan"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr "lebih Besar daripada"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr "lebih Besar daripada sama dengan"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr "Lebih Kecil daripada"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr "Lebih Kecil daripada sama dengan "
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr "Perlukan FileID!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "Terima kasih untuk undian anda!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "And sudah mengundi!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "Tiada kadar dipilih!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr "Mekanisma mengundi tidak dibolehkan!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr "Kadar undian tidak ditakrifkan!"
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "Artikel FAQ dicetak"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr "Dicipta di antara"
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr "Perlukan ItemID!"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "Artikel FAQ (baru dicipta)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "Artikel FAQ (baru diubah)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "Artikel FAQ (10 terbaik)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr "Tiada Jenis diberikan!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr "Jenis mesti antara LastCreate atau LastChange atau Top10!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr "Tidak boleh mencipta fail RSS!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -656,7 +736,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Takrifkan Tindakan dimana butang tetapan itu ada dalam widget objek bersambung (LinkObject::ViewMode = \"complex\"). Sila pastikan yang Tindakan ini perlu didaftarkan yang berikut fail-fail JS dan CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -668,7 +748,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Takrifkan dimana kolum ditunjukkan dalam widget FAQ-FAQ bersambung (LinkObject::ViewMode = \"complex\"). Nota: Hanya sifat-sifat FAQ dan Dynamic Fields (DynamicField_NameX) yang dibenarkan untuk DefaultColumns. Kemungkinan tetapan: 0 = Dinyahaktif, 1 = Ada, 2 = Aktif secara lazim."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -899,6 +979,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Aktifkan undian mekanisma pada modul FAQ."
 
 #. SysConfig
+msgid "Explorer"
+msgstr "Peneroka"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr "Pengulas AJAX FAQ"
 
@@ -989,6 +1073,14 @@ msgstr "Jurnal"
 #. SysConfig
 msgid "Language Management"
 msgstr "Pengurusan Bahasa"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "Mencipta aritkel FAQ terbaru"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "Kemaskini Artikel FAQ terbaru"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1246,7 +1338,7 @@ msgstr "Papar FAQ jalan ya / tidak."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Tunjukkan item-item tidak sahih dalam keputusan Peneroka FAQ bagi antaramuka agen."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1305,6 +1397,14 @@ msgid ""
 msgstr "Menunjukkan pautan di bar menu dalam pandangan dizum dalam antara muka ejen, yang membolehkan untuk mencetak artikel FAQ."
 
 #. SysConfig
+msgid "Solution"
+msgstr "Penyelesaian"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "Simptom"
+
+#. SysConfig
 msgid "Text Only"
 msgstr "hanya teks"
 
@@ -1347,6 +1447,14 @@ msgstr "Tertakluk kepada tiket untuk melepaskan artikel FAQ."
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Item Toolbar untuk jalan pintas."
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "luaran (pelanggan)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "dalaman (ejen)"
 
 #. SysConfig
 msgid "public (public)"

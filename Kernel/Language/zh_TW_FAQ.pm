@@ -15,43 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = '內部的';
-    $Self->{Translation}->{'public'} = '公開的';
-    $Self->{Translation}->{'external'} = '外部的';
-    $Self->{Translation}->{'FAQ Number'} = '常見問題編號';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近更新常見問題文章';
-    $Self->{Translation}->{'Latest created FAQ articles'} = '最近添加的常見問題文章';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = '首10篇常見問題文章';
-    $Self->{Translation}->{'Subcategory of'} = '';
-    $Self->{Translation}->{'No rate selected!'} = '沒有選取評分!';
-    $Self->{Translation}->{'Explorer'} = '瀏覽器';
-    $Self->{Translation}->{'public (all)'} = '公開  (全部)';
-    $Self->{Translation}->{'external (customer)'} = '外部 (客戶)';
-    $Self->{Translation}->{'internal (agent)'} = '內部 (服務員)';
-    $Self->{Translation}->{'Start day'} = '起始日';
-    $Self->{Translation}->{'Start month'} = '起始月份';
-    $Self->{Translation}->{'Start year'} = '起始年份';
-    $Self->{Translation}->{'End day'} = '結束日';
-    $Self->{Translation}->{'End month'} = '結束月份';
-    $Self->{Translation}->{'End year'} = '結束年份';
-    $Self->{Translation}->{'Thanks for your vote!'} = '感謝您的投票!';
-    $Self->{Translation}->{'You have already voted!'} = '您己經投票!';
-    $Self->{Translation}->{'FAQ Article Print'} = '常見問題文章列印';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '常見問題文章 (首10篇)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = '常見問題文章 (新添加)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '常見問題文章 (最近更新)';
-    $Self->{Translation}->{'FAQ category updated!'} = '常見問題目錄分類已更新!';
-    $Self->{Translation}->{'FAQ category added!'} = '常見問題目錄分類已添加!';
-    $Self->{Translation}->{'A category should have a name!'} = '目錄分類必須有名稱!';
-    $Self->{Translation}->{'This category already exists'} = '此目錄分類已經存在';
-    $Self->{Translation}->{'FAQ language added!'} = '常見問題語言已添加!';
-    $Self->{Translation}->{'FAQ language updated!'} = '常見問題語言已更新!';
-    $Self->{Translation}->{'The name is required!'} = '名稱為必須的!';
-    $Self->{Translation}->{'This language already exists!'} = '此語言已存在!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '解決方案';
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = '添加常見問題文章';
     $Self->{Translation}->{'Keywords'} = '關鍵字';
@@ -65,6 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = '添加目錄分類';
     $Self->{Translation}->{'Edit Category'} = '編輯目錄分類';
+    $Self->{Translation}->{'Subcategory of'} = '';
     $Self->{Translation}->{'Please select at least one permission group.'} = '請選擇至少一個權限組。';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '可以存取此目錄分類文章的服務員組別。';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '在瀏覽器中將會顯示為評言。';
@@ -189,15 +153,96 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = '回到常見問題瀏覽器';
 
+    # Perl Module: Kernel/Modules/AgentFAQAdd.pm
+    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQCategory.pm
+    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = '目錄分類必須有名稱!';
+    $Self->{Translation}->{'This category already exists'} = '此目錄分類已經存在';
+    $Self->{Translation}->{'FAQ category updated!'} = '常見問題目錄分類已更新!';
+    $Self->{Translation}->{'This category already exists!'} = '';
+    $Self->{Translation}->{'FAQ category added!'} = '常見問題目錄分類已添加!';
+    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQDelete.pm
+    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = '';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'FAQ History'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = '常見問題日誌';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
+        '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'The name is required!'} = '名稱為必須的!';
+    $Self->{Translation}->{'This language already exists!'} = '此語言已存在!';
+    $Self->{Translation}->{'FAQ language updated!'} = '常見問題語言已更新!';
+    $Self->{Translation}->{'FAQ language added!'} = '常見問題語言已添加!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = '最後更新';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '常見問題動態欄位';
 
+    # Perl Module: Kernel/Modules/AgentFAQRichText.pm
+    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '沒有結果!';
+    $Self->{Translation}->{'FAQ Number'} = '常見問題編號';
+    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Greater than'} = '';
+    $Self->{Translation}->{'Greater than equals'} = '';
+    $Self->{Translation}->{'Smaller than'} = '';
+    $Self->{Translation}->{'Smaller than equals'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQZoom.pm
+    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Thanks for your vote!'} = '感謝您的投票!';
+    $Self->{Translation}->{'You have already voted!'} = '您己經投票!';
+    $Self->{Translation}->{'No rate selected!'} = '沒有選取評分!';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+    $Self->{Translation}->{'FAQ Article Print'} = '常見問題文章列印';
+
+    # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+    $Self->{Translation}->{'Created between'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+    $Self->{Translation}->{'Need ItemID!'} = '';
+
+    # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+    $Self->{Translation}->{'FAQ Articles (new created)'} = '常見問題文章 (新添加)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '常見問題文章 (最近更新)';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '常見問題文章 (首10篇)';
+
+    # Perl Module: Kernel/Modules/PublicFAQRSS.pm
+    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '';
@@ -316,6 +361,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = '編輯此常見問題';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '啓用常見問題模組多種語言';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '啓用常見問題模組投票機制';
+    $Self->{Translation}->{'Explorer'} = '瀏覽器';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
@@ -339,6 +385,8 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '顯示快速搜尋的介面';
     $Self->{Translation}->{'Journal'} = '日誌';
     $Self->{Translation}->{'Language Management'} = '語言管理';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '最近添加的常見問題文章';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近更新常見問題文章';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '連結其他物件到此常見問題物件';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '在服務員介面可使用的狀態分類列表';
@@ -441,6 +489,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Solution'} = '解決方案';
+    $Self->{Translation}->{'Symptom'} = '';
     $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         '';
@@ -455,6 +505,8 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'external (customer)'} = '外部 (客戶)';
+    $Self->{Translation}->{'internal (agent)'} = '內部 (服務員)';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

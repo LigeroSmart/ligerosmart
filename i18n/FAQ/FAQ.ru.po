@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -15,146 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "служебное"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "общедоступное"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "открытое"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "Номер FAQ"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "Последние обновления статей FAQ"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "Новые статьи FAQ"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "Top 10 статей FAQ"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "Подраздел"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "Оценка отсутствует!"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "Обзор"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "общедоступное (всем)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "открытое (клиентам)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "служебное (агентам)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "Начало дня"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "Начала месяца"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "Начало года"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "Конец дня"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "Конец месяца"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "Конец года"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "Спасибо за вашу оценку!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "Вы уже поставили оценку!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "Печать статьи FAQ"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "Статьи FAQ (Top 10)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "Статьи FAQ (новые)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "Статьи FAQ (обновлённые)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "Категория FAQ изменена!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "Категория FAQ добавлена!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "У категории должно быть название!"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "Такая категория уже существует!"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "Язык для FAQ добавлен!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "Язык для FAQ изменён!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "Необходимо задать название!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "Такой язык уже существует!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "Симптомы"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "Решение"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -195,6 +55,10 @@ msgstr "Добавить категорию"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "Удалить категорию"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "Подраздел"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -532,9 +396,113 @@ msgstr "Общедоступное"
 msgid "Back to FAQ Explorer"
 msgstr "Вернуться в обзор FAQ"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr "Необходимы права rw!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr "Отсутствуют категории в которых пользователь имеет права чтения/записи!"
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr "Не указан язык по умолчанию и невозможно задать новый."
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr "Требуется CategoryID!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "У категории должно быть название!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "Такая категория уже существует!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "Категория FAQ изменена!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr "Такая категория уже существует!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "Категория FAQ добавлена!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr "CategoryID не задан!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr "Не удалось удалить категорию %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr "Не указан ItemID!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr "У вас нет прав на доступ к этой категории!"
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr "Не удалось удалить статью FAQ %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr "CategoryID %s неверен."
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr "Невозможно отобразить историю, так как не задан ItemID!"
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr "История FAQ "
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "Журнал FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr "Необходимо настроить параметр FAQ::Frontend::Overview"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr "Параметр FAQ::Frontend::Overview - требуется ссылка на HASH!"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "Не настроен обзор \"%s\"!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr "LanguageID не задан!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "Необходимо задать название!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "Такой язык уже существует!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "Язык для FAQ изменён!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "Язык для FAQ добавлен!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Не удалось удалить язык %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -544,9 +512,121 @@ msgstr "Последнее обновление"
 msgid "FAQ Dynamic Fields"
 msgstr "Динамические поля для FAQ"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr "%s не задан!"
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr "невозможно загрузить LanguageObject!"
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "Нет результата/Решения!"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "Номер FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr "Последним изменил"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr "Время создания статьи FAQ (до/после)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr "Время создания статьи FAQ (между)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr "Время изменения статьи FAQ (до/после)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr "Время изменения статьи FAQ (между)"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr "равняется"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr "больше чем"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr "больше или равно"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr "меньше чем"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr "меньше или равно"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr "Требуется FileID!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "Спасибо за вашу оценку!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "Вы уже поставили оценку!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "Оценка отсутствует!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr "Механизм голосования не включен!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr "Предельный уровень для голосования не задан!"
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "Печать статьи FAQ"
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr "Создана между"
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr "Требуется ItemID!"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "Статьи FAQ (новые)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "Статьи FAQ (обновлённые)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "Статьи FAQ (Top 10)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr "Не указан Тип!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr "Тип должен иметь значение LastCreate/Последние созданные или LastChange/Последние измененные или Top10/10 лучших!"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr "Невозможно создать RSS файл!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -657,7 +737,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Задает Действия/Actions когда кнопка настройки доступна в связанном виджете (LinkObject::ViewMode = \"complex\"). Обратите внимание, что эти Действия/Actions должны иметь зарегистрированные JS или CSS файлы: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -669,7 +749,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Задает, какие колонки отображаются в связанном FAQ виджете ((LinkObject::ViewMode = \"complex\"). Внимание:только атрибуты FAQ и динамических полей (DynamicField_NameX) разрешены для DefaultColumns/Колонки по умолчанию. Возможные значения: 0 = Отключено, 1 = Да, 2 = Включено по умолчанию."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -900,6 +980,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "Разрешить функцию оценки в модуле FAQ."
 
 #. SysConfig
+msgid "Explorer"
+msgstr "Обзор"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr "FAQ AJAX ответчик"
 
@@ -990,6 +1074,14 @@ msgstr "Журнал"
 #. SysConfig
 msgid "Language Management"
 msgstr "Управление языками"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "Новые статьи FAQ"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "Последние обновления статей FAQ"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1247,7 +1339,7 @@ msgstr "Показывать путь FAQ да/нет."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Показывать недействительные статьи в обзоре FAQ Explorer в интерфейсе агента."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1306,6 +1398,14 @@ msgid ""
 msgstr "Показывает пункт меню Печать при просмотре статьи FAQ в интерфейсе агента."
 
 #. SysConfig
+msgid "Solution"
+msgstr "Решение"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "Симптомы"
+
+#. SysConfig
 msgid "Text Only"
 msgstr "Только текст"
 
@@ -1348,6 +1448,14 @@ msgstr "Тема заявки на одобрение статьи FAQ."
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr "Описание ярлыка(иконки) для навигационной панели."
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "открытое (клиентам)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "служебное (агентам)"
 
 #. SysConfig
 msgid "public (public)"

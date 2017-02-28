@@ -15,43 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'ndani';
-    $Self->{Translation}->{'public'} = 'umma';
-    $Self->{Translation}->{'external'} = 'nje';
-    $Self->{Translation}->{'FAQ Number'} = 'idadi ya maswali';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Marekebisho mapya ya makala ya maswali';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Makala mpya ya maswali';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Makala 10 bora ya Maswali';
-    $Self->{Translation}->{'Subcategory of'} = 'Kijisehemu cha';
-    $Self->{Translation}->{'No rate selected!'} = 'Hakuna chaguo la kiwango';
-    $Self->{Translation}->{'Explorer'} = 'Kichunguzaji';
-    $Self->{Translation}->{'public (all)'} = 'Umma (wote)';
-    $Self->{Translation}->{'external (customer)'} = 'nje (mteja)';
-    $Self->{Translation}->{'internal (agent)'} = 'ndani (wakala)';
-    $Self->{Translation}->{'Start day'} = 'Siku ya kuanza';
-    $Self->{Translation}->{'Start month'} = 'Mwezi wa kuanza';
-    $Self->{Translation}->{'Start year'} = 'Mwaka wa kuanza';
-    $Self->{Translation}->{'End day'} = 'Siku ya kuisha';
-    $Self->{Translation}->{'End month'} = 'Mwezi wa kuisha';
-    $Self->{Translation}->{'End year'} = 'Mwaka wa kuisha';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Asante kwa Kura yako!';
-    $Self->{Translation}->{'You have already voted!'} = 'Umeshapiga kura tayari!';
-    $Self->{Translation}->{'FAQ Article Print'} = 'Chapisha makala ya maswali';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Makala ya maswali (10 bora)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Makala ya maswali (Mpya iliyotengenezwa)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Makala ya maswali (Iliyobadilishwa hivi karibuni)';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Sehemu ya maswali iliyobadilishwa!';
-    $Self->{Translation}->{'FAQ category added!'} = 'Sehemu ya maswali iliyoongezwa!';
-    $Self->{Translation}->{'A category should have a name!'} = 'sehemu iwe na jina';
-    $Self->{Translation}->{'This category already exists'} = 'Hii sehemu tayari ipo';
-    $Self->{Translation}->{'FAQ language added!'} = 'Lugha ya maswali  imeongezwa!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'Lugha ya maswali imebadilishwa!';
-    $Self->{Translation}->{'The name is required!'} = 'Jina linahitajika!';
-    $Self->{Translation}->{'This language already exists!'} = 'Lugha ipo tayari!';
-    $Self->{Translation}->{'Symptom'} = '';
-    $Self->{Translation}->{'Solution'} = '';
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Ongeza makala ya maswali';
     $Self->{Translation}->{'Keywords'} = 'Maneno makuu';
@@ -65,6 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Sawa';
     $Self->{Translation}->{'Add Category'} = 'Ongeza sehemu';
     $Self->{Translation}->{'Edit Category'} = 'Hariri sehemu';
+    $Self->{Translation}->{'Subcategory of'} = 'Kijisehemu cha';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Tafadhali chagua japo';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Makundi ya wakala yenye ruhusa kwa hii makala katika kategori hii.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Itaonyeshwa kama tamko kwenye Explorer.';
@@ -189,15 +153,96 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Back to FAQ mchunguzi';
 
+    # Perl Module: Kernel/Modules/AgentFAQAdd.pm
+    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQCategory.pm
+    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = 'sehemu iwe na jina';
+    $Self->{Translation}->{'This category already exists'} = 'Hii sehemu tayari ipo';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Sehemu ya maswali iliyobadilishwa!';
+    $Self->{Translation}->{'This category already exists!'} = '';
+    $Self->{Translation}->{'FAQ category added!'} = 'Sehemu ya maswali iliyoongezwa!';
+    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQDelete.pm
+    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = '';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'FAQ History'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Jarida la maswali';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
+        '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'The name is required!'} = 'Jina linahitajika!';
+    $Self->{Translation}->{'This language already exists!'} = 'Lugha ipo tayari!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'Lugha ya maswali imebadilishwa!';
+    $Self->{Translation}->{'FAQ language added!'} = 'Lugha ya maswali  imeongezwa!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Mabadiliko ya mwisho';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
 
+    # Perl Module: Kernel/Modules/AgentFAQRichText.pm
+    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'FAQ Number'} = 'idadi ya maswali';
+    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Greater than'} = '';
+    $Self->{Translation}->{'Greater than equals'} = '';
+    $Self->{Translation}->{'Smaller than'} = '';
+    $Self->{Translation}->{'Smaller than equals'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQZoom.pm
+    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Asante kwa Kura yako!';
+    $Self->{Translation}->{'You have already voted!'} = 'Umeshapiga kura tayari!';
+    $Self->{Translation}->{'No rate selected!'} = 'Hakuna chaguo la kiwango';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+    $Self->{Translation}->{'FAQ Article Print'} = 'Chapisha makala ya maswali';
+
+    # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+    $Self->{Translation}->{'Created between'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+    $Self->{Translation}->{'Need ItemID!'} = '';
+
+    # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Makala ya maswali (Mpya iliyotengenezwa)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Makala ya maswali (Iliyobadilishwa hivi karibuni)';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Makala ya maswali (10 bora)';
+
+    # Perl Module: Kernel/Modules/PublicFAQRSS.pm
+    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '';
@@ -316,6 +361,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Hariri makala hii';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Wezesha Lugha nyingi nyingi katika maswali haya.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Wezesha ';
+    $Self->{Translation}->{'Explorer'} = 'Kichunguzaji';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
@@ -339,6 +385,8 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Kiolesura ambacho utafutaji wa haraka unatakiwa kuonyeshwa.';
     $Self->{Translation}->{'Journal'} = 'Jarida';
     $Self->{Translation}->{'Language Management'} = 'Menejimenti ya lugha';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Makala mpya ya maswali';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Marekebisho mapya ya makala ya maswali';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Unganishga kitu kingine na kipengele hiki cha  maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha wakala.';
@@ -441,6 +489,8 @@ sub Data {
         'Inaonyesha kiunganishi katika orodha cha kurudi nyuma katika mandhari kuzwa ya maswali yanayoulizwa mara kwa mara ya wakala wa kiolesura.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Inaonyesha kiunganishi katika orodha kuchapisha maswali yanayoulizwa mara kwa mara katika mandhari iliyokuzwa ya wakala wa kiolesura.';
+    $Self->{Translation}->{'Solution'} = '';
+    $Self->{Translation}->{'Symptom'} = '';
     $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Kitambulishi cha maswali yanayoulizwa mara kwa mara, mfano maswali yanayoulizwa mara kwa mara#,KB#, MyFAQ#. Chaguo msingi ni maswali yanayoulizwa mara kwa mara#.';
@@ -455,6 +505,8 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Kiini cha tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Somo la tiketi kwa Idhini ya makala ya maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Kipengele cha mwambaa zana kwa ajili ya mkato.';
+    $Self->{Translation}->{'external (customer)'} = 'nje (mteja)';
+    $Self->{Translation}->{'internal (agent)'} = 'ndani (wakala)';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

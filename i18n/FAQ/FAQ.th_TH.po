@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-10-26 21:25+0000\n"
-"PO-Revision-Date: 2016-10-27 02:27+0000\n"
+"POT-Creation-Date: 2017-02-27 20:07+0000\n"
+"PO-Revision-Date: 2017-02-28 02:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
@@ -13,146 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: th_TH\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr "ภายใน"
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr "สาธารณะ"
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr "ภายนอก"
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr "หมายเลข FAQ"
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr "บทความ FAQ ที่อัปเดตล่าสุด"
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr "บทความ FAQ ที่สร้างล่าสุด"
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr "10 บทความ FAQ ยอดนิยม"
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr "หมวดหมู่ย่อยของ"
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr "ไม่มีเรทที่ถูกเลือก"
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr "นักสำรวจ"
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr "สาธารณะ (ทั้งหมด)"
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr "ภายนอก (ลูกค้า)"
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr "ภายใน (เอเย่นต์)"
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr "วันที่เริ่ม"
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr "เดือนที่เริ่ม"
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr "ปีที่เริ่ม"
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr "วันที่สิ้นสุด"
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr "เดือนที่สิ้นสุด"
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr "ปีที่สิ้นสุด"
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr "ขอบคุณสำหรับการโหวตของคุณ!"
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr "คุณได้ทำการโหวตแล้ว!"
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr "พิมพ์บทความ FAQ "
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr "บทความ FAQ (10 อันดับยอดนิยม)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr "บทความ FAQ (เพิ่งสร้างใหม่)"
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr "บทความ FAQ (เพิ่งเปลี่ยนแปลง)"
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr "อัปเดตหมวดหมู่ FAQ แล้ว!"
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr "เพิ่มหมวดหมู่ FAQ แล้ว!"
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr "ต้องระบุชื่อหมวดหมู่!"
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr "หมวดหมู่นี้มีอยู่แล้ว!"
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr "เพิ่มภาษา FAQ แล้ว!"
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr "อัปเดตภาษา FAQ แล้ว!"
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr "ต้องระบุชื่อ!"
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr "ภาษานี้มีอยู่แล้ว!"
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr "เครื่องแสดง"
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr "วิธีแก้ปัญหา"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -193,6 +53,10 @@ msgstr "เพิ่มหมวดหมู่"
 #. Template: AgentFAQCategory
 msgid "Edit Category"
 msgstr "แก้ไขหมวดหมู่"
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
+msgstr "หมวดหมู่ย่อยของ"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -530,9 +394,113 @@ msgstr "สาธารณะ"
 msgid "Back to FAQ Explorer"
 msgstr "กลับไปที่ FAQ Explorer"
 
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "You need rw permission!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No categories found where user has read/write permissions!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQAdd.pm
+msgid "No default language found and can't create a new one."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Need CategoryID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr "ต้องระบุชื่อหมวดหมู่!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr "หมวดหมู่นี้มีอยู่แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "อัปเดตหมวดหมู่ FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "เพิ่มหมวดหมู่ FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "No CategoryID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Was not able to delete the category %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "No ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "You have no permission for this category!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQDelete.pm
+msgid "Was not able to delete the FAQ article %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+msgid "The CategoryID %s is invalid."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "Can't show history, as no ItemID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQHistory.pm
+msgid "FAQ History"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
 msgstr "วารสาร FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Need config option FAQ::Frontend::Overview"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQJournal.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "No LanguageID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr "ต้องระบุชื่อ!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr "ภาษานี้มีอยู่แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr "อัปเดตภาษา FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr "เพิ่มภาษา FAQ แล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -542,9 +510,121 @@ msgstr "อัปเดตล่าสุด"
 msgid "FAQ Dynamic Fields"
 msgstr "ไดมานิคฟิลด์ของ FAQ"
 
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQRichText.pm
+msgid "Can't load LanguageObject!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
 msgstr "ไม่มีผลลัพธ์!"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
+msgstr "หมายเลข FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Last Changed by"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Create Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (before/after)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Item Change Time (between)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Greater than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "Smaller than equals"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Need FileID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr "ขอบคุณสำหรับการโหวตของคุณ!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr "คุณได้ทำการโหวตแล้ว!"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr "ไม่มีเรทที่ถูกเลือก"
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The voting mechanism is not enabled!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
+msgstr "พิมพ์บทความ FAQ "
+
+#. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+msgid "Created between"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr "บทความ FAQ (เพิ่งสร้างใหม่)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr "บทความ FAQ (เพิ่งเปลี่ยนแปลง)"
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
+msgstr "บทความ FAQ (10 อันดับยอดนิยม)"
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "No Type is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Type must be either LastCreate or LastChange or Top10!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+msgid "Can't create RSS file!"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -898,6 +978,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr "เปิดใช้งานกลไกการโหวตในโมดูลFAQ."
 
 #. SysConfig
+msgid "Explorer"
+msgstr "นักสำรวจ"
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr ""
 
@@ -988,6 +1072,14 @@ msgstr "วารสาร"
 #. SysConfig
 msgid "Language Management"
 msgstr "การจัดการภาษา"
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr "บทความ FAQ ที่สร้างล่าสุด"
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
+msgstr "บทความ FAQ ที่อัปเดตล่าสุด"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1304,6 +1396,14 @@ msgid ""
 msgstr "แสดงลิงค์ในเมนูเพื่อพิมพ์ FAQ ในการซูมของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
+msgid "Solution"
+msgstr "วิธีแก้ปัญหา"
+
+#. SysConfig
+msgid "Symptom"
+msgstr "เครื่องแสดง"
+
+#. SysConfig
 msgid "Text Only"
 msgstr ""
 
@@ -1346,6 +1446,14 @@ msgstr "หัวข้อของตั๋วสำหรับการอน
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
 msgstr ""
+
+#. SysConfig
+msgid "external (customer)"
+msgstr "ภายนอก (ลูกค้า)"
+
+#. SysConfig
+msgid "internal (agent)"
+msgstr "ภายใน (เอเย่นต์)"
 
 #. SysConfig
 msgid "public (public)"

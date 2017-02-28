@@ -15,43 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'служебное';
-    $Self->{Translation}->{'public'} = 'общедоступное';
-    $Self->{Translation}->{'external'} = 'открытое';
-    $Self->{Translation}->{'FAQ Number'} = 'Номер FAQ';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Последние обновления статей FAQ';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Новые статьи FAQ';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 статей FAQ';
-    $Self->{Translation}->{'Subcategory of'} = 'Подраздел';
-    $Self->{Translation}->{'No rate selected!'} = 'Оценка отсутствует!';
-    $Self->{Translation}->{'Explorer'} = 'Обзор';
-    $Self->{Translation}->{'public (all)'} = 'общедоступное (всем)';
-    $Self->{Translation}->{'external (customer)'} = 'открытое (клиентам)';
-    $Self->{Translation}->{'internal (agent)'} = 'служебное (агентам)';
-    $Self->{Translation}->{'Start day'} = 'Начало дня';
-    $Self->{Translation}->{'Start month'} = 'Начала месяца';
-    $Self->{Translation}->{'Start year'} = 'Начало года';
-    $Self->{Translation}->{'End day'} = 'Конец дня';
-    $Self->{Translation}->{'End month'} = 'Конец месяца';
-    $Self->{Translation}->{'End year'} = 'Конец года';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Спасибо за вашу оценку!';
-    $Self->{Translation}->{'You have already voted!'} = 'Вы уже поставили оценку!';
-    $Self->{Translation}->{'FAQ Article Print'} = 'Печать статьи FAQ';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Статьи FAQ (Top 10)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Статьи FAQ (новые)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Статьи FAQ (обновлённые)';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Категория FAQ изменена!';
-    $Self->{Translation}->{'FAQ category added!'} = 'Категория FAQ добавлена!';
-    $Self->{Translation}->{'A category should have a name!'} = 'У категории должно быть название!';
-    $Self->{Translation}->{'This category already exists'} = 'Такая категория уже существует!';
-    $Self->{Translation}->{'FAQ language added!'} = 'Язык для FAQ добавлен!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'Язык для FAQ изменён!';
-    $Self->{Translation}->{'The name is required!'} = 'Необходимо задать название!';
-    $Self->{Translation}->{'This language already exists!'} = 'Такой язык уже существует!';
-    $Self->{Translation}->{'Symptom'} = 'Симптомы';
-    $Self->{Translation}->{'Solution'} = 'Решение';
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Добавить статью FAQ';
     $Self->{Translation}->{'Keywords'} = 'Ключевые слова';
@@ -65,6 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Добавить категорию';
     $Self->{Translation}->{'Edit Category'} = 'Удалить категорию';
+    $Self->{Translation}->{'Subcategory of'} = 'Подраздел';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Укажите хотя бы одну группу.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Группы агентов, имеющих доступ к статьям этой категории.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Будет показано в Explorer как комментарий.';
@@ -189,15 +153,96 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Вернуться в обзор FAQ';
 
+    # Perl Module: Kernel/Modules/AgentFAQAdd.pm
+    $Self->{Translation}->{'You need rw permission!'} = 'Необходимы права rw!';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Отсутствуют категории в которых пользователь имеет права чтения/записи!';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'Не указан язык по умолчанию и невозможно задать новый.';
+
+    # Perl Module: Kernel/Modules/AgentFAQCategory.pm
+    $Self->{Translation}->{'Need CategoryID!'} = 'Требуется CategoryID!';
+    $Self->{Translation}->{'A category should have a name!'} = 'У категории должно быть название!';
+    $Self->{Translation}->{'This category already exists'} = 'Такая категория уже существует!';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Категория FAQ изменена!';
+    $Self->{Translation}->{'This category already exists!'} = 'Такая категория уже существует!';
+    $Self->{Translation}->{'FAQ category added!'} = 'Категория FAQ добавлена!';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'CategoryID не задан!';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Не удалось удалить категорию %s!';
+
+    # Perl Module: Kernel/Modules/AgentFAQDelete.pm
+    $Self->{Translation}->{'No ItemID is given!'} = 'Не указан ItemID!';
+    $Self->{Translation}->{'You have no permission for this category!'} = 'У вас нет прав на доступ к этой категории!';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'Не удалось удалить статью FAQ %s!';
+
+    # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'CategoryID %s неверен.';
+
+    # Perl Module: Kernel/Modules/AgentFAQHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = 'Невозможно отобразить историю, так как не задан ItemID!';
+    $Self->{Translation}->{'FAQ History'} = 'История FAQ ';
+
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Журнал FAQ';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'Необходимо настроить параметр FAQ::Frontend::Overview';
+    $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
+        'Параметр FAQ::Frontend::Overview - требуется ссылка на HASH!';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Не настроен обзор "%s"!';
+
+    # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+    $Self->{Translation}->{'No LanguageID is given!'} = 'LanguageID не задан!';
+    $Self->{Translation}->{'The name is required!'} = 'Необходимо задать название!';
+    $Self->{Translation}->{'This language already exists!'} = 'Такой язык уже существует!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'Язык для FAQ изменён!';
+    $Self->{Translation}->{'FAQ language added!'} = 'Язык для FAQ добавлен!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Не удалось удалить язык %s!';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Последнее обновление';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'Динамические поля для FAQ';
 
+    # Perl Module: Kernel/Modules/AgentFAQRichText.pm
+    $Self->{Translation}->{'No %s is given!'} = '%s не задан!';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = 'невозможно загрузить LanguageObject!';
+
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Нет результата/Решения!';
+    $Self->{Translation}->{'FAQ Number'} = 'Номер FAQ';
+    $Self->{Translation}->{'Last Changed by'} = 'Последним изменил';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'Время создания статьи FAQ (до/после)';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'Время создания статьи FAQ (между)';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'Время изменения статьи FAQ (до/после)';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'Время изменения статьи FAQ (между)';
+    $Self->{Translation}->{'Equals'} = 'равняется';
+    $Self->{Translation}->{'Greater than'} = 'больше чем';
+    $Self->{Translation}->{'Greater than equals'} = 'больше или равно';
+    $Self->{Translation}->{'Smaller than'} = 'меньше чем';
+    $Self->{Translation}->{'Smaller than equals'} = 'меньше или равно';
+
+    # Perl Module: Kernel/Modules/AgentFAQZoom.pm
+    $Self->{Translation}->{'Need FileID!'} = 'Требуется FileID!';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Спасибо за вашу оценку!';
+    $Self->{Translation}->{'You have already voted!'} = 'Вы уже поставили оценку!';
+    $Self->{Translation}->{'No rate selected!'} = 'Оценка отсутствует!';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = 'Механизм голосования не включен!';
+    $Self->{Translation}->{'The vote rate is not defined!'} = 'Предельный уровень для голосования не задан!';
+
+    # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+    $Self->{Translation}->{'FAQ Article Print'} = 'Печать статьи FAQ';
+
+    # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+    $Self->{Translation}->{'Created between'} = 'Создана между';
+
+    # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+    $Self->{Translation}->{'Need ItemID!'} = 'Требуется ItemID!';
+
+    # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Статьи FAQ (новые)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Статьи FAQ (обновлённые)';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Статьи FAQ (Top 10)';
+
+    # Perl Module: Kernel/Modules/PublicFAQRSS.pm
+    $Self->{Translation}->{'No Type is given!'} = 'Не указан Тип!';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = 'Тип должен иметь значение LastCreate/Последние созданные или LastChange/Последние измененные или Top10/10 лучших!';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = 'Невозможно создать RSS файл!';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '%s (FAQFulltext)';
@@ -237,11 +282,11 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Значение по умолчанию параметра Action для общедоступного фронтенда. Параметр Action используется в скриптах системы.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Задает Действия/Actions когда кнопка настройки доступна в связанном виджете (LinkObject::ViewMode = "complex"). Обратите внимание, что эти Действия/Actions должны иметь зарегистрированные JS или CSS файлы: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Задает, должен ли заголовок FAQ объединяться с темой статьи.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Задает, какие колонки отображаются в связанном FAQ виджете ((LinkObject::ViewMode = "complex"). Внимание:только атрибуты FAQ и динамических полей (DynamicField_NameX) разрешены для DefaultColumns/Колонки по умолчанию. Возможные значения: 0 = Отключено, 1 = Да, 2 = Включено по умолчанию.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Задает модуль просмотра для отображения журнала FAQ в small формате';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -316,6 +361,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Изменить этот FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Разрешить многоязычность в модуле FAQ.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Разрешить функцию оценки в модуле FAQ.';
+    $Self->{Translation}->{'Explorer'} = 'Обзор';
     $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX ответчик';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = 'FAQ AJAX ответчик для Richtext.';
     $Self->{Translation}->{'FAQ Area'} = 'Область FAQ';
@@ -339,6 +385,8 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Интерфейсы, в которых панель быстрого поиска может отображаться.';
     $Self->{Translation}->{'Journal'} = 'Журнал';
     $Self->{Translation}->{'Language Management'} = 'Управление языками';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Новые статьи FAQ';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Последние обновления статей FAQ';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Привязать другой объект к этому элементу FAQ';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Список типов состояний, которые могут использоваться в интерфейсе агента.';
@@ -423,7 +471,7 @@ sub Data {
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Показывать статью FAQ в HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Показывать путь FAQ да/нет.';
     $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
-        '';
+        'Показывать недействительные статьи в обзоре FAQ Explorer в интерфейсе агента.';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Показывать содержимое подразделов.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Показывать последние изменения в указаных интерфейсах.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Показывать новые пункты в указанных интерфейсах.';
@@ -441,6 +489,8 @@ sub Data {
         'Показывает пункт меню, позволяющий вернуться назад при просмотре статьи FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         'Показывает пункт меню Печать при просмотре статьи FAQ в интерфейсе агента.';
+    $Self->{Translation}->{'Solution'} = 'Решение';
+    $Self->{Translation}->{'Symptom'} = 'Симптомы';
     $Self->{Translation}->{'Text Only'} = 'Только текст';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Идентификатор FAQ, например, FAQ#, KB#, MyFAQ#. По умолчанию - FAQ#.';
@@ -455,6 +505,8 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Тело заявки на одобрение статьи FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Тема заявки на одобрение статьи FAQ.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Описание ярлыка(иконки) для навигационной панели.';
+    $Self->{Translation}->{'external (customer)'} = 'открытое (клиентам)';
+    $Self->{Translation}->{'internal (agent)'} = 'служебное (агентам)';
     $Self->{Translation}->{'public (public)'} = 'общедоступный (публичный)';
 
 }

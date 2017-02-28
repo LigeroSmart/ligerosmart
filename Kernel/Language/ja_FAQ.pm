@@ -15,43 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = '内部向';
-    $Self->{Translation}->{'public'} = '公開';
-    $Self->{Translation}->{'external'} = '外部向';
-    $Self->{Translation}->{'FAQ Number'} = 'FAQナンバー';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = '最後に更新されたFAQ項目';
-    $Self->{Translation}->{'Latest created FAQ articles'} = '最後に作成されたFAQ項目';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 FAQ項目';
-    $Self->{Translation}->{'Subcategory of'} = '親カテゴリ';
-    $Self->{Translation}->{'No rate selected!'} = '評価が選択されていません。';
-    $Self->{Translation}->{'Explorer'} = '一覧';
-    $Self->{Translation}->{'public (all)'} = '公開 (全員)';
-    $Self->{Translation}->{'external (customer)'} = '外部 (顧客)';
-    $Self->{Translation}->{'internal (agent)'} = '内部 (担当者)';
-    $Self->{Translation}->{'Start day'} = '開始日';
-    $Self->{Translation}->{'Start month'} = '開始月';
-    $Self->{Translation}->{'Start year'} = '開始年';
-    $Self->{Translation}->{'End day'} = '終了日';
-    $Self->{Translation}->{'End month'} = '終了月';
-    $Self->{Translation}->{'End year'} = '終了年';
-    $Self->{Translation}->{'Thanks for your vote!'} = '評価をいただきありがとうございます。';
-    $Self->{Translation}->{'You have already voted!'} = 'あなたはすでに評価済です。';
-    $Self->{Translation}->{'FAQ Article Print'} = '記事印刷';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '上位10件の記事';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = '新着記事';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '最近更新された記事';
-    $Self->{Translation}->{'FAQ category updated!'} = 'カテゴリが更新されました。';
-    $Self->{Translation}->{'FAQ category added!'} = '新しいカテゴリが追加されました。';
-    $Self->{Translation}->{'A category should have a name!'} = '「名前」は必須項目です。';
-    $Self->{Translation}->{'This category already exists'} = 'このカテゴリはすでに存在しています。';
-    $Self->{Translation}->{'FAQ language added!'} = '言語が追加されました。';
-    $Self->{Translation}->{'FAQ language updated!'} = '言語が更新されました。';
-    $Self->{Translation}->{'The name is required!'} = '「名前」は必須項目です。';
-    $Self->{Translation}->{'This language already exists!'} = 'この言語は設定済です。';
-    $Self->{Translation}->{'Symptom'} = '症状';
-    $Self->{Translation}->{'Solution'} = '解決';
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQの新規追加';
     $Self->{Translation}->{'Keywords'} = 'キーワード';
@@ -65,6 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'はい';
     $Self->{Translation}->{'Add Category'} = 'カテゴリを追加';
     $Self->{Translation}->{'Edit Category'} = 'カテゴリを編集';
+    $Self->{Translation}->{'Subcategory of'} = '親カテゴリ';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'ひとつ以上の権限のグループを選択してください。';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'このカテゴリで項目にアクセスできる担当者グループ';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '一覧でコメントとして表示されます。';
@@ -121,9 +85,9 @@ sub Data {
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'レート (例. 25%に等しい あるいは 75%より大きい)';
     $Self->{Translation}->{'Approved'} = '承認';
     $Self->{Translation}->{'Last changed by'} = '最終更新者';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ項目作成日時 (範囲指定)';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ項目作成日時 (以前/以後)';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ項目作成日時 (期間指定)';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ項目変更日時 (範囲指定)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ項目変更日時 (以前/以後)';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'FAQ項目変更日時 (期間指定)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
@@ -140,7 +104,7 @@ sub Data {
     $Self->{Translation}->{'No rate settings'} = 'レートの設定がありません';
     $Self->{Translation}->{'Specific rate'} = '特定のレート';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '例. 25%に等しい あるいは 75%以上';
-    $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ項目作成時間';
+    $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ項目作成日時';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ項目変更時間';
 
     # Template: AgentFAQZoom
@@ -189,15 +153,96 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'FAQエクスプローラーに戻る';
 
+    # Perl Module: Kernel/Modules/AgentFAQAdd.pm
+    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQCategory.pm
+    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = '「名前」は必須項目です。';
+    $Self->{Translation}->{'This category already exists'} = 'このカテゴリはすでに存在しています。';
+    $Self->{Translation}->{'FAQ category updated!'} = 'カテゴリが更新されました。';
+    $Self->{Translation}->{'This category already exists!'} = '';
+    $Self->{Translation}->{'FAQ category added!'} = '新しいカテゴリが追加されました。';
+    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQDelete.pm
+    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = '';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'FAQ History'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ ジャーナル';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
+        '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'The name is required!'} = '「名前」は必須項目です。';
+    $Self->{Translation}->{'This language already exists!'} = 'この言語は設定済です。';
+    $Self->{Translation}->{'FAQ language updated!'} = '言語が更新されました。';
+    $Self->{Translation}->{'FAQ language added!'} = '言語が追加されました。';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = '最終更新日';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ 動的フィールド';
 
+    # Perl Module: Kernel/Modules/AgentFAQRichText.pm
+    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '結果がありません。';
+    $Self->{Translation}->{'FAQ Number'} = 'FAQナンバー';
+    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ項目作成日時 (以前/以後)';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ項目作成日時 (期間指定)';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ項目変更日時 (以前/以後)';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ項目変更日時 (期間指定)';
+    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Greater than'} = '';
+    $Self->{Translation}->{'Greater than equals'} = '';
+    $Self->{Translation}->{'Smaller than'} = '';
+    $Self->{Translation}->{'Smaller than equals'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQZoom.pm
+    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Thanks for your vote!'} = '評価をいただきありがとうございます。';
+    $Self->{Translation}->{'You have already voted!'} = 'あなたはすでに評価済です。';
+    $Self->{Translation}->{'No rate selected!'} = '評価が選択されていません。';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+    $Self->{Translation}->{'FAQ Article Print'} = '記事印刷';
+
+    # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+    $Self->{Translation}->{'Created between'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+    $Self->{Translation}->{'Need ItemID!'} = '';
+
+    # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+    $Self->{Translation}->{'FAQ Articles (new created)'} = '新着記事';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '最近更新された記事';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '上位10件の記事';
+
+    # Perl Module: Kernel/Modules/PublicFAQRSS.pm
+    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '%s (FAQ全文)';
@@ -316,6 +361,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '評価の機能を有効にする';
+    $Self->{Translation}->{'Explorer'} = '一覧';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
@@ -339,6 +385,8 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'クイック検索が表示される画面';
     $Self->{Translation}->{'Journal'} = 'ジャーナル';
     $Self->{Translation}->{'Language Management'} = '言語管理';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '最後に作成されたFAQ項目';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '最後に更新されたFAQ項目';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'このFAQ記事に他オブジェクトを関連付ける';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '担当者インターフェイスで利用可能なステートタイプリスト';
@@ -441,6 +489,8 @@ sub Data {
         '担当者インターフェイスのズームビューで「戻る」のリンクを表示する。';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '担当者インターフェイスのズームビューでFAQを印刷リンクを表示する。';
+    $Self->{Translation}->{'Solution'} = '解決';
+    $Self->{Translation}->{'Symptom'} = '症状';
     $Self->{Translation}->{'Text Only'} = 'テキストのみ';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'FAQ用の識別子 例. FAQ#, KB#, MyFAQ#. デフォルトでは FAQ# となっています';
@@ -455,6 +505,8 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'FAQ承認チケット用　チケット本文';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'FAQ承認チケット用　チケット件名 ';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'ショートカットのためのツールバー・アイテムです。';
+    $Self->{Translation}->{'external (customer)'} = '外部 (顧客)';
+    $Self->{Translation}->{'internal (agent)'} = '内部 (担当者)';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

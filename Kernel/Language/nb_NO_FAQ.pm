@@ -15,43 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'intern';
-    $Self->{Translation}->{'public'} = 'offentlig';
-    $Self->{Translation}->{'external'} = 'ekstern';
-    $Self->{Translation}->{'FAQ Number'} = 'OSS-nummer';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sist oppdaterte OSS-artikler';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Sist opprettede OSS-artikler';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Topp 10 OSS';
-    $Self->{Translation}->{'Subcategory of'} = '';
-    $Self->{Translation}->{'No rate selected!'} = 'Ingen rating valgt';
-    $Self->{Translation}->{'Explorer'} = 'Utforsk';
-    $Self->{Translation}->{'public (all)'} = 'offentlig (alle)';
-    $Self->{Translation}->{'external (customer)'} = 'kun til kunder';
-    $Self->{Translation}->{'internal (agent)'} = 'kun internt (agenter)';
-    $Self->{Translation}->{'Start day'} = 'Startdag';
-    $Self->{Translation}->{'Start month'} = 'Måned';
-    $Self->{Translation}->{'Start year'} = 'År';
-    $Self->{Translation}->{'End day'} = 'Sluttdag';
-    $Self->{Translation}->{'End month'} = 'Måned';
-    $Self->{Translation}->{'End year'} = 'År';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Takk for din stemme!';
-    $Self->{Translation}->{'You have already voted!'} = 'Du har allerede stemt';
-    $Self->{Translation}->{'FAQ Article Print'} = 'Utskrift av OSS-artikkel';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'OSS-artikler (Topp 10)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'OSS-artikler (nylig opprettet)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'OSS-artikler (nylig endret)';
-    $Self->{Translation}->{'FAQ category updated!'} = 'OSS-kategori oppdatert!';
-    $Self->{Translation}->{'FAQ category added!'} = 'OSS-kategori lagt til';
-    $Self->{Translation}->{'A category should have a name!'} = 'En kategori må ha et navn!';
-    $Self->{Translation}->{'This category already exists'} = 'Denne kategorien eksisterer allerede';
-    $Self->{Translation}->{'FAQ language added!'} = 'OSS-språk lagt til!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'OSS-språk oppdatert!';
-    $Self->{Translation}->{'The name is required!'} = 'Navn er påkrevd!';
-    $Self->{Translation}->{'This language already exists!'} = 'Dette språket finnes allerede!';
-    $Self->{Translation}->{'Symptom'} = 'Symptom';
-    $Self->{Translation}->{'Solution'} = 'Løsning';
-
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Legg til OSS-artikkel';
     $Self->{Translation}->{'Keywords'} = 'Nøkkelord';
@@ -65,6 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Legg til kategori';
     $Self->{Translation}->{'Edit Category'} = 'Endre kategori';
+    $Self->{Translation}->{'Subcategory of'} = '';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Saksbehandlergrupper som har tilgang til artikler i denne kategorien';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Vil vises som kommentar i utforskeren';
@@ -189,15 +153,96 @@ sub Data {
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Tilbake til OSS utforskeren';
 
+    # Perl Module: Kernel/Modules/AgentFAQAdd.pm
+    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQCategory.pm
+    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = 'En kategori må ha et navn!';
+    $Self->{Translation}->{'This category already exists'} = 'Denne kategorien eksisterer allerede';
+    $Self->{Translation}->{'FAQ category updated!'} = 'OSS-kategori oppdatert!';
+    $Self->{Translation}->{'This category already exists!'} = '';
+    $Self->{Translation}->{'FAQ category added!'} = 'OSS-kategori lagt til';
+    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQDelete.pm
+    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = '';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQHistory.pm
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'FAQ History'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'OSS-journal';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
+        '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'The name is required!'} = 'Navn er påkrevd!';
+    $Self->{Translation}->{'This language already exists!'} = 'Dette språket finnes allerede!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'OSS-språk oppdatert!';
+    $Self->{Translation}->{'FAQ language added!'} = 'OSS-språk lagt til!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Sist oppdatert';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
 
+    # Perl Module: Kernel/Modules/AgentFAQRichText.pm
+    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Ingen resultater';
+    $Self->{Translation}->{'FAQ Number'} = 'OSS-nummer';
+    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Greater than'} = '';
+    $Self->{Translation}->{'Greater than equals'} = '';
+    $Self->{Translation}->{'Smaller than'} = '';
+    $Self->{Translation}->{'Smaller than equals'} = '';
+
+    # Perl Module: Kernel/Modules/AgentFAQZoom.pm
+    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Takk for din stemme!';
+    $Self->{Translation}->{'You have already voted!'} = 'Du har allerede stemt';
+    $Self->{Translation}->{'No rate selected!'} = 'Ingen rating valgt';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+    $Self->{Translation}->{'FAQ Article Print'} = 'Utskrift av OSS-artikkel';
+
+    # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
+    $Self->{Translation}->{'Created between'} = '';
+
+    # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+    $Self->{Translation}->{'Need ItemID!'} = '';
+
+    # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'OSS-artikler (nylig opprettet)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'OSS-artikler (nylig endret)';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'OSS-artikler (Topp 10)';
+
+    # Perl Module: Kernel/Modules/PublicFAQRSS.pm
+    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '';
@@ -316,6 +361,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Endre denne artikkelen';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
+    $Self->{Translation}->{'Explorer'} = 'Utforsk';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
@@ -339,6 +385,8 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Språkoppsett';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Sist opprettede OSS-artikler';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sist oppdaterte OSS-artikler';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Lenk opp et annet objekt til denne artikkelen';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '';
@@ -441,6 +489,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Solution'} = 'Løsning';
+    $Self->{Translation}->{'Symptom'} = 'Symptom';
     $Self->{Translation}->{'Text Only'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Identifikator for en OSS-artikkel, f.eks. FAQ#, KB#, OSS#, MinOSS#. Standard er FAQ#.';
@@ -455,6 +505,8 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Saksinnhold for godkjenning av OSS-artikler.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Saksemne for godkjenning av OSS-artikler.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '';
+    $Self->{Translation}->{'external (customer)'} = 'kun til kunder';
+    $Self->{Translation}->{'internal (agent)'} = 'kun internt (agenter)';
     $Self->{Translation}->{'public (public)'} = '';
 
 }

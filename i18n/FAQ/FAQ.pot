@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2016-11-09 13:58+0000\n"
+"POT-Creation-Date: 2017-02-27 20:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,146 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#. Template: AAAFAQ
-msgid "internal"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "public"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "external"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ Number"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Latest updated FAQ articles"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Latest created FAQ articles"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Top 10 FAQ articles"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Subcategory of"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "No rate selected!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Explorer"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "public (all)"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "external (customer)"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "internal (agent)"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Start day"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Start month"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Start year"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "End day"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "End month"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "End year"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Thanks for your vote!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "You have already voted!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ Article Print"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (Top 10)"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (new created)"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ Articles (recently changed)"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ category updated!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ category added!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "A category should have a name!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "This category already exists"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ language added!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "FAQ language updated!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "The name is required!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "This language already exists!"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Symptom"
-msgstr ""
-
-#. Template: AAAFAQ
-msgid "Solution"
-msgstr ""
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -188,6 +48,10 @@ msgstr ""
 
 #. Template: AgentFAQCategory
 msgid "Edit Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Subcategory of"
 msgstr ""
 
 #. Template: AgentFAQCategory
@@ -535,7 +399,23 @@ msgid "Need CategoryID!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "A category should have a name!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "This category already exists"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
@@ -591,6 +471,22 @@ msgid "No LanguageID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "The name is required!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "This language already exists!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "FAQ language added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
 msgstr ""
 
@@ -612,6 +508,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+msgid "FAQ Number"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
@@ -659,11 +559,27 @@ msgid "Need FileID!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "Thanks for your vote!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "You have already voted!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+msgid "No rate selected!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The voting mechanism is not enabled!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The vote rate is not defined!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
+msgid "FAQ Article Print"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
@@ -672,6 +588,18 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
 msgid "Need ItemID!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (new created)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (recently changed)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
+msgid "FAQ Articles (Top 10)"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
@@ -955,6 +883,10 @@ msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
 #. SysConfig
+msgid "Explorer"
+msgstr ""
+
+#. SysConfig
 msgid "FAQ AJAX Responder"
 msgstr ""
 
@@ -1044,6 +976,14 @@ msgstr ""
 
 #. SysConfig
 msgid "Language Management"
+msgstr ""
+
+#. SysConfig
+msgid "Latest created FAQ articles"
+msgstr ""
+
+#. SysConfig
+msgid "Latest updated FAQ articles"
 msgstr ""
 
 #. SysConfig
@@ -1295,6 +1235,14 @@ msgid "Shows a link in the menu to print a FAQ in the its zoom view of the agent
 msgstr ""
 
 #. SysConfig
+msgid "Solution"
+msgstr ""
+
+#. SysConfig
+msgid "Symptom"
+msgstr ""
+
+#. SysConfig
 msgid "Text Only"
 msgstr ""
 
@@ -1328,6 +1276,14 @@ msgstr ""
 
 #. SysConfig
 msgid "Toolbar Item for a shortcut."
+msgstr ""
+
+#. SysConfig
+msgid "external (customer)"
+msgstr ""
+
+#. SysConfig
+msgid "internal (agent)"
 msgstr ""
 
 #. SysConfig
