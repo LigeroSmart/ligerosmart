@@ -1,13 +1,14 @@
 # 
 # Translators:
+# David B <link.bigpoint@outlook.com>, 2017
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
 # Juan Clavero <juanm.clavero@ibsalut.es>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-02-03 00:14+0000\n"
+"Last-Translator: David B <link.bigpoint@outlook.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +18,7 @@ msgstr ""
 
 #. Template: AAAITSMCore
 msgid "Alternative to"
-msgstr "Alterantiva a"
+msgstr "Alternativa a"
 
 #. Template: AAAITSMCore
 msgid "Availability"
@@ -33,7 +34,7 @@ msgstr "Conectado a"
 
 #. Template: AAAITSMCore
 msgid "Current State"
-msgstr "Estado Actual"
+msgstr "Estado actual"
 
 #. Template: AAAITSMCore
 msgid "Demonstration"
@@ -113,7 +114,7 @@ msgstr "Tiempo de Respuesta"
 
 #. Template: AAAITSMCore
 msgid "SLA Overview"
-msgstr "Descripción de SLA"
+msgstr "Vista general del SLA"
 
 #. Template: AAAITSMCore
 msgid "Service Overview"
@@ -121,7 +122,7 @@ msgstr "Descripción de Servicios"
 
 #. Template: AAAITSMCore
 msgid "Service-Area"
-msgstr "Area-Servicio"
+msgstr "Servicio-Área"
 
 #. Template: AAAITSMCore
 msgid "Training"
@@ -153,7 +154,7 @@ msgstr "Asignar prioridad"
 
 #. Template: AdminSLA
 msgid "Minimum Time Between Incidents"
-msgstr "Tiempo Mínimo entre Incidentes"
+msgstr "Tiempo mínimo entre Incidentes"
 
 #. Template: AdminService
 msgid "Criticality"
@@ -185,7 +186,7 @@ msgstr "Estado actual del incidente"
 
 #. Template: AgentITSMServiceZoom
 msgid "Associated SLAs"
-msgstr "SLAs Asociados"
+msgstr "SLA Asociados"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
@@ -193,7 +194,7 @@ msgstr "Estado de Incidente Actual"
 
 #. SysConfig
 msgid "Both"
-msgstr ""
+msgstr "Ambos"
 
 #. SysConfig
 msgid ""
@@ -202,7 +203,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Definir acciones donde está disponible un botón de configuración en el widget de objetos vinculados (LinkObject::ViewMode = \"complex\"). Tenga en cuenta que estas acciones deben haber registrado los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid ""
@@ -210,7 +211,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Defina qué columnas se muestran en el widget de servicios vinculados (LinkObject::ViewMode = \"complex\"). Nota: Sólo se permiten atributos de servicio para columnas predeterminadas. Ajustes posibles: 0 = Desactivado, 1 = Disponible, 2 = Activado de forma predeterminada."
 
 #. SysConfig
 msgid ""
@@ -256,11 +257,11 @@ msgstr "Registro del módulo frontend para el objeto AgentITSMServiceZoom en la 
 
 #. SysConfig
 msgid "ITSM SLA Overview."
-msgstr ""
+msgstr "Descripción de ITSM SLA"
 
 #. SysConfig
 msgid "ITSM Service Overview."
-msgstr ""
+msgstr "Visión general del servicio ITSM."
 
 #. SysConfig
 msgid "Incident"
@@ -268,11 +269,11 @@ msgstr "Incidente"
 
 #. SysConfig
 msgid "Incident State Type"
-msgstr ""
+msgstr "Tipo de Estado de Incidente"
 
 #. SysConfig
 msgid "Incident State Type."
-msgstr ""
+msgstr "Tipo de Estado de Incidente."
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -308,19 +309,19 @@ msgstr "Parámetros para los estados de los incidentes en la vista de preferenci
 
 #. SysConfig
 msgid "SLA Print."
-msgstr ""
+msgstr "Imprimir SLA."
 
 #. SysConfig
 msgid "SLA Zoom."
-msgstr ""
+msgstr "Ampliar SLA."
 
 #. SysConfig
 msgid "Service Print."
-msgstr ""
+msgstr "Imprimir Servicio."
 
 #. SysConfig
 msgid "Service Zoom."
-msgstr ""
+msgstr "Ampliar Servicios."
 
 #. SysConfig
 msgid ""

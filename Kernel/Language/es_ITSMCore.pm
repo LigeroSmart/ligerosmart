@@ -16,11 +16,11 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = 'Alterantiva a';
+    $Self->{Translation}->{'Alternative to'} = 'Alternativa a';
     $Self->{Translation}->{'Availability'} = 'Disponibilidad';
     $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Conectado a';
-    $Self->{Translation}->{'Current State'} = 'Estado Actual';
+    $Self->{Translation}->{'Current State'} = 'Estado actual';
     $Self->{Translation}->{'Demonstration'} = 'Demostración';
     $Self->{Translation}->{'Depends on'} = 'Depende en';
     $Self->{Translation}->{'End User Service'} = 'Servicio de Usuario Final';
@@ -40,9 +40,9 @@ sub Data {
     $Self->{Translation}->{'Required for'} = 'Requerido para';
     $Self->{Translation}->{'Resolution Rate'} = 'Tasa de Resolución';
     $Self->{Translation}->{'Response Time'} = 'Tiempo de Respuesta';
-    $Self->{Translation}->{'SLA Overview'} = 'Descripción de SLA';
+    $Self->{Translation}->{'SLA Overview'} = 'Vista general del SLA';
     $Self->{Translation}->{'Service Overview'} = 'Descripción de Servicios';
-    $Self->{Translation}->{'Service-Area'} = 'Area-Servicio';
+    $Self->{Translation}->{'Service-Area'} = 'Servicio-Área';
     $Self->{Translation}->{'Training'} = 'Entrenamiento';
     $Self->{Translation}->{'Transactions'} = 'Transacciones';
     $Self->{Translation}->{'Underpinning Contract'} = 'Contrato con Terceros';
@@ -55,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'Priority allocation'} = 'Asignar prioridad';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Tiempo Mínimo entre Incidentes';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Tiempo mínimo entre Incidentes';
 
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Urgencia';
@@ -69,17 +69,17 @@ sub Data {
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Información del Servicio';
     $Self->{Translation}->{'Current incident state'} = 'Estado actual del incidente';
-    $Self->{Translation}->{'Associated SLAs'} = 'SLAs Asociados';
+    $Self->{Translation}->{'Associated SLAs'} = 'SLA Asociados';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'Current Incident State'} = 'Estado de Incidente Actual';
 
     # SysConfig
-    $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Both'} = 'Ambos';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Definir acciones donde está disponible un botón de configuración en el widget de objetos vinculados (LinkObject::ViewMode = "complex"). Tenga en cuenta que estas acciones deben haber registrado los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Defina qué columnas se muestran en el widget de servicios vinculados (LinkObject::ViewMode = "complex"). Nota: Sólo se permiten atributos de servicio para columnas predeterminadas. Ajustes posibles: 0 = Desactivado, 1 = Disponible, 2 = Activado de forma predeterminada.';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registro del módulo frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -94,11 +94,11 @@ sub Data {
         'Registro del módulo frontend para el objeto AgentITSMServicePrint en la interfaz del agente.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         'Registro del módulo frontend para el objeto AgentITSMServiceZoom en la interfaz del agente.';
-    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
-    $Self->{Translation}->{'ITSM Service Overview.'} = '';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = 'Descripción de ITSM SLA';
+    $Self->{Translation}->{'ITSM Service Overview.'} = 'Visión general del servicio ITSM.';
     $Self->{Translation}->{'Incident'} = 'Incidente';
-    $Self->{Translation}->{'Incident State Type'} = '';
-    $Self->{Translation}->{'Incident State Type.'} = '';
+    $Self->{Translation}->{'Incident State Type'} = 'Tipo de Estado de Incidente';
+    $Self->{Translation}->{'Incident State Type.'} = 'Tipo de Estado de Incidente.';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Administrar la matríz de prioridades.';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de servicio.';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de SLA.';
@@ -107,10 +107,10 @@ sub Data {
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Módulo para mostar el vínculo "Vincular" en el menú de servicio.';
     $Self->{Translation}->{'Operational'} = 'Operacional';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parámetros para los estados de los incidentes en la vista de preferencias.';
-    $Self->{Translation}->{'SLA Print.'} = '';
-    $Self->{Translation}->{'SLA Zoom.'} = '';
-    $Self->{Translation}->{'Service Print.'} = '';
-    $Self->{Translation}->{'Service Zoom.'} = '';
+    $Self->{Translation}->{'SLA Print.'} = 'Imprimir SLA.';
+    $Self->{Translation}->{'SLA Zoom.'} = 'Ampliar SLA.';
+    $Self->{Translation}->{'Service Print.'} = 'Imprimir Servicio.';
+    $Self->{Translation}->{'Service Zoom.'} = 'Ampliar Servicios.';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         'Configurar el tipo y direccion de los enlaces para ser usados para calculo del estado del incidente. La clave es el nombre del enlace (como esta definido en LinkObject::Type), y el valor es la dirección en el IncidentLinkType que debe seguir para calcular el estado del incidente. Por ejemplo si el IncidentLinkType esta configurado en \'DependeDe, y la direccion es \'Origen\', solo \'Depende de\' enlaces será seguido (y no el enlace opuesto \'Requerido para\') para calcular el estado del incidente. Puede añadir más tipos de direcciones de aviso como desee, ejm. \'Incluye\' con la direccion \'Objetivo\'. Todos los tipos definidos en el Sysconfig opcion LinkObject::Type son posible y la direccion puede ser \'Origen\', \'Objetivo\', o \'Ambos\'.
 ¡IMPORTANTE: DESPUES DE REALIZAR CAMBIOS EN LA OPCION DEL SISCONFIG ES NECESARIO CORRER EL SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl ASÍ TODO LOS ESTADOS DE LOS INCIDENTES SERÁN RECALCULADOS EN BASE A LA NUEVA CONFIGURACIÓN!';

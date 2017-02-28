@@ -2,13 +2,13 @@
 # Translators:
 # Jerry Du <jerry.du@athub.com>, 2016
 # 张梦 <adoeh@sina.com>, 2014
-# 汇民 王 <whuim@163.com>, 2016
+# 汇民 王 <whuim@163.com>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-02-09 14:40+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -203,7 +203,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "定义链接对象小部件(LinkObject::ViewMode = \\\"complex\\\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和CSS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。"
 
 #. SysConfig
 msgid ""
@@ -211,7 +211,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "定义链接的服务小部件(LinkObject::ViewMode = \"complex\")要显示的列。注意：只有服务属性才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。"
 
 #. SysConfig
 msgid ""
