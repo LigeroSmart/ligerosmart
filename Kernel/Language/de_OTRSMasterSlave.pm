@@ -23,18 +23,18 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = 'Neues Master Ticket';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Aufheben des Master Tickets';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Aufheben des Slave Tickets';
-    $Self->{Translation}->{'Slave of Ticket#'} = 'Slave von Ticket';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
-    $Self->{Translation}->{'Unset Master Tickets'} = '';
-    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+    $Self->{Translation}->{'Unset Master Tickets'} = 'Aufheben der Master Tickets';
+    $Self->{Translation}->{'Unset Slave Tickets'} = 'Aufheben der Slave Tickets';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master Ticket'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'All master tickets'} = '';
-    $Self->{Translation}->{'All slave tickets'} = '';
+    $Self->{Translation}->{'All master tickets'} = 'Alle Master Tickets';
+    $Self->{Translation}->{'All slave tickets'} = 'Alle Slave Tickets';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Erlaubt das hinzufügen von Notizen in der MasterSlave Ansicht des Agenten-Interface.';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'Den MasterSlave Status des Tickets ändern.';

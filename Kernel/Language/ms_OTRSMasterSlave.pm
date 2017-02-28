@@ -23,7 +23,7 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = 'Tiket Master Baharu';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Tiket Master Tidak Ditetapkan';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Tiket Slave Tidak Ditetapkan';
-    $Self->{Translation}->{'Slave of Ticket#'} = 'Slave untuk Tiket#';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = '';
@@ -53,8 +53,8 @@ sub Data {
         'Mentakrifkan jenis sejarah bagi tindakan skrin tiket MasterSlave, yang akan digunakan untuk sejarah tiket dalam antara muka ejen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Mentakrifkan keadaan seterusnya bagi tiket selepas menambah nota, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
-    $Self->{Translation}->{'Disabled'} = '';
-    $Self->{Translation}->{'Enabled'} = '';
+    $Self->{Translation}->{'Disabled'} = 'Tidak dibolehkan';
+    $Self->{Translation}->{'Enabled'} = 'Dibolehkan';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         '';

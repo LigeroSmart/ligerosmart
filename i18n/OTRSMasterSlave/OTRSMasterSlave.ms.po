@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:08+0000\n"
-"PO-Revision-Date: 2016-09-15 00:09+0000\n"
+"POT-Creation-Date: 2017-02-27 21:53+0000\n"
+"PO-Revision-Date: 2017-02-28 03:54+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -35,8 +35,8 @@ msgid "Unset Slave Ticket"
 msgstr "Tiket Slave Tidak Ditetapkan"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-msgid "Slave of Ticket#"
-msgstr "Slave untuk Tiket#"
+msgid "Slave of %s%s%s: %s"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
@@ -118,11 +118,11 @@ msgstr "Mentakrifkan keadaan seterusnya bagi tiket selepas menambah nota, dalam 
 
 #. SysConfig
 msgid "Disabled"
-msgstr ""
+msgstr "Tidak dibolehkan"
 
 #. SysConfig
 msgid "Enabled"
-msgstr ""
+msgstr "Dibolehkan"
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."

@@ -1,11 +1,12 @@
 # 
 # Translators:
+# 汇民 王 <whuim@163.com>, 2016
 # 陈德文 <sggggy@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:08+0000\n"
-"PO-Revision-Date: 2016-09-15 00:09+0000\n"
+"POT-Creation-Date: 2017-02-27 21:53+0000\n"
+"PO-Revision-Date: 2017-02-28 03:54+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +17,7 @@ msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
-msgstr ""
+msgstr "管理%s%s%s的 主/从 状态"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
@@ -35,8 +36,8 @@ msgid "Unset Slave Ticket"
 msgstr "从工单转为普通工单"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-msgid "Slave of Ticket#"
-msgstr "以下工单号的从工单"
+msgid "Slave of %s%s%s: %s"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
@@ -48,7 +49,7 @@ msgstr "取消从工单设置"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
-msgstr ""
+msgstr "主工单"
 
 #. SysConfig
 msgid "All master tickets"

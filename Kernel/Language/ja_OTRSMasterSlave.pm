@@ -23,11 +23,11 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = '新しいマスターチケット';
     $Self->{Translation}->{'Unset Master Ticket'} = 'マスターチケットを解除する';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'スレーブチケットを解除する';
-    $Self->{Translation}->{'Slave of Ticket#'} = 'スレーブチケット番号';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
-    $Self->{Translation}->{'Unset Master Tickets'} = '';
-    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+    $Self->{Translation}->{'Unset Master Tickets'} = 'マスターチケットを解除する';
+    $Self->{Translation}->{'Unset Slave Tickets'} = 'スレーブチケットを解除する';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master Ticket'} = '';

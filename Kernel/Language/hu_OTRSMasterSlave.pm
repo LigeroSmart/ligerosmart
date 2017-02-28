@@ -16,21 +16,21 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '%s%s%s mester/alárendelt állapotának kezelése';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Mester/alárendelt érték beállítása';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Új mesterjegy';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Mesterjegy törlése';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Alárendelt jegy törlése';
-    $Self->{Translation}->{'Slave of Ticket#'} = 'Jegy# alárendeltje';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = 'Mesterjegyek törlése';
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Alárendelt jegyek törlése';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master Ticket'} = '';
+    $Self->{Translation}->{'Master Ticket'} = 'Mesterjegy';
 
     # SysConfig
     $Self->{Translation}->{'All master tickets'} = 'Összes mesterjegy';

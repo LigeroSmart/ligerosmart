@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:08+0000\n"
-"PO-Revision-Date: 2016-09-15 00:09+0000\n"
+"POT-Creation-Date: 2017-02-27 21:53+0000\n"
+"PO-Revision-Date: 2017-02-28 03:54+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgid "Unset Slave Ticket"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-msgid "Slave of Ticket#"
+msgid "Slave of %s%s%s: %s"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm

@@ -16,29 +16,29 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = 'Управљање статусом Главни/Зависни за %s%s%s';
     $Self->{Translation}->{'Set Master/Slave Value'} = 'Подеси вредност Главни/Зависни ';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Нови главни тикет';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Опозови подешавање главног тикета';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Опозови подешавање зависног тикета';
-    $Self->{Translation}->{'Slave of Ticket#'} = 'Зависни од Тикет#';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
-    $Self->{Translation}->{'Unset Master Tickets'} = '';
-    $Self->{Translation}->{'Unset Slave Tickets'} = '';
+    $Self->{Translation}->{'Unset Master Tickets'} = 'Опозови подешавање главних тикета';
+    $Self->{Translation}->{'Unset Slave Tickets'} = 'Опозови подешавање зависних тикета';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master Ticket'} = '';
+    $Self->{Translation}->{'Master Ticket'} = 'Главни тикет';
 
     # SysConfig
-    $Self->{Translation}->{'All master tickets'} = 'Сви главни тикети.';
-    $Self->{Translation}->{'All slave tickets'} = 'Сви зависни тикети.';
+    $Self->{Translation}->{'All master tickets'} = 'Сви главни тикети';
+    $Self->{Translation}->{'All slave tickets'} = 'Сви зависни тикети';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Дозвољава додавање белешки на Главни/Зависни екрану детаљног приказа тикета оператерског интерфејса.';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = 'Промени Главни/Зависни статус тикета.';
-    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
+    $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'Дефинише динамички назив поља за функцију главног тикета.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Одређује да ли је потребно закључати главни/зависни екран тикета на детаљном приказу тикета у интерфејсу оператера (ако тикет још увек није закључан, тикет ће добити статус закључан и тренутни оператер ће бити аутоматски постављен као власник).';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -53,26 +53,26 @@ sub Data {
         'Одређује тип историјата за главни/зависни екранску акцију, што ће се користити за историјат у интерфејсу оператера.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Одређује наредни статус тикета после додаваља белешке, на главни/зависни екрану детаљног приказа тикета у интерфејсу оператера.';
-    $Self->{Translation}->{'Disabled'} = '';
-    $Self->{Translation}->{'Enabled'} = '';
-    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
+    $Self->{Translation}->{'Disabled'} = 'Онемогућен';
+    $Self->{Translation}->{'Enabled'} = 'Омогућен';
+    $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Активира напредни део функције Главни/Зависни.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
-        '';
+        'Активирање својства да зависни тикет прати главни на нови главни у напредном Главни/Зависни моду.';
     $Self->{Translation}->{'Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        '';
+        'Активирање функције за промену стања тикета Главни/Зависни  у напредном Главни/Зависни моду.';
     $Self->{Translation}->{'Enables the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        '';
+        'Активирање својства за прослеђивање чланака од типа „проследи” главног тикета корисницима зависних тикета. Подразумевано је (искључено) да се ништа не прослеђује зависним тикетима.';
     $Self->{Translation}->{'Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Активирање функције за задржавање везе надређени-подређени после измене стања Главни/Зависни  у напредном Главни/Зависни моду.';
     $Self->{Translation}->{'Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Активирање функције за задржавање везе надређени-подређени после опозива подешавања стања Главни/Зависни  у напредном Главни/Зависни моду.';
     $Self->{Translation}->{'Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        '';
+        'Активирање функције за опозив подешавања стања тикета Главни/Зависни  у напредном Главни/Зависни моду.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Ако је оператер додао напомену, подешава статус тикета на екрану Главни/Зависни тикета на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Master / Slave'} = 'Главни / Зависни';
     $Self->{Translation}->{'Master Tickets'} = 'Главни тикети';
-    $Self->{Translation}->{'MasterSlave'} = '';
+    $Self->{Translation}->{'MasterSlave'} = 'Главни/Зависни';
     $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'Модул Главни/Зависни за функцију масовне обраде тикета.';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         'Параметри за позадински приказ контролне табле прегледа главних тикета у интерфејсу оператера. „Лимит” је број уноса подрезумевано приказаних. „Група” се користи да ограничи приступ додатку (нпр. Група: admin;group1;group2;). „Подразумевано” одређује да ли је подразумевано активиран или да је потребно да га корисник мануелно активира. „CacheTTLLocal” је време у минутама за кеш додатка.';
@@ -108,7 +108,7 @@ sub Data {
         'Наводи разне типове чланака где ће стварно име са главног тикета бити замењено са једним на зависном тикету.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Овај модул активира поље Главни/Зависни на екрану нових имејл и телефонских тикета.';
-    $Self->{Translation}->{'Ticket MasterSlave.'} = '';
+    $Self->{Translation}->{'Ticket MasterSlave.'} = 'Тикет Главни/Зависни.';
 
 }
 

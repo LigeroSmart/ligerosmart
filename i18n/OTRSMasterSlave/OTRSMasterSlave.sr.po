@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-09-14 19:08+0000\n"
-"PO-Revision-Date: 2016-09-15 00:09+0000\n"
+"POT-Creation-Date: 2017-02-27 21:53+0000\n"
+"PO-Revision-Date: 2017-02-28 03:54+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
-msgstr ""
+msgstr "Управљање статусом Главни/Зависни за %s%s%s"
 
 #. Template: AgentTicketMasterSlave
 msgid "Set Master/Slave Value"
@@ -35,28 +35,28 @@ msgid "Unset Slave Ticket"
 msgstr "Опозови подешавање зависног тикета"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-msgid "Slave of Ticket#"
-msgstr "Зависни од Тикет#"
+msgid "Slave of %s%s%s: %s"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
-msgstr ""
+msgstr "Опозови подешавање главних тикета"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
-msgstr ""
+msgstr "Опозови подешавање зависних тикета"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
-msgstr ""
+msgstr "Главни тикет"
 
 #. SysConfig
 msgid "All master tickets"
-msgstr "Сви главни тикети."
+msgstr "Сви главни тикети"
 
 #. SysConfig
 msgid "All slave tickets"
-msgstr "Сви зависни тикети."
+msgstr "Сви зависни тикети"
 
 #. SysConfig
 msgid ""
@@ -70,7 +70,7 @@ msgstr "Промени Главни/Зависни статус тикета."
 
 #. SysConfig
 msgid "Defines dynamic field name for master ticket feature."
-msgstr ""
+msgstr "Дефинише динамички назив поља за функцију главног тикета."
 
 #. SysConfig
 msgid ""
@@ -118,52 +118,52 @@ msgstr "Одређује наредни статус тикета после д�
 
 #. SysConfig
 msgid "Disabled"
-msgstr ""
+msgstr "Онемогућен"
 
 #. SysConfig
 msgid "Enabled"
-msgstr ""
+msgstr "Омогућен"
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
-msgstr ""
+msgstr "Активира напредни део функције Главни/Зависни."
 
 #. SysConfig
 msgid ""
 "Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Активирање својства да зависни тикет прати главни на нови главни у напредном Главни/Зависни моду."
 
 #. SysConfig
 msgid ""
 "Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Активирање функције за промену стања тикета Главни/Зависни  у напредном Главни/Зависни моду."
 
 #. SysConfig
 msgid ""
 "Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr ""
+msgstr "Активирање својства за прослеђивање чланака од типа „проследи” главног тикета корисницима зависних тикета. Подразумевано је (искључено) да се ништа не прослеђује зависним тикетима."
 
 #. SysConfig
 msgid ""
 "Enables the feature to keep parent-child link after change of the "
 "MasterSlave state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Активирање функције за задржавање везе надређени-подређени после измене стања Главни/Зависни  у напредном Главни/Зависни моду."
 
 #. SysConfig
 msgid ""
 "Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Активирање функције за задржавање везе надређени-подређени после опозива подешавања стања Главни/Зависни  у напредном Главни/Зависни моду."
 
 #. SysConfig
 msgid ""
 "Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Активирање функције за опозив подешавања стања тикета Главни/Зависни  у напредном Главни/Зависни моду."
 
 #. SysConfig
 msgid ""
@@ -181,7 +181,7 @@ msgstr "Главни тикети"
 
 #. SysConfig
 msgid "MasterSlave"
-msgstr ""
+msgstr "Главни/Зависни"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -302,4 +302,4 @@ msgstr "Овај модул активира поље Главни/Зависн�
 
 #. SysConfig
 msgid "Ticket MasterSlave."
-msgstr ""
+msgstr "Тикет Главни/Зависни."

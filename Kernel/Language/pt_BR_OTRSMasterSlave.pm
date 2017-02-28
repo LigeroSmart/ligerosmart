@@ -23,7 +23,7 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = 'Novo Chamado Mestre';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Desfazer Chamado Mestre';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Desfazer Chamado Escravo';
-    $Self->{Translation}->{'Slave of Ticket#'} = 'Escravo do Chamado#';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = '';
@@ -53,8 +53,8 @@ sub Data {
         'Define o tipo de histórico para a ação da tela MasterSlave do ticket, que é utilizado para o histórico do ticket na interface de agente.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define o próximo estado de um ticket após uma nota ter sido adicionada, na tela MasterSlave de um ticket detalhado na interface de agente.';
-    $Self->{Translation}->{'Disabled'} = '';
-    $Self->{Translation}->{'Enabled'} = '';
+    $Self->{Translation}->{'Disabled'} = 'Desabilitado';
+    $Self->{Translation}->{'Enabled'} = 'Habilitado';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         '';

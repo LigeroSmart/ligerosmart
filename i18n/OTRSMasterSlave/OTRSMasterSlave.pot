@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2016-09-14 19:10+0000\n"
+"POT-Creation-Date: 2017-02-27 21:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "Unset Slave Ticket"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-msgid "Slave of Ticket#"
+msgid "Slave of %s%s%s: %s"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm

@@ -16,21 +16,21 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '管理%s%s%s的 主/从 状态';
     $Self->{Translation}->{'Set Master/Slave Value'} = '设置 主/从 值';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = '新建主工单';
     $Self->{Translation}->{'Unset Master Ticket'} = '主工单转为普通工单';
     $Self->{Translation}->{'Unset Slave Ticket'} = '从工单转为普通工单';
-    $Self->{Translation}->{'Slave of Ticket#'} = '以下工单号的从工单';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = '取消主工单设置';
     $Self->{Translation}->{'Unset Slave Tickets'} = '取消从工单设置';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master Ticket'} = '';
+    $Self->{Translation}->{'Master Ticket'} = '主工单';
 
     # SysConfig
     $Self->{Translation}->{'All master tickets'} = '所有的主工单';
