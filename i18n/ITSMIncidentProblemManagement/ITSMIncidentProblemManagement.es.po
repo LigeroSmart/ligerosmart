@@ -1,14 +1,15 @@
 # 
 # Translators:
+# David B <link.bigpoint@outlook.com>, 2017
 # Deiry Arias <mailimarias@gmail.com>, 2015
 # Luigy, 2016
 # Roberto Lugo <rlugo@cinetixgroup.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 17:45+0000\n"
-"PO-Revision-Date: 2016-07-02 21:30+0000\n"
-"Last-Translator: Luigy\n"
+"POT-Creation-Date: 2016-12-10 13:25+0000\n"
+"PO-Revision-Date: 2017-01-31 22:06+0000\n"
+"Last-Translator: David B <link.bigpoint@outlook.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,6 +77,22 @@ msgstr "Urgencia"
 msgid "Impact"
 msgstr "Impacto"
 
+#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
+msgid "This user is currently offline"
+msgstr "Este usuario está desconectado en este momento"
+
+#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
+msgid "This user is currently active"
+msgstr "Este usuario está activo en este momento"
+
+#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
+msgid "This user is currently away"
+msgstr "Este usuario está ausente en este momento"
+
+#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
+msgid "This user is currently unavailable"
+msgstr "Este usuario no está disponible en este momento"
+
 #. SysConfig
 msgid "Add a decision!"
 msgstr "¡Agregue una decisión!"
@@ -86,7 +103,7 @@ msgstr "Campos ITSM Adicionales"
 
 #. SysConfig
 msgid "Additional ITSM ticket fields."
-msgstr "Campos adicionales del tique en ITSM."
+msgstr "Campos adicionales del ticket en ITSM."
 
 #. SysConfig
 msgid ""
@@ -389,4 +406,4 @@ msgstr "Muestra los campos del título en la ventana de decisión de la interfaz
 
 #. SysConfig
 msgid "Ticket decision."
-msgstr "Decisión del tique."
+msgstr "Decisión del Ticket."

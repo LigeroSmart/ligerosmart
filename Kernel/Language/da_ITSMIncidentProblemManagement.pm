@@ -38,12 +38,6 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritikalitet';
     $Self->{Translation}->{'Impact'} = 'Påvirkning';
 
-    # Perl Module: Kernel/Modules/AgentTicketZoom.pm
-    $Self->{Translation}->{'This user is currently offline'} = '';
-    $Self->{Translation}->{'This user is currently active'} = '';
-    $Self->{Translation}->{'This user is currently away'} = '';
-    $Self->{Translation}->{'This user is currently unavailable'} = '';
-
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Tilføj en beslutning!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Yderlige ITSM felter';

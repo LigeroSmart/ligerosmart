@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2016-12-10 13:26+0000\n"
+"POT-Creation-Date: 2017-03-01 00:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,22 +68,6 @@ msgstr ""
 
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently offline"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently active"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently away"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently unavailable"
 msgstr ""
 
 #. SysConfig
