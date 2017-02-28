@@ -32,7 +32,13 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        my $TypeID = $Kernel::OM->Get('Kernel::System::Type')->TypeLookup( Type => 'Incident' );
+        # get the list of service types from general catalog
+        my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+            Class => 'ITSM::Service::Type',
+        );
+
+        # build a lookup hash
+        my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
 
         # create test service
         my $ServiceName     = "Service" . $Helper->GetRandomID();
@@ -41,7 +47,7 @@ $Selenium->RunTest(
             Name        => $ServiceName,
             ValidID     => 1,
             Comment     => 'Selenium Test Service',
-            TypeID      => $TypeID,
+            TypeID      => $ServiceTypeName2ID{Training},
             Criticality => $ITSMCriticality,
             UserID      => 1,
         );
@@ -60,6 +66,9 @@ $Selenium->RunTest(
 
         # get Ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+        # lookup type id for type 'Incident'
+        my $TypeID = $Kernel::OM->Get('Kernel::System::Type')->TypeLookup( Type => 'Incident' );
 
         # create test customer
         my $TestCustomer = 'Customer' . $Helper->GetRandomID();
