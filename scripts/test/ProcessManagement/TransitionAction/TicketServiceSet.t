@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
+# $origin: otrs - 545f2cd8327f273ee58775c2ac58313d68d91be3 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,8 @@ my $ModuleObject  = $Kernel::OM->Get('Kernel::System::ProcessManagement::Transit
 # get helper object
 $Kernel::OM->ObjectParamAdd(
     'Kernel::System::UnitTest::Helper' => {
-        RestoreDatabase => 1,
+        RestoreDatabase  => 1,
+        UseTmpArticleDir => 1,
     },
 );
 my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
@@ -42,6 +43,18 @@ my $TestUserLogin = $Helper->TestUserCreate();
 my $TestUserID    = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
     UserLogin => $TestUserLogin,
 );
+# ---
+# ITSMCore
+# ---
+
+# get the list of service types from general catalog
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::Service::Type',
+);
+
+# build a lookup hash
+my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+# ---
 
 #
 # Create new services
@@ -52,7 +65,7 @@ my @Services = (
 # ---
 # ITSMCore
 # ---
-        TypeID      => 1,
+        TypeID      => $ServiceTypeName2ID{Training},
         Criticality => '3 normal',
 # ---
         ValidID => 1,
@@ -63,7 +76,7 @@ my @Services = (
 # ---
 # ITSMCore
 # ---
-        TypeID      => 1,
+        TypeID      => $ServiceTypeName2ID{Training},
         Criticality => '3 normal',
 # ---
         ValidID => 1,
@@ -74,7 +87,7 @@ my @Services = (
 # ---
 # ITSMCore
 # ---
-        TypeID      => 1,
+        TypeID      => $ServiceTypeName2ID{Training},
         Criticality => '3 normal',
 # ---
         ValidID => 1,

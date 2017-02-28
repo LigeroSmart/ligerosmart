@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: otrs - 236b50bc98b88858ae16b07d9ab522b44ce431c8 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,28 +42,15 @@ my $RandomID = $Helper->GetRandomID();
 $Helper->ConfigSettingChange(
     Valid => 1,
     Key   => 'Ticket::Type',
-    Value => '1',
-);
-$Helper->ConfigSettingChange(
-    Valid => 1,
-    Key   => 'Ticket::Type',
     Value => 1,
 );
-$Helper->ConfigSettingChange(
-    Valid => 1,
-    Key   => 'Ticket::Frontend::AccountTime',
-    Value => '1',
-);
+
 $Helper->ConfigSettingChange(
     Valid => 1,
     Key   => 'Ticket::Frontend::AccountTime',
     Value => 1,
 );
-$Helper->ConfigSettingChange(
-    Valid => 1,
-    Key   => 'Ticket::Frontend::NeedAccountedTime',
-    Value => '1',
-);
+
 $Helper->ConfigSettingChange(
     Valid => 1,
     Key   => 'Ticket::Frontend::NeedAccountedTime',
@@ -74,18 +61,9 @@ $Helper->ConfigSettingChange(
 $Helper->ConfigSettingChange(
     Valid => 1,
     Key   => 'CheckMXRecord',
-    Value => '0',
-);
-$Helper->ConfigSettingChange(
-    Valid => 1,
-    Key   => 'CheckMXRecord',
     Value => 0,
 );
-$Helper->ConfigSettingChange(
-    Valid => 1,
-    Key   => 'CheckEmailAddresses',
-    Value => '1',
-);
+
 $Helper->ConfigSettingChange(
     Valid => 1,
     Key   => 'CheckEmailAddresses',
@@ -221,6 +199,26 @@ $Self->True(
 
 # create service object
 my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
+# ---
+# ITSMCore
+# ---
+
+# get the list of service types from general catalog
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::Service::Type',
+);
+
+# build a lookup hash
+my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+
+# get the list of sla types from general catalog
+my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::SLA::Type',
+);
+
+# build a lookup hash
+my %SLATypeName2ID = reverse %{ $SLATypeList };
+# ---
 
 # create new service
 my $ServiceID = $ServiceObject->ServiceAdd(
@@ -228,7 +226,7 @@ my $ServiceID = $ServiceObject->ServiceAdd(
 # ---
 # ITSMCore
 # ---
-    TypeID      => 1,
+    TypeID      => $ServiceTypeName2ID{Training},
     Criticality => '3 normal',
 # ---
     ValidID => 1,
@@ -270,7 +268,7 @@ my $SLAID = $SLAObject->SLAAdd(
 # ---
 # ITSMCore
 # ---
-    TypeID      => 1,
+    TypeID     => $SLATypeName2ID{Other},
 # ---
     ValidID    => 1,
     UserID     => 1,

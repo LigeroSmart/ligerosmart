@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Ticket.t
+# $origin: otrs - 7176d686c8a53f00ad7d6ef2208e93056a0893ab - scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,8 @@ my $UserObject    = $Kernel::OM->Get('Kernel::System::User');
 # get helper object
 $Kernel::OM->ObjectParamAdd(
     'Kernel::System::UnitTest::Helper' => {
-        RestoreDatabase => 1,
+        RestoreDatabase  => 1,
+        UseTmpArticleDir => 1,
     },
 );
 my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
@@ -883,6 +884,26 @@ $TypeObject->TypeUpdate(
     ValidID => 2,
     UserID  => 1,
 );
+# ---
+# ITSMCore
+# ---
+
+# get the list of service types from general catalog
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::Service::Type',
+);
+
+# build a lookup hash
+my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+
+# get the list of sla types from general catalog
+my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::SLA::Type',
+);
+
+# build a lookup hash
+my %SLATypeName2ID = reverse %{ $SLATypeList };
+# ---
 
 # create a test service
 my $ServiceID = $ServiceObject->ServiceAdd(
@@ -892,7 +913,7 @@ my $ServiceID = $ServiceObject->ServiceAdd(
 # ---
 # ITSMCore
 # ---
-    TypeID      => 1,
+    TypeID      => $ServiceTypeName2ID{Training},
     Criticality => '3 normal',
 # ---
     UserID  => 1,
@@ -974,7 +995,7 @@ my $SLAID = $SLAObject->SLAAdd(
 # ---
 # ITSMCore
 # ---
-    TypeID => 1,
+    TypeID => $SLATypeName2ID{Other},
 # ---
     UserID  => 1,
 );
@@ -1571,7 +1592,7 @@ my %TicketCreated = $TicketObject->TicketGet(
     UserID   => 1,
 );
 
-# wait 5 seconds
+# wait 2 seconds
 $Helper->FixedTimeAddSeconds(2);
 
 my $TicketIDSortOrder2 = $TicketObject->TicketCreate(
@@ -1586,7 +1607,7 @@ my $TicketIDSortOrder2 = $TicketObject->TicketCreate(
     UserID       => 1,
 );
 
-# wait 5 seconds
+# wait 2 seconds
 $Helper->FixedTimeAddSeconds(2);
 
 my $Success = $TicketObject->TicketStateSet(
@@ -1709,6 +1730,21 @@ my $TicketIDSortOrder4 = $TicketObject->TicketCreate(
     UserID       => 1,
 );
 
+# wait 2 seconds
+$Helper->FixedTimeAddSeconds(2);
+
+my $TicketIDSortOrder5 = $TicketObject->TicketCreate(
+    Title        => 'Some Ticket_Title - ticket sort/order by tests5 (with other queue)',
+    Queue        => 'Misc',
+    Lock         => 'unlock',
+    Priority     => '3 normal',
+    State        => 'new',
+    CustomerNo   => $CustomerNo,
+    CustomerUser => 'unittest@otrs.com',
+    OwnerID      => 1,
+    UserID       => 1,
+);
+
 # find oldest ticket by priority, age
 @TicketIDsSortOrder = $TicketObject->TicketSearch(
     Result       => 'ARRAY',
@@ -1779,6 +1815,24 @@ $Self->Is(
     $TicketIDsSortOrder[0],
     $TicketIDSortOrder1,
     'TicketTicketSearch() - ticket sort/order by (Age (Up))',
+);
+
+# sort by ticket queue
+@TicketIDsSortOrder = $TicketObject->TicketSearch(
+    Result       => 'ARRAY',
+    Title        => '%sort/order by test%',
+    Queues       => [ 'Misc', 'Raw' ],
+    CustomerID   => $CustomerNo,
+    CustomerUser => 'unittest@otrs.com',
+    OrderBy      => 'Up',
+    SortBy       => 'Queue',
+    UserID       => 1,
+    Limit        => 1,
+);
+$Self->Is(
+    $TicketIDsSortOrder[0],
+    $TicketIDSortOrder5,
+    'TicketTicketSearch() - ticket sort/order by (Queue (Up))',
 );
 
 $Count = $TicketObject->TicketSearch(
