@@ -16,7 +16,7 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAGeneralCatalog
-    $Self->{Translation}->{'Functionality'} = 'FuncionalAntiguidade';
+    $Self->{Translation}->{'Functionality'} = 'Funcionalidade';
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Gestão do Catálogo Geral';

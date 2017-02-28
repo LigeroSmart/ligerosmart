@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = '目录类';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = '';
+    $Self->{Translation}->{'Admin.'} = '系统管理。';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         '在系统管理中注册目录管理模块AdminGeneralCatalog的前端模块。';

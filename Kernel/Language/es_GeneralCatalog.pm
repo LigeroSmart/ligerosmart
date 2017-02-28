@@ -25,8 +25,8 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Clase de Catálogo';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = '';
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crear y administrar el Catálogo General';
+    $Self->{Translation}->{'Admin.'} = 'Admin.';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crea y gestiona el Catálogo General';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'El Frontend del registro del módulo para la configuración del AdminGeneralCatalog en el área admin';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo General';
