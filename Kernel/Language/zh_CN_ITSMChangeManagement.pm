@@ -587,10 +587,10 @@ sub Data {
     $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = '不能序列化工作指令"%s"。';
 
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
-    $Self->{Translation}->{'Need config option %s!'} = '';
-    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
+    $Self->{Translation}->{'Need config option %s!'} = '需要配置%s选项！';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '配置选项%s需要是一个哈希引用！';
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '没有找到视图“%s”的配置选项！';
-    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = '标题：%s | 类型：%s';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '我的工作指令';
@@ -631,7 +631,7 @@ sub Data {
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '服务人员界面变更搜索后端路由';
     $Self->{Translation}->{'Condition Overview'} = '条件概览';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
-        '';
+        '配置创建新工作指令后显示的界面。';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '配置计划开始时间或其它时间到达/过去时发送通知的频率。';
     $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '从这个工单创建一个变更（即从模板的方式）！';

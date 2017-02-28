@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-02-14 17:23+0000\n"
-"PO-Revision-Date: 2017-02-14 16:25+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-02-27 09:54+0000\n"
+"Last-Translator: David B <link.bigpoint@outlook.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1298,7 +1298,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "¡No se indica el %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
@@ -1598,7 +1598,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "Was not able to delete the template %s!"
-msgstr "No se pudo eliminar la plantilla %s!"
+msgstr "¡No se pudo eliminar la plantilla %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
 msgid "Was not able to update Template %s!"
@@ -1646,7 +1646,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
 msgid "Was not able to delete the workorder %s!"
-msgstr ""
+msgstr "¡No se pudo eliminar la orden de trabajo %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
 msgid "Was not able to update WorkOrder %s!"

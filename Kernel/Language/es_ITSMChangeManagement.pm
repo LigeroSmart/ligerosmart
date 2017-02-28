@@ -425,7 +425,7 @@ sub Data {
     $Self->{Translation}->{'Could not delete ConditionID %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'No %s is given!'} = '¡No se indica el %s!';
     $Self->{Translation}->{'Could not create new condition!'} = '';
     $Self->{Translation}->{'Could not update ConditionID %s!'} = '';
     $Self->{Translation}->{'Could not update ExpressionID %s!'} = '';
@@ -538,7 +538,7 @@ sub Data {
     $Self->{Translation}->{'You need %s permission!'} = '¡Necesita permiso %s!';
     $Self->{Translation}->{'No TemplateID is given!'} = '';
     $Self->{Translation}->{'Template "%s" not found in database!'} = '';
-    $Self->{Translation}->{'Was not able to delete the template %s!'} = 'No se pudo eliminar la plantilla %s!';
+    $Self->{Translation}->{'Was not able to delete the template %s!'} = '¡No se pudo eliminar la plantilla %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
     $Self->{Translation}->{'Was not able to update Template %s!'} = 'No se pudo actualizar la Plantilla %s!';
@@ -565,7 +565,7 @@ sub Data {
     $Self->{Translation}->{'Could not find Change for WorkOrder %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
-    $Self->{Translation}->{'Was not able to delete the workorder %s!'} = '';
+    $Self->{Translation}->{'Was not able to delete the workorder %s!'} = '¡No se pudo eliminar la orden de trabajo %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
     $Self->{Translation}->{'Was not able to update WorkOrder %s!'} = '';
