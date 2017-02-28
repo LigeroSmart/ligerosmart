@@ -1,4 +1,6 @@
-#5.0.7 2017-??-??
+#5.0.8 2017-??-??
+
+#5.0.7 2017-03-07
  - 2017-02-27 Updated framework files to OTRS 5.0.17.
  - 2017-02-27 Updated translations, thanks to all translators.
  - 2017-02-24 Removed hard coded '#' as ticket hook, in favor of settings: Ticket::Hook and Ticket::HookDivider, thanks to Balázs Úr.
