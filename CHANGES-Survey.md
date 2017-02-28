@@ -1,4 +1,6 @@
-#5.0.3 2016-??-??
+#5.0.4 2017-??-??
+
+#5.0.3 2017-03-07
  - 2017-02-27 Updated translations, thanks to all translators.
  - 2017-02-25 Fixed bug#[9848](https://bugs.otrs.org/show_bug.cgi?id=9848)(PR#7)  - If no customer article, and any system articles in a ticket, e-mail for survey may be sent to agent.
  - 2016-12-16 Fix ChangeBy handling in SurveySearch, thanks to straubr.
