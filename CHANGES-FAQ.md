@@ -1,4 +1,6 @@
-#5.0.8 2016-??-??
+#5.0.9 2017-??-??
+
+#5.0.8 2017-03-07
  - 2016-02-27 Updated translations, thanks to all translators.
  - 2017-02-25 Fixed bug#[11122](https://bugs.otrs.org/show_bug.cgi?id=11122)(PR#52)  - Dashlet: MouseOver in a Linktitle, thanks to S7.
  - 2017-02-14 Calls to old Get() method replaced with calls to new Translate() method. Thanks to Paweł Bogusławski!
