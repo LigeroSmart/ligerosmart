@@ -38,7 +38,7 @@ $Selenium->RunTest(
         );
 
         # build a lookup hash
-        my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+        my %ServiceTypeName2ID = reverse %{$ServiceTypeList};
 
         # create test service
         my $ServiceName     = "Service" . $Helper->GetRandomID();
