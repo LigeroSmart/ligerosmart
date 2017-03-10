@@ -25,6 +25,8 @@ our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::CustomerUser',
     'Kernel::System::DB',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
     'Kernel::System::Email',
     'Kernel::System::HTMLUtils',
     'Kernel::System::ITSMChange',
@@ -1487,6 +1489,10 @@ sub _NotificationReplaceMacros {
     $Text =~ s{ $Tag .+? $End }{-}xmsgi;
     $Text =~ s{ $Tag2 .+? $End}{-}xmsgi;
 
+    # get dynamic field objects
+    my $DynamicFieldObject        = $Kernel::OM->Get('Kernel::System::DynamicField');
+    my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
     # replace <OTRS_CHANGE_... tags
     {
         my $Tag = $Start . 'OTRS_CHANGE_';
@@ -1521,6 +1527,54 @@ sub _NotificationReplaceMacros {
 
             # build user attribute
             $ChangeData{$User} = "$UserData{UserFirstname} $UserData{UserLastname}";
+        }
+
+        # Dropdown, Checkbox and MultipleSelect DynamicFields, can store values (keys) that are
+        # different from the the values to display
+        # <OTRS_CHANGE_DynamicField_NameX> returns the stored key
+        # <OTRS_CHANGE_DynamicField_NameX_Value> returns the display value
+
+        # get the dynamic fields for change object
+        my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
+            Valid      => 1,
+            ObjectType => [ 'ITSMChange' ],
+        ) || [];
+
+        # cycle through all change Dynamic Fields
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
+
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+            # get the display value for each dynamic field
+            my $DisplayValue = $DynamicFieldBackendObject->ValueLookup(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Key                => $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                LanguageObject     => $LanguageObject,
+            );
+
+            # get the readable value (value) for each dynamic field
+            my $DisplayValueStrg = $DynamicFieldBackendObject->ReadableValueRender(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Value              => $DisplayValue,
+            );
+
+            # fill the DynamicFielsDisplayValues
+            if ($DisplayValueStrg) {
+                $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} . '_Value' }
+                    = $DisplayValueStrg->{Value};
+            }
+
+            # get the readable value (key) for each dynamic field
+            my $ValueStrg = $DynamicFieldBackendObject->ReadableValueRender(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Value              => $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            );
+
+            # replace ticket content with the value from ReadableValueRender (if any)
+            if ( IsHashRefWithData($ValueStrg) ) {
+                $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $ValueStrg->{Value};
+            }
         }
 
         # replace it
@@ -1561,6 +1615,54 @@ sub _NotificationReplaceMacros {
             # build workorder agent attribute
             if (%UserData) {
                 $WorkOrderData{WorkOrderAgent} = "$UserData{UserFirstname} $UserData{UserLastname}";
+            }
+        }
+
+        # Dropdown, Checkbox and MultipleSelect DynamicFields, can store values (keys) that are
+        # different from the the values to display
+        # <OTRS_WORKORDER_DynamicField_NameX> returns the stored key
+        # <OTRS_WORKORDER_DynamicField_NameX_Value> returns the display value
+
+        # get the dynamic fields for workorder object
+        my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
+            Valid      => 1,
+            ObjectType => [ 'ITSMWorkOrder' ],
+        ) || [];
+
+        # cycle through all workorder Dynamic Fields
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicFieldList} ) {
+
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+            # get the display value for each dynamic field
+            my $DisplayValue = $DynamicFieldBackendObject->ValueLookup(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Key                => $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                LanguageObject     => $LanguageObject,
+            );
+
+            # get the readable value (value) for each dynamic field
+            my $DisplayValueStrg = $DynamicFieldBackendObject->ReadableValueRender(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Value              => $DisplayValue,
+            );
+
+            # fill the DynamicFielsDisplayValues
+            if ($DisplayValueStrg) {
+                $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} . '_Value' }
+                    = $DisplayValueStrg->{Value};
+            }
+
+            # get the readable value (key) for each dynamic field
+            my $ValueStrg = $DynamicFieldBackendObject->ReadableValueRender(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Value              => $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            );
+
+            # replace ticket content with the value from ReadableValueRender (if any)
+            if ( IsHashRefWithData($ValueStrg) ) {
+                $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $ValueStrg->{Value};
             }
         }
 
