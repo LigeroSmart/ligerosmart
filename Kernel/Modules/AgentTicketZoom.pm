@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Modules/AgentTicketZoom.pm
+# $origin: otrs - 35b033a10de0da4955e767c1623f228ac33c881c - Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -702,6 +702,22 @@ sub MaskAgentZoom {
     # get article page
     my $ArticlePage = $ParamObject->GetParam( Param => 'ArticlePage' );
 
+    # Get all articles.
+    my @ArticleContentArgsAll = (
+        TicketID                   => $Self->{TicketID},
+        StripPlainBodyAsAttachment => $Self->{StripPlainBodyAsAttachment},
+        UserID                     => $Self->{UserID},
+        Order                      => $Order,
+        DynamicFields => 0,    # fetch later only for the article(s) to display
+    );
+    my @ArticleBoxAll = $TicketObject->ArticleContentIndex(@ArticleContentArgsAll);
+
+    my %ArticleFlags = $TicketObject->ArticleFlagsOfTicketGet(
+        TicketID => $Ticket{TicketID},
+        UserID   => $Self->{UserID},
+    );
+    my $ArticleID;
+
     if ( $Self->{ArticleID} ) {
         $Page = $TicketObject->ArticlePage(
             TicketID    => $Self->{TicketID},
@@ -715,7 +731,36 @@ sub MaskAgentZoom {
         $Page = $ArticlePage;
     }
     else {
-        $Page = 1;
+
+        # Find latest not seen article.
+        ARTICLE:
+        for my $Article (@ArticleBoxAll) {
+
+            # Ignore system sender type.
+            if (
+                $ConfigObject->Get('Ticket::NewArticleIgnoreSystemSender')
+                && $Article->{SenderType} eq 'system'
+                )
+            {
+                next ARTICLE;
+            }
+
+            next ARTICLE if $ArticleFlags{ $Article->{ArticleID} }->{Seen};
+            $ArticleID = $Article->{ArticleID};
+
+            $Page = $TicketObject->ArticlePage(
+                TicketID    => $Self->{TicketID},
+                ArticleID   => $ArticleID,
+                RowsPerPage => $Limit,
+                Order       => $Order,
+                %{ $Self->{ArticleFilter} // {} },
+            );
+            last ARTICLE;
+        }
+
+        if ( !$ArticleID ) {
+            $Page = 1;
+        }
     }
 
     # We need to find out whether pagination is actually necessary.
@@ -797,16 +842,6 @@ sub MaskAgentZoom {
         $Count = 0;
     }
 
-    # get all articles
-    my @ArticleContentArgsAll = (
-        TicketID                   => $Self->{TicketID},
-        StripPlainBodyAsAttachment => $Self->{StripPlainBodyAsAttachment},
-        UserID                     => $Self->{UserID},
-        Order                      => $Order,
-        DynamicFields => 0,    # fetch later only for the article(s) to display
-    );
-    my @ArticleBoxAll = $TicketObject->ArticleContentIndex(@ArticleContentArgsAll);
-
     if ( scalar @ArticleBox != scalar @ArticleBoxAll ) {
 
         if ( $ConfigObject->Get('Ticket::Frontend::ZoomExpandSort') eq 'reverse' ) {
@@ -849,46 +884,24 @@ sub MaskAgentZoom {
         $ArticleIDFound = 1;
     }
 
-    my %ArticleFlags = $TicketObject->ArticleFlagsOfTicketGet(
-        TicketID => $Ticket{TicketID},
-        UserID   => $Self->{UserID},
-    );
-
     # get selected or last customer article
-    my $ArticleID;
     if ($ArticleIDFound) {
         $ArticleID = $Self->{ArticleID};
     }
     else {
-
-        # find latest not seen article
-        ARTICLE:
-        for my $Article (@ArticleBox) {
-
-            # ignore system sender type
-            next ARTICLE
-                if $ConfigObject->Get('Ticket::NewArticleIgnoreSystemSender')
-                && $Article->{SenderType} eq 'system';
-
-            next ARTICLE if $ArticleFlags{ $Article->{ArticleID} }->{Seen};
-            $ArticleID = $Article->{ArticleID};
-            last ARTICLE;
-        }
-
-        # set selected article
         if ( !$ArticleID ) {
             if (@ArticleBox) {
 
                 # set first listed article as fallback
                 $ArticleID = $ArticleBox[0]->{ArticleID};
-            }
 
-            # set last customer article as selected article replacing last set
-            ARTICLETMP:
-            for my $ArticleTmp (@ArticleBox) {
-                if ( $ArticleTmp->{SenderType} eq 'customer' ) {
-                    $ArticleID = $ArticleTmp->{ArticleID};
-                    last ARTICLETMP if $Self->{ZoomExpandSort} eq 'reverse';
+                # set last customer article as selected article replacing last set
+                ARTICLETMP:
+                for my $ArticleTmp (@ArticleBox) {
+                    if ( $ArticleTmp->{SenderType} eq 'customer' ) {
+                        $ArticleID = $ArticleTmp->{ArticleID};
+                        last ARTICLETMP if $Self->{ZoomExpandSort} eq 'reverse';
+                    }
                 }
             }
         }
