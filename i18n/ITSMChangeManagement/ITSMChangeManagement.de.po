@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-14 17:23+0000\n"
-"PO-Revision-Date: 2017-02-14 16:25+0000\n"
+"POT-Creation-Date: 2017-03-13 15:03+0000\n"
+"PO-Revision-Date: 2017-03-13 14:04+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -1721,11 +1721,23 @@ msgid ""
 msgstr "Eine Liste von Arbeitsauftragsstaten, bei denen die ActualStartTime eines Arbeitsauftrags festgelegt wird, wenn diese vorher nicht festgelegt war."
 
 #. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr ""
+
+#. SysConfig
 msgid "Add a change from template."
 msgstr ""
 
 #. SysConfig
 msgid "Add a change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder to the change."
 msgstr ""
 
 #. SysConfig
@@ -1813,6 +1825,10 @@ msgid "Change area."
 msgstr ""
 
 #. SysConfig
+msgid "Change involved persons of the change."
+msgstr ""
+
+#. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
 msgstr "Anzeige Limit pro Seite für Changes in der kleinen Ansicht \"S\""
 
@@ -1837,7 +1853,15 @@ msgid ""
 msgstr "Konfiguration wie häufig Benachrichtungen verschickt werden wenn die geplante Startzeit oder andere Zeiten erreicht wurden bzw. schon vorbei sind."
 
 #. SysConfig
-msgid "Create a change (from template) from this ticket!"
+msgid "Create Change (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create a change from this ticket."
 msgstr ""
 
 #. SysConfig
@@ -2369,11 +2393,15 @@ msgid "Defines whether notifications should be sent."
 msgstr "Wenn Benachrichtigungen versendet werden sollen."
 
 #. SysConfig
-msgid "Delete Change"
+msgid "Delete a change."
 msgstr ""
 
 #. SysConfig
-msgid "Delete a change."
+msgid "Delete the change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the workorder."
 msgstr ""
 
 #. SysConfig
@@ -2477,6 +2505,18 @@ msgstr "Dynamische Felder Event-Modul zur Behandlung der Bedingungen wenn Dynami
 
 #. SysConfig
 msgid "Edit a change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the workorder."
 msgstr ""
 
 #. SysConfig
@@ -2594,6 +2634,14 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Link another object to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
@@ -2652,6 +2700,10 @@ msgid "Move Time Slot."
 msgstr ""
 
 #. SysConfig
+msgid "Move all workorders in time."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2687,6 +2739,14 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Zeigt in der \"Change Zoom\" Ansicht der Agenten-Oberfläche einen  Menu Link der es erlaubt die eingebundenen Agenten anzuzeigen."
+
+#. SysConfig
+msgid "Print the change."
+msgstr ""
+
+#. SysConfig
+msgid "Print the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability"
@@ -2860,13 +2920,21 @@ msgid "Reset a change and its workorders."
 msgstr ""
 
 #. SysConfig
-msgid "Reset change and its workorders"
+msgid "Reset change and its workorders."
 msgstr ""
 
 #. SysConfig
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Save workorder as a template."
 msgstr ""
 
 #. SysConfig
@@ -2893,6 +2961,10 @@ msgid ""
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
 msgstr "Definiert das Change Nummer Generierung Modul. \"AutoIncrement\" erhöht die Change Nummer fortlaufend, dieses Format stellt sich als SystemID.Zähler dar (z.B. 100118, 100119). Mit \"Datum\" werden die Change Nummern aus dem aktuellen Datum und einem Zähler generiert, dieses Format stellt sich als Jahr.Monat.Tag.Zähler dar, z.B. 2010062400001, 2010062400002. Mit \"DataChecksum\" hängt der Zähler eine Prüfziffer an den Wert an zuzüglich der SystemID. Die Prüfziffer ändert sich täglich, dieses Format stellt sich als Jahr.Monat.Tag.SystemID.Zähler.Prüfziffer dar, z.B. 2010062410000017, 2010062410000026."
+
+#. SysConfig
+msgid "Set the agent for the workorder."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3073,6 +3145,10 @@ msgid "Take Workorder."
 msgstr "Arbeitsauftrag übernehmen."
 
 #. SysConfig
+msgid "Take the workorder."
+msgstr ""
+
+#. SysConfig
 msgid "Template."
 msgstr ""
 
@@ -3119,6 +3195,10 @@ msgstr ""
 #. SysConfig
 msgid "Workorder Add."
 msgstr "Arbeitsauftrag hinzufügen."
+
+#. SysConfig
+msgid "Workorder Agent"
+msgstr ""
 
 #. SysConfig
 msgid "Workorder Agent."

@@ -502,7 +502,7 @@ sub Data {
     $Self->{Translation}->{'Work Order Title'} = '';
     $Self->{Translation}->{'CAB Agent'} = 'Agente del CAB';
     $Self->{Translation}->{'CAB Customer'} = 'Cliente del CAB';
-    $Self->{Translation}->{'Change Description'} = '';
+    $Self->{Translation}->{'Change Description'} = 'Cambiar descripción';
     $Self->{Translation}->{'Change Justification'} = '';
     $Self->{Translation}->{'WorkOrder Instruction'} = '';
     $Self->{Translation}->{'WorkOrder Report'} = '';
@@ -590,7 +590,7 @@ sub Data {
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
-    $Self->{Translation}->{'Title: %s | Type: %s'} = '';
+    $Self->{Translation}->{'Title: %s | Type: %s'} = 'Título: %s | Tipo: %s';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Mis Órdenes de Trabajo';
@@ -600,8 +600,11 @@ sub Data {
         'Una lista de los agentes que tienen permiso para tomar órdenes de trabajo. Key es un nombre de inicio de sesión. Content puede ser 0 ó 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Una lista de estados para las órdenes de trabajo, misma que será asignada a ActualStartTime, si para este punto seguía vacío.';
+    $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = 'Agregar un cambio desde una plantilla.';
     $Self->{Translation}->{'Add a change.'} = 'Añadir un cambio.';
+    $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
+    $Self->{Translation}->{'Add a workorder to the change.'} = '';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Administrar la matriz CIP.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Administrar la máquina de estados.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -627,6 +630,7 @@ sub Data {
     $Self->{Translation}->{'Change Zoom.'} = 'Ampliación del Cambio.';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Plantillas de Cambio y OrdenTrabajo editadas por este usuario.';
     $Self->{Translation}->{'Change area.'} = '';
+    $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Condition Overview'} = '';
@@ -634,7 +638,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Configura el intervalo de envío de notificaciones cuando alguno de los valores del tiempo, como la fecha de inicio planeada, se alcanzan/sobrepasan.';
-    $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
+    $Self->{Translation}->{'Create Change (from Template)'} = '';
+    $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
+    $Self->{Translation}->{'Create a change from this ticket.'} = '';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Tipo default para las órdenes de trabajo. Este registro debe existir en la clase \'ITSM::ChangeManagement::WorkOrder::Type\' del catálogo general.';
@@ -808,8 +814,9 @@ sub Data {
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
         'Define los tipos de órdenes de trabajo que se usarán en la vista de resumen de las PIR.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Determina si deben enviarse notificaciones.';
-    $Self->{Translation}->{'Delete Change'} = 'Eliminar Cambio';
     $Self->{Translation}->{'Delete a change.'} = 'Eliminar un cambio.';
+    $Self->{Translation}->{'Delete the change.'} = '';
+    $Self->{Translation}->{'Delete the workorder.'} = '';
     $Self->{Translation}->{'Details of a change history entry.'} = '';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         'Determina si, al crear una estadística, es posible que los agentes intercambien las X-axis de las mismas.';
@@ -844,6 +851,9 @@ sub Data {
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '';
     $Self->{Translation}->{'Edit a change.'} = 'Editar un cambio.';
+    $Self->{Translation}->{'Edit the change.'} = '';
+    $Self->{Translation}->{'Edit the conditions of the change.'} = '';
+    $Self->{Translation}->{'Edit the workorder.'} = '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
     $Self->{Translation}->{'History Zoom'} = '';
@@ -876,6 +886,8 @@ sub Data {
         'Módulo de eventos para ITSM para definir las fechas de inicio y finalización reales de las órdenes de trabajo.';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
+    $Self->{Translation}->{'Link another object to the change.'} = '';
+    $Self->{Translation}->{'Link another object to the workorder.'} = '';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Log para el contador de los cambios ITSM. Este archivo se usa para crear los números de cambios.';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
@@ -893,6 +905,7 @@ sub Data {
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         'Módulo que muestra un vínculo para crear un cambio de este ticket. El ticket se vinculará automaticamente con el cambio nuevo.';
     $Self->{Translation}->{'Move Time Slot.'} = '';
+    $Self->{Translation}->{'Move all workorders in time.'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Sólo los usuarios que pertenezcan a estos grupos tendrán permiso de usar los tipos de tickets, tal y como se define en "ITSMChange::AddChangeLinkTicketTypes" si la funcionalidad "Ticket::Acl::Module###200-Ticket::Acl::Module" está habilitada.';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
@@ -904,6 +917,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Presenta un vínculo en el menú para mostrar a las personas involucradas en un cambio, en la vista detallada de dicho cambio de la interfaz del agente.';
+    $Self->{Translation}->{'Print the change.'} = '';
+    $Self->{Translation}->{'Print the workorder.'} = '';
     $Self->{Translation}->{'Projected Service Availability'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Disponibilidad Proyectada del Servicio (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
@@ -953,14 +968,17 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Privilegios necesarios para ver una lista de mis órdenes de trabajo propias.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Privilegios necesarios para hacer un reporte de una orden de trabajo.';
     $Self->{Translation}->{'Reset a change and its workorders.'} = '';
-    $Self->{Translation}->{'Reset change and its workorders'} = '';
+    $Self->{Translation}->{'Reset change and its workorders.'} = '';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         '';
+    $Self->{Translation}->{'Save change as a template.'} = '';
+    $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Pantalla posterior a la creación de una orden de trabajo';
     $Self->{Translation}->{'Search Changes.'} = 'Buscar Cambios.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';
+    $Self->{Translation}->{'Set the agent for the workorder.'} = '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         'Establecer la altura predeterminada (en píxeles) de los campos HTML «inline» de AgentITSMChangeZoom y  AgentITSMWorkOrderZoom.';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
@@ -1019,6 +1037,7 @@ sub Data {
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
     $Self->{Translation}->{'Take Workorder.'} = '';
+    $Self->{Translation}->{'Take the workorder.'} = '';
     $Self->{Translation}->{'Template.'} = 'Plantilla.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Identificador de un cambio, por ejemplo: Cambio#, MiCambio#. El default es Change#.';
@@ -1032,6 +1051,7 @@ sub Data {
     $Self->{Translation}->{'User Search'} = 'Búsqueda de Usuario';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
     $Self->{Translation}->{'Workorder Add.'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = '';
     $Self->{Translation}->{'Workorder Agent.'} = '';
     $Self->{Translation}->{'Workorder Delete.'} = '';
     $Self->{Translation}->{'Workorder Edit.'} = '';

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-14 17:23+0000\n"
-"PO-Revision-Date: 2017-02-14 16:25+0000\n"
+"POT-Creation-Date: 2017-03-13 15:03+0000\n"
+"PO-Revision-Date: 2017-03-13 14:04+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -1714,11 +1714,23 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr ""
+
+#. SysConfig
 msgid "Add a change from template."
 msgstr ""
 
 #. SysConfig
 msgid "Add a change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder to the change."
 msgstr ""
 
 #. SysConfig
@@ -1806,6 +1818,10 @@ msgid "Change area."
 msgstr ""
 
 #. SysConfig
+msgid "Change involved persons of the change."
+msgstr ""
+
+#. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
 msgstr "Limit zmian na stronie dla przeglądu zmian \"Małe\""
 
@@ -1830,7 +1846,15 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Create a change (from template) from this ticket!"
+msgid "Create Change (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create a change from this ticket."
 msgstr ""
 
 #. SysConfig
@@ -2362,11 +2386,15 @@ msgid "Defines whether notifications should be sent."
 msgstr ""
 
 #. SysConfig
-msgid "Delete Change"
+msgid "Delete a change."
 msgstr ""
 
 #. SysConfig
-msgid "Delete a change."
+msgid "Delete the change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the workorder."
 msgstr ""
 
 #. SysConfig
@@ -2470,6 +2498,18 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit a change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the workorder."
 msgstr ""
 
 #. SysConfig
@@ -2587,6 +2627,14 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Link another object to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
@@ -2645,6 +2693,10 @@ msgid "Move Time Slot."
 msgstr ""
 
 #. SysConfig
+msgid "Move all workorders in time."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2679,6 +2731,14 @@ msgstr ""
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Print the change."
+msgstr ""
+
+#. SysConfig
+msgid "Print the workorder."
 msgstr ""
 
 #. SysConfig
@@ -2853,13 +2913,21 @@ msgid "Reset a change and its workorders."
 msgstr ""
 
 #. SysConfig
-msgid "Reset change and its workorders"
+msgid "Reset change and its workorders."
 msgstr ""
 
 #. SysConfig
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Save workorder as a template."
 msgstr ""
 
 #. SysConfig
@@ -2885,6 +2953,10 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
+msgstr ""
+
+#. SysConfig
+msgid "Set the agent for the workorder."
 msgstr ""
 
 #. SysConfig
@@ -3066,6 +3138,10 @@ msgid "Take Workorder."
 msgstr ""
 
 #. SysConfig
+msgid "Take the workorder."
+msgstr ""
+
+#. SysConfig
 msgid "Template."
 msgstr ""
 
@@ -3111,6 +3187,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Add."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Agent"
 msgstr ""
 
 #. SysConfig

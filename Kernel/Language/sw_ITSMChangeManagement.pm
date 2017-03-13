@@ -600,8 +600,11 @@ sub Data {
         'Orodha ya mawakala wenye ruhusa ya kuchukua oda za kazi. Muhimu ni jina la kuingia. Iliyomo ni 0 au 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Orodha ya hali za oda ya kazi, ambapo MudaHalisiKuanza wa oda ya kazi utasetiwa kama ulikuwa wazi katika pointi hii.';
+    $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
+    $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
+    $Self->{Translation}->{'Add a workorder to the change.'} = '';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Msimamizi wa matriki ya CIP.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Msimamizi wa mashine ya hali.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -627,6 +630,7 @@ sub Data {
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Violezo vya mabadiliko na Oda za Kazi vilivyohaririwa na mtumijai huyu.';
     $Self->{Translation}->{'Change area.'} = '';
+    $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Kikomo "cha chini" cha mabadiliko kwa kurasa kwa Mapitio ya Mabadiliko ';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko.';
     $Self->{Translation}->{'Condition Overview'} = '';
@@ -634,7 +638,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Ina sanidi ni kwa mara ngapi taarifa zinatumwa pale muda uliopangwa wa kuanza au mida mingine inapofikiwa/kupitwa.';
-    $Self->{Translation}->{'Create a change (from template) from this ticket!'} = '';
+    $Self->{Translation}->{'Create Change (from Template)'} = '';
+    $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
+    $Self->{Translation}->{'Create a change from this ticket.'} = '';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Chaguo-msingi la aina ya oda ya kazi. Hili ingizo lazima liwepo katika tabaka la katalogi la ujumla \'ITSM::UsimamiziMabadiliko::Oda ya Kazi::Aina\' .';
@@ -808,8 +814,9 @@ sub Data {
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
         'Inafafanua aina za oda za kazi ambazo zitatumika kuonyesha mapitio ya PIR.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Inafafanua kama taarifa zitumwe.';
-    $Self->{Translation}->{'Delete Change'} = '';
     $Self->{Translation}->{'Delete a change.'} = '';
+    $Self->{Translation}->{'Delete the change.'} = '';
+    $Self->{Translation}->{'Delete the workorder.'} = '';
     $Self->{Translation}->{'Details of a change history entry.'} = '';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         'Inaamua kama wakala anaweza kubadilisha jira-X la takwimu kama akitengeneza.';
@@ -844,6 +851,9 @@ sub Data {
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Moduli ya matukio ya SehemuZinazobadilika kushughulikia usasishaji wa masharti kama sehemu zinazobadilika zimeongezwa, zimesasishwa au kufutwa.';
     $Self->{Translation}->{'Edit a change.'} = '';
+    $Self->{Translation}->{'Edit the change.'} = '';
+    $Self->{Translation}->{'Edit the conditions of the change.'} = '';
+    $Self->{Translation}->{'Edit the workorder.'} = '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
     $Self->{Translation}->{'History Zoom'} = '';
@@ -876,6 +886,8 @@ sub Data {
         'Moduli ya matukio ya ITSM inayoseti muda halisi wa kuanza na kumaliza oda za kazi.';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
+    $Self->{Translation}->{'Link another object to the change.'} = '';
+    $Self->{Translation}->{'Link another object to the workorder.'} = '';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Failibatli la hesabu ya mabadiliko ya ITSM. Hili faili linatumika kutengeneza nambari za mabadiliko. ';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
@@ -893,6 +905,7 @@ sub Data {
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         'Moduli ya kuonyesha kiungo cha kutengeneza mabadiliko kutoka kwenye hii tiketi. Tiketi itaunganishwa kiotomatiki na mabadiliko mapya.';
     $Self->{Translation}->{'Move Time Slot.'} = '';
+    $Self->{Translation}->{'Move all workorders in time.'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika "Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko" kama kipengele "Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli" kimewezeshwa.';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
@@ -904,6 +917,8 @@ sub Data {
         'Vigezo kwa ajili vya kurasa(ambapo tiketi zinaonyeshwa) za mapitio ya mabadiliko madogo.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Inawasilisha kiunganishi katika menyu kuonyesha watu wanaohusika katika badiliko, katika mandhari iliyokuzwa ya badiliko hilo katika kiolesura cha wakala.';
+    $Self->{Translation}->{'Print the change.'} = '';
+    $Self->{Translation}->{'Print the workorder.'} = '';
     $Self->{Translation}->{'Projected Service Availability'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
@@ -953,14 +968,17 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Upendeleo unaotakiwa ili kuona orodha ya oda zako za kazi.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Upendeleo unaotakiwa ili kuandika ripoti ya oda ya kazi.';
     $Self->{Translation}->{'Reset a change and its workorders.'} = '';
-    $Self->{Translation}->{'Reset change and its workorders'} = '';
+    $Self->{Translation}->{'Reset change and its workorders.'} = '';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         '';
+    $Self->{Translation}->{'Save change as a template.'} = '';
+    $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Skrini baada ya kutengeneza oda ya kazi.';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Chagua module ya kutengeneza namba ya badiliko. "Kuongezeka kwa otomatiki" inaongeza namba ya badiliko, kitambulisho cha mfumo na kihesabuji zinatumika na kitambulisho cha mfumo.umbizo la kihesabuji (mfano 100118, 100119). Na "Tarehe" namba za mabadiliko zitatengenezwa na tarehe ya sasa na kihesabuji; Umbizo linafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062400001, 2010062400002. Na "Kuangalia jumla kwa tarehe"  kihesabuji kitaambatanishwa kama kiangaliaji jumla kwenye tungo ya tarehe na kitambulisho. Kiangalia jumla kitazungushwa kwa mishingi ya kila siku. Umbizo litafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062410000017, 2010062410000026.';
+    $Self->{Translation}->{'Set the agent for the workorder.'} = '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         '';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
@@ -1019,6 +1037,7 @@ sub Data {
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Inahifadhi vitambulisho vya mabadiliko na oda za kazi sambamba na kitambulisho cha kiolezo, wakati mtumiaji anahariri kiolezo.';
     $Self->{Translation}->{'Take Workorder.'} = '';
+    $Self->{Translation}->{'Take the workorder.'} = '';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Kitambulisho cha mabadiliko, mf. Mabadiliko#, MabadilikoYangu#. Chaguo-msingi ni Mabadiliko#.';
@@ -1032,6 +1051,7 @@ sub Data {
     $Self->{Translation}->{'User Search'} = '';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
     $Self->{Translation}->{'Workorder Add.'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = '';
     $Self->{Translation}->{'Workorder Agent.'} = '';
     $Self->{Translation}->{'Workorder Delete.'} = '';
     $Self->{Translation}->{'Workorder Edit.'} = '';

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-14 17:23+0000\n"
-"PO-Revision-Date: 2017-02-24 05:38+0000\n"
-"Last-Translator: 汇民 王 <whuim@163.com>\n"
+"POT-Creation-Date: 2017-03-13 15:03+0000\n"
+"PO-Revision-Date: 2017-03-13 14:04+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1713,12 +1713,24 @@ msgid ""
 msgstr "工作指令状态列表，工作指令的ActualStartTime（实际开始时间）将被设置（如果这时候还没有设置的话）。"
 
 #. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr ""
+
+#. SysConfig
 msgid "Add a change from template."
 msgstr "从模板添加一个变更。"
 
 #. SysConfig
 msgid "Add a change."
 msgstr "添加一个变更。"
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder to the change."
+msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1805,6 +1817,10 @@ msgid "Change area."
 msgstr "变更区域。"
 
 #. SysConfig
+msgid "Change involved persons of the change."
+msgstr ""
+
+#. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
 msgstr "变更概览简洁模式每页变更数限制"
 
@@ -1829,8 +1845,16 @@ msgid ""
 msgstr "配置计划开始时间或其它时间到达/过去时发送通知的频率。"
 
 #. SysConfig
-msgid "Create a change (from template) from this ticket!"
-msgstr "从这个工单创建一个变更（即从模板的方式）！"
+msgid "Create Change (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create a change from this ticket."
+msgstr ""
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
@@ -2361,12 +2385,16 @@ msgid "Defines whether notifications should be sent."
 msgstr "定义是否发送通知。"
 
 #. SysConfig
-msgid "Delete Change"
-msgstr "删除变更"
-
-#. SysConfig
 msgid "Delete a change."
 msgstr "删除一个变更。"
+
+#. SysConfig
+msgid "Delete the change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Details of a change history entry."
@@ -2470,6 +2498,18 @@ msgstr "处理动态字段更新条件（添加、更新或删除）的动态字
 #. SysConfig
 msgid "Edit a change."
 msgstr "编辑一个变更。"
+
+#. SysConfig
+msgid "Edit the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2586,6 +2626,14 @@ msgid ""
 msgstr "如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。"
 
 #. SysConfig
+msgid "Link another object to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
@@ -2644,6 +2692,10 @@ msgid "Move Time Slot."
 msgstr "移动时间轴。"
 
 #. SysConfig
+msgid "Move all workorders in time."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2679,6 +2731,14 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个链接以显示变更的相关人员。"
+
+#. SysConfig
+msgid "Print the change."
+msgstr ""
+
+#. SysConfig
+msgid "Print the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability"
@@ -2852,14 +2912,22 @@ msgid "Reset a change and its workorders."
 msgstr "重置一个变更和它的工作指令。"
 
 #. SysConfig
-msgid "Reset change and its workorders"
-msgstr "重置变更和它的工作指令"
+msgid "Reset change and its workorders."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
 msgstr "执行任务来检查是否到达了变更和工作指令的特定时间点。"
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Save workorder as a template."
+msgstr ""
 
 #. SysConfig
 msgid "Schedule"
@@ -2885,6 +2953,10 @@ msgid ""
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
 msgstr "选择变更编号生成器模块。“自动增量”--递增变更编号，系统ID和计数器配合使用的格式为：系统ID.计数器（如100118、100119）。“日期”--会用当前日期、系统ID和计数器共同生成变更编号，格式为：年.月.日.系统ID.计数器（如2010062400001、2010062400002）。“日期校验和”--计数器的值以校验和的方式追加日期和系统ID的字符串后面，校验和每日轮换，这种格式为：年.月.日.系统ID.计数器.校验和（如2010062410000017、2010062410000026）。"
+
+#. SysConfig
+msgid "Set the agent for the workorder."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3065,6 +3137,10 @@ msgid "Take Workorder."
 msgstr "执行工作指令。"
 
 #. SysConfig
+msgid "Take the workorder."
+msgstr ""
+
+#. SysConfig
 msgid "Template."
 msgstr "模板。"
 
@@ -3111,6 +3187,10 @@ msgstr "添加工作指令（从模板）。"
 #. SysConfig
 msgid "Workorder Add."
 msgstr "添加工作指令。"
+
+#. SysConfig
+msgid "Workorder Agent"
+msgstr ""
 
 #. SysConfig
 msgid "Workorder Agent."

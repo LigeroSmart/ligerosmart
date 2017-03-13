@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-14 17:23+0000\n"
-"PO-Revision-Date: 2017-02-14 16:25+0000\n"
+"POT-Creation-Date: 2017-03-13 15:03+0000\n"
+"PO-Revision-Date: 2017-03-13 14:04+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1714,12 +1714,24 @@ msgid ""
 msgstr "Список состояний задачи в которых фактическое время начала задачи может быть задано, если еще пусто к этому моменту."
 
 #. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr ""
+
+#. SysConfig
 msgid "Add a change from template."
 msgstr "Добавить Изменение из шаблона."
 
 #. SysConfig
 msgid "Add a change."
 msgstr "Добавить изменения"
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder to the change."
+msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1806,6 +1818,10 @@ msgid "Change area."
 msgstr "Область Изменения."
 
 #. SysConfig
+msgid "Change involved persons of the change."
+msgstr ""
+
+#. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
 msgstr "Изменить количество записей на странице при просмотре изменений в формате Small."
 
@@ -1830,8 +1846,16 @@ msgid ""
 msgstr "Задает частоту отправки уведомлений, когда запланированное время начала или другие времеНные значения достигнуты/прошли."
 
 #. SysConfig
-msgid "Create a change (from template) from this ticket!"
-msgstr "Создать Изменение (из шаблона) из этой заявки!"
+msgid "Create Change (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create a change from this ticket."
+msgstr ""
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
@@ -2362,12 +2386,16 @@ msgid "Defines whether notifications should be sent."
 msgstr "Задает, следует ли отправлять уведомления."
 
 #. SysConfig
-msgid "Delete Change"
-msgstr "Удалить изменение"
-
-#. SysConfig
 msgid "Delete a change."
 msgstr "Удалить изменение."
+
+#. SysConfig
+msgid "Delete the change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Details of a change history entry."
@@ -2471,6 +2499,18 @@ msgstr "Модуль управления событиями для динами
 #. SysConfig
 msgid "Edit a change."
 msgstr "Редактировать изменение."
+
+#. SysConfig
+msgid "Edit the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2587,6 +2627,14 @@ msgid ""
 msgstr "Если частота указана как \"regularly\" вы можете задать как часто будут отправляться уведомления (каждые Х часов)."
 
 #. SysConfig
+msgid "Link another object to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
@@ -2645,6 +2693,10 @@ msgid "Move Time Slot."
 msgstr "Сместить диапазон времени."
 
 #. SysConfig
+msgid "Move all workorders in time."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2680,6 +2732,14 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Показывает ссылку/элемент в меню для показа вовлеченных сотрудников для изменения при подробном просмотре изменения в интерфейсе агента."
+
+#. SysConfig
+msgid "Print the change."
+msgstr ""
+
+#. SysConfig
+msgid "Print the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability"
@@ -2853,14 +2913,22 @@ msgid "Reset a change and its workorders."
 msgstr "Очистить Изменение и его Задачи."
 
 #. SysConfig
-msgid "Reset change and its workorders"
-msgstr "Очистить Изменение и его Задачи"
+msgid "Reset change and its workorders."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
 msgstr "Запустить задание для проверки достижимости значений времени в Изменениях и Задачах."
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Save workorder as a template."
+msgstr ""
 
 #. SysConfig
 msgid "Schedule"
@@ -2886,6 +2954,10 @@ msgid ""
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
 msgstr "Задает способ генерации номеров изменений.  \"AutoIncrement\" - увеличивает номер на 1, формат - SystemID.counter (например, 100118, 100119).  \"Date\" - использует текущую дату, SystemID и счетчик, вид: Year.Month.Day.SystemID.counter - 2010062400001, 2010062400002. \"DateChecksum\" - счетчик дополняется контрольной суммой к строке из даты и SystemID. Формат строится как Year.Month.Day.SystemID.Counter.CheckSum. Контрольная сумма обновляется ежедневно, вид: 2010062410000017, 2010062410000026."
+
+#. SysConfig
+msgid "Set the agent for the workorder."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3066,6 +3138,10 @@ msgid "Take Workorder."
 msgstr "Взять Задачу в работу."
 
 #. SysConfig
+msgid "Take the workorder."
+msgstr ""
+
+#. SysConfig
 msgid "Template."
 msgstr "Шаблон."
 
@@ -3112,6 +3188,10 @@ msgstr "Добавить Задачу (используя шаблон)"
 #. SysConfig
 msgid "Workorder Add."
 msgstr "Добавление Задачи."
+
+#. SysConfig
+msgid "Workorder Agent"
+msgstr ""
 
 #. SysConfig
 msgid "Workorder Agent."

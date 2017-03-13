@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-14 17:23+0000\n"
-"PO-Revision-Date: 2017-02-27 09:54+0000\n"
-"Last-Translator: David B <link.bigpoint@outlook.com>\n"
+"POT-Creation-Date: 2017-03-13 15:03+0000\n"
+"PO-Revision-Date: 2017-03-13 14:04+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1478,7 +1478,7 @@ msgstr "Cliente del CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Description"
-msgstr ""
+msgstr "Cambiar descripción"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Justification"
@@ -1698,7 +1698,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Title: %s | Type: %s"
-msgstr ""
+msgstr "Título: %s | Tipo: %s"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
@@ -1717,12 +1717,24 @@ msgid ""
 msgstr "Una lista de estados para las órdenes de trabajo, misma que será asignada a ActualStartTime, si para este punto seguía vacío."
 
 #. SysConfig
+msgid "Add Workorder (from Template)"
+msgstr ""
+
+#. SysConfig
 msgid "Add a change from template."
 msgstr "Agregar un cambio desde una plantilla."
 
 #. SysConfig
 msgid "Add a change."
 msgstr "Añadir un cambio."
+
+#. SysConfig
+msgid "Add a workorder (from template) to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add a workorder to the change."
+msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1809,6 +1821,10 @@ msgid "Change area."
 msgstr ""
 
 #. SysConfig
+msgid "Change involved persons of the change."
+msgstr ""
+
+#. SysConfig
 msgid "Change limit per page for Change Overview \"Small\""
 msgstr ""
 
@@ -1833,7 +1849,15 @@ msgid ""
 msgstr "Configura el intervalo de envío de notificaciones cuando alguno de los valores del tiempo, como la fecha de inicio planeada, se alcanzan/sobrepasan."
 
 #. SysConfig
-msgid "Create a change (from template) from this ticket!"
+msgid "Create Change (from Template)"
+msgstr ""
+
+#. SysConfig
+msgid "Create a change (from template) from this ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Create a change from this ticket."
 msgstr ""
 
 #. SysConfig
@@ -2365,12 +2389,16 @@ msgid "Defines whether notifications should be sent."
 msgstr "Determina si deben enviarse notificaciones."
 
 #. SysConfig
-msgid "Delete Change"
-msgstr "Eliminar Cambio"
-
-#. SysConfig
 msgid "Delete a change."
 msgstr "Eliminar un cambio."
+
+#. SysConfig
+msgid "Delete the change."
+msgstr ""
+
+#. SysConfig
+msgid "Delete the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Details of a change history entry."
@@ -2474,6 +2502,18 @@ msgstr ""
 #. SysConfig
 msgid "Edit a change."
 msgstr "Editar un cambio."
+
+#. SysConfig
+msgid "Edit the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the conditions of the change."
+msgstr ""
+
+#. SysConfig
+msgid "Edit the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2590,6 +2630,14 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Link another object to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Link another object to the workorder."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Logfile for the ITSM change counter. This file is used for creating the "
 "change numbers."
@@ -2648,6 +2696,10 @@ msgid "Move Time Slot."
 msgstr ""
 
 #. SysConfig
+msgid "Move all workorders in time."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2683,6 +2735,14 @@ msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
 msgstr "Presenta un vínculo en el menú para mostrar a las personas involucradas en un cambio, en la vista detallada de dicho cambio de la interfaz del agente."
+
+#. SysConfig
+msgid "Print the change."
+msgstr ""
+
+#. SysConfig
+msgid "Print the workorder."
+msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability"
@@ -2856,13 +2916,21 @@ msgid "Reset a change and its workorders."
 msgstr ""
 
 #. SysConfig
-msgid "Reset change and its workorders"
+msgid "Reset change and its workorders."
 msgstr ""
 
 #. SysConfig
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
+msgstr ""
+
+#. SysConfig
+msgid "Save change as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Save workorder as a template."
 msgstr ""
 
 #. SysConfig
@@ -2888,6 +2956,10 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
+msgstr ""
+
+#. SysConfig
+msgid "Set the agent for the workorder."
 msgstr ""
 
 #. SysConfig
@@ -3069,6 +3141,10 @@ msgid "Take Workorder."
 msgstr ""
 
 #. SysConfig
+msgid "Take the workorder."
+msgstr ""
+
+#. SysConfig
 msgid "Template."
 msgstr "Plantilla."
 
@@ -3114,6 +3190,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Add."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Agent"
 msgstr ""
 
 #. SysConfig
