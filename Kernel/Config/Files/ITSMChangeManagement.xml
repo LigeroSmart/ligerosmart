@@ -120,7 +120,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">Add a change.</Description>
-                <Title>Add</Title>
+                <Title Translatable="1">Add</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description Translatable="1">New</Description>
@@ -144,7 +144,7 @@
                 <GroupRo>itsm-change-builder</GroupRo>
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">Add a change from template.</Description>
-                <Title>Add from template</Title>
+                <Title Translatable="1">Add from template</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <NavBar>
                     <Description Translatable="1">New (from template)</Description>
@@ -844,7 +844,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::OverviewSmall</Item>
-                <Item Key="Name">Small</Item>
+                <Item Key="Name" Translatable="1">Small</Item>
                 <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
             </Hash>
@@ -857,7 +857,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMTemplate::OverviewSmall</Item>
-                <Item Key="Name">Small</Item>
+                <Item Key="Name" Translatable="1">Small</Item>
                 <Item Key="NameShort">S</Item>
                 <Item Key="PageShown">25</Item>
             </Hash>
@@ -870,8 +870,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketMenu::ITSMChange</Item>
-                <Item Key="Name">Create Change</Item>
-                <Item Key="Description" Translatable="1">Create a change from this ticket!</Item>
+                <Item Key="Name" Translatable="1">Create Change</Item>
+                <Item Key="Description" Translatable="1">Create a change from this ticket.</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
                 <Item Key="Link">Action=AgentITSMChangeAdd;TicketID=[% Data.TicketID | html %]</Item>
             </Hash>
@@ -884,8 +884,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketMenu::ITSMChange</Item>
-                <Item Key="Name">Create Change (from template)</Item>
-                <Item Key="Description" Translatable="1">Create a change (from template) from this ticket!</Item>
+                <Item Key="Name" Translatable="1">Create Change (from Template)</Item>
+                <Item Key="Description" Translatable="1">Create a change (from template) from this ticket.</Item>
                 <Item Key="Action">AgentITSMChangeAddFromTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeAddFromTemplate;TicketID=[% Data.TicketID | html %]</Item>
             </Hash>
@@ -898,7 +898,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Back</Item>
+                <Item Key="Name" Translatable="1">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">[% Env("LastScreenChanges") %]</Item>
@@ -913,7 +913,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">History</Item>
+                <Item Key="Name" Translatable="1">History</Item>
                 <Item Key="Description" Translatable="1">History</Item>
                 <Item Key="Action">AgentITSMChangeHistory</Item>
                 <Item Key="Link">Action=AgentITSMChangeHistory;ChangeID=[% Data.ChangeID | html %]</Item>
@@ -928,8 +928,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Print</Item>
-                <Item Key="Description" Translatable="1">Print the change</Item>
+                <Item Key="Name" Translatable="1">Print</Item>
+                <Item Key="Description" Translatable="1">Print the change.</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="LinkParam">target="print_change"</Item>
@@ -944,8 +944,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Edit</Item>
-                <Item Key="Description" Translatable="1">Edit the change</Item>
+                <Item Key="Name" Translatable="1">Edit</Item>
+                <Item Key="Description" Translatable="1">Edit the change.</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
                 <Item Key="Link">Action=AgentITSMChangeEdit;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -959,8 +959,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Involved Persons</Item>
-                <Item Key="Description" Translatable="1">Change involved persons of the change</Item>
+                <Item Key="Name" Translatable="1">Involved Persons</Item>
+                <Item Key="Description" Translatable="1">Change involved persons of the change.</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
                 <Item Key="Link">Action=AgentITSMChangeInvolvedPersons;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -974,8 +974,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Add Workorder</Item>
-                <Item Key="Description" Translatable="1">Add a workorder to the change</Item>
+                <Item Key="Name" Translatable="1">Add Workorder</Item>
+                <Item Key="Description" Translatable="1">Add a workorder to the change.</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -989,8 +989,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Add Workorder (from template)</Item>
-                <Item Key="Description" Translatable="1">Add a workorder (from template) to the change</Item>
+                <Item Key="Name" Translatable="1">Add Workorder (from Template)</Item>
+                <Item Key="Description" Translatable="1">Add a workorder (from template) to the change.</Item>
                 <Item Key="Action">AgentITSMWorkOrderAddFromTemplate</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAddFromTemplate;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1004,8 +1004,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Conditions</Item>
-                <Item Key="Description" Translatable="1">Edit the conditions of the change</Item>
+                <Item Key="Name" Translatable="1">Conditions</Item>
+                <Item Key="Description" Translatable="1">Edit the conditions of the change.</Item>
                 <Item Key="Action">AgentITSMChangeCondition</Item>
                 <Item Key="Link">Action=AgentITSMChangeCondition;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1019,8 +1019,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Link</Item>
-                <Item Key="Description" Translatable="1">Link another object to the change</Item>
+                <Item Key="Name" Translatable="1">Link</Item>
+                <Item Key="Description" Translatable="1">Link another object to the change.</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMChange;SourceKey=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1034,8 +1034,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuTimeSlot</Item>
-                <Item Key="Name">Move Time Slot</Item>
-                <Item Key="Description" Translatable="1">Move all workorders in time</Item>
+                <Item Key="Name" Translatable="1">Move Time Slot</Item>
+                <Item Key="Description" Translatable="1">Move all workorders in time.</Item>
                 <Item Key="Action">AgentITSMChangeTimeSlot</Item>
                 <Item Key="Link">Action=AgentITSMChangeTimeSlot;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1049,8 +1049,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Template</Item>
-                <Item Key="Description" Translatable="1">Save change as a template</Item>
+                <Item Key="Name" Translatable="1">Template</Item>
+                <Item Key="Description" Translatable="1">Save change as a template.</Item>
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1064,8 +1064,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuChangeDelete</Item>
-                <Item Key="Name">Delete</Item>
-                <Item Key="Description" Translatable="1">Delete Change</Item>
+                <Item Key="Name" Translatable="1">Delete</Item>
+                <Item Key="Description" Translatable="1">Delete the change.</Item>
                 <Item Key="Action">AgentITSMChangeDelete</Item>
                 <Item Key="Link">Action=AgentITSMChangeDelete;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">ConfirmDialog</Item>
@@ -1083,8 +1083,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMChange::MenuGeneric</Item>
-                <Item Key="Name">Reset</Item>
-                <Item Key="Description" Translatable="1">Reset change and its workorders</Item>
+                <Item Key="Name" Translatable="1">Reset</Item>
+                <Item Key="Description" Translatable="1">Reset change and its workorders.</Item>
                 <Item Key="Action">AgentITSMChangeReset</Item>
                 <Item Key="Link">Action=AgentITSMChangeReset;ChangeID=[% Data.ChangeID | html %]</Item>
                 <Item Key="Target">ConfirmDialog</Item>
@@ -1102,7 +1102,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
-                <Item Key="Name">Back</Item>
+                <Item Key="Name" Translatable="1">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">[% Env("LastScreenWorkOrders") %]</Item>
@@ -1117,7 +1117,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
-                <Item Key="Name">History</Item>
+                <Item Key="Name" Translatable="1">History</Item>
                 <Item Key="Description" Translatable="1">History</Item>
                 <Item Key="Action">AgentITSMWorkOrderHistory</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderHistory;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
@@ -1132,8 +1132,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
-                <Item Key="Name">Print</Item>
-                <Item Key="Description" Translatable="1">Print the workorder</Item>
+                <Item Key="Name" Translatable="1">Print</Item>
+                <Item Key="Description" Translatable="1">Print the workorder.</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1147,8 +1147,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
-                <Item Key="Name">Edit</Item>
-                <Item Key="Description" Translatable="1">Edit the workorder</Item>
+                <Item Key="Name" Translatable="1">Edit</Item>
+                <Item Key="Description" Translatable="1">Edit the workorder.</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderEdit;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1162,8 +1162,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithTakePermission</Item>
-                <Item Key="Name">Take Workorder</Item>
-                <Item Key="Description" Translatable="1">Take the workorder</Item>
+                <Item Key="Name" Translatable="1">Take Workorder</Item>
+                <Item Key="Description" Translatable="1">Take the workorder.</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">ConfirmDialog</Item>
@@ -1181,8 +1181,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
-                <Item Key="Name">WorkOrderAgent</Item>
-                <Item Key="Description" Translatable="1">Set the agent for the workorder</Item>
+                <Item Key="Name" Translatable="1">Workorder Agent</Item>
+                <Item Key="Description" Translatable="1">Set the agent for the workorder.</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAgent;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1196,7 +1196,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
-                <Item Key="Name">Report</Item>
+                <Item Key="Name" Translatable="1">Report</Item>
                 <Item Key="Description" Translatable="1">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderReport;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
@@ -1211,8 +1211,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuGeneric</Item>
-                <Item Key="Name">Link</Item>
-                <Item Key="Description" Translatable="1">Link another object to the workorder</Item>
+                <Item Key="Name" Translatable="1">Link</Item>
+                <Item Key="Description" Translatable="1">Link another object to the workorder.</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject;SourceObject=ITSMWorkOrder;SourceKey=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1226,8 +1226,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
-                <Item Key="Name">Template</Item>
-                <Item Key="Description" Translatable="1">Save workorder as a template</Item>
+                <Item Key="Name" Translatable="1">Template</Item>
+                <Item Key="Description" Translatable="1">Save workorder as a template.</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTemplate;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1241,8 +1241,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrder::MenuWithPermissionFromChange</Item>
-                <Item Key="Name">Delete</Item>
-                <Item Key="Description" Translatable="1">Delete Workorder</Item>
+                <Item Key="Name" Translatable="1">Delete</Item>
+                <Item Key="Description" Translatable="1">Delete the workorder.</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderDelete;WorkOrderID=[% Data.WorkOrderID | html %]</Item>
                 <Item Key="Target">ConfirmDialog</Item>
@@ -4584,9 +4584,10 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
-                <Item Key="Column">Other Settings</Item>
+                <Item Key="Column" Translatable="1">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Screen after creating a workorder</Item>
-                <Item Key="Key" Translatable="1">Configure which screen should be shown after a new workorder has been created.</Item>
+                <Item Key="Desc" Translatable="1">Configure which screen should be shown after a new workorder has been created.</Item>
+                <Item Key="Key" Translatable="1">Screen</Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="AgentITSMWorkOrderZoom">WorkorderZoom</Item>
@@ -4607,7 +4608,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
-                <Item Key="Column">Other Settings</Item>
+                <Item Key="Column" Translatable="1">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Change Overview "Small" Limit</Item>
                 <Item Key="Key" Translatable="1">Change limit per page for Change Overview "Small"</Item>
                 <Item Key="Data">
@@ -4634,7 +4635,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
-                <Item Key="Column">Other Settings</Item>
+                <Item Key="Column" Translatable="1">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Change and WorkOrder templates edited by this user.</Item>
                 <Item Key="Key" Translatable="1">Change and WorkOrder templates edited by this user.</Item>
                 <Item Key="Block">Input</Item>
