@@ -628,10 +628,11 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Templat Change dan UrutanKerja diedit oleh pengguna ini.';
+    $Self->{Translation}->{'Change and Workorder Templates'} = '';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = '';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Had Change untuk setiap muka surat untuk Tinjauan Change "Kecil"';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Tukar router carian backend antara muka ejen.';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =

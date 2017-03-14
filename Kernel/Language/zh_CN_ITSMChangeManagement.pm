@@ -628,10 +628,11 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
     $Self->{Translation}->{'Change Zoom.'} = '变更详情。';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '这个用户编辑的变更模板和工作指令模板。';
+    $Self->{Translation}->{'Change and Workorder Templates'} = '';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = '变更区域。';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '变更概览简洁模式每页变更数限制';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '服务人员界面变更搜索后端路由';
     $Self->{Translation}->{'Condition Overview'} = '条件概览';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =

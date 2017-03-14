@@ -628,10 +628,11 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Változásnyomtatás.';
     $Self->{Translation}->{'Change Schedule.'} = 'Változtatási ütemterv.';
     $Self->{Translation}->{'Change Zoom.'} = 'Változásnagyítás.';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'A felhasználó által szerkesztett változás és munkamegrendelés sablonok.';
+    $Self->{Translation}->{'Change and Workorder Templates'} = '';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = 'Változásterület.';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Oldalankénti változás korlát a „kis” változás áttekintőnél';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Az ügyintézői felület változás keresési háttérprogram útválasztója.';
     $Self->{Translation}->{'Condition Overview'} = 'Feltétel áttekintés';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =

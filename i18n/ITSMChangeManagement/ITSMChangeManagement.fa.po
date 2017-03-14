@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-13 15:03+0000\n"
-"PO-Revision-Date: 2017-03-13 14:04+0000\n"
+"POT-Creation-Date: 2017-03-14 10:19+0000\n"
+"PO-Revision-Date: 2017-03-14 09:20+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -1808,7 +1808,11 @@ msgid "Change Zoom."
 msgstr ""
 
 #. SysConfig
-msgid "Change and WorkOrder templates edited by this user."
+msgid "Change and Workorder Templates"
+msgstr ""
+
+#. SysConfig
+msgid "Change and workorder templates edited by this user."
 msgstr ""
 
 #. SysConfig
@@ -1820,8 +1824,8 @@ msgid "Change involved persons of the change."
 msgstr ""
 
 #. SysConfig
-msgid "Change limit per page for Change Overview \"Small\""
-msgstr "تغییر محدودیت برای هر صفحه برای نمای کوچک تغییر"
+msgid "Change limit per page for Change Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."

@@ -628,10 +628,11 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Печать Изменения.';
     $Self->{Translation}->{'Change Schedule.'} = 'Изменение расписания.';
     $Self->{Translation}->{'Change Zoom.'} = 'Подробный просмотр Изменения.';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = 'Шаблоны Изменения и Задачи отредактированные пользователем.';
+    $Self->{Translation}->{'Change and Workorder Templates'} = '';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = 'Область Изменения.';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Изменить количество записей на странице при просмотре изменений в формате Small.';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Изменить источник поиска (backend) в интерфейсе агента.';
     $Self->{Translation}->{'Condition Overview'} = 'Обзор Условий';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =

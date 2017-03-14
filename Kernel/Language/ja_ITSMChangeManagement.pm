@@ -628,10 +628,11 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
-    $Self->{Translation}->{'Change and WorkOrder templates edited by this user.'} = '';
+    $Self->{Translation}->{'Change and Workorder Templates'} = '';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
     $Self->{Translation}->{'Change area.'} = '';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = '変更管理一覧(S)での1ページ毎の表示数';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Condition Overview'} = '条件の概要';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
