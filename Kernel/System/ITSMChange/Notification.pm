@@ -1537,7 +1537,7 @@ sub _NotificationReplaceMacros {
         # get the dynamic fields for change object
         my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
             Valid      => 1,
-            ObjectType => [ 'ITSMChange' ],
+            ObjectType => ['ITSMChange'],
         ) || [];
 
         # cycle through all change Dynamic Fields
@@ -1561,8 +1561,7 @@ sub _NotificationReplaceMacros {
 
             # fill the DynamicFielsDisplayValues
             if ($DisplayValueStrg) {
-                $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} . '_Value' }
-                    = $DisplayValueStrg->{Value};
+                $ChangeData{ 'DynamicField_' . $DynamicFieldConfig->{Name} . '_Value' } = $DisplayValueStrg->{Value};
             }
 
             # get the readable value (key) for each dynamic field
@@ -1626,7 +1625,7 @@ sub _NotificationReplaceMacros {
         # get the dynamic fields for workorder object
         my $DynamicFieldList = $DynamicFieldObject->DynamicFieldListGet(
             Valid      => 1,
-            ObjectType => [ 'ITSMWorkOrder' ],
+            ObjectType => ['ITSMWorkOrder'],
         ) || [];
 
         # cycle through all workorder Dynamic Fields
@@ -1650,8 +1649,7 @@ sub _NotificationReplaceMacros {
 
             # fill the DynamicFielsDisplayValues
             if ($DisplayValueStrg) {
-                $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} . '_Value' }
-                    = $DisplayValueStrg->{Value};
+                $WorkOrderData{ 'DynamicField_' . $DynamicFieldConfig->{Name} . '_Value' } = $DisplayValueStrg->{Value};
             }
 
             # get the readable value (key) for each dynamic field
