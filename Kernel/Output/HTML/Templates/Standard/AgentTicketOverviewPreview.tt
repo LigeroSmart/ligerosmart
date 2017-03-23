@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
+# $origin: otrs - 7113936e4ca6a142762b5f1628d5ec1ba16872b3 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -139,7 +139,7 @@
 [% RenderBlockEnd("Service") %]
                         <tr>
                             <td>
-                                <label>[% Translate("Owner") | html %]</label><div title="[% Data.UserFirstname | html %] [% Data.UserLastname | html %] ([% Data.Owner | html %])">[% Data.UserFirstname | truncate(15) | html %] [% Data.UserLastname | truncate(15) | html %]</div>
+                                <label>[% Translate("Owner") | html %]</label><div title="[% Data.UserFirstname | html %] [% Data.UserLastname | html %] ([% Data.Owner | html %])">[% Data.UserFullname | truncate(30) | html %]</div>
                             </td>
                             <td>
                                 <label>[% Translate("Lock") | html %]</label><div title="[% Translate(Data.Lock) | html %]">[% Translate(Data.Lock) | html %]</div>
@@ -383,6 +383,11 @@
 
         // prevent MasterAction on Dynamic Fields links
         if ($(Event.target).hasClass('DynamicFieldLink')) {
+            return true;
+        }
+
+        // Prevent MasterAction on Modernize input fields.
+        if ($(Event.target).hasClass('InputField_Search')) {
             return true;
         }
 

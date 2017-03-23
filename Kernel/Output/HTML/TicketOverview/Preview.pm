@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - b3d9059e40a85973298a845a0de025a5daf3534a - Kernel/Output/HTML/TicketOverview/Preview.pm
+# $origin: otrs - 7113936e4ca6a142762b5f1628d5ec1ba16872b3 - Kernel/Output/HTML/TicketOverview/Preview.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -406,8 +406,9 @@ sub _Show {
     );
 
     $Param{StandardResponsesStrg} = $LayoutObject->BuildSelection(
-        Name => 'ResponseID',
-        Data => $StandardTemplates{Answer} || {},
+        Name  => 'ResponseID',
+        Class => 'Modernize',
+        Data  => $StandardTemplates{Answer} || {},
     );
 
     # customer info
@@ -1180,9 +1181,10 @@ sub _Show {
 
                     # build html string
                     my $StandardResponsesStrg = $LayoutObject->BuildSelection(
-                        Name => 'ResponseID',
-                        ID   => 'ResponseID' . $ArticleItem->{ArticleID},
-                        Data => \@StandardResponseArray,
+                        Name  => 'ResponseID',
+                        Class => 'Modernize',
+                        ID    => 'ResponseID' . $ArticleItem->{ArticleID},
+                        Data  => \@StandardResponseArray,
                     );
 
                     $LayoutObject->Block(

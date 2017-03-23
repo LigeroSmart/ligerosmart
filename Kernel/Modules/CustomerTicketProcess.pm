@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - c7823ea24d1a48cae54f16eba31c13ce5d2b8960 - Kernel/Modules/CustomerTicketProcess.pm
+# $origin: otrs - c0c06922975f3ae8bb31eccda0ad6adea02a9f8b - Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3736,18 +3736,18 @@ sub _StoreActivityDialog {
         # Make sure the activity dialog to save is still the correct activity
         my $Activity = $Kernel::OM->Get('Kernel::System::ProcessManagement::Activity')->ActivityGet(
             ActivityEntityID => $ActivityEntityID,
-            Interface        => ['AgentInterface'],
+            Interface        => ['CustomerInterface'],
         );
         my %ActivityDialogs = reverse %{ $Activity->{ActivityDialog} // {} };
         if ( !$ActivityDialogs{$ActivityDialogEntityID} ) {
 
             return $Self->_ShowDialogError(
                 Message => $LayoutObject->{LanguageObject}->Translate(
-                    'This activity dialog does not belong to current activity in Ticket %s!',
+                    'This step does not belong anymore the current activity in process for Ticket %s!',
                     $Ticket{TicketID},
                 ),
                 Comment => Translatable(
-                    'It might be possible that the ticket was updated by another user in the mean time, please close this window and reload ticket.'
+                    'Another user changed this ticket in the meantime. Please close this window and reload the ticket.'
                 ),
             );
         }

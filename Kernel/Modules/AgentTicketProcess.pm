@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 7b9aa261f5203715a567c20e6e99db8f21f48ea0 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 1ef2afa76d6030b6a88003d6785a67fa58c75a6f - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4891,11 +4891,11 @@ sub _StoreActivityDialog {
 
             return $Self->_ShowDialogError(
                 Message => $LayoutObject->{LanguageObject}->Translate(
-                    'This activity dialog does not belong to current activity in Ticket %s!',
+                    'This step does not belong anymore the current activity in process for Ticket %s!',
                     $Ticket{TicketID},
                 ),
                 Comment => Translatable(
-                    'It might be possible that the ticket was updated by another user in the mean time, please close this window and reload ticket.'
+                    'Another user changed this ticket in the meantime. Please close this window and reload the ticket.'
                 ),
             );
         }

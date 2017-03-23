@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 0ad16a74c74bd97ecf136c44011cea4ea9ca9e95 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 89413fb7ae90e8cbe69cf08484e92d43060092a8 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -378,7 +378,8 @@ sub Run {
     DYNAMICFIELD:
     for my $DynamicFieldItem ( sort keys %DynamicFieldValues ) {
         next DYNAMICFIELD if !$DynamicFieldItem;
-        next DYNAMICFIELD if !$DynamicFieldValues{$DynamicFieldItem};
+        next DYNAMICFIELD if !defined $DynamicFieldValues{$DynamicFieldItem};
+        next DYNAMICFIELD if !length $DynamicFieldValues{$DynamicFieldItem};
 
         $DynamicFieldACLParameters{ 'DynamicField_' . $DynamicFieldItem } = $DynamicFieldValues{$DynamicFieldItem};
     }
@@ -1134,7 +1135,8 @@ sub Run {
         DYNAMICFIELD:
         for my $DynamicFieldItem ( sort keys %DynamicFieldValues ) {
             next DYNAMICFIELD if !$DynamicFieldItem;
-            next DYNAMICFIELD if !$DynamicFieldValues{$DynamicFieldItem};
+            next DYNAMICFIELD if !defined $DynamicFieldValues{$DynamicFieldItem};
+            next DYNAMICFIELD if !length $DynamicFieldValues{$DynamicFieldItem};
 
             $DynamicFieldACLParameters{ 'DynamicField_' . $DynamicFieldItem } = $DynamicFieldValues{$DynamicFieldItem};
         }
