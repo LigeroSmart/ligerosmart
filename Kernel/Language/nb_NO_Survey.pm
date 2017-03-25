@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '';
-    $Self->{Translation}->{'Add New Survey'} = '';
-    $Self->{Translation}->{'Survey Edit'} = 'Rediger spørreundersøkelse';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Rediger spørsmål til spørreundersøkelsen';
-    $Self->{Translation}->{'Question Edit'} = '';
-    $Self->{Translation}->{'Answer Edit'} = '';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
-    $Self->{Translation}->{'Status changed.'} = '';
-    $Self->{Translation}->{'Thank you for your feedback.'} = '';
-    $Self->{Translation}->{'The survey is finished.'} = '';
-    $Self->{Translation}->{'Complete'} = '';
-    $Self->{Translation}->{'Incomplete'} = '';
-    $Self->{Translation}->{'Checkbox (List)'} = '';
-    $Self->{Translation}->{'Radio'} = '';
-    $Self->{Translation}->{'Radio (List)'} = '';
-    $Self->{Translation}->{'Stats Overview'} = 'Statistikkoversikt';
-    $Self->{Translation}->{'Survey Description'} = '';
-    $Self->{Translation}->{'Survey Introduction'} = '';
-    $Self->{Translation}->{'Yes/No'} = '';
-    $Self->{Translation}->{'YesNo'} = '';
-    $Self->{Translation}->{'answered'} = '';
-    $Self->{Translation}->{'not answered'} = '';
-    $Self->{Translation}->{'Stats Detail'} = '';
-    $Self->{Translation}->{'Stats Details'} = '';
-    $Self->{Translation}->{'You have already answered the survey.'} = '';
-    $Self->{Translation}->{'Survey#'} = '';
-    $Self->{Translation}->{'- No queue selected -'} = '';
-    $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Lag ny spørreundersøkelse';
     $Self->{Translation}->{'Introduction'} = 'Introduksjon';
+    $Self->{Translation}->{'Survey Introduction'} = '';
     $Self->{Translation}->{'Notification Body'} = 'Melding i varsel-e-post';
     $Self->{Translation}->{'Internal Description'} = 'Intern beskrivelse';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = '';
     $Self->{Translation}->{'Survey Title'} = '';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = '';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Survey Edit'} = 'Rediger spørreundersøkelse';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Rediger spørsmål til spørreundersøkelsen';
+    $Self->{Translation}->{'Yes/No'} = '';
+    $Self->{Translation}->{'Radio (List)'} = '';
+    $Self->{Translation}->{'Checkbox (List)'} = '';
+    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'Complete'} = '';
+    $Self->{Translation}->{'Incomplete'} = '';
+    $Self->{Translation}->{'Question Edit'} = '';
+    $Self->{Translation}->{'Answer Edit'} = '';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Statistikkoversikt';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = '';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = '';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'answered'} = '';
+    $Self->{Translation}->{'not answered'} = '';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = '';
+    $Self->{Translation}->{'The survey is finished.'} = '';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'En modul for spørreundersøkelser';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
-    $Self->{Translation}->{'Edit Survey General Information'} = '';
-    $Self->{Translation}->{'Edit Survey Questions'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
@@ -200,19 +193,20 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = '';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Standard identifikator for en undersøklse, f.eks. Spørreundersøkelse#, MinSpørreundersøkelse#. Standard er Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Állapot módosítása -';
-    $Self->{Translation}->{'Add New Survey'} = 'Új kérdőív hozzáadása';
-    $Self->{Translation}->{'Survey Edit'} = 'Kérdőív szerkesztése';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Kérdőív kérdések szerkesztése';
-    $Self->{Translation}->{'Question Edit'} = 'Kérdés szerkesztése';
-    $Self->{Translation}->{'Answer Edit'} = 'Válasz szerkesztése';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nem állítható be az új állapot! Nincsenek kérdések meghatározva.';
-    $Self->{Translation}->{'Status changed.'} = 'Állapot módosítva.';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'Köszönjük a visszajelzését.';
-    $Self->{Translation}->{'The survey is finished.'} = 'A kérdőív befejeződött.';
-    $Self->{Translation}->{'Complete'} = 'Kész';
-    $Self->{Translation}->{'Incomplete'} = 'Befejezetlen';
-    $Self->{Translation}->{'Checkbox (List)'} = 'Jelölőnégyzet (lista)';
-    $Self->{Translation}->{'Radio'} = 'Választógomb';
-    $Self->{Translation}->{'Radio (List)'} = 'Választógomb (lista)';
-    $Self->{Translation}->{'Stats Overview'} = 'Statisztikák áttekintése';
-    $Self->{Translation}->{'Survey Description'} = 'Kérdőív leírása';
-    $Self->{Translation}->{'Survey Introduction'} = 'Kérdőív bevezetése';
-    $Self->{Translation}->{'Yes/No'} = 'Igen/Nem';
-    $Self->{Translation}->{'YesNo'} = 'IgenNem';
-    $Self->{Translation}->{'answered'} = 'megválaszolt';
-    $Self->{Translation}->{'not answered'} = 'nem megválaszolt';
-    $Self->{Translation}->{'Stats Detail'} = 'Statisztikák részlete';
-    $Self->{Translation}->{'Stats Details'} = 'Statisztikák részletei';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'Már kitöltötte a kérdőívet.';
-    $Self->{Translation}->{'Survey#'} = 'Kérdőív#';
-    $Self->{Translation}->{'- No queue selected -'} = '- Nincs várólista kijelölve -';
-    $Self->{Translation}->{'Master'} = 'Mester';
-    $Self->{Translation}->{'New Status'} = 'Új állapot';
-    $Self->{Translation}->{'Question Type'} = 'Kérdés típusa';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Új kérdőív létrehozása';
     $Self->{Translation}->{'Introduction'} = 'Bevezetés';
+    $Self->{Translation}->{'Survey Introduction'} = 'Kérdőív bevezetése';
     $Self->{Translation}->{'Notification Body'} = 'Értesítés törzse';
     $Self->{Translation}->{'Internal Description'} = 'Belső leírás';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Ezek az Ön válaszai';
     $Self->{Translation}->{'Survey Title'} = 'Kérdőív címe';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'Új kérdőív hozzáadása';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = 'Nincs jogosultsága ehhez a kérdőívhez!';
     $Self->{Translation}->{'No SurveyID is given!'} = 'Nincs kérdőív-azonosító megadva!';
-    $Self->{Translation}->{'Please contact the admin.'} = 'Vegye fel a kapcsolatot a rendszergazdával.';
+    $Self->{Translation}->{'Survey Edit'} = 'Kérdőív szerkesztése';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = 'Nincs jogosultsága ehhez a kérdőívhez vagy kérdéshez!';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = 'Nincs jogosultsága ehhez a kérdőívhez, kérdéshez vagy válaszhoz!';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Kérdőív kérdések szerkesztése';
+    $Self->{Translation}->{'Yes/No'} = 'Igen/Nem';
+    $Self->{Translation}->{'Radio (List)'} = 'Választógomb (lista)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Jelölőnégyzet (lista)';
+    $Self->{Translation}->{'Question Type'} = 'Kérdés típusa';
+    $Self->{Translation}->{'Complete'} = 'Kész';
+    $Self->{Translation}->{'Incomplete'} = 'Befejezetlen';
+    $Self->{Translation}->{'Question Edit'} = 'Kérdés szerkesztése';
+    $Self->{Translation}->{'Answer Edit'} = 'Válasz szerkesztése';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Statisztikák áttekintése';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Nincs jogosultsága ehhez a kérdőívhez vagy a statisztikák részleteihez!';
+    $Self->{Translation}->{'Stats Detail'} = 'Statisztikák részlete';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nem állítható be az új állapot! Nincsenek kérdések meghatározva.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Nem állítható be új állapot! A kérdések nincsenek befejezve.';
+    $Self->{Translation}->{'Status changed.'} = 'Állapot módosítva.';
+    $Self->{Translation}->{'- No queue selected -'} = '- Nincs várólista kijelölve -';
     $Self->{Translation}->{'- No ticket type selected -'} = '- Nincs jegytípus kiválasztva -';
     $Self->{Translation}->{'- No ticket service selected -'} = '- Nincs jegyszolgáltatás kiválasztva -';
+    $Self->{Translation}->{'- Change Status -'} = '- Állapot módosítása -';
     $Self->{Translation}->{'master'} = 'mester';
-    $Self->{Translation}->{'Survey %s'} = 'Kérdőív %s';
+    $Self->{Translation}->{'New Status'} = 'Új állapot';
+    $Self->{Translation}->{'Survey Description'} = 'Kérdőív leírása';
+    $Self->{Translation}->{'answered'} = 'megválaszolt';
+    $Self->{Translation}->{'not answered'} = 'nem megválaszolt';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Köszönjük a visszajelzését.';
+    $Self->{Translation}->{'The survey is finished.'} = 'A kérdőív befejeződött.';
     $Self->{Translation}->{'Survey Message!'} = 'Kérdőív üzenet!';
     $Self->{Translation}->{'Module not enabled.'} = 'A modul nincs engedélyezve.';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         'A beszúrt kérdőívkulcs érvénytelen. Ha egy hivatkozást követett, akkor az talán elavult vagy sérült lehet.';
     $Self->{Translation}->{'Survey Vote'} = 'Kérdőív szavazás';
     $Self->{Translation}->{'Survey Vote Data'} = 'Kérdőív szavazás adatok';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Már kitöltötte a kérdőívet.';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Egy kérdőív modul.';
@@ -171,8 +164,8 @@ sub Data {
         'Meghatározza a Rich Text nézetek legnagyobb magasságát a kérdőív nagyítás elemeknél.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. Ennek a beállításnak nincs hatása az oszlopok helyzetére.';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'Kérdőív általános információinak szerkesztése';
-    $Self->{Translation}->{'Edit Survey Questions'} = 'Kérdőív kérdések szerkesztése';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'A szavazási adatok megjelenítése képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'A küldési feltétel ellenőrzésének engedélyezése vagy letiltása a szolgáltatásnál.';
@@ -200,19 +193,20 @@ sub Data {
         'Egy hivatkozást jelenít meg a menüben az ügyintézői felület kérdőív nagyítási nézetébe való visszatéréshez.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy kérdőív statisztika részleteibe való nagyításhoz az ügyintézői felületen az elem nagyítási nézetében.';
+    $Self->{Translation}->{'Stats Details'} = 'Statisztikák részletei';
     $Self->{Translation}->{'Survey Add Module.'} = 'Kérdőív hozzáadás modul.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Kérdőív szerkesztés modul.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Kérdőív áttekintő „kis” korlát';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Kérdőív statisztikák modul.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Kérdőív nagyítás modul.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Oldalankénti kérdőív korlát a „kis” kérdőív áttekintőnél';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'A kérdőívek nem kerülnek elküldésre a beállított e-mail címekre.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Egy kérdőív azonosítója, például Survey#, MySurvey#. Az alapértelmezett: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhez az ügyfeleknek, ha egy jegy le van zárva.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Késleltetett kérdőívkérések küldésének aktiválása.';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Nagyítás a statisztikák részleteibe';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

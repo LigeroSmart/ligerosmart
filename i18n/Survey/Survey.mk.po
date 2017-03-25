@@ -5,135 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Macedonian (http://www.transifex.com/otrs/OTRS/language/mk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: mk\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- Промена на статусот -"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "Додади Новa Анкета"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "Уреди ја анкетата"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "Уреди ги прашањата за анкетата"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "Уреди ги прашањета"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "Уреди ги одговорите"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "Не може да постави нов статус! Нема дефинирани прашања."
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "Статусот е променет."
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "Ви благодариме за вашиот одговор."
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "Анкетата е завршена."
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "Комплетно"
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "Некомплетно"
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "Обележувач (Листа)"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "Копче"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "Листа од копчиња"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "Преглед на Статистика"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "Опис на анкета"
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "Вовед во анкета"
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "Да/Не"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "ДаНе"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "одговорено"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "не одговорено"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "Детаљ од Статистиката"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr "Детали од Статистиката"
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "Веќе ја одговоривте анкетата."
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "Анкета#"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "-Не е избран ред-"
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr "Главен"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "Нов Статус"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "Тип на прашање"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -142,6 +22,10 @@ msgstr "Креирај нова анкета"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "Вовед"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "Вовед во анкета"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -333,6 +217,10 @@ msgstr "Овие се ваши одговори"
 msgid "Survey Title"
 msgstr "Насолoв на анкета"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "Додади Новa Анкета"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -342,8 +230,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr ""
+msgid "Survey Edit"
+msgstr "Уреди ја анкетата"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -353,13 +241,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "Уреди ги прашањата за анкетата"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "Да/Не"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "Листа од копчиња"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "Обележувач (Листа)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "Тип на прашање"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "Комплетно"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "Некомплетно"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "Уреди ги прашањета"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "Уреди ги одговорите"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Преглед на Статистика"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Детаљ од Статистиката"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Не може да постави нов статус! Нема дефинирани прашања."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Статусот е променет."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "-Не е избран ред-"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -370,12 +314,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Промена на статусот -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "Нов Статус"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "Опис на анкета"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "одговорено"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "не одговорено"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "Ви благодариме за вашиот одговор."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "Анкетата е завршена."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -410,6 +378,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "Веќе ја одговоривте анкетата."
 
 #. SysConfig
 msgid "A Survey Module."
@@ -476,12 +448,12 @@ msgid ""
 msgstr "Дефинира прикажани колони во прегледот на анкети. Оваа опција нема ефект врз позицијата на колоните."
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "Уреди ги општите информации за Анкета"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "Уредување на анкетни прашања"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -559,6 +531,10 @@ msgid ""
 msgstr "Прикажува во менито линкот за детален приказ на статиситики во детален поглед во интерфејсот на агент"
 
 #. SysConfig
+msgid "Stats Details"
+msgstr "Детали од Статистиката"
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr ""
 
@@ -579,8 +555,8 @@ msgid "Survey Zoom Module."
 msgstr "Модул за Детален приказ на Анкета."
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr "Ограничување број на анкети по страници за прегчед \"Мали\""
+msgid "Survey limit per page for Survey Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -603,5 +579,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
-msgstr "Детален приказ на статистика"
+msgid "Zoom into statistics details."
+msgstr ""

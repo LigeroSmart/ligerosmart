@@ -4,135 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- Badilisha Hali-"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "Ongeza utafiti mpya"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "Hariri utafiti"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "Hariri maswali ya utafiti"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "Hariri maswali"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "Hariri majibu"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "Sioni hali mpya! Hakuna maswali yaliyofafanuliwa."
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "Hali imebadilika"
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "Asante kwa majibu yako."
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "Utafiti umemalizika"
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "Kamili"
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "Isiyo kamili"
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "Cheki boksi (orodha)"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "Redio"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "Redio (Orodha)"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "Mapitio ya takwimu"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "Maelezo ya tafiti"
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "Utangulizi wa tafiti"
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "Ndio/Hapana"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "NdioHapana"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "Yaliyojibiwa"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "Yasiyojibiwa"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "Maelezo ya tafiti"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr "Maelezo ya tafiti"
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "Umekwishajibu tafiti"
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "Tafiti#"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "- Hakuna foleni iliyochaguliwa-"
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr "Fuzu"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "Hali mpya"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "Aina ya swali"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -141,6 +21,10 @@ msgstr "Tengeneza tafiti mpya"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "Utangulizi"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "Utangulizi wa tafiti"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -332,6 +216,10 @@ msgstr "Haya ni majibu yako"
 msgid "Survey Title"
 msgstr "Kichwa cha habari cha utafiti"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "Ongeza utafiti mpya"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -341,8 +229,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr ""
+msgid "Survey Edit"
+msgstr "Hariri utafiti"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -352,13 +240,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "Hariri maswali ya utafiti"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "Ndio/Hapana"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "Redio (Orodha)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "Cheki boksi (orodha)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "Aina ya swali"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "Kamili"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "Isiyo kamili"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "Hariri maswali"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "Hariri majibu"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Mapitio ya takwimu"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Maelezo ya tafiti"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Sioni hali mpya! Hakuna maswali yaliyofafanuliwa."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Hali imebadilika"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "- Hakuna foleni iliyochaguliwa-"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -369,12 +313,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Badilisha Hali-"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "Hali mpya"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "Maelezo ya tafiti"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "Yaliyojibiwa"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "Yasiyojibiwa"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "Asante kwa majibu yako."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "Utafiti umemalizika"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -409,6 +377,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "Umekwishajibu tafiti"
 
 #. SysConfig
 msgid "A Survey Module."
@@ -475,12 +447,12 @@ msgid ""
 msgstr "Inafafanua safu iliyoonyeshwa kwenye mapitio ya utafiti. Hili chaguo halina athari kwa nafasi ya safu. "
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "Haririr taarifa za ujumla za savei"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "Hariri maswali ya savei"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -558,6 +530,10 @@ msgid ""
 msgstr "Inaonyesha kiungo katika menyu ili kukuza maelezo ya takwimu za utafiti katika muonekano uliokuzwa wa kiolesura cha wakala."
 
 #. SysConfig
+msgid "Stats Details"
+msgstr "Maelezo ya tafiti"
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr ""
 
@@ -578,8 +554,8 @@ msgid "Survey Zoom Module."
 msgstr "Moduli ya kukuza savei"
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr "Kikomo cha savei kwa kurasa kwa ajili ya mapitio ya savei \"Ndogo\""
+msgid "Survey limit per page for Survey Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -602,5 +578,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
-msgstr "Kuza maelezo ya takwimu"
+msgid "Zoom into statistics details."
+msgstr ""

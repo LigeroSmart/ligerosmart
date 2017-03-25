@@ -3,135 +3,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "Rediger spørreundersøkelse"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "Rediger spørsmål til spørreundersøkelsen"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr ""
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "Statistikkoversikt"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -140,6 +20,10 @@ msgstr "Lag ny spørreundersøkelse"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "Introduksjon"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -331,6 +215,10 @@ msgstr ""
 msgid "Survey Title"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -340,8 +228,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr ""
+msgid "Survey Edit"
+msgstr "Rediger spørreundersøkelse"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -351,12 +239,68 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "Rediger spørsmål til spørreundersøkelsen"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Statistikkoversikt"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
@@ -368,11 +312,35 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
+msgid "New Status"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -407,6 +375,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
 msgstr ""
 
 #. SysConfig
@@ -474,11 +446,11 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Edit Survey General Information"
+msgid "Edit survey general information."
 msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
+msgid "Edit survey questions."
 msgstr ""
 
 #. SysConfig
@@ -557,6 +529,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Stats Details"
+msgstr ""
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr ""
 
@@ -577,7 +553,7 @@ msgid "Survey Zoom Module."
 msgstr ""
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
+msgid "Survey limit per page for Survey Overview \"Small\"."
 msgstr ""
 
 #. SysConfig
@@ -601,5 +577,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
+msgid "Zoom into statistics details."
 msgstr ""

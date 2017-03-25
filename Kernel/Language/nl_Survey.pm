@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Status wijzigen -';
-    $Self->{Translation}->{'Add New Survey'} = 'Nieuwe enquête toevoegen';
-    $Self->{Translation}->{'Survey Edit'} = 'Bewerk enquête';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Bewerk vragen';
-    $Self->{Translation}->{'Question Edit'} = 'Bewerk vraag';
-    $Self->{Translation}->{'Answer Edit'} = 'Bewerk antwoord';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Kan status niet wijzigen, voeg eerst vragen toe.';
-    $Self->{Translation}->{'Status changed.'} = 'Status bijgewerkt.';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'Bedankt voor uw feedback.';
-    $Self->{Translation}->{'The survey is finished.'} = 'De enquête is ingestuurd.';
-    $Self->{Translation}->{'Complete'} = 'Volledig';
-    $Self->{Translation}->{'Incomplete'} = 'Onvolledig';
-    $Self->{Translation}->{'Checkbox (List)'} = 'Selectievak (lijst)';
-    $Self->{Translation}->{'Radio'} = 'Keuzerondje';
-    $Self->{Translation}->{'Radio (List)'} = 'Keuzerondje (lijst)';
-    $Self->{Translation}->{'Stats Overview'} = 'Statistieken';
-    $Self->{Translation}->{'Survey Description'} = 'Omschrijving';
-    $Self->{Translation}->{'Survey Introduction'} = 'Introductie';
-    $Self->{Translation}->{'Yes/No'} = 'Ja/Nee';
-    $Self->{Translation}->{'YesNo'} = 'JaNee';
-    $Self->{Translation}->{'answered'} = 'beantwoord';
-    $Self->{Translation}->{'not answered'} = 'niet beantwoord';
-    $Self->{Translation}->{'Stats Detail'} = 'Detail';
-    $Self->{Translation}->{'Stats Details'} = 'Stats Details';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'U heeft deze enquête al beantwoord.';
-    $Self->{Translation}->{'Survey#'} = 'Survey#';
-    $Self->{Translation}->{'- No queue selected -'} = '- Geen rij geselecteerd -';
-    $Self->{Translation}->{'Master'} = 'Master';
-    $Self->{Translation}->{'New Status'} = 'Nieuwe Status';
-    $Self->{Translation}->{'Question Type'} = 'Vraagtype';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
     $Self->{Translation}->{'Introduction'} = 'Introductie';
+    $Self->{Translation}->{'Survey Introduction'} = 'Introductie';
     $Self->{Translation}->{'Notification Body'} = 'Body text';
     $Self->{Translation}->{'Internal Description'} = 'Interne omschrijving';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Dit zijn uw antwoorden';
     $Self->{Translation}->{'Survey Title'} = 'Enquêtetitel';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'Nieuwe enquête toevoegen';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = 'Neem contact op met de beheerder.';
+    $Self->{Translation}->{'Survey Edit'} = 'Bewerk enquête';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Bewerk vragen';
+    $Self->{Translation}->{'Yes/No'} = 'Ja/Nee';
+    $Self->{Translation}->{'Radio (List)'} = 'Keuzerondje (lijst)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Selectievak (lijst)';
+    $Self->{Translation}->{'Question Type'} = 'Vraagtype';
+    $Self->{Translation}->{'Complete'} = 'Volledig';
+    $Self->{Translation}->{'Incomplete'} = 'Onvolledig';
+    $Self->{Translation}->{'Question Edit'} = 'Bewerk vraag';
+    $Self->{Translation}->{'Answer Edit'} = 'Bewerk antwoord';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Statistieken';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Detail';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Kan status niet wijzigen, voeg eerst vragen toe.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Status bijgewerkt.';
+    $Self->{Translation}->{'- No queue selected -'} = '- Geen rij geselecteerd -';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Status wijzigen -';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = 'Nieuwe Status';
+    $Self->{Translation}->{'Survey Description'} = 'Omschrijving';
+    $Self->{Translation}->{'answered'} = 'beantwoord';
+    $Self->{Translation}->{'not answered'} = 'niet beantwoord';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Bedankt voor uw feedback.';
+    $Self->{Translation}->{'The survey is finished.'} = 'De enquête is ingestuurd.';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'U heeft deze enquête al beantwoord.';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Een module om enquêtes te onderhouden en te versturen';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
-    $Self->{Translation}->{'Edit Survey General Information'} = '';
-    $Self->{Translation}->{'Edit Survey Questions'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
@@ -200,19 +193,20 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Stats Details'} = 'Stats Details';
     $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = '';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

@@ -5,135 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:02+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- Mengubah Status -"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "Tambahkan survey baru"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "Ubah survey"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "Ubah pertanyaan survey"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "Ubah pertanyaan"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "Ubah jawaban"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "Tidak dapat membuat status baru!  Tidak ada pertanyaan yang di definisikan."
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "Status diubah"
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "Terima kasih atas tanggapan anda."
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "Survey telah selesai."
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "Lengkap."
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "Tidak lengkap."
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "Kotak centang (daftar)"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "Radio"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "Radio (daftar)"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "Gambaran status."
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "Deskripsi survey."
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "Keta pengantar survey."
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "Ya/Tidak"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "YaTidak"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "Terjawab"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "Belum dijawab"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "Rincian Status"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr "Rincian Status"
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "Anda telah menjawab survey ini."
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "Survey#"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "- Tidak ada antrian yang dipilih - "
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr "Induk"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "Status baru"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "Tipe pertanyaan"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -142,6 +22,10 @@ msgstr "Buat survey baru"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "Pengantar"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "Keta pengantar survey."
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -333,6 +217,10 @@ msgstr "Berikut ini adalah jawaban anda"
 msgid "Survey Title"
 msgstr "Judul survey"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "Tambahkan survey baru"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -342,8 +230,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr "Silahkan hubungi admin."
+msgid "Survey Edit"
+msgstr "Ubah survey"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -353,13 +241,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "Ubah pertanyaan survey"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "Ya/Tidak"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "Radio (daftar)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "Kotak centang (daftar)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "Tipe pertanyaan"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "Lengkap."
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "Tidak lengkap."
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "Ubah pertanyaan"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "Ubah jawaban"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Gambaran status."
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Rincian Status"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Tidak dapat membuat status baru!  Tidak ada pertanyaan yang di definisikan."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Status diubah"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "- Tidak ada antrian yang dipilih - "
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -370,12 +314,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Mengubah Status -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "Status baru"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "Deskripsi survey."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "Terjawab"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "Belum dijawab"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "Terima kasih atas tanggapan anda."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "Survey telah selesai."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -410,6 +378,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "Anda telah menjawab survey ini."
 
 #. SysConfig
 msgid "A Survey Module."
@@ -476,12 +448,12 @@ msgid ""
 msgstr "Definisikan kolom yang di tampilkan pada gambaran survey. Pilihan ini tidak memiliki efek pada posisi kolom tersebut."
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "Ubah informasi umum survey"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "Ubah pertanyaan survey"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -559,6 +531,10 @@ msgid ""
 msgstr "Tampilkan tautan pada menu untuk zoom ke rincian statistik survey pada tampilan zoomnya di antar muka agen."
 
 #. SysConfig
+msgid "Stats Details"
+msgstr "Rincian Status"
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr "Modul menambah survey"
 
@@ -579,8 +555,8 @@ msgid "Survey Zoom Module."
 msgstr "Modul zoom survey"
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr "Batas survey per halaman pada gambaran \"kecil\" survey"
+msgid "Survey limit per page for Survey Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -603,5 +579,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr "Mulai pengiriman permintaan survey yang yang ditunda"
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
-msgstr "Zoom ke rincian statisik."
+msgid "Zoom into statistics details."
+msgstr ""

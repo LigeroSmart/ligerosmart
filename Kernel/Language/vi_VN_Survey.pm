@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Đổi trạng thái -';
-    $Self->{Translation}->{'Add New Survey'} = 'Thêm khảo sát mới';
-    $Self->{Translation}->{'Survey Edit'} = 'Sửa bản khảo sát';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Sửa câu hỏi khảo sát';
-    $Self->{Translation}->{'Question Edit'} = 'Sửa câu hỏi';
-    $Self->{Translation}->{'Answer Edit'} = 'Sửa đáp án';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Không thể đặt trạng thái mới! Không có câu hỏi nào được định nghĩa.';
-    $Self->{Translation}->{'Status changed.'} = 'Trạng thái đã đổi.';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'Cảm ơn bạn đã phản hồi.';
-    $Self->{Translation}->{'The survey is finished.'} = 'Khảo sát đã kết thúc.';
-    $Self->{Translation}->{'Complete'} = 'Hoàn tất';
-    $Self->{Translation}->{'Incomplete'} = 'Chưa hoàn tất';
-    $Self->{Translation}->{'Checkbox (List)'} = 'Hộp kiểm (danh sách)';
-    $Self->{Translation}->{'Radio'} = 'Hộp chọn';
-    $Self->{Translation}->{'Radio (List)'} = 'Hộp chọn (danh sách)';
-    $Self->{Translation}->{'Stats Overview'} = 'Thống kê tổng quát';
-    $Self->{Translation}->{'Survey Description'} = 'Mô tả khảo sát';
-    $Self->{Translation}->{'Survey Introduction'} = 'Giới thiệu khảo sát';
-    $Self->{Translation}->{'Yes/No'} = 'Có/Không';
-    $Self->{Translation}->{'YesNo'} = 'CóKhông';
-    $Self->{Translation}->{'answered'} = 'đã trả lời';
-    $Self->{Translation}->{'not answered'} = 'chưa trả lời';
-    $Self->{Translation}->{'Stats Detail'} = 'Thống kê chi tiết';
-    $Self->{Translation}->{'Stats Details'} = 'Thống kê chi tiết';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'Bạn đã tham gia trả lời khảo sát.';
-    $Self->{Translation}->{'Survey#'} = 'Khảo sát#';
-    $Self->{Translation}->{'- No queue selected -'} = '- Chưa chọn hàng đợi -';
-    $Self->{Translation}->{'Master'} = 'Chính';
-    $Self->{Translation}->{'New Status'} = 'Trạng thái mới';
-    $Self->{Translation}->{'Question Type'} = 'Loại câu hỏi';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Tạo khảo sát mới';
     $Self->{Translation}->{'Introduction'} = 'Giới thiệu';
+    $Self->{Translation}->{'Survey Introduction'} = 'Giới thiệu khảo sát';
     $Self->{Translation}->{'Notification Body'} = 'Nội dung thông báo';
     $Self->{Translation}->{'Internal Description'} = 'Mô tả nội bộ';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Đây là đáp án của bạn';
     $Self->{Translation}->{'Survey Title'} = 'Tiêu đề khảo sát';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'Thêm khảo sát mới';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Survey Edit'} = 'Sửa bản khảo sát';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Sửa câu hỏi khảo sát';
+    $Self->{Translation}->{'Yes/No'} = 'Có/Không';
+    $Self->{Translation}->{'Radio (List)'} = 'Hộp chọn (danh sách)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Hộp kiểm (danh sách)';
+    $Self->{Translation}->{'Question Type'} = 'Loại câu hỏi';
+    $Self->{Translation}->{'Complete'} = 'Hoàn tất';
+    $Self->{Translation}->{'Incomplete'} = 'Chưa hoàn tất';
+    $Self->{Translation}->{'Question Edit'} = 'Sửa câu hỏi';
+    $Self->{Translation}->{'Answer Edit'} = 'Sửa đáp án';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Thống kê tổng quát';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Thống kê chi tiết';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Không thể đặt trạng thái mới! Không có câu hỏi nào được định nghĩa.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Trạng thái đã đổi.';
+    $Self->{Translation}->{'- No queue selected -'} = '- Chưa chọn hàng đợi -';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Đổi trạng thái -';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = 'Trạng thái mới';
+    $Self->{Translation}->{'Survey Description'} = 'Mô tả khảo sát';
+    $Self->{Translation}->{'answered'} = 'đã trả lời';
+    $Self->{Translation}->{'not answered'} = 'chưa trả lời';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Cảm ơn bạn đã phản hồi.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Khảo sát đã kết thúc.';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Bạn đã tham gia trả lời khảo sát.';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Một mô-đun khảo sát';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Định nghĩa số cột hiển thị trong màn hình tổng quát. Tuỳ chọn này không ảnh hưởng đến vị trí của cột.';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'Sửa thông tin khảo sát chung';
-    $Self->{Translation}->{'Edit Survey Questions'} = 'Sửa câu hỏi khảo sát';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Kích hoạt hoặc giải hoạt màn hình ShowVoteData trong giao diện công cộng để hiển thị dữ liệu của một kết quả khảo sát khi khách hàng cố thử trả lời một bản khảo sát hai lần.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Kích hoạt hoặc giải hoạt gửi kiểm tra điều kiện cho dịch vụ.';
@@ -200,19 +193,20 @@ sub Data {
         'Hiển thị liên kết trong trình đơn để quay lại trong khi xem chi tiết khảo sát ở giao diện điều hành viên.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Hiển thị liên kết trong trình đơn để xem thống kê chi tiết của khảo sát trong khi xem chi tiết khảo sát ở giao diện điều hành viên.';
+    $Self->{Translation}->{'Stats Details'} = 'Thống kê chi tiết';
     $Self->{Translation}->{'Survey Add Module.'} = 'Mô đun thêm Khảo sát.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Mô-đun sửa Khảo sát.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Giới hạn danh sách khảo sát tổng quát';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Mô-đun thống kê khảo sát.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Mô-đun xem khảo sát.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Giới hạn số khảo sát trong một trang cho danh sách khảo sát tổng quát.';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Khảo sát sẽ không được gửi đến địa chỉ email đã thiết lập.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Định danh cho khảo sát, ví dụ: Khảo sát#, Khảo sát của tôi#. Ngầm định là Khảo sát#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Mô-đun bắt sự kiện của phiếu yêu cầu để gửi email yêu cầu tự động đến khách hàng nếu phiếu yêu cầu được đóng.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Bẫy gửi yêu cầu khảo sát bị trễ.';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Xem thống kê chi tiết';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

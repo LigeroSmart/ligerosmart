@@ -4,135 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- 更改狀態 -"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "創建新的調查"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "編輯調查"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "編輯調查問題"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "編輯問題"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "編輯回答"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "無法設置新的狀態！還未定義問題。"
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "狀態已更改。"
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "感謝你的反饋。"
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "調查結束。"
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "完整"
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "不完整"
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "複選框（列表）"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "單選"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "單選（列表）"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "統計概況"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "調查描述"
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "調查介紹"
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "是/否"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "是否"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "已回答"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "未回答"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "統計詳情"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "你已經回答了調查。"
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "調查#"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "- 沒有選取佇列 -"
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr ""
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "新狀態"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "問題類別"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -141,6 +21,10 @@ msgstr "創建新的調查"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "介紹"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "調查介紹"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -332,6 +216,10 @@ msgstr "這些是你的回答"
 msgid "Survey Title"
 msgstr "調查標題"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "創建新的調查"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -341,8 +229,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr ""
+msgid "Survey Edit"
+msgstr "編輯調查"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -352,13 +240,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "編輯調查問題"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "是/否"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "單選（列表）"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "複選框（列表）"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "問題類別"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "完整"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "不完整"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "編輯問題"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "編輯回答"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "統計概況"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "統計詳情"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "無法設置新的狀態！還未定義問題。"
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "狀態已更改。"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "- 沒有選取佇列 -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -369,12 +313,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- 更改狀態 -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "新狀態"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "調查描述"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "已回答"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "未回答"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "感謝你的反饋。"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "調查結束。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -409,6 +377,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "你已經回答了調查。"
 
 #. SysConfig
 msgid "A Survey Module."
@@ -475,12 +447,12 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "編輯調查一般信息"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "編輯調查問題"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -558,6 +530,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Stats Details"
+msgstr ""
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr "調查添加模組"
 
@@ -578,7 +554,7 @@ msgid "Survey Zoom Module."
 msgstr "Modul Umfrage-Detailansicht"
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
+msgid "Survey limit per page for Survey Overview \"Small\"."
 msgstr ""
 
 #. SysConfig
@@ -602,5 +578,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
+msgid "Zoom into statistics details."
 msgstr ""

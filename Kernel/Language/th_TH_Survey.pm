@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- เปลี่ยนสถานะ -';
-    $Self->{Translation}->{'Add New Survey'} = 'เพิ่มแบบสอบถาม';
-    $Self->{Translation}->{'Survey Edit'} = 'แก้ไขแบบสอบถาม';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'แบบสอบถามแก้ไขคำถาม';
-    $Self->{Translation}->{'Question Edit'} = 'แก้ไขคำถาม';
-    $Self->{Translation}->{'Answer Edit'} = 'แก้ไขคำตอบ';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม';
-    $Self->{Translation}->{'Status changed.'} = 'สถานภาพเปลี่ยนแล้ว';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'ขอบคุณสำหรับความคิดเห็นของคุณ';
-    $Self->{Translation}->{'The survey is finished.'} = 'แบบสอบถามเสร็จเรียบร้อยแล้ว';
-    $Self->{Translation}->{'Complete'} = 'เสร็จ';
-    $Self->{Translation}->{'Incomplete'} = 'ไม่เสร็จ';
-    $Self->{Translation}->{'Checkbox (List)'} = 'กล่องตรวจสอบ (รายชื่อ)';
-    $Self->{Translation}->{'Radio'} = 'เรดิโอ';
-    $Self->{Translation}->{'Radio (List)'} = 'เรดิโอ(รายชื่อ)';
-    $Self->{Translation}->{'Stats Overview'} = 'สถิติภาพรวม';
-    $Self->{Translation}->{'Survey Description'} = 'คำอธิบายแบบสอบถาม';
-    $Self->{Translation}->{'Survey Introduction'} = 'คำนำแบบสอบถาม';
-    $Self->{Translation}->{'Yes/No'} = 'ใช่/ไม่ใช่';
-    $Self->{Translation}->{'YesNo'} = 'ใช่ไม่ใช่';
-    $Self->{Translation}->{'answered'} = 'ตอบแล้ว';
-    $Self->{Translation}->{'not answered'} = 'ยังไม่ตอบ';
-    $Self->{Translation}->{'Stats Detail'} = 'เนื้อหาสถิติ';
-    $Self->{Translation}->{'Stats Details'} = 'เนื้อหาสถิติ';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'คุณได้ตอบแบบสอบถามนี้แล้ว';
-    $Self->{Translation}->{'Survey#'} = 'แบบสอบถาม#';
-    $Self->{Translation}->{'- No queue selected -'} = '- ไม่มีคิวที่ถูกเลือก -';
-    $Self->{Translation}->{'Master'} = 'มาสเตอร์';
-    $Self->{Translation}->{'New Status'} = 'สถานะใหม่';
-    $Self->{Translation}->{'Question Type'} = 'ประเภทของคำถาม';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'สร้างแบบสอบถามใหม่';
     $Self->{Translation}->{'Introduction'} = 'บทนำ';
+    $Self->{Translation}->{'Survey Introduction'} = 'คำนำแบบสอบถาม';
     $Self->{Translation}->{'Notification Body'} = 'การแจ้งเตือนส่วนเนื้อเรื่อง';
     $Self->{Translation}->{'Internal Description'} = 'รายละเอียดภายใน';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'นี่คือคำตอบของคุณ';
     $Self->{Translation}->{'Survey Title'} = 'หัวข้อแบบสอบถาม';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'เพิ่มแบบสอบถาม';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = 'กรุณาติดต่อผู้ดูแลระบบ';
+    $Self->{Translation}->{'Survey Edit'} = 'แก้ไขแบบสอบถาม';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'แบบสอบถามแก้ไขคำถาม';
+    $Self->{Translation}->{'Yes/No'} = 'ใช่/ไม่ใช่';
+    $Self->{Translation}->{'Radio (List)'} = 'เรดิโอ(รายชื่อ)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'กล่องตรวจสอบ (รายชื่อ)';
+    $Self->{Translation}->{'Question Type'} = 'ประเภทของคำถาม';
+    $Self->{Translation}->{'Complete'} = 'เสร็จ';
+    $Self->{Translation}->{'Incomplete'} = 'ไม่เสร็จ';
+    $Self->{Translation}->{'Question Edit'} = 'แก้ไขคำถาม';
+    $Self->{Translation}->{'Answer Edit'} = 'แก้ไขคำตอบ';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'สถิติภาพรวม';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'เนื้อหาสถิติ';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'สถานภาพเปลี่ยนแล้ว';
+    $Self->{Translation}->{'- No queue selected -'} = '- ไม่มีคิวที่ถูกเลือก -';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- เปลี่ยนสถานะ -';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = 'สถานะใหม่';
+    $Self->{Translation}->{'Survey Description'} = 'คำอธิบายแบบสอบถาม';
+    $Self->{Translation}->{'answered'} = 'ตอบแล้ว';
+    $Self->{Translation}->{'not answered'} = 'ยังไม่ตอบ';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'ขอบคุณสำหรับความคิดเห็นของคุณ';
+    $Self->{Translation}->{'The survey is finished.'} = 'แบบสอบถามเสร็จเรียบร้อยแล้ว';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'คุณได้ตอบแบบสอบถามนี้แล้ว';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'โมดูลแบบสอบถาม';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'กำหนดคอลัมน์ที่จะแสดงในภาพรวมของแบบสอบถามตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'แก้ไขข้อมูลทั่วไปของแบบสอบถาม';
-    $Self->{Translation}->{'Edit Survey Questions'} = 'แก้ไขคำถามในแบบสอบถาม';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'เปิดหรือปิดการใช้งานสกรีน ที่แสดงข้อมูลการโหวตในอินเตอร์เฟซสาธารณะเพื่อจะแสดงผลของแบบสอบถาม เมื่อลูกค้าพยายามที่จะตอบแบบสอบถามครั้งที่สอง';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'เปิดหรือปิดการตรวจสอบเงื่อนไขการส่งสำหรับการบริการ';
@@ -200,19 +193,20 @@ sub Data {
         'แสดงลิงค์ในเมนูเพื่อย้อนกลับในการซูมของอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'แสดงลิงค์ในเมนูเพื่อซูฒไปที่รายละเอียดสถิติของแบบสอบถามในอินเตอร์เฟซของเอเย่นต์';
+    $Self->{Translation}->{'Stats Details'} = 'เนื้อหาสถิติ';
     $Self->{Translation}->{'Survey Add Module.'} = 'แบบสอบถามเพิ่มโมดูล';
     $Self->{Translation}->{'Survey Edit Module.'} = 'แบบสอบถามแก้ไขโมดูล';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'การจำกัดภาพรวมของแบบสอบถาม "ขนาดเล็ก"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'การสำรวจสถิติโมดูล';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'โมดูลซูมแบบสอบถาม';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'ขีดจำกัดของแบบสอบถามในแต่ละหน้าสำหรับภาพรวมแบบสอบถาม';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'จะไม่มีการส่งแบบสอบถามที่อีเมลที่ถูกกำหนดค่า';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'ตัวบ่งชี้สำหรับแบบสอบถาม, ตัวอย่างเช่น แบบสอบถาม# แบบสอบถามของฉัน#. ค่าเริ่มต้นคือแบบสอบถาม#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'โมดูลตั๋วกิจกรรมที่จะส่งอีเมลแบบสอบถามของการร้องขออัตโนมัติให้ลูกค้าในกรณีที่ตั๋วถูกปิด';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'การกระตุ้นการส่งการร้องขอแบบสอบที่ล่าช้า';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'ซูมไปที่รายละเอียดของสถิติ';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

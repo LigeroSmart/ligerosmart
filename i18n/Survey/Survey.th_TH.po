@@ -4,135 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:02+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: th_TH\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- เปลี่ยนสถานะ -"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "เพิ่มแบบสอบถาม"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "แก้ไขแบบสอบถาม"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "แบบสอบถามแก้ไขคำถาม"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "แก้ไขคำถาม"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "แก้ไขคำตอบ"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม"
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "สถานภาพเปลี่ยนแล้ว"
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "แบบสอบถามเสร็จเรียบร้อยแล้ว"
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "เสร็จ"
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "ไม่เสร็จ"
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "กล่องตรวจสอบ (รายชื่อ)"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "เรดิโอ"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "เรดิโอ(รายชื่อ)"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "สถิติภาพรวม"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "คำอธิบายแบบสอบถาม"
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "คำนำแบบสอบถาม"
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "ใช่/ไม่ใช่"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "ใช่ไม่ใช่"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "ตอบแล้ว"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "ยังไม่ตอบ"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "เนื้อหาสถิติ"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr "เนื้อหาสถิติ"
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "คุณได้ตอบแบบสอบถามนี้แล้ว"
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "แบบสอบถาม#"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "- ไม่มีคิวที่ถูกเลือก -"
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr "มาสเตอร์"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "สถานะใหม่"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "ประเภทของคำถาม"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -141,6 +21,10 @@ msgstr "สร้างแบบสอบถามใหม่"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "บทนำ"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "คำนำแบบสอบถาม"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -332,6 +216,10 @@ msgstr "นี่คือคำตอบของคุณ"
 msgid "Survey Title"
 msgstr "หัวข้อแบบสอบถาม"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "เพิ่มแบบสอบถาม"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -341,8 +229,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr "กรุณาติดต่อผู้ดูแลระบบ"
+msgid "Survey Edit"
+msgstr "แก้ไขแบบสอบถาม"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -352,13 +240,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "แบบสอบถามแก้ไขคำถาม"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "ใช่/ไม่ใช่"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "เรดิโอ(รายชื่อ)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "กล่องตรวจสอบ (รายชื่อ)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "ประเภทของคำถาม"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "เสร็จ"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "ไม่เสร็จ"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "แก้ไขคำถาม"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "แก้ไขคำตอบ"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "สถิติภาพรวม"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "เนื้อหาสถิติ"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม"
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "สถานภาพเปลี่ยนแล้ว"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "- ไม่มีคิวที่ถูกเลือก -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -369,12 +313,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- เปลี่ยนสถานะ -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "สถานะใหม่"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "คำอธิบายแบบสอบถาม"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "ตอบแล้ว"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "ยังไม่ตอบ"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "แบบสอบถามเสร็จเรียบร้อยแล้ว"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -409,6 +377,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "คุณได้ตอบแบบสอบถามนี้แล้ว"
 
 #. SysConfig
 msgid "A Survey Module."
@@ -475,12 +447,12 @@ msgid ""
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมของแบบสอบถามตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "แก้ไขข้อมูลทั่วไปของแบบสอบถาม"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "แก้ไขคำถามในแบบสอบถาม"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -558,6 +530,10 @@ msgid ""
 msgstr "แสดงลิงค์ในเมนูเพื่อซูฒไปที่รายละเอียดสถิติของแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
 
 #. SysConfig
+msgid "Stats Details"
+msgstr "เนื้อหาสถิติ"
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr "แบบสอบถามเพิ่มโมดูล"
 
@@ -578,8 +554,8 @@ msgid "Survey Zoom Module."
 msgstr "โมดูลซูมแบบสอบถาม"
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr "ขีดจำกัดของแบบสอบถามในแต่ละหน้าสำหรับภาพรวมแบบสอบถาม"
+msgid "Survey limit per page for Survey Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -602,5 +578,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr "การกระตุ้นการส่งการร้องขอแบบสอบที่ล่าช้า"
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
-msgstr "ซูมไปที่รายละเอียดของสถิติ"
+msgid "Zoom into statistics details."
+msgstr ""

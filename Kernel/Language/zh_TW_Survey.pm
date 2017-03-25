@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- 更改狀態 -';
-    $Self->{Translation}->{'Add New Survey'} = '創建新的調查';
-    $Self->{Translation}->{'Survey Edit'} = '編輯調查';
-    $Self->{Translation}->{'Survey Edit Questions'} = '編輯調查問題';
-    $Self->{Translation}->{'Question Edit'} = '編輯問題';
-    $Self->{Translation}->{'Answer Edit'} = '編輯回答';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '無法設置新的狀態！還未定義問題。';
-    $Self->{Translation}->{'Status changed.'} = '狀態已更改。';
-    $Self->{Translation}->{'Thank you for your feedback.'} = '感謝你的反饋。';
-    $Self->{Translation}->{'The survey is finished.'} = '調查結束。';
-    $Self->{Translation}->{'Complete'} = '完整';
-    $Self->{Translation}->{'Incomplete'} = '不完整';
-    $Self->{Translation}->{'Checkbox (List)'} = '複選框（列表）';
-    $Self->{Translation}->{'Radio'} = '單選';
-    $Self->{Translation}->{'Radio (List)'} = '單選（列表）';
-    $Self->{Translation}->{'Stats Overview'} = '統計概況';
-    $Self->{Translation}->{'Survey Description'} = '調查描述';
-    $Self->{Translation}->{'Survey Introduction'} = '調查介紹';
-    $Self->{Translation}->{'Yes/No'} = '是/否';
-    $Self->{Translation}->{'YesNo'} = '是否';
-    $Self->{Translation}->{'answered'} = '已回答';
-    $Self->{Translation}->{'not answered'} = '未回答';
-    $Self->{Translation}->{'Stats Detail'} = '統計詳情';
-    $Self->{Translation}->{'Stats Details'} = '';
-    $Self->{Translation}->{'You have already answered the survey.'} = '你已經回答了調查。';
-    $Self->{Translation}->{'Survey#'} = '調查#';
-    $Self->{Translation}->{'- No queue selected -'} = '- 沒有選取佇列 -';
-    $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'New Status'} = '新狀態';
-    $Self->{Translation}->{'Question Type'} = '問題類別';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '創建新的調查';
     $Self->{Translation}->{'Introduction'} = '介紹';
+    $Self->{Translation}->{'Survey Introduction'} = '調查介紹';
     $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Internal Description'} = '内部描述';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = '這些是你的回答';
     $Self->{Translation}->{'Survey Title'} = '調查標題';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = '創建新的調查';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Survey Edit'} = '編輯調查';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = '編輯調查問題';
+    $Self->{Translation}->{'Yes/No'} = '是/否';
+    $Self->{Translation}->{'Radio (List)'} = '單選（列表）';
+    $Self->{Translation}->{'Checkbox (List)'} = '複選框（列表）';
+    $Self->{Translation}->{'Question Type'} = '問題類別';
+    $Self->{Translation}->{'Complete'} = '完整';
+    $Self->{Translation}->{'Incomplete'} = '不完整';
+    $Self->{Translation}->{'Question Edit'} = '編輯問題';
+    $Self->{Translation}->{'Answer Edit'} = '編輯回答';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = '統計概況';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = '統計詳情';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '無法設置新的狀態！還未定義問題。';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = '狀態已更改。';
+    $Self->{Translation}->{'- No queue selected -'} = '- 沒有選取佇列 -';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- 更改狀態 -';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = '新狀態';
+    $Self->{Translation}->{'Survey Description'} = '調查描述';
+    $Self->{Translation}->{'answered'} = '已回答';
+    $Self->{Translation}->{'not answered'} = '未回答';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = '感謝你的反饋。';
+    $Self->{Translation}->{'The survey is finished.'} = '調查結束。';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = '你已經回答了調查。';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = '調查模組';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
-    $Self->{Translation}->{'Edit Survey General Information'} = '編輯調查一般信息';
-    $Self->{Translation}->{'Edit Survey Questions'} = '編輯調查問題';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
@@ -200,19 +193,20 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Stats Details'} = '';
     $Self->{Translation}->{'Survey Add Module.'} = '調查添加模組';
     $Self->{Translation}->{'Survey Edit Module.'} = '調查編輯模組';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Stats Module.'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modul Umfrage-Detailansicht';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

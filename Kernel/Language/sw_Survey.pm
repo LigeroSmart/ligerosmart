@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Badilisha Hali-';
-    $Self->{Translation}->{'Add New Survey'} = 'Ongeza utafiti mpya';
-    $Self->{Translation}->{'Survey Edit'} = 'Hariri utafiti';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Hariri maswali ya utafiti';
-    $Self->{Translation}->{'Question Edit'} = 'Hariri maswali';
-    $Self->{Translation}->{'Answer Edit'} = 'Hariri majibu';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Sioni hali mpya! Hakuna maswali yaliyofafanuliwa.';
-    $Self->{Translation}->{'Status changed.'} = 'Hali imebadilika';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'Asante kwa majibu yako.';
-    $Self->{Translation}->{'The survey is finished.'} = 'Utafiti umemalizika';
-    $Self->{Translation}->{'Complete'} = 'Kamili';
-    $Self->{Translation}->{'Incomplete'} = 'Isiyo kamili';
-    $Self->{Translation}->{'Checkbox (List)'} = 'Cheki boksi (orodha)';
-    $Self->{Translation}->{'Radio'} = 'Redio';
-    $Self->{Translation}->{'Radio (List)'} = 'Redio (Orodha)';
-    $Self->{Translation}->{'Stats Overview'} = 'Mapitio ya takwimu';
-    $Self->{Translation}->{'Survey Description'} = 'Maelezo ya tafiti';
-    $Self->{Translation}->{'Survey Introduction'} = 'Utangulizi wa tafiti';
-    $Self->{Translation}->{'Yes/No'} = 'Ndio/Hapana';
-    $Self->{Translation}->{'YesNo'} = 'NdioHapana';
-    $Self->{Translation}->{'answered'} = 'Yaliyojibiwa';
-    $Self->{Translation}->{'not answered'} = 'Yasiyojibiwa';
-    $Self->{Translation}->{'Stats Detail'} = 'Maelezo ya tafiti';
-    $Self->{Translation}->{'Stats Details'} = 'Maelezo ya tafiti';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'Umekwishajibu tafiti';
-    $Self->{Translation}->{'Survey#'} = 'Tafiti#';
-    $Self->{Translation}->{'- No queue selected -'} = '- Hakuna foleni iliyochaguliwa-';
-    $Self->{Translation}->{'Master'} = 'Fuzu';
-    $Self->{Translation}->{'New Status'} = 'Hali mpya';
-    $Self->{Translation}->{'Question Type'} = 'Aina ya swali';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Tengeneza tafiti mpya';
     $Self->{Translation}->{'Introduction'} = 'Utangulizi';
+    $Self->{Translation}->{'Survey Introduction'} = 'Utangulizi wa tafiti';
     $Self->{Translation}->{'Notification Body'} = 'Kiini cha taarifa';
     $Self->{Translation}->{'Internal Description'} = 'Maelezo ya ndani';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Haya ni majibu yako';
     $Self->{Translation}->{'Survey Title'} = 'Kichwa cha habari cha utafiti';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'Ongeza utafiti mpya';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Survey Edit'} = 'Hariri utafiti';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Hariri maswali ya utafiti';
+    $Self->{Translation}->{'Yes/No'} = 'Ndio/Hapana';
+    $Self->{Translation}->{'Radio (List)'} = 'Redio (Orodha)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Cheki boksi (orodha)';
+    $Self->{Translation}->{'Question Type'} = 'Aina ya swali';
+    $Self->{Translation}->{'Complete'} = 'Kamili';
+    $Self->{Translation}->{'Incomplete'} = 'Isiyo kamili';
+    $Self->{Translation}->{'Question Edit'} = 'Hariri maswali';
+    $Self->{Translation}->{'Answer Edit'} = 'Hariri majibu';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Mapitio ya takwimu';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Maelezo ya tafiti';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Sioni hali mpya! Hakuna maswali yaliyofafanuliwa.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Hali imebadilika';
+    $Self->{Translation}->{'- No queue selected -'} = '- Hakuna foleni iliyochaguliwa-';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Badilisha Hali-';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = 'Hali mpya';
+    $Self->{Translation}->{'Survey Description'} = 'Maelezo ya tafiti';
+    $Self->{Translation}->{'answered'} = 'Yaliyojibiwa';
+    $Self->{Translation}->{'not answered'} = 'Yasiyojibiwa';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Asante kwa majibu yako.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Utafiti umemalizika';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Umekwishajibu tafiti';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Moduli ya utafiti';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Inafafanua safu iliyoonyeshwa kwenye mapitio ya utafiti. Hili chaguo halina athari kwa nafasi ya safu. ';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'Haririr taarifa za ujumla za savei';
-    $Self->{Translation}->{'Edit Survey Questions'} = 'Hariri maswali ya savei';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Wezesha au Usiwezeshe skrini ya OneshaKuraData kwa kiolesura cha umma ili kuonyesha data za utafiti fulani maalumu pale mteja anapojaribu kujibu utafiti kwa mara ya pili.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Wezesha au Usiwezeshe kuchagua hali ya kutuma kwa hii huduma.';
@@ -200,19 +193,20 @@ sub Data {
         'Inaonyesha kiungo katika menyu ili kurudi katika muonekano uliokuzwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Inaonyesha kiungo katika menyu ili kukuza maelezo ya takwimu za utafiti katika muonekano uliokuzwa wa kiolesura cha wakala.';
+    $Self->{Translation}->{'Stats Details'} = 'Maelezo ya tafiti';
     $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Moduli ya kuhariri savei.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Mapitio ya savei kikomo "cha chini"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Moduli ya takwimu za savei.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Moduli ya kukuza savei';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Kikomo cha savei kwa kurasa kwa ajili ya mapitio ya savei "Ndogo"';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Savei hazitatumwa kwa barua pepe zilizowekwa.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Kitambulisho cha utafiti, mf. Utafiti#, Utafiti wangu#. Chaguo-msingi ni Utafiti#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Moduli ya tukio la tiketi kwa ajili ya kutuma barua pepe za maombi ya tafiti moja kwa moja kwa wateja kama tiketi imefungwa.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Kuza maelezo ya takwimu';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

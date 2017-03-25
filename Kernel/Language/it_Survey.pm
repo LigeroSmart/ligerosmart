@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Cambia stato -';
-    $Self->{Translation}->{'Add New Survey'} = 'Aggiungi nuovo sondaggio';
-    $Self->{Translation}->{'Survey Edit'} = 'Modifica Sondaggio';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Modifica le domande del sondaggio';
-    $Self->{Translation}->{'Question Edit'} = 'Modifica domanda';
-    $Self->{Translation}->{'Answer Edit'} = 'Modifica risposta';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Impossibile impostare il nuovo stato! Nessuna domanda definita.';
-    $Self->{Translation}->{'Status changed.'} = 'Stato cambiato.';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'Grazie per il tuo riscontro.';
-    $Self->{Translation}->{'The survey is finished.'} = 'Il sondaggio è terminato.';
-    $Self->{Translation}->{'Complete'} = 'Sondaggi completi';
-    $Self->{Translation}->{'Incomplete'} = 'Sondaggi incompleti';
-    $Self->{Translation}->{'Checkbox (List)'} = 'Casella di selezione (elenco)';
-    $Self->{Translation}->{'Radio'} = 'Radio';
-    $Self->{Translation}->{'Radio (List)'} = 'Radio (elenco)';
-    $Self->{Translation}->{'Stats Overview'} = 'Risultati statistici';
-    $Self->{Translation}->{'Survey Description'} = 'Descrizione del sondaggio';
-    $Self->{Translation}->{'Survey Introduction'} = 'Introduzione del sondaggio';
-    $Self->{Translation}->{'Yes/No'} = 'Sì/No';
-    $Self->{Translation}->{'YesNo'} = 'SìNo';
-    $Self->{Translation}->{'answered'} = 'risposta';
-    $Self->{Translation}->{'not answered'} = 'non risposta';
-    $Self->{Translation}->{'Stats Detail'} = 'Dettaglio statistiche';
-    $Self->{Translation}->{'Stats Details'} = 'Dettagli statistiche';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'Hai già risposto al sondaggio.';
-    $Self->{Translation}->{'Survey#'} = 'Sondaggio#';
-    $Self->{Translation}->{'- No queue selected -'} = '- Nessuna coda selezionata -';
-    $Self->{Translation}->{'Master'} = 'Principale';
-    $Self->{Translation}->{'New Status'} = 'Nuovo stato';
-    $Self->{Translation}->{'Question Type'} = 'Tipo di domanda';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Creazione nuovo sondaggio';
     $Self->{Translation}->{'Introduction'} = 'Introduzione';
+    $Self->{Translation}->{'Survey Introduction'} = 'Introduzione del sondaggio';
     $Self->{Translation}->{'Notification Body'} = 'Corpo del sondaggio';
     $Self->{Translation}->{'Internal Description'} = 'Descrizione ad uso interno';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Queste sono le tue risposte';
     $Self->{Translation}->{'Survey Title'} = 'Titolo del sondaggio';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'Aggiungi nuovo sondaggio';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-    $Self->{Translation}->{'You have no permission for this survey!'} = '';
-    $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'You have no permission for this survey!'} = 'Non hai i permessi per questo Sondaggio!';
+    $Self->{Translation}->{'No SurveyID is given!'} = 'Non è stato specificato un SurveyID';
+    $Self->{Translation}->{'Survey Edit'} = 'Modifica Sondaggio';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Modifica le domande del sondaggio';
+    $Self->{Translation}->{'Yes/No'} = 'Sì/No';
+    $Self->{Translation}->{'Radio (List)'} = 'Radio (elenco)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Casella di selezione (elenco)';
+    $Self->{Translation}->{'Question Type'} = 'Tipo di domanda';
+    $Self->{Translation}->{'Complete'} = 'Sondaggi completi';
+    $Self->{Translation}->{'Incomplete'} = 'Sondaggi incompleti';
+    $Self->{Translation}->{'Question Edit'} = 'Modifica domanda';
+    $Self->{Translation}->{'Answer Edit'} = 'Modifica risposta';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Risultati statistici';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Dettaglio statistiche';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Impossibile impostare il nuovo stato! Nessuna domanda definita.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Stato cambiato.';
+    $Self->{Translation}->{'- No queue selected -'} = '- Nessuna coda selezionata -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nessuna tipologia di ticket selezionata -';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Cambia stato -';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = 'Nuovo stato';
+    $Self->{Translation}->{'Survey Description'} = 'Descrizione del sondaggio';
+    $Self->{Translation}->{'answered'} = 'risposta';
+    $Self->{Translation}->{'not answered'} = 'non risposta';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Grazie per il tuo riscontro.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Il sondaggio è terminato.';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Hai già risposto al sondaggio.';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Un modulo per i sondaggi.';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'Modifica informazioni generali del sondaggio';
-    $Self->{Translation}->{'Edit Survey Questions'} = 'Modifica domande del sondaggio';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Abilita o disabilita il controllo della condizione di invio per il servizio.';
@@ -200,19 +193,20 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Stats Details'} = 'Dettagli statistiche';
     $Self->{Translation}->{'Survey Add Module.'} = 'Modulo di aggiunta dei sondaggi.';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Modulo di modifica dei sondaggi.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite per visualizzazione "compatta".';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Modulo di statistiche dei sondaggi.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modulo di zoom per i sondaggi.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'I sondaggi non saranno inviati agli indirizzi email configurati.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Identificativo per il sondaggio, per esempio Sondaggio#, Inchiesta#. Il default Sondaggio#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

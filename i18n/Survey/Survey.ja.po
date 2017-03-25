@@ -5,135 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- ステータス変更 -"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "新規調査の追加"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "調査の編集"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "調査質問の編集"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "質問の編集"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "回答の編集"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "新しい状態を設定できません! 質問が定義されていません。"
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "状態が変更されました。"
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "フィードバックいただきありがとうございました。"
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "調査が完了しました。"
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "完成"
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "未完成"
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "チェックボックス (一覧)"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "ラジオボタン"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "ラジオボタン (一覧)"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "統計一覧"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "調査の説明"
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "調査の紹介文"
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "はい/いいえ"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "はい/いいえ"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "回答あり"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "回答なし"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "統計の詳細"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr "統計の詳細"
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "調査に回答済みです。"
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "統計#"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "キューが選択されていません"
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr "マスター"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "新しい状況"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "質問タイプ"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -142,6 +22,10 @@ msgstr "新規調査の作成"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "紹介文"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "調査の紹介文"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -333,6 +217,10 @@ msgstr "これらは過去に回答されたものです。"
 msgid "Survey Title"
 msgstr "調査のタイトル"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "新規調査の追加"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -342,8 +230,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr ""
+msgid "Survey Edit"
+msgstr "調査の編集"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -353,13 +241,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "調査質問の編集"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "はい/いいえ"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "ラジオボタン (一覧)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "チェックボックス (一覧)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "質問タイプ"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "完成"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "未完成"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "質問の編集"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "回答の編集"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "統計一覧"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "統計の詳細"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "新しい状態を設定できません! 質問が定義されていません。"
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "状態が変更されました。"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "キューが選択されていません"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -370,12 +314,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- ステータス変更 -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "新しい状況"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "調査の説明"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "回答あり"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "回答なし"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "フィードバックいただきありがとうございました。"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "調査が完了しました。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -410,6 +378,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "調査に回答済みです。"
 
 #. SysConfig
 msgid "A Survey Module."
@@ -476,12 +448,12 @@ msgid ""
 msgstr "調査一覧で表示される列数を定義します。このオプションは列の位置には作用しません。"
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "統計一般情報の編集"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "統計の設問を編集する"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -559,6 +531,10 @@ msgid ""
 msgstr "担当者インタフェースのズームビューで表示している統計の編集リンクをメニューを表示する。"
 
 #. SysConfig
+msgid "Stats Details"
+msgstr "統計の詳細"
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr "サーベイモジュール追加"
 
@@ -579,8 +555,8 @@ msgid "Survey Zoom Module."
 msgstr "調査の拡大モジュール"
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr "調査一覧(S)での1ページ毎の調査数"
+msgid "Survey limit per page for Survey Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -603,5 +579,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr "追ってのサーベイ要求を送信するトリガ。"
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
-msgstr "統計調査の詳細にズームする"
+msgid "Zoom into statistics details."
+msgstr ""

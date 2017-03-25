@@ -15,41 +15,10 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '- Ubah Status -';
-    $Self->{Translation}->{'Add New Survey'} = 'Tambah Ukur Baru';
-    $Self->{Translation}->{'Survey Edit'} = 'Ukur Edit';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Penyiasatan Edit Soalan';
-    $Self->{Translation}->{'Question Edit'} = 'Edit soalan';
-    $Self->{Translation}->{'Answer Edit'} = 'Edit Jawapan';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Tidak boleh menetapkan status baru! Tiada soalan yang ditakrifkan.';
-    $Self->{Translation}->{'Status changed.'} = 'status berubah.';
-    $Self->{Translation}->{'Thank you for your feedback.'} = 'Terima kasih atas maklum balas anda.';
-    $Self->{Translation}->{'The survey is finished.'} = 'Kaji selidik itu selesai.';
-    $Self->{Translation}->{'Complete'} = 'lengkap';
-    $Self->{Translation}->{'Incomplete'} = 'tidak lengkap';
-    $Self->{Translation}->{'Checkbox (List)'} = 'Checkbox (Senarai)';
-    $Self->{Translation}->{'Radio'} = 'Radio';
-    $Self->{Translation}->{'Radio (List)'} = 'Radio (Senarai)';
-    $Self->{Translation}->{'Stats Overview'} = 'Statistik Tinjauan';
-    $Self->{Translation}->{'Survey Description'} = 'Huraian penyiasatan';
-    $Self->{Translation}->{'Survey Introduction'} = 'Penyiasatan Pengenalan';
-    $Self->{Translation}->{'Yes/No'} = 'Ya/Tidak';
-    $Self->{Translation}->{'YesNo'} = 'YaTidak';
-    $Self->{Translation}->{'answered'} = 'Dijawab';
-    $Self->{Translation}->{'not answered'} = 'Tidak dijawab';
-    $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
-    $Self->{Translation}->{'Stats Details'} = 'Maklumat statistik';
-    $Self->{Translation}->{'You have already answered the survey.'} = 'Anda telah menjawab kaji selidik.';
-    $Self->{Translation}->{'Survey#'} = 'Penyiasatan#';
-    $Self->{Translation}->{'- No queue selected -'} = '-Tiada giliran dipilih-';
-    $Self->{Translation}->{'Master'} = 'Induk';
-    $Self->{Translation}->{'New Status'} = 'Status baharu';
-    $Self->{Translation}->{'Question Type'} = 'Jenis soalan';
-
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = 'Buat Survey Baru';
     $Self->{Translation}->{'Introduction'} = 'Pengenalan';
+    $Self->{Translation}->{'Survey Introduction'} = 'Penyiasatan Pengenalan';
     $Self->{Translation}->{'Notification Body'} = 'Badan Pemberitahuan';
     $Self->{Translation}->{'Internal Description'} = 'Description dalaman';
 
@@ -115,26 +84,49 @@ sub Data {
     $Self->{Translation}->{'These are your answers'} = 'Ini adalah jawapan anda';
     $Self->{Translation}->{'Survey Title'} = 'Tajuk Ukur';
 
+    # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+    $Self->{Translation}->{'Add New Survey'} = 'Tambah Ukur Baru';
+
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
+    $Self->{Translation}->{'Survey Edit'} = 'Ukur Edit';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Penyiasatan Edit Soalan';
+    $Self->{Translation}->{'Yes/No'} = 'Ya/Tidak';
+    $Self->{Translation}->{'Radio (List)'} = 'Radio (Senarai)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Checkbox (Senarai)';
+    $Self->{Translation}->{'Question Type'} = 'Jenis soalan';
+    $Self->{Translation}->{'Complete'} = 'lengkap';
+    $Self->{Translation}->{'Incomplete'} = 'tidak lengkap';
+    $Self->{Translation}->{'Question Edit'} = 'Edit soalan';
+    $Self->{Translation}->{'Answer Edit'} = 'Edit Jawapan';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Statistik Tinjauan';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Tidak boleh menetapkan status baru! Tiada soalan yang ditakrifkan.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'status berubah.';
+    $Self->{Translation}->{'- No queue selected -'} = '-Tiada giliran dipilih-';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Ubah Status -';
     $Self->{Translation}->{'master'} = '';
-    $Self->{Translation}->{'Survey %s'} = '';
+    $Self->{Translation}->{'New Status'} = 'Status baharu';
+    $Self->{Translation}->{'Survey Description'} = 'Huraian penyiasatan';
+    $Self->{Translation}->{'answered'} = 'Dijawab';
+    $Self->{Translation}->{'not answered'} = 'Tidak dijawab';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Terima kasih atas maklum balas anda.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Kaji selidik itu selesai.';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -145,6 +137,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Anda telah menjawab kaji selidik.';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Satu Modul Penyiasatan';
@@ -171,8 +164,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Mentakrifkan ruangan menunjukkan dalam gambaran kajian.Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang.';
-    $Self->{Translation}->{'Edit Survey General Information'} = 'Ubah maklumat umum kaji selidik';
-    $Self->{Translation}->{'Edit Survey Questions'} = 'Ubah soalan kaji selidik';
+    $Self->{Translation}->{'Edit survey general information.'} = '';
+    $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Dayakan atau nyahdayakan Undi Papar Data skrin dalam antara muka awam untuk menunjukkan data hasil kajian tertentu apabila pelanggan cuba untuk menjawab kaji selidik kali kedua.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Membolehkan atau melumpuhkan menghantar semakan keadaan untuk perkhidmatan itu.';
@@ -200,19 +193,20 @@ sub Data {
         'Menunjukkan pautan dalam menu untuk kembali ke paparan zum kaji selidik antara muka ejen.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         'Menunjukkan pautan dalam menu untuk zum maklumat statistik kaji selidik dalam paparan zum antara muka ejen.';
+    $Self->{Translation}->{'Stats Details'} = 'Maklumat statistik';
     $Self->{Translation}->{'Survey Add Module.'} = 'Modul Tambah Soal Selidik';
     $Self->{Translation}->{'Survey Edit Module.'} = 'Kaji selidik suntingan modul';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ukur Tinjauan Had "Kecil"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Kaji selidik Modul Statistik';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Penyiasatan Zoom Modul';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Had Penyiasatan setiap halaman untuk Tinjauan Survey "Kecil"';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Ukur tidak akan dihantar ke alamat e-mel yang dikonfigurasi.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah Penyiasatan#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Pencetus menghantar permohonan soal selidik ditangguhkan';
-    $Self->{Translation}->{'Zoom Into Statistics Details'} = 'Zum pada maklumat statistik';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '';
 
 }
 

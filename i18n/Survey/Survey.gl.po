@@ -5,135 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-11-07 14:57+0000\n"
-"PO-Revision-Date: 2016-11-07 14:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-03-24 23:21+0000\n"
+"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Galician (http://www.transifex.com/otrs/OTRS/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAASurvey
-msgid "- Change Status -"
-msgstr "- Cambiar o estado -"
-
-#. Template: AAASurvey
-msgid "Add New Survey"
-msgstr "Engadir unha enquisa nova"
-
-#. Template: AAASurvey
-msgid "Survey Edit"
-msgstr "Editar enquisa"
-
-#. Template: AAASurvey
-msgid "Survey Edit Questions"
-msgstr "Editar Preguntas da Enquisa"
-
-#. Template: AAASurvey
-msgid "Question Edit"
-msgstr "Editar Pregunta"
-
-#. Template: AAASurvey
-msgid "Answer Edit"
-msgstr "Editar Resposta"
-
-#. Template: AAASurvey
-msgid "Can't set new status! No questions defined."
-msgstr "Non se pode establecer o novo status!Non hai preguntas definidas."
-
-#. Template: AAASurvey
-msgid "Status changed."
-msgstr "Estado cambiado."
-
-#. Template: AAASurvey
-msgid "Thank you for your feedback."
-msgstr "Grazas pola súa opinión."
-
-#. Template: AAASurvey
-msgid "The survey is finished."
-msgstr "A enquisa está rematada."
-
-#. Template: AAASurvey
-msgid "Complete"
-msgstr "Completa"
-
-#. Template: AAASurvey
-msgid "Incomplete"
-msgstr "Incompleta"
-
-#. Template: AAASurvey
-msgid "Checkbox (List)"
-msgstr "Opción non excluínte (lista)"
-
-#. Template: AAASurvey
-msgid "Radio"
-msgstr "Opción excluínte"
-
-#. Template: AAASurvey
-msgid "Radio (List)"
-msgstr "Opción excluínte (lista)"
-
-#. Template: AAASurvey
-msgid "Stats Overview"
-msgstr "Vista xeral das estatísticas"
-
-#. Template: AAASurvey
-msgid "Survey Description"
-msgstr "Descrición da enquisa"
-
-#. Template: AAASurvey
-msgid "Survey Introduction"
-msgstr "Introdución á enquisa"
-
-#. Template: AAASurvey
-msgid "Yes/No"
-msgstr "Si/Non"
-
-#. Template: AAASurvey
-msgid "YesNo"
-msgstr "SiNon"
-
-#. Template: AAASurvey
-msgid "answered"
-msgstr "respondida"
-
-#. Template: AAASurvey
-msgid "not answered"
-msgstr "non respondida"
-
-#. Template: AAASurvey
-msgid "Stats Detail"
-msgstr "Detalle das estatísticas"
-
-#. Template: AAASurvey
-msgid "Stats Details"
-msgstr "Detalles das estatísticas"
-
-#. Template: AAASurvey
-msgid "You have already answered the survey."
-msgstr "Xa respondeu a esta enquisa."
-
-#. Template: AAASurvey
-msgid "Survey#"
-msgstr "EnquisaNº"
-
-#. Template: AAASurvey
-msgid "- No queue selected -"
-msgstr "- Non hai ningunha fila seleccionada -"
-
-#. Template: AAASurvey
-msgid "Master"
-msgstr "Principal"
-
-#. Template: AAASurvey
-msgid "New Status"
-msgstr "Novo estado"
-
-#. Template: AAASurvey
-msgid "Question Type"
-msgstr "Tipo de pregunta"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -142,6 +22,10 @@ msgstr "Crear unha enquisa nova"
 #. Template: AgentSurveyAdd
 msgid "Introduction"
 msgstr "Introdución"
+
+#. Template: AgentSurveyAdd
+msgid "Survey Introduction"
+msgstr "Introdución á enquisa"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -333,6 +217,10 @@ msgstr "Estas son as súas respostas"
 msgid "Survey Title"
 msgstr "Título da enquisa"
 
+#. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
+msgid "Add New Survey"
+msgstr "Engadir unha enquisa nova"
+
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
 msgstr ""
@@ -342,8 +230,8 @@ msgid "No SurveyID is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-msgid "Please contact the admin."
-msgstr ""
+msgid "Survey Edit"
+msgstr "Editar enquisa"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -353,13 +241,69 @@ msgstr ""
 msgid "You have no permission for this survey, question or answer!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Survey Edit Questions"
+msgstr "Editar Preguntas da Enquisa"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Yes/No"
+msgstr "Si/Non"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Radio (List)"
+msgstr "Opción excluínte (lista)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Checkbox (List)"
+msgstr "Opción non excluínte (lista)"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Type"
+msgstr "Tipo de pregunta"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Complete"
+msgstr "Completa"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Incomplete"
+msgstr "Incompleta"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Question Edit"
+msgstr "Editar Pregunta"
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Answer Edit"
+msgstr "Editar Resposta"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Vista xeral das estatísticas"
+
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Detalle das estatísticas"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Non se pode establecer o novo status!Non hai preguntas definidas."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Estado cambiado."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No queue selected -"
+msgstr "- Non hai ningunha fila seleccionada -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -370,12 +314,36 @@ msgid "- No ticket service selected -"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Cambiar o estado -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "master"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Survey %s"
-msgstr ""
+msgid "New Status"
+msgstr "Novo estado"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Survey Description"
+msgstr "Descrición da enquisa"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "answered"
+msgstr "respondida"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "not answered"
+msgstr "non respondida"
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "Thank you for your feedback."
+msgstr "Grazas pola súa opinión."
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "The survey is finished."
+msgstr "A enquisa está rematada."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -410,6 +378,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/PublicSurvey.pm
+msgid "You have already answered the survey."
+msgstr "Xa respondeu a esta enquisa."
 
 #. SysConfig
 msgid "A Survey Module."
@@ -476,12 +448,12 @@ msgid ""
 msgstr "Define as columnas mostradas na visión xeral de enquisa. Esta opción non ten ningún efecto sobre a posición das columnas."
 
 #. SysConfig
-msgid "Edit Survey General Information"
-msgstr "Edite Información Xeral Enquisa"
+msgid "Edit survey general information."
+msgstr ""
 
 #. SysConfig
-msgid "Edit Survey Questions"
-msgstr "Edite Preguntas Enquisa"
+msgid "Edit survey questions."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -559,6 +531,10 @@ msgid ""
 msgstr "Mostra un enlace no menu para facer zoom nos detalles das estatísticas da enquisa na súa vista zoom da interface de axente."
 
 #. SysConfig
+msgid "Stats Details"
+msgstr "Detalles das estatísticas"
+
+#. SysConfig
 msgid "Survey Add Module."
 msgstr ""
 
@@ -579,8 +555,8 @@ msgid "Survey Zoom Module."
 msgstr "Módulo Zoom Enquisa."
 
 #. SysConfig
-msgid "Survey limit per page for Survey Overview \"Small\""
-msgstr "Límite enquisa por páxina para Vista Xeral \"Pequena\" de Enquisa"
+msgid "Survey limit per page for Survey Overview \"Small\"."
+msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -603,5 +579,5 @@ msgid "Trigger sending delayed survey requests."
 msgstr ""
 
 #. SysConfig
-msgid "Zoom Into Statistics Details"
-msgstr "Zoom Nos Detalles Estatísticos"
+msgid "Zoom into statistics details."
+msgstr ""

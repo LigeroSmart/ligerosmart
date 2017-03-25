@@ -1,4 +1,5 @@
 #5.0.4 2017-??-??
+ - 2017-03-25 Updated translations, thanks to all translators.
  - 2017-03-25 Fixed bug#[12712](https://bugs.otrs.org/show_bug.cgi?id=12712)(PR#26) - Hardcoded string in block headers, thanks to Balázs Úr.
 
 #5.0.3 2017-03-07
