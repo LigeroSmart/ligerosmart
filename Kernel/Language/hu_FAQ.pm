@@ -81,8 +81,8 @@ sub Data {
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Kulcsszó';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Szavazás (például Equals 10 vagy GreaterThan 60)';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Értékelés (például Equals 25% vagy GreaterThan 75%)';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Szavazás (például Egyenlő 10 vagy Nagyobb mint 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Értékelés (például Egyenlő 25% vagy Nagyobb mint 75%)';
     $Self->{Translation}->{'Approved'} = 'Jóváhagyott';
     $Self->{Translation}->{'Last changed by'} = 'Utoljára módosította';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'GyIK bejegyzés létrehozási ideje (előtt/után)';
@@ -99,11 +99,11 @@ sub Data {
     $Self->{Translation}->{'Vote'} = 'Szavazás';
     $Self->{Translation}->{'No vote settings'} = 'Nincsenek szavazási beállítások';
     $Self->{Translation}->{'Specific votes'} = 'Adott szavazatok';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'például Equals 10 vagy GreaterThan 60';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'például Egyenlő 10 vagy Nagyobb mint 60';
     $Self->{Translation}->{'Rate'} = 'Értékelés';
     $Self->{Translation}->{'No rate settings'} = 'Nincsenek értékelési beállítások';
     $Self->{Translation}->{'Specific rate'} = 'Adott értékelés';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'például Equals 25% vagy GreaterThan 75%';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'például Egyenlő 25% vagy Nagyobb mint 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'GyIK bejegyzés létrehozási ideje';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'GyIK bejegyzés módosítási ideje';
 
@@ -256,7 +256,11 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - nyilvános (GyIK szabad-szavas)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'Need rate!'} = '';
     $Self->{Translation}->{'This article is empty!'} = 'Ez a bejegyzés üres!';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Legutóbb létrehozott GyIK bejegyzések';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Legutóbb frissített GyIK bejegyzések';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Legjobb 10 GyIK bejegyzés';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -286,7 +290,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Meghatározza, hogy a GyIK címét össze kell-e fűzni a bejegyzés tárgyával.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt GyIK-ok felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak GyIK attribútumok és dinamikus mezők (DynamicField_NévX) engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
+        'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt GyIK-ok felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak GyIK attribútumok és dinamikus mezők (DynamicField_NévX) engedélyezettek a DefaultColumns értékeinél. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Egy áttekintő modult határoz meg egy GyIK napló kis nézetének megjelenítéséhez.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -320,7 +324,7 @@ sub Data {
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
         'Meghatározza egy GyIK-alapú jegybe beszúrandó információkat. A „Teljes GyIK” szöveget, mellékleteket és beágyazott képeket tartalmaz.';
     $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
-        'Meghatározza a vezérlőpult háttérprogram paramétereit. A „Korlát” határozza meg az alapértelmezetten megjelenített bejegyzések számát. A „Csoport” használható a hozzáférés korlátozásához a bővítményre (például Csoport: admin;csoport1;csoport2;). Az „Alapértelmezett” jelzi, ha a bővítmény alapértelmezetten engedélyezve van, vagy ha a felhasználónak kézzel kell engedélyeznie azt.';
+        'Meghatározza a vezérlőpult háttérprogram paramétereit. A „Limit” határozza meg az alapértelmezetten megjelenített bejegyzések számát. A „Group” használható a hozzáférés korlátozásához a bővítményre (például Group: admin;csoport1;csoport2;). A „Default” jelzi, ha a bővítmény alapértelmezetten engedélyezve van, vagy ha a felhasználónak kézzel kell engedélyeznie azt.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
         'Meghatározza a megjelenített oszlopokat a GyIK böngészőben. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
@@ -385,8 +389,6 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Azok a felületek, ahol a gyors keresésnek meg kell jelennie.';
     $Self->{Translation}->{'Journal'} = 'Napló';
     $Self->{Translation}->{'Language Management'} = 'Nyelvkezelés';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Legutóbb létrehozott GyIK bejegyzések';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Legutóbb frissített GyIK bejegyzések';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Másik objektum hozzákapcsolása ehhez a GyIK elemhez';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Állapottípusok listája, amelyek használhatók az ügyintézői felületen.';
@@ -493,7 +495,7 @@ sub Data {
     $Self->{Translation}->{'Symptom'} = 'Jelenség';
     $Self->{Translation}->{'Text Only'} = 'Csak szöveg';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
-        'Egy GyIK azonosítója, például FAQ#, KB#, MyFAQ#. Az alapértelmezett: FAQ#.';
+        'Egy GyIK azonosítója, például FAQ#, TB#, GyIK#. Az alapértelmezett: FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
         'Ez a beállítás határozza meg, hogy egy „GyIK” objektum összeköthető-e más „GyIK” objektumokkal a „Normál” hivatkozástípus használatával.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'ParentChild\' link type.'} =

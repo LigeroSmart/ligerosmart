@@ -156,7 +156,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
     $Self->{Translation}->{'You need rw permission!'} = 'Sie benötigen Lese- und Schreibrechte!';
     $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Keine Katgorien gefunden in denen der Benutzer Lese-/Schreibrechte besitzt!';
-    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'Standardsprache wurde nicht gefunden. Neue Standardsprache konnte nicht erstellt werden.';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
     $Self->{Translation}->{'Need CategoryID!'} = 'Benötige KategorieID!';
@@ -165,20 +165,20 @@ sub Data {
     $Self->{Translation}->{'FAQ category updated!'} = 'FAQ-Kategorie aktualisiert!';
     $Self->{Translation}->{'This category already exists!'} = 'Diese Kategorie existiert bereits!';
     $Self->{Translation}->{'FAQ category added!'} = 'FAQ-Kategorie hinzugefügt!';
-    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'Es wurde keine KategorieID vergeben!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Kategorie %s konnte nicht gelöscht werden!';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
-    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'No ItemID is given!'} = 'Es wurde keine ItemID vergeben!';
     $Self->{Translation}->{'You have no permission for this category!'} = 'Sie besitzen keine Berechtigung für diese Kategorie!';
     $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'FAQ Artikel %s konnte nicht gelöscht werden!';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'Die KategorieID %s ist ungültig.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'FAQ History'} = 'FAQ Verlauf';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ Journal';
@@ -211,18 +211,18 @@ sub Data {
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
-    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Equals'} = 'ist gleich';
     $Self->{Translation}->{'Greater than'} = 'Größer als';
-    $Self->{Translation}->{'Greater than equals'} = '';
+    $Self->{Translation}->{'Greater than equals'} = 'ist größer/gleich';
     $Self->{Translation}->{'Smaller than'} = 'Kleiner als';
-    $Self->{Translation}->{'Smaller than equals'} = '';
+    $Self->{Translation}->{'Smaller than equals'} = 'ist kleiner/gleich';
 
     # Perl Module: Kernel/Modules/AgentFAQZoom.pm
     $Self->{Translation}->{'Need FileID!'} = 'Benötige DateiID';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Vielen Dank für Ihre Bewertung!';
     $Self->{Translation}->{'You have already voted!'} = 'Sie haben bereits abgestimmt!';
     $Self->{Translation}->{'No rate selected!'} = 'Keine Bewertung ausgewählt!';
-    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = 'Abstimmungsfunktion ist nicht aktiviert.';
     $Self->{Translation}->{'The vote rate is not defined!'} = '';
 
     # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
@@ -256,7 +256,11 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - Öffentlich (FAQ Volltext)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'Need rate!'} = '';
     $Self->{Translation}->{'This article is empty!'} = 'Dieser Artikel ist leer!';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Zuletzt erstellte FAQ-Artikel';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Zuletzt geänderte FAQ-Artikel';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 FAQ-Artikel';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -385,8 +389,6 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Oberfläche auf der die Schnellsuche angezeigt werden soll';
     $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Sprachen-Verwaltung';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Zuletzt erstellte FAQ-Artikel';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Zuletzt geänderte FAQ-Artikel';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Diese FAQ mit einem anderen Objekt verknüpfen';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Liste der Statustypen, die in der Agentenoberfläche genutzt werden können.';

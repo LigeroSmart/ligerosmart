@@ -256,7 +256,11 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - 公开（FAQ全文）';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'Need rate!'} = '';
     $Self->{Translation}->{'This article is empty!'} = '文章无内容！';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '最近创建的FAQ文章';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近修改的FAQ文章';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = '最常用的文章';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -385,8 +389,6 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '快速搜索时显示的界面';
     $Self->{Translation}->{'Journal'} = '日志';
     $Self->{Translation}->{'Language Management'} = '管理语言';
-    $Self->{Translation}->{'Latest created FAQ articles'} = '最近创建的FAQ文章';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近修改的FAQ文章';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象到这个FAQ条目';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '在服务人员界面中能够使用的状态类型列表。';

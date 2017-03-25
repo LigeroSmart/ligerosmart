@@ -256,7 +256,11 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+    $Self->{Translation}->{'Need rate!'} = '';
     $Self->{Translation}->{'This article is empty!'} = 'Dit item heeft geen waarde!';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Laatst aangemaakte artikelen';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Laatst gewijzigde artikelen';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Populairste artikelen';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -385,8 +389,6 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Logboek';
     $Self->{Translation}->{'Language Management'} = 'Beheer talen';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Laatst aangemaakte artikelen';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Laatst gewijzigde artikelen';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Koppel een ander object aan dit artikel';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '';

@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-27 20:07+0000\n"
-"PO-Revision-Date: 2017-02-28 02:09+0000\n"
+"POT-Creation-Date: 2017-03-24 22:01+0000\n"
+"PO-Revision-Date: 2017-03-25 04:11+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -646,8 +646,24 @@ msgid "%s - Public (FAQFulltext)"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Need rate!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest created FAQ articles"
+msgstr "آخرین اقلام ایجاد شده"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest updated FAQ articles"
+msgstr "آخرین اقلام تعریف شده"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Top 10 FAQ articles"
+msgstr "بالاترین ۱۰ قلم"
 
 #. SysConfig
 msgid ""
@@ -1071,14 +1087,6 @@ msgstr ""
 #. SysConfig
 msgid "Language Management"
 msgstr ""
-
-#. SysConfig
-msgid "Latest created FAQ articles"
-msgstr "آخرین اقلام ایجاد شده"
-
-#. SysConfig
-msgid "Latest updated FAQ articles"
-msgstr "آخرین اقلام تعریف شده"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"

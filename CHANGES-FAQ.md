@@ -1,4 +1,5 @@
 #5.0.9 2017-??-??
+ - 2017-03-24 Updated translations, thanks to all translators.
  - 2017-03-24 Marked strings as translatable, thanks to Balázs Úr (PR#71).
 
 #5.0.8 2017-03-07

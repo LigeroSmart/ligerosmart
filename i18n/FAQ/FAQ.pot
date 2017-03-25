@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2017-02-27 20:33+0000\n"
+"POT-Creation-Date: 2017-03-24 22:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -635,7 +635,23 @@ msgid "%s - Public (FAQFulltext)"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Need rate!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest created FAQ articles"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest updated FAQ articles"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Top 10 FAQ articles"
 msgstr ""
 
 #. SysConfig
@@ -976,14 +992,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Language Management"
-msgstr ""
-
-#. SysConfig
-msgid "Latest created FAQ articles"
-msgstr ""
-
-#. SysConfig
-msgid "Latest updated FAQ articles"
 msgstr ""
 
 #. SysConfig

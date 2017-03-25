@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Antonius Klockenkämper, 2017
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
 # Jonas Kohls <Jonas.kohls@outlook.de>, 2016
 # eliasp <mail@eliasprobst.eu>, 2015
@@ -13,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-27 20:07+0000\n"
-"PO-Revision-Date: 2017-02-28 02:09+0000\n"
+"POT-Creation-Date: 2017-03-24 22:01+0000\n"
+"PO-Revision-Date: 2017-03-25 04:11+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -413,7 +414,7 @@ msgstr "Keine Katgorien gefunden in denen der Benutzer Lese-/Schreibrechte besit
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
-msgstr ""
+msgstr "Standardsprache wurde nicht gefunden. Neue Standardsprache konnte nicht erstellt werden."
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
@@ -441,7 +442,7 @@ msgstr "FAQ-Kategorie hinzugefügt!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
-msgstr ""
+msgstr "Es wurde keine KategorieID vergeben!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
@@ -449,7 +450,7 @@ msgstr "Kategorie %s konnte nicht gelöscht werden!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
-msgstr ""
+msgstr "Es wurde keine ItemID vergeben!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
@@ -461,7 +462,7 @@ msgstr "FAQ Artikel %s konnte nicht gelöscht werden!"
 
 #. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
 msgid "The CategoryID %s is invalid."
-msgstr ""
+msgstr "Die KategorieID %s ist ungültig."
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
@@ -469,7 +470,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "FAQ Verlauf"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -557,7 +558,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Equals"
-msgstr ""
+msgstr "ist gleich"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than"
@@ -565,7 +566,7 @@ msgstr "Größer als"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than equals"
-msgstr ""
+msgstr "ist größer/gleich"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than"
@@ -573,7 +574,7 @@ msgstr "Kleiner als"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than equals"
-msgstr ""
+msgstr "ist kleiner/gleich"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Need FileID!"
@@ -593,7 +594,7 @@ msgstr "Keine Bewertung ausgewählt!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The voting mechanism is not enabled!"
-msgstr ""
+msgstr "Abstimmungsfunktion ist nicht aktiviert."
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The vote rate is not defined!"
@@ -656,8 +657,24 @@ msgid "%s - Public (FAQFulltext)"
 msgstr "%s - Öffentlich (FAQ Volltext)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Need rate!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
 msgstr "Dieser Artikel ist leer!"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest created FAQ articles"
+msgstr "Zuletzt erstellte FAQ-Artikel"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Latest updated FAQ articles"
+msgstr "Zuletzt geänderte FAQ-Artikel"
+
+#. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+msgid "Top 10 FAQ articles"
+msgstr "Top 10 FAQ-Artikel"
 
 #. SysConfig
 msgid ""
@@ -1081,14 +1098,6 @@ msgstr "Journal"
 #. SysConfig
 msgid "Language Management"
 msgstr "Sprachen-Verwaltung"
-
-#. SysConfig
-msgid "Latest created FAQ articles"
-msgstr "Zuletzt erstellte FAQ-Artikel"
-
-#. SysConfig
-msgid "Latest updated FAQ articles"
-msgstr "Zuletzt geänderte FAQ-Artikel"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
