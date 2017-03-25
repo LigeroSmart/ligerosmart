@@ -11,6 +11,8 @@ package Kernel::Output::HTML::Layout::FAQ;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::AuthSession',
@@ -51,7 +53,9 @@ sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
 
     if ( !defined $Param{Rate} ) {
-        return $Self->FatalError( Message => 'Need rate!' );
+        return $Self->FatalError(
+            Message => Translatable('Need rate!'),
+        );
     }
     my $CssTmp             = '';
     my $VotingResultColors = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Explorer::ItemList::VotingResultColors');
@@ -117,21 +121,21 @@ sub FAQListShow {
     my $Backends = $ConfigObject->Get('FAQ::Frontend::Overview') || '';
     if ( !$Backends ) {
         return $Self->FatalError(
-            Message => 'Need config option FAQ::Frontend::Overview',
+            Message => Translatable('Need config option FAQ::Frontend::Overview'),
         );
     }
 
     # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
         return $Self->FatalError(
-            Message => 'Config option FAQ::Frontend::Overview needs to be a HASH ref!',
+            Message => Translatable('Config option FAQ::Frontend::Overview needs to be a HASH ref!'),
         );
     }
 
     # check for config key
     if ( !$Backends->{$View} ) {
         return $Self->FatalError(
-            Message => "No config option found for the view '$View'!",
+            Message => $Self->{LanguageObject}->Translate( 'No config option found for the view "%s"!', $View ),
         );
     }
 
@@ -795,13 +799,13 @@ sub FAQShowLatestNewsBox {
     my $RSSTitle;
     if ( $Param{Type} eq 'LastCreate' ) {
         $OrderBy  = 'Created';
-        $Header   = 'Latest created FAQ articles';
-        $RSSTitle = 'FAQ Articles (new created)';
+        $Header   = Translatable('Latest created FAQ articles');
+        $RSSTitle = Translatable('FAQ Articles (new created)');
     }
     elsif ( $Param{Type} eq 'LastChange' ) {
         $OrderBy  = 'Changed';
-        $Header   = 'Latest updated FAQ articles';
-        $RSSTitle = 'FAQ Articles (recently changed)';
+        $Header   = Translatable('Latest updated FAQ articles');
+        $RSSTitle = Translatable('FAQ Articles (recently changed)');
     }
 
     my $Result = -1;
@@ -1009,7 +1013,7 @@ sub FAQShowTop10 {
             $Self->Block(
                 Name => 'InfoBoxFAQMiniList',
                 Data => {
-                    Header => 'Top 10 FAQ articles',
+                    Header => Translatable('Top 10 FAQ articles'),
                 },
             );
 
@@ -1020,7 +1024,7 @@ sub FAQShowTop10 {
                     Name => 'InfoBoxFAQMiniListNewsRSS',
                     Data => {
                         Type  => 'Top10',
-                        Title => 'FAQ Articles (Top 10)',
+                        Title => Translatable('FAQ Articles (Top 10)'),
                     },
                 );
             }
