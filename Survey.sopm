@@ -48,7 +48,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Layout/Survey.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/SurveyMenu/Generic.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/SurveyOverview/Small.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAASurvey.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyAdd.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEdit.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEditQuestions.tt" />

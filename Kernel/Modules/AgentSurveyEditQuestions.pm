@@ -456,7 +456,7 @@ sub Run {
 
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No SurveyID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -491,7 +491,7 @@ sub _MaskQuestionOverview {
 
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No SurveyID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -621,11 +621,11 @@ sub _MaskQuestionOverview {
                     $ClassDown = 'Disabled';
                 }
 
-                my $Status = 'Complete';
+                my $Status = Translatable('Complete');
                 if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                     if ( $AnswerCount < 2 ) {
                         $Class  = 'Warning';
-                        $Status = 'Incomplete';
+                        $Status = Translatable('Incomplete');
                     }
                 }
 

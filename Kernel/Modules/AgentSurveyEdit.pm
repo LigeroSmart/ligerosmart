@@ -73,7 +73,7 @@ sub Run {
 
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('No SurveyID is given!'),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 

@@ -394,11 +394,15 @@ sub Run {
     );
 
     # output the survey common blocks
+    my %TranslatedTitles = (
+        Introduction => $LayoutObject->{LanguageObject}->Translate('Survey Introduction'),
+        Description  => $LayoutObject->{LanguageObject}->Translate('Survey Description'),
+    );
     for my $Field (qw( Introduction Description)) {
         $LayoutObject->Block(
             Name => 'SurveyBlock',
             Data => {
-                Title       => $LayoutObject->{LanguageObject}->Translate( 'Survey %s', $Field ),
+                Title       => $TranslatedTitles{$Field},
                 SurveyField => $Field,
             },
         );
@@ -511,7 +515,7 @@ sub Run {
                     $Percent = sprintf( "%.0f", $Percent );
                 }
                 my %Data;
-                $Data{Answer} = "answered";
+                $Data{Answer} = $LayoutObject->{LanguageObject}->Translate('answered');
                 if ( !$RequestComplete ) {
                     $Data{AnswerPercent} = 0;
                 }
@@ -520,7 +524,7 @@ sub Run {
                 }
                 push( @Answers, \%Data );
                 my %Data2;
-                $Data2{Answer}        = "not answered";
+                $Data2{Answer}        = $LayoutObject->{LanguageObject}->Translate('not answered');
                 $Data2{AnswerPercent} = $Percent;
                 push( @Answers, \%Data2 );
             }
