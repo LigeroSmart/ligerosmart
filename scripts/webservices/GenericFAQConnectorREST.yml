@@ -25,7 +25,7 @@ Provider:
       Description: Search for public FAQs
       MappingInbound: {}
       MappingOutbound: {}
-      Type: FAQ::PublicFAQGet
+      Type: FAQ::PublicFAQSearch
   Transport:
     Config:
       KeepAlive: ''
