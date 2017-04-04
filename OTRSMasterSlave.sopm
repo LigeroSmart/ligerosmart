@@ -8,6 +8,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">Includes "Ticket Master/Slave" feature.</Description>
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
+    <Description Lang="hu">A „mester/alárendelt jegy” funkciót tartalmazza.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml" />
         <File Permission="644" Location="Kernel/Language/cs_OTRSMasterSlave.pm" />
@@ -96,6 +97,26 @@
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Telepítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSMasterSlave OTRS csomag telepítésére készül.<br/>
+        <br/>
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Győződjön meg arról, hogy az adatbázisa elfogadja-e az 5 MB-nál nagyobb méretű csomagokat.
+        Például egy MySQL adatbázis alapértelmezetten legfeljebb 1 MB méretű csomagot fogad el.
+        Ebben az esetben a max_allowed_packet értékét kell megnövelni.
+        A javasolt legnagyobb elfogadott méret 20 MB.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
         <br/>
         <strong>WELCOME</strong>
@@ -113,6 +134,17 @@
         <br/>
         <br/>
         Usted est&aacute; apunto de actualizar el paquete OTRSMasterSlave de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Frissítési információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>ÜDVÖZÖLJÜK</strong>
+        <br/>
+        <br/>
+        Ön az OTRSMasterSlave OTRS csomag frissítésére készül.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -140,6 +172,20 @@
         permanecer&aacute;n, pero todas relaciones de tickets Master Slave creadas durante
         el uso de este paquete ser&aacute;n borradas.
         &iexcl;Todos los datos de esas relaciones se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Eltávolítási információk" Lang="hu"><![CDATA[
+        <br/>
+        <strong>FIGYELEM</strong>
+        <br/>
+        <br/>
+        Ha eltávolítja ezt a csomagot, akkor a szülő-gyermek jegy hivatkozások meg fognak maradni,
+        de az összes olyan mester-alárendelt kapcsolat törlésre kerül, amelyek a csomag használata
+        során lettek létrehozva.
+        Ezekből a kapcsolatokból az összes adat visszavonhatatlanul el fog veszni!
         <br/>
         <br/>
         ((enjoy))<br/>
