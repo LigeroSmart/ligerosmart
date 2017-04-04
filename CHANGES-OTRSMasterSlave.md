@@ -1,4 +1,5 @@
 #5.0.8 2017-??-??
+ - 2017-04-04 Fixed bug#[2428](https://bugs.otrs.org/show_bug.cgi?id=2428) - Error while install.
  - 2017-04-03 Added Hungarian package description, thanks to Balázs Úr.
  - 2017-04-03 Fixed bug#[12095](https://bugs.otrs.org/show_bug.cgi?id=12095) - some event modules not working.
 

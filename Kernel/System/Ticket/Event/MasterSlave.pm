@@ -13,6 +13,7 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::System::CheckItem',
     'Kernel::System::CustomerUser',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
@@ -177,6 +178,17 @@ sub Run {
                 );
             }
 
+            my $CheckItemObject = $Kernel::OM->Get('Kernel::System::CheckItem');
+
+            # check if customer email is valid
+            if (
+                $Customer{UserEmail}
+                && !$CheckItemObject->CheckEmail( Address => $Customer{UserEmail} )
+                )
+            {
+                $Customer{UserEmail} = '';
+            }
+
             # if we can't find a valid UserEmail in CustomerData
             # we have to get the last Article with SenderType 'customer'
             # and get the UserEmail
@@ -189,6 +201,15 @@ sub Run {
                 if (@Index) {
                     $Customer{UserEmail} = $Index[-1]{From};
                 }
+            }
+
+            # check if customer email is valid
+            if (
+                $Customer{UserEmail}
+                && !$CheckItemObject->CheckEmail( Address => $Customer{UserEmail} )
+                )
+            {
+                $Customer{UserEmail} = '';
             }
 
             # if we still have no UserEmail, drop an error
