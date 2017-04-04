@@ -1,4 +1,5 @@
 #5.0.8 2017-??-??
+ - 2017-04-04 Fixed bug#[12095](https://bugs.otrs.org/show_bug.cgi?id=12095) - some event modules not working.
 
 #5.0.7 2017-03-07
  - 2017-02-27 Updated framework files to OTRS 5.0.17.
