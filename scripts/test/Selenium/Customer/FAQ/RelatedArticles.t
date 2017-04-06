@@ -98,7 +98,8 @@ $Selenium->RunTest(
 
         # Check if until RelatedFAQArticles box is displayed
         $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $("#FAQRelatedArticles:visible").length' );
+            JavaScript => 'return typeof($) === "function" && $("#FAQRelatedArticles:visible").length'
+        );
 
         $Self->True(
             index( $Selenium->get_page_source(), 'Type a subject or text to get a list of helpful resources.' ) > -1,
