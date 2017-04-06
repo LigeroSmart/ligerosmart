@@ -14,7 +14,7 @@ use vars qw($Self);
 
 $Kernel::OM->ObjectParamAdd(
     'Kernel::System::UnitTest::Helper' => {
-       RestoreDatabase => 1,
+        RestoreDatabase => 1,
     },
 );
 my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
@@ -55,11 +55,12 @@ $FAQObject->FAQKeywordCustomerArticleList(
 # define the tickets for the statistic result tests
 my @FAQItems = (
     {
-        Title       => 'Some Text',
-        CategoryID  => 1,
-        StateID     => $ReverseStateList{'external (customer)'}, # 'external'
-        LanguageID  => 1, # 'en'
-        Keywords    => "ticket$RandomNumber keyword$RandomNumber itsm$RandomNumber example$RandomNumber $RandomNumber.$RandomNumber",
+        Title      => 'Some Text',
+        CategoryID => 1,
+        StateID    => $ReverseStateList{'external (customer)'},    # 'external'
+        LanguageID => 1,                                           # 'en'
+        Keywords =>
+            "ticket$RandomNumber keyword$RandomNumber itsm$RandomNumber example$RandomNumber $RandomNumber.$RandomNumber",
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
@@ -68,8 +69,8 @@ my @FAQItems = (
     {
         Title       => 'Some Text Example',
         CategoryID  => 1,
-        StateID     => $ReverseStateList{'external (customer)'}, # 'external'
-        LanguageID  => 1, # 'en'
+        StateID     => $ReverseStateList{'external (customer)'},    # 'external'
+        LanguageID  => 1,                                           # 'en'
         Keywords    => "faq$RandomNumber keyword$RandomNumber",
         Field1      => 'Problem...',
         Field2      => 'Solution...',
@@ -79,8 +80,8 @@ my @FAQItems = (
     {
         Title       => 'Some Text Example',
         CategoryID  => 1,
-        StateID     => $ReverseStateList{'external (customer)'}, # 'external'
-        LanguageID  => 2, # 'de'
+        StateID     => $ReverseStateList{'external (customer)'},                    # 'external'
+        LanguageID  => 2,                                                           # 'de'
         Keywords    => "faq$RandomNumber keyword$RandomNumber ItSm$RandomNumber",
         Field1      => 'Problem...',
         Field2      => 'Solution...',
@@ -90,8 +91,8 @@ my @FAQItems = (
     {
         Title       => 'Some Text Public',
         CategoryID  => 1,
-        StateID     => $ReverseStateList{'public (all)'}, # 'public'
-        LanguageID  => 1, # 'en'
+        StateID     => $ReverseStateList{'public (all)'},                             # 'public'
+        LanguageID  => 1,                                                             # 'en'
         Keywords    => "FAQ$RandomNumber keyword$RandomNumber public$RandomNumber",
         Field1      => 'Problem...',
         Field2      => 'Solution...',
@@ -101,8 +102,8 @@ my @FAQItems = (
     {
         Title       => 'Some Text Internal',
         CategoryID  => 1,
-        StateID     => $ReverseStateList{'internal (agent)'}, # 'internal'
-        LanguageID  => 1, # 'en'
+        StateID     => $ReverseStateList{'internal (agent)'},                                               # 'internal'
+        LanguageID  => 1,                                                                                   # 'en'
         Keywords    => "ticket$RandomNumber KeyWord$RandomNumber iTsm$RandomNumber internal$RandomNumber",
         Field1      => 'Problem...',
         Field2      => 'Solution...',
@@ -118,7 +119,7 @@ FAQITEM:
 for my $FAQItem (@FAQItems) {
 
     my $FAQItemID = $FAQObject->FAQAdd(
-        %{ $FAQItem },
+        %{$FAQItem},
     );
 
     $Self->True(
@@ -173,10 +174,10 @@ my @Tests = (
         },
     },
     {
-        Description                   => "Test with a customer user, but only with language 'en' for FAQKeywordCustomerArticleList",
+        Description => "Test with a customer user, but only with language 'en' for FAQKeywordCustomerArticleList",
         FAQKeywordCustomerArticleList => {
             CustomerUser => $CustomerUsers[0],
-            Languages    => [ 'en' ],
+            Languages    => ['en'],
         },
         ReferenceData => {
             "example$RandomNumber" => [
@@ -203,10 +204,10 @@ my @Tests = (
         },
     },
     {
-        Description                   => "Test with a customer user, but only with language 'de' for FAQKeywordCustomerArticleList",
+        Description => "Test with a customer user, but only with language 'de' for FAQKeywordCustomerArticleList",
         FAQKeywordCustomerArticleList => {
             CustomerUser => $CustomerUsers[0],
-            Languages    => [ 'de' ],
+            Languages    => ['de'],
         },
         ReferenceData => {
             "faq$RandomNumber" => [
@@ -221,7 +222,7 @@ my @Tests = (
         },
     },
     {
-        Description                   => "Test with a customer user with language 'en' and 'de' for FAQKeywordCustomerArticleList",
+        Description => "Test with a customer user with language 'en' and 'de' for FAQKeywordCustomerArticleList",
         FAQKeywordCustomerArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => [ 'en', 'de' ],
@@ -350,16 +351,16 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
 # Define some test for the function 'RelatedCustomerArticleList'.
 @Tests = (
     {
-        Description                   => 'Test does not contain all necessary data for RelatedCustomerArticleList',
-        Fails                         => 1,
-        RelatedCustomerArticleList    => {
+        Description                => 'Test does not contain all necessary data for RelatedCustomerArticleList',
+        Fails                      => 1,
+        RelatedCustomerArticleList => {
             Subject => '',
             Body    => '',
         },
-        ReferenceData                 => {},
+        ReferenceData => {},
     },
     {
-        Description                   => 'Test with a keyword in the subject for RelatedCustomerArticleList',
+        Description                => 'Test with a keyword in the subject for RelatedCustomerArticleList',
         RelatedCustomerArticleList => {
             Subject => "itsm$RandomNumber",
             Body    => "$RandomNumber",
@@ -407,11 +408,13 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
     #   - FAQArticle 4 => 1
     #   - FAQArticle 3 => 1
     {
-        Description                => 'Test with some html keywords in the subject and body (with html and link) for RelatedCustomerArticleList',
+        Description =>
+            'Test with some html keywords in the subject and body (with html and link) for RelatedCustomerArticleList',
         RelatedCustomerArticleList => {
             Subject => "itsm$RandomNumber",
-            Body    => "$RandomNumber itsm$RandomNumber ticket$RandomNumber <br />keyword$RandomNumber ITSM$RandomNumber. [1] https://faq.com/",
-            UserID  => $CustomerUsers[0],
+            Body =>
+                "$RandomNumber itsm$RandomNumber ticket$RandomNumber <br />keyword$RandomNumber ITSM$RandomNumber. [1] https://faq.com/",
+            UserID => $CustomerUsers[0],
         },
         ReferenceData => [
             $FAQItemIDs[0],
@@ -450,7 +453,7 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
     #   - FAQArticle 1 => 5
     #   - FAQArticle 2 => 4
     {
-        Description                => 'Test with some keywords in the subject and body and a limit for RelatedCustomerArticleList',
+        Description => 'Test with some keywords in the subject and body and a limit for RelatedCustomerArticleList',
         RelatedCustomerArticleList => {
             Subject => "itsm$RandomNumber",
             Body    => "itsm$RandomNumber; ticket$RandomNumber keyword$RandomNumber ITSM$RandomNumber.",
@@ -463,7 +466,6 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
         ],
     },
 
-
     # E.g.
     # Given Keyword from text (with counter):
     #   - RandomNumner.RandomNumer (2)
@@ -472,7 +474,7 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
     #   - FAQArticle 1 => 2
     #   - FAQArticle 4 => 1
     {
-        Description                => 'Test with some keywords in the subject and body and a limit for RelatedCustomerArticleList',
+        Description => 'Test with some keywords in the subject and body and a limit for RelatedCustomerArticleList',
         RelatedCustomerArticleList => {
             Subject => "$RandomNumber",
             Body    => "$RandomNumber.$RandomNumber faq$RandomNumber $RandomNumber.$RandomNumber.",

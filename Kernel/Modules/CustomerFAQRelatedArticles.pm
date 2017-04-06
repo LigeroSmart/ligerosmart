@@ -58,7 +58,7 @@ sub Run {
             UserID    => $Self->{UserID},
         );
 
-        if (!@RelatedFAQArticleList) {
+        if ( !@RelatedFAQArticleList ) {
             $RelatedFAQArticleFoundNothing = 1;
         }
     }

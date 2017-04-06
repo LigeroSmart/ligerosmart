@@ -78,8 +78,8 @@ sub Run {
     #   if no relevant article exists.
     my @FAQArticleIDs = $FAQObject->FAQSearch(
         %FAQSearchParameter,
-        Limit       => 1,
-        UserID      => 1,
+        Limit  => 1,
+        UserID => 1,
     );
 
     return 1 if !@FAQArticleIDs;
@@ -93,8 +93,8 @@ sub Run {
     );
 
     my $Search = '(<div id="RichTextServerError"[^>]*>.*?<\/div>)(\s*<div class="Clear"><\/div>\s*<\/div>)';
-    ${ $Param{Data} } =~ s{$Search}{$1<div id="FAQRelatedArticles" class="Hidden">$CustomerRelatedFAQArticlesHTMLString</div>$2}msg;
-
+    ${ $Param{Data} }
+        =~ s{$Search}{$1<div id="FAQRelatedArticles" class="Hidden">$CustomerRelatedFAQArticlesHTMLString</div>$2}msg;
 
     my $FrontendCustomerTicketMessageConfig      = $ConfigObject->Get("Ticket::Frontend::CustomerTicketMessage");
     my $FrontendCustomerFAQRelatedArticlesConfig = $ConfigObject->Get("FAQ::Frontend::CustomerFAQRelatedArticles");
@@ -103,11 +103,13 @@ sub Run {
     my $QueuesEnabledStrg = '';
     if ( IsArrayRefWithData($QueuesEnabled) ) {
 
-        # Don't show the functionality, if the queue selection is disabled and the default queue is not in the enabled queues.
+  # Don't show the functionality, if the queue selection is disabled and the default queue is not in the enabled queues.
         if ( !$FrontendCustomerTicketMessageConfig->{Queue} ) {
             my %LookupQuquesEnabled = map { $_ => 1 } @{$QueuesEnabled};
 
-            return if !$FrontendCustomerTicketMessageConfig->{QueueDefault} || !$LookupQuquesEnabled{ $FrontendCustomerTicketMessageConfig->{QueueDefault} };
+            return
+                if !$FrontendCustomerTicketMessageConfig->{QueueDefault}
+                || !$LookupQuquesEnabled{ $FrontendCustomerTicketMessageConfig->{QueueDefault} };
         }
         else {
             $QueuesEnabledStrg = join( "','", @{$QueuesEnabled} );

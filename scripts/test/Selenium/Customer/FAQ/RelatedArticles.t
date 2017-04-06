@@ -97,7 +97,8 @@ $Selenium->RunTest(
         }
 
         # Check if until RelatedFAQArticles box is displayed
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQRelatedArticles:visible").length' );
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#FAQRelatedArticles:visible").length' );
 
         $Self->True(
             index( $Selenium->get_page_source(), 'Type a subject or text to get a list of helpful resources.' ) > -1,
@@ -133,7 +134,7 @@ $Selenium->RunTest(
         );
 
         # Change the body, to have a text which should not return some related faq article.
-        $Selenium->execute_script( 'CKEDITOR.instances.RichText.setData();' );
+        $Selenium->execute_script('CKEDITOR.instances.RichText.setData();');
         $Selenium->find_element( "#Subject", 'css' )->send_keys( "\N{U+E004}", 'Nothing', " " );
 
         # Wait for ajax call after customer user selection.
