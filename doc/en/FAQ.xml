@@ -127,6 +127,13 @@
         </para>
     </section>
     <section>
+        <title>This might be helpful (customer ticket creation)</title>
+        <para>
+            An additional widget for the customer ticket creation providing you helpful faq
+            article related for the insert subject and text.
+         </para>
+    </section>
+    <section>
         <title>Inserting FAQ Articles In OTRS Replies</title>
         <para>
             You can insert FAQ articles (including images and attachments) in new tickets or replies
@@ -375,6 +382,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
+            <title>CustomerFrontend::Module###CustomerFAQRelatedArticles.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
+            <para>Frontend module registration for the customer interface.</para>
+        </section>
+        <section>
             <title>CustomerFrontend::Module###CustomerFAQSearch.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
             <para>Frontend module registration for the customer interface.</para>
@@ -448,6 +460,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <title>FAQ::CacheTTL.</title>
             <para>Group: FAQ, Subgroup: Core.</para>
             <para>Cache Time To Leave for FAQ items.</para>
+        </section>
+        <section>
+            <title>FAQ::Customer::RelatedArticles::Enabled.</title>
+            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Enable the related article feature for the customer frontend.</para>
         </section>
         <section>
             <title>FAQ::Customer::StateTypes.</title>
@@ -623,6 +640,26 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <title>FAQ::Frontend::AgentFAQPrint###DynamicField.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewPrint.</para>
             <para>Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
+            <para>The default languages for the related faq articles.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
+            <para>List of queue names for which the related article feature is enabled.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
+            <para>Output limit for the relatd faq articles.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
+            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output).</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch.</title>
@@ -1140,6 +1177,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Defines where the 'Insert FAQ' link will be displayed.</para>
         </section>
         <section>
+            <title>Frontend::Output::FilterElementPost###OutputFilterPostFAQRelatedArticles.</title>
+            <para>Group: FAQ, Subgroup: Frontend::Customer.</para>
+            <para>Output filter to add Java-script to CustomerTicketMessage screen.</para>
+        </section>
+        <section>
             <title>Frontend::Output::OutputFilterTextAutoLink###FAQ.</title>
             <para>Group: FAQ, Subgroup: Core::Web.</para>
             <para>A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</para>
@@ -1356,6 +1398,24 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
           </tgroup>
         </table>
     </section>
+    <section>
+        <title>Related article function</title>
+        <para>
+            The OTRS FAQ has an related article feature for the customer ticket creation. The feature
+            is activated by default, but the functionality can be deactivated by setting the option
+            FAQ::Customer::RelatedArticles::Enabled to 'No'.
+        </para>
+        <para>
+            The related article feature can be enabled for the defined queues under
+            FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled. If the setting is emptry the
+            feature is enabled for all queues.
+        </para>
+        <para>
+            The output for the rating in the related article list can be configured with t
+            FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible. Only the rating greater then
+            the configured value will be visible in the list.
+        </para>
+    </section>
 </chapter>
 
 <!-- ******** -->
@@ -1485,29 +1545,66 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </orderedlist>
     </section>
     <section>
-        <title>Create a New Language</title>
-        <para>This example shows how to create a new FAQ language.</para>
-        <note>
-            <para>Be sure that the logged user is a member of "faq" and "faq_admin" groups.</para>
-        </note>
-        <orderedlist>
-            <listitem>
-                <para>From FAQ menu click on "Language Management".</para>
-                <para>
-                    A list of available languages is shown (from there is also possible to edit or
-                    delete them)
-                </para>
-            </listitem>
-            <listitem>
-                <para>Click on "Add Language" from the Actions side bar.</para>
-            </listitem>
-            <listitem>
-                <para>Fill the required information.</para>
-            </listitem>
-            <listitem>
-                <para>Click on "Submit" button, and the new language will be ready to use.</para>
-            </listitem>
-        </orderedlist>
+        <title>This might be helpful (during the customer ticket creation)</title>
+        <para>
+            With the FAQ package a new widget in the customer ticket creation will be visible. The widget should help the customer to get
+            directly a helpful solution without a ticket creation. The user must type a subject or text to get a list of helpful resources.
+            <mediaobject>
+                <imageobject>
+                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Initial.jpg" format="JPG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+        <para>
+            For the output of the helpfull article list all external and public faq article will be considered (but only
+            faq article with the default language or the user language).
+            <mediaobject>
+                <imageobject>
+                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Result.jpg" format="JPG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+    </section>
+    <section>
+        <title>Collection/Sorting for the helpful article</title>
+        <para>
+            For the helpful faq article collection the insert content in the subject and text will be used. After every
+            whitespace (for the subject only after 10 characters or if already some text in the text field exists) a check in
+            the background collect possible new helpful faq article for the list.
+            The keywords (every single word) from the insert subject and text will be compared with all keywords from the
+            faq articles and all matched articles will be added to the result list. The matched articles will be ordered
+            with a keyword quantifier, the last change time and the create time.
+        </para>
+        <para>
+            The occurrence of the words in the text and title will be counted and the quantifier will be calculated with
+            the defined keywords in the faq articles. If the word is a keyword in a faq article the quantifier for this
+            faq article will be increased (word counter + current faq article quantifier).
+            Here is a example for the related faq article ordering:
+        </para>
+        <screen>
+            <![CDATA[
+We have some FAQ Article with the following keywords:
+    - FAQArticle 1 with keywords:  'itsm', 'changemanagement', 'ticket'
+    - FAQArticle 2 with keywords: 'itsm', 'changemangement'
+    - FAQArticle 3 with keywords: 'ticket'
+Some example words from the subject and text (with a counter for the occur in the subject and text):
+    - changemanagement (5)
+    - ticket (4)
+    - itsm (1)
+Result for the collection (FAQArticleID => Calculated Quantifier):
+    - FAQArticle 1 => 11 - ( changemanagement (5) + ticket (4) + itsm (1) = Quantifier (11) )
+    - FAQArticle 2 => 6  - ( changemanagement (5) + itsm (1) = Quantifier (6) )
+    - FAQArticle 3 => 4  - ( ticket (4) = Quantifier (4) )
+            ]]>
+        </screen>
+        <para>
+            If two article have the same keyword quantifier the last change time and create time will also
+            be used for the sorting.
+        </para>
+        <para>
+            To provide good helpful faq article for the customer ticket creation, you need good maintained keywords
+            in the faq articles.
+        </para>
     </section>
 </chapter>
 
@@ -1561,7 +1658,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:FAQSearch/InConditionGet
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:FAQSearch/InConditionGet:FAQ/RelatedArticle
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test GenericInterface/FAQConnector
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/FAQ/Import:Console/Command/Maint/FAQ/ContentTypeSet
         </screen>
@@ -1571,7 +1668,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/
         </para>
         <screen>
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer:AgentFAQLanguage:AgentFAQLinkObject:AgentFAQPrint:AgentFAQSearch:AgentFAQZoom
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer:CustomerFAQPrint:CustomerFAQSearch:CustomerFAQZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer:CustomerFAQPrint:CustomerFAQSearch:CustomerFAQZoom:Customer/FAQ/RelatedArticles
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicFAQExplorer:PublicFAQPrint:PublicFAQRSS:PublicFAQSearch:PublicFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ:FAQJournalOverview/Small:FAQMenu/Generic:FAQOverview/Small:HeaderMeta/AgentFAQSearch:HeaderMeta/CustomerFAQSearch:HeaderMeta/PublicFAQSearch:LinkObject/FAQ
         </screen>

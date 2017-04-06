@@ -20,6 +20,7 @@ use base qw(
     Kernel::System::FAQ::Language
     Kernel::System::FAQ::Category
     Kernel::System::FAQ::State
+    Kernel::System::FAQ::RelatedArticle
     Kernel::System::FAQ::Vote
     Kernel::System::EventHandler
 );
@@ -703,6 +704,14 @@ sub FAQAdd {
             );
         }
     }
+
+    # Cleanup the cache for 'FAQKeywordArticleList' and the runtime cache.
+    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        Type => 'FAQKeywordArticleList',
+    );
+
+    # Cleanup the runtime cache from the FAQ/Category.pm.
+    delete $Self->{Cache};
 
     return $ID;
 }
@@ -1621,6 +1630,9 @@ sub HistoryGet {
 
 =item KeywordList()
 
+TODO: Function not used? Keyword seperator is here a other as at other places...
+TODO: Clarify - Remove function or change the seperator?
+
 get a list of keywords as a hash, with their count as the value:
 
     my %Keywords = $FAQObject->KeywordList(
@@ -1684,6 +1696,151 @@ sub KeywordList {
     }
 
     return %Data;
+}
+
+=item FAQKeywordCustomerArticleList()
+
+Get a keyword and related faq articles lookup list (optional only for the given languages).
+At the moment only for the interface 'external' (to use only approved article) and the
+customer state types (maybe improve this later).
+
+    my %FAQKeywordCustomerArticleList = $FAQObject->FAQKeywordCustomerArticleList(
+        CustomerUser => 'tt',
+        Languages    => [ 'en', 'de' ], # optional
+        UserID       => 1,
+    );
+
+Returns
+
+    my %FAQKeywordCustomerArticleList = (
+        'ExampleKeyword' => [
+            12,
+            13,
+        ],
+        'TestKeyword' => [
+            876,
+        ],
+    );
+
+=cut
+
+sub FAQKeywordCustomerArticleList {
+    my ( $Self, %Param ) = @_;
+
+    for my $Argument (qw(CustomerUser UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my @LanguageIDs;
+
+    LANGUAGENAME:
+    for my $LanguageName ( @{ $Param{Languages} } ) {
+        next LANGUAGENAME if !$LanguageName;
+
+        my $LanguageID = $Self->LanguageLookup(
+            Name => $LanguageName,
+        );
+        next LANGUAGENAME if !$LanguageID;
+
+        push @LanguageIDs, $LanguageID;
+    }
+
+    my $CustomerCategoryIDs = $Self->CustomerCategorySearch(
+        CustomerUser => $Param{CustomerUser},
+        Mode         => 'Customer',
+        UserID       => $Param{UserID},
+    );
+
+    return if !IsArrayRefWithData($CustomerCategoryIDs);
+
+    my $CacheKey = 'FAQKeywordArticleList';
+
+    if (@LanguageIDs) {
+        $CacheKey .= '::Language' . join '::', @LanguageIDs;
+    }
+    $CacheKey .= '::CategoryIDs' . join '::', @{$CustomerCategoryIDs};
+
+    my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+        Type => 'FAQKeywordArticleList',
+        Key  => $CacheKey,
+    );
+    return %{$Cache} if $Cache;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my %FAQSearchParameter;
+
+    # Set interface setting to 'external', to search only for approved faq article.
+    $FAQSearchParameter{Interface} = $Self->StateTypeGet(
+        Name   => 'external',
+        UserID => $Param{UserID},
+    );
+
+    $FAQSearchParameter{States} = $Self->StateTypeList(
+        Types  => $ConfigObject->Get('FAQ::Customer::StateTypes'),
+        UserID => $Param{UserID},
+    );
+
+    my $SearchLimit = $ConfigObject->Get('FAQ::KeywordArticeList::SearchLimit');
+
+    if (@LanguageIDs) {
+        $FAQSearchParameter{LanguageIDs} = \@LanguageIDs;
+    }
+
+    # Get the relevant FAQ article for the current customer user.
+    my @FAQArticleIDs = $Self->FAQSearch(
+        %FAQSearchParameter,
+        CategoryIDs      => $CustomerCategoryIDs,
+        OrderBy          => ['FAQID'],
+        OrderByDirection => ['Down'],
+        Limit            => $SearchLimit,
+        UserID           => 1,
+    );
+
+    my %KeywordArticeList;
+    my %LookupKeywordArticleID;
+
+    FAQARTICLEID:
+    for my $FAQArticleID (@FAQArticleIDs) {
+
+        my %FAQArticleData = $Self->FAQGet(
+            ItemID => $FAQArticleID,
+            UserID => $Param{UserID},
+        );
+
+        next FAQARTICLEID if !$FAQArticleData{Keywords};
+
+        # Replace commas and semicolons, because the keywords are normal split with an whitespace.
+        $FAQArticleData{Keywords} =~ s/,/ /g;
+        $FAQArticleData{Keywords} =~ s/;/ /g;
+
+        my @Keywords = split /\s+/, lc $FAQArticleData{Keywords};
+
+        KEYWORD:
+        for my $Keyword (@Keywords) {
+
+            next KEYWORD if $LookupKeywordArticleID{$Keyword}->{$FAQArticleID};
+
+            push @{ $KeywordArticeList{$Keyword} }, $FAQArticleID;
+
+            $LookupKeywordArticleID{$Keyword}->{$FAQArticleID} = 1;
+        }
+    }
+
+    $Kernel::OM->Get('Kernel::System::Cache')->Set(
+        Type  => 'FAQKeywordArticleList',
+        Key   => $CacheKey,
+        Value => \%KeywordArticeList,
+        TTL   => 60 * 60 * 3,
+    );
+
+    return %KeywordArticeList;
 }
 
 =item FAQPathListGet()
@@ -2566,6 +2723,12 @@ sub _DeleteFromFAQCache {
         Type => 'FAQ',
         Key  => 'ItemFieldGet::ItemID::' . $Param{ItemID},
     );
+
+    # Cleanup cache for the 'FAQKeywordArticleList'.
+    $CacheObject->CleanUp(
+        Type => 'FAQKeywordArticleList',
+    );
+
     return 1;
 }
 

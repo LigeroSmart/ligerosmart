@@ -1,4 +1,5 @@
 #5.0.9 2017-??-??
+ - 2017-04-06 Added the new related faq article widget 'This might be helpful' for the customer ticket creation.
  - 2017-04-03 Fixed wrong operation assignment.
  - 2017-03-24 Updated translations, thanks to all translators.
  - 2017-03-24 Marked strings as translatable, thanks to Balázs Úr (PR#71).

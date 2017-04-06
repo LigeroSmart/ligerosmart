@@ -60,6 +60,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentFAQZoom.pm" />
         <File Permission="644" Location="Kernel/Modules/CustomerFAQExplorer.pm" />
         <File Permission="644" Location="Kernel/Modules/CustomerFAQPrint.pm" />
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQRelatedArticles.pm" />
         <File Permission="644" Location="Kernel/Modules/CustomerFAQSearch.pm" />
         <File Permission="644" Location="Kernel/Modules/CustomerFAQZoom.pm" />
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm" />
@@ -78,6 +79,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Layout/FAQ.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/LinkObject/FAQ.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/FAQ.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/FAQRelatedArticles.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQAdd.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardFAQOverview.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQCategory.tt" />
@@ -97,6 +99,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoom.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoomSmall.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQExplorer.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQRelatedArticles.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearch.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearchOpenSearchDescriptionFAQNumber.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearchOpenSearchDescriptionFullText.tt" />
@@ -113,6 +116,7 @@
         <File Permission="644" Location="Kernel/System/DynamicField/ObjectType/FAQ.pm" />
         <File Permission="644" Location="Kernel/System/FAQ/Category.pm" />
         <File Permission="644" Location="Kernel/System/FAQ/Language.pm" />
+        <File Permission="644" Location="Kernel/System/FAQ/RelatedArticle.pm" />
         <File Permission="644" Location="Kernel/System/FAQ/State.pm" />
         <File Permission="644" Location="Kernel/System/FAQ/Vote.pm" />
         <File Permission="644" Location="Kernel/System/FAQ.pm" />
@@ -126,6 +130,7 @@
         <File Permission="644" Location="scripts/test/FAQSearch/InConditionGet.t" />
         <File Permission="644" Location="scripts/test/FAQ.t" />
         <File Permission="644" Location="scripts/test/FAQSearch.t" />
+        <File Permission="644" Location="scripts/test/FAQ/RelatedArticle.t" />
         <File Permission="644" Location="scripts/test/GenericInterface/FAQConnector.t" />
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc" />
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf" />
@@ -148,6 +153,7 @@
         <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQPrint.t" />
         <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQSearch.t" />
         <File Permission="644" Location="scripts/test/Selenium/Customer/CustomerFAQZoom.t" />
+        <File Permission="644" Location="scripts/test/Selenium/Customer/FAQ/RelatedArticles.t" />
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicFAQExplorer.t" />
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicFAQPrint.t" />
         <File Permission="644" Location="scripts/test/Selenium/Public/PublicFAQRSS.t" />
@@ -170,6 +176,7 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/help-small.png" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.RelatedArticles.css" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.FAQZoom.css" />
         <File Permission="644" Location="var/packagesetup/FAQ.pm" />

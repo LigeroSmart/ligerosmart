@@ -773,7 +773,7 @@ sub CategorySearch {
 
 =item CategorySubCategoryIDList()
 
-get all subcategory ids of of a category
+get all subcategory ids of a category
 
     my $SubCategoryIDArrayRef = $FAQObject->CategorySubCategoryIDList(
         ParentID     => 1,
@@ -1509,7 +1509,6 @@ sub GetCustomerCategories {
     # check cache
     my $CacheKey = 'GetCustomerCategories::CustomerUser::' . $Param{CustomerUser};
     if ( defined $Self->{Cache}->{$CacheKey} ) {
-
         return $Self->{Cache}->{$CacheKey};
     }
 
