@@ -32,9 +32,6 @@ $ConfigObject->Set(
     Value => 0,
 );
 
-# Don't run the test, if the feature is disabled (can be removed after the next package release).
-return 1 if !$ConfigObject->Get('FAQ::Customer::RelatedArticles::Enabled');
-
 # create some customer users
 my @CustomerUsers;
 for ( 0 .. 1 ) {
