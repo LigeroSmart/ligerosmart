@@ -11,6 +11,7 @@ package Kernel::Output::HTML::LinkObject::FAQ;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::Output::HTML::Layout;
 use Kernel::System::VariableCheck qw(:all);
 
@@ -304,24 +305,33 @@ sub TableCreateComplex {
     }
 
     # Define Headline columns.
+    my @AllColumns;
     COLUMN:
     for my $Column ( sort { $SortOrder{$a} <=> $SortOrder{$b} } keys %UserColumns ) {
-        next COLUMN if $Column eq 'FAQNumber';         # Always present, already added.
+
+        my $ColumnTranslate = $Column;
+        if ( $Column eq 'CategoryName' ) {
+            $ColumnTranslate = Translatable('Category');
+        }
+        elsif ( $Column eq 'ContentType' ) {
+            $ColumnTranslate = Translatable('Content Type');
+        }
+
+        push @AllColumns, {
+            ColumnName      => $Column,
+            ColumnTranslate => $ColumnTranslate,
+        };
+
+        # Always present, already added.
+        next COLUMN if $Column eq 'FAQNumber';
 
         # Ff enabled by default.
         if ( $UserColumns{$Column} == 2 ) {
             my $ColumnName = '';
 
-            if ( $Column eq 'CategoryName' ) {
-                $ColumnName = 'Category';
-            }
-            elsif ( $Column eq 'ContentType' ) {
-                $ColumnName = 'Content Type'
-            }
-
             # Other FAQ fields.
-            elsif ( $Column !~ m{\A DynamicField_}xms ) {
-                $ColumnName = $Column;
+            if ( $Column !~ m{\A DynamicField_}xms ) {
+                $ColumnName = $ColumnTranslate;
             }
 
             # Dynamic fields.
@@ -444,6 +454,7 @@ sub TableCreateComplex {
         ObjectID   => $Param{ObjectID},
         Headline   => \@Headline,
         ItemList   => \@ItemList,
+        AllColumns => \@AllColumns,
     );
 
     return ( \%Block );
