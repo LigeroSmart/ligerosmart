@@ -18,7 +18,7 @@ my @Tests = (
         Name     => "No Params 'SendInHoursAfterClose' disabled",
         Params   => [],
         Config   => 0,
-        ExitCode => 1,
+        ExitCode => 0,
     },
     {
         Name     => "Wrong Param 'SendInHoursAfterClose' disabled",
@@ -30,7 +30,7 @@ my @Tests = (
         Name     => "Force param 'SendInHoursAfterClose' disabled",
         Params   => ['--force'],
         Config   => 0,
-        ExitCode => 1,
+        ExitCode => 0,
     },
     {
         Name     => "No Params 'SendInHoursAfterClose' enabled",
