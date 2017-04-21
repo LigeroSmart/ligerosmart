@@ -126,7 +126,7 @@ sub Run {
         );
 
         # don't send for survey_requests that are younger than CreateTime + $SendINHoursAfterClose
-        if ( $SendInHoursAfterClose * 3_600 + $CreateTime < $SystemTime ) {
+        if ( $SendInHoursAfterClose * 3_600 + $CreateTime > $SystemTime ) {
             $Self->Print(
                 "   -Skipped because send time wasn't reached yet.\n\n"
             );
