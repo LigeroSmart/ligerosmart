@@ -1,4 +1,5 @@
 #5.0.4 2017-??-??
+ - 2017-04-21 Fixed bug#[12226](https://bugs.otrs.org/show_bug.cgi?id=12226) - SurveyRequestsSend failed.
  - 2017-04-21 Fixed bug#[12737](https://bugs.otrs.org/show_bug.cgi?id=12737) - Survey request is beeing sent ignoring the Survey::SendInHoursAfterClose value.
  - 2017-03-25 Updated translations, thanks to all translators.
  - 2017-03-25 Fixed bug#[12712](https://bugs.otrs.org/show_bug.cgi?id=12712)(PR#26) - Hardcoded string in block headers, thanks to Balázs Úr.

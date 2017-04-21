@@ -46,21 +46,18 @@ EOF
     return;
 }
 
-sub PreRun {
-    my ( $Self, %Param ) = @_;
-
-    my $SendInHoursAfterClose = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
-    if ( !$SendInHoursAfterClose ) {
-        die "No hours configured in Survey::SendInHoursAfterClose.\n";
-    }
-
-    return;
-}
-
 sub Run {
     my ( $Self, %Param ) = @_;
 
     $Self->Print("<yellow>Processing pending survey requests...</yellow>\n\n");
+
+    my $SendInHoursAfterClose = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
+    if ( !$SendInHoursAfterClose ) {
+        $Self->Print("No hours configured in Survey::SendInHoursAfterClose.\n");
+
+        $Self->Print("<green>Done.</green>\n");
+        return $Self->ExitCodeOk();
+    }
 
     # get force option
     my $Force = $Self->GetOption('force');
@@ -118,8 +115,6 @@ sub Run {
         my $CreateTime = $TimeObject->TimeStamp2SystemTime(
             String => $Request->{CreateTime},
         );
-
-        my $SendInHoursAfterClose = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
 
         $Self->Print(
             "  RequestID: <yellow>$Request->{ID}</yellow>\n   -For TicketID: $Request->{TicketID}\n"
