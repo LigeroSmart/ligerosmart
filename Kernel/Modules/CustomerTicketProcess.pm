@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - c0c06922975f3ae8bb31eccda0ad6adea02a9f8b - Kernel/Modules/CustomerTicketProcess.pm
+# $origin: otrs - da2b6615e0cbfff1636f4e0b2dbd06ddb6bd0291 - Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1121,7 +1121,7 @@ sub _OutputActivityDialog {
     my %Error        = ();
     my %ErrorMessage = ();
 
-    # If we had Errors, we got an Errorhash
+    # If we had Errors, we got an Error hash
     %Error        = %{ $Param{Error} }        if ( IsHashRefWithData( $Param{Error} ) );
     %ErrorMessage = %{ $Param{ErrorMessage} } if ( IsHashRefWithData( $Param{ErrorMessage} ) );
 
@@ -1239,7 +1239,7 @@ sub _OutputActivityDialog {
             && IsHashRefWithData( $Activity->{ActivityDialog}{$_}{Overwrite} )
     } keys %{ $Activity->{ActivityDialog} };
 
-    # let the Overwrites Overwrite the ActivityDialog's Hashvalues
+    # let the Overwrites Overwrite the ActivityDialog's Hash values
     if ( $OverwriteActivityDialogNumber[0] ) {
         %{$ActivityDialog} = (
             %{$ActivityDialog},
@@ -1257,13 +1257,11 @@ sub _OutputActivityDialog {
             Value => $Ticket{Number},
         );
 
-        # display given notify messages if this is not an ajax request
+        # display given notify messages if this is not an AJAX request
         if ( IsArrayRefWithData( $Param{Notify} ) ) {
 
-            for my $NotifyString ( @{ $Param{Notify} } ) {
-                $Output .= $LayoutObject->Notify(
-                    Data => $NotifyString,
-                );
+            for my $NotifyData ( @{ $Param{Notify} } ) {
+                $Output .= $LayoutObject->Notify( %{$NotifyData} );
             }
         }
 
@@ -1273,8 +1271,32 @@ sub _OutputActivityDialog {
                 Name =>
                     $LayoutObject->{LanguageObject}->Translate( $ActivityDialog->{Name} )
                     || '',
-                }
+            },
         );
+
+        # show descriptions
+        if ( $ActivityDialog->{DescriptionShort} ) {
+            $LayoutObject->Block(
+                Name => 'DescriptionShort',
+                Data => {
+                    DescriptionShort
+                        => $LayoutObject->{LanguageObject}->Translate(
+                        $ActivityDialog->{DescriptionShort},
+                        ),
+                },
+            );
+        }
+        if ( $ActivityDialog->{DescriptionLong} ) {
+            $LayoutObject->Block(
+                Name => 'DescriptionLong',
+                Data => {
+                    DescriptionLong
+                        => $LayoutObject->{LanguageObject}->Translate(
+                        $ActivityDialog->{DescriptionLong},
+                        ),
+                },
+            );
+        }
     }
     elsif ( $Self->{IsMainWindow} && IsHashRefWithData( \%Error ) ) {
 
@@ -1305,64 +1327,33 @@ sub _OutputActivityDialog {
         $MainBoxClass = 'MainBox';
     }
 
-    # display process iformation
+    # Show descriptions if activity is a first screen. See bug#12649 for more information.
     if ( $Self->{IsMainWindow} ) {
-
-        # get process data
-        my $Process = $ProcessObject->ProcessGet(
-            ProcessEntityID => $Param{ProcessEntityID},
-        );
-
-        # output main process information
-        $LayoutObject->Block(
-            Name => 'ProcessInfoSidebar',
-            Data => {
-                Process        => $Process->{Name}        || '',
-                Activity       => $Activity->{Name}       || '',
-                ActivityDialog => $ActivityDialog->{Name} || '',
-            },
-        );
-
-        # output activity dilalog short description (if any)
-        if (
-            defined $ActivityDialog->{DescriptionShort}
-            && $ActivityDialog->{DescriptionShort} ne ''
-            )
-        {
+        if ( $ActivityDialog->{DescriptionShort} ) {
             $LayoutObject->Block(
-                Name => 'ProcessInfoSidebarActivityDialogDesc',
+                Name => 'DescriptionShortAlt',
                 Data => {
-                    ActivityDialogDescription => $ActivityDialog->{DescriptionShort} || '',
+                    DescriptionShort
+                        => $LayoutObject->{LanguageObject}->Translate(
+                        $ActivityDialog->{DescriptionShort},
+                        ),
+                },
+            );
+        }
+        if ( $ActivityDialog->{DescriptionLong} ) {
+            $LayoutObject->Block(
+                Name => 'DescriptionLongAlt',
+                Data => {
+                    DescriptionLong
+                        => $LayoutObject->{LanguageObject}->Translate(
+                        $ActivityDialog->{DescriptionLong},
+                        ),
                 },
             );
         }
     }
 
-    # show descriptions
-    if ( $ActivityDialog->{DescriptionShort} ) {
-        $LayoutObject->Block(
-            Name => 'DescriptionShort',
-            Data => {
-                DescriptionShort
-                    => $LayoutObject->{LanguageObject}->Translate(
-                    $ActivityDialog->{DescriptionShort},
-                    ),
-            },
-        );
-    }
-    if ( $ActivityDialog->{DescriptionLong} ) {
-        $LayoutObject->Block(
-            Name => 'DescriptionLong',
-            Data => {
-                DescriptionLong
-                    => $LayoutObject->{LanguageObject}->Translate(
-                    $ActivityDialog->{DescriptionLong},
-                    ),
-            },
-        );
-    }
-
-    # show close & cancel link if neccessary
+    # show close & cancel link if necessary
     if ( !$Self->{IsMainWindow} ) {
         if ( $Param{RenderLocked} ) {
             $LayoutObject->Block(
@@ -3529,6 +3520,8 @@ sub _StoreActivityDialog {
     my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
     my $TicketObject  = $Kernel::OM->Get('Kernel::System::Ticket');
 
+    my @Notify;
+
     my $NewTicketID;
     if ( !$TicketID ) {
 
@@ -3740,16 +3733,19 @@ sub _StoreActivityDialog {
         );
         my %ActivityDialogs = reverse %{ $Activity->{ActivityDialog} // {} };
         if ( !$ActivityDialogs{$ActivityDialogEntityID} ) {
+            my $TicketHook        = $ConfigObject->Get('Ticket::Hook');
+            my $TicketHookDivider = $ConfigObject->Get('Ticket::HookDivider');
 
-            return $Self->_ShowDialogError(
-                Message => $LayoutObject->{LanguageObject}->Translate(
-                    'This step does not belong anymore the current activity in process for Ticket %s!',
-                    $Ticket{TicketID},
+            $Error{WrongActivity} = 1;
+            push @Notify, {
+                Priority => 'Error',
+                Data     => $LayoutObject->{LanguageObject}->Translate(
+                    'This step does not belong anymore the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime.',
+                    $TicketHook,
+                    $TicketHookDivider,
+                    $Ticket{TicketNumber},
                 ),
-                Comment => Translatable(
-                    'Another user changed this ticket in the meantime. Please close this window and reload the ticket.'
-                ),
-            );
+            };
         }
 
         $ProcessEntityID = $Ticket{
@@ -3778,6 +3774,7 @@ sub _StoreActivityDialog {
             Error                  => \%Error,
             ErrorMessage           => \%ErrorMessage,
             GetParam               => $Param{GetParam},
+            Notify                 => \@Notify,
         );
     }
 

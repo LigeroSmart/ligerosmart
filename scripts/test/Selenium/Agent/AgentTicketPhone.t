@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: otrs - 83bdec42c184e8462075a00c56af0757ba6effb6 - scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,6 +23,26 @@ $Selenium->RunTest(
         # get needed objects
         my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+        # Overload CustomerUser => Map setting defined in the Defaults.pm.
+        my $DefaultCustomerUser = $ConfigObject->Get("CustomerUser");
+        $DefaultCustomerUser->{Map}->[5] = [
+            'UserEmail',
+            'Email',
+            'email',
+            1,
+            1,
+            'var',
+            '[% Env("CGIHandle") %]?Action=AgentTicketCompose;ResponseID=1;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]',
+            0,
+            '',
+            'AsPopup OTRSPopup_TicketAction',
+        ];
+
+        $Helper->ConfigSettingChange(
+            Key   => 'CustomerUser',
+            Value => $DefaultCustomerUser,
+        );
 
         # do not check email addresses
         $Helper->ConfigSettingChange(
@@ -227,7 +247,20 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Subject",  'css' )->send_keys($TicketSubject);
         $Selenium->find_element( "#RichText", 'css' )->send_keys($TicketBody);
-        $Selenium->find_element( "#Subject",  'css' )->VerifiedSubmit();
+
+        # wait for "Customer Information"
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset .Value").length'
+        );
+
+        # make sure that Customer email is not a link
+        my $LinkVisible = $Selenium->execute_script("return \$('.SidebarColumn fieldset a.AsPopup').length;");
+        $Self->False(
+            $LinkVisible,
+            "Customer email is not a link with class AsPopup."
+        );
+
+        $Selenium->find_element( "#Subject", 'css' )->VerifiedSubmit();
 
         # get ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - dc9f0257c590c2c2d9b1f35dcc998675d8e163a2 - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -82,7 +82,7 @@ sub Run {
     for my $Key (
         qw(Year Month Day Hour Minute To Cc Bcc TimeUnits PriorityID Subject Body
         TypeID ServiceID SLAID OwnerAll ResponsibleAll NewResponsibleID NewUserID
-        NextStateID StandardTemplateID
+        NextStateID StandardTemplateID Dest
         )
         )
     {
@@ -593,6 +593,14 @@ sub Run {
                 );
             }
 
+            my $Dest = '';
+            if ( !$Self->{QueueID} && $GetParam{Dest} ) {
+
+                my @QueueParts = split( /\|\|/, $GetParam{Dest} );
+                $Self->{QueueID} = $QueueParts[0];
+                $Dest = $GetParam{Dest};
+            }
+
             # html output
             my $Services = $Self->_GetServices(
                 QueueID => $Self->{QueueID} || 1,
@@ -642,6 +650,7 @@ sub Run {
                     %ACLCompatGetParam,
                     QueueID => $Self->{QueueID}
                 ),
+                FromSelected      => $Dest,
                 To                => '',
                 Subject           => $Subject,
                 Body              => $Body,
