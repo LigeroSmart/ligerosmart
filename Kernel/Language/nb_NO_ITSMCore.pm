@@ -75,7 +75,7 @@ sub Data {
     $Self->{Translation}->{'Current Incident State'} = 'Tilstand på nåværende hendelse';
 
     # SysConfig
-    $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Both'} = 'Begge';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         '';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
@@ -94,11 +94,11 @@ sub Data {
         'Registrering av frontend-modul for AgentITSMServicePrint-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         'Registrering av frontend-modul for AgentITSMServiceZoom-objektet i saksbehandler-delen';
-    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
-    $Self->{Translation}->{'ITSM Service Overview.'} = '';
-    $Self->{Translation}->{'Incident'} = '';
-    $Self->{Translation}->{'Incident State Type'} = '';
-    $Self->{Translation}->{'Incident State Type.'} = '';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = 'SLA-oversikt';
+    $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM-Tjenesteoversikt';
+    $Self->{Translation}->{'Incident'} = 'Hendelse';
+    $Self->{Translation}->{'Incident State Type'} = 'Type hendelsestilstand';
+    $Self->{Translation}->{'Incident State Type.'} = 'Type hendelsestilstand.';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Administrér prioritetsmatrise';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Modul som viser tilbake-lenken i tjenestemenyen';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Modul som viser tilbake-lenken i SLA-menyen';
@@ -107,10 +107,10 @@ sub Data {
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul som viser lenke-lenken i tjeneste-menyen';
     $Self->{Translation}->{'Operational'} = 'Operativ';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parametre for hendelsestilstander i valgvisningen';
-    $Self->{Translation}->{'SLA Print.'} = '';
-    $Self->{Translation}->{'SLA Zoom.'} = '';
-    $Self->{Translation}->{'Service Print.'} = '';
-    $Self->{Translation}->{'Service Zoom.'} = '';
+    $Self->{Translation}->{'SLA Print.'} = 'SLA-utskrift';
+    $Self->{Translation}->{'SLA Zoom.'} = 'SLA-detaljer.';
+    $Self->{Translation}->{'Service Print.'} = 'Tjenesteutskrift';
+    $Self->{Translation}->{'Service Zoom.'} = 'Tjenestedetaljer';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =

@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Joao Ferro <fmthard@gmail.com>, 2017
 # Joao Ferro <fmthard@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-03-01 00:02+0000\n"
+"PO-Revision-Date: 2017-03-31 10:34+0000\n"
+"Last-Translator: Joao Ferro <fmthard@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr "Alternativa a"
 
 #. Template: AAAITSMCore
 msgid "Availability"
-msgstr "DisponibilAntiguidade"
+msgstr "Disponibilidade"
 
 #. Template: AAAITSMCore
 msgid "Back End"
@@ -192,7 +193,7 @@ msgstr "Estado Atual de Incidente"
 
 #. SysConfig
 msgid "Both"
-msgstr ""
+msgstr "Ambos"
 
 #. SysConfig
 msgid ""
@@ -201,7 +202,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Definir Acções onde um botão de configurações está disponível na widget the objectos ligados (LinkObject::ViewMode = \"complex\").  Estas Acções devem estar registadas nos seguintes ficheiros JS e CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid ""
@@ -209,7 +210,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Definir que colunas são apresentadas nos widget de Serviços ligados (LinkObject::ViewMode = \"complex\"). Nota: Apenas atributes de Serviço são permitidos nas DefaultColumns. Configurações Possíveis: 0 = Desactivado, 1 = Activado, 2 = Activado por omissão."
 
 #. SysConfig
 msgid ""
@@ -255,11 +256,11 @@ msgstr "Registo de módulo de interface para o objeto AgentITSMServiceZoom para 
 
 #. SysConfig
 msgid "ITSM SLA Overview."
-msgstr ""
+msgstr "Visão Geral SLA ITSM"
 
 #. SysConfig
 msgid "ITSM Service Overview."
-msgstr ""
+msgstr "Visão Geral Serviço ITSM"
 
 #. SysConfig
 msgid "Incident"
@@ -267,11 +268,11 @@ msgstr "Incidente"
 
 #. SysConfig
 msgid "Incident State Type"
-msgstr ""
+msgstr "Tipo de Estado de Incidente"
 
 #. SysConfig
 msgid "Incident State Type."
-msgstr ""
+msgstr "Tipo de Estado de Incidente"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -307,19 +308,19 @@ msgstr "Parâmetros para os estados de incidente nas preferências."
 
 #. SysConfig
 msgid "SLA Print."
-msgstr ""
+msgstr "Impressão de SLA"
 
 #. SysConfig
 msgid "SLA Zoom."
-msgstr ""
+msgstr "Detalhe de SLA"
 
 #. SysConfig
 msgid "Service Print."
-msgstr ""
+msgstr "Impressão de Serviço"
 
 #. SysConfig
 msgid "Service Zoom."
-msgstr ""
+msgstr "Detalhe de Serviço"
 
 #. SysConfig
 msgid ""

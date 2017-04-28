@@ -1,12 +1,13 @@
 # 
 # Translators:
 # Lars Åge Kamfjord <lars-transifex@kamfjord.org>, 2014
+# Peter Værlien <pvarlien@online.no>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-03-01 00:02+0000\n"
+"PO-Revision-Date: 2017-04-25 11:45+0000\n"
+"Last-Translator: Peter Værlien <pvarlien@online.no>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -192,7 +193,7 @@ msgstr "Tilstand på nåværende hendelse"
 
 #. SysConfig
 msgid "Both"
-msgstr ""
+msgstr "Begge"
 
 #. SysConfig
 msgid ""
@@ -255,23 +256,23 @@ msgstr "Registrering av frontend-modul for AgentITSMServiceZoom-objektet i saksb
 
 #. SysConfig
 msgid "ITSM SLA Overview."
-msgstr ""
+msgstr "SLA-oversikt"
 
 #. SysConfig
 msgid "ITSM Service Overview."
-msgstr ""
+msgstr "ITSM-Tjenesteoversikt"
 
 #. SysConfig
 msgid "Incident"
-msgstr ""
+msgstr "Hendelse"
 
 #. SysConfig
 msgid "Incident State Type"
-msgstr ""
+msgstr "Type hendelsestilstand"
 
 #. SysConfig
 msgid "Incident State Type."
-msgstr ""
+msgstr "Type hendelsestilstand."
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -307,19 +308,19 @@ msgstr "Parametre for hendelsestilstander i valgvisningen"
 
 #. SysConfig
 msgid "SLA Print."
-msgstr ""
+msgstr "SLA-utskrift"
 
 #. SysConfig
 msgid "SLA Zoom."
-msgstr ""
+msgstr "SLA-detaljer."
 
 #. SysConfig
 msgid "Service Print."
-msgstr ""
+msgstr "Tjenesteutskrift"
 
 #. SysConfig
 msgid "Service Zoom."
-msgstr ""
+msgstr "Tjenestedetaljer"
 
 #. SysConfig
 msgid ""
