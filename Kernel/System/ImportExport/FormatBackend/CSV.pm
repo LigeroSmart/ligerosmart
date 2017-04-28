@@ -11,6 +11,8 @@ package Kernel::System::ImportExport::FormatBackend::CSV;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::System::ImportExport',
     'Kernel::System::Log',
@@ -91,15 +93,15 @@ sub FormatAttributesGet {
     my $Attributes = [
         {
             Key   => 'ColumnSeparator',
-            Name  => 'Column Separator',
+            Name  => Translatable('Column Separator'),
             Input => {
                 Type => 'Selection',
                 Data => {
-                    Tabulator => 'Tabulator (TAB)',
-                    Semicolon => 'Semicolon (;)',
-                    Colon     => 'Colon (:)',
-                    Dot       => 'Dot (.)',
-                    Comma     => 'Comma (,)',
+                    Tabulator => Translatable('Tabulator (TAB)'),
+                    Semicolon => Translatable('Semicolon (;)'),
+                    Colon     => Translatable('Colon (:)'),
+                    Dot       => Translatable('Dot (.)'),
+                    Comma     => Translatable('Comma (,)'),
                 },
                 Required     => 1,
                 Translation  => 1,
@@ -108,7 +110,7 @@ sub FormatAttributesGet {
         },
         {
             Key   => 'Charset',
-            Name  => 'Charset',
+            Name  => Translatable('Charset'),
             Input => {
                 Type         => 'Text',
                 ValueDefault => 'UTF-8',
@@ -120,12 +122,12 @@ sub FormatAttributesGet {
         },
         {
             Key   => 'IncludeColumnHeaders',
-            Name  => 'Include Column Headers',
+            Name  => Translatable('Include Column Headers'),
             Input => {
                 Type => 'Selection',
                 Data => {
-                    0 => 'No',
-                    1 => 'Yes',
+                    0 => Translatable('No'),
+                    1 => Translatable('Yes'),
                 },
                 Translation  => 1,
                 PossibleNone => 0,
@@ -161,7 +163,7 @@ sub MappingFormatAttributesGet {
     my $Attributes = [
         {
             Key   => 'Column',
-            Name  => 'Column',
+            Name  => Translatable('Column'),
             Input => {
                 Type     => 'TT',
                 Data     => '',

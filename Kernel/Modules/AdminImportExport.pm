@@ -1339,7 +1339,7 @@ sub Run {
             $LayoutObject->Block(
                 Name => 'OverviewList',
                 Data => {
-                    ObjectName => 'Template List',
+                    ObjectName => Translatable('Template List'),
                 },
             );
             $LayoutObject->Block( Name => 'NoDataFoundMsg' );
