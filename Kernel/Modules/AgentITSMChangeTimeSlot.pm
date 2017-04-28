@@ -249,12 +249,12 @@ sub Run {
                 {
                     Name       => 'MoveTimeDay',
                     Data       => { map { $_ => sprintf '%02d', $_ } ( 1 .. 31 ) },
-                    SelectedID => sprintf '%0x', $Day,
+                    SelectedID => int $Day,
                 },
                 {
                     Name       => 'MoveTimeMonth',
                     Data       => { map { $_ => sprintf '%02d', $_ } ( 1 .. 12 ) },
-                    SelectedID => sprintf '%0x', $Month,
+                    SelectedID => int $Month,
                 },
                 {
                     Name       => 'MoveTimeYear',
