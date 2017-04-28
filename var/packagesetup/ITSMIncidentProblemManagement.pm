@@ -11,6 +11,7 @@ package var::packagesetup::ITSMIncidentProblemManagement;    ## no critic
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::Output::Template::Provider;
 
 our @ObjectDependencies = (
@@ -688,7 +689,7 @@ sub _GetITSMDynamicFieldsDefinition {
         {
             OldName    => 'TicketFreeText15',
             Name       => 'ITSMReviewRequired',
-            Label      => 'Review Required',
+            Label      => Translatable('Review Required'),
             FieldType  => 'Dropdown',
             ObjectType => 'Ticket',
             Config     => {
@@ -696,8 +697,8 @@ sub _GetITSMDynamicFieldsDefinition {
                 Link           => '',
                 PossibleNone   => 0,
                 PossibleValues => {
-                    No  => 'No',
-                    Yes => 'Yes',
+                    No  => Translatable('No'),
+                    Yes => Translatable('Yes'),
                 },
                 TranslatableValues => 1,
             },
@@ -705,7 +706,7 @@ sub _GetITSMDynamicFieldsDefinition {
         {
             OldName    => 'TicketFreeText16',
             Name       => 'ITSMDecisionResult',
-            Label      => 'Decision Result',
+            Label      => Translatable('Decision Result'),
             FieldType  => 'Dropdown',
             ObjectType => 'Ticket',
             Config     => {
@@ -714,18 +715,18 @@ sub _GetITSMDynamicFieldsDefinition {
                 TranslatableValues => 1,
                 PossibleNone       => 1,
                 PossibleValues     => {
-                    'Approved'     => 'Approved',
-                    'Pending'      => 'Pending',
-                    'Postponed'    => 'Postponed',
-                    'Pre-approved' => 'Pre-approved',
-                    'Rejected'     => 'Rejected',
+                    'Approved'     => Translatable('Approved'),
+                    'Pending'      => Translatable('Pending'),
+                    'Postponed'    => Translatable('Postponed'),
+                    'Pre-approved' => Translatable('Pre-approved'),
+                    'Rejected'     => Translatable('Rejected'),
                 },
             },
         },
         {
             OldName    => 'TicketFreeTime3',
             Name       => 'ITSMRepairStartTime',
-            Label      => 'Repair Start Time',
+            Label      => Translatable('Repair Start Time'),
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
             Config     => {
@@ -739,7 +740,7 @@ sub _GetITSMDynamicFieldsDefinition {
         {
             OldName    => 'TicketFreeTime4',
             Name       => 'ITSMRecoveryStartTime',
-            Label      => 'Recovery Start Time',
+            Label      => Translatable('Recovery Start Time'),
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
             Config     => {
@@ -753,7 +754,7 @@ sub _GetITSMDynamicFieldsDefinition {
         {
             OldName    => 'TicketFreeTime5',
             Name       => 'ITSMDecisionDate',
-            Label      => 'Decision Date',
+            Label      => Translatable('Decision Date'),
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
             Config     => {
@@ -767,7 +768,7 @@ sub _GetITSMDynamicFieldsDefinition {
         {
             OldName    => 'TicketFreeTime6',
             Name       => 'ITSMDueDate',
-            Label      => 'Due Date',
+            Label      => Translatable('Due Date'),
             FieldType  => 'DateTime',
             ObjectType => 'Ticket',
             Config     => {
