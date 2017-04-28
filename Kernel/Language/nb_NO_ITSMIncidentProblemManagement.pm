@@ -29,7 +29,7 @@ sub Data {
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = 'Endre sakens beslutning';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Endre sakens ITSM-felter';
-    $Self->{Translation}->{'Service Incident State'} = '';
+    $Self->{Translation}->{'Service Incident State'} = 'Hendelsestilstand for tjenesten';
 
     # Template: AgentTicketEmail
     $Self->{Translation}->{'Link ticket'} = 'Koble sak';
@@ -38,10 +38,14 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritikalitet';
     $Self->{Translation}->{'Impact'} = 'Omfang';
 
+    # Perl Module: Kernel/Modules/AgentTicketProcess.pm
+    $Self->{Translation}->{'This step does not belong anymore the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime.'} =
+        '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Legg til en beslutning!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Ekstra ITSM-felt';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Ekstra ITSM-felt for saken.';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Tillater å legge til notiser i de ekstra ITSM-feltene i saksbehandlerdelen';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -142,7 +146,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = 'Beslutning for saken.';
 
 }
 
