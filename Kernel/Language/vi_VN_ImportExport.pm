@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Thêm mẫu mapping';
-    $Self->{Translation}->{'Charset'} = 'Bộ mã ký tự';
-    $Self->{Translation}->{'Colon (:)'} = 'Dấu hai chấm (:)';
-    $Self->{Translation}->{'Column'} = 'Cột';
-    $Self->{Translation}->{'Column Separator'} = 'Phân cách cột';
-    $Self->{Translation}->{'Dot (.)'} = 'Dấu chấm (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Dấu chấm phẩy (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Bộ lập bảng (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Gồm tiêu đề cột';
-    $Self->{Translation}->{'Import summary for'} = 'Tóm lược nhập vào cho';
-    $Self->{Translation}->{'Imported records'} = 'Bản ghi được nhập';
-    $Self->{Translation}->{'Exported records'} = 'Bản ghi được xuất';
-    $Self->{Translation}->{'Records'} = 'Bản ghi';
-    $Self->{Translation}->{'Skipped'} = 'Bị bỏ qua';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Quản lý Nhập/Xuất';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tạo một mẫu để nhập và xuất thông tin đối tượng.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Giới hạn dữ liệu xuất mỗi lần tìm kiếm';
     $Self->{Translation}->{'Import information'} = 'Thông tin nhập vào';
     $Self->{Translation}->{'Source File'} = 'Tệp nguồn';
+    $Self->{Translation}->{'Import summary for'} = 'Tóm lược nhập vào cho';
+    $Self->{Translation}->{'Records'} = 'Bản ghi';
     $Self->{Translation}->{'Success'} = 'Thành công';
     $Self->{Translation}->{'Failed'} = 'Lỗi';
     $Self->{Translation}->{'Duplicate names'} = 'Trùng tên';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Phân cách cột';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Bộ lập bảng (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Dấu chấm phẩy (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Dấu hai chấm (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Dấu chấm (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Bộ mã ký tự';
+    $Self->{Translation}->{'Include Column Headers'} = 'Gồm tiêu đề cột';
+    $Self->{Translation}->{'Column'} = 'Cột';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

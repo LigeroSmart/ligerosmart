@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = '';
-    $Self->{Translation}->{'Charset'} = 'Teckenkodning';
-    $Self->{Translation}->{'Colon (:)'} = 'Kolon (:)';
-    $Self->{Translation}->{'Column'} = 'Kolumn';
-    $Self->{Translation}->{'Column Separator'} = 'Kolumn-avskiljare';
-    $Self->{Translation}->{'Dot (.)'} = 'Punkt (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = '';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = 'Importsummering för';
-    $Self->{Translation}->{'Imported records'} = 'Importerade poster';
-    $Self->{Translation}->{'Exported records'} = 'Exporterade poster';
-    $Self->{Translation}->{'Records'} = 'Poster';
-    $Self->{Translation}->{'Skipped'} = 'Hoppade över';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Hantering av Import/Export';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Skapa en mall för att importera och exportera objektinformation.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = '';
     $Self->{Translation}->{'Import information'} = 'Importinformation';
     $Self->{Translation}->{'Source File'} = 'Källfil';
+    $Self->{Translation}->{'Import summary for'} = 'Importsummering för';
+    $Self->{Translation}->{'Records'} = 'Poster';
     $Self->{Translation}->{'Success'} = 'Lyckad';
     $Self->{Translation}->{'Failed'} = 'Misslyckad';
     $Self->{Translation}->{'Duplicate names'} = 'Upprepa namn';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Kolumn-avskiljare';
+    $Self->{Translation}->{'Tabulator (TAB)'} = '';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Kolon (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Punkt (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Teckenkodning';
+    $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Column'} = 'Kolumn';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

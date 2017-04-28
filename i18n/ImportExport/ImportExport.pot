@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2017-03-01 00:11+0000\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,62 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr ""
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr ""
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -139,6 +83,14 @@ msgid "Source File"
 msgstr ""
 
 #. Template: AdminImportExport
+msgid "Import summary for"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr ""
+
+#. Template: AdminImportExport
 msgid "Success"
 msgstr ""
 
@@ -187,6 +139,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr ""
 
@@ -212,6 +168,42 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
 msgstr ""
 
 #. SysConfig

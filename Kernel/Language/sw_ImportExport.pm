@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Ongeza kielezo cha kuweka ramani';
-    $Self->{Translation}->{'Charset'} = 'Seti ya herufi';
-    $Self->{Translation}->{'Colon (:)'} = 'Colon (:)';
-    $Self->{Translation}->{'Column'} = 'Safuwima';
-    $Self->{Translation}->{'Column Separator'} = 'Kitenganishi safu wima';
-    $Self->{Translation}->{'Dot (.)'} = 'Nukta (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Alama ya nukta mkato (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabo (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Ambatisha vichwa vya habari vya safuwima';
-    $Self->{Translation}->{'Import summary for'} = 'Leta muhtasari kwa ajili ya';
-    $Self->{Translation}->{'Imported records'} = 'Kumbukumbu zilizoletwa';
-    $Self->{Translation}->{'Exported records'} = 'Kumbukumbu zilizohamishwa';
-    $Self->{Translation}->{'Records'} = 'Kumbukumbu';
-    $Self->{Translation}->{'Skipped'} = 'Rukwa';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Usimamizi wa kuleta/Hamisha';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tengeneza kiolezo kuleta na kuhamisha taarifa za kipengee';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Zuia uhamishaji kwa kila utafutaji';
     $Self->{Translation}->{'Import information'} = 'Leta taarifa';
     $Self->{Translation}->{'Source File'} = 'Faili la chanzo';
+    $Self->{Translation}->{'Import summary for'} = 'Leta muhtasari kwa ajili ya';
+    $Self->{Translation}->{'Records'} = 'Kumbukumbu';
     $Self->{Translation}->{'Success'} = 'Mafanikio';
     $Self->{Translation}->{'Failed'} = 'Shindwa';
     $Self->{Translation}->{'Duplicate names'} = 'Jina limejirudia:';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Kitenganishi safu wima';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabo (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Alama ya nukta mkato (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Colon (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Nukta (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Seti ya herufi';
+    $Self->{Translation}->{'Include Column Headers'} = 'Ambatisha vichwa vya habari vya safuwima';
+    $Self->{Translation}->{'Column'} = 'Safuwima';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

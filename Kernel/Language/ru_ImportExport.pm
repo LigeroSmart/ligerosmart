@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Добавить шаблон сопоставления';
-    $Self->{Translation}->{'Charset'} = 'Кодировка';
-    $Self->{Translation}->{'Colon (:)'} = 'Двоеточие (:)';
-    $Self->{Translation}->{'Column'} = 'Столбец ';
-    $Self->{Translation}->{'Column Separator'} = 'Разделитель';
-    $Self->{Translation}->{'Dot (.)'} = 'Точка (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Точка с запятой (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Табуляция (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Включить заголовки столбцов';
-    $Self->{Translation}->{'Import summary for'} = 'Отчет об импорте';
-    $Self->{Translation}->{'Imported records'} = 'Импортировано записей';
-    $Self->{Translation}->{'Exported records'} = 'Экспортировано записей';
-    $Self->{Translation}->{'Records'} = 'Записей';
-    $Self->{Translation}->{'Skipped'} = 'Пропущено';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Управление Импортом/Экспортом';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Создайте шаблон для импорта и экспорта информации объектов';
@@ -41,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = 'Объект обязателен!';
     $Self->{Translation}->{'Format is required!'} = 'Формат обязателен!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Шаг 2 из 5 - Редактировать информацию об объекте';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Шаг 3 из 5 - Редактировать формат информации';
     $Self->{Translation}->{'is required!'} = 'обязателен!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Шаг 4 из 5 - Редактировать информацию сопоставления';
     $Self->{Translation}->{'No map elements found.'} = 'Нет элементов сопоставления.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
     $Self->{Translation}->{'Import information'} = 'Информация об импорте';
     $Self->{Translation}->{'Source File'} = 'Исходный файл';
+    $Self->{Translation}->{'Import summary for'} = 'Отчет об импорте';
+    $Self->{Translation}->{'Records'} = 'Записей';
     $Self->{Translation}->{'Success'} = 'Успешно';
     $Self->{Translation}->{'Failed'} = 'Не удалось выполнить';
     $Self->{Translation}->{'Duplicate names'} = 'Дублирующие имена';
@@ -57,13 +43,14 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
-    $Self->{Translation}->{'No object backend found!'} = '';
-    $Self->{Translation}->{'No format backend found!'} = '';
+    $Self->{Translation}->{'No object backend found!'} = 'Объект не найден!';
+    $Self->{Translation}->{'No format backend found!'} = 'Бэкэнд не найден!';
     $Self->{Translation}->{'Template not found!'} = 'Шаблон не найден!';
     $Self->{Translation}->{'Can\'t insert/update template!'} = 'Невозможно добавить/обновить шаблон!';
     $Self->{Translation}->{'Needed TemplateID!'} = 'Требуется ID Шаблона!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ошибка. Импорт невозможен! Смотри подробности в Syslog.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Ошибка. Экспорт невозможен! Смотри подробности в Syslog.';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = 'номер';
     $Self->{Translation}->{'number bigger than zero'} = 'номер больше нуля';
     $Self->{Translation}->{'integer'} = 'целое число';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = 'Обязательные элемент, пожалуйста введите данные.';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Неверные данные, пожалуйста, укажите верные %s';
     $Self->{Translation}->{'Format not found!'} = 'Формат не найден!';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Разделитель';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Табуляция (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Точка с запятой (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Двоеточие (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Точка (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Кодировка';
+    $Self->{Translation}->{'Include Column Headers'} = 'Включить заголовки столбцов';
+    $Self->{Translation}->{'Column'} = 'Столбец ';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

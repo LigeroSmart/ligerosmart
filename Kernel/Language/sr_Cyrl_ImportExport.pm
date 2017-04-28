@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Додај шаблон за мапирање';
-    $Self->{Translation}->{'Charset'} = 'Карактерсет';
-    $Self->{Translation}->{'Colon (:)'} = 'Двотачка (:)';
-    $Self->{Translation}->{'Column'} = 'Колона';
-    $Self->{Translation}->{'Column Separator'} = 'Сепаратор колона';
-    $Self->{Translation}->{'Dot (.)'} = 'Тачка (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Тачка и запета (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Табулатор (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Укључи наслове колона';
-    $Self->{Translation}->{'Import summary for'} = 'Резиме увоза за';
-    $Self->{Translation}->{'Imported records'} = 'Увезени записи';
-    $Self->{Translation}->{'Exported records'} = 'Извезени записи';
-    $Self->{Translation}->{'Records'} = 'Записи';
-    $Self->{Translation}->{'Skipped'} = 'Прескочено';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Увоз/Извоз управљање';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Креирај шаблон за увоз и извоз информација о објекту.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничење извоза по претрази';
     $Self->{Translation}->{'Import information'} = 'Увоз информација';
     $Self->{Translation}->{'Source File'} = 'Изворна датотека';
+    $Self->{Translation}->{'Import summary for'} = 'Резиме увоза за';
+    $Self->{Translation}->{'Records'} = 'Записи';
     $Self->{Translation}->{'Success'} = 'Успешно';
     $Self->{Translation}->{'Failed'} = 'Неуспешно';
     $Self->{Translation}->{'Duplicate names'} = 'Дупликат имена';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'Потребан ИД шаблона!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Догодила се грешка. Увоз је немогућ! За детаље погледајте у системски дневник.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Догодила се грешка. Извоз је немогућ! За детаље погледајте у системски дневник.';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = 'број';
     $Self->{Translation}->{'number bigger than zero'} = 'број већи од нула';
     $Self->{Translation}->{'integer'} = 'цео број';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = 'Неопходан елемент, молимо унесите податке';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Неисправни подаци, унесете важећи %s';
     $Self->{Translation}->{'Format not found!'} = 'Формат није пронађен!';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Сепаратор колона';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Табулатор (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Тачка и запета (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Двотачка (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Тачка (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Карактерсет';
+    $Self->{Translation}->{'Include Column Headers'} = 'Укључи наслове колона';
+    $Self->{Translation}->{'Column'} = 'Колона';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

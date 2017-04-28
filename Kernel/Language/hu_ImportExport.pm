@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Leképezési sablon hozzáadása';
-    $Self->{Translation}->{'Charset'} = 'Karakterkészlet';
-    $Self->{Translation}->{'Colon (:)'} = 'Kettőspont (:)';
-    $Self->{Translation}->{'Column'} = 'Oszlop';
-    $Self->{Translation}->{'Column Separator'} = 'Oszlopelválasztó';
-    $Self->{Translation}->{'Dot (.)'} = 'Pont (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Pontosvessző (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Oszlopfejlécek felvétele';
-    $Self->{Translation}->{'Import summary for'} = 'Importálási összegzés ehhez';
-    $Self->{Translation}->{'Imported records'} = 'Importált rekordok';
-    $Self->{Translation}->{'Exported records'} = 'Exportált rekordok';
-    $Self->{Translation}->{'Records'} = 'Rekordok';
-    $Self->{Translation}->{'Skipped'} = 'Kihagyva';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Importálás/exportálás kezelés';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Sablon létrehozása objektuminformációk importálásához és exportálásához.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Exportálás korlátozása keresésenként';
     $Self->{Translation}->{'Import information'} = 'Importálási információk';
     $Self->{Translation}->{'Source File'} = 'Forrásfájl';
+    $Self->{Translation}->{'Import summary for'} = 'Importálási összegzés ehhez';
+    $Self->{Translation}->{'Records'} = 'Rekordok';
     $Self->{Translation}->{'Success'} = 'Sikeres';
     $Self->{Translation}->{'Failed'} = 'Sikertelen';
     $Self->{Translation}->{'Duplicate names'} = 'Nevek kettőzése';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'Sablon-azonosító szükséges!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Hiba történt. Az importálás lehetetlen! Nézze meg a rendszernaplót a részletekért.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Hiba történt. Az exportálás lehetetlen! Nézze meg a rendszernaplót a részletekért.';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = 'szám';
     $Self->{Translation}->{'number bigger than zero'} = 'nullánál nagyobb szám';
     $Self->{Translation}->{'integer'} = 'egész';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = 'Elem szükséges, szúrjon be adatokat';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Érvénytelen adatok, egy érvényes %s beszúrása szükséges';
     $Self->{Translation}->{'Format not found!'} = 'Formátum nem található!';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Oszlopelválasztó';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Pontosvessző (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Kettőspont (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Pont (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Karakterkészlet';
+    $Self->{Translation}->{'Include Column Headers'} = 'Oszlopfejlécek felvétele';
+    $Self->{Translation}->{'Column'} = 'Oszlop';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

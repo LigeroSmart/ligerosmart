@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Aggiungi mappatura modello';
-    $Self->{Translation}->{'Charset'} = 'Charset';
-    $Self->{Translation}->{'Colon (:)'} = 'Due punti (:)';
-    $Self->{Translation}->{'Column'} = 'Colonna';
-    $Self->{Translation}->{'Column Separator'} = 'Separatore di colonna';
-    $Self->{Translation}->{'Dot (.)'} = 'Punto (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Punto e virgola (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulatore (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Includi le Colonne di Intestazione';
-    $Self->{Translation}->{'Import summary for'} = 'Importa il sommario per';
-    $Self->{Translation}->{'Imported records'} = 'Voci importate';
-    $Self->{Translation}->{'Exported records'} = 'Esporta voci';
-    $Self->{Translation}->{'Records'} = 'Voci';
-    $Self->{Translation}->{'Skipped'} = 'Saltato';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestione Importazione/Esportazione';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crea un template per importare ed esportare le informazioni degli oggetti.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Restringere esportazione per ricerca';
     $Self->{Translation}->{'Import information'} = 'Importare informazione';
     $Self->{Translation}->{'Source File'} = 'Archivio origine';
+    $Self->{Translation}->{'Import summary for'} = 'Importa il sommario per';
+    $Self->{Translation}->{'Records'} = 'Voci';
     $Self->{Translation}->{'Success'} = 'Successo';
     $Self->{Translation}->{'Failed'} = 'Fallito';
     $Self->{Translation}->{'Duplicate names'} = 'Duplica i nomi';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Separatore di colonna';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulatore (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Punto e virgola (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Due punti (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Punto (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Charset';
+    $Self->{Translation}->{'Include Column Headers'} = 'Includi le Colonne di Intestazione';
+    $Self->{Translation}->{'Column'} = 'Colonna';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

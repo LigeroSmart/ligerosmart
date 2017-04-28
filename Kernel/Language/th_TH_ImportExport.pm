@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'เพิ่มแม่แบบการทำแผนที่';
-    $Self->{Translation}->{'Charset'} = 'เซตคาเรกเตอร์';
-    $Self->{Translation}->{'Colon (:)'} = 'เครื่องหมายทวิภาค (:)';
-    $Self->{Translation}->{'Column'} = 'คอลัมน์';
-    $Self->{Translation}->{'Column Separator'} = 'ตัวคั่นคอลัมน์';
-    $Self->{Translation}->{'Dot (.)'} = 'จุด(.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'เครื่องหมายอัฒภาค(;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'ตัวทำตาราง(แท็บ)';
-    $Self->{Translation}->{'Include Column Headers'} = 'รวมทั้งส่วนหัวของคอลัมน์';
-    $Self->{Translation}->{'Import summary for'} = 'นำเข้าบทสรุปสำหรับ';
-    $Self->{Translation}->{'Imported records'} = 'การบันทึกได้นำเข้าแล้ว';
-    $Self->{Translation}->{'Exported records'} = 'การบันทึกได้ส่งออกแล้ว';
-    $Self->{Translation}->{'Records'} = 'การบันทึก';
-    $Self->{Translation}->{'Skipped'} = 'ข้ามแล้ว';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'การจัดการ นำเข้า/ส่งออก';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'สร้างแม่แบบเพื่อนำเข้าและส่งออกข้อมูลออบเจกต์';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'การจำกัดการส่งออกตามการค้นหา';
     $Self->{Translation}->{'Import information'} = 'ข้อมูลนำเข้า';
     $Self->{Translation}->{'Source File'} = 'แหล่งไฟล์';
+    $Self->{Translation}->{'Import summary for'} = 'นำเข้าบทสรุปสำหรับ';
+    $Self->{Translation}->{'Records'} = 'การบันทึก';
     $Self->{Translation}->{'Success'} = 'ความสำเร็จ';
     $Self->{Translation}->{'Failed'} = 'ล้มเหลว';
     $Self->{Translation}->{'Duplicate names'} = 'ชื่อซ้ำ';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'ตัวคั่นคอลัมน์';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'ตัวทำตาราง(แท็บ)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'เครื่องหมายอัฒภาค(;)';
+    $Self->{Translation}->{'Colon (:)'} = 'เครื่องหมายทวิภาค (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'จุด(.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'เซตคาเรกเตอร์';
+    $Self->{Translation}->{'Include Column Headers'} = 'รวมทั้งส่วนหัวของคอลัมน์';
+    $Self->{Translation}->{'Column'} = 'คอลัมน์';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

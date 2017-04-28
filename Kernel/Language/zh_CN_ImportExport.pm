@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = '增加映射模版';
-    $Self->{Translation}->{'Charset'} = '字符集';
-    $Self->{Translation}->{'Colon (:)'} = '冒号 (:)';
-    $Self->{Translation}->{'Column'} = '列';
-    $Self->{Translation}->{'Column Separator'} = '列分隔符';
-    $Self->{Translation}->{'Dot (.)'} = '句号 (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = '分号 (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'TAB键 (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '包括列标题';
-    $Self->{Translation}->{'Import summary for'} = '导入总结';
-    $Self->{Translation}->{'Imported records'} = '导入记录';
-    $Self->{Translation}->{'Exported records'} = '导出记录';
-    $Self->{Translation}->{'Records'} = '记录';
-    $Self->{Translation}->{'Skipped'} = '跳过的';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = '导入/导出管理';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '创建模板导入和导出对象信息。';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = '按搜索限制导出';
     $Self->{Translation}->{'Import information'} = '导入信息';
     $Self->{Translation}->{'Source File'} = '源文件';
+    $Self->{Translation}->{'Import summary for'} = '导入总结';
+    $Self->{Translation}->{'Records'} = '记录';
     $Self->{Translation}->{'Success'} = '成功';
     $Self->{Translation}->{'Failed'} = '失败';
     $Self->{Translation}->{'Duplicate names'} = '重复的名称';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '需要TemplateID！';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '出现错误。不能导入！查看Syslog获取详细信息。';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '出现错误。不能导出！查看Syslog获取详细信息。';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '数字';
     $Self->{Translation}->{'number bigger than zero'} = '数字大于0';
     $Self->{Translation}->{'integer'} = '整数';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '需要元素，请插入数据';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '无效的数据，请插入一个有效的%s';
     $Self->{Translation}->{'Format not found!'} = '没有找到格式！';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = '列分隔符';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'TAB键 (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = '分号 (;)';
+    $Self->{Translation}->{'Colon (:)'} = '冒号 (:)';
+    $Self->{Translation}->{'Dot (.)'} = '句号 (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = '字符集';
+    $Self->{Translation}->{'Include Column Headers'} = '包括列标题';
+    $Self->{Translation}->{'Column'} = '列';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

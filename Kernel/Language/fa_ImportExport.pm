@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'اضافه کردن یک قالب نگاشت';
-    $Self->{Translation}->{'Charset'} = 'کدبندی اطلاعات';
-    $Self->{Translation}->{'Colon (:)'} = 'دونقطه (:)';
-    $Self->{Translation}->{'Column'} = 'ستون';
-    $Self->{Translation}->{'Column Separator'} = 'جداکننده ستون‌ها';
-    $Self->{Translation}->{'Dot (.)'} = 'نقطه (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'سمی کالن (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'جدول ساز (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'مدیریت ورود/صدور';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'ساخت قالبی برای ورود و صدور اطلاعات آبجکت';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
     $Self->{Translation}->{'Import information'} = 'ورود اطلاعات';
     $Self->{Translation}->{'Source File'} = 'فایل منبع';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Records'} = '';
     $Self->{Translation}->{'Success'} = '';
     $Self->{Translation}->{'Failed'} = '';
     $Self->{Translation}->{'Duplicate names'} = '';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'جداکننده ستون‌ها';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'جدول ساز (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'سمی کالن (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'دونقطه (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'نقطه (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'کدبندی اطلاعات';
+    $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Column'} = 'ستون';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

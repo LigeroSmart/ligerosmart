@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Tambah templat peta';
-    $Self->{Translation}->{'Charset'} = 'Set karakter';
-    $Self->{Translation}->{'Colon (:)'} = 'Titik bertindih (:)';
-    $Self->{Translation}->{'Column'} = 'Kolum';
-    $Self->{Translation}->{'Column Separator'} = 'Kolum pemisah';
-    $Self->{Translation}->{'Dot (.)'} = 'Titik (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Termasuk Kolum Kepala';
-    $Self->{Translation}->{'Import summary for'} = 'Import ringkasan untuk';
-    $Self->{Translation}->{'Imported records'} = 'Rekod yang diimport';
-    $Self->{Translation}->{'Exported records'} = 'Rekod yang dieksport';
-    $Self->{Translation}->{'Records'} = 'Rekod-rekod';
-    $Self->{Translation}->{'Skipped'} = 'Melangkaui';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Pengurusan Import/Eksport';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Cipta templat untuk import dan eksport informasi objek.';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Dilarang eksport per carian';
     $Self->{Translation}->{'Import information'} = 'Informasi import';
     $Self->{Translation}->{'Source File'} = 'Sumber fail';
+    $Self->{Translation}->{'Import summary for'} = 'Import ringkasan untuk';
+    $Self->{Translation}->{'Records'} = 'Rekod-rekod';
     $Self->{Translation}->{'Success'} = 'Berjaya';
     $Self->{Translation}->{'Failed'} = 'Gagal';
     $Self->{Translation}->{'Duplicate names'} = 'Menyalin nama-nama';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Kolum pemisah';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Titik bertindih (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Titik (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Set karakter';
+    $Self->{Translation}->{'Include Column Headers'} = 'Termasuk Kolum Kepala';
+    $Self->{Translation}->{'Column'} = 'Kolum';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

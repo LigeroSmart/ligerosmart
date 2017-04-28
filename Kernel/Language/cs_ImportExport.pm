@@ -15,22 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Nová šablona zobrazení';
-    $Self->{Translation}->{'Charset'} = 'Znaková sada';
-    $Self->{Translation}->{'Colon (:)'} = 'Dvojtečka (:)';
-    $Self->{Translation}->{'Column'} = 'Sloupec';
-    $Self->{Translation}->{'Column Separator'} = 'Oddělovač Sloupců';
-    $Self->{Translation}->{'Dot (.)'} = 'Tečka (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Středník (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = '';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = 'Záznamů';
-    $Self->{Translation}->{'Skipped'} = 'Přeskočeno';
-
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export Správa';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
@@ -50,6 +34,8 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
     $Self->{Translation}->{'Import information'} = 'Informace o Importu';
     $Self->{Translation}->{'Source File'} = 'Zdrojový Soubor';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Records'} = 'Záznamů';
     $Self->{Translation}->{'Success'} = 'Úspěšně';
     $Self->{Translation}->{'Failed'} = 'Neúspěšně';
     $Self->{Translation}->{'Duplicate names'} = 'Duplicitní jména';
@@ -64,6 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -71,6 +58,17 @@ sub Data {
     $Self->{Translation}->{'Element required, please insert data'} = '';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
+
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Oddělovač Sloupců';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Středník (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Dvojtečka (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Tečka (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Znaková sada';
+    $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Column'} = 'Sloupec';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
