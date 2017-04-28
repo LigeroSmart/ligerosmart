@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:20+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-03-14 09:45+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1810,11 +1810,11 @@ msgstr "Változásnagyítás."
 
 #. SysConfig
 msgid "Change and Workorder Templates"
-msgstr ""
+msgstr "Változás és munkamegrendelés sablonok"
 
 #. SysConfig
 msgid "Change and workorder templates edited by this user."
-msgstr ""
+msgstr "A felhasználó által szerkesztett változás és munkamegrendelés sablonok."
 
 #. SysConfig
 msgid "Change area."
@@ -1826,7 +1826,7 @@ msgstr "A változás résztvevő személyeinek módosítása."
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\"."
-msgstr ""
+msgstr "Oldalankénti változás korlát a „kis” változás áttekintőnél."
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."

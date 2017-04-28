@@ -600,11 +600,11 @@ sub Data {
         '有权限接手工作指令的服务人员列表。“键”是登录名，“值”是0或1。';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         '工作指令状态列表，工作指令的ActualStartTime（实际开始时间）将被设置（如果这时候还没有设置的话）。';
-    $Self->{Translation}->{'Add Workorder (from Template)'} = '';
+    $Self->{Translation}->{'Add Workorder (from Template)'} = '从模板添加工作指令';
     $Self->{Translation}->{'Add a change from template.'} = '从模板添加一个变更。';
     $Self->{Translation}->{'Add a change.'} = '添加一个变更。';
-    $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
-    $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '从模板添加变更的工作指令。';
+    $Self->{Translation}->{'Add a workorder to the change.'} = '添加变更的工作指令';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = '管理CIP矩阵。';
     $Self->{Translation}->{'Admin of the state machine.'} = '管理状态模式转换。';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -628,20 +628,20 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
     $Self->{Translation}->{'Change Zoom.'} = '变更详情。';
-    $Self->{Translation}->{'Change and Workorder Templates'} = '';
-    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
+    $Self->{Translation}->{'Change and Workorder Templates'} = '变更和工作指令模板';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '本用户编辑的变更模板和工作指令模板。';
     $Self->{Translation}->{'Change area.'} = '变更区域。';
-    $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
+    $Self->{Translation}->{'Change involved persons of the change.'} = '更换变更涉及的相关人员。';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '变更概览简洁模式每页变更数限制。';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '服务人员界面变更搜索后端路由';
     $Self->{Translation}->{'Condition Overview'} = '条件概览';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '配置创建新工作指令后显示的界面。';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '配置计划开始时间或其它时间到达/过去时发送通知的频率。';
-    $Self->{Translation}->{'Create Change (from Template)'} = '';
-    $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
-    $Self->{Translation}->{'Create a change from this ticket.'} = '';
+    $Self->{Translation}->{'Create Change (from Template)'} = '从模板创建变更';
+    $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '从这个工单创建一个变更（即从模板的方式）。';
+    $Self->{Translation}->{'Create a change from this ticket.'} = '从这个工单创建变更。';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '创建和管理ITSM变更管理通知。';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '工作指令的默认类型。这个条目必须在目录类\'ITSM::ChangeManagement::WorkOrder::Type\'中存在。';
@@ -816,8 +816,8 @@ sub Data {
         '定义在\'PIR（实施后审查）\'概览中用作过滤器的工作指令类型。';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = '定义是否发送通知。';
     $Self->{Translation}->{'Delete a change.'} = '删除一个变更。';
-    $Self->{Translation}->{'Delete the change.'} = '';
-    $Self->{Translation}->{'Delete the workorder.'} = '';
+    $Self->{Translation}->{'Delete the change.'} = '删除此变更。';
+    $Self->{Translation}->{'Delete the workorder.'} = '删除此工作指令。';
     $Self->{Translation}->{'Details of a change history entry.'} = '一个变更历史条目的详细信息。';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         '确定服务人员能否交换他生成的统计的X轴。';
@@ -852,9 +852,9 @@ sub Data {
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '处理动态字段更新条件（添加、更新或删除）的动态字段事件模块。';
     $Self->{Translation}->{'Edit a change.'} = '编辑一个变更。';
-    $Self->{Translation}->{'Edit the change.'} = '';
-    $Self->{Translation}->{'Edit the conditions of the change.'} = '';
-    $Self->{Translation}->{'Edit the workorder.'} = '';
+    $Self->{Translation}->{'Edit the change.'} = '编辑变更。';
+    $Self->{Translation}->{'Edit the conditions of the change.'} = '编辑变更条件。';
+    $Self->{Translation}->{'Edit the workorder.'} = '编辑工作指令。';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '转发变更的计划表。已批准变更的概览。';
     $Self->{Translation}->{'History Zoom'} = '历史详情';
@@ -887,8 +887,8 @@ sub Data {
         '设置工作指令实际开始/结束时间的ITSM事件模块。';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。';
-    $Self->{Translation}->{'Link another object to the change.'} = '';
-    $Self->{Translation}->{'Link another object to the workorder.'} = '';
+    $Self->{Translation}->{'Link another object to the change.'} = '链接另一对象到变更。';
+    $Self->{Translation}->{'Link another object to the workorder.'} = '链接另一对象到工作指令。';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'ITSM变更计数器的日志文件，这个文件在创建变更编号时会用到。';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '查找CAB成员，用于自动补齐功能。';
@@ -906,7 +906,7 @@ sub Data {
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         '显示一个链接以从工单创建一个变更的模块。工单将自动链接到新的变更。';
     $Self->{Translation}->{'Move Time Slot.'} = '移动时间轴。';
-    $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'Move all workorders in time.'} = '移动所有工作指令的时间。';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '如果启用了“Ticket::Acl::Module###200-Ticket::Acl::Module”，只有这些组中的用户有权使用“ITSMChange::AddChangeLinkTicketTypes”中定义的工单类型。';
     $Self->{Translation}->{'Overview over all Changes.'} = '所有变更的概览。';
@@ -918,8 +918,8 @@ sub Data {
         '变更概览简洁模式显示变更的页面参数。';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         '在服务人员界面变更详情窗口，在菜单中显示一个链接以显示变更的相关人员。';
-    $Self->{Translation}->{'Print the change.'} = '';
-    $Self->{Translation}->{'Print the workorder.'} = '';
+    $Self->{Translation}->{'Print the change.'} = '打印变更。';
+    $Self->{Translation}->{'Print the workorder.'} = '打印工作指令。';
     $Self->{Translation}->{'Projected Service Availability'} = '计划服务可用性';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = '计划服务可用性（PSA）';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
@@ -969,17 +969,17 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = '查看自己的工作指令所需的权限。';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '为工作指令编写报告所需的权限。';
     $Self->{Translation}->{'Reset a change and its workorders.'} = '重置一个变更和它的工作指令。';
-    $Self->{Translation}->{'Reset change and its workorders.'} = '';
+    $Self->{Translation}->{'Reset change and its workorders.'} = '重置变更和它的工作指令。';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         '执行任务来检查是否到达了变更和工作指令的特定时间点。';
-    $Self->{Translation}->{'Save change as a template.'} = '';
-    $Self->{Translation}->{'Save workorder as a template.'} = '';
+    $Self->{Translation}->{'Save change as a template.'} = '保存变更为模板。';
+    $Self->{Translation}->{'Save workorder as a template.'} = '保存工作指令为模板。';
     $Self->{Translation}->{'Schedule'} = '计划表';
     $Self->{Translation}->{'Screen after creating a workorder'} = '创建工作指令后的窗口';
     $Self->{Translation}->{'Search Changes.'} = '搜索变更。';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '选择变更编号生成器模块。“自动增量”--递增变更编号，系统ID和计数器配合使用的格式为：系统ID.计数器（如100118、100119）。“日期”--会用当前日期、系统ID和计数器共同生成变更编号，格式为：年.月.日.系统ID.计数器（如2010062400001、2010062400002）。“日期校验和”--计数器的值以校验和的方式追加日期和系统ID的字符串后面，校验和每日轮换，这种格式为：年.月.日.系统ID.计数器.校验和（如2010062410000017、2010062410000026）。';
-    $Self->{Translation}->{'Set the agent for the workorder.'} = '';
+    $Self->{Translation}->{'Set the agent for the workorder.'} = '为工作指令指派服务人员。';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         '在“AgentITSMChangeZoom（变更详情窗口）”和“AgentITSMWorkOrderZoom（工作指令详情窗口）”中，设置内置HTML字段的默认高度（单位：像素）。';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
@@ -1038,7 +1038,7 @@ sub Data {
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '当用户编辑一个模板时，存储变更和工作指令的ID和他们对应的模板ID。';
     $Self->{Translation}->{'Take Workorder.'} = '执行工作指令。';
-    $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Take the workorder.'} = '接手这个工作指令。';
     $Self->{Translation}->{'Template.'} = '模板。';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         '变更的标识符，例如：Change#、MyChange#。默认为Change#。';
@@ -1052,7 +1052,7 @@ sub Data {
     $Self->{Translation}->{'User Search'} = '用户搜索';
     $Self->{Translation}->{'Workorder Add (from template).'} = '添加工作指令（从模板）。';
     $Self->{Translation}->{'Workorder Add.'} = '添加工作指令。';
-    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = '工作指令服务人员';
     $Self->{Translation}->{'Workorder Agent.'} = '工作指令服务人员。';
     $Self->{Translation}->{'Workorder Delete.'} = '删除工作指令。';
     $Self->{Translation}->{'Workorder Edit.'} = '编辑工作指令。';

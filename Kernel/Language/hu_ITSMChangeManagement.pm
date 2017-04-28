@@ -600,11 +600,11 @@ sub Data {
         'Azon ügyintézők listája, akik jogosultsággal rendelkeznek a munkamegrendelések felvételéhez. A kulcs a bejelentkezési név. A tartalom 0 vagy 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Azon munkamegrendelés-állapotok listája, amelyeknél egy munkamegrendelés tényleges kezdési ideje be lesz állítva, ha az üres ennél a pontnál.';
-    $Self->{Translation}->{'Add Workorder (from Template)'} = '';
+    $Self->{Translation}->{'Add Workorder (from Template)'} = 'Munkamegrendelés hozzáadása (sablonból)';
     $Self->{Translation}->{'Add a change from template.'} = 'Egy változás hozzáadása sablonból.';
     $Self->{Translation}->{'Add a change.'} = 'Egy változás hozzáadása.';
-    $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
-    $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add a workorder (from template) to the change.'} = 'Egy munkamegrendelés hozzáadása (sablonból) a változáshoz.';
+    $Self->{Translation}->{'Add a workorder to the change.'} = 'Egy munkamegrendelés hozzáadása a változáshoz.';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'A CIP mátrix adminisztrátora.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Az állapotgép adminisztrátora.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -628,20 +628,20 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Változásnyomtatás.';
     $Self->{Translation}->{'Change Schedule.'} = 'Változtatási ütemterv.';
     $Self->{Translation}->{'Change Zoom.'} = 'Változásnagyítás.';
-    $Self->{Translation}->{'Change and Workorder Templates'} = '';
-    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
+    $Self->{Translation}->{'Change and Workorder Templates'} = 'Változás és munkamegrendelés sablonok';
+    $Self->{Translation}->{'Change and workorder templates edited by this user.'} = 'A felhasználó által szerkesztett változás és munkamegrendelés sablonok.';
     $Self->{Translation}->{'Change area.'} = 'Változásterület.';
-    $Self->{Translation}->{'Change involved persons of the change.'} = '';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
+    $Self->{Translation}->{'Change involved persons of the change.'} = 'A változás résztvevő személyeinek módosítása.';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = 'Oldalankénti változás korlát a „kis” változás áttekintőnél.';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Az ügyintézői felület változás keresési háttérprogram útválasztója.';
     $Self->{Translation}->{'Condition Overview'} = 'Feltétel áttekintés';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         'Annak beállítása, hogy mely képernyő legyen megjelenítve, miután egy új munkamegrendelést létrehoztak.';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Beállítja, hogy milyen gyakran legyenek elküldve az értesítések, amikor elérik/átadják a tervezett kezdési időt vagy más időértékeket.';
-    $Self->{Translation}->{'Create Change (from Template)'} = '';
-    $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
-    $Self->{Translation}->{'Create a change from this ticket.'} = '';
+    $Self->{Translation}->{'Create Change (from Template)'} = 'Változás létrehozása (sablonból)';
+    $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Változás létrehozása (sablonból) ebből a jegyből.';
+    $Self->{Translation}->{'Create a change from this ticket.'} = 'Változás létrehozása ebből a jegyből.';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'ITSM változásmenedzsment értesítések létrehozása és kezelése.';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Egy munkamegrendelés alapértelmezett típusa. Ennek a bejegyzésnek léteznie kell az „ITSM::ChangeManagement::WorkOrder::Type” általános katalógus osztályban.';
@@ -816,8 +816,8 @@ sub Data {
         'Meghatározza azokat a munkamegrendelés-típusokat, amelyek a PIR áttekintő megjelenítéshez lesznek használva.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Meghatározza, hogy az értesítéseket el kell-e küldeni.';
     $Self->{Translation}->{'Delete a change.'} = 'Egy változás törlése.';
-    $Self->{Translation}->{'Delete the change.'} = '';
-    $Self->{Translation}->{'Delete the workorder.'} = '';
+    $Self->{Translation}->{'Delete the change.'} = 'A változás törlése.';
+    $Self->{Translation}->{'Delete the workorder.'} = 'A munkamegrendelés törlése.';
     $Self->{Translation}->{'Details of a change history entry.'} = 'Egy változástörténet-bejegyzés részletei.';
     $Self->{Translation}->{'Determines if an agent can exchange the X-axis of a stat if he generates one.'} =
         'Meghatározza, hogy egy ügyintéző kicserélheti-e egy statisztika X-tengelyét, ha létrehozott egyet.';
@@ -852,9 +852,9 @@ sub Data {
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Dinamikus mező eseménymodul a feltételek frissítésének kezeléséhez, ha dinamikus mezők kerülnek hozzáadásra, frissítésre vagy törlésre.';
     $Self->{Translation}->{'Edit a change.'} = 'Egy változás szerkesztése.';
-    $Self->{Translation}->{'Edit the change.'} = '';
-    $Self->{Translation}->{'Edit the conditions of the change.'} = '';
-    $Self->{Translation}->{'Edit the workorder.'} = '';
+    $Self->{Translation}->{'Edit the change.'} = 'A változás szerkesztése.';
+    $Self->{Translation}->{'Edit the conditions of the change.'} = 'A változás feltételeinek szerkesztése.';
+    $Self->{Translation}->{'Edit the workorder.'} = 'A munkamegrendelés szerkesztése.';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Változások előjegyzési terve. A jóváhagyott változások áttekintése.';
     $Self->{Translation}->{'History Zoom'} = 'Előzménynagyítás';
@@ -887,8 +887,8 @@ sub Data {
         'ITSM eseménymodul a munkamegrendelések tényleges kezdési és befejezési idejének beállításához.';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         'Ha a gyakoriság „rendszeresen”, akkor beállíthatja, hogy az értesítések milyen gyakran legyenek elküldve (minden X. órában).';
-    $Self->{Translation}->{'Link another object to the change.'} = '';
-    $Self->{Translation}->{'Link another object to the workorder.'} = '';
+    $Self->{Translation}->{'Link another object to the change.'} = 'Másik objektum összekapcsolása a változással.';
+    $Self->{Translation}->{'Link another object to the workorder.'} = 'Másik objektum összekapcsolása a munkamegrendeléssel.';
     $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
         'Naplófájl az ITSM változásszámlálóhoz. Ezt a fájlt a változásszámok létrehozásához használják.';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'CAB-tagok kikeresése az automatikus kiegészítéshez.';
@@ -906,7 +906,7 @@ sub Data {
     $Self->{Translation}->{'Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.'} =
         'Egy modul egy hivatkozás megjelenítéséhez, amely egy változás létrehozására mutat ebből a jegyből. A jegy automatikusan össze lesz kapcsolva az új változással.';
     $Self->{Translation}->{'Move Time Slot.'} = 'Időrés áthelyezése.';
-    $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'Move all workorders in time.'} = 'Minden munkamegrendelés áthelyezése az időben.';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Csak ezen csoportok felhasználóinak van jogosultsága az „ITSMChange::AddChangeLinkTicketTypes” beállításban meghatározott jegytípusok használatára, ha a „Ticket::Acl::Module###200-Ticket::Acl::Module” szolgáltatás engedélyezve van.';
     $Self->{Translation}->{'Overview over all Changes.'} = 'Az összes változás áttekintése.';
@@ -918,8 +918,8 @@ sub Data {
         'Paraméterek a kis változás áttekintő oldalaihoz (amelyekben a változások megjelennek).';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen.';
-    $Self->{Translation}->{'Print the change.'} = '';
-    $Self->{Translation}->{'Print the workorder.'} = '';
+    $Self->{Translation}->{'Print the change.'} = 'A változás nyomtatása.';
+    $Self->{Translation}->{'Print the workorder.'} = 'A munkamegrendelés nyomtatása.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Tervezett szolgáltatáselérhetőség';
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Tervezett szolgáltatáselérhetőség (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
@@ -969,17 +969,17 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'A szükséges jogosultságok a saját munkamegrendelések listájának megtekintéséhez.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'A szükséges jogosultságok egy jelentés írásához a munkamegrendelésnél.';
     $Self->{Translation}->{'Reset a change and its workorders.'} = 'Egy változás és a munkamegrendeléseinek visszaállítása.';
-    $Self->{Translation}->{'Reset change and its workorders.'} = '';
+    $Self->{Translation}->{'Reset change and its workorders.'} = 'A változás és munkamegrendeléseinek visszaállítása.';
     $Self->{Translation}->{'Run task to check if specific times have been reached in changes and workorders.'} =
         'Feladat futtatása annak ellenőrzéséhez, hogy a meghatározott időpontokat elérték-e a változásokban és a munkamegrendelésekben.';
-    $Self->{Translation}->{'Save change as a template.'} = '';
-    $Self->{Translation}->{'Save workorder as a template.'} = '';
+    $Self->{Translation}->{'Save change as a template.'} = 'Változás mentése sablonként.';
+    $Self->{Translation}->{'Save workorder as a template.'} = 'Munkamegrendelés mentése sablonként.';
     $Self->{Translation}->{'Schedule'} = 'Ütemterv';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Egy munkamegrendelés létrehozása utáni képernyő';
     $Self->{Translation}->{'Search Changes.'} = 'Változások keresése.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Kiválasztja a változásszám előállító modult. Az „AutoIncrement” növeli a változásszámot, ahol a rendszer-azonosítót és a számlálót a RendszerID.számláló formátummal használja (például 100118, 100119). A „Date” értékkel a változásszámokat az aktuális dátum és a számláló fogja előállítani. A formátum így néz ki: Év.Hónap.Nap.számláló (például 2010062400001, 2010062400002). A „DateChecksum” használatával a számláló ellenőrzőösszegként lesz hozzáfűzve a dátum és a rendszer-azonosító szövegéhez. Az ellenőrzőösszeg naponta fog átfordulni. A formátum így néz ki: Év.Hónap.Nap.RendszerID.Számláló.EllÖsszeg (például 2010062410000017, 2010062410000026).';
-    $Self->{Translation}->{'Set the agent for the workorder.'} = '';
+    $Self->{Translation}->{'Set the agent for the workorder.'} = 'Az ügyintéző beállítása a munkamegrendeléshez.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         'A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen.';
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
@@ -1038,7 +1038,7 @@ sub Data {
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Változás- és munkamegrendelés-azonosítókat, valamint a nekik megfelelő sablonazonosítót tárolja, miközben egy felhasználó szerkeszt egy sablont.';
     $Self->{Translation}->{'Take Workorder.'} = 'Munkamegrendelés felvétele.';
-    $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Take the workorder.'} = 'A munkamegrendelés felvétele.';
     $Self->{Translation}->{'Template.'} = 'Sablon.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Egy változás azonosítója, például Change#, MyChange#. Az alapértelmezett: Change#.';
@@ -1052,7 +1052,7 @@ sub Data {
     $Self->{Translation}->{'User Search'} = 'Felhasználókeresés';
     $Self->{Translation}->{'Workorder Add (from template).'} = 'Munkamegrendelés hozzáadása (sablonból).';
     $Self->{Translation}->{'Workorder Add.'} = 'Munkamegrendelés hozzáadása.';
-    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = 'Munkamegrendelés ügyintézője';
     $Self->{Translation}->{'Workorder Agent.'} = 'Munkamegrendelés ügyintézője.';
     $Self->{Translation}->{'Workorder Delete.'} = 'Munkamegrendelés törlése.';
     $Self->{Translation}->{'Workorder Edit.'} = 'Munkamegrendelés szerkesztése.';
