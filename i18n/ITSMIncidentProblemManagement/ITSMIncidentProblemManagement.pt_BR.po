@@ -2,12 +2,13 @@
 # Translators:
 # Flávio Veras <flaviove@gmail.com>, 2017
 # Glauber Caires <glaubercaires@gmail.com>, 2016
+# Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:25+0000\n"
-"PO-Revision-Date: 2017-02-09 12:54+0000\n"
-"Last-Translator: Flávio Veras <flaviove@gmail.com>\n"
+"POT-Creation-Date: 2017-04-28 13:31+0000\n"
+"PO-Revision-Date: 2017-04-28 13:50+0000\n"
+"Last-Translator: Samuel Diniz Casimiro <nedmaj@yahoo.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,21 +76,11 @@ msgstr "Criticalidade"
 msgid "Impact"
 msgstr "Impacto"
 
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently offline"
-msgstr "Este usuário está correntemente offline"
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently active"
-msgstr "Este usuário está correntemente ativo"
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently away"
-msgstr "Este usuário está atualmente afastado"
-
-#. Perl Module: Kernel/Modules/AgentTicketZoom.pm
-msgid "This user is currently unavailable"
-msgstr "Este usuário está correntemente indisponível"
+#. Perl Module: Kernel/Modules/AgentTicketProcess.pm
+msgid ""
+"This step does not belong anymore the current activity in process for ticket"
+" '%s%s%s'! Another user changed this ticket in the meantime."
+msgstr "Este passo não pertence mais à atividade atual para o chamado '%s%s%s'! Outro usuário alterou este chamado durante a execução."
 
 #. SysConfig
 msgid "Add a decision!"

@@ -40,7 +40,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTicketProcess.pm
     $Self->{Translation}->{'This step does not belong anymore the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime.'} =
-        '';
+        'Este passo não pertence mais à atividade atual para o chamado \'%s%s%s\'! Outro usuário alterou este chamado durante a execução.';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Adicionar uma decisão!';

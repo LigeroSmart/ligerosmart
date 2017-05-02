@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-24 21:48+0000\n"
-"PO-Revision-Date: 2016-05-24 19:49+0000\n"
+"POT-Creation-Date: 2017-04-28 13:31+0000\n"
+"PO-Revision-Date: 2017-04-28 11:32+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Bulgarian (http://www.transifex.com/otrs/OTRS/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -72,6 +72,12 @@ msgstr "Критичност"
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
 msgstr "Влияние"
+
+#. Perl Module: Kernel/Modules/AgentTicketProcess.pm
+msgid ""
+"This step does not belong anymore the current activity in process for ticket"
+" '%s%s%s'! Another user changed this ticket in the meantime."
+msgstr ""
 
 #. SysConfig
 msgid "Add a decision!"
