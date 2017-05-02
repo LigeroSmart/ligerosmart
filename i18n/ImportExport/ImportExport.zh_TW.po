@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -13,62 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "增加映射模版"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "字符集"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "冒號 (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "列"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "列分隔符"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "句號 (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "分號 (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "制表鍵 (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "包括列標題"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "導入總結"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "已導入紀錄"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "已導出紀錄"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "紀錄"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "跳過的"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -107,7 +51,7 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
+msgid "Step 3 of 5 - Edit format information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -141,6 +85,14 @@ msgstr "導入信息"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "源文件"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "導入總結"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "紀錄"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -191,6 +143,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr ""
 
@@ -217,6 +173,42 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "列分隔符"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "制表鍵 (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "分號 (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "冒號 (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "句號 (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "字符集"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "包括列標題"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "列"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

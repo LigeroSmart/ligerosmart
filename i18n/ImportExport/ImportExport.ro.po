@@ -7,71 +7,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:36+0000\n"
-"PO-Revision-Date: 2017-01-24 18:02+0000\n"
-"Last-Translator: Costin Stanescu\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Romanian (http://www.transifex.com/otrs/OTRS/language/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Adaugă șablon asocieri"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Set de caractere"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Două puncte (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Coloană"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Separator de coloană"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Punct (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Punct și virgulă (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Tabulator (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Include capul de tabel"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Importă sumarul pentru"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Înregistrări importate"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Înregistrări exportate"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Înregistrări"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Sărit"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -146,6 +90,14 @@ msgid "Source File"
 msgstr "Fișier sursă"
 
 #. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Importă sumarul pentru"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Înregistrări"
+
+#. Template: AdminImportExport
 msgid "Success"
 msgstr "Succes"
 
@@ -194,6 +146,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr "numar"
 
@@ -220,6 +176,42 @@ msgstr "Date invalide, introdu date valide %s"
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr "Formatul nu a fost gasit!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Separator de coloană"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabulator (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Punct și virgulă (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Două puncte (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Punct (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Set de caractere"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Include capul de tabel"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Coloană"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

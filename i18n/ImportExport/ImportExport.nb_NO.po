@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
@@ -13,62 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Legg til mal for mapping"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Tegnsett"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Kolon (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Kolonne"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Kolonneseparator"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Punktum (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Semikolon (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Tabulator (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Inkluder kolonneoverskrifter"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Oppsummeringer for import"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Importerte rader"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Eksporterte rader"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Rader"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Hoppet over"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -107,7 +51,7 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
+msgid "Step 3 of 5 - Edit format information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -141,6 +85,14 @@ msgstr "Import-informasjon"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "Kildefil"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Oppsummeringer for import"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Rader"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -191,6 +143,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr ""
 
@@ -217,6 +173,42 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Kolonneseparator"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabulator (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Semikolon (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Kolon (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Punktum (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Tegnsett"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Inkluder kolonneoverskrifter"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Kolonne"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

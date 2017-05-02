@@ -5,71 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-11-29 08:36+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Додај шаблон за мапирање"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Карактерсет"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Двотачка (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Колона"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Сепаратор колона"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Тачка (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Тачка и запета (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Табулатор (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Укључи наслове колона"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Резиме увоза за"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Увезени записи"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Извезени записи"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Записи"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Прескочено"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -108,8 +52,8 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr "Корак 2 од 5 - Уреди информације о објекту"
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
-msgstr "Корак 3 од 5"
+msgid "Step 3 of 5 - Edit format information"
+msgstr "Корак 3 од 5 - Уреди информације о формату"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -142,6 +86,14 @@ msgstr "Увоз информација"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "Изворна датотека"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Резиме увоза за"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Записи"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -192,6 +144,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr "Догодила се грешка. Извоз је немогућ! За детаље погледајте у системски дневник."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr "број"
 
@@ -218,6 +174,42 @@ msgstr "Неисправни подаци, унесете важећи %s"
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr "Формат није пронађен!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Сепаратор колона"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Табулатор (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Тачка и запета (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Двотачка (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Тачка (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Карактерсет"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Укључи наслове колона"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Колона"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

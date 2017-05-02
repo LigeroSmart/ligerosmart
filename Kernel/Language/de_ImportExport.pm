@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = 'Objekt ist erforderlich!';
     $Self->{Translation}->{'Format is required!'} = 'Format ist erforderlich!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Schritt 2 von 5 - Objekt-Informationen bearbeiten';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Schritt 3 von 5 - Formatinformationen bearbeiten';
     $Self->{Translation}->{'is required!'} = 'wird benötigt!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Schritt 4 von 5 - Mapping-Informationen bearbeiten';
     $Self->{Translation}->{'No map elements found.'} = 'Keine Mapping-Elemente gefunden.';

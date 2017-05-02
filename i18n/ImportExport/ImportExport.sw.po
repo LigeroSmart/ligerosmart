@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -14,62 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Ongeza kielezo cha kuweka ramani"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Seti ya herufi"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Colon (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Safuwima"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Kitenganishi safu wima"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Nukta (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Alama ya nukta mkato (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Tabo (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Ambatisha vichwa vya habari vya safuwima"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Leta muhtasari kwa ajili ya"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Kumbukumbu zilizoletwa"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Kumbukumbu zilizohamishwa"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Kumbukumbu"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Rukwa"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -108,7 +52,7 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
+msgid "Step 3 of 5 - Edit format information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -142,6 +86,14 @@ msgstr "Leta taarifa"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "Faili la chanzo"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Leta muhtasari kwa ajili ya"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Kumbukumbu"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -192,6 +144,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr ""
 
@@ -218,6 +174,42 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Kitenganishi safu wima"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabo (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Alama ya nukta mkato (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Colon (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Nukta (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Seti ya herufi"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Ambatisha vichwa vya habari vya safuwima"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Safuwima"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

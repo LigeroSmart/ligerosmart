@@ -8,71 +8,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-07-31 18:39+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Mapping-Template hinzufügen"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Zeichensatz"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Doppelpunkt (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Spalte"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Spaltentrenner"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Punkt (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Semicolon (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Tabulator (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Mit Spaltenüberschriften"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Import-Bericht für"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Importierte Datensätze"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Exportierte Datensätze"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Datensätze"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Übersprungen"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -111,8 +55,8 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr "Schritt 2 von 5 - Objekt-Informationen bearbeiten"
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
-msgstr "Schritt 3 von 5"
+msgid "Step 3 of 5 - Edit format information"
+msgstr "Schritt 3 von 5 - Formatinformationen bearbeiten"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -145,6 +89,14 @@ msgstr "Import-Informationen"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "Quell-Datei"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Import-Bericht für"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Datensätze"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -195,6 +147,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr "Fehler aufgetreten. Exportieren unmöglich! Für Details siehe Syslog."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr "Zahl"
 
@@ -221,6 +177,42 @@ msgstr "Ungültige Daten, bitte geben Sie ein gültiges %s ein"
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr "Format nicht gefunden!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Spaltentrenner"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabulator (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Semicolon (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Doppelpunkt (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Punkt (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Zeichensatz"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Mit Spaltenüberschriften"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Spalte"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

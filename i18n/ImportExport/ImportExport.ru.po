@@ -7,71 +7,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-01 00:11+0000\n"
-"PO-Revision-Date: 2017-03-29 12:56+0000\n"
-"Last-Translator: Anatoly A <aaksinenko@gmail.com>\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Добавить шаблон сопоставления"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Кодировка"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Двоеточие (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Столбец "
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Разделитель"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Точка (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Точка с запятой (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Табуляция (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Включить заголовки столбцов"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Отчет об импорте"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Импортировано записей"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Экспортировано записей"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Записей"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Пропущено"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -146,6 +90,14 @@ msgid "Source File"
 msgstr "Исходный файл"
 
 #. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Отчет об импорте"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Записей"
+
+#. Template: AdminImportExport
 msgid "Success"
 msgstr "Успешно"
 
@@ -194,6 +146,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr "Ошибка. Экспорт невозможен! Смотри подробности в Syslog."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr "номер"
 
@@ -220,6 +176,42 @@ msgstr "Неверные данные, пожалуйста, укажите ве
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr "Формат не найден!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Разделитель"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Табуляция (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Точка с запятой (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Двоеточие (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Точка (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Кодировка"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Включить заголовки столбцов"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Столбец "
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

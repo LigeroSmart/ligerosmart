@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-06-03 18:14+0000\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 11:38+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -13,62 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Tambah templat peta"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Set karakter"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Titik bertindih (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Kolum"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Kolum pemisah"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Titik (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Semikolon (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Tabulator (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Termasuk Kolum Kepala"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Import ringkasan untuk"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Rekod yang diimport"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Rekod yang dieksport"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Rekod-rekod"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Melangkaui"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -107,7 +51,7 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
+msgid "Step 3 of 5 - Edit format information"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -141,6 +85,14 @@ msgstr "Informasi import"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "Sumber fail"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Import ringkasan untuk"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Rekod-rekod"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -191,6 +143,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr ""
 
@@ -217,6 +173,42 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Kolum pemisah"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabulator (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Semikolon (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Titik bertindih (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Titik (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr ""
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Set karakter"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Termasuk Kolum Kepala"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Kolum"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = 'Az objektum kötelező!';
     $Self->{Translation}->{'Format is required!'} = 'A formátum kötelező!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '2. lépés az 5-ből - objektuminformációk szerkesztése';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '3. lépés az 5-ből - formátuminformációk szerkesztése';
     $Self->{Translation}->{'is required!'} = 'kötelező!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '4. lépés az 5-ből - leképezési információk szerkesztése';
     $Self->{Translation}->{'No map elements found.'} = 'Nem találhatók térképelemek.';
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'Sablon-azonosító szükséges!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Hiba történt. Az importálás lehetetlen! Nézze meg a rendszernaplót a részletekért.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Hiba történt. Az exportálás lehetetlen! Nézze meg a rendszernaplót a részletekért.';
-    $Self->{Translation}->{'Template List'} = '';
+    $Self->{Translation}->{'Template List'} = 'Sablonlista';
     $Self->{Translation}->{'number'} = 'szám';
     $Self->{Translation}->{'number bigger than zero'} = 'nullánál nagyobb szám';
     $Self->{Translation}->{'integer'} = 'egész';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Pontosvessző (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Kettőspont (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Pont (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Vessző (,)';
     $Self->{Translation}->{'Charset'} = 'Karakterkészlet';
     $Self->{Translation}->{'Include Column Headers'} = 'Oszlopfejlécek felvétele';
     $Self->{Translation}->{'Column'} = 'Oszlop';

@@ -1,11 +1,11 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014,2016
+# Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-03 20:11+0000\n"
-"PO-Revision-Date: 2016-10-31 17:05+0000\n"
+"POT-Creation-Date: 2017-04-28 13:37+0000\n"
+"PO-Revision-Date: 2017-04-28 19:38+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -13,62 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAImportExport
-msgid "Add mapping template"
-msgstr "Leképezési sablon hozzáadása"
-
-#. Template: AAAImportExport
-msgid "Charset"
-msgstr "Karakterkészlet"
-
-#. Template: AAAImportExport
-msgid "Colon (:)"
-msgstr "Kettőspont (:)"
-
-#. Template: AAAImportExport
-msgid "Column"
-msgstr "Oszlop"
-
-#. Template: AAAImportExport
-msgid "Column Separator"
-msgstr "Oszlopelválasztó"
-
-#. Template: AAAImportExport
-msgid "Dot (.)"
-msgstr "Pont (.)"
-
-#. Template: AAAImportExport
-msgid "Semicolon (;)"
-msgstr "Pontosvessző (;)"
-
-#. Template: AAAImportExport
-msgid "Tabulator (TAB)"
-msgstr "Tabulátor (TAB)"
-
-#. Template: AAAImportExport
-msgid "Include Column Headers"
-msgstr "Oszlopfejlécek felvétele"
-
-#. Template: AAAImportExport
-msgid "Import summary for"
-msgstr "Importálási összegzés ehhez"
-
-#. Template: AAAImportExport
-msgid "Imported records"
-msgstr "Importált rekordok"
-
-#. Template: AAAImportExport
-msgid "Exported records"
-msgstr "Exportált rekordok"
-
-#. Template: AAAImportExport
-msgid "Records"
-msgstr "Rekordok"
-
-#. Template: AAAImportExport
-msgid "Skipped"
-msgstr "Kihagyva"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
@@ -107,7 +51,7 @@ msgid "Step 2 of 5 - Edit object information"
 msgstr "2. lépés az 5-ből - objektuminformációk szerkesztése"
 
 #. Template: AdminImportExport
-msgid "Step 3 of 5"
+msgid "Step 3 of 5 - Edit format information"
 msgstr "3. lépés az 5-ből - formátuminformációk szerkesztése"
 
 #. Template: AdminImportExport
@@ -141,6 +85,14 @@ msgstr "Importálási információk"
 #. Template: AdminImportExport
 msgid "Source File"
 msgstr "Forrásfájl"
+
+#. Template: AdminImportExport
+msgid "Import summary for"
+msgstr "Importálási összegzés ehhez"
+
+#. Template: AdminImportExport
+msgid "Records"
+msgstr "Rekordok"
 
 #. Template: AdminImportExport
 msgid "Success"
@@ -191,6 +143,10 @@ msgid "Error occurred. Export impossible! See Syslog for details."
 msgstr "Hiba történt. Az exportálás lehetetlen! Nézze meg a rendszernaplót a részletekért."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
+msgid "Template List"
+msgstr "Sablonlista"
+
+#. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
 msgstr "szám"
 
@@ -217,6 +173,42 @@ msgstr "Érvénytelen adatok, egy érvényes %s beszúrása szükséges"
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
 msgstr "Formátum nem található!"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column Separator"
+msgstr "Oszlopelválasztó"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Tabulator (TAB)"
+msgstr "Tabulátor (TAB)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Semicolon (;)"
+msgstr "Pontosvessző (;)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Colon (:)"
+msgstr "Kettőspont (:)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Dot (.)"
+msgstr "Pont (.)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Comma (,)"
+msgstr "Vessző (,)"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Charset"
+msgstr "Karakterkészlet"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Include Column Headers"
+msgstr "Oszlopfejlécek felvétele"
+
+#. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+msgid "Column"
+msgstr "Oszlop"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
