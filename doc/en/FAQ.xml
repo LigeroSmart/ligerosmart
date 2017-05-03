@@ -369,7 +369,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <section>
             <title>CustomerFrontend::HeaderMetaModule###3-FAQSearch.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleMetaHead.</para>
-            <para>Module to generate HTML OpenSearch profile for short faq search in the customer interface.</para>
+            <para>Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.</para>
         </section>
         <section>
             <title>CustomerFrontend::Module###CustomerFAQExplorer.</title>
@@ -644,7 +644,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
-            <para>The default languages for the related faq articles.</para>
+            <para>The default languages for the related FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled.</title>
@@ -654,7 +654,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit.</title>
             <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
-            <para>Output limit for the relatd faq articles.</para>
+            <para>Output limit for the related FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible.</title>
@@ -1104,7 +1104,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <section>
             <title>Frontend::HeaderMetaModule###3-FAQSearch.</title>
             <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleMetaHead.</para>
-            <para>Module to generate html OpenSearch profile for short faq search.</para>
+            <para>Module to generate html OpenSearch profile for short FAQ search.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQAdd.</title>
@@ -1556,8 +1556,8 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </mediaobject>
         </para>
         <para>
-            For the output of the helpfull article list all external and public faq article will be considered (but only
-            faq article with the default language or the user language).
+            For the output of the helpful article list all external and public FAQ article will be considered (but only
+            FAQ article with the default language or the user language).
             <mediaobject>
                 <imageobject>
                     <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Result.jpg" format="JPG"/>
@@ -1568,18 +1568,18 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Collection/Sorting for the helpful article</title>
         <para>
-            For the helpful faq article collection the insert content in the subject and text will be used. After every
+            For the helpful FAQ article collection the insert content in the subject and text will be used. After every
             whitespace (for the subject only after 10 characters or if already some text in the text field exists) a check in
-            the background collect possible new helpful faq article for the list.
+            the background collect possible new helpful FAQ article for the list.
             The keywords (every single word) from the insert subject and text will be compared with all keywords from the
-            faq articles and all matched articles will be added to the result list. The matched articles will be ordered
+            FAQ articles and all matched articles will be added to the result list. The matched articles will be ordered
             with a keyword quantifier, the last change time and the create time.
         </para>
         <para>
             The occurrence of the words in the text and title will be counted and the quantifier will be calculated with
-            the defined keywords in the faq articles. If the word is a keyword in a faq article the quantifier for this
-            faq article will be increased (word counter + current faq article quantifier).
-            Here is a example for the related faq article ordering:
+            the defined keywords in the FAQ articles. If the word is a keyword in a FAQ article the quantifier for this
+            FAQ article will be increased (word counter + current FAQ article quantifier).
+            Here is a example for the related FAQ article ordering:
         </para>
         <screen>
             <![CDATA[
@@ -1602,8 +1602,8 @@ Result for the collection (FAQArticleID => Calculated Quantifier):
             be used for the sorting.
         </para>
         <para>
-            To provide good helpful faq article for the customer ticket creation, you need good maintained keywords
-            in the faq articles.
+            To provide good helpful FAQ article for the customer ticket creation, you need good maintained keywords
+            in the FAQ articles.
         </para>
     </section>
 </chapter>
