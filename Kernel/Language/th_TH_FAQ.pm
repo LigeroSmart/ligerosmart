@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'ไม่พบบทความ FAQ ';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'ค้นหาแบบฉบับเต็มในบทความ FAQ (เช่น "John*n" or "Will*")';
     $Self->{Translation}->{'Vote restrictions'} = 'ข้อจำกัดการโหวต';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'บทความ FAQ ที่อัปเดตล่าสุด';
     $Self->{Translation}->{'Top 10 FAQ articles'} = '10 บทความ FAQ ยอดนิยม';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'ตัวกรองสำหรับการแสดงผล HTMLเพื่อเพิ่มการเชื่อมโยงที่อยู่เบื้องหลังของอักขระที่กำหนดไว้ องค์ประกอบของภาพที่จะช่วยให้สามารถป้อนข้อมูลสองชนิดได้ หนึ่งคือชื่อของภาพ (เช่น faq.png)ในกรณีนี้เส้นทางของภาพOTRS จะถูกนำมาใช้ สองคือการแทรกการเชื่อมโยงไปยังภาพ';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'ตำแหน่งทศนิยมของผลการนับคะแนน';
     $Self->{Translation}->{'Default category name.'} = 'ชื่อหมวดหมู่เริ่มต้น';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'ภาษาเริ่มต้นสำหรับ FAQ ในโหมดภาษาเดียว';
@@ -364,6 +373,8 @@ sub Data {
         'ไดนามิคฟิลด์แสดงในหน้าการซูม FAQ ในอินเตอร์เฟซสาธารณะการตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
     $Self->{Translation}->{'Edit this FAQ'} = 'แก้ไข FAQ นี้';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'เปิดใช้งานหลากหลายภาษา ในโมดูล FAQ.';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'เปิดใช้งานกลไกการโหวตในโมดูลFAQ.';
     $Self->{Translation}->{'Explorer'} = 'นักสำรวจ';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'อินเตอร์เฟซที่การค้นหาแบบรวดเร็วควรจะแสดง';
     $Self->{Translation}->{'Journal'} = 'วารสาร';
     $Self->{Translation}->{'Language Management'} = 'การจัดการภาษา';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'ลิงค์ออบเจกต์อื่นไปยัง FAQ นี้';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'รายชื่อของประเภทสถานภาพต่างๆที่สามารถใช้งานในอินเตอร์เฟซของเอเย่นต์ได้';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,12 +438,12 @@ sub Data {
         'จำนวนหัวข้อสูงสุดในบทความ FAQ  ที่จะแสดงในการค้นหาของ FAQ ในอินเตอร์เฟซสาธารณะ';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         'จำนวนหัวข้อสูงสุดในบทความ FAQ ที่จะแสดงในวารสาร FAQ ในอินเตอร์เฟซของเอเย่นต์';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'โมดูลในการสร้างโปรไฟล์ OpenSearch html สำหรับการค้นหา FAQ แบบกระชับ ในอินเตอร์เฟซที่สาธารณะ';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        'โมดูลในการสร้างโปรไฟล์ OpenSearch html สำหรับการค้นหา FAQ แบบกระชับ ในอินเตอร์เฟซของลูกค้า';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
-        'โมดูลในการสร้างโปรไฟล์ OpenSearch html สำหรับการค้นหา FAQ แบบกระชับ';
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
+        '';
     $Self->{Translation}->{'New FAQ Article'} = 'หัวข้อ FAQ ใหม่';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'บทความFAQ ใหม่ต้องที่ได้รับการอนุมัติก่อนได้รับการตีพิมพ์';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'จำนวน items ที่แสดงในช่วงที่เปลี่ยนแปลงครั้งล่าสุด';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'จำนวน items ที่แสดงในช่วงที่สร้างขึ้นครั้งล่าสุด';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'จำนวนรายการที่แสดงฟีเจอร์ใน 10 อันดับแรก';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'พารามิเตอร์สำหรับหน้าในรายการ (ซึ่งจะแสดงรายการ FAQ ) ของวารสาร FAQ ขนาดเล็ก';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'แสดงรายการของหมวดหมู่ย่อย';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'แสดงรายการการเปลี่ยนแปลงที่ผ่านมาล่าสุดในอินเตอร์เฟซที่กำหนดไว้';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'แสดงรายการที่สร้างล่าสุดในอินเตอร์เฟซที่กำหนดไว้.';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'แสดง10 รายการยอดนิยมในอินเตอร์เฟซที่กำหนดไว้';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'แสดงการโหวตในอินเตอร์เฟซที่กำหนดไว้';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'วิธีแก้ปัญหา';
     $Self->{Translation}->{'Symptom'} = 'เครื่องแสดง';
     $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'ตัวบ่งชี้สำหรับ FAQ, เช่น FAQ#,  KB#, MyFAQ #. ค่าเริ่มต้นคือ FAQ#';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

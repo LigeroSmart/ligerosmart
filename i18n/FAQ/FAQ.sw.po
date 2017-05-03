@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 22:01+0000\n"
-"PO-Revision-Date: 2017-03-25 04:11+0000\n"
+"POT-Creation-Date: 2017-05-02 20:19+0000\n"
+"PO-Revision-Date: 2017-05-03 01:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -350,6 +350,18 @@ msgstr "Ingiza maswali yote na link"
 msgid "No FAQ articles found."
 msgstr "Hakuna makala ya maswali iliyopatikana"
 
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
 msgstr "Tafuta nakala kamili katika maswali yanayooulizwa mara kwa mara (mfano \"John\" au \"Will\")"
@@ -670,6 +682,10 @@ msgstr "Marekebisho mapya ya makala ya maswali"
 msgid "Top 10 FAQ articles"
 msgstr "Makala 10 bora ya Maswali"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -708,6 +724,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig
@@ -994,6 +1014,10 @@ msgid "Enable multiple languages on FAQ module."
 msgstr "Wezesha Lugha nyingi nyingi katika maswali haya."
 
 #. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
 msgid "Enable voting mechanism on FAQ module."
 msgstr "Wezesha "
 
@@ -1094,8 +1118,16 @@ msgid "Language Management"
 msgstr "Menejimenti ya lugha"
 
 #. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
 msgstr "Unganishga kitu kingine na kipengele hiki cha  maswali yaliyoulizwa mara kwa mara"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1196,18 +1228,18 @@ msgstr "Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa k
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
 msgstr "Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha umma. "
 
 #. SysConfig
-msgid ""
-"Module to generate HTML OpenSearch profile for short faq search in the "
-"customer interface."
-msgstr "Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha mteja. "
-
-#. SysConfig
-msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr "Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara."
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1252,6 +1284,14 @@ msgstr "Namba ya vitu vilivotengenezwa mwishoni."
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "Namba ya vitu vilivoonyweshwa katika vipengele 10 bora."
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1364,6 +1404,12 @@ msgid "Show last created items in defined interfaces."
 msgstr "Inaonyesha vipengele vilivyotengenezwa mwishoni katika kiolesura  kilichofafanuliwa."
 
 #. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactive the output)."
+msgstr ""
+
+#. SysConfig
 msgid "Show top 10 items in defined interfaces."
 msgstr "Inaonyesha vipengele  10  bora katika kiolesura kilichofafanuliwa."
 
@@ -1417,6 +1463,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Text Only"
+msgstr ""
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
 msgstr ""
 
 #. SysConfig

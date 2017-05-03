@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Hakuna makala ya maswali iliyopatikana';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Tafuta nakala kamili katika maswali yanayooulizwa mara kwa mara (mfano "John" au "Will")';
     $Self->{Translation}->{'Vote restrictions'} = 'Vizuizi vya kura';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Marekebisho mapya ya makala ya maswali';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Makala 10 bora ya Maswali';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Kichujio cha matokeo ya HTML ili kuongeza viungo kwa tungo zilizo fafanuliwa. Sura ya elemnti hii inaruhusu maingizo ya aina mbili. Kwanza jinala sura (mf. faq.png). Kwa kesi hii sura ya njia ya OTRS itatumika. Njia ya pili ni kuingiza kiungo cha hiyo sura.';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Mwongo wa matokeo ya kura';
     $Self->{Translation}->{'Default category name.'} = 'Jina la chaguo-msingi la kategori';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Chaguo-msingi la lugha ya makala ya maswali yaliyoulizwa mara nyingi katika lugha moja.';
@@ -364,6 +373,8 @@ sub Data {
         'Uga wenye uwezo imeonyeshwa katika skrini ilikuzwa ya maswali yanayoulizwa mara kwa mara ya kiolesura cha umma. 0= Lemazwa, 1 = wezesha.';
     $Self->{Translation}->{'Edit this FAQ'} = 'Hariri makala hii';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Wezesha Lugha nyingi nyingi katika maswali haya.';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Wezesha ';
     $Self->{Translation}->{'Explorer'} = 'Kichunguzaji';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Kiolesura ambacho utafutaji wa haraka unatakiwa kuonyeshwa.';
     $Self->{Translation}->{'Journal'} = 'Jarida';
     $Self->{Translation}->{'Language Management'} = 'Menejimenti ya lugha';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Unganishga kitu kingine na kipengele hiki cha  maswali yaliyoulizwa mara kwa mara';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha wakala.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,12 +438,12 @@ sub Data {
         'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika utafutaji wa maswali yanayoulizwa mara kwa mara katika kiolesura cha umma.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         'Upeo wa juu wa ukubwa wa vichwa katika makala ya maswali inayoonyeshwa katika jarida la maswali yanayoulizwa mara kwa mara katika kiolesura cha wakala.';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha umma. ';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        'Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha mteja. ';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
-        'Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara.';
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
+        '';
     $Self->{Translation}->{'New FAQ Article'} = 'Makala mpya ya maswali';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Makala mpya ya maswali yanahitaji idhinisho kabla hayatolewa.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Namba ya vitu vilivoonyweshwa katika mabadiliko ya mwisho.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Namba ya vitu vilivotengenezwa mwishoni.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Namba ya vitu vilivoonyweshwa katika vipengele 10 bora.';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Parameta za kurasa (ambazo vipengee vya maswali yanayoulizwa mara kwa mara zimeonyeshwa) za mapitio madogo ya jarida la maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Inaonyesha vipengele vya kategori.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Inaonyesha vipengele vilivyobadilishwa katika kiolesura kilichofafanuliwa.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Inaonyesha vipengele vilivyotengenezwa mwishoni katika kiolesura  kilichofafanuliwa.';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Inaonyesha vipengele  10  bora katika kiolesura kilichofafanuliwa.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Inaonyesha kupiga kura katika kiolesura kilichofafanuliwa.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = '';
     $Self->{Translation}->{'Symptom'} = '';
     $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Kitambulishi cha maswali yanayoulizwa mara kwa mara, mfano maswali yanayoulizwa mara kwa mara#,KB#, MyFAQ#. Chaguo msingi ni maswali yanayoulizwa mara kwa mara#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = '沒有找到常見問題文章。';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = '常見問題文章全文檢索 (例："John*n" 或 "Will*")';
     $Self->{Translation}->{'Vote restrictions'} = '投票限制條件';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = '最近更新常見問題文章';
     $Self->{Translation}->{'Top 10 FAQ articles'} = '首10篇常見問題文章';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '選票結果小數位';
     $Self->{Translation}->{'Default category name.'} = '默許目錄分類名稱';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '單一語言模式下的常見問題文章默許語言';
@@ -364,6 +373,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Edit this FAQ'} = '編輯此常見問題';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '啓用常見問題模組多種語言';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '啓用常見問題模組投票機制';
     $Self->{Translation}->{'Explorer'} = '瀏覽器';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '顯示快速搜尋的介面';
     $Self->{Translation}->{'Journal'} = '日誌';
     $Self->{Translation}->{'Language Management'} = '語言管理';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '連結其他物件到此常見問題物件';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '在服務員介面可使用的狀態分類列表';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,11 +438,11 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         '';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
     $Self->{Translation}->{'New FAQ Article'} = '新常見問題文章';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新常見問題文章發佈前需要經過審批';
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '最近更新顯示項目數量';
     $Self->{Translation}->{'Number of shown items in last created.'} = '最近創建顯示項目數量';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '首10篇功能顯示項目數量';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = '顯示子目錄分類項目';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '顯示指定介面的最近更新項目';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '顯示指定介面的最近創建項目';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '顯示指定介面的首10個項目';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '顯示指定介面的投票';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = '解決方案';
     $Self->{Translation}->{'Symptom'} = '';
     $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 22:01+0000\n"
-"PO-Revision-Date: 2017-03-25 04:11+0000\n"
+"POT-Creation-Date: 2017-05-02 20:19+0000\n"
+"PO-Revision-Date: 2017-05-03 01:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -351,6 +351,18 @@ msgstr "插入完整FAQ和链接"
 msgid "No FAQ articles found."
 msgstr "未找到FAQ文章。"
 
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
 msgstr "在FAQ中进行全文本搜索（例如：“John*n”或“Will*”）"
@@ -653,7 +665,7 @@ msgstr "%s - 公开（FAQ全文）"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Need rate!"
-msgstr ""
+msgstr "请评分！"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -670,6 +682,10 @@ msgstr "最近修改的FAQ文章"
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Top 10 FAQ articles"
 msgstr "最常用的文章"
+
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -710,6 +726,10 @@ msgstr "客户FAQ搜索"
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "客户FAQ。"
+
+#. SysConfig
+msgid "CustomerFAQRelatedArticles."
+msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -995,6 +1015,10 @@ msgid "Enable multiple languages on FAQ module."
 msgstr "在FAQ模块中启用多种语言。"
 
 #. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
 msgid "Enable voting mechanism on FAQ module."
 msgstr "在FAQ模块中启用投票机制。"
 
@@ -1095,8 +1119,16 @@ msgid "Language Management"
 msgstr "管理语言"
 
 #. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
 msgstr "链接对象到这个FAQ条目"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1197,18 +1229,18 @@ msgstr "在服务人员界面中，FAQ日志视图显示FAQ文章标题的最长
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
 msgstr "在公共界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。"
 
 #. SysConfig
-msgid ""
-"Module to generate HTML OpenSearch profile for short faq search in the "
-"customer interface."
-msgstr "在客户界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。"
-
-#. SysConfig
-msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr "在服务人员界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。"
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1253,6 +1285,14 @@ msgstr "显示最新创建条目的数量。"
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "按Top10格式显示的条目数。"
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1365,6 +1405,12 @@ msgid "Show last created items in defined interfaces."
 msgstr "在定义的界面上显示最新创建的条目。"
 
 #. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactive the output)."
+msgstr ""
+
+#. SysConfig
 msgid "Show top 10 items in defined interfaces."
 msgstr "在定义的界面上显示点击量前十个条目。"
 
@@ -1419,6 +1465,10 @@ msgstr "症状"
 #. SysConfig
 msgid "Text Only"
 msgstr "仅文本"
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."

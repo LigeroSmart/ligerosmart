@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Nem találhatók GyIK bejegyzések.';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Szabad-szavas keresés a GyIK bejegyzésekben (például „J*nos” vagy „Kov*”)';
     $Self->{Translation}->{'Vote restrictions'} = 'Szavazási korlátozások';
@@ -256,11 +261,14 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - nyilvános (GyIK szabad-szavas)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'Need rate!'} = '';
+    $Self->{Translation}->{'Need rate!'} = 'Értékelés szükséges!';
     $Self->{Translation}->{'This article is empty!'} = 'Ez a bejegyzés üres!';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Legutóbb létrehozott GyIK bejegyzések';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Legutóbb frissített GyIK bejegyzések';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Legjobb 10 GyIK bejegyzés';
+
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Ügyfél GyIK nagyítás.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Ügyfél GyIK keresés.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Ügyfél GyIK.';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'A szavazási eredmény tizedesjegyeinek száma.';
     $Self->{Translation}->{'Default category name.'} = 'Alapértelmezett kategórianév.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'A GyIK bejegyzések alapértelmezett nyelve egynyelvű módban.';
@@ -364,6 +373,8 @@ sub Data {
         'A nyilvános felület GyIK nagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve.';
     $Self->{Translation}->{'Edit this FAQ'} = 'A GyIK szerkesztése';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Több nyelv engedélyezése a GyIK modulban.';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Szavazási mechanizmus engedélyezése a GyIK modulban.';
     $Self->{Translation}->{'Explorer'} = 'Böngésző';
     $Self->{Translation}->{'FAQ AJAX Responder'} = 'GyIK AJAX válaszadó';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Azok a felületek, ahol a gyors keresésnek meg kell jelennie.';
     $Self->{Translation}->{'Journal'} = 'Napló';
     $Self->{Translation}->{'Language Management'} = 'Nyelvkezelés';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Másik objektum hozzákapcsolása ehhez a GyIK elemhez';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Állapottípusok listája, amelyek használhatók az ügyintézői felületen.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,12 +438,12 @@ sub Data {
         'A GyIK keresőben megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete a nyilvános felületen.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         'A GyIK naplóban megjelenítendő GyIK bejegyzésben lévő címek legnagyobb mérete az ügyintézői felületen.';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez a nyilvános felületen.';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        'Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez az ügyfélfelületen.';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
-        'Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez.';
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
+        '';
     $Self->{Translation}->{'New FAQ Article'} = 'Új GyIK bejegyzés';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Az új GyIK bejegyzések jóváhagyása szükséges a közzétételük előtt.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'A megjelenített elemek száma a legutóbb módosítottakban.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'A megjelenített elemek száma a legutóbb létrehozottakban.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'A megjelenített elemek száma a legjobb 10 szolgáltatásban.';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Paraméterek a kis GyIK napló áttekintő oldalaihoz (amelyekben a GyIK elemek megjelennek).';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Alkategóriák elemeinek megjelenítése.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Az utoljára módosított elemek megjelenítése a meghatározott felületeken.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Az utoljára létrehozott elemek megjelenítése a meghatározott felületeken.';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'A legjobb 10 elem megjelenítése a meghatározott felületeken.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Szavazás megjelenítése a meghatározott felületeken.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Megoldás';
     $Self->{Translation}->{'Symptom'} = 'Jelenség';
     $Self->{Translation}->{'Text Only'} = 'Csak szöveg';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Egy GyIK azonosítója, például FAQ#, TB#, GyIK#. Az alapértelmezett: FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

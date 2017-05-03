@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Нису пронађени ЧПП чланци.';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Потпуна текстуална претрага у ЧПП чланцима (нпр. "John*n" или "Will*")';
     $Self->{Translation}->{'Vote restrictions'} = 'Ограничења гласања';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Последње ажурирани ЧПП чланци';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Првих 10 ЧПП чланака';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент Слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике.';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Детаљи клијентских ЧПП.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Претрага клијентских ЧПП.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Клијентска ЧПП.';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Број децимала у резултату гласања.';
     $Self->{Translation}->{'Default category name.'} = 'Назив подразумеване категорије.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Подразумевани језик ЧПП чланака у једнојезичком начину рада.';
@@ -364,6 +373,8 @@ sub Data {
         'Динамичка поља приказана на екрану детаљног прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
     $Self->{Translation}->{'Edit this FAQ'} = 'Уреди ово ЧПП';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Активирање више језика на ЧПП модулу.';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Активирање механизма за гласање на ЧПП модулу.';
     $Self->{Translation}->{'Explorer'} = 'Истраживач';
     $Self->{Translation}->{'FAQ AJAX Responder'} = 'ЧПП „AJAX” одговарач';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Интерфејс на ком треба приказати брзу претрагу.';
     $Self->{Translation}->{'Journal'} = 'Дневник';
     $Self->{Translation}->{'Language Management'} = 'Управљање језицима';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Повежи други објекат са овом ставком ЧПП';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Листа типова стања који се могу користити у интерфејсу оператера.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,12 +438,12 @@ sub Data {
         'Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП претрази у јавном интерфејсу.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         'Максимална дужина наслова у ЧПП чланаку који ће бити приказани у ЧПП дневнику у интерфејсу оператера.';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу у јавном профилу.';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        'Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу у профилу клијента.';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
-        'Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу.';
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
+        '';
     $Self->{Translation}->{'New FAQ Article'} = 'Нови ЧПП чланак';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Нови ЧПП чланци требају бити одобрени пре објављивања.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Број приказаних ставки у последњим изменама.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Број приказаних ставки у последње креираним.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Број приказаних ставки у "првих 10" .';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Параметри страница (на којима су ЧПП ставке приказане) на малом приказу прегледа ЧПП дневника.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Прикажи ставке субкатегорија.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Прикажи задње промењене ставке у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Прикажи задње креиране ставке у дефинисаним интерфејсима.';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Прикажи првих 10 ставки у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Прикажи гласање у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Решење';
     $Self->{Translation}->{'Symptom'} = 'Симптом';
     $Self->{Translation}->{'Text Only'} = 'Само текст';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Идентификатор за ЧПП, нпр ЧПП#, БЗ#, МојЧПП#. Подразумевано је ЧПП#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

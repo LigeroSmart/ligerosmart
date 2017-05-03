@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Nessun articolo FAQ trovato.';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Ricerca testuale negli articoli FAQ (ad esempio "John*n" or "Will*")';
     $Self->{Translation}->{'Vote restrictions'} = 'Restrizioni sul Voto';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Ultimi articoli FAQ aggiornati';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 articoli FAQ';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Un filtro per l\'output HTML per aggiungere collegamenti ad una stringa definita. L\'elemento Immagine permette due tipi di ingresso. Primo il nome di un\'immagine (ad esempio faq.png). In questo caso verrà utilizzato il percorso delle immagini di OTRS. La seconda possibilità è quella di inserire il collegamento all\'immagine.';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Posizioni decimali del risultato del voto.';
     $Self->{Translation}->{'Default category name.'} = 'Nome Predefinito della categoria.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Lingua predefinita per gli articoli  FAQ per la modalità singola lingua.';
@@ -364,6 +373,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Modifica questa FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Abilita più lingue nel modulo FAQ.';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Abilita meccanismo di voto nel modulo FAQ.';
     $Self->{Translation}->{'Explorer'} = 'Esplora';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Interfacce dove la ricerca rapida dovrebbe essere vista.';
     $Self->{Translation}->{'Journal'} = 'Registro';
     $Self->{Translation}->{'Language Management'} = 'Gestione della lingua';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Collega un\'altro oggetto a questo oggetto FAQ';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,11 +438,11 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         '';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
     $Self->{Translation}->{'New FAQ Article'} = 'Nuovo articolo FAQ';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'I nuovi articoli FAQ richiedono approvazione prima di essere pubblicati.';
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Numero di elementi mostrati nei modificati di recente.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Numero di elementi mostrati nei creati di recente.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Numero di elementi mostrati nella funzionalità principali 10.';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Mostra gli elementi delle sottocategorie.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Mostra i principali 10 nelle interfacce specificate.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Mostra la votazione nelle interfacce specificate.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Soluzione';
     $Self->{Translation}->{'Symptom'} = 'Sintomo';
     $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Identificatore per le FAQ, es: FAQ#, KB#, MyFAQ#. Il valore predefinito è FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

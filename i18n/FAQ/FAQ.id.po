@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 22:01+0000\n"
-"PO-Revision-Date: 2017-03-25 04:11+0000\n"
+"POT-Creation-Date: 2017-05-02 20:19+0000\n"
+"PO-Revision-Date: 2017-05-03 01:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -349,6 +349,18 @@ msgstr "Masukkan Seluruh Link dan FAQ"
 msgid "No FAQ articles found."
 msgstr "Tidak ditemukan artikel FAQ"
 
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
 msgstr "Pencarian Tekspenuh pada Artikel FAQ (contoh: \"John*n\" atau \"Will\")"
@@ -669,6 +681,10 @@ msgstr "Artikel FAQ paling baru"
 msgid "Top 10 FAQ articles"
 msgstr "Artikel FAQ 10 teratas"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -707,6 +723,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig
@@ -993,6 +1013,10 @@ msgid "Enable multiple languages on FAQ module."
 msgstr "Aktifkan multibahasa pada modul FAQ."
 
 #. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
 msgid "Enable voting mechanism on FAQ module."
 msgstr "Aktifkan mekanisme voting pada modul FA"
 
@@ -1093,8 +1117,16 @@ msgid "Language Management"
 msgstr "Manajemen Bahasa"
 
 #. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
 msgstr "Tautkan objek lainnya ke item FAQ ini"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1195,18 +1227,18 @@ msgstr "Ukuran maksimal Judul di dalam artikel FAQ yang akan di tampilkan di dal
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
 msgstr "Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ di antarmuka umum."
 
 #. SysConfig
-msgid ""
-"Module to generate HTML OpenSearch profile for short faq search in the "
-"customer interface."
-msgstr "Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ di antarmuka pelanggan."
-
-#. SysConfig
-msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr "Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ."
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1251,6 +1283,14 @@ msgstr "Jumlah item yang di tampilkan dalam pembuatan terakhir."
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "Jumlah item yang ditampilkan dalam 10 fitur teratas."
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1363,6 +1403,12 @@ msgid "Show last created items in defined interfaces."
 msgstr "Tampilkan item terakhir yang di ciptakan pada antarmuka yang di tentukan."
 
 #. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactive the output)."
+msgstr ""
+
+#. SysConfig
 msgid "Show top 10 items in defined interfaces."
 msgstr "Tampilkan 10 item teratas pada antarmuka yang di tentukan."
 
@@ -1416,6 +1462,10 @@ msgstr "Gejala"
 
 #. SysConfig
 msgid "Text Only"
+msgstr ""
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
 msgstr ""
 
 #. SysConfig

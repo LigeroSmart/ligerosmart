@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 22:01+0000\n"
-"PO-Revision-Date: 2017-03-25 04:22+0000\n"
+"POT-Creation-Date: 2017-05-02 20:19+0000\n"
+"PO-Revision-Date: 2017-05-03 01:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -351,6 +351,18 @@ msgstr "Insertar FAQ Completo & Enlace"
 msgid "No FAQ articles found."
 msgstr "No se encontraron artículos FAQ"
 
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
 msgstr "Búsqueda de texto completo en artículos FAQ (ej: \"John*n\" o \"Will*\")"
@@ -671,6 +683,10 @@ msgstr "Últimos artículos FAQ modificados"
 msgid "Top 10 FAQ articles"
 msgstr "Top 10 de artículos FAQ"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -709,6 +725,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig
@@ -995,6 +1015,10 @@ msgid "Enable multiple languages on FAQ module."
 msgstr "Habilitar múltiples idiomas en el módulo FAQ"
 
 #. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
 msgid "Enable voting mechanism on FAQ module."
 msgstr "Habilitar el mecanismo de votación en el módulo FAQ"
 
@@ -1095,8 +1119,16 @@ msgid "Language Management"
 msgstr "Gestión de Idiomas"
 
 #. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
 msgstr "Enlazar otro objecto a este artículo FAQ"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1197,18 +1229,18 @@ msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Di
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
+"customer interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
 msgstr "Módulo para generar el perfil HTML OpenSearch para la búsqueda corta de las FAQ en la interfaz pública."
 
 #. SysConfig
-msgid ""
-"Module to generate HTML OpenSearch profile for short faq search in the "
-"customer interface."
-msgstr "Módulo para generar el perfil HTML OpenSearch para la búsqueda corta de las FAQ en la interfaz del cliente."
-
-#. SysConfig
-msgid "Module to generate html OpenSearch profile for short faq search."
-msgstr "Módulo para generar el perfil html \"OpenSearch\" para búsquedas cortas de FAQ."
+msgid "Module to generate html OpenSearch profile for short FAQ search."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1253,6 +1285,14 @@ msgstr "Número de elementos a mostrar en últimos creados."
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "Número de elementos a mostrar en el Top 10."
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1365,6 +1405,12 @@ msgid "Show last created items in defined interfaces."
 msgstr "Mostrar los últimos artículos creados en las interfaces definidas."
 
 #. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactive the output)."
+msgstr ""
+
+#. SysConfig
 msgid "Show top 10 items in defined interfaces."
 msgstr "Mostrar los artículos Top 10 en las interfaces definidas."
 
@@ -1419,6 +1465,10 @@ msgstr "Síntoma"
 #. SysConfig
 msgid "Text Only"
 msgstr "Solo Texto"
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."

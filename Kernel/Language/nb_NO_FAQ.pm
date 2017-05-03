@@ -28,7 +28,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Legg til kategori';
     $Self->{Translation}->{'Edit Category'} = 'Endre kategori';
-    $Self->{Translation}->{'Subcategory of'} = '';
+    $Self->{Translation}->{'Subcategory of'} = 'Underkategori av';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Saksbehandlergrupper som har tilgang til artikler i denne kategorien';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Vil vises som kommentar i utforskeren';
@@ -95,7 +95,7 @@ sub Data {
 
     # Template: AgentFAQSearchSmall
     $Self->{Translation}->{'FAQ Search'} = 'OSS-søk';
-    $Self->{Translation}->{'Profile Selection'} = '';
+    $Self->{Translation}->{'Profile Selection'} = 'Profilvalg';
     $Self->{Translation}->{'Vote'} = 'Stem';
     $Self->{Translation}->{'No vote settings'} = 'Ingen stemmeinnstillinger';
     $Self->{Translation}->{'Specific votes'} = 'Spesifikk notis';
@@ -132,6 +132,11 @@ sub Data {
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Ingen OSS-artikler ble funnet';
+
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Fulltekstsøk i OSS-artikler (f.eks. "Ol*" eller "Andreas*n"';
@@ -178,7 +183,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'FAQ History'} = 'OSS-historikk';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'OSS-journal';
@@ -206,7 +211,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Ingen resultater';
     $Self->{Translation}->{'FAQ Number'} = 'OSS-nummer';
-    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'Last Changed by'} = 'Sist endret av';
     $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sist oppdaterte OSS-artikler';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Topp 10 OSS';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Antall desimaler for avstemningsresultat';
     $Self->{Translation}->{'Default category name.'} = 'Forvalgt kategori';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';
@@ -364,6 +373,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Endre denne artikkelen';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
     $Self->{Translation}->{'Explorer'} = 'Utforsk';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Språkoppsett';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Lenk opp et annet objekt til denne artikkelen';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,11 +438,11 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         '';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        '';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
     $Self->{Translation}->{'New FAQ Article'} = 'Ny OSS-artikkel';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Nye artikler trenger godkjenning før de kan publiseres.';
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Antall objekter vist i siste endringer.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Antall viste objekter under sist opprettet.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Antall viste artikler i "Topp 10"-funksjonen';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Vis innhold i underkategorier.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Vis sist endrede artikler i definerte grensesnitt.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Vis sist opprettede artikler i definerte grensesnitt';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Vis "Topp 10" i definerte grensesnitt.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Vis avstemming i definerte grensensnitt';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Løsning';
     $Self->{Translation}->{'Symptom'} = 'Symptom';
     $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Identifikator for en OSS-artikkel, f.eks. FAQ#, KB#, OSS#, MinOSS#. Standard er FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

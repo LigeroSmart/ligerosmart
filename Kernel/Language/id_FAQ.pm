@@ -133,6 +133,11 @@ sub Data {
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Tidak ditemukan artikel FAQ';
 
+    # Template: CustomerFAQRelatedArticles
+    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Pencarian Tekspenuh pada Artikel FAQ (contoh: "John*n" atau "Will")';
     $Self->{Translation}->{'Vote restrictions'} = 'Batasan Pemilihan';
@@ -262,6 +267,9 @@ sub Data {
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Artikel FAQ paling baru';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Artikel FAQ 10 teratas';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+    $Self->{Translation}->{'Content Type'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Sebuah filter untuk output HTML untuk menambahkan tautan terkait string yang ditentukan. Dua buah masukan diperkenankan untuk Elemen Gambar. Pertama nama dari gambar (contoh: faq.png). Pada kasus ini path gambar OTRS yang digunakan. Kemungkinan kedua adalah memasukkan tautan ke dalam gambar.';
@@ -273,6 +281,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Posisi desimal pada hasil pemilihan.';
     $Self->{Translation}->{'Default category name.'} = 'Nama kategori default.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Bahasa default untuk artikel FAQ pada mode satu bahasa.';
@@ -364,6 +373,8 @@ sub Data {
         'Bidang dinamis yang ditampilkan di dalam layar zoom FAQ pada antarmuka umum. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
     $Self->{Translation}->{'Edit this FAQ'} = 'ubah FAQ ini.';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Aktifkan multibahasa pada modul FAQ.';
+    $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
+        '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Aktifkan mekanisme voting pada modul FA';
     $Self->{Translation}->{'Explorer'} = 'Eksplorer';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
@@ -389,7 +400,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Antarmuka dimana pencarian cepat harus di tampilkan';
     $Self->{Translation}->{'Journal'} = 'Jurnal';
     $Self->{Translation}->{'Language Management'} = 'Manajemen Bahasa';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Tautkan objek lainnya ke item FAQ ini';
+    $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
+        '';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Daftar jenis status yang dapat digunakan pada antarmuka agen.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -424,12 +438,12 @@ sub Data {
         'Ukuran maksimal Judul di dalam artikel FAQ yang akan di tampilkan di dalam Pencarian FAQ pada antarmuka umum.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         'Ukuran maksimal Judul di dalam artikel FAQ yang akan di tampilkan di dalam Journal FAQ pada antarmuka agen.';
+    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
+        '';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ di antarmuka umum.';
-    $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short faq search in the customer interface.'} =
-        'Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ di antarmuka pelanggan.';
-    $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} =
-        'Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ.';
+    $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
+        '';
     $Self->{Translation}->{'New FAQ Article'} = 'Artikel FAQ Baru';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Artikel FAQ baru membutuhkan ersetujuan sebelum dipublikasikan.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
@@ -443,6 +457,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Jumlah item yang ditampilkan dalam perubahan terakhir.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Jumlah item yang di tampilkan dalam pembuatan terakhir.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Jumlah item yang ditampilkan dalam 10 fitur teratas.';
+    $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
+        '';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Parameter untuk halaman (dimana item FAQ di tampilkan) jurnal kecil gambaran FAQ.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -477,6 +494,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Tampilkan item dari subkategori.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Tampilkan item terakhir yang di ubah pada antarmuka yang di tentukan.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Tampilkan item terakhir yang di ciptakan pada antarmuka yang di tentukan.';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Tampilkan 10 item teratas pada antarmuka yang di tentukan.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Tampilkan pemilihan pada antarmuka yang di tentukan.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -494,6 +513,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Solusi';
     $Self->{Translation}->{'Symptom'} = 'Gejala';
     $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Pengidentifikasi untuk FAQ, Misalnya FAQ#, KB#, MyFAQ#. Standarnya adalah FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

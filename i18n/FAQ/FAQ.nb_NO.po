@@ -2,11 +2,12 @@
 # Translators:
 # Kenneth Nilssen <inactive+kennethnilssen@transifex.com>, 2015
 # LarsMagnusHerland <lars.magnus@herland.priv.no>, 2015
+# Peter Værlien <pvarlien@online.no>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 22:01+0000\n"
-"PO-Revision-Date: 2017-03-25 04:11+0000\n"
+"POT-Creation-Date: 2017-05-02 20:19+0000\n"
+"PO-Revision-Date: 2017-05-03 01:20+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +58,7 @@ msgstr "Endre kategori"
 
 #. Template: AgentFAQCategory
 msgid "Subcategory of"
-msgstr ""
+msgstr "Underkategori av"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -228,7 +229,7 @@ msgstr "OSS-søk"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Profilvalg"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
@@ -347,6 +348,18 @@ msgstr ""
 msgid "No FAQ articles found."
 msgstr "Ingen OSS-artikler ble funnet"
 
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
 msgstr "Fulltekstsøk i OSS-artikler (f.eks. \"Ol*\" eller \"Andreas*n\""
@@ -461,7 +474,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "OSS-historikk"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -529,7 +542,7 @@ msgstr "OSS-nummer"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Last Changed by"
-msgstr ""
+msgstr "Sist endret av"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (before/after)"
@@ -667,6 +680,10 @@ msgstr "Sist oppdaterte OSS-artikler"
 msgid "Top 10 FAQ articles"
 msgstr "Topp 10 OSS"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -705,6 +722,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig
@@ -991,6 +1012,10 @@ msgid "Enable multiple languages on FAQ module."
 msgstr ""
 
 #. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
 msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
@@ -1091,8 +1116,16 @@ msgid "Language Management"
 msgstr "Språkoppsett"
 
 #. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
 msgstr "Lenk opp et annet objekt til denne artikkelen"
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
+msgstr ""
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1193,17 +1226,17 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
-"public interface."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Module to generate HTML OpenSearch profile for short faq search in the "
 "customer interface."
 msgstr ""
 
 #. SysConfig
-msgid "Module to generate html OpenSearch profile for short faq search."
+msgid ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Module to generate html OpenSearch profile for short FAQ search."
 msgstr ""
 
 #. SysConfig
@@ -1249,6 +1282,14 @@ msgstr "Antall viste objekter under sist opprettet."
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "Antall viste artikler i \"Topp 10\"-funksjonen"
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1361,6 +1402,12 @@ msgid "Show last created items in defined interfaces."
 msgstr "Vis sist opprettede artikler i definerte grensesnitt"
 
 #. SysConfig
+msgid ""
+"Show the stars for the articles with a rating equal or greater like the "
+"defined value (set value '0' to deactive the output)."
+msgstr ""
+
+#. SysConfig
 msgid "Show top 10 items in defined interfaces."
 msgstr "Vis \"Topp 10\" i definerte grensesnitt."
 
@@ -1414,6 +1461,10 @@ msgstr "Symptom"
 
 #. SysConfig
 msgid "Text Only"
+msgstr ""
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
 msgstr ""
 
 #. SysConfig

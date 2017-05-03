@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2017-03-24 22:25+0000\n"
+"POT-Creation-Date: 2017-05-02 20:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -334,6 +334,18 @@ msgstr ""
 msgid "No FAQ articles found."
 msgstr ""
 
+#. Template: CustomerFAQRelatedArticles
+msgid "This might be helpful"
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Found no helpful resources for the subject and text."
+msgstr ""
+
+#. Template: CustomerFAQRelatedArticles
+msgid "Type a subject or text to get a list of helpful resources."
+msgstr ""
+
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
 msgstr ""
@@ -654,6 +666,10 @@ msgstr ""
 msgid "Top 10 FAQ articles"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
+msgid "Content Type"
+msgstr ""
+
 #. SysConfig
 msgid "A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image."
 msgstr ""
@@ -688,6 +704,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
+msgstr ""
+
+#. SysConfig
+msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig
@@ -895,6 +915,10 @@ msgid "Enable multiple languages on FAQ module."
 msgstr ""
 
 #. SysConfig
+msgid "Enable the related article feature for the customer frontend."
+msgstr ""
+
+#. SysConfig
 msgid "Enable voting mechanism on FAQ module."
 msgstr ""
 
@@ -995,7 +1019,15 @@ msgid "Language Management"
 msgstr ""
 
 #. SysConfig
+msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
 msgid "Link another object to this FAQ item"
+msgstr ""
+
+#. SysConfig
+msgid "List of queue names for which the related article feature is enabled."
 msgstr ""
 
 #. SysConfig
@@ -1067,15 +1099,15 @@ msgid "Maximum size of the titles in a FAQ article to be shown in the FAQ journa
 msgstr ""
 
 #. SysConfig
+msgid "Module to generate HTML OpenSearch profile for short FAQ search in the customer interface."
+msgstr ""
+
+#. SysConfig
 msgid "Module to generate HTML OpenSearch profile for short FAQ search in the public interface."
 msgstr ""
 
 #. SysConfig
-msgid "Module to generate HTML OpenSearch profile for short faq search in the customer interface."
-msgstr ""
-
-#. SysConfig
-msgid "Module to generate html OpenSearch profile for short faq search."
+msgid "Module to generate html OpenSearch profile for short FAQ search."
 msgstr ""
 
 #. SysConfig
@@ -1112,6 +1144,14 @@ msgstr ""
 
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
+msgstr ""
+
+#. SysConfig
+msgid "Output filter to add Java-script to CustomerTicketMessage screen."
+msgstr ""
+
+#. SysConfig
+msgid "Output limit for the related FAQ articles."
 msgstr ""
 
 #. SysConfig
@@ -1211,6 +1251,10 @@ msgid "Show last created items in defined interfaces."
 msgstr ""
 
 #. SysConfig
+msgid "Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output)."
+msgstr ""
+
+#. SysConfig
 msgid "Show top 10 items in defined interfaces."
 msgstr ""
 
@@ -1252,6 +1296,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Text Only"
+msgstr ""
+
+#. SysConfig
+msgid "The default languages for the related FAQ articles."
 msgstr ""
 
 #. SysConfig
