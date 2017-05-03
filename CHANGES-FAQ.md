@@ -1,4 +1,6 @@
-#5.0.9 2017-??-??
+#5.0.10 2017-??-??
+
+#5.0.9 2017-05-09
  - 2017-05-02 Updated translations, thanks to all translators.
  - 2017-04-06 Added the new related faq article widget 'This might be helpful' for the customer ticket creation.
  - 2017-04-03 Fixed wrong operation assignment.
