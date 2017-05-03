@@ -164,8 +164,8 @@ sub Data {
         '定义调查详情窗口富文本查看视图的默认高度。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '定义调查概览中显示的字段。这个选项不会影响字段的位置。';
-    $Self->{Translation}->{'Edit survey general information.'} = '';
-    $Self->{Translation}->{'Edit survey questions.'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = '编辑调查一般信息。';
+    $Self->{Translation}->{'Edit survey questions.'} = '编辑调查问题。';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         '在公共界面启用或禁用显示投票数据窗口（当客户试图再次回答一个调查时显示指定调查结果的数据）。';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '启用或禁用服务的发送条件检查。';
@@ -199,14 +199,14 @@ sub Data {
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '调查概览简洁模式限制';
     $Self->{Translation}->{'Survey Stats Module.'} = '调查统计模块。';
     $Self->{Translation}->{'Survey Zoom Module.'} = '调查详情模块。';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '调查概览简洁模式每页显示的调查数限制。';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '调查不会发送给配置的邮件地址。';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '调查的标识符，例如：Survey#、MySurvey#。默认为Survey#。';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '如果一个工单已关闭就自动发送调查请求邮件给客户的工单事件模块。';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '触发器发送延迟的调查请求。';
-    $Self->{Translation}->{'Zoom into statistics details.'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = '进入调查统计详情。';
 
 }
 

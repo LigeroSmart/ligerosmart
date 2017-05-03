@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-03-24 23:21+0000\n"
-"PO-Revision-Date: 2017-03-25 05:23+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2017-03-28 00:43+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -448,11 +448,11 @@ msgstr "定义调查概览中显示的字段。这个选项不会影响字段的
 
 #. SysConfig
 msgid "Edit survey general information."
-msgstr ""
+msgstr "编辑调查一般信息。"
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "编辑调查问题。"
 
 #. SysConfig
 msgid ""
@@ -555,7 +555,7 @@ msgstr "调查详情模块。"
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr ""
+msgstr "调查概览简洁模式每页显示的调查数限制。"
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -579,4 +579,4 @@ msgstr "触发器发送延迟的调查请求。"
 
 #. SysConfig
 msgid "Zoom into statistics details."
-msgstr ""
+msgstr "进入调查统计详情。"

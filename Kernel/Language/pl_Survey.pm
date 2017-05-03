@@ -30,29 +30,29 @@ sub Data {
     $Self->{Translation}->{'Survey Questions'} = 'Pytania ankiety';
     $Self->{Translation}->{'Add Question'} = 'Dodaj pytanie';
     $Self->{Translation}->{'Type the question'} = 'Wprowadź pytanie';
-    $Self->{Translation}->{'Answer required'} = '';
+    $Self->{Translation}->{'Answer required'} = 'Wymagana odpowiedź';
     $Self->{Translation}->{'No questions saved for this survey.'} = 'Brak pytań zapisanych w tej ankiecie.';
     $Self->{Translation}->{'Question'} = 'Pytanie';
-    $Self->{Translation}->{'Answer Required'} = '';
+    $Self->{Translation}->{'Answer Required'} = 'Wymagana odpowiedź';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        '';
+        'Kiedy zakończysz edycję pytań ankiety po prostu zamknij to okno.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        '';
+        'Czy na pewno chcesz usunąć to pytanie? Wszystkie związane dane będą USUNIĘTE!';
     $Self->{Translation}->{'Edit Question'} = 'Edytuj pytanie';
     $Self->{Translation}->{'go back to questions'} = 'powrót do pytań';
-    $Self->{Translation}->{'Question:'} = '';
+    $Self->{Translation}->{'Question:'} = 'Pytanie:';
     $Self->{Translation}->{'Possible Answers For'} = 'Możliwe odpowiedzi do';
     $Self->{Translation}->{'Add Answer'} = 'Dodaj odpowiedź';
-    $Self->{Translation}->{'No answers saved for this question.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'Brak zapisanych odpowiedzi na to pytanie.';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Czy na pewno chcesz usunąć tę odpowiedź?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Nie posiada wielu odpowiedzi, będzie wyświetlane pole tekstowe.';
     $Self->{Translation}->{'Edit Answer'} = 'Edytuj odpowiedź';
     $Self->{Translation}->{'go back to edit question'} = 'powrót do edycji pytania';
-    $Self->{Translation}->{'Answer:'} = '';
+    $Self->{Translation}->{'Answer:'} = 'Odpowiedz:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown surveys per page'} = 'Maks. liczba wyświetlanych ankiet na stronę';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Nadawca powiadomienia';
@@ -64,7 +64,7 @@ sub Data {
     $Self->{Translation}->{'Requests Table'} = 'Tabela żądań';
     $Self->{Translation}->{'Send Time'} = 'Czas wysłania';
     $Self->{Translation}->{'Vote Time'} = 'Czas głosowania';
-    $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'See Details'} = 'Zobacz szczegóły';
     $Self->{Translation}->{'Survey Stat Details'} = 'Szczegóły statystyki';
     $Self->{Translation}->{'go back to stats overview'} = 'Wstecz do przeglądu statystyki';
 
@@ -73,7 +73,7 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Wysłane żądania';
     $Self->{Translation}->{'Received surveys'} = 'Otrzymane ankiety';
     $Self->{Translation}->{'Survey Details'} = 'Szczegóły ankiety';
-    $Self->{Translation}->{'Ticket Services'} = '';
+    $Self->{Translation}->{'Ticket Services'} = 'Zgłoszenie Usług';
     $Self->{Translation}->{'Survey Results Graph'} = 'Wykres wyników ankiety';
     $Self->{Translation}->{'No stat results.'} = 'Brak wyników ankiety.';
 
@@ -88,18 +88,18 @@ sub Data {
     $Self->{Translation}->{'Add New Survey'} = 'Dodaj nową ankietę';
 
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
-    $Self->{Translation}->{'You have no permission for this survey!'} = '';
-    $Self->{Translation}->{'No SurveyID is given!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey!'} = 'Nie masz uprawnień do tej ankiety!';
+    $Self->{Translation}->{'No SurveyID is given!'} = 'Nie podano identyfikatora ankiety SurveyID!';
     $Self->{Translation}->{'Survey Edit'} = 'Edycja ankiety';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
-    $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
-    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey or question!'} = 'Nie masz uprawnień do tej ankiety lub pytania!';
+    $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = 'Nie masz uprawnień do tej ankiety, pytania lub odpowiedzi!';
     $Self->{Translation}->{'Survey Edit Questions'} = 'Edycja pytań ankiety';
     $Self->{Translation}->{'Yes/No'} = 'Tak/Nie';
-    $Self->{Translation}->{'Radio (List)'} = '';
-    $Self->{Translation}->{'Checkbox (List)'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
+    $Self->{Translation}->{'Radio (List)'} = 'Radio (Lista)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Pole wyboru (Lista)';
+    $Self->{Translation}->{'Question Type'} = 'Typ pytania';
     $Self->{Translation}->{'Complete'} = 'Kompletne';
     $Self->{Translation}->{'Incomplete'} = 'Niekompletne';
     $Self->{Translation}->{'Question Edit'} = 'Edycja pytań';
@@ -107,18 +107,18 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
     $Self->{Translation}->{'Stats Overview'} = 'Statystyka';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = 'Szczegóły stanu';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Nie masz uprawnień do tej ankiety lub szczegółów statystyki!';
+    $Self->{Translation}->{'Stats Detail'} = 'Szczegóły statystyki';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nie można zmienić stanu! Brak zdefiniowanych pytań.';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Nie można zmienić stanu! Pytanie niekompletne.';
     $Self->{Translation}->{'Status changed.'} = 'Zmieniono stan.';
-    $Self->{Translation}->{'- No queue selected -'} = '';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- No queue selected -'} = '- Nie wybrano kolejki -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nie wybrano typu zgłoszenia -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Nie wybrano zgłoszenia usług -';
     $Self->{Translation}->{'- Change Status -'} = '- Zmień stan -';
-    $Self->{Translation}->{'master'} = '';
+    $Self->{Translation}->{'master'} = 'nadrzędny';
     $Self->{Translation}->{'New Status'} = 'Nowy stan';
     $Self->{Translation}->{'Survey Description'} = 'Opis ankiety';
     $Self->{Translation}->{'answered'} = 'odpowiedziano';
@@ -127,16 +127,16 @@ sub Data {
     # Perl Module: Kernel/Modules/PublicSurvey.pm
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Dziękujęmy za wypełnienie ankiety.';
     $Self->{Translation}->{'The survey is finished.'} = 'Ankieta zakończona.';
-    $Self->{Translation}->{'Survey Message!'} = '';
-    $Self->{Translation}->{'Module not enabled.'} = '';
+    $Self->{Translation}->{'Survey Message!'} = 'Wiadomość ankiety!';
+    $Self->{Translation}->{'Module not enabled.'} = 'Moduł nie włączony.';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
-        '';
-    $Self->{Translation}->{'Survey Error!'} = '';
-    $Self->{Translation}->{'Invalid survey key.'} = '';
+        'Ta funkcjonalność nie jest włączona. Proszę skontaktuj się z administratorem.';
+    $Self->{Translation}->{'Survey Error!'} = 'Błąd ankiety!';
+    $Self->{Translation}->{'Invalid survey key.'} = 'Nieprawidłowy klucz ankiety.';
     $Self->{Translation}->{'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.'} =
-        '';
-    $Self->{Translation}->{'Survey Vote'} = '';
-    $Self->{Translation}->{'Survey Vote Data'} = '';
+        'Wprowadzony klucz ankiety jest nieprawidłowy. Jeśli trafiłeś tutaj przy pomocy linku, być może jest on nieaktualny lub nieprawidłowy.';
+    $Self->{Translation}->{'Survey Vote'} = 'Wynik ankiety';
+    $Self->{Translation}->{'Survey Vote Data'} = 'Dane wynikowe ankiety';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Już odpowiedziałeś na tę ankietę.';
 
     # SysConfig
@@ -157,26 +157,26 @@ sub Data {
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Definiuje maksymalną liczbę ankiet wysyłaniu do Klienta w ciągu 30 dni. (0 oznacza brak ograniczenia, wszystkie żądania będą wysyłane).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
-        '';
+        'Ustala liczbę godzin które muszą minąć od zamknięcia zgłoszenia do wysłania ankiety (0 oznacza bezzwłoczną wysyłkę przy zamykaniu zgłoszenia). Uwaga: opóźnione wysyłanie ankiety jest realizowane przez Demona OTRS, po uprzedniej aktywacji w ustawieniach: \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' ';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Definiuje domyślną wysokość widoków Richtext dla elementów SurveyZoom.';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
-        '';
+        'Definiuje maksymalną wysokość widoków Richtext dla elementów SurveyZoom.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Definiuje widoczne kolumny w przeglądzie ankiet. Ta opcja nie wpływa na pozycję kolumn.';
-    $Self->{Translation}->{'Edit survey general information.'} = '';
-    $Self->{Translation}->{'Edit survey questions.'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = 'Edytuj informacje ogólne ankiety.';
+    $Self->{Translation}->{'Edit survey questions.'} = 'Edytuj pytania ankiety.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Włącz lub wyłącz ekran ShowVoteData w interfejsie publicznym aby pokazać wyniki ankiety gdy klient próbuje odpowiedzieć na akietę drugi raz.';
-    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = '';
+    $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Włącza lub wyłącza sprawdzanie warunku wysyłki dla usługi.';
     $Self->{Translation}->{'Enable or disable the send condition check for the ticket type.'} =
-        '';
+        'Włącza lub wyłącza sprawdzanie warunku wysyłki dla typu zgłoszenia.';
     $Self->{Translation}->{'Frontend module registration for survey add in the agent interface.'} =
-        '';
+        'Moduł frontend rejestrujący dodawanie ankiet w panelu agenta.';
     $Self->{Translation}->{'Frontend module registration for survey edit in the agent interface.'} =
-        '';
+        'Moduł frontend rejestrujący edycję ankiet w panelu agenta.';
     $Self->{Translation}->{'Frontend module registration for survey stats in the agent interface.'} =
-        '';
+        'Moduł frontend rejestrujący statystykę ankiet w panelu agenta.';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         'Moduł frontend rejestrujący podgląd ankiet w panelu agenta.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
@@ -186,27 +186,27 @@ sub Data {
         'Parametry dla stron (na których pokazywane są ankiety) dla małego przeglądu ankiet.';
     $Self->{Translation}->{'Public Survey.'} = 'Ankieta publiczna.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
-        '';
+        'Pokazuje link w menu do edycji ankiety w jej przybliżonym widoku w interfejsie agenta.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
-        '';
+        'Pokazuje link w menu do edycji pytań ankiety w jej przybliżonym widoku w interfejsie agenta.';
     $Self->{Translation}->{'Shows a link in the menu to go back in the survey zoom view of the agent interface.'} =
-        '';
+        'Pokazuje w menu link wstecz w widoku przybliżonym ankiety w interfejsie agenta.';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
-        '';
-    $Self->{Translation}->{'Stats Details'} = '';
-    $Self->{Translation}->{'Survey Add Module.'} = '';
-    $Self->{Translation}->{'Survey Edit Module.'} = '';
+        'Pokazuje link w menu do przybliżania szczegółów statystyk ankiety w jej widoku przybliżonym w interfejsie agenta';
+    $Self->{Translation}->{'Stats Details'} = 'Szczegóły statystyk';
+    $Self->{Translation}->{'Survey Add Module.'} = 'Moduł dodawania ankiet.';
+    $Self->{Translation}->{'Survey Edit Module.'} = 'Moduł edycji ankiet.';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limit "małego" przeglądu ankiet';
-    $Self->{Translation}->{'Survey Stats Module.'} = '';
+    $Self->{Translation}->{'Survey Stats Module.'} = 'Moduł statystyk ankiet.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Podgląd ankiety.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Limit ilości ankiet w "małym" przeglądzie.';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Ankiety nie będą wysyłane na skonfigurowane adresy email.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Identyfikacja dla ankiety, np. Survey#, MySurvey#. Domyślnie: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełnienie ankiety po zamknięciu zgłoszenia.';
-    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
-    $Self->{Translation}->{'Zoom into statistics details.'} = '';
+    $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Wyzwalacz opóźnionej wysyłki próśb o wypełnienie ankiety.';
+    $Self->{Translation}->{'Zoom into statistics details.'} = 'Podgląd szczegółów statystyk.';
 
 }
 

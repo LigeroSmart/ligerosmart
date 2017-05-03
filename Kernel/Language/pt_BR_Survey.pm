@@ -164,8 +164,8 @@ sub Data {
         'Define a altura máxima para visualizações do Richtext nos elementos do SurveyZoom.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem efeito sobre a posição das colunas.';
-    $Self->{Translation}->{'Edit survey general information.'} = '';
-    $Self->{Translation}->{'Edit survey questions.'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = 'Editar informação geral da pesquisa.';
+    $Self->{Translation}->{'Edit survey questions.'} = 'Editar as questões da pesquisa.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Habilita ou desabilita a tela ShowVoteData na interface pública para exibir dados do resultado de uma pesquisa específica quando o cliente tenta responder uma pesquisa pela segunda vez.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Ativa ou desativa verificação de condições de serviços para envio.';
@@ -199,14 +199,14 @@ sub Data {
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite da Visão Geral de Pesquisa "Pequena"';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Módulo de Estatísticas de Pesquisa';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Módulo de Detalhe de Pesquisa.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Limite de pesquisa por página para Visão Geral da pesquisa "Pequeno".';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'As pesquisas não será enviadas para os endereços de e-mail configurados.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de chamado para enviar requisições de pesquisa via e-mail automaticamente para clientes se um chamado for fechado.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Disparar o envio de solicitações de pesquisa atrasadas.';
-    $Self->{Translation}->{'Zoom into statistics details.'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = 'Zoom em detalhes de estatísticas.';
 
 }
 

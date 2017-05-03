@@ -164,8 +164,8 @@ sub Data {
         'Meghatározza a Rich Text nézetek legnagyobb magasságát a kérdőív nagyítás elemeknél.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. Ennek a beállításnak nincs hatása az oszlopok helyzetére.';
-    $Self->{Translation}->{'Edit survey general information.'} = '';
-    $Self->{Translation}->{'Edit survey questions.'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = 'Kérdőív általános információinak szerkesztése.';
+    $Self->{Translation}->{'Edit survey questions.'} = 'Kérdőív kérdések szerkesztése.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'A szavazási adatok megjelenítése képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'A küldési feltétel ellenőrzésének engedélyezése vagy letiltása a szolgáltatásnál.';
@@ -199,14 +199,14 @@ sub Data {
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Kérdőív áttekintő „kis” korlát';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Kérdőív statisztikák modul.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Kérdőív nagyítás modul.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Oldalankénti kérdőív korlát a „kis” kérdőív áttekintőnél.';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'A kérdőívek nem kerülnek elküldésre a beállított e-mail címekre.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Egy kérdőív azonosítója, például Survey#, MySurvey#. Az alapértelmezett: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhez az ügyfeleknek, ha egy jegy le van zárva.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Késleltetett kérdőívkérések küldésének aktiválása.';
-    $Self->{Translation}->{'Zoom into statistics details.'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = 'Nagyítás a statisztikák részleteibe.';
 
 }
 
