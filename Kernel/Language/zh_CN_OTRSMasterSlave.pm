@@ -23,7 +23,7 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = '新建主工单';
     $Self->{Translation}->{'Unset Master Ticket'} = '主工单转为普通工单';
     $Self->{Translation}->{'Unset Slave Ticket'} = '从工单转为普通工单';
-    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '%s%s%s的从工单：%s';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = '取消主工单设置';

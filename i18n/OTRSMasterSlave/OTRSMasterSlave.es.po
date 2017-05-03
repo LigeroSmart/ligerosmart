@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-02-27 21:53+0000\n"
-"PO-Revision-Date: 2017-02-28 03:54+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2017-03-02 12:30+0000\n"
+"Last-Translator: David B <link.bigpoint@outlook.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +40,7 @@ msgstr "Desactivar ticket esclavo"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of %s%s%s: %s"
-msgstr ""
+msgstr "Esclavo de %s%s%s: %s"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
@@ -74,7 +74,7 @@ msgstr "Modifica el estado Maestro-Esclavo del ticket."
 
 #. SysConfig
 msgid "Defines dynamic field name for master ticket feature."
-msgstr ""
+msgstr "Define el nombre del campo dinámico para la función de ticket maestro."
 
 #. SysConfig
 msgid ""
@@ -130,19 +130,19 @@ msgstr "Habilitado"
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
-msgstr ""
+msgstr "Activa la parte Maestro-Esclavo avanzada de la función."
 
 #. SysConfig
 msgid ""
 "Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Activa la función de que los tickets esclavos siguen el ticket maestro a un nuevo maestro en el modo Maestro-Esclavo avanzado."
 
 #. SysConfig
 msgid ""
 "Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Activa la función que cambie el estado Maestro-Esclavo de un ticket en el modo Maestro-Esclavo avanzado."
 
 #. SysConfig
 msgid ""
@@ -302,8 +302,8 @@ msgstr "Especificar los diferentes tipos de artículos donde el verdadero nombre
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
-msgstr "Este módulo activa el campo Maestro-Esclavo en la pantalla de un nuevo tique de email o de teléfono."
+msgstr "Este módulo activa el campo Maestro-Esclavo en la pantalla de un nuevo ticket de email o de teléfono."
 
 #. SysConfig
 msgid "Ticket MasterSlave."
-msgstr ""
+msgstr "Ticket Maestro-Esclavo."

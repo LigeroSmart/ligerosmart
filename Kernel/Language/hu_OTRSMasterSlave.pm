@@ -23,7 +23,7 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = 'Új mesterjegy';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Mesterjegy törlése';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Alárendelt jegy törlése';
-    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '%s%s%s alárendeltje: %s';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = 'Mesterjegyek törlése';

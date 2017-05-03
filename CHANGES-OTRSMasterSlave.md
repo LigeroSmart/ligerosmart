@@ -1,4 +1,5 @@
 #5.0.9 2017-??-??
+ - 2017-05-02 Updated translations, thanks to all translators.
  - 2017-05-02 Updated framework files to OTRS 5.0.19.
  - 2017-04-06 Fixed bug#[12092](https://bugs.otrs.org/show_bug.cgi?id=12092) - internal mail is sent to customer.
  - 2017-04-04 Fixed bug#[12428](https://bugs.otrs.org/show_bug.cgi?id=12428) - Use single value of CustomerUserListFields as mail address if UserMail is empty.
