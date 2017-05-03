@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2017-05-02 13:02+0000\n"
+"POT-Creation-Date: 2017-05-03 13:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,10 +68,6 @@ msgstr ""
 
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTicketProcess.pm
-msgid "This step does not belong anymore the current activity in process for ticket '%s%s%s'! Another user changed this ticket in the meantime."
 msgstr ""
 
 #. SysConfig

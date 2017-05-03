@@ -38,10 +38,6 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Критичност';
     $Self->{Translation}->{'Impact'} = 'Влияние';
 
-    # Perl Module: Kernel/Modules/AgentTicketProcess.pm
-    $Self->{Translation}->{'This step does not belong anymore the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime.'} =
-        '';
-
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Допълнителни ITSM полета';
