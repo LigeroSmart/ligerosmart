@@ -15,17 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'Döntés hozzáadása a jegyhez';
-    $Self->{Translation}->{'Decision Date'} = 'Döntés dátuma';
-    $Self->{Translation}->{'Decision Result'} = 'Döntés eredménye';
-    $Self->{Translation}->{'Due Date'} = 'Határidő';
-    $Self->{Translation}->{'Reason'} = 'Ok';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Helyreállítás indítási ideje';
-    $Self->{Translation}->{'Repair Start Time'} = 'Javítás indítási ideje';
-    $Self->{Translation}->{'Review Required'} = 'Áttekintés szükséges';
-    $Self->{Translation}->{'closed with workaround'} = 'lezárva kerülő megoldással';
-
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = 'Jegy döntésének módosítása';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Jegy ITSM mezőinek módosítása';

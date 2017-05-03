@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2017-05-03 13:17+0000\n"
+"POT-Creation-Date: 2017-05-03 13:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,42 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Add decision to ticket"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Date"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Result"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Due Date"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Reason"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Recovery Start Time"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Repair Start Time"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Review Required"
-msgstr ""
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "closed with workaround"
-msgstr ""
 
 #. Template: AgentTicketActionCommon
 msgid "Change Decision of Ticket"

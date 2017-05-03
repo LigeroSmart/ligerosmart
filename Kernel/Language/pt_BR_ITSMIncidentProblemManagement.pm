@@ -15,17 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMIncidentProblemManagement
-    $Self->{Translation}->{'Add decision to ticket'} = 'Adicionar decisão ao chamado';
-    $Self->{Translation}->{'Decision Date'} = 'Data de Decisão';
-    $Self->{Translation}->{'Decision Result'} = 'Decisão Resultante';
-    $Self->{Translation}->{'Due Date'} = 'Data de vencimento';
-    $Self->{Translation}->{'Reason'} = 'Razão';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Horário Inicial de Recuperação';
-    $Self->{Translation}->{'Repair Start Time'} = 'Horário Inicial de Reparo';
-    $Self->{Translation}->{'Review Required'} = 'Revisão Requisitada';
-    $Self->{Translation}->{'closed with workaround'} = 'fechado com solução de contorno';
-
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = 'Alterar Decisão de Chamado';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Alterar os campos ITSM do chamado';
