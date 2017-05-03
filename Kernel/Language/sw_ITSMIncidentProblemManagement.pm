@@ -27,6 +27,18 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kwa kina';
     $Self->{Translation}->{'Impact'} = 'Madhara';
 
+    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Review Required'} = 'mapitio yanahitajika';
+    $Self->{Translation}->{'Decision Result'} = 'Matokeo ya uamuzi';
+    $Self->{Translation}->{'Approved'} = 'Kuidhinisha';
+    $Self->{Translation}->{'Postponed'} = '';
+    $Self->{Translation}->{'Pre-approved'} = '';
+    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Repair Start Time'} = 'Muda wa kuanza wa matengenezo';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Muda wa kuanza wa urejeshi';
+    $Self->{Translation}->{'Decision Date'} = 'Tarehe ya uamuzi';
+    $Self->{Translation}->{'Due Date'} = 'Tarehe ukomo';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Ongeza uamuzi!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Uga zilizoongezwa Za ITSM';

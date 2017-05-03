@@ -27,6 +27,18 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritikalitet';
     $Self->{Translation}->{'Impact'} = 'Påvirkning';
 
+    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Review Required'} = 'Anmeldelse kræves';
+    $Self->{Translation}->{'Decision Result'} = 'Beslutningsresultat';
+    $Self->{Translation}->{'Approved'} = '';
+    $Self->{Translation}->{'Postponed'} = '';
+    $Self->{Translation}->{'Pre-approved'} = '';
+    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Repair Start Time'} = 'Starttid for reperation';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Starttid for genetablering';
+    $Self->{Translation}->{'Decision Date'} = 'Beslutningsdato';
+    $Self->{Translation}->{'Due Date'} = 'Forfaldsdato';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Tilføj en beslutning!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Yderlige ITSM felter';

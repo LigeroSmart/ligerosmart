@@ -27,6 +27,18 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritikusság';
     $Self->{Translation}->{'Impact'} = 'Hatás';
 
+    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Review Required'} = 'Áttekintés szükséges';
+    $Self->{Translation}->{'Decision Result'} = 'Döntés eredménye';
+    $Self->{Translation}->{'Approved'} = 'Jóváhagyva';
+    $Self->{Translation}->{'Postponed'} = '';
+    $Self->{Translation}->{'Pre-approved'} = '';
+    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Repair Start Time'} = 'Javítás indítási ideje';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Helyreállítás indítási ideje';
+    $Self->{Translation}->{'Decision Date'} = 'Döntés dátuma';
+    $Self->{Translation}->{'Due Date'} = 'Határidő';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Adjon hozzá egy döntést!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'További ITSM mezők';

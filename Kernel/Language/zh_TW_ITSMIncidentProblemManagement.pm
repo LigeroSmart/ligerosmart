@@ -27,6 +27,18 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = '重要';
     $Self->{Translation}->{'Impact'} = '影響';
 
+    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Review Required'} = '需要複審';
+    $Self->{Translation}->{'Decision Result'} = '決定结果';
+    $Self->{Translation}->{'Approved'} = '已通過審批';
+    $Self->{Translation}->{'Postponed'} = '';
+    $Self->{Translation}->{'Pre-approved'} = '';
+    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Repair Start Time'} = '修復開始時間';
+    $Self->{Translation}->{'Recovery Start Time'} = '恢復開始時間';
+    $Self->{Translation}->{'Decision Date'} = '決定日期';
+    $Self->{Translation}->{'Due Date'} = '截止日期';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '添加決定!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'ITSM字段';

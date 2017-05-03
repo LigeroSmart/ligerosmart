@@ -27,6 +27,18 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Criticalidade';
     $Self->{Translation}->{'Impact'} = 'Impacto';
 
+    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Review Required'} = 'Revisão Requisitada';
+    $Self->{Translation}->{'Decision Result'} = 'Decisão Resultante';
+    $Self->{Translation}->{'Approved'} = 'Aprovado';
+    $Self->{Translation}->{'Postponed'} = '';
+    $Self->{Translation}->{'Pre-approved'} = '';
+    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Repair Start Time'} = 'Horário Inicial de Reparo';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Horário Inicial de Recuperação';
+    $Self->{Translation}->{'Decision Date'} = 'Data de Decisão';
+    $Self->{Translation}->{'Due Date'} = 'Data de vencimento';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Adicionar uma decisão!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Campos adicionais ITSM';

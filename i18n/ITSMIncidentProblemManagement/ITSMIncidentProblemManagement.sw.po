@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:31+0000\n"
-"PO-Revision-Date: 2017-04-28 11:32+0000\n"
+"POT-Creation-Date: 2017-05-03 16:57+0000\n"
+"PO-Revision-Date: 2017-05-03 14:57+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -13,42 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Add decision to ticket"
-msgstr "Ongeza tiketi ya uamuzi"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Date"
-msgstr "Tarehe ya uamuzi"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Result"
-msgstr "Matokeo ya uamuzi"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Due Date"
-msgstr "Tarehe ukomo"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Reason"
-msgstr "Sababu"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Recovery Start Time"
-msgstr "Muda wa kuanza wa urejeshi"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Repair Start Time"
-msgstr "Muda wa kuanza wa matengenezo"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Review Required"
-msgstr "mapitio yanahitajika"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "closed with workaround"
-msgstr "Fungwa na mkusanyiko kazi"
 
 #. Template: AgentTicketActionCommon
 msgid "Change Decision of Ticket"
@@ -74,11 +38,55 @@ msgstr "Kwa kina"
 msgid "Impact"
 msgstr "Madhara"
 
-#. Perl Module: Kernel/Modules/AgentTicketProcess.pm
-msgid ""
-"This step does not belong anymore the current activity in process for ticket"
-" '%s%s%s'! Another user changed this ticket in the meantime."
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Review Required"
+msgstr "mapitio yanahitajika"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Result"
+msgstr "Matokeo ya uamuzi"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Approved"
+msgstr "Kuidhinisha"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Postponed"
 msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Pre-approved"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Rejected"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Repair Start Time"
+msgstr "Muda wa kuanza wa matengenezo"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Recovery Start Time"
+msgstr "Muda wa kuanza wa urejeshi"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Date"
+msgstr "Tarehe ya uamuzi"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Due Date"
+msgstr "Tarehe ukomo"
 
 #. SysConfig
 msgid "Add a decision!"

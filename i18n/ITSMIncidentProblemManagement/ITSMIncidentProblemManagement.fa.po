@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:31+0000\n"
-"PO-Revision-Date: 2017-04-28 11:32+0000\n"
+"POT-Creation-Date: 2017-05-03 16:57+0000\n"
+"PO-Revision-Date: 2017-05-03 14:57+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -12,42 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Add decision to ticket"
-msgstr "الصاق یک تصمیم به درخواست"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Date"
-msgstr "تاریخ تصمیم"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Result"
-msgstr "نتیجه تصمیم"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Due Date"
-msgstr "تاریخ انجام"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Reason"
-msgstr "دلیل"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Recovery Start Time"
-msgstr "زمان شروع بهبود"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Repair Start Time"
-msgstr "زمان شروع تعمیر"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Review Required"
-msgstr "نیاز به بازبینی دارد"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "closed with workaround"
-msgstr "موقتا بسته شد"
 
 #. Template: AgentTicketActionCommon
 msgid "Change Decision of Ticket"
@@ -73,11 +37,55 @@ msgstr "اهمیت"
 msgid "Impact"
 msgstr "اثر"
 
-#. Perl Module: Kernel/Modules/AgentTicketProcess.pm
-msgid ""
-"This step does not belong anymore the current activity in process for ticket"
-" '%s%s%s'! Another user changed this ticket in the meantime."
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Review Required"
+msgstr "نیاز به بازبینی دارد"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Result"
+msgstr "نتیجه تصمیم"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Approved"
 msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Postponed"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Pre-approved"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Rejected"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Repair Start Time"
+msgstr "زمان شروع تعمیر"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Recovery Start Time"
+msgstr "زمان شروع بهبود"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Date"
+msgstr "تاریخ تصمیم"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Due Date"
+msgstr "تاریخ انجام"
 
 #. SysConfig
 msgid "Add a decision!"

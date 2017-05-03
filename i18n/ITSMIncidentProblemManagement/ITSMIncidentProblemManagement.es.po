@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:31+0000\n"
-"PO-Revision-Date: 2017-04-28 11:32+0000\n"
+"POT-Creation-Date: 2017-05-03 16:57+0000\n"
+"PO-Revision-Date: 2017-05-03 14:57+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -16,42 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Add decision to ticket"
-msgstr "Añadir decisión al ticket"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Date"
-msgstr "Fecha de Decisión"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Decision Result"
-msgstr "Resultado de Decisión"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Due Date"
-msgstr "Fecha de vencimiento"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Reason"
-msgstr "Motivo"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Recovery Start Time"
-msgstr "Fecha Inicial de Recuperación"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Repair Start Time"
-msgstr "Fecha Inicial de Reparación"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "Review Required"
-msgstr "Revisión Requerida"
-
-#. Template: AAAITSMIncidentProblemManagement
-msgid "closed with workaround"
-msgstr "Cerrado con solución provisional"
 
 #. Template: AgentTicketActionCommon
 msgid "Change Decision of Ticket"
@@ -77,11 +41,55 @@ msgstr "Urgencia"
 msgid "Impact"
 msgstr "Impacto"
 
-#. Perl Module: Kernel/Modules/AgentTicketProcess.pm
-msgid ""
-"This step does not belong anymore the current activity in process for ticket"
-" '%s%s%s'! Another user changed this ticket in the meantime."
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Review Required"
+msgstr "Revisión Requerida"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Result"
+msgstr "Resultado de Decisión"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Approved"
+msgstr "Aprobado"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Postponed"
 msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Pre-approved"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Rejected"
+msgstr ""
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Repair Start Time"
+msgstr "Fecha Inicial de Reparación"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Recovery Start Time"
+msgstr "Fecha Inicial de Recuperación"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Date"
+msgstr "Fecha de Decisión"
+
+#. Perl Module:
+#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Due Date"
+msgstr "Fecha de vencimiento"
 
 #. SysConfig
 msgid "Add a decision!"

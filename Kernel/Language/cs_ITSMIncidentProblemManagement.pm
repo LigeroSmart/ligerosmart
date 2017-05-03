@@ -27,6 +27,18 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritičnost';
     $Self->{Translation}->{'Impact'} = 'Vliv';
 
+    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Review Required'} = 'Vyžaduje Přehled';
+    $Self->{Translation}->{'Decision Result'} = 'Výsledek Řešení';
+    $Self->{Translation}->{'Approved'} = '';
+    $Self->{Translation}->{'Postponed'} = '';
+    $Self->{Translation}->{'Pre-approved'} = '';
+    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Repair Start Time'} = 'Čas zahájení opravy';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Čas zahájení obnovení';
+    $Self->{Translation}->{'Decision Date'} = 'Datum Řešení';
+    $Self->{Translation}->{'Due Date'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Doplňte řešení!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Doplňková ITSM pole';
