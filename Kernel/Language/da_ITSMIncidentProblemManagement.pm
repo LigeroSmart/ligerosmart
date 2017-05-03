@@ -27,7 +27,7 @@ sub Data {
     $Self->{Translation}->{'Criticality'} = 'Kritikalitet';
     $Self->{Translation}->{'Impact'} = 'Påvirkning';
 
-    # Perl Module: /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+    # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Anmeldelse kræves';
     $Self->{Translation}->{'Decision Result'} = 'Beslutningsresultat';
     $Self->{Translation}->{'Approved'} = '';
