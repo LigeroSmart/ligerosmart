@@ -1,4 +1,6 @@
-#5.0.4 2017-??-??
+#5.0.5 2017-??-??
+
+#5.0.4 2017-05-09
  - 2017-05-02 Updated translations, thanks to all translators.
  - 2017-04-21 Fixed bug#[12226](https://bugs.otrs.org/show_bug.cgi?id=12226) - SurveyRequestsSend failed.
  - 2017-04-21 Fixed bug#[12737](https://bugs.otrs.org/show_bug.cgi?id=12737) - Survey request is beeing sent ignoring the Survey::SendInHoursAfterClose value.
