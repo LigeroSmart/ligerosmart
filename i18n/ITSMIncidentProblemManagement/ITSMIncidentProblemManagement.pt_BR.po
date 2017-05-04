@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-03 16:57+0000\n"
+"POT-Creation-Date: 2017-05-04 09:11+0000\n"
 "PO-Revision-Date: 2017-05-03 14:57+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
@@ -40,53 +40,43 @@ msgstr "Criticalidade"
 msgid "Impact"
 msgstr "Impacto"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
 msgstr "Revisão Requisitada"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Result"
 msgstr "Decisão Resultante"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Approved"
 msgstr "Aprovado"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Postponed"
 msgstr ""
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Pre-approved"
 msgstr ""
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Rejected"
 msgstr ""
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Repair Start Time"
 msgstr "Horário Inicial de Reparo"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Recovery Start Time"
 msgstr "Horário Inicial de Recuperação"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Date"
 msgstr "Data de Decisão"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Due Date"
 msgstr "Data de vencimento"
 
