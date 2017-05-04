@@ -31,9 +31,9 @@ sub Data {
     $Self->{Translation}->{'Review Required'} = 'Áttekintés szükséges';
     $Self->{Translation}->{'Decision Result'} = 'Döntés eredménye';
     $Self->{Translation}->{'Approved'} = 'Jóváhagyva';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = 'Elhalasztva';
+    $Self->{Translation}->{'Pre-approved'} = 'Előzetesen jóváhagyva';
+    $Self->{Translation}->{'Rejected'} = 'Elutasítva';
     $Self->{Translation}->{'Repair Start Time'} = 'Javítás indítási ideje';
     $Self->{Translation}->{'Recovery Start Time'} = 'Helyreállítás indítási ideje';
     $Self->{Translation}->{'Decision Date'} = 'Döntés dátuma';

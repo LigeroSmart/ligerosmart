@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2016
+# Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-03 16:57+0000\n"
-"PO-Revision-Date: 2017-05-03 14:57+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-05-03 17:29+0000\n"
+"PO-Revision-Date: 2017-05-03 19:27+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,53 +38,43 @@ msgstr "Kritikusság"
 msgid "Impact"
 msgstr "Hatás"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
 msgstr "Áttekintés szükséges"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Result"
 msgstr "Döntés eredménye"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Approved"
 msgstr "Jóváhagyva"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Postponed"
-msgstr ""
+msgstr "Elhalasztva"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Pre-approved"
-msgstr ""
+msgstr "Előzetesen jóváhagyva"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Rejected"
-msgstr ""
+msgstr "Elutasítva"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Repair Start Time"
 msgstr "Javítás indítási ideje"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Recovery Start Time"
 msgstr "Helyreállítás indítási ideje"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Date"
 msgstr "Döntés dátuma"
 
-#. Perl Module:
-#. /devel/ITSMIncidentProblemManagement_5_0//var/packagesetup/ITSMIncidentProblemManagement.pm
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Due Date"
 msgstr "Határidő"
 
