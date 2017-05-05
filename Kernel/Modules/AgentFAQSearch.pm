@@ -588,8 +588,12 @@ sub Run {
 
         my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
 
-        # CSV output
-        if ( $GetParam{ResultForm} eq 'CSV' ) {
+        # CSV and Excel output
+        if (
+            $GetParam{ResultForm} eq 'CSV'
+            || $GetParam{ResultForm} eq 'Excel'
+            )
+        {
             my @TmpCSVHead;
             my @CSVHead;
             my @CSVData;
@@ -720,6 +724,18 @@ sub Run {
                 }
             }
 
+            # get Separator from language file
+            my $UserCSVSeparator = $LayoutObject->{LanguageObject}->{Separator};
+
+            if ( $ConfigObject->Get('PreferencesGroups')->{CSVSeparator}->{Active} ) {
+                my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
+                    UserID => $Self->{UserID},
+                );
+                if ( $UserData{UserCSVSeparator} ) {
+                    $UserCSVSeparator = $UserData{UserCSVSeparator};
+                }
+            }
+
             # translate headers
             for my $Header (@CSVHead) {
 
@@ -732,15 +748,8 @@ sub Run {
                 }
             }
 
-            # assemble CSV data
-            my $CSV = $Kernel::OM->Get('Kernel::System::CSV')->Array2CSV(
-                Head      => \@CSVHead,
-                Data      => \@CSVData,
-                Separator => $Self->{UserCSVSeparator},
-            );
-
             # return CSV to download
-            my $CSVFile = 'FAQ_search';
+            my $FileName = 'FAQ_search';
             my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
                 SystemTime => $TimeObject->SystemTime(),
             );
@@ -748,11 +757,42 @@ sub Run {
             $D = sprintf( "%02d", $D );
             $h = sprintf( "%02d", $h );
             $m = sprintf( "%02d", $m );
-            return $LayoutObject->Attachment(
-                Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
-                ContentType => "text/csv; charset=" . $LayoutObject->{UserCharset},
-                Content     => $CSV,
-            );
+
+            my $CSVObject = $Kernel::OM->Get('Kernel::System::CSV');
+
+            # generate CSV output
+            if ( $GetParam{ResultForm} eq 'CSV' ) {
+
+                my $CSV = $CSVObject->Array2CSV(
+                    Head      => \@CSVHead,
+                    Data      => \@CSVData,
+                    Separator => $UserCSVSeparator,
+                );
+
+                # return csv to download
+                return $LayoutObject->Attachment(
+                    Filename    => $FileName . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
+                    ContentType => "text/csv; charset=" . $LayoutObject->{UserCharset},
+                    Content     => $CSV,
+                );
+            }
+
+            # generate Excel output
+            elsif ( $GetParam{ResultForm} eq 'Excel' ) {
+                my $Excel = $CSVObject->Array2CSV(
+                    Head   => \@CSVHead,
+                    Data   => \@CSVData,
+                    Format => 'Excel',
+                );
+
+                # return Excel to download
+                return $LayoutObject->Attachment(
+                    Filename => $FileName . "_" . "$Y-$M-$D" . "_" . "$h-$m.xlsx",
+                    ContentType =>
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    Content => $Excel,
+                );
+            }
         }
         elsif ( $GetParam{ResultForm} eq 'Print' ) {
 
@@ -1614,6 +1654,7 @@ sub _MaskForm {
             Normal => Translatable('Normal'),
             Print  => Translatable('Print'),
             CSV    => Translatable('CSV'),
+            Excel  => Translatable('Excel'),
         },
         Name       => 'ResultForm',
         SelectedID => $GetParam{ResultForm} || 'Normal',

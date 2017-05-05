@@ -1,4 +1,5 @@
 #5.0.10 2017-??-??
+ - 2017-05-05 Fixed bug#[12768](https://bugs.otrs.org/show_bug.cgi?id=12768) - Excel output is missing from the FAQ search.
 
 #5.0.9 2017-05-09
  - 2017-05-02 Updated translations, thanks to all translators.
