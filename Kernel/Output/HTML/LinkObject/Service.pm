@@ -11,6 +11,7 @@ package Kernel::Output::HTML::LinkObject::Service;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
 use Kernel::Output::HTML::Layout;
 use Kernel::System::VariableCheck qw(:all);
 
@@ -318,30 +319,30 @@ sub TableCreateComplex {
     }
 
     # Define Headline columns.
+    my @AllColumns;
     COLUMN:
     for my $Column ( sort { $SortOrder{$a} <=> $SortOrder{$b} } keys %UserColumns ) {
 
+        my $ColumnTranslate = $Column;
+        if ( $Column eq 'CurInciState' ) {
+            $ColumnTranslate = Translatable('Incident State');
+        }
+        elsif ( $Column eq 'CreateTime' ) {
+            $ColumnTranslate = Translatable('Created');
+        }
+        elsif ( $Column eq 'ChangeTime' ) {
+            $ColumnTranslate = Translatable('Changed');
+        }
+
+        push @AllColumns, {
+            ColumnName      => $Column,
+            ColumnTranslate => $ColumnTranslate,
+        };
+
         # if enabled by default.
         if ( $UserColumns{$Column} == 2 ) {
-            my $ColumnName = '';
-
-            if ( $Column eq 'CurInciState' ) {
-                $ColumnName = 'Incident State';
-            }
-            elsif ( $Column eq 'CreateTime' ) {
-                $ColumnName = 'Created';
-            }
-            elsif ( $Column eq 'ChangeTime' ) {
-                $ColumnName = 'Changed';
-            }
-
-            # all other fields
-            else {
-                $ColumnName = $Column;
-            }
-
             push @Headline, {
-                Content => $ColumnName,
+                Content => $ColumnTranslate,
             };
         }
     }
@@ -418,6 +419,7 @@ sub TableCreateComplex {
         ObjectID   => $Param{ObjectID},
         Headline   => \@Headline,
         ItemList   => \@ItemList,
+        AllColumns => \@AllColumns,
     );
 
     return ( \%Block );
