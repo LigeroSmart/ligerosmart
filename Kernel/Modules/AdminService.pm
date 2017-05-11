@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Modules/AdminService.pm
+# $origin: otrs - fd7cceb8373782599ad2c379ed7db1dbd768d6c1 - Kernel/Modules/AdminService.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -107,6 +107,23 @@ sub Run {
 
         if ( !$GetParam{Name} ) {
             $Error{'NameInvalid'} = 'ServerError';
+        }
+
+        my $ServiceName = '';
+        if ( $GetParam{ParentID} ) {
+            my $Prefix = $ServiceObject->ServiceLookup(
+                ServiceID => $GetParam{ParentID},
+            );
+
+            if ($Prefix) {
+                $ServiceName = $Prefix . "::";
+            }
+        }
+        $ServiceName .= $GetParam{Name};
+
+        if ( length $ServiceName > 200 ) {
+            $Error{'NameInvalid'} = 'ServerError';
+            $Error{LongName} = 1;
         }
 
         if ( !%Error ) {

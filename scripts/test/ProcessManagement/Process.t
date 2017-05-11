@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 545f2cd8327f273ee58775c2ac58313d68d91be3 - scripts/test/ProcessManagement/Process.t
+# $origin: otrs - 169a87f2ee569ddd49e2dd9b874d3d159ffd90cf - scripts/test/ProcessManagement/Process.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -217,9 +217,45 @@ my @Tests = (
                     },
                 },
             },
-            ProcessEntityID => 'unknown123',
-            Message         => 'ProcessGet() (No ProcessEntityID)',
+            ProcessEntityID => 'unknown' . $RandomID,
+            Message         => 'ProcessGet() (unknown ProcessEntityID)',
             TestType        => 'False',
+            }
+    },
+
+    {
+        ProcessGet => {
+            Config => {
+                'Process' => {
+                    'P1' => {
+                        Name                => 'Book Orders',
+                        CreateTime          => '16-02-2012 13:37:00',
+                        CreateBy            => '1',
+                        ChangeTime          => '17-02-2012 13:37:00',
+                        ChangeBy            => '1',
+                        State               => 'Active',
+                        StartActivity       => 'A1',
+                        StartActivityDialog => 'AD1',
+                        Path                => {
+                            'A1' => {
+                                'T1' => {
+                                    ActivityEntityID => 'A2',
+                                },
+                                'T2' => {
+                                    ActivityEntityID => 'A3',
+                                },
+                            },
+                            'A2' => {
+                                'T3' => {
+                                    ActivityEntityID => 'A4',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            Message  => 'ProcessGet() (No ProcessEntityID)',
+            TestType => 'False',
             }
     },
 
