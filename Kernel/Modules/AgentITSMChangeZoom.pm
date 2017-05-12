@@ -762,12 +762,18 @@ sub Run {
     # get link table view mode
     my $LinkTableViewMode = $ConfigObject->Get('LinkObject::ViewMode');
 
+    # convert to JSON string
+    my $AdditionalLinkListWithDataJSONString = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
+        Data => $LinkListWithDataCombinedWorkOrders,
+    );
+
     # create the link table
     my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
-        LinkListWithData => $LinkListWithData,
-        ViewMode         => $LinkTableViewMode,
-        Object           => 'ITSMChange',
-        Key              => $ChangeID,
+        LinkListWithData               => $LinkListWithData,
+        ViewMode                       => $LinkTableViewMode,
+        Object                         => 'ITSMChange',
+        Key                            => $ChangeID,
+        AdditionalLinkListWithDataJSON => $AdditionalLinkListWithDataJSONString,
     );
 
     # output the link table
