@@ -838,7 +838,7 @@ sub Run {
             ActionList            => \%ActionList,
             ActionListConstraints => $ActionListConstraints,
         );
-        $ActionData->{''} = '';
+        $ActionData->{''} = '-';
 
         if ( $UnitRef && $UnitRef->{ActionID} && $ActionList{ $UnitRef->{ActionID} } ) {
             $ActionData->{ $UnitRef->{ActionID} } = $ActionList{ $UnitRef->{ActionID} };
@@ -1408,7 +1408,7 @@ sub _ProjectList {
     my @LastProjects = (
         {
             Key   => '',
-            Value => '',
+            Value => '-',
         },
     );
 
@@ -1469,7 +1469,7 @@ sub _ProjectList {
         @AllProjects = (
             {
                 Key   => '',
-                Value => '',
+                Value => '-',
             },
         );
     }
