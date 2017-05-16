@@ -17,9 +17,6 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        # Don't run the test, if the feature is disabled (can be removed after the next package release).
-        return 1 if !$Kernel::OM->Get('Kernel::Config')->Get('FAQ::Customer::RelatedArticles::Enabled');
-
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         $Helper->ConfigSettingChange(
@@ -36,6 +33,10 @@ $Selenium->RunTest(
             Valid => 1,
             Key   => 'Ticket::Type',
             Value => 0,
+        );
+        $Helper->ConfigSettingChange(
+            Valid => 0,
+            Key   => 'FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled',
         );
 
         # Create test customer user and login.
@@ -111,7 +112,6 @@ $Selenium->RunTest(
 
         my $SubjectRandom = "Subject" . $Helper->GetRandomID();
         my $TextRandom    = "Text" . $Helper->GetRandomID();
-        $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Subject", 'css' )->send_keys($SubjectRandom);
 
         # Set body text and add a whitespace at the end to trigger the ajay request for the related faq article.
