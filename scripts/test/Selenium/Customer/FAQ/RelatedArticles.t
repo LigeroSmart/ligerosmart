@@ -39,16 +39,6 @@ $Selenium->RunTest(
             Key   => 'FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled',
         );
 
-        # Create test customer user and login.
-        my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate(
-        ) || die "Did not get test customer user";
-
-        $Selenium->Login(
-            Type     => 'Customer',
-            User     => $TestCustomerUserLogin,
-            Password => $TestCustomerUserLogin,
-        );
-
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         my %Category = $FAQObject->CategoryGet(
@@ -88,6 +78,16 @@ $Selenium->RunTest(
 
             push @FAQArticles, \%FAQ;
         }
+
+        # Create test customer user and login.
+        my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate(
+        ) || die "Did not get test customer user";
+
+        $Selenium->Login(
+            Type     => 'Customer',
+            User     => $TestCustomerUserLogin,
+            Password => $TestCustomerUserLogin,
+        );
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
