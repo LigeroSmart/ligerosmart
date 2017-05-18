@@ -630,7 +630,7 @@ sub Run {
 =item _HasFieldChanged()
 
 This method checks whether a field was changed or not. It returns 1 when field
-was changed, 0 otherwise
+was changed, undef othrewise.
 
     my $FieldHasChanged = $HistoryObject->_HasFieldChanged(
         Old => 'old value', # can be array reference or hash reference as well
@@ -679,7 +679,7 @@ sub _HasFieldChanged {
     }
 
     # field has not been changed
-    return 0;
+    return;
 }
 
 1;
