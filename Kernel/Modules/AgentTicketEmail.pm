@@ -1,12 +1,16 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - dc9f0257c590c2c2d9b1f35dcc998675d8e163a2 - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - 118997639104b2b70164ded173895ba7683c1823 - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+# TODO
+# This file contains changes that will be included in OTRS 5.0.20!
+# This comment must be removed after OTRS 5.0.20 has been built
 
 package Kernel::Modules::AgentTicketEmail;
 ## nofilter(TidyAll::Plugin::OTRS::Perl::DBObject)
@@ -675,6 +679,7 @@ sub Run {
 
     # deliver signature
     elsif ( $Self->{Subaction} eq 'Signature' ) {
+        my $CustomerUser = $ParamObject->GetParam( Param => 'SelectedCustomerUser' ) || '';
         my $QueueID = $ParamObject->GetParam( Param => 'QueueID' );
         if ( !$QueueID ) {
             my $Dest = $ParamObject->GetParam( Param => 'Dest' ) || '';
@@ -684,7 +689,10 @@ sub Run {
         # start with empty signature (no queue selected) - if we have a queue, get the sig.
         my $Signature = '';
         if ($QueueID) {
-            $Signature = $Self->_GetSignature( QueueID => $QueueID );
+            $Signature = $Self->_GetSignature(
+                QueueID        => $QueueID,
+                CustomerUserID => $CustomerUser,
+            );
         }
         my $MimeType = 'text/plain';
         if ( $LayoutObject->{BrowserRichText} ) {
@@ -743,11 +751,6 @@ sub Run {
             $GetParam{From} = $Queue{Email};
         }
 
-        # get sender queue from
-        my $Signature = '';
-        if ($NewQueueID) {
-            $Signature = $Self->_GetSignature( QueueID => $NewQueueID );
-        }
         my $CustomerUser = $ParamObject->GetParam( Param => 'CustomerUser' )
             || $ParamObject->GetParam( Param => 'PreSelectedCustomerUser' )
             || $ParamObject->GetParam( Param => 'SelectedCustomerUser' )
@@ -763,6 +766,15 @@ sub Run {
             || '';
         $GetParam{QueueID}            = $NewQueueID;
         $GetParam{ExpandCustomerName} = $ExpandCustomerName;
+
+        # get sender queue from
+        my $Signature = '';
+        if ($NewQueueID) {
+            $Signature = $Self->_GetSignature(
+                QueueID        => $NewQueueID,
+                CustomerUserID => $CustomerUser
+            );
+        }
 
         if ( $ParamObject->GetParam( Param => 'OwnerAllRefresh' ) ) {
             $GetParam{OwnerAll} = 1;
@@ -1703,7 +1715,10 @@ sub Run {
         }
         my $Signature = '';
         if ($QueueID) {
-            $Signature = $Self->_GetSignature( QueueID => $QueueID );
+            $Signature = $Self->_GetSignature(
+                QueueID        => $QueueID,
+                CustomerUserID => $CustomerUser,
+            );
         }
         my $Users = $Self->_GetUsers(
             %GetParam,
@@ -2307,6 +2322,10 @@ sub _GetTos {
                 || '<Realname> <<Email>> - Queue: <Queue>';
             $String =~ s/<Queue>/$QueueData{Name}/g;
             $String =~ s/<QueueComment>/$QueueData{Comment}/g;
+
+            # remove trailing spaces
+            $String =~ s{\s+\z}{} if !$QueueData{Comment};
+
             if ( $ConfigObject->Get('Ticket::Frontend::NewQueueSelectionType') ne 'Queue' )
             {
                 my %SystemAddressData = $Kernel::OM->Get('Kernel::System::SystemAddress')->SystemAddressGet(
@@ -2827,7 +2846,6 @@ sub _MaskEmailNew {
 
         # get the html strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
-
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -2837,6 +2855,7 @@ sub _MaskEmailNew {
             next DYNAMICFIELD;
         }
 # ---
+
         $LayoutObject->Block(
             Name => 'DynamicField',
             Data => {

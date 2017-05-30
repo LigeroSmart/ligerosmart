@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 1b81981e25b16a370bc5c63d4843a20117de050d - Kernel/Modules/AgentTicketZoom.pm
+# $origin: otrs - 74a863dbd8b93075e469398a38d4ee0130a76a10 - Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -228,7 +228,7 @@ sub Run {
         Message => Translatable(
             'We are sorry, you do not have permissions anymore to access this ticket in its current state.'
         ),
-        WithHeader => 'yes',
+        WithHeader => $Self->{Subaction} && $Self->{Subaction} eq 'ArticleUpdate' ? 'no' : 'yes',
     ) if !$Access;
 
     # get ticket attributes

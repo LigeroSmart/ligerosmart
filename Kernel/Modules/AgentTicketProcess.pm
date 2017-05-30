@@ -1,12 +1,16 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - b2e4a3fb932a0831a28770a18f6e4f450c23ce48 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 4875f85e36c43d3e54b61d28e7a7b7a646ad1fdb - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+# TODO
+# This file contains changes that will be included in OTRS 5.0.20!
+# This comment must be removed after OTRS 5.0.20 has been built
 
 package Kernel::Modules::AgentTicketProcess;
 ## nofilter(TidyAll::Plugin::OTRS::Perl::DBObject)
@@ -282,6 +286,7 @@ sub Run {
         Data          => \%ProcessListACL,
         Action        => $Self->{Action},
         UserID        => $Self->{UserID},
+        TicketID      => $TicketID,
     );
 
     if ( IsHashRefWithData($ProcessList) && $ACL ) {
@@ -2882,6 +2887,13 @@ sub _RenderCustomer {
         $Data{SelectedCustomerUser} = $CustomerUserData{UserID}         || '';
     }
 
+    # When there is no Customer in the DB, it could be unknown Customer, set it from the ticket.
+    # See bug#12797 ( https://bugs.otrs.org/show_bug.cgi?id=12797 ).
+    else {
+        $Data{CustomerUserID} = $Param{Ticket}{CustomerUserID} || '';
+        $Data{CustomerID}     = $Param{Ticket}{CustomerID}     || '';
+    }
+
     # set fields that will get an AJAX loader icon when this field changes
     my $JSON = $LayoutObject->JSONEncode(
         Data     => $Param{AJAXUpdatableFields},
@@ -4933,7 +4945,7 @@ sub _StoreActivityDialog {
             push @Notify, {
                 Priority => 'Error',
                 Data     => $LayoutObject->{LanguageObject}->Translate(
-                    'This step does not belong anymore the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime.',
+                    'This step does not belong anymore to the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime. Please close this window and reload the ticket.',
                     $TicketHook,
                     $TicketHookDivider,
                     $Ticket{TicketNumber},
@@ -5743,6 +5755,11 @@ sub _GetResponsibles {
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
     my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # Get available permissions and set permission group type accordingly.
+    my $ConfigPermissions = $ConfigObject->Get('System::Permission');
+    my $PermissionGroupType = ( grep { $_ eq 'responsible' } @{$ConfigPermissions} ) ? 'responsible' : 'rw';
 
     # if we are updating a ticket show the full list of possible responsibles
     if ( $Param{TicketID} ) {
@@ -5750,7 +5767,7 @@ sub _GetResponsibles {
             my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
-                Type    => 'owner',
+                Type    => $PermissionGroupType,
             );
             for my $UserID ( sort keys %MemberList ) {
                 $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
@@ -5758,9 +5775,6 @@ sub _GetResponsibles {
         }
     }
     else {
-
-        # get config object
-        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
         # the StartActivityDialog does not provide a TicketID and it could be that also there
         # is no QueueID information. Get the default QueueID for this matters.
@@ -5793,12 +5807,12 @@ sub _GetResponsibles {
             %ShownUsers = %AllGroupsMembers;
         }
 
-        # show all subscribed users who have at least Owner permission in the queue group
+        # show all subscribed users who have the appropriate permission in the queue group
         elsif ( $Param{QueueID} ) {
             my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
-                Type    => 'owner',
+                Type    => $PermissionGroupType,
             );
             for my $KeyMember ( sort keys %MemberList ) {
                 if ( $AllGroupsMembers{$KeyMember} ) {
@@ -5837,6 +5851,11 @@ sub _GetOwners {
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my $QueueObject  = $Kernel::OM->Get('Kernel::System::Queue');
     my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # Get available permissions and set permission group type accordingly.
+    my $ConfigPermissions = $ConfigObject->Get('System::Permission');
+    my $PermissionGroupType = ( grep { $_ eq 'owner' } @{$ConfigPermissions} ) ? 'owner' : 'rw';
 
     # if we are updating a ticket show the full list of possible owners
     if ( $Param{TicketID} ) {
@@ -5844,7 +5863,7 @@ sub _GetOwners {
             my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
-                Type    => 'owner',
+                Type    => $PermissionGroupType,
             );
             for my $UserID ( sort keys %MemberList ) {
                 $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
@@ -5852,9 +5871,6 @@ sub _GetOwners {
         }
     }
     else {
-
-        # get config object
-        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
         # the StartActivityDialog does not provide a TicketID and it could be that also there
         # is no QueueID information. Get the default QueueID for this matters.
@@ -5887,12 +5903,12 @@ sub _GetOwners {
             %ShownUsers = %AllGroupsMembers;
         }
 
-        # show all subscribed users who have at least Owner permission in the queue group
+        # show all subscribed users who have the appropriate permission in the queue group
         elsif ( $Param{QueueID} ) {
             my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
-                Type    => 'owner',
+                Type    => $PermissionGroupType,
             );
             for my $KeyMember ( sort keys %MemberList ) {
                 if ( $AllGroupsMembers{$KeyMember} ) {
@@ -6056,6 +6072,10 @@ sub _GetQueues {
                 || '<Realname> <<Email>> - Queue: <Queue>';
             $String =~ s/<Queue>/$QueueData{Name}/g;
             $String =~ s/<QueueComment>/$QueueData{Comment}/g;
+
+            # remove trailing spaces
+            $String =~ s{\s+\z}{} if !$QueueData{Comment};
+
             if ( $ConfigObject->Get('Ticket::Frontend::NewQueueSelectionType') ne 'Queue' )
             {
                 my %SystemAddressData = $Self->{SystemAddress}->SystemAddressGet(

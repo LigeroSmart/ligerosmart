@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 16269dfbe5641d64ea99e55b302e1f4ade2899bd - Kernel/Output/HTML/Templates/Standard/AgentTicketEmail.tt
+# $origin: otrs - 118997639104b2b70164ded173895ba7683c1823 - Kernel/Output/HTML/Templates/Standard/AgentTicketEmail.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,8 +81,9 @@ $('#TypeID').bind('change', function (Event) {
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">//<![CDATA[
 $('#Dest').bind('change', function (Event) {
-    var Dest = $(this).val() || '';
-    var SignatureURL = '[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Signature;Dest=' + Dest;
+    var Dest = $(this).val() || '',
+        CustomerUser = $('#SelectedCustomerUser').val() || '';
+    var SignatureURL = '[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Signature;Dest=' + Dest + ';SelectedCustomerUser=' + CustomerUser;
     Core.AJAX.FormUpdate($('#NewEmailTicket'), 'AJAXUpdate', 'Dest', ['TypeID', 'Signature', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
     if (!Core.Config.Get('SessionIDCookie')) {
         SignatureURL += ';' + Core.Config.Get('SessionName') + '=' + Core.Config.Get('SessionID');
@@ -465,7 +466,7 @@ $('#OwnerSelectionGetAll').bind('click', function (Event) {
 });
 
 $('#NewUserID').bind('change', function (Event) {
-    Core.AJAX.FormUpdate($('#NewEmailTicket'), 'AJAXUpdate', 'NewUserID', [ 'TypeID', 'Dest', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
+    Core.AJAX.FormUpdate($('#NewEmailTicket'), 'AJAXUpdate', 'NewUserID', [ 'TypeID', 'Dest', 'Signature', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
 });
 //]]></script>
 [% END %]
@@ -645,7 +646,6 @@ $('#FileUpload').bind('change', function () {
                         <p class="FieldExplanation">[% Translate("For all pending* states.") | html %]</p>
                     </div>
                     <div class="Clear"></div>
-
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -661,6 +661,7 @@ $('#FileUpload').bind('change', function () {
                     </div>
 [% RenderBlockEnd("DynamicField_ITSMImpact") %]
 # ---
+
                     <label for="PriorityID">[% Translate("Priority") | html %]:</label>
                     <div class="Field">
                         [% Data.PriorityStrg %]

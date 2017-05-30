@@ -1,12 +1,16 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 153b251a2beb77eb9228e1a32e0f5e35f64922ae - Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
+# $origin: otrs - 90eb9ee112e1292f4074218bc5192d4389b6e20e - Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+# TODO
+# This file contains changes that will be included in OTRS 5.0.20!
+# This comment must be removed after OTRS 5.0.20 has been built
 
 [% RenderBlockStart("ArticleFilterDialog") %]
 [% WRAPPER JSOnDocumentComplete %]
@@ -1292,24 +1296,5 @@ function CheckIFrameHeight(IFrameID) {
 
 //]]></script>
 [% END %]
+[% INCLUDE "MetaFloater.tt" %]
 [% RenderBlockEnd("TicketZoomInit") %]
-
-<div class="MetaFloater Hidden">
-    <a href="#" class="Scale" title="[% Translate('Scale preview content') | html %]" style="display: none;">
-        <i class="fa fa-search-plus"></i>
-    </a>
-    <a href="#" class="Open" target="_blank" title="[% Translate('Open URL in new tab') | html %]" style="display: none;">
-        <i class="fa fa-external-link"></i>
-    </a>
-    <a href="#" class="Close" title="[% Translate('Close preview') | html %]">
-        <i class="fa fa-times"></i>
-    </a>
-    <i class="fa fa-spinner fa-spin"></i>
-    <div class="NoPreview">
-        <i class="fa fa-warning"></i>
-        [% Translate("A preview of this website can't be provided because it didn't allow to be embedded.") | html %]
-    </div>
-    <div class="Content" style="display: none;">
-        <iframe sandbox="allow-scripts allow-forms"></iframe>
-    </div>
-</div>

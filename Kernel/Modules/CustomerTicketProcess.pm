@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - da2b6615e0cbfff1636f4e0b2dbd06ddb6bd0291 - Kernel/Modules/CustomerTicketProcess.pm
+# $origin: otrs - 4875f85e36c43d3e54b61d28e7a7b7a646ad1fdb - Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3740,7 +3740,7 @@ sub _StoreActivityDialog {
             push @Notify, {
                 Priority => 'Error',
                 Data     => $LayoutObject->{LanguageObject}->Translate(
-                    'This step does not belong anymore the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime.',
+                    'This step does not belong anymore to the current activity in process for ticket \'%s%s%s\'! Another user changed this ticket in the meantime. Please close this window and reload the ticket.',
                     $TicketHook,
                     $TicketHookDivider,
                     $Ticket{TicketNumber},
@@ -4548,6 +4548,10 @@ sub _GetQueues {
                 || '<Realname> <<Email>> - Queue: <Queue>';
             $String =~ s/<Queue>/$QueueData{Name}/g;
             $String =~ s/<QueueComment>/$QueueData{Comment}/g;
+
+            # remove trailing spaces
+            $String =~ s{\s+\z}{} if !$QueueData{Comment};
+
             if ( $ConfigObject->Get('Ticket::Frontend::NewQueueSelectionType') ne 'Queue' )
             {
                 my %SystemAddressData = $Self->{SystemAddress}->SystemAddressGet(

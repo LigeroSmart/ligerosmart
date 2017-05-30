@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
+# $origin: otrs - 90eb9ee112e1292f4074218bc5192d4389b6e20e - Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -240,7 +240,7 @@
 #[% RenderBlockStart("TicketDynamicField") %]
 #                    <li>
 #                        <span class="Key">[% Translate(Data.Label) | html %]:</span>
-#                        <span title="[% Data.Title | html %]">[% Data.Value %]</span>
+#                        <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" class="DynamicFieldLink" [% IF Data.LinkPreview %] data-trigger="floater" data-floater-url="[% Data.LinkPreview | Interpolate %]"[% END %] target="_blank">[% Data.Value %]</a></span>
 #                    </li>
 #[% RenderBlockEnd("TicketDynamicField") %]
 # ---
@@ -420,9 +420,12 @@
 [% WRAPPER JSOnDocumentComplete %]
 <script type="text/javascript">
     Core.Customer.TicketZoom.Init();
+    Core.UI.Floater.Init();
     $('a.AsPopup').bind('click', function (Event) {
         Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
         return false;
     });
 </script>
 [% END %]
+
+[% INCLUDE "MetaFloater.tt" %]
