@@ -1,12 +1,16 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Console/Command/Admin/Service/Add.t
+# $origin: otrs - 04f244c480bab7b3874948d1501565d45f46b9d6 - scripts/test/Console/Command/Admin/Service/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+# TODO
+# This file contains changes that will be included in OTRS 5.0.20!
+# This comment must be removed after OTRS 5.0.20 has been built
 
 use strict;
 use warnings;
@@ -87,6 +91,47 @@ $Self->Is(
     $ExitCode,
     0,
     "Existing parent ( service is added - $ChildServiceName )",
+);
+
+# Same again (should fail because already exists).
+# ---
+# ITSMCore
+# ---
+#$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ChildServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
+# ---
+$Self->Is(
+    $ExitCode,
+    1,
+    "Existing parent ( service ${ParentServiceName}::$ChildServiceName already exists )",
+);
+
+# Parent and child service same name.
+# ---
+# ITSMCore
+# ---
+#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ParentServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ParentServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
+# ---
+my $ServiceName = $ParentServiceName . '::' . $ParentServiceName;
+$Self->Is(
+    $ExitCode,
+    0,
+    "Parent and child service same name - $ServiceName - is created",
+);
+
+# Parent (two levels) and child same name.
+# ---
+# ITSMCore
+# ---
+#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName );
+$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
+# ---
+$ServiceName = $ServiceName . '::' . $ParentServiceName;
+$Self->Is(
+    $ExitCode,
+    0,
+    "Parent (two levels) and child service same name - $ServiceName - is created",
 );
 
 # cleanup is done by RestoreDatabase

@@ -10,7 +10,7 @@
 
 # TODO
 # This file contains changes that will be included in OTRS 5.0.20!
-# This comment must be removed after OTRS 5.0.20 has been built.
+# This comment must be removed after OTRS 5.0.20 has been built
 
 package Kernel::Modules::AdminService;
 
