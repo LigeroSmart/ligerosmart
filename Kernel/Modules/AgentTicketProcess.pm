@@ -8,10 +8,6 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# TODO
-# This file contains changes that will be included in OTRS 5.0.20!
-# This comment must be removed after OTRS 5.0.20 has been built
-
 package Kernel::Modules::AgentTicketProcess;
 ## nofilter(TidyAll::Plugin::OTRS::Perl::DBObject)
 
