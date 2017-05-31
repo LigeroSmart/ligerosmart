@@ -202,7 +202,6 @@ $Selenium->RunTest(
         my $AutoCompleteString = "\"$TestCustomer $TestCustomer\" <$TestCustomer\@localhost.com> ($TestCustomer)";
         my $TicketSubject      = "Selenium Ticket";
         my $TicketBody         = "Selenium body test";
-
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteString']")->VerifiedClick();
