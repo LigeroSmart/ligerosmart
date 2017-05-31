@@ -212,7 +212,7 @@
 [% RenderBlockStart("TicketDynamicField") %]
                     <li>
                         <span class="Key">[% Translate(Data.Label) | html %]:</span>
-                        <span title="[% Data.Title | html %]">[% Data.Value %]</span>
+                        <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" class="DynamicFieldLink" [% IF Data.LinkPreview %] data-trigger="floater" data-floater-url="[% Data.LinkPreview | Interpolate %]"[% END %] target="_blank">[% Data.Value %]</a></span>
                     </li>
 [% RenderBlockEnd("TicketDynamicField") %]
 # ---
