@@ -865,7 +865,7 @@ Your OTRS Notification Master
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
-                    <AccessKey>S</AccessKey>
+                    <AccessKey>f</AccessKey>
                     <Prio>960</Prio>
                 </NavBar>
                 <Loader>
@@ -1218,7 +1218,7 @@ Your OTRS Notification Master
                     <NavBar>FAQ</NavBar>
                     <Link>Action=CustomerFAQSearch</Link>
                     <LinkOption></LinkOption>
-                    <AccessKey>S</AccessKey>
+                    <AccessKey>f</AccessKey>
                     <Prio>780</Prio>
                 </NavBar>
                 <Loader>
