@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4875f85e36c43d3e54b61d28e7a7b7a646ad1fdb - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 72eeb3ac0d7368690ed6c6e49d127a830e59f19e - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5076,6 +5076,18 @@ sub _StoreActivityDialog {
                     );
                 }
 
+                # Change history type and comment accordingly to the process article.
+                my $ArticleType = $ActivityDialog->{Fields}->{Article}->{Config}->{ArticleType};
+                my $HistoryType;
+                my $HistoryComment = '';
+                if ( $ArticleType eq 'phone' ) {
+                    $HistoryType = 'PhoneCallAgent';
+                }
+                else {
+                    $HistoryType    = 'AddNote';
+                    $HistoryComment = 'Note';
+                }
+
                 my $From = "\"$Self->{UserFirstname} $Self->{UserLastname}\" <$Self->{UserEmail}>";
                 $ArticleID = $TicketObject->ArticleCreate(
                     TicketID                  => $TicketID,
@@ -5084,11 +5096,11 @@ sub _StoreActivityDialog {
                     MimeType                  => $MimeType,
                     Charset                   => $LayoutObject->{UserCharset},
                     UserID                    => $Self->{UserID},
-                    HistoryType               => 'AddNote',
-                    HistoryComment            => '%%Note',
+                    HistoryType               => $HistoryType,
+                    HistoryComment            => '%%' . $HistoryComment,
                     Body                      => $Param{GetParam}{Body},
                     Subject                   => $Param{GetParam}{Subject},
-                    ArticleType               => $ActivityDialog->{Fields}->{Article}->{Config}->{ArticleType},
+                    ArticleType               => $ArticleType,
                     ForceNotificationToUserID => $ActivityDialog->{Fields}->{Article}->{Config}->{InformAgents}
                     ? $Param{GetParam}{InformUserID}
                     : [],

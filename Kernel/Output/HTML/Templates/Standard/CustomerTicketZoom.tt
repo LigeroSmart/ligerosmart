@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 90eb9ee112e1292f4074218bc5192d4389b6e20e - Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
+# $origin: otrs - d770645718b49a1da77103affac791dd2caa18f9 - Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -100,7 +100,12 @@
 [% RenderBlockStart("ArticleDynamicField") %]
                             <div>
                                 <div class="Label" title="[% Data.Label | html %]">[% Translate(Data.Label) | html %]:</div>
+[% RenderBlockStart("ArticleDynamicFieldLink") %]
+                                <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" [% IF Data.LinkPreview %] data-trigger="floater" data-floater-url="[% Data.LinkPreview | Interpolate %]"[% END %] target="_blank" class="DynamicFieldLink">[% Data.Value %]</a></span>
+[% RenderBlockEnd("ArticleDynamicFieldLink") %]
+[% RenderBlockStart("ArticleDynamicFieldPlain") %]
                                 <span title="[% Data.Title | html %]">[% Data.Value %]</span>
+[% RenderBlockEnd("ArticleDynamicFieldPlain") %]
                                 <div class="Clear"></div>
                             </div>
 [% RenderBlockEnd("ArticleDynamicField") %]
@@ -210,9 +215,15 @@
 # ITSMIncidentProblemManagement
 # ---
 [% RenderBlockStart("TicketDynamicField") %]
+[% USE Dumper; Dumper.dump(Data) %]
                     <li>
                         <span class="Key">[% Translate(Data.Label) | html %]:</span>
+[% RenderBlockStart("TicketDynamicFieldLink") %]
                         <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" class="DynamicFieldLink" [% IF Data.LinkPreview %] data-trigger="floater" data-floater-url="[% Data.LinkPreview | Interpolate %]"[% END %] target="_blank">[% Data.Value %]</a></span>
+[% RenderBlockEnd("TicketDynamicFieldLink") %]
+[% RenderBlockStart("TicketDynamicFieldPlain") %]
+                        <span title="[% Data.Title | html %]">[% Data.Value %]</span>
+[% RenderBlockEnd("TicketDynamicFieldPlain") %]
                     </li>
 [% RenderBlockEnd("TicketDynamicField") %]
 # ---
@@ -240,7 +251,12 @@
 #[% RenderBlockStart("TicketDynamicField") %]
 #                    <li>
 #                        <span class="Key">[% Translate(Data.Label) | html %]:</span>
+#[% RenderBlockStart("TicketDynamicFieldLink") %]
 #                        <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" class="DynamicFieldLink" [% IF Data.LinkPreview %] data-trigger="floater" data-floater-url="[% Data.LinkPreview | Interpolate %]"[% END %] target="_blank">[% Data.Value %]</a></span>
+#[% RenderBlockEnd("TicketDynamicFieldLink") %]
+#[% RenderBlockStart("TicketDynamicFieldPlain") %]
+#                        <span title="[% Data.Title | html %]">[% Data.Value %]</span>
+#[% RenderBlockEnd("TicketDynamicFieldPlain") %]
 #                    </li>
 #[% RenderBlockEnd("TicketDynamicField") %]
 # ---
