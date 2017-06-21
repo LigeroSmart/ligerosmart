@@ -490,7 +490,7 @@ sub Run {
         # 1 Shows the SubcategoryIDs of Category 1.
         # 2 and 3 are empty hashes because these categories don't have subcategories.
         #
-        # Keys of the inner hashes are CategoryIDs a user is allowed to have rw access to.
+        # Keys of the inner hashes are CategoryIDs a user is allowed to have ro access to.
         # Values are the Category names.
 
         my $UserCatGroup = $FAQObject->GetUserCategories(
