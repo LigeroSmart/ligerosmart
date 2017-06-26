@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 118997639104b2b70164ded173895ba7683c1823 - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - 9d4096797d5ea206f6064d857ea4add1bb6aa79d - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1000,7 +1000,8 @@ sub Run {
                 my %ExternalCustomerUserData = $CustomerUserObject->CustomerUserDataGet(
                     User => $FromExternalCustomer{Customer},
                 );
-                $FromExternalCustomer{Email} = $ExternalCustomerUserData{UserEmail};
+                $FromExternalCustomer{Email}
+                    = "\"$ExternalCustomerUserData{UserFirstname} $ExternalCustomerUserData{UserLastname}\" <$ExternalCustomerUserData{UserEmail}>";
             }
             $Error{ExpandCustomerName} = 1;
         }

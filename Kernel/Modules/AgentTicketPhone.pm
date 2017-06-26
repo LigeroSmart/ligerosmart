@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 6b8ebc8eb3d22f3aaa138421dd704d9cbbe2ecc5 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - 9d4096797d5ea206f6064d857ea4add1bb6aa79d - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -504,9 +504,14 @@ sub Run {
                 $CustomerKey = $Article{CustomerUserID};
             }
 
+            my $CustomerElement = $EmailAddress;
+            if ( $Email->phrase() ) {
+                $CustomerElement = $Email->phrase() . " <$EmailAddress>";
+            }
+
             push @MultipleCustomer, {
                 Count            => $CountAux,
-                CustomerElement  => $Email->address(),
+                CustomerElement  => $CustomerElement,
                 CustomerSelected => $CustomerSelected,
                 CustomerKey      => $CustomerKey,
                 CustomerError    => $CustomerError,
@@ -1122,7 +1127,8 @@ sub Run {
                 my %ExternalCustomerUserData = $CustomerUserObject->CustomerUserDataGet(
                     User => $FromExternalCustomer{Customer},
                 );
-                $FromExternalCustomer{Email} = $ExternalCustomerUserData{UserEmail};
+                $FromExternalCustomer{Email}
+                    = "\"$ExternalCustomerUserData{UserFirstname} $ExternalCustomerUserData{UserLastname}\" <$ExternalCustomerUserData{UserEmail}>";
             }
             $Error{ExpandCustomerName} = 1;
         }

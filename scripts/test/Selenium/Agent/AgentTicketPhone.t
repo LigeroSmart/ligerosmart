@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - ca73dab63f552117023be006e4d4620b78fdcd9e - scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: otrs - 39ba17a8547504ecd027f4d0c9cb80a2741c9e25 - scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ $Selenium->RunTest(
         my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-        # Overload CustomerUser => Map setting defined in the Defaults.pm.
+        # Overload CustomerUser => Map setting defined in the Defaults.pm - use external url.
         my $DefaultCustomerUser = $ConfigObject->Get("CustomerUser");
         $DefaultCustomerUser->{Map}->[5] = [
             'UserEmail',
@@ -33,12 +33,11 @@ $Selenium->RunTest(
             1,
             1,
             'var',
-            '[% Env("CGIHandle") %]?Action=AgentTicketCompose;ResponseID=1;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]',
+            'http://www.otrs.com',
             0,
             '',
             'AsPopup OTRSPopup_TicketAction',
         ];
-
         $Helper->ConfigSettingChange(
             Key   => 'CustomerUser',
             Value => $DefaultCustomerUser,
@@ -252,8 +251,43 @@ $Selenium->RunTest(
             JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset .Value").length'
         );
 
+        # Make sure that Customer email is link.
+        my $LinkVisible = $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset a.AsPopup:visible").length'
+        );
+        $Self->True(
+            $LinkVisible,
+            "Customer email is a link with class AsPopup."
+        );
+
+        # Overload CustomerUser => Map setting defined in the Defaults.pm - use internal url.
+        $DefaultCustomerUser->{Map}->[5] = [
+            'UserEmail',
+            'Email',
+            'email',
+            1,
+            1,
+            'var',
+            '[% Env("CGIHandle") %]?Action=AgentTicketCompose;ResponseID=1;TicketID=[% Data.TicketID | uri %];ArticleID=[% Data.ArticleID | uri %]',
+            0,
+            '',
+            'AsPopup OTRSPopup_TicketAction',
+        ];
+        $Helper->ConfigSettingChange(
+            Key   => 'CustomerUser',
+            Value => $DefaultCustomerUser,
+        );
+
+        # remove customer
+        $Selenium->find_element( "#TicketCustomerContentFromCustomer a.CustomerTicketRemove", "css" )->VerifiedClick();
+
+        # add customer again
+        $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
+        $Selenium->find_element("//*[text()='$AutoCompleteString']")->VerifiedClick();
+
         # Make sure that Customer email is not a link.
-        my $LinkVisible = $Selenium->execute_script("return \$('.SidebarColumn fieldset a.AsPopup').length;");
+        $LinkVisible = $Selenium->execute_script("return \$('.SidebarColumn fieldset a.AsPopup').length;");
         $Self->False(
             $LinkVisible,
             "Customer email is not a link with class AsPopup."
@@ -265,6 +299,7 @@ $Selenium->RunTest(
 
         # Get created test ticket ID and number.
         my @Ticket = split( 'TicketID=', $Selenium->get_current_url() );
+
         my $TicketID = $Ticket[1];
 
         my $TicketNumber = $TicketObject->TicketNumberLookup(
