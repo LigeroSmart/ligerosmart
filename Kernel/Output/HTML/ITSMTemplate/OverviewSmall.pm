@@ -12,6 +12,8 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::Group',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::ITSMChange::Template',
     'Kernel::System::Log',
@@ -65,6 +67,45 @@ sub Run {
     my @ShowColumns;
     if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
         @ShowColumns = @{ $Param{ShowColumns} };
+    }
+
+    # for the template deletion link we need to check the permissions
+    my $DeleteFound = grep { $_ eq 'Delete' } @ShowColumns;
+    if ($DeleteFound) {
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+        my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
+        my $ModuleReg    = $ConfigObject->Get('Frontend::Module')->{AgentITSMTemplateDelete};
+
+        my %Groups;
+        $Groups{GroupRo} = {
+            reverse $GroupObject->PermissionUserGet(
+                UserID => $Self->{UserID},
+                Type   => 'ro',
+                )
+        };
+        $Groups{Group} = {
+            reverse $GroupObject->PermissionUserGet(
+                UserID => $Self->{UserID},
+                Type   => 'rw',
+                )
+        };
+
+        my $AccessOk;
+        for my $GroupType (qw(Group GroupRo)) {
+
+            PERMISSION:
+            for my $Group ( @{ $ModuleReg->{$GroupType} || [] } ) {
+                next PERMISSION if !$Groups{$GroupType}->{$Group};
+
+                $AccessOk = 1;
+
+                last PERMISSION;
+            }
+        }
+
+        if ( !$AccessOk ) {
+            @ShowColumns = grep { $_ ne 'Delete' } @ShowColumns;
+        }
     }
 
     my @Col = (qw(Name TemplateTypeID ValidID CreateTime ChangeTime));
