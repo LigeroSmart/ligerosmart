@@ -1378,18 +1378,12 @@ sub GetUserCategories {
     my $CategoryGroups = $Self->CategoryGroupGetAll(
         UserID => $Param{UserID},
     );
-    my %UserGroups;
-    if ( !$Self->{Cache}->{GetUserCategories}->{GroupMemberList} ) {
-        %UserGroups = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
-            UserID => $Param{UserID},
-            Type   => $Param{Type},
-            Result => 'HASH',
-        );
-        $Self->{Cache}->{GetUserCategories}->{GroupMemberList} = \%UserGroups;
-    }
-    else {
-        %UserGroups = %{ $Self->{Cache}->{GetUserCategories}->{GroupMemberList} };
-    }
+
+    my %UserGroups = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
+        UserID => $Param{UserID},
+        Type   => $Param{Type},
+        Result => 'HASH',
+    );
 
     my $UserCategories = $Self->_UserCategories(
         Categories     => $Categories,
@@ -1743,6 +1737,7 @@ get user permission for a category
 
     my $PermissionString = $FAQObject->CheckCategoryUserPermission(
         CategoryID => '123',
+        Type       => 'rw',     # (optional) rw or ro, default ro
         UserID     => 1,
     );
 
@@ -1767,19 +1762,30 @@ sub CheckCategoryUserPermission {
         }
     }
 
+    if ( !$Param{Type} ) {
+        $Param{Type} = 'ro';
+    }
+
+    $Param{Type} = lc $Param{Type};
+
+    if ( $Param{Type} ne 'rw' && $Param{Type} ne 'ro' ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Type is invalid!",
+        );
+    }
+
     my $UserCategories = $Self->GetUserCategories(
-        Type   => 'ro',
+        Type   => $Param{Type},
         UserID => $Param{UserID},
     );
 
-    for my $Permission (qw(rw ro)) {
-        for my $ParentID ( sort keys %{$UserCategories} ) {
-            my $Categories = $UserCategories->{$ParentID};
-            for my $CategoryID ( sort keys %{$Categories} ) {
-                if ( $CategoryID == $Param{CategoryID} ) {
+    for my $ParentID ( sort keys %{$UserCategories} ) {
+        my $Categories = $UserCategories->{$ParentID};
+        for my $CategoryID ( sort keys %{$Categories} ) {
+            if ( $CategoryID == $Param{CategoryID} ) {
 
-                    return $Permission;
-                }
+                return $Param{Type};
             }
         }
     }

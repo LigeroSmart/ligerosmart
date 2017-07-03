@@ -138,6 +138,7 @@ sub Run {
         my $Permission = $FAQObject->CheckCategoryUserPermission(
             UserID     => $Self->{UserID},
             CategoryID => $CategoryID,
+            Type       => 'ro',
         );
 
         # show error message

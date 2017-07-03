@@ -1,4 +1,5 @@
 #5.0.10 2017-??-??
+ - 2017-07-01 Fixed bug#[11478](https://bugs.otrs.org/show_bug.cgi?id=11478) - Editing and Deleting of articles possible with RO-Permission.
  - 2017-07-01 Fixed bug#[12067](https://bugs.otrs.org/show_bug.cgi?id=12067) - FAQ Explorer shows Internal Server Error if no categories found.
  - 2017-06-30 Replaced UserFistname, UserLastname in favor of a more flexible UserFullname, thanks to Dian Tong Software.
  - 2017-05-05 Fixed bug#[12768](https://bugs.otrs.org/show_bug.cgi?id=12768) - Excel output is missing from the FAQ search.

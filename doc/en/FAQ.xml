@@ -1658,7 +1658,8 @@ Result for the collection (FAQArticleID => Calculated Quantifier):
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ:FAQSearch:FAQSearch/InConditionGet:FAQ/RelatedArticle
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ --test FAQSearch --test FAQSearch/InConditionGet
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory FAQ
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test GenericInterface/FAQConnector
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/FAQ/Import:Console/Command/Maint/FAQ/ContentTypeSet
         </screen>

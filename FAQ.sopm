@@ -131,6 +131,7 @@
         <File Permission="644" Location="scripts/test/FAQ.t" />
         <File Permission="644" Location="scripts/test/FAQSearch.t" />
         <File Permission="644" Location="scripts/test/FAQ/RelatedArticle.t" />
+        <File Permission="644" Location="scripts/test/FAQ/Category/CheckCategoryUserPermission.t" />
         <File Permission="644" Location="scripts/test/GenericInterface/FAQConnector.t" />
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc" />
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf" />
