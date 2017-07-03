@@ -11,6 +11,8 @@ package Kernel::System::FAQ::Category;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::CustomerGroup',
@@ -1102,6 +1104,8 @@ sub AgentCategorySearch {
         Type   => 'ro',
         UserID => $Param{UserID},
     );
+
+    return [] if !IsHashRefWithData($Categories);
 
     my %Category = %{ $Categories->{ $Param{ParentID} } };
     my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
