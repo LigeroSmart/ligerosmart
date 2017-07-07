@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Třídy Katalogu';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = '';
+    $Self->{Translation}->{'Admin.'} = 'Administrátor';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Vytvořit a spravovat hlavní katalog';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Frontendová registrace modulu pro konfiguraci hlavního katalogu v administrativní oblasti.';
