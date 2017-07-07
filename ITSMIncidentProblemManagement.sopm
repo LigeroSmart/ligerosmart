@@ -71,8 +71,8 @@
     </Filelist>
     <DatabaseInstall Type="post">
         <Insert Table="ticket_state">
-            <Data Key="name" Type="Quote">closed with workaround</Data>
-            <Data Key="comments" Type="Quote">ticket is closed with workaround</Data>
+            <Data Key="name" Type="Quote" Translatable="1">closed with workaround</Data>
+            <Data Key="comments" Type="Quote">Ticket is closed with workaround.</Data>
             <Data Key="type_id">3</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
