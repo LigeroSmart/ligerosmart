@@ -1,4 +1,5 @@
 #5.0.10 2017-??-??
+ - 2017-07-07 Replaced UserFistname, UserLastname in favor of a more flexible UserFullname, thanks to Dian Tong Software.
 
 #5.0.9 2017-05-09
  - 2017-05-02 Updated translations, thanks to all translators.

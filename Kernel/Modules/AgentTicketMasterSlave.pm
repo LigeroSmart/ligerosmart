@@ -902,7 +902,14 @@ sub Run {
                 );
             }
 
-            my $From = "\"$Self->{UserFirstname} $Self->{UserLastname}\" <$Self->{UserEmail}>";
+# ---
+# OTRSMasterSlave
+# ---
+#            my $From = "\"$Self->{UserFirstname} $Self->{UserLastname}\" <$Self->{UserEmail}>";
+
+            # TODO: Marker can be removed for OTRSMasterSlave 6
+            my $From = "\"$Self->{UserFullname}\" <$Self->{UserEmail}>";
+# ---
             my @NotifyUserIDs;
 
             # get list of users that will be informed without selection in informed/involved list
