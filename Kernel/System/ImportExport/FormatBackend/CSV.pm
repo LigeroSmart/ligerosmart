@@ -118,6 +118,7 @@ sub FormatAttributesGet {
                 Translation  => 0,
                 Size         => 20,
                 MaxLength    => 20,
+                Readonly     => 1,
             },
         },
         {
@@ -229,14 +230,13 @@ sub ImportDataGet {
 
     # get charset
     my $Charset = $FormatData->{Charset} ||= '';
-    $Charset =~ s{ \s* (utf-8|utf8) \s* }{UTF-8}xmsi;
 
     # check the charset
-    if ( !$Charset ) {
+    if ( $Charset ne 'UTF-8' ) {
 
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "No valid charset found for the template id $Param{TemplateID}",
+            Message  => "No valid charset found for the template id $Param{TemplateID}. Charset must be UTF-8!",
         );
         return;
     }
@@ -310,8 +310,6 @@ sub ImportDataGet {
     # close the in memory file handle
     close $FH;
 
-    return \@ImportData if $Charset ne 'UTF-8';
-
     # set utf8 flag
     for my $Row (@ImportData) {
         for my $Cell ( @{$Row} ) {
@@ -374,19 +372,18 @@ sub ExportDataSave {
 
     # get charset
     my $Charset = $FormatData->{Charset} ||= '';
-    $Charset =~ s{ \s* (utf-8|utf8) \s* }{UTF-8}xmsi;
 
     # check the charset
-    if ( !$Charset ) {
+    if ( $Charset ne 'UTF-8' ) {
 
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "No valid charset found for the template id $Param{TemplateID}",
+            Message  => "No valid charset found for the template id $Param{TemplateID}. Charset must be UTF-8!",
         );
         return;
     }
 
-    # get charset
+    # get columnn separator
     $FormatData->{ColumnSeparator} ||= '';
     my $Separator = $Self->{AvailableSeparators}->{ $FormatData->{ColumnSeparator} } || '';
 
@@ -429,8 +426,6 @@ sub ExportDataSave {
 
     # create the CSV string
     my $String = $ParseObject->string();
-
-    return $String if $Charset ne 'UTF-8';
 
     # set utf8 flag
     Encode::_utf8_on($String);

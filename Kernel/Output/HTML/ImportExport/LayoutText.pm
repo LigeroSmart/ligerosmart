@@ -54,9 +54,10 @@ sub new {
 create a input string
 
     my $Value = $BackendObject->FormInputCreate(
-        Item   => $ItemRef,
-        Prefix => 'Prefix::',  # (optional)
-        Value  => 'Value',     # (optional)
+        Item     => $ItemRef,
+        Prefix   => 'Prefix::',  # (optional)
+        Value    => 'Value',     # (optional)
+        Readonly => 1,           # (optional)
     );
 
 =cut
@@ -68,7 +69,7 @@ sub FormInputCreate {
     if ( !$Param{Item} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need Item!'
+            Message  => 'Need Item!',
         );
         return;
     }
@@ -120,6 +121,11 @@ sub FormInputCreate {
     # add maximum length
     if ( $Param{Item}->{Input}->{MaxLength} ) {
         $String .= "maxlength=\"$Param{Item}->{Input}->{MaxLength}\" ";
+    }
+
+    # add readonly
+    if ( $Param{Item}->{Input}->{Readonly} ) {
+        $String .= 'readonly="readonly" ';
     }
 
     $String .= "/> ";
