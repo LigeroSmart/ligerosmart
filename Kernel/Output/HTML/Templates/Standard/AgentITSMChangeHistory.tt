@@ -63,7 +63,7 @@
 [% RenderBlockEnd("ShowWorkOrderZoom") %]
                             </td>
                             <td>
-                                [% Data.UserLogin | truncate(25) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
+                                [% Data.UserFullname | html %]
                             </td>
                             <td>
                                 [% Data.CreateTime | Localize("TimeLong") %]

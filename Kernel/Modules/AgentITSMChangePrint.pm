@@ -679,8 +679,7 @@ sub _OutputChangeInfo {
                     Cache => 1,
                 );
                 if (%UserData) {
-                    push @LongNames, sprintf '%s (%s %s)',
-                        @UserData{qw(UserLogin UserFirstname UserLastname)};
+                    push @LongNames, $UserData{UserFullname};
                 }
                 else {
                     push @LongNames, 'ID=' . $CABCustomer;

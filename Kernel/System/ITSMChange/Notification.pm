@@ -1526,7 +1526,7 @@ sub _NotificationReplaceMacros {
             next USER if !%UserData;
 
             # build user attribute
-            $ChangeData{$User} = "$UserData{UserFirstname} $UserData{UserLastname}";
+            $ChangeData{$User} = "$UserData{UserFullname}";
         }
 
         # Dropdown, Checkbox and MultipleSelect DynamicFields, can store values (keys) that are
@@ -1613,7 +1613,7 @@ sub _NotificationReplaceMacros {
 
             # build workorder agent attribute
             if (%UserData) {
-                $WorkOrderData{WorkOrderAgent} = "$UserData{UserFirstname} $UserData{UserLastname}";
+                $WorkOrderData{WorkOrderAgent} = "$UserData{UserFullname}";
             }
         }
 

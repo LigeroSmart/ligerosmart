@@ -49,8 +49,8 @@
             <div class="Clear"></div>
 
             <label>[% Translate("Changed by") | html %]:</label>
-            <div class="Field" title="[% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])">
-                [% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
+            <div class="Field" title="[% Data.UserFullname | html %]">
+                [% Data.UserFullname | html %]
             </div>
             <div class="Clear"></div>
 

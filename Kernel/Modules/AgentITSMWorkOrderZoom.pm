@@ -306,7 +306,7 @@ sub Run {
     );
 
     # get CreateBy user information
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+    for my $Postfix (qw(UserFullname)) {
         $WorkOrder->{ 'Create' . $Postfix } = $CreateUser{$Postfix};
     }
 
@@ -317,7 +317,7 @@ sub Run {
     );
 
     # get ChangeBy user information
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+    for my $Postfix (qw(UserFullname)) {
         $WorkOrder->{ 'Change' . $Postfix } = $ChangeUser{$Postfix};
     }
 
@@ -466,7 +466,7 @@ sub Run {
     }
 
     # get change builder information
-    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+    for my $Postfix (qw(UserFullname)) {
         $WorkOrder->{ 'ChangeBuilder' . $Postfix } = $ChangeBuilderUser{$Postfix} || '';
     }
 
@@ -500,7 +500,7 @@ sub Run {
         if (%WorkOrderAgentUser) {
 
             # get WorkOrderAgent information
-            for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+            for my $Postfix (qw(UserFullname)) {
                 $WorkOrder->{ 'WorkOrderAgent' . $Postfix } = $WorkOrderAgentUser{$Postfix} || '';
             }
 
