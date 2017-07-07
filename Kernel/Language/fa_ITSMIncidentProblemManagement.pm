@@ -39,6 +39,9 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'تاریخ تصمیم';
     $Self->{Translation}->{'Due Date'} = 'تاریخ انجام';
 
+    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    $Self->{Translation}->{'closed with workaround'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'یک تصمیم اضافه کنید!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'فیلدهای اضافه ITSM';

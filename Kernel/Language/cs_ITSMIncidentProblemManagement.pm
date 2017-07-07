@@ -39,6 +39,9 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'Datum Řešení';
     $Self->{Translation}->{'Due Date'} = '';
 
+    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    $Self->{Translation}->{'closed with workaround'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Doplňte řešení!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Doplňková ITSM pole';

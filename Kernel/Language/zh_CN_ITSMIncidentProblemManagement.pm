@@ -31,13 +31,16 @@ sub Data {
     $Self->{Translation}->{'Review Required'} = '需要复审';
     $Self->{Translation}->{'Decision Result'} = '决定结果';
     $Self->{Translation}->{'Approved'} = '通过审批';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = '推迟';
+    $Self->{Translation}->{'Pre-approved'} = '预先批准';
+    $Self->{Translation}->{'Rejected'} = '驳回';
     $Self->{Translation}->{'Repair Start Time'} = '修复开始时间';
     $Self->{Translation}->{'Recovery Start Time'} = '恢复开始时间';
     $Self->{Translation}->{'Decision Date'} = '决定日期';
     $Self->{Translation}->{'Due Date'} = '到期日';
+
+    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    $Self->{Translation}->{'closed with workaround'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '添加决定!';

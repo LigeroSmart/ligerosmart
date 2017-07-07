@@ -1,11 +1,12 @@
 # 
 # Translators:
+# Patrick Lentz, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-05-04 09:11+0000\n"
-"PO-Revision-Date: 2017-05-03 14:57+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-06-29 08:34+0000\n"
+"Last-Translator: Patrick Lentz\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +76,7 @@ msgstr "Date de décision"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Due Date"
-msgstr "Engagenent de date"
+msgstr "Échéance"
 
 #. SysConfig
 msgid "Add a decision!"

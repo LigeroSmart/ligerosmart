@@ -37,7 +37,10 @@ sub Data {
     $Self->{Translation}->{'Repair Start Time'} = 'Date de début de réparation';
     $Self->{Translation}->{'Recovery Start Time'} = 'Date de début de retour à la normale';
     $Self->{Translation}->{'Decision Date'} = 'Date de décision';
-    $Self->{Translation}->{'Due Date'} = 'Engagenent de date';
+    $Self->{Translation}->{'Due Date'} = 'Échéance';
+
+    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    $Self->{Translation}->{'closed with workaround'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Ajoutez une décision!';

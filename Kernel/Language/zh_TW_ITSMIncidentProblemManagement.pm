@@ -39,6 +39,9 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = '決定日期';
     $Self->{Translation}->{'Due Date'} = '截止日期';
 
+    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    $Self->{Translation}->{'closed with workaround'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '添加決定!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'ITSM字段';

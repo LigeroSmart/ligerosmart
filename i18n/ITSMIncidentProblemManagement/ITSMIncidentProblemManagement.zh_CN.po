@@ -1,12 +1,12 @@
 # 
 # Translators:
-# 汇民 王 <whuim@163.com>, 2016
+# 汇民 王 <whuim@163.com>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-05-04 09:11+0000\n"
-"PO-Revision-Date: 2017-05-03 14:57+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-05-17 13:49+0000\n"
+"Last-Translator: 汇民 王 <whuim@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,15 +52,15 @@ msgstr "通过审批"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Postponed"
-msgstr ""
+msgstr "推迟"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Pre-approved"
-msgstr ""
+msgstr "预先批准"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Rejected"
-msgstr ""
+msgstr "驳回"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Repair Start Time"

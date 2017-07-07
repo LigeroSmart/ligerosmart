@@ -31,13 +31,16 @@ sub Data {
     $Self->{Translation}->{'Review Required'} = 'Revisión Requerida';
     $Self->{Translation}->{'Decision Result'} = 'Resultado de Decisión';
     $Self->{Translation}->{'Approved'} = 'Aprobado';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = 'Pospuesto';
+    $Self->{Translation}->{'Pre-approved'} = 'Pre-aprobado';
+    $Self->{Translation}->{'Rejected'} = 'Rechazado';
     $Self->{Translation}->{'Repair Start Time'} = 'Fecha Inicial de Reparación';
     $Self->{Translation}->{'Recovery Start Time'} = 'Fecha Inicial de Recuperación';
     $Self->{Translation}->{'Decision Date'} = 'Fecha de Decisión';
     $Self->{Translation}->{'Due Date'} = 'Fecha de vencimiento';
+
+    # Database XML Definition: ITSMIncidentProblemManagement.sopm
+    $Self->{Translation}->{'closed with workaround'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '¡Agregue una decisión!';
