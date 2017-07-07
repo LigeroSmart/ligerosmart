@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = 'Objeto é obrigatório!';
     $Self->{Translation}->{'Format is required!'} = 'O formato é obrigatório!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Passo 2 de 5 - Editar informações do objeto';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Passo 3 de 5 - Editar informações de formato';
     $Self->{Translation}->{'is required!'} = 'é obrigatório!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Passo 4 de 5 - Editar informações de mapeamento';
     $Self->{Translation}->{'No map elements found.'} = 'Não há elementos mapa encontrado.';
@@ -47,16 +47,16 @@ sub Data {
     $Self->{Translation}->{'No format backend found!'} = 'Nenhum formato backend encontrado!';
     $Self->{Translation}->{'Template not found!'} = 'Modelo não encontrado!';
     $Self->{Translation}->{'Can\'t insert/update template!'} = 'Não é possível inserir/atualizar modelo!';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
-    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Template List'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'Necessário TemplateID!';
+    $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ocorreu um erro. Foi impossível realizar a importação! Verifique o Syslog para mais detalhes.';
+    $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Ocorreu um erro. Foi impossível realizar a exportação! Verifique o Syslog para mais detalhes.';
+    $Self->{Translation}->{'Template List'} = 'Lista de modelos';
+    $Self->{Translation}->{'number'} = 'número';
+    $Self->{Translation}->{'number bigger than zero'} = 'número maior que zero';
+    $Self->{Translation}->{'integer'} = 'inteiro';
+    $Self->{Translation}->{'integer bigger than zero'} = 'inteiro maior que zero';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Elemento necessário, por favor insira o dado';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Dado inválido, por favor insira um %s válido';
     $Self->{Translation}->{'Format not found!'} = 'Formato não encontrado!';
 
     # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Ponto e Vírgula (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Dois Pontos (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Ponto (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Virgula (,)';
     $Self->{Translation}->{'Charset'} = 'Codificação de Caracteres';
     $Self->{Translation}->{'Include Column Headers'} = 'Incluir Cabeçalhos de Colunas';
     $Self->{Translation}->{'Column'} = 'Coluna';

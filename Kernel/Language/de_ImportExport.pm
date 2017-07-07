@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'Die ID der Vorlage wird benötigt!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Fehler aufgetreten. Importieren unmöglich! Für Details siehe Syslog.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Fehler aufgetreten. Exportieren unmöglich! Für Details siehe Syslog.';
-    $Self->{Translation}->{'Template List'} = '';
+    $Self->{Translation}->{'Template List'} = 'Vorlagenliste';
     $Self->{Translation}->{'number'} = 'Zahl';
     $Self->{Translation}->{'number bigger than zero'} = 'Zahl größer als Null';
     $Self->{Translation}->{'integer'} = 'Ganzzahl';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Semicolon (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Doppelpunkt (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Punkt (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Komma (,)';
     $Self->{Translation}->{'Charset'} = 'Zeichensatz';
     $Self->{Translation}->{'Include Column Headers'} = 'Mit Spaltenüberschriften';
     $Self->{Translation}->{'Column'} = 'Spalte';

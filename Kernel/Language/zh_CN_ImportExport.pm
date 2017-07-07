@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '需要TemplateID！';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '出现错误。不能导入！查看Syslog获取详细信息。';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '出现错误。不能导出！查看Syslog获取详细信息。';
-    $Self->{Translation}->{'Template List'} = '';
+    $Self->{Translation}->{'Template List'} = '模板清单';
     $Self->{Translation}->{'number'} = '数字';
     $Self->{Translation}->{'number bigger than zero'} = '数字大于0';
     $Self->{Translation}->{'integer'} = '整数';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = '分号 (;)';
     $Self->{Translation}->{'Colon (:)'} = '冒号 (:)';
     $Self->{Translation}->{'Dot (.)'} = '句号 (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = '逗号（,）';
     $Self->{Translation}->{'Charset'} = '字符集';
     $Self->{Translation}->{'Include Column Headers'} = '包括列标题';
     $Self->{Translation}->{'Column'} = '列';

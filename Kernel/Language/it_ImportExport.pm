@@ -45,19 +45,19 @@ sub Data {
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
     $Self->{Translation}->{'No format backend found!'} = '';
-    $Self->{Translation}->{'Template not found!'} = '';
+    $Self->{Translation}->{'Template not found!'} = 'Modello non trovato!';
     $Self->{Translation}->{'Can\'t insert/update template!'} = '';
-    $Self->{Translation}->{'Needed TemplateID!'} = '';
+    $Self->{Translation}->{'Needed TemplateID!'} = 'Necessario TemplateID!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
-    $Self->{Translation}->{'Template List'} = '';
-    $Self->{Translation}->{'number'} = '';
-    $Self->{Translation}->{'number bigger than zero'} = '';
-    $Self->{Translation}->{'integer'} = '';
-    $Self->{Translation}->{'integer bigger than zero'} = '';
-    $Self->{Translation}->{'Element required, please insert data'} = '';
+    $Self->{Translation}->{'Template List'} = 'Lista Modelli';
+    $Self->{Translation}->{'number'} = 'numero';
+    $Self->{Translation}->{'number bigger than zero'} = 'numero più grande di zero';
+    $Self->{Translation}->{'integer'} = 'intero';
+    $Self->{Translation}->{'integer bigger than zero'} = 'intero più grande di zero';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Elemento richiesto, inserisci dati gentilmente';
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
-    $Self->{Translation}->{'Format not found!'} = '';
+    $Self->{Translation}->{'Format not found!'} = 'Formato non trovato!';
 
     # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
     $Self->{Translation}->{'Column Separator'} = 'Separatore di colonna';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Punto e virgola (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Due punti (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Punto (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Virgola (,)';
     $Self->{Translation}->{'Charset'} = 'Charset';
     $Self->{Translation}->{'Include Column Headers'} = 'Includi le Colonne di Intestazione';
     $Self->{Translation}->{'Column'} = 'Colonna';

@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Object is required!'} = 'オブジェクトは必須です!';
     $Self->{Translation}->{'Format is required!'} = 'フォーマットは必須です!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Step 2 of 5 - オブジェクト情報の設定';
-    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = 'Step 3 of 5 - フォーマット情報の設定';
     $Self->{Translation}->{'is required!'} = '必須です';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = 'Step 4 of 5 - マッピング情報の設定';
     $Self->{Translation}->{'No map elements found.'} = 'マッピング要素が見つかりませんでした';
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'テンプレートIDの入力が必要です！';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'インポートが出来ません（エラーが発生しました。詳細はシステムログをご確認ください）！';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'エクスポートが出来ません（エラーが発生しました。詳細はシステムログをご確認ください）！';
-    $Self->{Translation}->{'Template List'} = '';
+    $Self->{Translation}->{'Template List'} = 'テンプレート一覧';
     $Self->{Translation}->{'number'} = '数値';
     $Self->{Translation}->{'number bigger than zero'} = '0以上の数値';
     $Self->{Translation}->{'integer'} = '整数値';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'セミコロン (;)';
     $Self->{Translation}->{'Colon (:)'} = 'コロン (:)';
     $Self->{Translation}->{'Dot (.)'} = 'ドット(.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'カンマ (,)';
     $Self->{Translation}->{'Charset'} = 'キャラクタセット';
     $Self->{Translation}->{'Include Column Headers'} = 'ヘッダ情報を含む';
     $Self->{Translation}->{'Column'} = '桁';

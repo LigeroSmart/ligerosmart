@@ -1,15 +1,16 @@
 # 
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2014,2016
+# Felix Schäfer <web.otrs@yorfeix.de>, 2017
 # nilsleideck <nils.leideck@leidex.net>, 2016
 # Tobias Krumholz <krumholt@fh-trier.de>, 2015
 # Udo Bretz, 2014
-# Udo Bretz, 2014
+# Udo Bretz, 2014,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
+"PO-Revision-Date: 2017-07-07 11:58+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +149,7 @@ msgstr "Fehler aufgetreten. Exportieren unmöglich! Für Details siehe Syslog."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr ""
+msgstr "Vorlagenliste"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
@@ -200,7 +201,7 @@ msgstr "Punkt (.)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Comma (,)"
-msgstr ""
+msgstr "Komma (,)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Charset"
