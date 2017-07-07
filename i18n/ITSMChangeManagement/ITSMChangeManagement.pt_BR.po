@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:20+0000\n"
+"POT-Creation-Date: 2017-04-28 13:35+0000\n"
+"PO-Revision-Date: 2017-05-24 22:19+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -1294,7 +1294,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "Nenhum %s informado."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
@@ -1690,7 +1690,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "No config option found for the view \"%s\"!"
-msgstr ""
+msgstr "Não foram encontradas opções de configuração para a visualização \"%s\"!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Title: %s | Type: %s"

@@ -425,7 +425,7 @@ sub Data {
     $Self->{Translation}->{'Could not delete ConditionID %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'No %s is given!'} = 'Nenhum %s informado.';
     $Self->{Translation}->{'Could not create new condition!'} = '';
     $Self->{Translation}->{'Could not update ConditionID %s!'} = '';
     $Self->{Translation}->{'Could not update ExpressionID %s!'} = '';
@@ -589,7 +589,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = '';
     $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Não foram encontradas opções de configuração para a visualização "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
