@@ -428,7 +428,7 @@
         <div class="WidgetSimple">
             <div class="Header">
 [% RenderBlockStart("HeaderAddUser") %]
-                <h2>[% Translate("New User Settings") | html %]: [% Data.UserFirstname | html %] [% Data.UserLastname | html %] ([% Data.UserLogin | html %])</h2>
+                <h2>[% Translate("New User Settings") | html %]: [% Data.UserFullname | html %] ([% Data.UserLogin | html %])</h2>
 [% RenderBlockEnd("HeaderAddUser") %]
 [% RenderBlockStart("HeaderEditUser") %]
                 <h2>[% Translate("Edit User Settings") | html %]</h2>
@@ -442,7 +442,7 @@
 
                     <fieldset class="TableLike">
                         <label for="Name">[% Translate("Name") | html %]:</label>
-                        <div class="Value">[% Data.UserFirstname | html %] [% Data.UserLastname | html %]</div>
+                        <div class="Value">[% Data.UserFullname | html %]</div>
                         <div class="Clear"></div>
 
                         <label for="Name">[% Translate("Username") | html %]:</label>
