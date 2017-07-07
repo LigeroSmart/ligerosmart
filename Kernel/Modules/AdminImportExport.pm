@@ -62,8 +62,7 @@ sub Run {
         my $TemplateData;
         my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
-        my $SaveContinue;
-        $SaveContinue = $ParamObject->GetParam( Param => 'SubmitNext' );
+        my $SaveContinue = $ParamObject->GetParam( Param => 'SubmitNext' );
 
         if ( !$SaveContinue ) {
 
@@ -71,7 +70,7 @@ sub Run {
             if ( !$TemplateID ) {
                 return $Self->_MaskTemplateEdit1(
                     New => 1,
-                    %Param
+                    %Param,
                 );
             }
 
@@ -93,7 +92,6 @@ sub Run {
             if ( $TemplateData->{TemplateID} ) {
                 return $Self->_MaskTemplateEdit1( %Param, %{$TemplateData} );
             }
-
         }
 
         # if save & continue
@@ -251,7 +249,6 @@ sub Run {
                     $Error = 1;
                 }
             }
-
         }
 
         # reload with server errors
@@ -274,7 +271,6 @@ sub Run {
         return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=TemplateEdit3;TemplateID=$TemplateID",
         );
-
     }
 
     # ------------------------------------------------------------ #
@@ -1412,7 +1408,7 @@ sub _MaskTemplateEdit1 {
                 %Param,
                 ObjectName => $Param{Object},
                 FormatName => $Param{Format},
-                }
+            },
         );
     }
 

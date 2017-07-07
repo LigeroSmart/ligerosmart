@@ -115,6 +115,7 @@
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="TemplateEdit1" />
                     <input type="hidden" name="TemplateID" value="[% Data.TemplateID %]" />
+                    <input type="hidden" name="SubmitNext" value="1" />
 
                     <fieldset class="TableLike">
 
@@ -191,7 +192,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext"><span>[% Translate("Next") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit"><span>[% Translate("Next") | html %]</span></button>
                             [% Translate("or") | html %]
                             <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction='Overview'">[% Translate("Cancel") | html %] </a>
                         </div>
@@ -209,6 +210,7 @@
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="TemplateEdit2" />
                     <input type="hidden" name="TemplateID" value="[% Data.TemplateID | html %]" />
+                    <input type="hidden" name="SubmitNext" value="1" />
 
                     <fieldset class="TableLike">
 
@@ -238,7 +240,7 @@
 [% RenderBlockEnd("TemplateEdit2Element") %]
                         <div class="Field SpacingTop">
                             <button class="Back CallForAction" type="button" name="Back" ><span>[% Translate("Back") | html %]</span></button>
-                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext" ><span>[% Translate("Next") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit"><span>[% Translate("Next") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -254,6 +256,7 @@
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="TemplateEdit3" />
                     <input type="hidden" name="TemplateID" value="[% Data.TemplateID | html %]" />
+                    <input type="hidden" name="SubmitNext" value="1" />
 
                     <fieldset class="TableLike">
 
@@ -285,7 +288,7 @@
 [% RenderBlockEnd("TemplateEdit3Element") %]
                         <div class="Field SpacingTop">
                             <button class="Back CallForAction" type="button" name="Back" ><span>[% Translate("Back") | html %]</span></button>
-                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext"><span>[% Translate("Next") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit"><span>[% Translate("Next") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
@@ -448,6 +451,7 @@
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="TemplateSave5" />
                     <input type="hidden" name="TemplateID" value="[% Data.TemplateID | html %]" />
+                    <input type="hidden" name="SubmitNext" value="1" />
                     <fieldset class="TableLike">
                         <label>[% Translate("Template Name") | html %]:</label>
                         <div class="Field">
@@ -470,7 +474,7 @@
 
                         <div class="Field SpacingTop">
                             <button class="Back CallForAction" type="submit" name="SubmitBack" value="SubmitBack"><span>[% Translate("Back") | html %]</span></button>
-                            <button class="Primary CallForAction" type="submit" name="SubmitNext" value="SubmitNext"><span>[% Translate("Finish") | html %]</span></button>
+                            <button class="Primary CallForAction" type="submit"><span>[% Translate("Finish") | html %]</span></button>
                         </div>
                     </fieldset>
                 </form>
