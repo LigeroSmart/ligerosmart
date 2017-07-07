@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 9d4096797d5ea206f6064d857ea4add1bb6aa79d - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - bdc4a65cfe710072413553c2c442496bc4cb114b - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1055,7 +1055,8 @@ sub Run {
             # search customer
             my %CustomerUserList;
             %CustomerUserList = $CustomerUserObject->CustomerSearch(
-                Search => $GetParam{From},
+                Search           => $GetParam{From},
+                CustomerUserOnly => 1,
             );
 
             # check if just one customer user exists
