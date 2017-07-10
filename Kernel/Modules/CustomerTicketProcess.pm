@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 72eeb3ac0d7368690ed6c6e49d127a830e59f19e - Kernel/Modules/CustomerTicketProcess.pm
+# $origin: otrs - 2cb1beb86a6fb14feb9dd35bf0aa05a930a9dfe5 - Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2266,8 +2266,6 @@ sub _RenderCustomer {
         };
     }
 
-    my $AutoCompleteConfig = $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Frontend::CustomerSearchAutoComplete');
-
     my %CustomerUserData = ();
 
     my $SubmittedCustomerUserID = $Param{GetParam}{CustomerUserID};
@@ -2294,17 +2292,6 @@ sub _RenderCustomer {
     if ( IsHashRefWithData( $Param{Error} ) && $Param{Error}->{CustomerID} ) {
         $Data{CustomerIDServerError} = 'ServerError';
     }
-
-    # set some customer search autocomplete properties
-    $LayoutObject->Block(
-        Name => 'CustomerSearchAutoComplete',
-        Data => {
-            minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
-            queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 100,
-            maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            ActiveAutoComplete  => $AutoCompleteConfig->{Active},
-        },
-    );
 
     if (
         ( IsHashRefWithData( $Param{Ticket} ) && $Param{Ticket}->{CustomerUserID} )

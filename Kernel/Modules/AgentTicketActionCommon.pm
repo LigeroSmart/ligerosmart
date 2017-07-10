@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - c16b30309c93a274ba83438ce7f52b5f2aae4691 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - f3598c2953e75270670e9fe6d793074892cd701e - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -845,9 +845,10 @@ sub Run {
         # set state
         if ( $Config->{State} && $GetParam{NewStateID} ) {
             $TicketObject->TicketStateSet(
-                TicketID => $Self->{TicketID},
-                StateID  => $GetParam{NewStateID},
-                UserID   => $Self->{UserID},
+                TicketID     => $Self->{TicketID},
+                StateID      => $GetParam{NewStateID},
+                UserID       => $Self->{UserID},
+                DynamicField => $GetParam{DynamicField},
             );
 
             # unlock the ticket after close
