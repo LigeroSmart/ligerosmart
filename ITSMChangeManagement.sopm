@@ -98,7 +98,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyCAB.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyChanges.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/ToolBar/MyWorkOrders.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAITSMChangeManagement.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeCIPAllocate.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeNotification.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMStateMachine.tt" />
@@ -917,7 +916,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">requested</Data>
+            <Data Key="name" Type="Quote" Translatable="1">requested</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -926,7 +925,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">pending approval</Data>
+            <Data Key="name" Type="Quote" Translatable="1">pending approval</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -935,7 +934,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">rejected</Data>
+            <Data Key="name" Type="Quote" Translatable="1">rejected</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -944,7 +943,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">approved</Data>
+            <Data Key="name" Type="Quote" Translatable="1">approved</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -953,7 +952,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">in progress</Data>
+            <Data Key="name" Type="Quote" Translatable="1">in progress</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -962,7 +961,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">pending pir</Data>
+            <Data Key="name" Type="Quote" Translatable="1">pending pir</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -971,7 +970,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">successful</Data>
+            <Data Key="name" Type="Quote" Translatable="1">successful</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -980,7 +979,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">failed</Data>
+            <Data Key="name" Type="Quote" Translatable="1">failed</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -989,7 +988,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">canceled</Data>
+            <Data Key="name" Type="Quote" Translatable="1">canceled</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -998,7 +997,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Change::State</Data>
-            <Data Key="name" Type="Quote">retracted</Data>
+            <Data Key="name" Type="Quote" Translatable="1">retracted</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1007,7 +1006,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
-            <Data Key="name" Type="Quote">created</Data>
+            <Data Key="name" Type="Quote" Translatable="1">created</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1016,7 +1015,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
-            <Data Key="name" Type="Quote">accepted</Data>
+            <Data Key="name" Type="Quote" Translatable="1">accepted</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1025,7 +1024,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
-            <Data Key="name" Type="Quote">ready</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ready</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1034,7 +1033,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
-            <Data Key="name" Type="Quote">in progress</Data>
+            <Data Key="name" Type="Quote" Translatable="1">in progress</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1043,7 +1042,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
-            <Data Key="name" Type="Quote">closed</Data>
+            <Data Key="name" Type="Quote" Translatable="1">closed</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1052,7 +1051,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::State</Data>
-            <Data Key="name" Type="Quote">canceled</Data>
+            <Data Key="name" Type="Quote" Translatable="1">canceled</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1061,7 +1060,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
-            <Data Key="name" Type="Quote">approval</Data>
+            <Data Key="name" Type="Quote" Translatable="1">approval</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1070,7 +1069,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
-            <Data Key="name" Type="Quote">workorder</Data>
+            <Data Key="name" Type="Quote" Translatable="1">workorder</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1079,7 +1078,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
-            <Data Key="name" Type="Quote">backout</Data>
+            <Data Key="name" Type="Quote" Translatable="1">backout</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1088,7 +1087,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
-            <Data Key="name" Type="Quote">decision</Data>
+            <Data Key="name" Type="Quote" Translatable="1">decision</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1097,7 +1096,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::WorkOrder::Type</Data>
-            <Data Key="name" Type="Quote">pir</Data>
+            <Data Key="name" Type="Quote" Translatable="1">pir</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -1512,46 +1511,46 @@
             <Data Key="name" Type="Quote">WorkOrderAgentID</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is not</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is not</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is empty</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is empty</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is not empty</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is not empty</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is greater than</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is greater than</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is less than</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is less than</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is before</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is before</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">is after</Data>
+            <Data Key="name" Type="Quote" Translatable="1">is after</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">contains</Data>
+            <Data Key="name" Type="Quote" Translatable="1">contains</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">not contains</Data>
+            <Data Key="name" Type="Quote" Translatable="1">not contains</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">begins with</Data>
+            <Data Key="name" Type="Quote" Translatable="1">begins with</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">ends with</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ends with</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">set</Data>
+            <Data Key="name" Type="Quote" Translatable="1">set</Data>
         </Insert>
         <Insert Table="condition_operator">
-            <Data Key="name" Type="Quote">lock</Data>
+            <Data Key="name" Type="Quote" Translatable="1">lock</Data>
         </Insert>
         <Insert Table="change_notification_grps">
             <Data Key="name" Type="Quote">ChangeBuilder</Data>
