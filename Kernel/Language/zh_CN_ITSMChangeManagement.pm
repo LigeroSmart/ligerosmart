@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = '变更';
-    $Self->{Translation}->{'ITSMChanges'} = '变更';
-    $Self->{Translation}->{'ITSM Changes'} = '变更';
-    $Self->{Translation}->{'workorder'} = '工作指令';
-    $Self->{Translation}->{'A change must have a title!'} = '变更必须有标题!';
-    $Self->{Translation}->{'A condition must have a name!'} = '条件必须有名称!';
-    $Self->{Translation}->{'A template must have a name!'} = '模板必须有名称!';
-    $Self->{Translation}->{'A workorder must have a title!'} = '工作指令必须有标题!';
-    $Self->{Translation}->{'Add CAB Template'} = '添加CAB（变更咨询委员会）模板';
-    $Self->{Translation}->{'Add Workorder'} = '添加工作指令';
-    $Self->{Translation}->{'Add a workorder to the change'} = '添加变更工作指令';
-    $Self->{Translation}->{'Add new condition and action pair'} = '添加新的条件和操作';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        '显示变更经理概览图标的服务人员界面模块。';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = '显示“我的CAB”概览图标的服务人员界面模块。';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = '显示“我的变更”概览图标的服务人员界面模块。';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        '显示“我的工作指令”概览图标的服务人员界面模块。';
-    $Self->{Translation}->{'CABAgents'} = '服务人员CAB';
-    $Self->{Translation}->{'CABCustomers'} = '客户CAB';
-    $Self->{Translation}->{'Change Overview'} = '变更概况';
-    $Self->{Translation}->{'Change Schedule'} = '变更计划';
-    $Self->{Translation}->{'Change involved persons of the change'} = '更换变更涉及的相关人员';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = '新的操作 （ID=%s）';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = '操作（ID=%s） 已删除';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = '条件（ID=%s）的所有操作均已删除';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = '操作（ID=%s）已执行：%s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (操作ID=%s): 新：“%s” <-，旧：“ %s”';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = '变更（ID=%s）的实际结束时间已到。';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = '变更（ID=%s）的实际开始时间已到。';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = '新建变更（ID=%s）';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = '新增附件: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = '删除附件 %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'CAB已删除 %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s : 新：“%s” <-，旧：“%s”';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = '添加到%s的链接 （ID=%s）';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = '删除到%s 的链接（ID=%s）。';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = '通知已发送给%s （事件： %s）';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = '变更（ID=%s）的计划结束时间已到。';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = '变更（ID=%s）的计划开始时间已到。';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = '变更（ID=%s）的请求时间已到。';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s : 新：“%s” <-，旧：“%s”';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = '新增条件（ID=%s）';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = '条件（ID=%s）已删除';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = '变更（ID=%s）的所有条件均已删除';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s（条件ID=%s） : 新：“%s” <-，旧：“%s”';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = '新建表达式（ID=%s）';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = '表达式（ID=%s）已删除';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = '条件（ID=%s）的所有表达式均已删除';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s（表达式ID=%s） : 新：“%s” <-，旧：“%s”';
-    $Self->{Translation}->{'ChangeNumber'} = '变更编号';
-    $Self->{Translation}->{'Condition Edit'} = '条件编辑';
-    $Self->{Translation}->{'Create Change'} = '创建变更';
-    $Self->{Translation}->{'Create a change from this ticket!'} = '从这个工单创建变更！';
-    $Self->{Translation}->{'Delete Workorder'} = '删除工作指令';
-    $Self->{Translation}->{'Edit the change'} = '编辑变更';
-    $Self->{Translation}->{'Edit the conditions of the change'} = '编辑变更条件';
-    $Self->{Translation}->{'Edit the workorder'} = '编辑工作指令';
-    $Self->{Translation}->{'Expression'} = '表达式';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = '在变更和工作指令中进行全文搜索';
-    $Self->{Translation}->{'ITSMCondition'} = '条件';
-    $Self->{Translation}->{'ITSMWorkOrder'} = '工作指令';
-    $Self->{Translation}->{'Link another object to the change'} = '链接另一对象到变更';
-    $Self->{Translation}->{'Link another object to the workorder'} = '链接另一对象到工作指令';
-    $Self->{Translation}->{'Move all workorders in time'} = '移动所有工作指令的时间';
-    $Self->{Translation}->{'My CABs'} = '我的CAB';
-    $Self->{Translation}->{'My Changes'} = '我的变更';
-    $Self->{Translation}->{'My Workorders'} = '我的工作指令';
-    $Self->{Translation}->{'No XXX settings'} = '没有设置\'%s\'';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (实施后审查)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (计划服务可用性)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = '请先选择目录类';
-    $Self->{Translation}->{'Print the change'} = '打印变更';
-    $Self->{Translation}->{'Print the workorder'} = '打印工作指令';
-    $Self->{Translation}->{'RequestedTime'} = '请求时间';
-    $Self->{Translation}->{'Save Change CAB as Template'} = '保存变更CAB为模板';
-    $Self->{Translation}->{'Save change as a template'} = '保存变更为模板';
-    $Self->{Translation}->{'Save workorder as a template'} = '保存工作指令为模板';
-    $Self->{Translation}->{'Search Changes'} = '搜索变更';
-    $Self->{Translation}->{'Set the agent for the workorder'} = '为工作指令指派服务人员';
-    $Self->{Translation}->{'Take Workorder'} = '接手工作指令';
-    $Self->{Translation}->{'Take the workorder'} = '接手这个工作指令';
-    $Self->{Translation}->{'Template Overview'} = '模板概览';
-    $Self->{Translation}->{'The planned end time is invalid!'} = '计划结束时间无效！';
-    $Self->{Translation}->{'The planned start time is invalid!'} = '计划开始时间无效！';
-    $Self->{Translation}->{'The planned time is invalid!'} = '计划时间无效！';
-    $Self->{Translation}->{'The requested time is invalid!'} = '请求时间无效！';
-    $Self->{Translation}->{'New (from template)'} = '从模板新建变更';
-    $Self->{Translation}->{'Add from template'} = '从模板添加';
-    $Self->{Translation}->{'Add Workorder (from template)'} = '从模板添加工作指令';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '在变更中添加工作指令（通过模板）';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = '工作指令（ID=%s） 实际结束时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        '工作指令（ID=%s） 实际结束时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = '工作指令（ID=%s） 实际开始时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        '工作指令（ID=%s） 实际结束时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = '新建工作指令（ID=%s）';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = '新建工作指令（ID=%s）';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = '工作指令%s新增附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '（ID=%s）工作指令%s新增附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = '工作指令%s删除附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '（ID=%s）工作指令%s删除附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = '工作指令%s新建\'报告\'附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        '（ID=%s）工作指令%s新建\'报告\'附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = '工作指令%s删除\'报告\'附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        '（ID=%s）工作指令%s删除\'报告\'附件';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'Workorder （ID=%s） deleted';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = '工作指令（ID=%s）已删除';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = '工作指令历史::工作指令添加链接';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = '（ID=%s）链接到%s（ID=%s）已添加';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = '链接到%s（ID=%s）已删除';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = '（ID=%s）链接到%s（ID=%s）已删除';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = '通知已发送给%s （事件： %s）';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '（ID=%s）通知已发送给%s （事件： %s）';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = '工作指令（ID=%s）计划结束时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        '工作指令（ID=%s）计划结束时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = '工作指令（ID=%s）计划开始时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        '工作指令（ID=%s）计划开始时间已到。';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s : 新：“%s” <-，旧：“%s”';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '（ID=%s）%s : 新：“%s” <-，旧：“%s”';
-    $Self->{Translation}->{'WorkOrderNumber'} = '工作指令号';
-    $Self->{Translation}->{'accepted'} = '接受';
-    $Self->{Translation}->{'any'} = '任何';
-    $Self->{Translation}->{'approval'} = '审批';
-    $Self->{Translation}->{'approved'} = '通过审批';
-    $Self->{Translation}->{'backout'} = '回退';
-    $Self->{Translation}->{'begins with'} = '以...开始';
-    $Self->{Translation}->{'canceled'} = '取消';
-    $Self->{Translation}->{'contains'} = '包含';
-    $Self->{Translation}->{'created'} = '创建于';
-    $Self->{Translation}->{'decision'} = '决定';
-    $Self->{Translation}->{'ends with'} = '以...结束';
-    $Self->{Translation}->{'failed'} = '失败';
-    $Self->{Translation}->{'in progress'} = '处理中';
-    $Self->{Translation}->{'is'} = '是';
-    $Self->{Translation}->{'is after'} = '是在...之后';
-    $Self->{Translation}->{'is before'} = '是在...之前';
-    $Self->{Translation}->{'is empty'} = '为空';
-    $Self->{Translation}->{'is greater than'} = '大于';
-    $Self->{Translation}->{'is less than'} = '小于';
-    $Self->{Translation}->{'is not'} = '不是';
-    $Self->{Translation}->{'is not empty'} = '不为空';
-    $Self->{Translation}->{'not contains'} = '不包含';
-    $Self->{Translation}->{'pending approval'} = '待审批';
-    $Self->{Translation}->{'pending pir'} = '等待实施后审查';
-    $Self->{Translation}->{'pir'} = 'PIR (实施后审查)';
-    $Self->{Translation}->{'ready'} = '就绪';
-    $Self->{Translation}->{'rejected'} = '被拒绝';
-    $Self->{Translation}->{'requested'} = '请求的';
-    $Self->{Translation}->{'retracted'} = '撤回';
-    $Self->{Translation}->{'set'} = '设置';
-    $Self->{Translation}->{'successful'} = '成功';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = '风险类别 <-> 影响 <-> 优先级';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = '上次修改于';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
     $Self->{Translation}->{'Ok'} = '确定';
+    $Self->{Translation}->{'ITSMChange'} = '变更';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。';
     $Self->{Translation}->{'Download Attachment'} = '下载附件';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '没有找到视图“%s”的配置选项！';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '标题：%s | 类型：%s';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = '我的CAB';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = '我的变更';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '我的工作指令';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = '请求的';
+    $Self->{Translation}->{'pending approval'} = '待审批';
+    $Self->{Translation}->{'rejected'} = '被拒绝';
+    $Self->{Translation}->{'approved'} = '通过审批';
+    $Self->{Translation}->{'in progress'} = '处理中';
+    $Self->{Translation}->{'pending pir'} = '等待实施后审查';
+    $Self->{Translation}->{'successful'} = '成功';
+    $Self->{Translation}->{'failed'} = '失败';
+    $Self->{Translation}->{'canceled'} = '取消';
+    $Self->{Translation}->{'retracted'} = '撤回';
+    $Self->{Translation}->{'created'} = '创建于';
+    $Self->{Translation}->{'accepted'} = '接受';
+    $Self->{Translation}->{'ready'} = '就绪';
+    $Self->{Translation}->{'approval'} = '审批';
+    $Self->{Translation}->{'workorder'} = '工作指令';
+    $Self->{Translation}->{'backout'} = '回退';
+    $Self->{Translation}->{'decision'} = '决定';
+    $Self->{Translation}->{'pir'} = 'PIR (实施后审查)';
+    $Self->{Translation}->{'is'} = '是';
+    $Self->{Translation}->{'is not'} = '不是';
+    $Self->{Translation}->{'is empty'} = '为空';
+    $Self->{Translation}->{'is not empty'} = '不为空';
+    $Self->{Translation}->{'is greater than'} = '大于';
+    $Self->{Translation}->{'is less than'} = '小于';
+    $Self->{Translation}->{'is before'} = '是在...之前';
+    $Self->{Translation}->{'is after'} = '是在...之后';
+    $Self->{Translation}->{'contains'} = '包含';
+    $Self->{Translation}->{'not contains'} = '不包含';
+    $Self->{Translation}->{'begins with'} = '以...开始';
+    $Self->{Translation}->{'ends with'} = '以...结束';
+    $Self->{Translation}->{'set'} = '设置';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         '有权限接手工作指令的服务人员列表。“键”是登录名，“值”是0或1。';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         '工作指令状态列表，工作指令的ActualStartTime（实际开始时间）将被设置（如果这时候还没有设置的话）。';
+    $Self->{Translation}->{'Add Workorder'} = '添加工作指令';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '从模板添加工作指令';
     $Self->{Translation}->{'Add a change from template.'} = '从模板添加一个变更。';
     $Self->{Translation}->{'Add a change.'} = '添加一个变更。';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '从模板添加变更的工作指令。';
     $Self->{Translation}->{'Add a workorder to the change.'} = '添加变更的工作指令';
+    $Self->{Translation}->{'Add from template'} = '从模板添加';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = '管理CIP矩阵。';
     $Self->{Translation}->{'Admin of the state machine.'} = '管理状态模式转换。';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = '变更概览简洁模式限制';
     $Self->{Translation}->{'Change Overview.'} = '变更概览';
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
+    $Self->{Translation}->{'Change Schedule'} = '变更计划';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
     $Self->{Translation}->{'Change Zoom.'} = '变更详情。';
     $Self->{Translation}->{'Change and Workorder Templates'} = '变更和工作指令模板';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '更换变更涉及的相关人员。';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '变更概览简洁模式每页变更数限制。';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '服务人员界面变更搜索后端路由';
+    $Self->{Translation}->{'Condition Edit'} = '条件编辑';
     $Self->{Translation}->{'Condition Overview'} = '条件概览';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '配置创建新工作指令后显示的界面。';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '配置计划开始时间或其它时间到达/过去时发送通知的频率。';
+    $Self->{Translation}->{'Create Change'} = '创建变更';
     $Self->{Translation}->{'Create Change (from Template)'} = '从模板创建变更';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '从这个工单创建一个变更（即从模板的方式）。';
     $Self->{Translation}->{'Create a change from this ticket.'} = '从这个工单创建变更。';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '变更经理概览。';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '变更PIR（实施后审查）概览。';
     $Self->{Translation}->{'ITSM Change notification rules'} = '变更通知规则';
+    $Self->{Translation}->{'ITSM Changes'} = '变更';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '我的CAB概览';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '我的变更概览。';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '我的工作指令概览。';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '重新计算工作指令编号的ITSM事件模块。';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         '设置工作指令实际开始/结束时间的ITSM事件模块。';
+    $Self->{Translation}->{'ITSMWorkOrder'} = '工作指令';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。';
     $Self->{Translation}->{'Link another object to the change.'} = '链接另一对象到变更。';
@@ -907,10 +792,12 @@ sub Data {
         '显示一个链接以从工单创建一个变更的模块。工单将自动链接到新的变更。';
     $Self->{Translation}->{'Move Time Slot.'} = '移动时间轴。';
     $Self->{Translation}->{'Move all workorders in time.'} = '移动所有工作指令的时间。';
+    $Self->{Translation}->{'New (from template)'} = '从模板新建变更';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '如果启用了“Ticket::Acl::Module###200-Ticket::Acl::Module”，只有这些组中的用户有权使用“ITSMChange::AddChangeLinkTicketTypes”中定义的工单类型。';
     $Self->{Translation}->{'Overview over all Changes.'} = '所有变更的概览。';
     $Self->{Translation}->{'PIR'} = '实施后评审';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (实施后审查)';
     $Self->{Translation}->{'PSA'} = 'PSA';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         '服务人员界面偏好设置视图UserCreateWorkOrderNextMask（创建工作指令后的窗口）对象的参数。';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = '保存工作指令为模板。';
     $Self->{Translation}->{'Schedule'} = '计划表';
     $Self->{Translation}->{'Screen after creating a workorder'} = '创建工作指令后的窗口';
+    $Self->{Translation}->{'Search Changes'} = '搜索变更';
     $Self->{Translation}->{'Search Changes.'} = '搜索变更。';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '选择变更编号生成器模块。“自动增量”--递增变更编号，系统ID和计数器配合使用的格式为：系统ID.计数器（如100118、100119）。“日期”--会用当前日期、系统ID和计数器共同生成变更编号，格式为：年.月.日.系统ID.计数器（如2010062400001、2010062400002）。“日期校验和”--计数器的值以校验和的方式追加日期和系统ID的字符串后面，校验和每日轮换，这种格式为：年.月.日.系统ID.计数器.校验和（如2010062410000017、2010062410000026）。';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = '状态模式转换';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '当用户编辑一个模板时，存储变更和工作指令的ID和他们对应的模板ID。';
+    $Self->{Translation}->{'Take Workorder'} = '接手工作指令';
     $Self->{Translation}->{'Take Workorder.'} = '执行工作指令。';
     $Self->{Translation}->{'Take the workorder.'} = '接手这个工作指令。';
+    $Self->{Translation}->{'Template Overview'} = '模板概览';
     $Self->{Translation}->{'Template.'} = '模板。';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         '变更的标识符，例如：Change#、MyChange#。默认为Change#。';

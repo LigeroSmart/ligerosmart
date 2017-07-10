@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:20+0000\n"
+"POT-Creation-Date: 2017-07-10 14:46+0000\n"
+"PO-Revision-Date: 2017-07-10 12:46+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -13,614 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChange"
-msgstr "變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChanges"
-msgstr "變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSM Changes"
-msgstr "變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "workorder"
-msgstr "工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "A change must have a title!"
-msgstr "變更必須有標題!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A condition must have a name!"
-msgstr "條件必須有名稱!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A template must have a name!"
-msgstr "模板必須有名稱!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A workorder must have a title!"
-msgstr "工作指令必須有標題!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add CAB Template"
-msgstr "添加CAB模板"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder"
-msgstr "添加工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder to the change"
-msgstr "添加變更工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add new condition and action pair"
-msgstr "添加新的條件和操作"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyCAB overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyChanges overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "CABAgents"
-msgstr "CAB服務人員"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABCustomers"
-msgstr "CAB用户"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Overview"
-msgstr "變更概況"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Schedule"
-msgstr "變更計劃"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change involved persons of the change"
-msgstr "更換變更涉及的相關人員"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAddID"
-msgstr "New Action (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDelete"
-msgstr "Action (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDeleteAll"
-msgstr "All Actions of Condition (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionExecute"
-msgstr "Action (ID=%s) executed: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionUpdate"
-msgstr "%s (Action ID=%s): New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "Change (ID=%s) reached actual end time."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "Change (ID=%s) reached actual start time."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAdd"
-msgstr "New Change (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "New Attachment: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "Deleted Attachment %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABDelete"
-msgstr "CAB Deleted %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "%s: New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "Link to %s (ID=%s) added"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "Link to %s (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "Notification sent to %s (Event: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "Change (ID=%s) reached planned end time."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "Change (ID=%s) reached planned start time."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "Change (ID=%s) reached requested time."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeUpdate"
-msgstr "%s: New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAddID"
-msgstr "New Condition (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDelete"
-msgstr "Condition (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "All Conditions of Change (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionUpdate"
-msgstr "%s (Condition ID=%s): New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAddID"
-msgstr "New Expression (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDelete"
-msgstr "Expression (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "All Expressions of Condition (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionUpdate"
-msgstr "%s (Expression ID=%s): New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeNumber"
-msgstr "變更編號"
-
-#. Template: AAAITSMChangeManagement
-msgid "Condition Edit"
-msgstr "删除"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create Change"
-msgstr "創建變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create a change from this ticket!"
-msgstr "從工單中創建變更！"
-
-#. Template: AAAITSMChangeManagement
-msgid "Delete Workorder"
-msgstr "删除工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the change"
-msgstr "編輯變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the conditions of the change"
-msgstr "編輯變更條件"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the workorder"
-msgstr "編輯工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Expression"
-msgstr "表達式"
-
-#. Template: AAAITSMChangeManagement
-msgid "Full-Text Search in Change and Workorder"
-msgstr "在變更和工作指令中進行全文搜索"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMCondition"
-msgstr "條件"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMWorkOrder"
-msgstr "ITSM工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the change"
-msgstr "連接另一個對象至變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the workorder"
-msgstr "連接另一個對象至工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Move all workorders in time"
-msgstr "適時移動所有工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "My CABs"
-msgstr "我的CAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Changes"
-msgstr "我的變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Workorders"
-msgstr "我的工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "No XXX settings"
-msgstr "沒有'%s'設置"
-
-#. Template: AAAITSMChangeManagement
-msgid "PIR (Post Implementation Review)"
-msgstr "PIR (實施後審查)"
-
-#. Template: AAAITSMChangeManagement
-msgid "PSA (Projected Service Availability)"
-msgstr "PSA (計劃服務可用性)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Please select first a catalog class!"
-msgstr "請先選擇目錄類"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the change"
-msgstr "打印變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the workorder"
-msgstr "打印工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "RequestedTime"
-msgstr "請求時間"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save Change CAB as Template"
-msgstr "保存變更CAB至模板"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save change as a template"
-msgstr "保存變更至模板"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save workorder as a template"
-msgstr "保存工作指令至模板"
-
-#. Template: AAAITSMChangeManagement
-msgid "Search Changes"
-msgstr "搜索變更"
-
-#. Template: AAAITSMChangeManagement
-msgid "Set the agent for the workorder"
-msgstr "為工作指令指派服務人員"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take Workorder"
-msgstr "接手工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take the workorder"
-msgstr "接手這個工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "Template Overview"
-msgstr "模板概況"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned end time is invalid!"
-msgstr "計劃結束時間無效"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned start time is invalid!"
-msgstr "計劃開始時間無效"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned time is invalid!"
-msgstr "計劃時間無效"
-
-#. Template: AAAITSMChangeManagement
-msgid "The requested time is invalid!"
-msgstr "請求時間無效"
-
-#. Template: AAAITSMChangeManagement
-msgid "New (from template)"
-msgstr "創建新變更(通過模板)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add from template"
-msgstr "Von Template hinzufügen"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder (from template)"
-msgstr "添加工作指令（通過模板）"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder (from template) to the change"
-msgstr "在變更中添加工作指令（通過模板）"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "Workorder (ID=%s) reached actual end time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached actual end time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "Workorder (ID=%s) reached actual start time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached actual start time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "New Workorder (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "New Workorder (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "New Attachment for WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) New Attachment for WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "Deleted Attachment from WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Deleted Attachment from WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr "New Report Attachment for WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) New Report Attachment for WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr "Deleted Report Attachment from WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "Workorder (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "Workorder (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "WorkOrderHistory::WorkOrderLinkAdd"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) Link to %s (ID=%s) added"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "Link to %s (ID=%s) deleted"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) Link to %s (ID=%s) gelöscht"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "Notification sent to %s (Event: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) Notification sent to %s (Event: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "Workorder (ID=%s) reached planned end time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached planned end time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "Workorder (ID=%s) reached planned start time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "Workorder (ID=%s) reached planned start time."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "%s: New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: New: %s <- Old: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderNumber"
-msgstr "工作指令"
-
-#. Template: AAAITSMChangeManagement
-msgid "accepted"
-msgstr "接受"
-
-#. Template: AAAITSMChangeManagement
-msgid "any"
-msgstr "任何"
-
-#. Template: AAAITSMChangeManagement
-msgid "approval"
-msgstr "審批"
-
-#. Template: AAAITSMChangeManagement
-msgid "approved"
-msgstr "通過審批"
-
-#. Template: AAAITSMChangeManagement
-msgid "backout"
-msgstr "退回"
-
-#. Template: AAAITSMChangeManagement
-msgid "begins with"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "canceled"
-msgstr "取消"
-
-#. Template: AAAITSMChangeManagement
-msgid "contains"
-msgstr "含有"
-
-#. Template: AAAITSMChangeManagement
-msgid "created"
-msgstr "創建於"
-
-#. Template: AAAITSMChangeManagement
-msgid "decision"
-msgstr "決定"
-
-#. Template: AAAITSMChangeManagement
-msgid "ends with"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "failed"
-msgstr "失敗"
-
-#. Template: AAAITSMChangeManagement
-msgid "in progress"
-msgstr "處理中"
-
-#. Template: AAAITSMChangeManagement
-msgid "is"
-msgstr "是"
-
-#. Template: AAAITSMChangeManagement
-msgid "is after"
-msgstr "...之後"
-
-#. Template: AAAITSMChangeManagement
-msgid "is before"
-msgstr "...之前"
-
-#. Template: AAAITSMChangeManagement
-msgid "is empty"
-msgstr "空白"
-
-#. Template: AAAITSMChangeManagement
-msgid "is greater than"
-msgstr "大於..."
-
-#. Template: AAAITSMChangeManagement
-msgid "is less than"
-msgstr "小於..."
-
-#. Template: AAAITSMChangeManagement
-msgid "is not"
-msgstr "不是"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not empty"
-msgstr "非空白"
-
-#. Template: AAAITSMChangeManagement
-msgid "not contains"
-msgstr "does not contain"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending approval"
-msgstr "待審批"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending pir"
-msgstr "等待實施後審查"
-
-#. Template: AAAITSMChangeManagement
-msgid "pir"
-msgstr "PIR (實施後審查)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ready"
-msgstr "準備開始"
-
-#. Template: AAAITSMChangeManagement
-msgid "rejected"
-msgstr "被拒絕"
-
-#. Template: AAAITSMChangeManagement
-msgid "requested"
-msgstr "請求"
-
-#. Template: AAAITSMChangeManagement
-msgid "retracted"
-msgstr "撤回"
-
-#. Template: AAAITSMChangeManagement
-msgid "set"
-msgstr "設置"
-
-#. Template: AAAITSMChangeManagement
-msgid "successful"
-msgstr "成功"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
@@ -1085,6 +477,10 @@ msgstr "上次修改人"
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
 msgstr "Ok"
+
+#. Template: AgentITSMChangeZoom
+msgid "ITSMChange"
+msgstr "變更"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -1696,9 +1092,141 @@ msgstr ""
 msgid "Title: %s | Type: %s"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "我的CAB"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "我的變更"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "請求"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "待審批"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "被拒絕"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "通過審批"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "處理中"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "等待實施後審查"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "成功"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "失敗"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "取消"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "撤回"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "創建於"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "接受"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "準備開始"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "審批"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "工作指令"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "退回"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "決定"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "PIR (實施後審查)"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "是"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "不是"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "空白"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "非空白"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "大於..."
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "小於..."
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "...之前"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "...之後"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "含有"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "does not contain"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "設置"
 
 #. SysConfig
 msgid ""
@@ -1711,6 +1239,10 @@ msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
 msgstr ""
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "添加工作指令"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1731,6 +1263,10 @@ msgstr ""
 #. SysConfig
 msgid "Add a workorder to the change."
 msgstr ""
+
+#. SysConfig
+msgid "Add from template"
+msgstr "Von Template hinzufügen"
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1801,6 +1337,10 @@ msgid "Change Print."
 msgstr ""
 
 #. SysConfig
+msgid "Change Schedule"
+msgstr "變更計劃"
+
+#. SysConfig
 msgid "Change Schedule."
 msgstr ""
 
@@ -1833,6 +1373,10 @@ msgid "Change search backend router of the agent interface."
 msgstr ""
 
 #. SysConfig
+msgid "Condition Edit"
+msgstr "删除"
+
+#. SysConfig
 msgid "Condition Overview"
 msgstr ""
 
@@ -1847,6 +1391,10 @@ msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr ""
+
+#. SysConfig
+msgid "Create Change"
+msgstr "創建變更"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -2552,6 +2100,10 @@ msgid "ITSM Change notification rules"
 msgstr ""
 
 #. SysConfig
+msgid "ITSM Changes"
+msgstr "變更"
+
+#. SysConfig
 msgid "ITSM MyCAB Overview."
 msgstr ""
 
@@ -2622,6 +2174,10 @@ msgstr ""
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr ""
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "ITSM工作指令"
 
 #. SysConfig
 msgid ""
@@ -2700,6 +2256,10 @@ msgid "Move all workorders in time."
 msgstr ""
 
 #. SysConfig
+msgid "New (from template)"
+msgstr "創建新變更(通過模板)"
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2713,6 +2273,10 @@ msgstr ""
 #. SysConfig
 msgid "PIR"
 msgstr ""
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "PIR (實施後審查)"
 
 #. SysConfig
 msgid "PSA"
@@ -2942,6 +2506,10 @@ msgid "Screen after creating a workorder"
 msgstr "創建工作指令後的視圖"
 
 #. SysConfig
+msgid "Search Changes"
+msgstr "搜索變更"
+
+#. SysConfig
 msgid "Search Changes."
 msgstr ""
 
@@ -3137,12 +2705,20 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Take Workorder"
+msgstr "接手工作指令"
+
+#. SysConfig
 msgid "Take Workorder."
 msgstr ""
 
 #. SysConfig
 msgid "Take the workorder."
 msgstr ""
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "模板概況"
 
 #. SysConfig
 msgid "Template."

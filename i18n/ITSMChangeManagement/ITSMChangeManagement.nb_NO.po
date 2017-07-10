@@ -4,623 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-04-25 12:52+0000\n"
-"Last-Translator: Peter Værlien <pvarlien@online.no>\n"
+"POT-Creation-Date: 2017-07-10 14:46+0000\n"
+"PO-Revision-Date: 2017-07-10 12:46+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChange"
-msgstr "Endring"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChanges"
-msgstr "Endringer"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSM Changes"
-msgstr "Endringer"
-
-#. Template: AAAITSMChangeManagement
-msgid "workorder"
-msgstr "Arbeidsordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "A change must have a title!"
-msgstr "En endring må ha en tittel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A condition must have a name!"
-msgstr "En forutsetning må ha et navn!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A template must have a name!"
-msgstr "En mal må ha et navn!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A workorder must have a title!"
-msgstr "En arbeidsordre må ha en tittel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add CAB Template"
-msgstr "Legg til CAB-mal"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder"
-msgstr "Legg til Arbeidordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder to the change"
-msgstr "Legg en arbeidsordre til endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add new condition and action pair"
-msgstr "Legg til nytt forutsetning-gjøremål-par"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyCAB overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyChanges overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "CABAgents"
-msgstr "CAB-saksbehandlere"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABCustomers"
-msgstr "CAB-kunder"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Overview"
-msgstr "Endringsoversikt"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Schedule"
-msgstr "Endre tidsplan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change involved persons of the change"
-msgstr "Endre involverte personer i endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAddID"
-msgstr "Nytt gjøremål (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDelete"
-msgstr "Gjøremål (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDeleteAll"
-msgstr "Alle gjøremål for forutsetning (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionExecute"
-msgstr "Gjøremål (ID=%s) utført: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionUpdate"
-msgstr "%s (Gjøremål ID=%s): Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "Endring (ID=%s) har nådd faktisk sluttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "Endring (ID=%s) har nådd faktisk starttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAdd"
-msgstr "Ny Endring (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "Nytt Vedlegg: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "Slettet Vedlegg %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABDelete"
-msgstr "CAB Slettet %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "%s: Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "Kobling til %s (ID=%s) lagt til"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "Kobling til %s (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "Melding sendt til %s (Hendelse: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "Endring (ID=%s) har nådd planlagt sluttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "Endring (ID=%s) har nådd planlagt starttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "Endring (ID=%s) har nådd forespurt tid."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeUpdate"
-msgstr "%s: Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAddID"
-msgstr "Ny forutsetning (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDelete"
-msgstr "Forutsetning (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "Alle Forutsetninger for Endring (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionUpdate"
-msgstr "%s (Forutsetning ID=%s): Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAddID"
-msgstr "Nytt uttrykk (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDelete"
-msgstr "Uttrykk (ID=%s) Slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "Alle Uttrykk for Forutsetning (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionUpdate"
-msgstr "%s (Uttrykk ID=%s): Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeNumber"
-msgstr "Endringsnummer"
-
-#. Template: AAAITSMChangeManagement
-msgid "Condition Edit"
-msgstr "Endre Forutsetning"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create Change"
-msgstr "Opprett Endring"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create a change from this ticket!"
-msgstr "Opprett en Endring fra denne saken"
-
-#. Template: AAAITSMChangeManagement
-msgid "Delete Workorder"
-msgstr "Slett Arbeidsordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the change"
-msgstr "Rediger endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the conditions of the change"
-msgstr "Endre forutsetningene for denne endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the workorder"
-msgstr "Endre arbeidsordren"
-
-#. Template: AAAITSMChangeManagement
-msgid "Expression"
-msgstr "Uttrykk"
-
-#. Template: AAAITSMChangeManagement
-msgid "Full-Text Search in Change and Workorder"
-msgstr "Fulltekstsøk i Endring og Arbeidsordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMCondition"
-msgstr "Forutsetning"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMWorkOrder"
-msgstr "Arbeidsordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the change"
-msgstr "Koble et annet objekt til endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the workorder"
-msgstr "Koble et annet objekt til arbeidsordren"
-
-#. Template: AAAITSMChangeManagement
-msgid "Move all workorders in time"
-msgstr "Flytt alle arbeidsordre i tid"
-
-#. Template: AAAITSMChangeManagement
-msgid "My CABs"
-msgstr "Mine Endringsråd"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Changes"
-msgstr "Mine Endringer"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Workorders"
-msgstr "Mine Arbeidsordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "No XXX settings"
-msgstr "Ingen innstillinger for '%s'"
-
-#. Template: AAAITSMChangeManagement
-msgid "PIR (Post Implementation Review)"
-msgstr "PIR (Sluttevaluering)"
-
-#. Template: AAAITSMChangeManagement
-msgid "PSA (Projected Service Availability)"
-msgstr "PSA (Forventet tjenestetilgjengelighet)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Please select first a catalog class!"
-msgstr "Vennligst velg en katalogklasse først!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the change"
-msgstr "Skriv ut endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the workorder"
-msgstr "Skriv ut arbeidsordren"
-
-#. Template: AAAITSMChangeManagement
-msgid "RequestedTime"
-msgstr "Forespurt tid"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save Change CAB as Template"
-msgstr "Lagre Endringsråd som mal"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save change as a template"
-msgstr "Lagre Endring som mal"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save workorder as a template"
-msgstr "Lagre Arbeidsordre som mal"
-
-#. Template: AAAITSMChangeManagement
-msgid "Search Changes"
-msgstr "Søk i Endringer"
-
-#. Template: AAAITSMChangeManagement
-msgid "Set the agent for the workorder"
-msgstr "Sett saksbehandler for arbeidsordren"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take Workorder"
-msgstr "Ta arbeidsordre"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take the workorder"
-msgstr "Ta arbeidsordren"
-
-#. Template: AAAITSMChangeManagement
-msgid "Template Overview"
-msgstr "Maloversikt"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned end time is invalid!"
-msgstr "Planlagt sluttid er ugyldig!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned start time is invalid!"
-msgstr "Planlagt starttid er ugyldig!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned time is invalid!"
-msgstr "Planlagt tid er ugyldig!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The requested time is invalid!"
-msgstr "Forespurt tid er ugyldig!"
-
-#. Template: AAAITSMChangeManagement
-msgid "New (from template)"
-msgstr "Ny (fra mal)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add from template"
-msgstr "Legg til fra mal"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder (from template)"
-msgstr "Legg til arbeidordre (fra mal)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder (from template) to the change"
-msgstr "Legg en arbeidsordre (fra mal) til endringen"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "Arbeidsordre (ID=%s) har nådd faktisk sluttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "Arbeidsordre (ID=%s) har nådd faktisk sluttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "Arbeidsordre (ID=%s) har nådd faktisk starttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "Arbeidsordre (ID=%s) har nådd faktisk starttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "Ny Arbeidsordre (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "Ny Arbeidsordre (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "Nytt vedlegg til Arbeidsordre: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) Nytt vedlegg til Arbeidsordre: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "Slettet vedlegget fra Arbeidsordre: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Slettet vedlegget fra Arbeidsordre: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "Arbeidsordre (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "Arbeidsordre (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "Kobling til %s (ID=%s) lagt til"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) Kobling til %s (ID=%s) lagt til"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "Kobling til %s (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) Kobling til %s (ID=%s) slettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "Melding sendt til %s (Hendelse: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) Melding sent til %s (Hendelse: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "Arbeidsordre (ID=%s) har nådd planlagt sluttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "Arbeidsordre (ID=%s) har nådd planlagt sluttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "Arbeidsordre (ID=%s) har nådd planlagt starttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "Arbeidsordre (ID=%s) har nådd planlagt starttid."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "%s: Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: Ny: %s -> Gammel: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderNumber"
-msgstr "Arbeidsordre nr"
-
-#. Template: AAAITSMChangeManagement
-msgid "accepted"
-msgstr "Akseptert"
-
-#. Template: AAAITSMChangeManagement
-msgid "any"
-msgstr "hvilken som helst"
-
-#. Template: AAAITSMChangeManagement
-msgid "approval"
-msgstr "Godkjenning"
-
-#. Template: AAAITSMChangeManagement
-msgid "approved"
-msgstr "Godkjent"
-
-#. Template: AAAITSMChangeManagement
-msgid "backout"
-msgstr "Plan for gjenoppretting"
-
-#. Template: AAAITSMChangeManagement
-msgid "begins with"
-msgstr "starter med"
-
-#. Template: AAAITSMChangeManagement
-msgid "canceled"
-msgstr "Avbrutt"
-
-#. Template: AAAITSMChangeManagement
-msgid "contains"
-msgstr "inneholder"
-
-#. Template: AAAITSMChangeManagement
-msgid "created"
-msgstr "Opprettet"
-
-#. Template: AAAITSMChangeManagement
-msgid "decision"
-msgstr "Beslutning"
-
-#. Template: AAAITSMChangeManagement
-msgid "ends with"
-msgstr "slutter med"
-
-#. Template: AAAITSMChangeManagement
-msgid "failed"
-msgstr "feilet"
-
-#. Template: AAAITSMChangeManagement
-msgid "in progress"
-msgstr "Under arbeid"
-
-#. Template: AAAITSMChangeManagement
-msgid "is"
-msgstr "er"
-
-#. Template: AAAITSMChangeManagement
-msgid "is after"
-msgstr "er etter"
-
-#. Template: AAAITSMChangeManagement
-msgid "is before"
-msgstr "er før"
-
-#. Template: AAAITSMChangeManagement
-msgid "is empty"
-msgstr "er tom"
-
-#. Template: AAAITSMChangeManagement
-msgid "is greater than"
-msgstr "er større enn"
-
-#. Template: AAAITSMChangeManagement
-msgid "is less than"
-msgstr "er mindre enn"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not"
-msgstr "er ikke"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not empty"
-msgstr "er ikke tom"
-
-#. Template: AAAITSMChangeManagement
-msgid "not contains"
-msgstr "inneholder ikke"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending approval"
-msgstr "Avventer godkjenning"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending pir"
-msgstr "Avventer Sluttevaluering"
-
-#. Template: AAAITSMChangeManagement
-msgid "pir"
-msgstr "PIR (Sluttevaluering)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ready"
-msgstr "Klar"
-
-#. Template: AAAITSMChangeManagement
-msgid "rejected"
-msgstr "Avvist"
-
-#. Template: AAAITSMChangeManagement
-msgid "requested"
-msgstr "Forespurt"
-
-#. Template: AAAITSMChangeManagement
-msgid "retracted"
-msgstr "Trukket tilbake"
-
-#. Template: AAAITSMChangeManagement
-msgid "set"
-msgstr "satt"
-
-#. Template: AAAITSMChangeManagement
-msgid "successful"
-msgstr "Vellykket"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
@@ -1085,6 +477,10 @@ msgstr "Sist endret av"
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
 msgstr "Ok"
+
+#. Template: AgentITSMChangeZoom
+msgid "ITSMChange"
+msgstr "Endring"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -1696,9 +1092,141 @@ msgstr ""
 msgid "Title: %s | Type: %s"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "Mine Endringsråd"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "Mine Endringer"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr "Mine Arbeidsordre"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "Forespurt"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "Avventer godkjenning"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "Avvist"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "Godkjent"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "Under arbeid"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "Avventer Sluttevaluering"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "Vellykket"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "feilet"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "Avbrutt"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "Trukket tilbake"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "Opprettet"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "Akseptert"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "Klar"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "Godkjenning"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "Arbeidsordre"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "Plan for gjenoppretting"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "Beslutning"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "PIR (Sluttevaluering)"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "er"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "er ikke"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "er tom"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "er ikke tom"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "er større enn"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "er mindre enn"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "er før"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "er etter"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "inneholder"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "inneholder ikke"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "starter med"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "slutter med"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "satt"
 
 #. SysConfig
 msgid ""
@@ -1711,6 +1239,10 @@ msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
 msgstr "Liste over arbeidsordretilstander som vil utløse at faktisk starttid blir satt (hvis tom fra før)."
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "Legg til Arbeidordre"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1731,6 +1263,10 @@ msgstr "Legg en arbeidsordre (fra mal) til endringen."
 #. SysConfig
 msgid "Add a workorder to the change."
 msgstr "Legg en arbeidsordre til endringen."
+
+#. SysConfig
+msgid "Add from template"
+msgstr "Legg til fra mal"
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1801,6 +1337,10 @@ msgid "Change Print."
 msgstr ""
 
 #. SysConfig
+msgid "Change Schedule"
+msgstr "Endre tidsplan"
+
+#. SysConfig
 msgid "Change Schedule."
 msgstr ""
 
@@ -1833,6 +1373,10 @@ msgid "Change search backend router of the agent interface."
 msgstr ""
 
 #. SysConfig
+msgid "Condition Edit"
+msgstr "Endre Forutsetning"
+
+#. SysConfig
 msgid "Condition Overview"
 msgstr ""
 
@@ -1847,6 +1391,10 @@ msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr "Setter opp hvor ofte meldinger blir sendt ut når planlagt starttid eller andre tidspunkter nås eller passeres"
+
+#. SysConfig
+msgid "Create Change"
+msgstr "Opprett Endring"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -2552,6 +2100,10 @@ msgid "ITSM Change notification rules"
 msgstr ""
 
 #. SysConfig
+msgid "ITSM Changes"
+msgstr "Endringer"
+
+#. SysConfig
 msgid "ITSM MyCAB Overview."
 msgstr ""
 
@@ -2622,6 +2174,10 @@ msgstr ""
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr ""
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "Arbeidsordre"
 
 #. SysConfig
 msgid ""
@@ -2700,6 +2256,10 @@ msgid "Move all workorders in time."
 msgstr "Flytt alle arbeidsordre i tid."
 
 #. SysConfig
+msgid "New (from template)"
+msgstr "Ny (fra mal)"
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2713,6 +2273,10 @@ msgstr "Oversikt over alle endringer."
 #. SysConfig
 msgid "PIR"
 msgstr ""
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "PIR (Sluttevaluering)"
 
 #. SysConfig
 msgid "PSA"
@@ -2942,6 +2506,10 @@ msgid "Screen after creating a workorder"
 msgstr ""
 
 #. SysConfig
+msgid "Search Changes"
+msgstr "Søk i Endringer"
+
+#. SysConfig
 msgid "Search Changes."
 msgstr "Søk i Endringer."
 
@@ -3137,12 +2705,20 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Take Workorder"
+msgstr "Ta arbeidsordre"
+
+#. SysConfig
 msgid "Take Workorder."
 msgstr "Ta arbeidsordre."
 
 #. SysConfig
 msgid "Take the workorder."
 msgstr "Ta arbeidsordren."
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "Maloversikt"
 
 #. SysConfig
 msgid "Template."

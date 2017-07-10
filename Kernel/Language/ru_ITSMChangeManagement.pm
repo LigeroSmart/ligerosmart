@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'Изменение';
-    $Self->{Translation}->{'ITSMChanges'} = 'Изменения';
-    $Self->{Translation}->{'ITSM Changes'} = 'Изменения';
-    $Self->{Translation}->{'workorder'} = 'Задача';
-    $Self->{Translation}->{'A change must have a title!'} = 'Изменение должно иметь название';
-    $Self->{Translation}->{'A condition must have a name!'} = 'Условие должно иметь имя';
-    $Self->{Translation}->{'A template must have a name!'} = 'Шаблон должен иметь имя';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'Задача должна иметь название';
-    $Self->{Translation}->{'Add CAB Template'} = 'Добавить шаблон для CAB';
-    $Self->{Translation}->{'Add Workorder'} = 'Добавить задачу';
-    $Self->{Translation}->{'Add a workorder to the change'} = 'Добавить задачу к изменению';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'Добавить новую пару условие-действие';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        'Модуль интерфейса агента отображающий иконку обзора ChangeManager';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = 'Модуль интерфейса агента отображающий иконку обзора Мои CAB';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = 'Модуль интерфейса агента отображающий иконку обзора Мои изменения';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        'Модуль интерфейса агента отображающий иконку обзора Мои задачи';
-    $Self->{Translation}->{'CABAgents'} = 'агенты в CAB';
-    $Self->{Translation}->{'CABCustomers'} = 'клиенты в CAB';
-    $Self->{Translation}->{'Change Overview'} = 'Обзор изменений';
-    $Self->{Translation}->{'Change Schedule'} = 'Планировщик изменений';
-    $Self->{Translation}->{'Change involved persons of the change'} = 'Изменить список вовлеченных участников изменения';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Новое действие (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Действие (ID=%s) удалено';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Все действия и условия (ID=%s) удалены';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Действие (ID=%s) выполняется: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Действие ID=%s): Новое: %s <- Старое: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Изменение (ID=%s) достигло фактического времени окончания.';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Изменение (ID=%s) достигло фактического времени начала.';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Новое изменение (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Новое вложение: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'Удаленные вложения %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'CAB удален %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = 'CAB %s: Новый: %s <- Старый: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'Связь %s (ID=%s) добавлена';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'Связь для %s (ID=%s) удалена';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'Уведомление отправлено %s (Событие: %s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Изменение (ID=%s) достигло запланированного времени окончания.';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Изменение (ID=%s) достигло запланированного времени начала.';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Изменение (ID=%s) достигло заданного срока.';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: Новое: %s <- Старое: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'Новое условие (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'Условие (ID=%s) удалено';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'Все условия изменения (ID=%s) удалены';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (Условие ID=%s): Новое: %s <- Старое: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'Новое выражение (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'Выражение (ID=%s) удалено';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'Все выражения условия (ID=%s) удалены';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (Выражение ID=%s): Новое: %s <- Старое: %s';
-    $Self->{Translation}->{'ChangeNumber'} = 'Номер изменения';
-    $Self->{Translation}->{'Condition Edit'} = 'Редактировать условие';
-    $Self->{Translation}->{'Create Change'} = 'Создать изменение';
-    $Self->{Translation}->{'Create a change from this ticket!'} = 'Создать изменение из этой заявки!';
-    $Self->{Translation}->{'Delete Workorder'} = 'Удалить задачу';
-    $Self->{Translation}->{'Edit the change'} = 'Редактировать изменение';
-    $Self->{Translation}->{'Edit the conditions of the change'} = 'Редактировать условия изменения';
-    $Self->{Translation}->{'Edit the workorder'} = 'Редактировать задачу';
-    $Self->{Translation}->{'Expression'} = 'Выражение';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Полнотекстовый поиск в изменении и задаче';
-    $Self->{Translation}->{'ITSMCondition'} = 'Условие';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'Задача';
-    $Self->{Translation}->{'Link another object to the change'} = 'Связать другой объект с изменением';
-    $Self->{Translation}->{'Link another object to the workorder'} = 'Связать другой объект с задачей';
-    $Self->{Translation}->{'Move all workorders in time'} = 'Переместить все задачи во времени';
-    $Self->{Translation}->{'My CABs'} = 'Мои CAB';
-    $Self->{Translation}->{'My Changes'} = 'Мои изменения';
-    $Self->{Translation}->{'My Workorders'} = 'Мои задачи';
-    $Self->{Translation}->{'No XXX settings'} = 'Нет \'%s\' параметров';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review/Анализ после выполнения)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability/Проектируемая доступность сервиса)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'Пожалуйста, сначала выберите класс каталога';
-    $Self->{Translation}->{'Print the change'} = 'Печать изменения';
-    $Self->{Translation}->{'Print the workorder'} = 'Печать задачи';
-    $Self->{Translation}->{'RequestedTime'} = 'Запрошенное время';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'Сохранить состав CAB для изменения как шаблон';
-    $Self->{Translation}->{'Save change as a template'} = 'Сохранить изменение как шаблон';
-    $Self->{Translation}->{'Save workorder as a template'} = 'Сохранить задачу как шаблон';
-    $Self->{Translation}->{'Search Changes'} = 'Поиск изменений';
-    $Self->{Translation}->{'Set the agent for the workorder'} = 'Назначит агента для задачи';
-    $Self->{Translation}->{'Take Workorder'} = 'Взять задачу';
-    $Self->{Translation}->{'Take the workorder'} = 'Взять задачу';
-    $Self->{Translation}->{'Template Overview'} = 'Обзор шаблонов';
-    $Self->{Translation}->{'The planned end time is invalid!'} = 'Запланированное время окончания неверно!';
-    $Self->{Translation}->{'The planned start time is invalid!'} = 'Запланированное время начала неверно!';
-    $Self->{Translation}->{'The planned time is invalid!'} = 'Планоый срок неверен!';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'Запрашиваемое время неверно!';
-    $Self->{Translation}->{'New (from template)'} = 'Новое(ая) из шаблона';
-    $Self->{Translation}->{'Add from template'} = 'Добавить, используя шаблон';
-    $Self->{Translation}->{'Add Workorder (from template)'} = 'Добавить задачу ( используя шаблон)';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Добавить задачу к изменению (используя шаблон)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Задача (ID=%s) достигла фактического времени окончания.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        'Задача (ID=%s) достигла фактического времени окончания.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Задача (ID=%s) достигла фактического времени начала.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        'Задача (ID=%s) достигла фактического времени начала.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'Новая задача (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'Новая задача (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = 'Новое вложение для задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '(ID=%s) Новое вложение из задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Удаленное вложение для задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Удаленное вложение из задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = 'Новый вложенный отчет для задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        '(ID=%s) Новый вложенный отчет для задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = 'Удаленный вложенный отчет из задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        '(ID=%s) Удаленный вложенный отчет из задачи: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'Задача (ID=%s) удалена';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'Задача (ID=%s) удалена';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'Связь для %s (ID=%s) добавлена';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = '(ID=%s) Связь для %s (ID=%s) добавлена';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Связь для %s (ID=%s) удалена';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = '(ID=%s) Связь для %s (ID=%s) удалена';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'Уведомление отправлено %s (Событие: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '(ID=%s) Уведомление отправлено %s (Событие: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'Задача (ID=%s) достигла запланированного времени окончания.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        'достигла запланированного времени окончания.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Задача (ID=%s) достигла запланированного времени начала';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        'Задача (ID=%s) достигла запланированного времени начала.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: Новая: %s <- Старая: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: Новая: %s <- Старая: %s';
-    $Self->{Translation}->{'WorkOrderNumber'} = 'Номер задачи';
-    $Self->{Translation}->{'accepted'} = 'Принято';
-    $Self->{Translation}->{'any'} = 'любой(ая)';
-    $Self->{Translation}->{'approval'} = 'Утверждение';
-    $Self->{Translation}->{'approved'} = 'Утверждено';
-    $Self->{Translation}->{'backout'} = 'План отката';
-    $Self->{Translation}->{'begins with'} = 'начать с';
-    $Self->{Translation}->{'canceled'} = 'отменено';
-    $Self->{Translation}->{'contains'} = 'содержит';
-    $Self->{Translation}->{'created'} = 'создано(а)';
-    $Self->{Translation}->{'decision'} = 'решение';
-    $Self->{Translation}->{'ends with'} = 'окончить с';
-    $Self->{Translation}->{'failed'} = 'не удалось';
-    $Self->{Translation}->{'in progress'} = 'в работе';
-    $Self->{Translation}->{'is'} = 'Является';
-    $Self->{Translation}->{'is after'} = 'после';
-    $Self->{Translation}->{'is before'} = 'до';
-    $Self->{Translation}->{'is empty'} = 'пусто';
-    $Self->{Translation}->{'is greater than'} = 'больше чем';
-    $Self->{Translation}->{'is less than'} = 'меньше чем';
-    $Self->{Translation}->{'is not'} = 'не';
-    $Self->{Translation}->{'is not empty'} = 'не пусто';
-    $Self->{Translation}->{'not contains'} = 'не содержит';
-    $Self->{Translation}->{'pending approval'} = 'отложенное утверждение';
-    $Self->{Translation}->{'pending pir'} = 'ожидает одобрения PIR';
-    $Self->{Translation}->{'pir'} = 'PIR (Post Implementation Review/анализ по окончании)';
-    $Self->{Translation}->{'ready'} = 'готово';
-    $Self->{Translation}->{'rejected'} = 'отвергнуто';
-    $Self->{Translation}->{'requested'} = 'запрошено';
-    $Self->{Translation}->{'retracted'} = 'отказано';
-    $Self->{Translation}->{'set'} = 'установлено';
-    $Self->{Translation}->{'successful'} = 'успешно';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Категория <-> Влияние <-> Приоритет';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Дата последнего изменеия';
     $Self->{Translation}->{'Last changed by'} = 'Последний изменил';
     $Self->{Translation}->{'Ok'} = 'О.К.';
+    $Self->{Translation}->{'ITSMChange'} = 'Изменение';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'Для открытия ссылки в следующем сообщении/заметке необходимо нажать и удерживать клавишу Ctrl или Cmd или Shift и кликнуть по ссылке (зависит от вашего браузера и ОС).';
     $Self->{Translation}->{'Download Attachment'} = 'Загрузить вложение';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Не настроен обзор "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = 'Мои CAB';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = 'Мои изменения';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Мои Задачи';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = 'запрошено';
+    $Self->{Translation}->{'pending approval'} = 'отложенное утверждение';
+    $Self->{Translation}->{'rejected'} = 'отвергнуто';
+    $Self->{Translation}->{'approved'} = 'Утверждено';
+    $Self->{Translation}->{'in progress'} = 'в работе';
+    $Self->{Translation}->{'pending pir'} = 'ожидает одобрения PIR';
+    $Self->{Translation}->{'successful'} = 'успешно';
+    $Self->{Translation}->{'failed'} = 'не удалось';
+    $Self->{Translation}->{'canceled'} = 'отменено';
+    $Self->{Translation}->{'retracted'} = 'отказано';
+    $Self->{Translation}->{'created'} = 'создано(а)';
+    $Self->{Translation}->{'accepted'} = 'Принято';
+    $Self->{Translation}->{'ready'} = 'готово';
+    $Self->{Translation}->{'approval'} = 'Утверждение';
+    $Self->{Translation}->{'workorder'} = 'Задача';
+    $Self->{Translation}->{'backout'} = 'План отката';
+    $Self->{Translation}->{'decision'} = 'решение';
+    $Self->{Translation}->{'pir'} = 'PIR (Post Implementation Review/анализ по окончании)';
+    $Self->{Translation}->{'is'} = 'Является';
+    $Self->{Translation}->{'is not'} = 'не';
+    $Self->{Translation}->{'is empty'} = 'пусто';
+    $Self->{Translation}->{'is not empty'} = 'не пусто';
+    $Self->{Translation}->{'is greater than'} = 'больше чем';
+    $Self->{Translation}->{'is less than'} = 'меньше чем';
+    $Self->{Translation}->{'is before'} = 'до';
+    $Self->{Translation}->{'is after'} = 'после';
+    $Self->{Translation}->{'contains'} = 'содержит';
+    $Self->{Translation}->{'not contains'} = 'не содержит';
+    $Self->{Translation}->{'begins with'} = 'начать с';
+    $Self->{Translation}->{'ends with'} = 'окончить с';
+    $Self->{Translation}->{'set'} = 'установлено';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Список агентов, имеющих права взять задачу в работу. Ключ - логин, Содержание - 0 или 1';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Список состояний задачи в которых фактическое время начала задачи может быть задано, если еще пусто к этому моменту.';
+    $Self->{Translation}->{'Add Workorder'} = 'Добавить задачу';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = 'Добавить Изменение из шаблона.';
     $Self->{Translation}->{'Add a change.'} = 'Добавить изменения';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add from template'} = 'Добавить, используя шаблон';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Управление матрицей CIP';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Управление машиной состояний';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Изменить количество строк/записей при просмотре изменений в формате Small.';
     $Self->{Translation}->{'Change Overview.'} = 'Обзор Изменения';
     $Self->{Translation}->{'Change Print.'} = 'Печать Изменения.';
+    $Self->{Translation}->{'Change Schedule'} = 'Планировщик изменений';
     $Self->{Translation}->{'Change Schedule.'} = 'Изменение расписания.';
     $Self->{Translation}->{'Change Zoom.'} = 'Подробный просмотр Изменения.';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Изменить источник поиска (backend) в интерфейсе агента.';
+    $Self->{Translation}->{'Condition Edit'} = 'Редактировать условие';
     $Self->{Translation}->{'Condition Overview'} = 'Обзор Условий';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Задает частоту отправки уведомлений, когда запланированное время начала или другие времеНные значения достигнуты/прошли.';
+    $Self->{Translation}->{'Create Change'} = 'Создать изменение';
     $Self->{Translation}->{'Create Change (from Template)'} = '';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = 'Обзор Управляющих Изменениями в ITSM ';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'Обзор ITSM Change PIR';
     $Self->{Translation}->{'ITSM Change notification rules'} = 'Правила Уведомления в Управлении Изменениями';
+    $Self->{Translation}->{'ITSM Changes'} = 'Изменения';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = 'Обзор МоиCAB ';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = 'Обзор МоиИзменения';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = 'Обзор МоиЗадачи.';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'ITSM модуль обработки событий, перевычисляющий номера задач.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'ITSM модуль обработки событий, устанавливающий фактическое время начала и окончания задач.';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'Задача';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         'Если частота указана как "regularly" вы можете задать как часто будут отправляться уведомления (каждые Х часов).';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -907,10 +792,12 @@ sub Data {
         'Модуль для отображении ссылки на создание изменения из этой заявки. Заявка будет автоматически связана с новым изменением.';
     $Self->{Translation}->{'Move Time Slot.'} = 'Сместить диапазон времени.';
     $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Новое(ая) из шаблона';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Пользователи только указанных групп имеют права на использование типов заявок заданных в "ITSMChange::AddChangeLinkTicketTypes", если параметр "Ticket::Acl::Module###200-Ticket::Acl::Module" включен.';
     $Self->{Translation}->{'Overview over all Changes.'} = 'Обзор всех Изменений.';
     $Self->{Translation}->{'PIR'} = 'PIR';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review/Анализ после выполнения)';
     $Self->{Translation}->{'PSA'} = 'PSA';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'Параметры для объекта UserCreateWorkOrderNextMask  в предварительном просмотре в интерфейсе агента';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Показать этот экран после создания новой задачи';
+    $Self->{Translation}->{'Search Changes'} = 'Поиск изменений';
     $Self->{Translation}->{'Search Changes.'} = 'Поиск изменений.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Задает способ генерации номеров изменений.  "AutoIncrement" - увеличивает номер на 1, формат - SystemID.counter (например, 100118, 100119).  "Date" - использует текущую дату, SystemID и счетчик, вид: Year.Month.Day.SystemID.counter - 2010062400001, 2010062400002. "DateChecksum" - счетчик дополняется контрольной суммой к строке из даты и SystemID. Формат строится как Year.Month.Day.SystemID.Counter.CheckSum. Контрольная сумма обновляется ежедневно, вид: 2010062410000017, 2010062410000026.';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'Состояния';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Сохраняет идентфикаторы - id\'s изменениия и задачи и их соответствующие идентификаторы шаблонов во время редактирования их пользователем.';
+    $Self->{Translation}->{'Take Workorder'} = 'Взять задачу';
     $Self->{Translation}->{'Take Workorder.'} = 'Взять Задачу в работу.';
     $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Template Overview'} = 'Обзор шаблонов';
     $Self->{Translation}->{'Template.'} = 'Шаблон.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Индентификатор для изменения, например Change#, MyChange#. The default is Change#.';

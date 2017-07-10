@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'تغییر';
-    $Self->{Translation}->{'ITSMChanges'} = 'تغییرات';
-    $Self->{Translation}->{'ITSM Changes'} = 'تغییرات';
-    $Self->{Translation}->{'workorder'} = 'دستور کار';
-    $Self->{Translation}->{'A change must have a title!'} = 'هر تغییر باید عنوان داشته باشد!';
-    $Self->{Translation}->{'A condition must have a name!'} = 'هر شرط باید دارای نام باشد!';
-    $Self->{Translation}->{'A template must have a name!'} = 'قالب باید دارای نام باشد!';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'هر دستور کار باید دارای عنوان باشد!';
-    $Self->{Translation}->{'Add CAB Template'} = 'افزودن قالب برای هیئت مشاوران';
-    $Self->{Translation}->{'Add Workorder'} = 'افزودن دستور کار';
-    $Self->{Translation}->{'Add a workorder to the change'} = 'افزودن یک دستور کار به تغییر';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'افزودن جفتی از شرط و عملیات';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        'ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی مدیر تغییر';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = 'ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی کارشناسان تیم تغییر من';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = 'ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی تغییرات من';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        'ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی دستور کارهای من';
-    $Self->{Translation}->{'CABAgents'} = 'کارشناسان هیئت مشاور تغییر';
-    $Self->{Translation}->{'CABCustomers'} = 'هیئت مشاور تغییر - مشترکان';
-    $Self->{Translation}->{'Change Overview'} = 'نمای کلی تغییر';
-    $Self->{Translation}->{'Change Schedule'} = 'زمان‌بندی تغییر';
-    $Self->{Translation}->{'Change involved persons of the change'} = 'افراد درگیر این تغییر';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'عملیات جدید (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'عملیات (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'تمام عملیات‌های شرط (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'عملیات (ID=%s) اجرا شد: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (شناسه عملیات=%s): جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'زمان حقیقی پایان تغییر فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'زمان حقیقی آغاز تغییر فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'تغییر جدید (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'پیوست جدید: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'پیوست حذف شد %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'هیئت مشاوران تغییر حذف شد %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'ارتباط به %s (ID=%s) افزوده شد';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'ارتباط به %s (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'اعلام فرستاده شد %s (رویداد: %s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'زمان برنامه‌ریزی شده پایان تغییر فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'زمان برنامه‌ریزی شده آغاز تغییر فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'زمان درخواست شده تغییر توسط مشترک فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'شرط جدید (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'شرط (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'تمام شروط دستور کار (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (شناسه شرط=%s): جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'عبارت منطقی جدید (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'عبارت منطقی (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'تمام عبارات منطقی شرط (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (شناسه عبارت=%s): جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'ChangeNumber'} = 'شماره تغییر';
-    $Self->{Translation}->{'Condition Edit'} = 'ویرایش شرط';
-    $Self->{Translation}->{'Create Change'} = 'ساختن تغییر';
-    $Self->{Translation}->{'Create a change from this ticket!'} = 'ساخت یک تغییر از این درخواست!';
-    $Self->{Translation}->{'Delete Workorder'} = 'حذف دستور کار';
-    $Self->{Translation}->{'Edit the change'} = 'ویرایش تغییر';
-    $Self->{Translation}->{'Edit the conditions of the change'} = 'ویرایش شروط تغییر';
-    $Self->{Translation}->{'Edit the workorder'} = 'ویرایش دستور کار';
-    $Self->{Translation}->{'Expression'} = 'عبارت منطقی';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'جستجوی تمام متن در تغییرات و دستور کارها';
-    $Self->{Translation}->{'ITSMCondition'} = 'شرط';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'دستور کار';
-    $Self->{Translation}->{'Link another object to the change'} = 'ارتباط دادن یک شیء به تغییر';
-    $Self->{Translation}->{'Link another object to the workorder'} = 'ارتباط دادن یک شیء دیگر به دستور کار';
-    $Self->{Translation}->{'Move all workorders in time'} = 'جابه‌جا کردن تمام دستور کارها در زمان';
-    $Self->{Translation}->{'My CABs'} = 'هیئت مشاوران من';
-    $Self->{Translation}->{'My Changes'} = 'تغییرات من';
-    $Self->{Translation}->{'My Workorders'} = 'دستور کارهای من';
-    $Self->{Translation}->{'No XXX settings'} = 'بدون تنظیمات \'%s\'';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'بررسی پس از پیاده‌سازی';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'دسترس‌پذیری پیش‌بینی شده خدمات';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'لطفا ابتدا یک کلاس انتخاب کنید!';
-    $Self->{Translation}->{'Print the change'} = 'چاپ تغییر';
-    $Self->{Translation}->{'Print the workorder'} = 'چاپ دستور کار';
-    $Self->{Translation}->{'RequestedTime'} = 'زمان مورد انتظار';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'ذخیره کردن تیم کارشناسی تغییر به عنوان قالب';
-    $Self->{Translation}->{'Save change as a template'} = 'ذخیره کردن تغییر به عنون قالب';
-    $Self->{Translation}->{'Save workorder as a template'} = 'ذخیره کردن دستور کار به عنوان قالب';
-    $Self->{Translation}->{'Search Changes'} = 'جستجوی تغییرات';
-    $Self->{Translation}->{'Set the agent for the workorder'} = 'مشخص کردن کارشناس برای دستور کار';
-    $Self->{Translation}->{'Take Workorder'} = 'گرفتن دستور کار';
-    $Self->{Translation}->{'Take the workorder'} = 'این دستور کار را بگیر';
-    $Self->{Translation}->{'Template Overview'} = 'نمای کلی قالب';
-    $Self->{Translation}->{'The planned end time is invalid!'} = 'زمان برنامه‌ریزی شده پایان معتبر نیست!';
-    $Self->{Translation}->{'The planned start time is invalid!'} = 'زمان برنامه‌ریزی شده آغاز معتبر نیست!';
-    $Self->{Translation}->{'The planned time is invalid!'} = 'زمان برنامه‌ریزی شده معتبر نیست!';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'زمان درخواست معتبر نیست!';
-    $Self->{Translation}->{'New (from template)'} = '';
-    $Self->{Translation}->{'Add from template'} = '';
-    $Self->{Translation}->{'Add Workorder (from template)'} = '';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'زمان حقیقی پایان دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        'زمان حقیقی پایان دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'زمان حقیقی آغاز دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        'زمان حقیقی آغاز دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'دستور کار جدید (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'دستور کار جدید (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = 'پیوست جدید برای دستور کار: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '(ID=%s) پیوست جدید برای دستور کار: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'پیوست حذف شده از دستور کار: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) پیوست حذف شده از دستور کار: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'دستور کار (ID=%s) حذف شد';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'دستور کار (ID=%s) حذف شد';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'ارتباط به %s (ID=%s) افزوده شد';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = '(ID=%s) ارتباط به %s (ID=%s) افزوده شد';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'ارتباط به %s (ID=%s) حذف شد';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = '(ID=%s) ارتباط به %s (ID=%s) حذف شد';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'اعلان به %s ارسال شد )رویداد: %s(';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '(ID=%s) اعلان ارسال شد به %s (رویداد: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        'زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        'زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'WorkOrderNumber'} = 'شماره دستور کار';
-    $Self->{Translation}->{'accepted'} = 'پذیرفته شده';
-    $Self->{Translation}->{'any'} = 'هیچ';
-    $Self->{Translation}->{'approval'} = 'تصویب';
-    $Self->{Translation}->{'approved'} = 'تایید شده';
-    $Self->{Translation}->{'backout'} = 'طرح بازگشت';
-    $Self->{Translation}->{'begins with'} = 'شروع می‌شود با';
-    $Self->{Translation}->{'canceled'} = 'لغو شده';
-    $Self->{Translation}->{'contains'} = 'شامل است';
-    $Self->{Translation}->{'created'} = 'ساخته شده';
-    $Self->{Translation}->{'decision'} = 'تصمیم';
-    $Self->{Translation}->{'ends with'} = 'پایان می‌یابد با';
-    $Self->{Translation}->{'failed'} = 'شکست';
-    $Self->{Translation}->{'in progress'} = 'در حال اجرا';
-    $Self->{Translation}->{'is'} = 'هست';
-    $Self->{Translation}->{'is after'} = 'پس از';
-    $Self->{Translation}->{'is before'} = 'قبل از';
-    $Self->{Translation}->{'is empty'} = 'خالی است';
-    $Self->{Translation}->{'is greater than'} = 'بزرگتر است از';
-    $Self->{Translation}->{'is less than'} = 'کوچکتر است از';
-    $Self->{Translation}->{'is not'} = 'نیست';
-    $Self->{Translation}->{'is not empty'} = 'خالی نیست';
-    $Self->{Translation}->{'not contains'} = 'شامل نیست';
-    $Self->{Translation}->{'pending approval'} = 'در انتظار تایید';
-    $Self->{Translation}->{'pending pir'} = 'در انتظار بررسی پس از پیاده‌سازی';
-    $Self->{Translation}->{'pir'} = 'بررسی پس از پیاده‌سازی';
-    $Self->{Translation}->{'ready'} = 'آماده';
-    $Self->{Translation}->{'rejected'} = 'رد شده';
-    $Self->{Translation}->{'requested'} = 'درخواست شده';
-    $Self->{Translation}->{'retracted'} = 'جمع شده';
-    $Self->{Translation}->{'set'} = 'تنظیم شده';
-    $Self->{Translation}->{'successful'} = 'موفقیت';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'طبقه <-> اثر <-> الویت';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'آخرین تغییر ';
     $Self->{Translation}->{'Last changed by'} = 'آخرین تغییر توسط';
     $Self->{Translation}->{'Ok'} = 'تایید';
+    $Self->{Translation}->{'ITSMChange'} = 'تغییر';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = 'دریافت پیوست';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = 'هیئت مشاوران من';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = 'تغییرات من';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = 'درخواست شده';
+    $Self->{Translation}->{'pending approval'} = 'در انتظار تایید';
+    $Self->{Translation}->{'rejected'} = 'رد شده';
+    $Self->{Translation}->{'approved'} = 'تایید شده';
+    $Self->{Translation}->{'in progress'} = 'در حال اجرا';
+    $Self->{Translation}->{'pending pir'} = 'در انتظار بررسی پس از پیاده‌سازی';
+    $Self->{Translation}->{'successful'} = 'موفقیت';
+    $Self->{Translation}->{'failed'} = 'شکست';
+    $Self->{Translation}->{'canceled'} = 'لغو شده';
+    $Self->{Translation}->{'retracted'} = 'جمع شده';
+    $Self->{Translation}->{'created'} = 'ساخته شده';
+    $Self->{Translation}->{'accepted'} = 'پذیرفته شده';
+    $Self->{Translation}->{'ready'} = 'آماده';
+    $Self->{Translation}->{'approval'} = 'تصویب';
+    $Self->{Translation}->{'workorder'} = 'دستور کار';
+    $Self->{Translation}->{'backout'} = 'طرح بازگشت';
+    $Self->{Translation}->{'decision'} = 'تصمیم';
+    $Self->{Translation}->{'pir'} = 'بررسی پس از پیاده‌سازی';
+    $Self->{Translation}->{'is'} = 'هست';
+    $Self->{Translation}->{'is not'} = 'نیست';
+    $Self->{Translation}->{'is empty'} = 'خالی است';
+    $Self->{Translation}->{'is not empty'} = 'خالی نیست';
+    $Self->{Translation}->{'is greater than'} = 'بزرگتر است از';
+    $Self->{Translation}->{'is less than'} = 'کوچکتر است از';
+    $Self->{Translation}->{'is before'} = 'قبل از';
+    $Self->{Translation}->{'is after'} = 'پس از';
+    $Self->{Translation}->{'contains'} = 'شامل است';
+    $Self->{Translation}->{'not contains'} = 'شامل نیست';
+    $Self->{Translation}->{'begins with'} = 'شروع می‌شود با';
+    $Self->{Translation}->{'ends with'} = 'پایان می‌یابد با';
+    $Self->{Translation}->{'set'} = 'تنظیم شده';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'فهرست کارشناسانی که اجازه دسترسی برای گرفتن دستور کار را دارا هستند. کلید یک نام برای ورود است. محتوا 0 یا 1 است.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'فهرستی از وضعیت‌های دستور کار که در صورتی در اینجا وارد نشود، به عنوان زمان واقعی آغاز مشخص خواهد شد.';
+    $Self->{Translation}->{'Add Workorder'} = 'افزودن دستور کار';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add from template'} = '';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت <-> اثر <-> الویت';
     $Self->{Translation}->{'Admin of the state machine.'} = 'مدیر ماشین وضعیت';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'نمای کلی تغییر به صورت کوچک';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
+    $Self->{Translation}->{'Change Schedule'} = 'زمان‌بندی تغییر';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'تغییر مسیریاب جستجو در رابط کاربری کارشناس';
+    $Self->{Translation}->{'Condition Edit'} = 'ویرایش شرط';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
+    $Self->{Translation}->{'Create Change'} = 'ساختن تغییر';
     $Self->{Translation}->{'Create Change (from Template)'} = '';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
+    $Self->{Translation}->{'ITSM Changes'} = 'تغییرات';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         '';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'دستور کار';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -907,10 +792,12 @@ sub Data {
         '';
     $Self->{Translation}->{'Move Time Slot.'} = '';
     $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'New (from template)'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'بررسی پس از پیاده‌سازی';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         '';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
+    $Self->{Translation}->{'Search Changes'} = 'جستجوی تغییرات';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'ماشین وضعیت';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
+    $Self->{Translation}->{'Take Workorder'} = 'گرفتن دستور کار';
     $Self->{Translation}->{'Take Workorder.'} = '';
     $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Template Overview'} = 'نمای کلی قالب';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         '';

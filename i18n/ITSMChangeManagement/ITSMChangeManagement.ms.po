@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:20+0000\n"
+"POT-Creation-Date: 2017-07-10 14:46+0000\n"
+"PO-Revision-Date: 2017-07-10 12:46+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -13,614 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChange"
-msgstr "ITSMUChange"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChanges"
-msgstr "ITSMChanges"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSM Changes"
-msgstr "ITSM Changes"
-
-#. Template: AAAITSMChangeManagement
-msgid "workorder"
-msgstr "urutankerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "A change must have a title!"
-msgstr "Perubahan mesti mempunyai tajuk!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A condition must have a name!"
-msgstr "Syarat mesti mempunyai nama!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A template must have a name!"
-msgstr "Templat mesti mempunyai nama!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A workorder must have a title!"
-msgstr "Urutankerja mesti mempunyai tajuk!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add CAB Template"
-msgstr "Tambah templat CAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder"
-msgstr "Tambah Urutankerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder to the change"
-msgstr "Tambah urutankerja kepada perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add new condition and action pair"
-msgstr "Tambah syarat baru dan pasangan tindakan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr "Modul ejen interface untuk menunjukkan PerubahanPengurusan melihat semula ikon."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyCAB overview icon."
-msgstr "Modul ejen interface untuk menunjukkan CABSaya melihat semula ikon."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyChanges overview icon."
-msgstr "Modul ejen interface untuk menunjukkan PerubahanSaya melihat semula ikon."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr "Modul ejen interface untuk menunjukkan UrutanKerjaSaya melihat semula ikon."
-
-#. Template: AAAITSMChangeManagement
-msgid "CABAgents"
-msgstr "Ejen CAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABCustomers"
-msgstr "Pelanggan CAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Overview"
-msgstr "Ubah Lihat Semula"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Schedule"
-msgstr "Ubah Jadual"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change involved persons of the change"
-msgstr "Ubah melibatkan seseorang yang diubah"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAddID"
-msgstr "Tambah Tindakan (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDelete"
-msgstr "Padam Tindakan(ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDeleteAll"
-msgstr "Padam Semua Tindakan (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionExecute"
-msgstr "Melancarkan(ID=%s) Tindakan: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionUpdate"
-msgstr "%s (Action ID=%s): Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "Perubahan (ID = %s) telah siap."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "Perubahan (ID=%s) telah siap."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAdd"
-msgstr "Tambah Ubah (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "Tambah Ubah Lampiran: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "Lampiran dikeluarkan: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABDelete"
-msgstr "CAB dipadam %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "%s: Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "Link untuk %s (ID=%s) tambah"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "Link untuk %s (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "Pemberitahuan dihantar ke %s (acara: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "Perubahan (ID=%s) sampai akhir dijadualkan."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "Perubahan (ID=%s) sampai dijadualkan masa mula."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "Perubahan (ID=%s) sampai akhir diingini."
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeUpdate"
-msgstr "%s: Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAddID"
-msgstr "Keadaan baru (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDelete"
-msgstr "Keadaan (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "Semua syarat Perubahan (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionUpdate"
-msgstr "%s (Keadaan ID=%s): Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAddID"
-msgstr "Ekspresi baru (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDelete"
-msgstr "Ekspresi (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "Memadam mana-mana ungkapan logik keadaan (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionUpdate"
-msgstr "%s (Expression ID=%s): Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeNumber"
-msgstr "Ubah Nombor"
-
-#. Template: AAAITSMChangeManagement
-msgid "Condition Edit"
-msgstr "Audit Syarat"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create Change"
-msgstr "Cipta Ubah"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create a change from this ticket!"
-msgstr "Cipta perubahan dari tiket ini!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Delete Workorder"
-msgstr "Padam UrutanKerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the change"
-msgstr "Audit Perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the conditions of the change"
-msgstr "Audit syarat kepada perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the workorder"
-msgstr "Audit urutankerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Expression"
-msgstr "Ekspresi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Full-Text Search in Change and Workorder"
-msgstr "Carian Teks-Penuh dalam Perubahan dan UrutanKerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMCondition"
-msgstr "ITSMSyarat"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMWorkOrder"
-msgstr "ITSMUrutanKerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the change"
-msgstr "Pautan objek lain kepada perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the workorder"
-msgstr "Pautan objek lain kepada urutankerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Move all workorders in time"
-msgstr "Pindah semua urutankerja dalam masa"
-
-#. Template: AAAITSMChangeManagement
-msgid "My CABs"
-msgstr "CAB Saya"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Changes"
-msgstr "Perubahan Saya"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Workorders"
-msgstr "UrutanKerja Saya"
-
-#. Template: AAAITSMChangeManagement
-msgid "No XXX settings"
-msgstr "Tiada '%s' pemilihan"
-
-#. Template: AAAITSMChangeManagement
-msgid "PIR (Post Implementation Review)"
-msgstr "PIR (Post Implementation Review)"
-
-#. Template: AAAITSMChangeManagement
-msgid "PSA (Projected Service Availability)"
-msgstr "PSA (Projected Service Availability)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Please select first a catalog class!"
-msgstr "Sila mula-mula pilih katalog kelas!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the change"
-msgstr "Cetak perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the workorder"
-msgstr "Cetak urutankerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "RequestedTime"
-msgstr "MasaYangDiminta"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save Change CAB as Template"
-msgstr "Simpan Ubah CAB sebagai Templat"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save change as a template"
-msgstr "Simpan ubah sebagai templat"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save workorder as a template"
-msgstr "Simpan urutankerja sebagai templat"
-
-#. Template: AAAITSMChangeManagement
-msgid "Search Changes"
-msgstr "Cari Perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "Set the agent for the workorder"
-msgstr "Set ejen untuk urutankerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take Workorder"
-msgstr "Ambil UrutanKerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take the workorder"
-msgstr "Ambil UrutanKerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "Template Overview"
-msgstr "Lihat Semula Templat"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned end time is invalid!"
-msgstr "Perancangan masa tamat adalah tidak sah!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned start time is invalid!"
-msgstr "Perancangan masa mula adalah tidak sah!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned time is invalid!"
-msgstr "Masa dirancang tidak sah!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The requested time is invalid!"
-msgstr "Masa yang diminta tidak sah!"
-
-#. Template: AAAITSMChangeManagement
-msgid "New (from template)"
-msgstr "Baru (daripada templat)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add from template"
-msgstr "Tambah daripada templat"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder (from template)"
-msgstr "Tambah aturan kerja (daripada templat)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder (from template) to the change"
-msgstr "Tambah aturan kerja (daripada templat) pada perubahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "Perintah Kerja (ID=%s​​) telah siap."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "Perintah Kerja (ID=%s) berakhir."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "Perintah kerja (ID=%s) bermula."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "Perintah kerja (ID=%s) bermula."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "Perintah kerja baru (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "Perintah kerja baru (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "Nota untuk Perintah Kerja baru: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) Nota untuk Perintah Kerja baru: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "Nota dipadam dari Perintah Kerja: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) Nota dari Perintah Kerja dipadam: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "Perintah Kerja (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "Perintah Kerja (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "Pautan untuk %s (ID=%s) tambah"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) Pautan untuk %s (ID=%s) tambah"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "Pautan kepada %s (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) Pautan untuk %s (ID=%s) dipadam"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "Pemberitahuan dihantar ke %s (acara:%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) Pemberitahuan dihantar ke %s (Acara: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "Perintah kerja (ID=%s) sampai akhir dijadualkan."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "Perintah kerja (ID=%s) sampai akhir dijadualkan."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "Perintah Kerja (ID=%s) sampai dijadualkan masa mula."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "Perintah Kerja (ID=%s) sampai dijadualkan masa mula."
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "%s: Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: Baru: %s <- Lama: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderNumber"
-msgstr "Nombor UrutanKerja"
-
-#. Template: AAAITSMChangeManagement
-msgid "accepted"
-msgstr "Diterima"
-
-#. Template: AAAITSMChangeManagement
-msgid "any"
-msgstr "pelbagai"
-
-#. Template: AAAITSMChangeManagement
-msgid "approval"
-msgstr "Pengesahan"
-
-#. Template: AAAITSMChangeManagement
-msgid "approved"
-msgstr "Disahkan"
-
-#. Template: AAAITSMChangeManagement
-msgid "backout"
-msgstr "menarikdiri"
-
-#. Template: AAAITSMChangeManagement
-msgid "begins with"
-msgstr "bermula dengan"
-
-#. Template: AAAITSMChangeManagement
-msgid "canceled"
-msgstr "dibatalkan"
-
-#. Template: AAAITSMChangeManagement
-msgid "contains"
-msgstr "mengandungi"
-
-#. Template: AAAITSMChangeManagement
-msgid "created"
-msgstr "dicipta"
-
-#. Template: AAAITSMChangeManagement
-msgid "decision"
-msgstr "keputusan"
-
-#. Template: AAAITSMChangeManagement
-msgid "ends with"
-msgstr "tamat dengan"
-
-#. Template: AAAITSMChangeManagement
-msgid "failed"
-msgstr "digagalkan"
-
-#. Template: AAAITSMChangeManagement
-msgid "in progress"
-msgstr "dalam proses"
-
-#. Template: AAAITSMChangeManagement
-msgid "is"
-msgstr "ialah"
-
-#. Template: AAAITSMChangeManagement
-msgid "is after"
-msgstr "ialah selepas"
-
-#. Template: AAAITSMChangeManagement
-msgid "is before"
-msgstr "ialah sebelum"
-
-#. Template: AAAITSMChangeManagement
-msgid "is empty"
-msgstr "ialah kosong"
-
-#. Template: AAAITSMChangeManagement
-msgid "is greater than"
-msgstr "ialah lebih besar daripada"
-
-#. Template: AAAITSMChangeManagement
-msgid "is less than"
-msgstr "ialah kurang daripada"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not"
-msgstr "ialah tidak"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not empty"
-msgstr "ialah tidak kosong"
-
-#. Template: AAAITSMChangeManagement
-msgid "not contains"
-msgstr "tidak mengandungi"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending approval"
-msgstr "pengesahan tergantung"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending pir"
-msgstr "PIR tergantung"
-
-#. Template: AAAITSMChangeManagement
-msgid "pir"
-msgstr "PIR (Post Implementation Review)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ready"
-msgstr "sedia"
-
-#. Template: AAAITSMChangeManagement
-msgid "rejected"
-msgstr "ditolak"
-
-#. Template: AAAITSMChangeManagement
-msgid "requested"
-msgstr "diminta"
-
-#. Template: AAAITSMChangeManagement
-msgid "retracted"
-msgstr "ditarik balik"
-
-#. Template: AAAITSMChangeManagement
-msgid "set"
-msgstr "set"
-
-#. Template: AAAITSMChangeManagement
-msgid "successful"
-msgstr "berjaya"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
@@ -1085,6 +477,10 @@ msgstr "Terakhir diubah oleh"
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
 msgstr "Ok"
+
+#. Template: AgentITSMChangeZoom
+msgid "ITSMChange"
+msgstr "ITSMUChange"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -1696,9 +1092,141 @@ msgstr "Tiada pilihan config dijumpai untuk pandangan \"%s\"!"
 msgid "Title: %s | Type: %s"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "CAB Saya"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "Perubahan Saya"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "diminta"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "pengesahan tergantung"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "ditolak"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "Disahkan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "dalam proses"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "PIR tergantung"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "berjaya"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "digagalkan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "dibatalkan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "ditarik balik"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "dicipta"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "Diterima"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "sedia"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "Pengesahan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "urutankerja"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "menarikdiri"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "keputusan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "PIR (Post Implementation Review)"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "ialah"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "ialah tidak"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "ialah kosong"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "ialah tidak kosong"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "ialah lebih besar daripada"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "ialah kurang daripada"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "ialah sebelum"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "ialah selepas"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "mengandungi"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "tidak mengandungi"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "bermula dengan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "tamat dengan"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "set"
 
 #. SysConfig
 msgid ""
@@ -1711,6 +1239,10 @@ msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
 msgstr "Satu senarai status pesanan kerja, di mana Masa Mula sebenar perintah kerja akan ditetapkan jika ia adalah kosong pada ketika ini."
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "Tambah Urutankerja"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1731,6 +1263,10 @@ msgstr ""
 #. SysConfig
 msgid "Add a workorder to the change."
 msgstr ""
+
+#. SysConfig
+msgid "Add from template"
+msgstr "Tambah daripada templat"
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1801,6 +1337,10 @@ msgid "Change Print."
 msgstr ""
 
 #. SysConfig
+msgid "Change Schedule"
+msgstr "Ubah Jadual"
+
+#. SysConfig
 msgid "Change Schedule."
 msgstr ""
 
@@ -1833,6 +1373,10 @@ msgid "Change search backend router of the agent interface."
 msgstr "Tukar router carian backend antara muka ejen."
 
 #. SysConfig
+msgid "Condition Edit"
+msgstr "Audit Syarat"
+
+#. SysConfig
 msgid "Condition Overview"
 msgstr ""
 
@@ -1847,6 +1391,10 @@ msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr "Dikonfigurasi berapa kerap pemberitahuan akan dihantar apabila merancang masa mula atau nilai masa lain telah mencapai / diluluskan."
+
+#. SysConfig
+msgid "Create Change"
+msgstr "Cipta Ubah"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -2552,6 +2100,10 @@ msgid "ITSM Change notification rules"
 msgstr ""
 
 #. SysConfig
+msgid "ITSM Changes"
+msgstr "ITSM Changes"
+
+#. SysConfig
 msgid "ITSM MyCAB Overview."
 msgstr ""
 
@@ -2622,6 +2174,10 @@ msgstr "ITSM modul acara untuk mengira nombor pesanan kerja."
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr "ITSM modul acara untuk menetapkan permulaan sebenar dan masa akhir pesanan kerja."
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "ITSMUrutanKerja"
 
 #. SysConfig
 msgid ""
@@ -2700,6 +2256,10 @@ msgid "Move all workorders in time."
 msgstr ""
 
 #. SysConfig
+msgid "New (from template)"
+msgstr "Baru (daripada templat)"
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2713,6 +2273,10 @@ msgstr ""
 #. SysConfig
 msgid "PIR"
 msgstr ""
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "PIR (Post Implementation Review)"
 
 #. SysConfig
 msgid "PSA"
@@ -2942,6 +2506,10 @@ msgid "Screen after creating a workorder"
 msgstr "Skrin selepas mencipta urutankerja."
 
 #. SysConfig
+msgid "Search Changes"
+msgstr "Cari Perubahan"
+
+#. SysConfig
 msgid "Search Changes."
 msgstr ""
 
@@ -3137,12 +2705,20 @@ msgid ""
 msgstr "Simpan change dan urutankerja ids dan id templat sepadan, sementara pengguna mengedit templat."
 
 #. SysConfig
+msgid "Take Workorder"
+msgstr "Ambil UrutanKerja"
+
+#. SysConfig
 msgid "Take Workorder."
 msgstr ""
 
 #. SysConfig
 msgid "Take the workorder."
 msgstr ""
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "Lihat Semula Templat"
 
 #. SysConfig
 msgid "Template."

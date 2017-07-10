@@ -4,623 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:45+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2017-07-10 14:46+0000\n"
+"PO-Revision-Date: 2017-07-10 12:46+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChange"
-msgstr "ITSM változás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChanges"
-msgstr "ITSM változások"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSM Changes"
-msgstr "ITSM változások"
-
-#. Template: AAAITSMChangeManagement
-msgid "workorder"
-msgstr "munkamegrendelés"
-
-#. Template: AAAITSMChangeManagement
-msgid "A change must have a title!"
-msgstr "A változásnak rendelkeznie kell egy címmel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A condition must have a name!"
-msgstr "A feltételnek rendelkeznie kell egy névvel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A template must have a name!"
-msgstr "A sablonnak rendelkeznie kell egy névvel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A workorder must have a title!"
-msgstr "A munkamegrendelésnek rendelkeznie kell egy címmel!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add CAB Template"
-msgstr "CAB sablon hozzáadása"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder"
-msgstr "Munkamegrendelés hozzáadása"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder to the change"
-msgstr "Egy munkamegrendelés hozzáadása a változáshoz"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add new condition and action pair"
-msgstr "Új feltétel és művelet pár hozzáadása"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr "Ügyintézői felület modul a változásmenedzser áttekintő ikonjának megjelenítéséhez."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyCAB overview icon."
-msgstr "Ügyintézői felület modul a saját CAB áttekintő ikonjának megjelenítéséhez."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyChanges overview icon."
-msgstr "Ügyintézői felület modul a saját változások áttekintő ikonjának megjelenítéséhez."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr "Ügyintézői felület modul a saját munkamegrendelések áttekintő ikonjának megjelenítéséhez."
-
-#. Template: AAAITSMChangeManagement
-msgid "CABAgents"
-msgstr "CAB ügyintézők"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABCustomers"
-msgstr "CAB ügyfelek"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Overview"
-msgstr "Változás áttekintő"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Schedule"
-msgstr "Változtatási ütemterv"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change involved persons of the change"
-msgstr "A változás résztvevő személyeinek módosítása"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAdd"
-msgstr "Változás előzmények::Hozzáadás művelet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAddID"
-msgstr "Változás előzmények::Azonosító hozzáadása művelet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDelete"
-msgstr "Változás előzmények::Törlés művelet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDeleteAll"
-msgstr "Változás előzmények::Összes törlése művelet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionExecute"
-msgstr "Változás előzmények::Végrehajtás művelet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionUpdate"
-msgstr "Változás előzmények::Frissítés művelet"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "Változás előzmények::Változás tényleges befejezési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "Változás előzmények::Változás tényleges kezdési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAdd"
-msgstr "Változás előzmények::Változás hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "Változás előzmények::Változásmelléklet hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "Változás előzmények::Változásmelléklet törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABDelete"
-msgstr "Változás előzmények::Változás CAB törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "Változás előzmények::Változás CAB frissítés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "Változás előzmények::Változás-hivatkozás hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "Változás előzmények::Változás-hivatkozás törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "Változás előzmények::Változásértesítés küldés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "Változás előzmények::Változás tervezett befejezési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "Változás előzmények::Változás tervezett kezdési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "Változás előzmények::Változás kért ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeUpdate"
-msgstr "Változás előzmények::Változás frissítés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAdd"
-msgstr "Változás előzmények::Feltétel hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAddID"
-msgstr "Változás előzmények::Feltétel azonosító hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDelete"
-msgstr "Változás előzmények::Feltétel törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "Változás előzmények::Feltétel összes törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionUpdate"
-msgstr "Változás előzmények::Feltétel frissítés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAdd"
-msgstr "Változás előzmények::Kifejezés hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAddID"
-msgstr "Változás előzmények::Kifejezés azonosító hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDelete"
-msgstr "Változás előzmények::Kifejezés törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "Változás előzmények::Kifejezés összes törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionUpdate"
-msgstr "Változás előzmények::Kifejezés frissítés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeNumber"
-msgstr "Változásszám"
-
-#. Template: AAAITSMChangeManagement
-msgid "Condition Edit"
-msgstr "Feltétel szerkesztés"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create Change"
-msgstr "Változás létrehozása"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create a change from this ticket!"
-msgstr "Változás létrehozása ebből a jegyből!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Delete Workorder"
-msgstr "Munkamegrendelés törlése"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the change"
-msgstr "A változás szerkesztése"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the conditions of the change"
-msgstr "A változás feltételeinek szerkesztése"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the workorder"
-msgstr "A munkamegrendelés szerkesztése"
-
-#. Template: AAAITSMChangeManagement
-msgid "Expression"
-msgstr "Kifejezés"
-
-#. Template: AAAITSMChangeManagement
-msgid "Full-Text Search in Change and Workorder"
-msgstr "Szabad-szavas keresés a változásban és a munkamegrendelésben"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMCondition"
-msgstr "ITSM feltétel"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMWorkOrder"
-msgstr "ITSM munkamegrendelés"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the change"
-msgstr "Másik objektum összekapcsolása a változással"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the workorder"
-msgstr "Másik objektum összekapcsolása a munkamegrendeléssel"
-
-#. Template: AAAITSMChangeManagement
-msgid "Move all workorders in time"
-msgstr "Minden munkamegrendelés áthelyezése az időben"
-
-#. Template: AAAITSMChangeManagement
-msgid "My CABs"
-msgstr "Saját CAB-ok"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Changes"
-msgstr "Saját változások"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Workorders"
-msgstr "Saját munkamegrendelések"
-
-#. Template: AAAITSMChangeManagement
-msgid "No XXX settings"
-msgstr "Nincsenek XXX beállítások"
-
-#. Template: AAAITSMChangeManagement
-msgid "PIR (Post Implementation Review)"
-msgstr "PIR (megvalósítás utáni vizsgálat)"
-
-#. Template: AAAITSMChangeManagement
-msgid "PSA (Projected Service Availability)"
-msgstr "PSA (tervezett szolgáltatáselérhetőség)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Please select first a catalog class!"
-msgstr "Először válasszon egy katalógusosztályt!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the change"
-msgstr "A változás nyomtatása"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the workorder"
-msgstr "A munkamegrendelés nyomtatása"
-
-#. Template: AAAITSMChangeManagement
-msgid "RequestedTime"
-msgstr "Kért idő"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save Change CAB as Template"
-msgstr "Változás CAB mentése sablonként"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save change as a template"
-msgstr "Változás mentése sablonként"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save workorder as a template"
-msgstr "Munkamegrendelés mentése sablonként"
-
-#. Template: AAAITSMChangeManagement
-msgid "Search Changes"
-msgstr "Változások keresése"
-
-#. Template: AAAITSMChangeManagement
-msgid "Set the agent for the workorder"
-msgstr "Az ügyintéző beállítása a munkamegrendeléshez"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take Workorder"
-msgstr "Munkamegrendelés felvétele"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take the workorder"
-msgstr "A munkamegrendelés felvétele"
-
-#. Template: AAAITSMChangeManagement
-msgid "Template Overview"
-msgstr "Sablon áttekintő"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned end time is invalid!"
-msgstr "A tervezett befejezési idő érvénytelen!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned start time is invalid!"
-msgstr "A tervezett kezdési idő érvénytelen!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned time is invalid!"
-msgstr "A tervezett idő érvénytelen!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The requested time is invalid!"
-msgstr "A kért idő érvénytelen!"
-
-#. Template: AAAITSMChangeManagement
-msgid "New (from template)"
-msgstr "Új (sablonból)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add from template"
-msgstr "Hozzáadás sablonból"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder (from template)"
-msgstr "Munkamegrendelés hozzáadása (sablonból)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder (from template) to the change"
-msgstr "Egy munkamegrendelés hozzáadása (sablonból) a változáshoz"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges befejezési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges befejezési ideje elérve munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges kezdési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tényleges kezdési ideje elérve munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés hozzáadás munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet hozzáadás munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés melléklet törlés munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet hozzáadás munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés jelentés melléklet törlés munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés törlés munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás hozzáadás"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás hozzáadás munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás törlés"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés hivatkozás törlés munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés értesítés küldés"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés értesítés küldés munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett befejezési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett befejezési ideje elérve munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett kezdési ideje elérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés tervezett kezdési ideje elérve munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés frissítés"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "Munkamegrendelés előzmények::Munkamegrendelés frissítés munkamegrendelés-azonosítóval"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderNumber"
-msgstr "Munkamegrendelés-szám"
-
-#. Template: AAAITSMChangeManagement
-msgid "accepted"
-msgstr "elfogadva"
-
-#. Template: AAAITSMChangeManagement
-msgid "any"
-msgstr "bármely"
-
-#. Template: AAAITSMChangeManagement
-msgid "approval"
-msgstr "jóváhagyás"
-
-#. Template: AAAITSMChangeManagement
-msgid "approved"
-msgstr "jóváhagyva"
-
-#. Template: AAAITSMChangeManagement
-msgid "backout"
-msgstr "visszaállás"
-
-#. Template: AAAITSMChangeManagement
-msgid "begins with"
-msgstr "ezzel kezdődik"
-
-#. Template: AAAITSMChangeManagement
-msgid "canceled"
-msgstr "megszakítva"
-
-#. Template: AAAITSMChangeManagement
-msgid "contains"
-msgstr "tartalmazza"
-
-#. Template: AAAITSMChangeManagement
-msgid "created"
-msgstr "létrehozva"
-
-#. Template: AAAITSMChangeManagement
-msgid "decision"
-msgstr "döntés"
-
-#. Template: AAAITSMChangeManagement
-msgid "ends with"
-msgstr "ezzel végződik"
-
-#. Template: AAAITSMChangeManagement
-msgid "failed"
-msgstr "sikertelen"
-
-#. Template: AAAITSMChangeManagement
-msgid "in progress"
-msgstr "folyamatban"
-
-#. Template: AAAITSMChangeManagement
-msgid "is"
-msgstr "egyenlő"
-
-#. Template: AAAITSMChangeManagement
-msgid "is after"
-msgstr "ez után"
-
-#. Template: AAAITSMChangeManagement
-msgid "is before"
-msgstr "ez előtt"
-
-#. Template: AAAITSMChangeManagement
-msgid "is empty"
-msgstr "üres"
-
-#. Template: AAAITSMChangeManagement
-msgid "is greater than"
-msgstr "nagyobb mint"
-
-#. Template: AAAITSMChangeManagement
-msgid "is less than"
-msgstr "kisebb mint"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not"
-msgstr "nem"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not empty"
-msgstr "nem üres"
-
-#. Template: AAAITSMChangeManagement
-msgid "not contains"
-msgstr "nem tartalmazza"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending approval"
-msgstr "jóváhagyásra vár"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending pir"
-msgstr "függőben lévő PIR"
-
-#. Template: AAAITSMChangeManagement
-msgid "pir"
-msgstr "PIR"
-
-#. Template: AAAITSMChangeManagement
-msgid "ready"
-msgstr "készen áll"
-
-#. Template: AAAITSMChangeManagement
-msgid "rejected"
-msgstr "visszautasítva"
-
-#. Template: AAAITSMChangeManagement
-msgid "requested"
-msgstr "kérve"
-
-#. Template: AAAITSMChangeManagement
-msgid "retracted"
-msgstr "visszavonva"
-
-#. Template: AAAITSMChangeManagement
-msgid "set"
-msgstr "beállítva"
-
-#. Template: AAAITSMChangeManagement
-msgid "successful"
-msgstr "sikeres"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
@@ -1085,6 +477,10 @@ msgstr "Utoljára módosította"
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
 msgstr "OK"
+
+#. Template: AgentITSMChangeZoom
+msgid "ITSMChange"
+msgstr "ITSM változás"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -1696,9 +1092,141 @@ msgstr "Nem található konfigurációs beállítás a(z) „%s” nézethez!"
 msgid "Title: %s | Type: %s"
 msgstr "Cím: %s | Típus: %s"
 
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "Saját CAB-ok"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "Saját változások"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr "Saját munkamegrendelések"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "kérve"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "jóváhagyásra vár"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "visszautasítva"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "jóváhagyva"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "folyamatban"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "függőben lévő PIR"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "sikeres"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "sikertelen"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "megszakítva"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "visszavonva"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "létrehozva"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "elfogadva"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "készen áll"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "jóváhagyás"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "munkamegrendelés"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "visszaállás"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "döntés"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "PIR"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "egyenlő"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "nem"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "üres"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "nem üres"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "nagyobb mint"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "kisebb mint"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "ez előtt"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "ez után"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "tartalmazza"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "nem tartalmazza"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "ezzel kezdődik"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "ezzel végződik"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "beállítva"
 
 #. SysConfig
 msgid ""
@@ -1711,6 +1239,10 @@ msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
 msgstr "Azon munkamegrendelés-állapotok listája, amelyeknél egy munkamegrendelés tényleges kezdési ideje be lesz állítva, ha az üres ennél a pontnál."
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "Munkamegrendelés hozzáadása"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1731,6 +1263,10 @@ msgstr "Egy munkamegrendelés hozzáadása (sablonból) a változáshoz."
 #. SysConfig
 msgid "Add a workorder to the change."
 msgstr "Egy munkamegrendelés hozzáadása a változáshoz."
+
+#. SysConfig
+msgid "Add from template"
+msgstr "Hozzáadás sablonból"
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1801,6 +1337,10 @@ msgid "Change Print."
 msgstr "Változásnyomtatás."
 
 #. SysConfig
+msgid "Change Schedule"
+msgstr "Változtatási ütemterv"
+
+#. SysConfig
 msgid "Change Schedule."
 msgstr "Változtatási ütemterv."
 
@@ -1833,6 +1373,10 @@ msgid "Change search backend router of the agent interface."
 msgstr "Az ügyintézői felület változás keresési háttérprogram útválasztója."
 
 #. SysConfig
+msgid "Condition Edit"
+msgstr "Feltétel szerkesztés"
+
+#. SysConfig
 msgid "Condition Overview"
 msgstr "Feltétel áttekintés"
 
@@ -1847,6 +1391,10 @@ msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr "Beállítja, hogy milyen gyakran legyenek elküldve az értesítések, amikor elérik/átadják a tervezett kezdési időt vagy más időértékeket."
+
+#. SysConfig
+msgid "Create Change"
+msgstr "Változás létrehozása"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -2552,6 +2100,10 @@ msgid "ITSM Change notification rules"
 msgstr "ITSM változás értesítési szabályok"
 
 #. SysConfig
+msgid "ITSM Changes"
+msgstr "ITSM változások"
+
+#. SysConfig
 msgid "ITSM MyCAB Overview."
 msgstr "ITSM saját CAB áttekintés."
 
@@ -2622,6 +2174,10 @@ msgstr "ITSM eseménymodul a munkamegrendelés számainak újraszámolásához."
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr "ITSM eseménymodul a munkamegrendelések tényleges kezdési és befejezési idejének beállításához."
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "ITSM munkamegrendelés"
 
 #. SysConfig
 msgid ""
@@ -2700,6 +2256,10 @@ msgid "Move all workorders in time."
 msgstr "Minden munkamegrendelés áthelyezése az időben."
 
 #. SysConfig
+msgid "New (from template)"
+msgstr "Új (sablonból)"
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2713,6 +2273,10 @@ msgstr "Az összes változás áttekintése."
 #. SysConfig
 msgid "PIR"
 msgstr "PIR"
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "PIR (megvalósítás utáni vizsgálat)"
 
 #. SysConfig
 msgid "PSA"
@@ -2942,6 +2506,10 @@ msgid "Screen after creating a workorder"
 msgstr "Egy munkamegrendelés létrehozása utáni képernyő"
 
 #. SysConfig
+msgid "Search Changes"
+msgstr "Változások keresése"
+
+#. SysConfig
 msgid "Search Changes."
 msgstr "Változások keresése."
 
@@ -3137,12 +2705,20 @@ msgid ""
 msgstr "Változás- és munkamegrendelés-azonosítókat, valamint a nekik megfelelő sablonazonosítót tárolja, miközben egy felhasználó szerkeszt egy sablont."
 
 #. SysConfig
+msgid "Take Workorder"
+msgstr "Munkamegrendelés felvétele"
+
+#. SysConfig
 msgid "Take Workorder."
 msgstr "Munkamegrendelés felvétele."
 
 #. SysConfig
 msgid "Take the workorder."
 msgstr "A munkamegrendelés felvétele."
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "Sablon áttekintő"
 
 #. SysConfig
 msgid "Template."

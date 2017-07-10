@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:20+0000\n"
+"POT-Creation-Date: 2017-07-10 14:46+0000\n"
+"PO-Revision-Date: 2017-07-10 12:46+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -12,614 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChange"
-msgstr "تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChanges"
-msgstr "تغییرات"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSM Changes"
-msgstr "تغییرات"
-
-#. Template: AAAITSMChangeManagement
-msgid "workorder"
-msgstr "دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "A change must have a title!"
-msgstr "هر تغییر باید عنوان داشته باشد!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A condition must have a name!"
-msgstr "هر شرط باید دارای نام باشد!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A template must have a name!"
-msgstr "قالب باید دارای نام باشد!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A workorder must have a title!"
-msgstr "هر دستور کار باید دارای عنوان باشد!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add CAB Template"
-msgstr "افزودن قالب برای هیئت مشاوران"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder"
-msgstr "افزودن دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder to the change"
-msgstr "افزودن یک دستور کار به تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add new condition and action pair"
-msgstr "افزودن جفتی از شرط و عملیات"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی مدیر تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyCAB overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی کارشناسان تیم تغییر من"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyChanges overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی تغییرات من"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr "ماژول واسط کاربری کارشناس برای نمایش آیکون نمای کلی دستور کارهای من"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABAgents"
-msgstr "کارشناسان هیئت مشاور تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABCustomers"
-msgstr "هیئت مشاور تغییر - مشترکان"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Overview"
-msgstr "نمای کلی تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Schedule"
-msgstr "زمان‌بندی تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change involved persons of the change"
-msgstr "افراد درگیر این تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAddID"
-msgstr "عملیات جدید (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDelete"
-msgstr "عملیات (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDeleteAll"
-msgstr "تمام عملیات‌های شرط (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionExecute"
-msgstr "عملیات (ID=%s) اجرا شد: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionUpdate"
-msgstr "%s (شناسه عملیات=%s): جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "زمان حقیقی پایان تغییر فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "زمان حقیقی آغاز تغییر فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAdd"
-msgstr "تغییر جدید (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "پیوست جدید: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "پیوست حذف شد %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABDelete"
-msgstr "هیئت مشاوران تغییر حذف شد %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "%s: جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "ارتباط به %s (ID=%s) افزوده شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "ارتباط به %s (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "اعلام فرستاده شد %s (رویداد: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "زمان برنامه‌ریزی شده پایان تغییر فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "زمان برنامه‌ریزی شده آغاز تغییر فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "زمان درخواست شده تغییر توسط مشترک فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeUpdate"
-msgstr "%s: جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAddID"
-msgstr "شرط جدید (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDelete"
-msgstr "شرط (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "تمام شروط دستور کار (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionUpdate"
-msgstr "%s (شناسه شرط=%s): جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAdd"
-msgstr "%s: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAddID"
-msgstr "عبارت منطقی جدید (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDelete"
-msgstr "عبارت منطقی (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "تمام عبارات منطقی شرط (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionUpdate"
-msgstr "%s (شناسه عبارت=%s): جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeNumber"
-msgstr "شماره تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Condition Edit"
-msgstr "ویرایش شرط"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create Change"
-msgstr "ساختن تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create a change from this ticket!"
-msgstr "ساخت یک تغییر از این درخواست!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Delete Workorder"
-msgstr "حذف دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the change"
-msgstr "ویرایش تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the conditions of the change"
-msgstr "ویرایش شروط تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the workorder"
-msgstr "ویرایش دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Expression"
-msgstr "عبارت منطقی"
-
-#. Template: AAAITSMChangeManagement
-msgid "Full-Text Search in Change and Workorder"
-msgstr "جستجوی تمام متن در تغییرات و دستور کارها"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMCondition"
-msgstr "شرط"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMWorkOrder"
-msgstr "دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the change"
-msgstr "ارتباط دادن یک شیء به تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the workorder"
-msgstr "ارتباط دادن یک شیء دیگر به دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Move all workorders in time"
-msgstr "جابه‌جا کردن تمام دستور کارها در زمان"
-
-#. Template: AAAITSMChangeManagement
-msgid "My CABs"
-msgstr "هیئت مشاوران من"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Changes"
-msgstr "تغییرات من"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Workorders"
-msgstr "دستور کارهای من"
-
-#. Template: AAAITSMChangeManagement
-msgid "No XXX settings"
-msgstr "بدون تنظیمات '%s'"
-
-#. Template: AAAITSMChangeManagement
-msgid "PIR (Post Implementation Review)"
-msgstr "بررسی پس از پیاده‌سازی"
-
-#. Template: AAAITSMChangeManagement
-msgid "PSA (Projected Service Availability)"
-msgstr "دسترس‌پذیری پیش‌بینی شده خدمات"
-
-#. Template: AAAITSMChangeManagement
-msgid "Please select first a catalog class!"
-msgstr "لطفا ابتدا یک کلاس انتخاب کنید!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the change"
-msgstr "چاپ تغییر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the workorder"
-msgstr "چاپ دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "RequestedTime"
-msgstr "زمان مورد انتظار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save Change CAB as Template"
-msgstr "ذخیره کردن تیم کارشناسی تغییر به عنوان قالب"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save change as a template"
-msgstr "ذخیره کردن تغییر به عنون قالب"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save workorder as a template"
-msgstr "ذخیره کردن دستور کار به عنوان قالب"
-
-#. Template: AAAITSMChangeManagement
-msgid "Search Changes"
-msgstr "جستجوی تغییرات"
-
-#. Template: AAAITSMChangeManagement
-msgid "Set the agent for the workorder"
-msgstr "مشخص کردن کارشناس برای دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take Workorder"
-msgstr "گرفتن دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take the workorder"
-msgstr "این دستور کار را بگیر"
-
-#. Template: AAAITSMChangeManagement
-msgid "Template Overview"
-msgstr "نمای کلی قالب"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned end time is invalid!"
-msgstr "زمان برنامه‌ریزی شده پایان معتبر نیست!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned start time is invalid!"
-msgstr "زمان برنامه‌ریزی شده آغاز معتبر نیست!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned time is invalid!"
-msgstr "زمان برنامه‌ریزی شده معتبر نیست!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The requested time is invalid!"
-msgstr "زمان درخواست معتبر نیست!"
-
-#. Template: AAAITSMChangeManagement
-msgid "New (from template)"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Add from template"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder (from template)"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder (from template) to the change"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "زمان حقیقی پایان دستور کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "زمان حقیقی پایان دستور کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "زمان حقیقی آغاز دستور کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "زمان حقیقی آغاز دستور کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "دستور کار جدید (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "دستور کار جدید (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "پیوست جدید برای دستور کار: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "(ID=%s) پیوست جدید برای دستور کار: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "پیوست حذف شده از دستور کار: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "(ID=%s) پیوست حذف شده از دستور کار: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr ""
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "دستور کار (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "دستور کار (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "ارتباط به %s (ID=%s) افزوده شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "(ID=%s) ارتباط به %s (ID=%s) افزوده شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "ارتباط به %s (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "(ID=%s) ارتباط به %s (ID=%s) حذف شد"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "اعلان به %s ارسال شد )رویداد: %s("
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "(ID=%s) اعلان ارسال شد به %s (رویداد: %s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "%s: جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "(ID=%s) %s: جدید: %s -> قدیم: %s"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderNumber"
-msgstr "شماره دستور کار"
-
-#. Template: AAAITSMChangeManagement
-msgid "accepted"
-msgstr "پذیرفته شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "any"
-msgstr "هیچ"
-
-#. Template: AAAITSMChangeManagement
-msgid "approval"
-msgstr "تصویب"
-
-#. Template: AAAITSMChangeManagement
-msgid "approved"
-msgstr "تایید شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "backout"
-msgstr "طرح بازگشت"
-
-#. Template: AAAITSMChangeManagement
-msgid "begins with"
-msgstr "شروع می‌شود با"
-
-#. Template: AAAITSMChangeManagement
-msgid "canceled"
-msgstr "لغو شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "contains"
-msgstr "شامل است"
-
-#. Template: AAAITSMChangeManagement
-msgid "created"
-msgstr "ساخته شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "decision"
-msgstr "تصمیم"
-
-#. Template: AAAITSMChangeManagement
-msgid "ends with"
-msgstr "پایان می‌یابد با"
-
-#. Template: AAAITSMChangeManagement
-msgid "failed"
-msgstr "شکست"
-
-#. Template: AAAITSMChangeManagement
-msgid "in progress"
-msgstr "در حال اجرا"
-
-#. Template: AAAITSMChangeManagement
-msgid "is"
-msgstr "هست"
-
-#. Template: AAAITSMChangeManagement
-msgid "is after"
-msgstr "پس از"
-
-#. Template: AAAITSMChangeManagement
-msgid "is before"
-msgstr "قبل از"
-
-#. Template: AAAITSMChangeManagement
-msgid "is empty"
-msgstr "خالی است"
-
-#. Template: AAAITSMChangeManagement
-msgid "is greater than"
-msgstr "بزرگتر است از"
-
-#. Template: AAAITSMChangeManagement
-msgid "is less than"
-msgstr "کوچکتر است از"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not"
-msgstr "نیست"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not empty"
-msgstr "خالی نیست"
-
-#. Template: AAAITSMChangeManagement
-msgid "not contains"
-msgstr "شامل نیست"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending approval"
-msgstr "در انتظار تایید"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending pir"
-msgstr "در انتظار بررسی پس از پیاده‌سازی"
-
-#. Template: AAAITSMChangeManagement
-msgid "pir"
-msgstr "بررسی پس از پیاده‌سازی"
-
-#. Template: AAAITSMChangeManagement
-msgid "ready"
-msgstr "آماده"
-
-#. Template: AAAITSMChangeManagement
-msgid "rejected"
-msgstr "رد شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "requested"
-msgstr "درخواست شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "retracted"
-msgstr "جمع شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "set"
-msgstr "تنظیم شده"
-
-#. Template: AAAITSMChangeManagement
-msgid "successful"
-msgstr "موفقیت"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
@@ -1084,6 +476,10 @@ msgstr "آخرین تغییر توسط"
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
 msgstr "تایید"
+
+#. Template: AgentITSMChangeZoom
+msgid "ITSMChange"
+msgstr "تغییر"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -1695,9 +1091,141 @@ msgstr ""
 msgid "Title: %s | Type: %s"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "هیئت مشاوران من"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "تغییرات من"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "درخواست شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "در انتظار تایید"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "رد شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "تایید شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "در حال اجرا"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "در انتظار بررسی پس از پیاده‌سازی"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "موفقیت"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "شکست"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "لغو شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "جمع شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "ساخته شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "پذیرفته شده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "آماده"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "تصویب"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "دستور کار"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "طرح بازگشت"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "تصمیم"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "بررسی پس از پیاده‌سازی"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "هست"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "نیست"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "خالی است"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "خالی نیست"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "بزرگتر است از"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "کوچکتر است از"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "قبل از"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "پس از"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "شامل است"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "شامل نیست"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "شروع می‌شود با"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "پایان می‌یابد با"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "تنظیم شده"
 
 #. SysConfig
 msgid ""
@@ -1710,6 +1238,10 @@ msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
 msgstr "فهرستی از وضعیت‌های دستور کار که در صورتی در اینجا وارد نشود، به عنوان زمان واقعی آغاز مشخص خواهد شد."
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "افزودن دستور کار"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1729,6 +1261,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Add a workorder to the change."
+msgstr ""
+
+#. SysConfig
+msgid "Add from template"
 msgstr ""
 
 #. SysConfig
@@ -1800,6 +1336,10 @@ msgid "Change Print."
 msgstr ""
 
 #. SysConfig
+msgid "Change Schedule"
+msgstr "زمان‌بندی تغییر"
+
+#. SysConfig
 msgid "Change Schedule."
 msgstr ""
 
@@ -1832,6 +1372,10 @@ msgid "Change search backend router of the agent interface."
 msgstr "تغییر مسیریاب جستجو در رابط کاربری کارشناس"
 
 #. SysConfig
+msgid "Condition Edit"
+msgstr "ویرایش شرط"
+
+#. SysConfig
 msgid "Condition Overview"
 msgstr ""
 
@@ -1846,6 +1390,10 @@ msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr ""
+
+#. SysConfig
+msgid "Create Change"
+msgstr "ساختن تغییر"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -2551,6 +2099,10 @@ msgid "ITSM Change notification rules"
 msgstr ""
 
 #. SysConfig
+msgid "ITSM Changes"
+msgstr "تغییرات"
+
+#. SysConfig
 msgid "ITSM MyCAB Overview."
 msgstr ""
 
@@ -2621,6 +2173,10 @@ msgstr ""
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr ""
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "دستور کار"
 
 #. SysConfig
 msgid ""
@@ -2699,6 +2255,10 @@ msgid "Move all workorders in time."
 msgstr ""
 
 #. SysConfig
+msgid "New (from template)"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2712,6 +2272,10 @@ msgstr ""
 #. SysConfig
 msgid "PIR"
 msgstr ""
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "بررسی پس از پیاده‌سازی"
 
 #. SysConfig
 msgid "PSA"
@@ -2941,6 +2505,10 @@ msgid "Screen after creating a workorder"
 msgstr ""
 
 #. SysConfig
+msgid "Search Changes"
+msgstr "جستجوی تغییرات"
+
+#. SysConfig
 msgid "Search Changes."
 msgstr ""
 
@@ -3136,12 +2704,20 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Take Workorder"
+msgstr "گرفتن دستور کار"
+
+#. SysConfig
 msgid "Take Workorder."
 msgstr ""
 
 #. SysConfig
 msgid "Take the workorder."
 msgstr ""
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "نمای کلی قالب"
 
 #. SysConfig
 msgid "Template."

@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'ITSMUChange';
-    $Self->{Translation}->{'ITSMChanges'} = 'ITSMChanges';
-    $Self->{Translation}->{'ITSM Changes'} = 'ITSM Changes';
-    $Self->{Translation}->{'workorder'} = 'urutankerja';
-    $Self->{Translation}->{'A change must have a title!'} = 'Perubahan mesti mempunyai tajuk!';
-    $Self->{Translation}->{'A condition must have a name!'} = 'Syarat mesti mempunyai nama!';
-    $Self->{Translation}->{'A template must have a name!'} = 'Templat mesti mempunyai nama!';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'Urutankerja mesti mempunyai tajuk!';
-    $Self->{Translation}->{'Add CAB Template'} = 'Tambah templat CAB';
-    $Self->{Translation}->{'Add Workorder'} = 'Tambah Urutankerja';
-    $Self->{Translation}->{'Add a workorder to the change'} = 'Tambah urutankerja kepada perubahan';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'Tambah syarat baru dan pasangan tindakan';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        'Modul ejen interface untuk menunjukkan PerubahanPengurusan melihat semula ikon.';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = 'Modul ejen interface untuk menunjukkan CABSaya melihat semula ikon.';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = 'Modul ejen interface untuk menunjukkan PerubahanSaya melihat semula ikon.';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        'Modul ejen interface untuk menunjukkan UrutanKerjaSaya melihat semula ikon.';
-    $Self->{Translation}->{'CABAgents'} = 'Ejen CAB';
-    $Self->{Translation}->{'CABCustomers'} = 'Pelanggan CAB';
-    $Self->{Translation}->{'Change Overview'} = 'Ubah Lihat Semula';
-    $Self->{Translation}->{'Change Schedule'} = 'Ubah Jadual';
-    $Self->{Translation}->{'Change involved persons of the change'} = 'Ubah melibatkan seseorang yang diubah';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Tambah Tindakan (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Padam Tindakan(ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Padam Semua Tindakan (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Melancarkan(ID=%s) Tindakan: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Action ID=%s): Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Perubahan (ID = %s) telah siap.';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Perubahan (ID=%s) telah siap.';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Tambah Ubah (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Tambah Ubah Lampiran: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'Lampiran dikeluarkan: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'CAB dipadam %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'Link untuk %s (ID=%s) tambah';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'Link untuk %s (ID=%s) dipadam';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'Pemberitahuan dihantar ke %s (acara: %s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Perubahan (ID=%s) sampai akhir dijadualkan.';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Perubahan (ID=%s) sampai dijadualkan masa mula.';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Perubahan (ID=%s) sampai akhir diingini.';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'Keadaan baru (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'Keadaan (ID=%s) dipadam';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'Semua syarat Perubahan (ID=%s) dipadam';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (Keadaan ID=%s): Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'Ekspresi baru (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'Ekspresi (ID=%s) dipadam';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'Memadam mana-mana ungkapan logik keadaan (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (Expression ID=%s): Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'ChangeNumber'} = 'Ubah Nombor';
-    $Self->{Translation}->{'Condition Edit'} = 'Audit Syarat';
-    $Self->{Translation}->{'Create Change'} = 'Cipta Ubah';
-    $Self->{Translation}->{'Create a change from this ticket!'} = 'Cipta perubahan dari tiket ini!';
-    $Self->{Translation}->{'Delete Workorder'} = 'Padam UrutanKerja';
-    $Self->{Translation}->{'Edit the change'} = 'Audit Perubahan';
-    $Self->{Translation}->{'Edit the conditions of the change'} = 'Audit syarat kepada perubahan';
-    $Self->{Translation}->{'Edit the workorder'} = 'Audit urutankerja';
-    $Self->{Translation}->{'Expression'} = 'Ekspresi';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Carian Teks-Penuh dalam Perubahan dan UrutanKerja';
-    $Self->{Translation}->{'ITSMCondition'} = 'ITSMSyarat';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMUrutanKerja';
-    $Self->{Translation}->{'Link another object to the change'} = 'Pautan objek lain kepada perubahan';
-    $Self->{Translation}->{'Link another object to the workorder'} = 'Pautan objek lain kepada urutankerja';
-    $Self->{Translation}->{'Move all workorders in time'} = 'Pindah semua urutankerja dalam masa';
-    $Self->{Translation}->{'My CABs'} = 'CAB Saya';
-    $Self->{Translation}->{'My Changes'} = 'Perubahan Saya';
-    $Self->{Translation}->{'My Workorders'} = 'UrutanKerja Saya';
-    $Self->{Translation}->{'No XXX settings'} = 'Tiada \'%s\' pemilihan';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'Sila mula-mula pilih katalog kelas!';
-    $Self->{Translation}->{'Print the change'} = 'Cetak perubahan';
-    $Self->{Translation}->{'Print the workorder'} = 'Cetak urutankerja';
-    $Self->{Translation}->{'RequestedTime'} = 'MasaYangDiminta';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'Simpan Ubah CAB sebagai Templat';
-    $Self->{Translation}->{'Save change as a template'} = 'Simpan ubah sebagai templat';
-    $Self->{Translation}->{'Save workorder as a template'} = 'Simpan urutankerja sebagai templat';
-    $Self->{Translation}->{'Search Changes'} = 'Cari Perubahan';
-    $Self->{Translation}->{'Set the agent for the workorder'} = 'Set ejen untuk urutankerja';
-    $Self->{Translation}->{'Take Workorder'} = 'Ambil UrutanKerja';
-    $Self->{Translation}->{'Take the workorder'} = 'Ambil UrutanKerja';
-    $Self->{Translation}->{'Template Overview'} = 'Lihat Semula Templat';
-    $Self->{Translation}->{'The planned end time is invalid!'} = 'Perancangan masa tamat adalah tidak sah!';
-    $Self->{Translation}->{'The planned start time is invalid!'} = 'Perancangan masa mula adalah tidak sah!';
-    $Self->{Translation}->{'The planned time is invalid!'} = 'Masa dirancang tidak sah!';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'Masa yang diminta tidak sah!';
-    $Self->{Translation}->{'New (from template)'} = 'Baru (daripada templat)';
-    $Self->{Translation}->{'Add from template'} = 'Tambah daripada templat';
-    $Self->{Translation}->{'Add Workorder (from template)'} = 'Tambah aturan kerja (daripada templat)';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Tambah aturan kerja (daripada templat) pada perubahan';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Perintah Kerja (ID=%s​​) telah siap.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        'Perintah Kerja (ID=%s) berakhir.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Perintah kerja (ID=%s) bermula.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        'Perintah kerja (ID=%s) bermula.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'Perintah kerja baru (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'Perintah kerja baru (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = 'Nota untuk Perintah Kerja baru: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '(ID=%s) Nota untuk Perintah Kerja baru: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Nota dipadam dari Perintah Kerja: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Nota dari Perintah Kerja dipadam: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = 'WorkOrderHistory::WorkOrderReportAttachmentAdd';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = 'WorkOrderHistory::WorkOrderReportAttachmentDelete';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'Perintah Kerja (ID=%s) dipadam';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'Perintah Kerja (ID=%s) dipadam';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'Pautan untuk %s (ID=%s) tambah';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = '(ID=%s) Pautan untuk %s (ID=%s) tambah';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Pautan kepada %s (ID=%s) dipadam';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = '(ID=%s) Pautan untuk %s (ID=%s) dipadam';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'Pemberitahuan dihantar ke %s (acara:%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '(ID=%s) Pemberitahuan dihantar ke %s (Acara: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'Perintah kerja (ID=%s) sampai akhir dijadualkan.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        'Perintah kerja (ID=%s) sampai akhir dijadualkan.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Perintah Kerja (ID=%s) sampai dijadualkan masa mula.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        'Perintah Kerja (ID=%s) sampai dijadualkan masa mula.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: Baru: %s <- Lama: %s';
-    $Self->{Translation}->{'WorkOrderNumber'} = 'Nombor UrutanKerja';
-    $Self->{Translation}->{'accepted'} = 'Diterima';
-    $Self->{Translation}->{'any'} = 'pelbagai';
-    $Self->{Translation}->{'approval'} = 'Pengesahan';
-    $Self->{Translation}->{'approved'} = 'Disahkan';
-    $Self->{Translation}->{'backout'} = 'menarikdiri';
-    $Self->{Translation}->{'begins with'} = 'bermula dengan';
-    $Self->{Translation}->{'canceled'} = 'dibatalkan';
-    $Self->{Translation}->{'contains'} = 'mengandungi';
-    $Self->{Translation}->{'created'} = 'dicipta';
-    $Self->{Translation}->{'decision'} = 'keputusan';
-    $Self->{Translation}->{'ends with'} = 'tamat dengan';
-    $Self->{Translation}->{'failed'} = 'digagalkan';
-    $Self->{Translation}->{'in progress'} = 'dalam proses';
-    $Self->{Translation}->{'is'} = 'ialah';
-    $Self->{Translation}->{'is after'} = 'ialah selepas';
-    $Self->{Translation}->{'is before'} = 'ialah sebelum';
-    $Self->{Translation}->{'is empty'} = 'ialah kosong';
-    $Self->{Translation}->{'is greater than'} = 'ialah lebih besar daripada';
-    $Self->{Translation}->{'is less than'} = 'ialah kurang daripada';
-    $Self->{Translation}->{'is not'} = 'ialah tidak';
-    $Self->{Translation}->{'is not empty'} = 'ialah tidak kosong';
-    $Self->{Translation}->{'not contains'} = 'tidak mengandungi';
-    $Self->{Translation}->{'pending approval'} = 'pengesahan tergantung';
-    $Self->{Translation}->{'pending pir'} = 'PIR tergantung';
-    $Self->{Translation}->{'pir'} = 'PIR (Post Implementation Review)';
-    $Self->{Translation}->{'ready'} = 'sedia';
-    $Self->{Translation}->{'rejected'} = 'ditolak';
-    $Self->{Translation}->{'requested'} = 'diminta';
-    $Self->{Translation}->{'retracted'} = 'ditarik balik';
-    $Self->{Translation}->{'set'} = 'set';
-    $Self->{Translation}->{'successful'} = 'berjaya';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategori <-> Kesan <-> keutamaan';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Terkini berubah';
     $Self->{Translation}->{'Last changed by'} = 'Terakhir diubah oleh';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'ITSMChange'} = 'ITSMUChange';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'Untuk membuka pautan dalam keterangan blok berikut, anda mungkin perlu menekan kekunci Ctrl atau Cmd atau Shift semasa menekan pautan (bergantung kepada pelayar dan sistem operasi anda).';
     $Self->{Translation}->{'Download Attachment'} = 'memuat turun lampiran';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Tiada pilihan config dijumpai untuk pandangan "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = 'CAB Saya';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = 'Perubahan Saya';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = 'diminta';
+    $Self->{Translation}->{'pending approval'} = 'pengesahan tergantung';
+    $Self->{Translation}->{'rejected'} = 'ditolak';
+    $Self->{Translation}->{'approved'} = 'Disahkan';
+    $Self->{Translation}->{'in progress'} = 'dalam proses';
+    $Self->{Translation}->{'pending pir'} = 'PIR tergantung';
+    $Self->{Translation}->{'successful'} = 'berjaya';
+    $Self->{Translation}->{'failed'} = 'digagalkan';
+    $Self->{Translation}->{'canceled'} = 'dibatalkan';
+    $Self->{Translation}->{'retracted'} = 'ditarik balik';
+    $Self->{Translation}->{'created'} = 'dicipta';
+    $Self->{Translation}->{'accepted'} = 'Diterima';
+    $Self->{Translation}->{'ready'} = 'sedia';
+    $Self->{Translation}->{'approval'} = 'Pengesahan';
+    $Self->{Translation}->{'workorder'} = 'urutankerja';
+    $Self->{Translation}->{'backout'} = 'menarikdiri';
+    $Self->{Translation}->{'decision'} = 'keputusan';
+    $Self->{Translation}->{'pir'} = 'PIR (Post Implementation Review)';
+    $Self->{Translation}->{'is'} = 'ialah';
+    $Self->{Translation}->{'is not'} = 'ialah tidak';
+    $Self->{Translation}->{'is empty'} = 'ialah kosong';
+    $Self->{Translation}->{'is not empty'} = 'ialah tidak kosong';
+    $Self->{Translation}->{'is greater than'} = 'ialah lebih besar daripada';
+    $Self->{Translation}->{'is less than'} = 'ialah kurang daripada';
+    $Self->{Translation}->{'is before'} = 'ialah sebelum';
+    $Self->{Translation}->{'is after'} = 'ialah selepas';
+    $Self->{Translation}->{'contains'} = 'mengandungi';
+    $Self->{Translation}->{'not contains'} = 'tidak mengandungi';
+    $Self->{Translation}->{'begins with'} = 'bermula dengan';
+    $Self->{Translation}->{'ends with'} = 'tamat dengan';
+    $Self->{Translation}->{'set'} = 'set';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Satu senarai agen yang mempunyai kebenaran untuk mengambil pesanan kerja. Utama adalah nama log masuk. Kandungan adalah 0 atau 1';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Satu senarai status pesanan kerja, di mana Masa Mula sebenar perintah kerja akan ditetapkan jika ia adalah kosong pada ketika ini.';
+    $Self->{Translation}->{'Add Workorder'} = 'Tambah Urutankerja';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add from template'} = 'Tambah daripada templat';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Admin matriks CIP.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Admin jentera kerajaan.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Tinjauan Change Had "Kecil"';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
+    $Self->{Translation}->{'Change Schedule'} = 'Ubah Jadual';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Tukar router carian backend antara muka ejen.';
+    $Self->{Translation}->{'Condition Edit'} = 'Audit Syarat';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Dikonfigurasi berapa kerap pemberitahuan akan dihantar apabila merancang masa mula atau nilai masa lain telah mencapai / diluluskan.';
+    $Self->{Translation}->{'Create Change'} = 'Cipta Ubah';
     $Self->{Translation}->{'Create Change (from Template)'} = '';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
+    $Self->{Translation}->{'ITSM Changes'} = 'ITSM Changes';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'ITSM modul acara untuk mengira nombor pesanan kerja.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'ITSM modul acara untuk menetapkan permulaan sebenar dan masa akhir pesanan kerja.';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMUrutanKerja';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -907,10 +792,12 @@ sub Data {
         'Modul untuk menunjukkan pautan untuk membuat perubahan dari tiket ini. Tiket akan secara automatik dikaitkan dengan perubahan baru.';
     $Self->{Translation}->{'Move Time Slot.'} = '';
     $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Baru (daripada templat)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Hanya pengguna kumpulan-kumpulan ini mempunyai kebenaran untuk menggunakan jenis tiket seperti yang ditakrifkan dalam "ITSMChange :: AddChangeLinkTicketTypes" jika ciri "Tiket :: ACL :: Modul # # # 200-Tiket :: ACL :: Modul" diaktifkan.';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'Parameter untuk objek UserCreateWorkOrderNextMask dalam pandangan keutamaan bagi antara muka ejen.';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Skrin selepas mencipta urutankerja.';
+    $Self->{Translation}->{'Search Changes'} = 'Cari Perubahan';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Memilih modul beberapa perubahan penjana. "AutoIncrement" menambah nombor perubahan, SistemID dan kaunter digunakan dengan format SystemID.counter (contoh: 100118 , 100119 ). Dengan "Tarikh", nombor perubahan akan dijana oleh tarikh dan kaunter; format ini kelihatan seperti Year.Month.Day.counter; contohnya 2010062400001 , 2010062400002. Dengan "DateChecksum", kaunter itu akan ditambah sebagai checksum kepada rentetan Tarikh ditambah ID Sistem. Checksum ini akan berputar setiap hari. Format ini kelihatan seperti Year.Month.Day.SystemID.Counter.CheckSum, contohnya 2010062410000017 , 2010062410000026 .';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'Keadaan Mesin';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Simpan change dan urutankerja ids dan id templat sepadan, sementara pengguna mengedit templat.';
+    $Self->{Translation}->{'Take Workorder'} = 'Ambil UrutanKerja';
     $Self->{Translation}->{'Take Workorder.'} = '';
     $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Template Overview'} = 'Lihat Semula Templat';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Pengecam untuk perubahan, i. Perubahan# Perubahan Saya#. Lalai adalah Perubahan#.';

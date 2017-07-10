@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'Endring';
-    $Self->{Translation}->{'ITSMChanges'} = 'Endringer';
-    $Self->{Translation}->{'ITSM Changes'} = 'Endringer';
-    $Self->{Translation}->{'workorder'} = 'Arbeidsordre';
-    $Self->{Translation}->{'A change must have a title!'} = 'En endring må ha en tittel!';
-    $Self->{Translation}->{'A condition must have a name!'} = 'En forutsetning må ha et navn!';
-    $Self->{Translation}->{'A template must have a name!'} = 'En mal må ha et navn!';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'En arbeidsordre må ha en tittel!';
-    $Self->{Translation}->{'Add CAB Template'} = 'Legg til CAB-mal';
-    $Self->{Translation}->{'Add Workorder'} = 'Legg til Arbeidordre';
-    $Self->{Translation}->{'Add a workorder to the change'} = 'Legg en arbeidsordre til endringen';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'Legg til nytt forutsetning-gjøremål-par';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        '';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = '';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = '';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        '';
-    $Self->{Translation}->{'CABAgents'} = 'CAB-saksbehandlere';
-    $Self->{Translation}->{'CABCustomers'} = 'CAB-kunder';
-    $Self->{Translation}->{'Change Overview'} = 'Endringsoversikt';
-    $Self->{Translation}->{'Change Schedule'} = 'Endre tidsplan';
-    $Self->{Translation}->{'Change involved persons of the change'} = 'Endre involverte personer i endringen';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Nytt gjøremål (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Gjøremål (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Alle gjøremål for forutsetning (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Gjøremål (ID=%s) utført: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Gjøremål ID=%s): Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Endring (ID=%s) har nådd faktisk sluttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Endring (ID=%s) har nådd faktisk starttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Ny Endring (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Nytt Vedlegg: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'Slettet Vedlegg %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'CAB Slettet %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'Kobling til %s (ID=%s) lagt til';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'Kobling til %s (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'Melding sendt til %s (Hendelse: %s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Endring (ID=%s) har nådd planlagt sluttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Endring (ID=%s) har nådd planlagt starttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Endring (ID=%s) har nådd forespurt tid.';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'Ny forutsetning (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'Forutsetning (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'Alle Forutsetninger for Endring (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (Forutsetning ID=%s): Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'Nytt uttrykk (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'Uttrykk (ID=%s) Slettet';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'Alle Uttrykk for Forutsetning (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (Uttrykk ID=%s): Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'ChangeNumber'} = 'Endringsnummer';
-    $Self->{Translation}->{'Condition Edit'} = 'Endre Forutsetning';
-    $Self->{Translation}->{'Create Change'} = 'Opprett Endring';
-    $Self->{Translation}->{'Create a change from this ticket!'} = 'Opprett en Endring fra denne saken';
-    $Self->{Translation}->{'Delete Workorder'} = 'Slett Arbeidsordre';
-    $Self->{Translation}->{'Edit the change'} = 'Rediger endringen';
-    $Self->{Translation}->{'Edit the conditions of the change'} = 'Endre forutsetningene for denne endringen';
-    $Self->{Translation}->{'Edit the workorder'} = 'Endre arbeidsordren';
-    $Self->{Translation}->{'Expression'} = 'Uttrykk';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Fulltekstsøk i Endring og Arbeidsordre';
-    $Self->{Translation}->{'ITSMCondition'} = 'Forutsetning';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'Arbeidsordre';
-    $Self->{Translation}->{'Link another object to the change'} = 'Koble et annet objekt til endringen';
-    $Self->{Translation}->{'Link another object to the workorder'} = 'Koble et annet objekt til arbeidsordren';
-    $Self->{Translation}->{'Move all workorders in time'} = 'Flytt alle arbeidsordre i tid';
-    $Self->{Translation}->{'My CABs'} = 'Mine Endringsråd';
-    $Self->{Translation}->{'My Changes'} = 'Mine Endringer';
-    $Self->{Translation}->{'My Workorders'} = 'Mine Arbeidsordre';
-    $Self->{Translation}->{'No XXX settings'} = 'Ingen innstillinger for \'%s\'';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Sluttevaluering)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Forventet tjenestetilgjengelighet)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'Vennligst velg en katalogklasse først!';
-    $Self->{Translation}->{'Print the change'} = 'Skriv ut endringen';
-    $Self->{Translation}->{'Print the workorder'} = 'Skriv ut arbeidsordren';
-    $Self->{Translation}->{'RequestedTime'} = 'Forespurt tid';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'Lagre Endringsråd som mal';
-    $Self->{Translation}->{'Save change as a template'} = 'Lagre Endring som mal';
-    $Self->{Translation}->{'Save workorder as a template'} = 'Lagre Arbeidsordre som mal';
-    $Self->{Translation}->{'Search Changes'} = 'Søk i Endringer';
-    $Self->{Translation}->{'Set the agent for the workorder'} = 'Sett saksbehandler for arbeidsordren';
-    $Self->{Translation}->{'Take Workorder'} = 'Ta arbeidsordre';
-    $Self->{Translation}->{'Take the workorder'} = 'Ta arbeidsordren';
-    $Self->{Translation}->{'Template Overview'} = 'Maloversikt';
-    $Self->{Translation}->{'The planned end time is invalid!'} = 'Planlagt sluttid er ugyldig!';
-    $Self->{Translation}->{'The planned start time is invalid!'} = 'Planlagt starttid er ugyldig!';
-    $Self->{Translation}->{'The planned time is invalid!'} = 'Planlagt tid er ugyldig!';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'Forespurt tid er ugyldig!';
-    $Self->{Translation}->{'New (from template)'} = 'Ny (fra mal)';
-    $Self->{Translation}->{'Add from template'} = 'Legg til fra mal';
-    $Self->{Translation}->{'Add Workorder (from template)'} = 'Legg til arbeidordre (fra mal)';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Legg en arbeidsordre (fra mal) til endringen';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Arbeidsordre (ID=%s) har nådd faktisk sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        'Arbeidsordre (ID=%s) har nådd faktisk sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Arbeidsordre (ID=%s) har nådd faktisk starttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        'Arbeidsordre (ID=%s) har nådd faktisk starttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'Ny Arbeidsordre (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'Ny Arbeidsordre (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = 'Nytt vedlegg til Arbeidsordre: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = '(ID=%s) Nytt vedlegg til Arbeidsordre: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Slettet vedlegget fra Arbeidsordre: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Slettet vedlegget fra Arbeidsordre: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'Arbeidsordre (ID=%s) slettet';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'Arbeidsordre (ID=%s) slettet';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'Kobling til %s (ID=%s) lagt til';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = '(ID=%s) Kobling til %s (ID=%s) lagt til';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Kobling til %s (ID=%s) slettet';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = '(ID=%s) Kobling til %s (ID=%s) slettet';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'Melding sendt til %s (Hendelse: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '(ID=%s) Melding sent til %s (Hendelse: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'Arbeidsordre (ID=%s) har nådd planlagt sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        'Arbeidsordre (ID=%s) har nådd planlagt sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Arbeidsordre (ID=%s) har nådd planlagt starttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        'Arbeidsordre (ID=%s) har nådd planlagt starttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'WorkOrderNumber'} = 'Arbeidsordre nr';
-    $Self->{Translation}->{'accepted'} = 'Akseptert';
-    $Self->{Translation}->{'any'} = 'hvilken som helst';
-    $Self->{Translation}->{'approval'} = 'Godkjenning';
-    $Self->{Translation}->{'approved'} = 'Godkjent';
-    $Self->{Translation}->{'backout'} = 'Plan for gjenoppretting';
-    $Self->{Translation}->{'begins with'} = 'starter med';
-    $Self->{Translation}->{'canceled'} = 'Avbrutt';
-    $Self->{Translation}->{'contains'} = 'inneholder';
-    $Self->{Translation}->{'created'} = 'Opprettet';
-    $Self->{Translation}->{'decision'} = 'Beslutning';
-    $Self->{Translation}->{'ends with'} = 'slutter med';
-    $Self->{Translation}->{'failed'} = 'feilet';
-    $Self->{Translation}->{'in progress'} = 'Under arbeid';
-    $Self->{Translation}->{'is'} = 'er';
-    $Self->{Translation}->{'is after'} = 'er etter';
-    $Self->{Translation}->{'is before'} = 'er før';
-    $Self->{Translation}->{'is empty'} = 'er tom';
-    $Self->{Translation}->{'is greater than'} = 'er større enn';
-    $Self->{Translation}->{'is less than'} = 'er mindre enn';
-    $Self->{Translation}->{'is not'} = 'er ikke';
-    $Self->{Translation}->{'is not empty'} = 'er ikke tom';
-    $Self->{Translation}->{'not contains'} = 'inneholder ikke';
-    $Self->{Translation}->{'pending approval'} = 'Avventer godkjenning';
-    $Self->{Translation}->{'pending pir'} = 'Avventer Sluttevaluering';
-    $Self->{Translation}->{'pir'} = 'PIR (Sluttevaluering)';
-    $Self->{Translation}->{'ready'} = 'Klar';
-    $Self->{Translation}->{'rejected'} = 'Avvist';
-    $Self->{Translation}->{'requested'} = 'Forespurt';
-    $Self->{Translation}->{'retracted'} = 'Trukket tilbake';
-    $Self->{Translation}->{'set'} = 'satt';
-    $Self->{Translation}->{'successful'} = 'Vellykket';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategori <-> Omfang <-> Prioritet';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Sist endret';
     $Self->{Translation}->{'Last changed by'} = 'Sist endret av';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'ITSMChange'} = 'Endring';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = 'Last ned vedlegg';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = 'Mine Endringsråd';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = 'Mine Endringer';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Mine Arbeidsordre';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = 'Forespurt';
+    $Self->{Translation}->{'pending approval'} = 'Avventer godkjenning';
+    $Self->{Translation}->{'rejected'} = 'Avvist';
+    $Self->{Translation}->{'approved'} = 'Godkjent';
+    $Self->{Translation}->{'in progress'} = 'Under arbeid';
+    $Self->{Translation}->{'pending pir'} = 'Avventer Sluttevaluering';
+    $Self->{Translation}->{'successful'} = 'Vellykket';
+    $Self->{Translation}->{'failed'} = 'feilet';
+    $Self->{Translation}->{'canceled'} = 'Avbrutt';
+    $Self->{Translation}->{'retracted'} = 'Trukket tilbake';
+    $Self->{Translation}->{'created'} = 'Opprettet';
+    $Self->{Translation}->{'accepted'} = 'Akseptert';
+    $Self->{Translation}->{'ready'} = 'Klar';
+    $Self->{Translation}->{'approval'} = 'Godkjenning';
+    $Self->{Translation}->{'workorder'} = 'Arbeidsordre';
+    $Self->{Translation}->{'backout'} = 'Plan for gjenoppretting';
+    $Self->{Translation}->{'decision'} = 'Beslutning';
+    $Self->{Translation}->{'pir'} = 'PIR (Sluttevaluering)';
+    $Self->{Translation}->{'is'} = 'er';
+    $Self->{Translation}->{'is not'} = 'er ikke';
+    $Self->{Translation}->{'is empty'} = 'er tom';
+    $Self->{Translation}->{'is not empty'} = 'er ikke tom';
+    $Self->{Translation}->{'is greater than'} = 'er større enn';
+    $Self->{Translation}->{'is less than'} = 'er mindre enn';
+    $Self->{Translation}->{'is before'} = 'er før';
+    $Self->{Translation}->{'is after'} = 'er etter';
+    $Self->{Translation}->{'contains'} = 'inneholder';
+    $Self->{Translation}->{'not contains'} = 'inneholder ikke';
+    $Self->{Translation}->{'begins with'} = 'starter med';
+    $Self->{Translation}->{'ends with'} = 'slutter med';
+    $Self->{Translation}->{'set'} = 'satt';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Liste over saksbehandlere som har tilgang til å ta arbeidsordre. Innholdet er 0 eller 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Liste over arbeidsordretilstander som vil utløse at faktisk starttid blir satt (hvis tom fra før).';
+    $Self->{Translation}->{'Add Workorder'} = 'Legg til Arbeidordre';
     $Self->{Translation}->{'Add Workorder (from Template)'} = 'Legg til arbeidordre (fra mal)';
     $Self->{Translation}->{'Add a change from template.'} = 'Legg til en endring fra mal.';
     $Self->{Translation}->{'Add a change.'} = 'Legg til en endring.';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = 'Legg en arbeidsordre (fra mal) til endringen.';
     $Self->{Translation}->{'Add a workorder to the change.'} = 'Legg en arbeidsordre til endringen.';
+    $Self->{Translation}->{'Add from template'} = 'Legg til fra mal';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Administrasjon av CIP-matrisen.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Administrasjon av tilstandsendringer.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
+    $Self->{Translation}->{'Change Schedule'} = 'Endre tidsplan';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
+    $Self->{Translation}->{'Condition Edit'} = 'Endre Forutsetning';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Setter opp hvor ofte meldinger blir sendt ut når planlagt starttid eller andre tidspunkter nås eller passeres';
+    $Self->{Translation}->{'Create Change'} = 'Opprett Endring';
     $Self->{Translation}->{'Create Change (from Template)'} = 'Opprett en endring (fra mal)';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Opprett en endring (fra mal) fra denne saken.';
     $Self->{Translation}->{'Create a change from this ticket.'} = 'Opprett en Endring fra denne saken.';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
+    $Self->{Translation}->{'ITSM Changes'} = 'Endringer';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         '';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'Arbeidsordre';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -907,10 +792,12 @@ sub Data {
         '';
     $Self->{Translation}->{'Move Time Slot.'} = 'Flytt tidsrommet.';
     $Self->{Translation}->{'Move all workorders in time.'} = 'Flytt alle arbeidsordre i tid.';
+    $Self->{Translation}->{'New (from template)'} = 'Ny (fra mal)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
     $Self->{Translation}->{'Overview over all Changes.'} = 'Oversikt over alle endringer.';
     $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Sluttevaluering)';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         '';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = 'Lagre Arbeidsordre som mal.';
     $Self->{Translation}->{'Schedule'} = 'Tidsplan';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
+    $Self->{Translation}->{'Search Changes'} = 'Søk i Endringer';
     $Self->{Translation}->{'Search Changes.'} = 'Søk i Endringer.';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'Tilstandsendringer';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
+    $Self->{Translation}->{'Take Workorder'} = 'Ta arbeidsordre';
     $Self->{Translation}->{'Take Workorder.'} = 'Ta arbeidsordre.';
     $Self->{Translation}->{'Take the workorder.'} = 'Ta arbeidsordren.';
+    $Self->{Translation}->{'Template Overview'} = 'Maloversikt';
     $Self->{Translation}->{'Template.'} = 'Mal.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         '';

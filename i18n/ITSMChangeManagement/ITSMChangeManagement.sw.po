@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-14 10:19+0000\n"
-"PO-Revision-Date: 2017-03-14 09:20+0000\n"
+"POT-Creation-Date: 2017-07-10 14:46+0000\n"
+"PO-Revision-Date: 2017-07-10 12:46+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -15,614 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChange"
-msgstr "BadiliITSM"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMChanges"
-msgstr "MabadilikoITSM"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSM Changes"
-msgstr "Mabadiliko ya ITSM"
-
-#. Template: AAAITSMChangeManagement
-msgid "workorder"
-msgstr "oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "A change must have a title!"
-msgstr "Mabadiliko lazima yawe na kichwa cha habari!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A condition must have a name!"
-msgstr "Sharti lazima liwe na jina!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A template must have a name!"
-msgstr "Kiolezo lazima kiwe na jina!"
-
-#. Template: AAAITSMChangeManagement
-msgid "A workorder must have a title!"
-msgstr "Oda ya kazi lazima iwe na kichwa cha habari!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add CAB Template"
-msgstr "Ongeza kiolezo cha CAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder"
-msgstr "Ongeza Oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder to the change"
-msgstr "Ongeza  oda ya kazi kwenye mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add new condition and action pair"
-msgstr "Ongeza sharti jipya na kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the ChangeManager overview icon."
-msgstr "Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya MenejaMabadiliko."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyCAB overview icon."
-msgstr "Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya CABYangu."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyChanges overview icon."
-msgstr "Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya MabadilikoYangu."
-
-#. Template: AAAITSMChangeManagement
-msgid "Agent interface module to show the MyWorkOrders overview icon."
-msgstr "Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya OdaZanguzaKazi."
-
-#. Template: AAAITSMChangeManagement
-msgid "CABAgents"
-msgstr "MawakalaCAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "CABCustomers"
-msgstr "WatejaCAB"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Overview"
-msgstr "Mapitio ya Mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change Schedule"
-msgstr "Badili Ratiba"
-
-#. Template: AAAITSMChangeManagement
-msgid "Change involved persons of the change"
-msgstr "Mabadiliko yanayohusisha watu wa mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAdd"
-msgstr "BadiliHistoria::OngezaKitendo"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionAddID"
-msgstr "BadiliHistoria::KitambulishoOngezaKitendo"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDelete"
-msgstr "BadiliHistoria::FutaKitendo"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionDeleteAll"
-msgstr "BadiliHistoria::FutaHistoriaZote"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionExecute"
-msgstr "BadiliHistoria::TekelezaKitendo"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ActionUpdate"
-msgstr "BadiliHistoria::SasishaKitendo"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualEndTimeReached"
-msgstr "BadiliHistoria::BadiliMudaKumalizaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeActualStartTimeReached"
-msgstr "BadiliHistoria::BadiliMudaKuanzaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAdd"
-msgstr "BadiliHistoria::OngezaMabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentAdd"
-msgstr "BadiliHistoria::BadiliKiambatanishoOngeza"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeAttachmentDelete"
-msgstr "BadiliHistoria::BadiliKiambatanishoFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABDelete"
-msgstr "BadiliHistoria::BadiliCABFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeCABUpdate"
-msgstr "BadiliHistoria::BadiliCABFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkAdd"
-msgstr "BadiliHistoria::BadiliKiungoOngeza"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeLinkDelete"
-msgstr "BadiliHistoria::BadiliKiungoFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeNotificationSent"
-msgstr "BadiliHistoria::BadiliTaarifaImetumwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedEndTimeReached"
-msgstr "BadiliHistoria::BadiliMudaUliopangwaKumalizaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangePlannedStartTimeReached"
-msgstr "BadiliHistoria::BadiliMudaUliopangwaKunzaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeRequestedTimeReached"
-msgstr "BadiliHistoria::BadiliMudaUlioombwaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ChangeUpdate"
-msgstr "BadiliHistoria::BadiliKisasisho"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAdd"
-msgstr "BadiliHistoria::Sharti"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionAddID"
-msgstr "BadiliHistoria::ShartiOngezaKitambulisho"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDelete"
-msgstr "BadiliHistoria::ShartiFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionDeleteAll"
-msgstr "BadiliHistoria::ShartiFutaZote"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ConditionUpdate"
-msgstr "BadiliHistoria::ShartiSasisha"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAdd"
-msgstr "BadiliHistoria::UsemiOngeza"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionAddID"
-msgstr "BadiliHistoria::UsemiOngezaKitambulisho"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDelete"
-msgstr "BadiliHistoria::UsemiFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionDeleteAll"
-msgstr "BadiliHistoria::UsemiFutaZote"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeHistory::ExpressionUpdate"
-msgstr "BadiliHistoria::UsemiSasisha"
-
-#. Template: AAAITSMChangeManagement
-msgid "ChangeNumber"
-msgstr "BadiliNambari"
-
-#. Template: AAAITSMChangeManagement
-msgid "Condition Edit"
-msgstr "Sharti Hariri"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create Change"
-msgstr "Tengeneza Mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Create a change from this ticket!"
-msgstr "Tengeneza Mabadiliko kutoka kwenye hii tiketi!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Delete Workorder"
-msgstr "Futa Oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the change"
-msgstr "Hariri mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the conditions of the change"
-msgstr "Hariri masharti ya mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Edit the workorder"
-msgstr "Hariri oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Expression"
-msgstr "Usemi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Full-Text Search in Change and Workorder"
-msgstr "Tafuta Nakala-Kamili katika Mabadiliko na Oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMCondition"
-msgstr "MashartiITSM"
-
-#. Template: AAAITSMChangeManagement
-msgid "ITSMWorkOrder"
-msgstr "ITSMOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the change"
-msgstr "Unganisha kitu kingine kwenye mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Link another object to the workorder"
-msgstr "Unganisha kitu kingine kwenye oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Move all workorders in time"
-msgstr "Hamisha oda zote za kazi kwa muda"
-
-#. Template: AAAITSMChangeManagement
-msgid "My CABs"
-msgstr "CAB zangu"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Changes"
-msgstr "Mabadiliko Yangu"
-
-#. Template: AAAITSMChangeManagement
-msgid "My Workorders"
-msgstr "Oda zangu za kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "No XXX settings"
-msgstr "Hakuna mipangilio XXX"
-
-#. Template: AAAITSMChangeManagement
-msgid "PIR (Post Implementation Review)"
-msgstr "Baada ya utekelezaji wa mapitio (PIR)"
-
-#. Template: AAAITSMChangeManagement
-msgid "PSA (Projected Service Availability)"
-msgstr "Makadirio huduma upatikanaji (PSA)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Please select first a catalog class!"
-msgstr "Tafadhali chagua tabaka la kwanza la katalogi!"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the change"
-msgstr "Chapisha mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Print the workorder"
-msgstr "Chapisha oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "RequestedTime"
-msgstr "MudaUlioombwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save Change CAB as Template"
-msgstr "Hifadhi Mabadiliko ya CAB kama Kiolezo"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save change as a template"
-msgstr "Hifadhi mabadiliko kama kiolezo"
-
-#. Template: AAAITSMChangeManagement
-msgid "Save workorder as a template"
-msgstr "Hifadhi oda ya kazi kama kiolezo"
-
-#. Template: AAAITSMChangeManagement
-msgid "Search Changes"
-msgstr "Tafuta Mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "Set the agent for the workorder"
-msgstr "Seti wakala kwa oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take Workorder"
-msgstr "Chukua Oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Take the workorder"
-msgstr "Chukua oda ya kazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "Template Overview"
-msgstr "Mapitio ya Kiolezo"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned end time is invalid!"
-msgstr "Muda wa kumaliza uliopangwa ni batili!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned start time is invalid!"
-msgstr "Muda wa kuanza uliopangwa ni batili!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The planned time is invalid!"
-msgstr "Muda uliopangwa ni batili!"
-
-#. Template: AAAITSMChangeManagement
-msgid "The requested time is invalid!"
-msgstr "Muda ulioombwa ni batili!"
-
-#. Template: AAAITSMChangeManagement
-msgid "New (from template)"
-msgstr "Mpya (kutoka kwenye kiolezo)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add from template"
-msgstr "Ongeza kutoka kwenye kiolezo"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add Workorder (from template)"
-msgstr "Ongeza Oda ya kazi (kutoka kwenye kiolezo)"
-
-#. Template: AAAITSMChangeManagement
-msgid "Add a workorder (from template) to the change"
-msgstr "Ongeza oda ya kazi (kutoka kwenye kiolezo) kwenye mabadiliko"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReached"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaHalisiKumalizaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaHalisiKumalizaUmefikiwaWenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReached"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaHalisiKunzaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaHalisiKunzaUmefikiwaWenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAdd"
-msgstr "OdaYaKaziHistoria::OdaYaKaziOngeza"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAddWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziOngezaYenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAdd"
-msgstr "OdaYaKaziHistoria::OdaYaKaziKiambatanishoOngeza"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziKiambatanishoOngezaYenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDelete"
-msgstr "OdaYaKaziHistoria::OdaYaKaziKiambatanishoFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziKiambatanishoFutaYenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAdd"
-msgstr "OdaYaKaziHistoria::OdaYaKaziOngezaKiambatanishoChaRipoti"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziOngezaKiambatanishoChaRipotiChenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDelete"
-msgstr "OdaYaKaziHistoria::OdaYaKaziFutaKiambatanishoChaRipoti"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziFutaKiambatanishoChaRipotiChenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDelete"
-msgstr "OdaYaKaziHistoria::OdaYaKaziFuta"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziFutaYenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAdd"
-msgstr "OdaYaKaziHistoria::OdaYaKaziOngezaKiungo"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziOngezaKiungoChenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDelete"
-msgstr "OdaYaKaziHistoria::OdaYaKaziFutaKiungo"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziFutaKiungoChenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSent"
-msgstr "OdaYaKaziHistoria::OdaYaKaziTaarifaImetumwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziTaarifaImetumwaYenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReached"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaKumalizaUliopangwaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaKumalizaUliopangwaUmefikiwaWenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReached"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaKuanzaUliopangwaUmefikiwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziMudaKuanzaUliopangwaUmefikiwaWenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdate"
-msgstr "OdaYaKaziHistoria::OdaYaKaziSasisha"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"
-msgstr "OdaYaKaziHistoria::OdaYaKaziSasishaYenyeKitambulishoChaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "WorkOrderNumber"
-msgstr "NambariYaOdaYaKazi"
-
-#. Template: AAAITSMChangeManagement
-msgid "accepted"
-msgstr "kubaliwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "any"
-msgstr "yoyote"
-
-#. Template: AAAITSMChangeManagement
-msgid "approval"
-msgstr "kibali"
-
-#. Template: AAAITSMChangeManagement
-msgid "approved"
-msgstr "kubaliwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "backout"
-msgstr "kujitoa"
-
-#. Template: AAAITSMChangeManagement
-msgid "begins with"
-msgstr "inaanza na"
-
-#. Template: AAAITSMChangeManagement
-msgid "canceled"
-msgstr "sitishwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "contains"
-msgstr "vyenye"
-
-#. Template: AAAITSMChangeManagement
-msgid "created"
-msgstr "tengenezwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "decision"
-msgstr "maamuzi"
-
-#. Template: AAAITSMChangeManagement
-msgid "ends with"
-msgstr "inaishia na"
-
-#. Template: AAAITSMChangeManagement
-msgid "failed"
-msgstr "Shindwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "in progress"
-msgstr "kwenye maendeleo"
-
-#. Template: AAAITSMChangeManagement
-msgid "is"
-msgstr "ni"
-
-#. Template: AAAITSMChangeManagement
-msgid "is after"
-msgstr "ni baada"
-
-#. Template: AAAITSMChangeManagement
-msgid "is before"
-msgstr "ni kabla"
-
-#. Template: AAAITSMChangeManagement
-msgid "is empty"
-msgstr "ni tupu"
-
-#. Template: AAAITSMChangeManagement
-msgid "is greater than"
-msgstr "ni kubwa zaidi ya"
-
-#. Template: AAAITSMChangeManagement
-msgid "is less than"
-msgstr "ni ndogo zaidi ya"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not"
-msgstr "siyo"
-
-#. Template: AAAITSMChangeManagement
-msgid "is not empty"
-msgstr "siyo tupu"
-
-#. Template: AAAITSMChangeManagement
-msgid "not contains"
-msgstr "haina kitu"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending approval"
-msgstr "kibali kinasubiri"
-
-#. Template: AAAITSMChangeManagement
-msgid "pending pir"
-msgstr "pir inasubiri"
-
-#. Template: AAAITSMChangeManagement
-msgid "pir"
-msgstr "baada ya utekelezaji wa mapitio"
-
-#. Template: AAAITSMChangeManagement
-msgid "ready"
-msgstr "tayari"
-
-#. Template: AAAITSMChangeManagement
-msgid "rejected"
-msgstr "kataliwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "requested"
-msgstr "ombwa"
-
-#. Template: AAAITSMChangeManagement
-msgid "retracted"
-msgstr "ondoa"
-
-#. Template: AAAITSMChangeManagement
-msgid "set"
-msgstr "seti"
-
-#. Template: AAAITSMChangeManagement
-msgid "successful"
-msgstr "mafanikio"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
@@ -1087,6 +479,10 @@ msgstr "Mara ya mwisho imebadilishwa na"
 #. Template: AgentITSMChangeZoom
 msgid "Ok"
 msgstr "Sawa"
+
+#. Template: AgentITSMChangeZoom
+msgid "ITSMChange"
+msgstr "BadiliITSM"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -1698,9 +1094,141 @@ msgstr ""
 msgid "Title: %s | Type: %s"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+msgid "My CABs"
+msgstr "CAB zangu"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+msgid "My Changes"
+msgstr "Mabadiliko Yangu"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "requested"
+msgstr "ombwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending approval"
+msgstr "kibali kinasubiri"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "rejected"
+msgstr "kataliwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approved"
+msgstr "kubaliwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "in progress"
+msgstr "kwenye maendeleo"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pending pir"
+msgstr "pir inasubiri"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "successful"
+msgstr "mafanikio"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "failed"
+msgstr "Shindwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "canceled"
+msgstr "sitishwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "retracted"
+msgstr "ondoa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "created"
+msgstr "tengenezwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "accepted"
+msgstr "kubaliwa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ready"
+msgstr "tayari"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "approval"
+msgstr "kibali"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "workorder"
+msgstr "oda ya kazi"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "backout"
+msgstr "kujitoa"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "decision"
+msgstr "maamuzi"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "pir"
+msgstr "baada ya utekelezaji wa mapitio"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is"
+msgstr "ni"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not"
+msgstr "siyo"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is empty"
+msgstr "ni tupu"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is not empty"
+msgstr "siyo tupu"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is greater than"
+msgstr "ni kubwa zaidi ya"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is less than"
+msgstr "ni ndogo zaidi ya"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is before"
+msgstr "ni kabla"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "is after"
+msgstr "ni baada"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "contains"
+msgstr "vyenye"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "not contains"
+msgstr "haina kitu"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "begins with"
+msgstr "inaanza na"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ends with"
+msgstr "inaishia na"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "set"
+msgstr "seti"
 
 #. SysConfig
 msgid ""
@@ -1713,6 +1241,10 @@ msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
 msgstr "Orodha ya hali za oda ya kazi, ambapo MudaHalisiKuanza wa oda ya kazi utasetiwa kama ulikuwa wazi katika pointi hii."
+
+#. SysConfig
+msgid "Add Workorder"
+msgstr "Ongeza Oda ya kazi"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1733,6 +1265,10 @@ msgstr ""
 #. SysConfig
 msgid "Add a workorder to the change."
 msgstr ""
+
+#. SysConfig
+msgid "Add from template"
+msgstr "Ongeza kutoka kwenye kiolezo"
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
@@ -1803,6 +1339,10 @@ msgid "Change Print."
 msgstr ""
 
 #. SysConfig
+msgid "Change Schedule"
+msgstr "Badili Ratiba"
+
+#. SysConfig
 msgid "Change Schedule."
 msgstr ""
 
@@ -1835,6 +1375,10 @@ msgid "Change search backend router of the agent interface."
 msgstr "Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko."
 
 #. SysConfig
+msgid "Condition Edit"
+msgstr "Sharti Hariri"
+
+#. SysConfig
 msgid "Condition Overview"
 msgstr ""
 
@@ -1849,6 +1393,10 @@ msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
 msgstr "Ina sanidi ni kwa mara ngapi taarifa zinatumwa pale muda uliopangwa wa kuanza au mida mingine inapofikiwa/kupitwa."
+
+#. SysConfig
+msgid "Create Change"
+msgstr "Tengeneza Mabadiliko"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -2554,6 +2102,10 @@ msgid "ITSM Change notification rules"
 msgstr ""
 
 #. SysConfig
+msgid "ITSM Changes"
+msgstr "Mabadiliko ya ITSM"
+
+#. SysConfig
 msgid "ITSM MyCAB Overview."
 msgstr ""
 
@@ -2624,6 +2176,10 @@ msgstr "Moduli ya matukio ya ITSM inayopiga upya hesabu ya nambari ya oda za kaz
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr "Moduli ya matukio ya ITSM inayoseti muda halisi wa kuanza na kumaliza oda za kazi."
+
+#. SysConfig
+msgid "ITSMWorkOrder"
+msgstr "ITSMOdaYaKazi"
 
 #. SysConfig
 msgid ""
@@ -2702,6 +2258,10 @@ msgid "Move all workorders in time."
 msgstr ""
 
 #. SysConfig
+msgid "New (from template)"
+msgstr "Mpya (kutoka kwenye kiolezo)"
+
+#. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
@@ -2715,6 +2275,10 @@ msgstr ""
 #. SysConfig
 msgid "PIR"
 msgstr ""
+
+#. SysConfig
+msgid "PIR (Post Implementation Review)"
+msgstr "Baada ya utekelezaji wa mapitio (PIR)"
 
 #. SysConfig
 msgid "PSA"
@@ -2944,6 +2508,10 @@ msgid "Screen after creating a workorder"
 msgstr "Skrini baada ya kutengeneza oda ya kazi."
 
 #. SysConfig
+msgid "Search Changes"
+msgstr "Tafuta Mabadiliko"
+
+#. SysConfig
 msgid "Search Changes."
 msgstr ""
 
@@ -3139,12 +2707,20 @@ msgid ""
 msgstr "Inahifadhi vitambulisho vya mabadiliko na oda za kazi sambamba na kitambulisho cha kiolezo, wakati mtumiaji anahariri kiolezo."
 
 #. SysConfig
+msgid "Take Workorder"
+msgstr "Chukua Oda ya kazi"
+
+#. SysConfig
 msgid "Take Workorder."
 msgstr ""
 
 #. SysConfig
 msgid "Take the workorder."
 msgstr ""
+
+#. SysConfig
+msgid "Template Overview"
+msgstr "Mapitio ya Kiolezo"
 
 #. SysConfig
 msgid "Template."

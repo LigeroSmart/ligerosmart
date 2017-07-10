@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'ZmianaITSM';
-    $Self->{Translation}->{'ITSMChanges'} = 'ZmianyITSM';
-    $Self->{Translation}->{'ITSM Changes'} = 'Zmiany ITSM';
-    $Self->{Translation}->{'workorder'} = 'zadanie';
-    $Self->{Translation}->{'A change must have a title!'} = 'Zmiana musi posiadać tytuł!';
-    $Self->{Translation}->{'A condition must have a name!'} = 'Warunek musi posiadań nazwę!';
-    $Self->{Translation}->{'A template must have a name!'} = 'Szablon musi posiadać nazwę!';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'Zadanie musi posiadać tytuł!';
-    $Self->{Translation}->{'Add CAB Template'} = 'Dodaj szablon CAB';
-    $Self->{Translation}->{'Add Workorder'} = 'Dodaj zadanie';
-    $Self->{Translation}->{'Add a workorder to the change'} = 'Dodaj zadanie do zmiany';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'Dodaj nową parę warunek-akcja';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        'Moduł interfejsu agenta do wyświetlania ikony przeglądu Manager zmiany.';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = 'Moduł interfejsu agenta do wyświetlania ikony przeglądu Moje CAB.';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = 'Moduł interfejsu agenta do wyświetlania ikony przeglądu Moje zmiany.';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        'Moduł interfejsu agenta do wyświetlania ikony przeglądu Moje zadania.';
-    $Self->{Translation}->{'CABAgents'} = 'CAB Agenci';
-    $Self->{Translation}->{'CABCustomers'} = 'CAB Klienci';
-    $Self->{Translation}->{'Change Overview'} = 'Przegląd zmiany';
-    $Self->{Translation}->{'Change Schedule'} = 'Harmonogram zmiany';
-    $Self->{Translation}->{'Change involved persons of the change'} = 'Zmień osoby zaangażowane w zmianę';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'ChangeHistory::ActionAddID';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Akcja (ID=%s) usunięta';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Wszystkie akcje warunku (ID=%s) usunięte';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Akcja (ID=%s) wykonana: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Akcja ID=%s): Nowe: %s <- Stare: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Zmiana (ID=%s) osiągnęła rzeczywisty czas końca.';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Zmiana (ID=%s) osiągnęła rzeczywisty czas startu.';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Nowa zmiana (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Nowy załącznik: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'Usunięty załącznik %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'CAB usunięto %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: Nowe: %s <- Stare: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'Utworzony odnośnik do %s (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'Usunięty odnośnik do %s (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'Powiadomienie wysłane do %s (Zdarzenie: %s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Zmiana (ID=%s) osiągnęła planowany czas końca.';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Zmiana (ID=%s) osiągnęła planowany czas startu.';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Zmiana (ID=%s) osiągnęła żądany czas.';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: Nowe: %s <- Stare: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'ChangeHistory::ConditionAddID';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'Warunek (ID=%s) usunięty';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'Wszsytkie warunki w zmianie (ID=%s) usunięte';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (Warunek ID=%s): Nowe: %s <- Stare: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'ChangeHistory::ExpressionAddID';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'Wyrażenie (ID=%s) usunięte';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'Wszystkie wyrażenia w warunku (ID=%s) usunięte';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (Wyrażenie ID=%s): Nowe: %s <- Stare: %s';
-    $Self->{Translation}->{'ChangeNumber'} = 'Numer zmiany';
-    $Self->{Translation}->{'Condition Edit'} = 'Edycja warunku';
-    $Self->{Translation}->{'Create Change'} = 'Utwórz zmianę';
-    $Self->{Translation}->{'Create a change from this ticket!'} = 'Utwórz zmianę z tego zgłoszenia!';
-    $Self->{Translation}->{'Delete Workorder'} = 'Usuń zadanie';
-    $Self->{Translation}->{'Edit the change'} = 'Edytuj zmianę';
-    $Self->{Translation}->{'Edit the conditions of the change'} = 'Edytuj warunki w zmianie';
-    $Self->{Translation}->{'Edit the workorder'} = 'Edytuj zadanie';
-    $Self->{Translation}->{'Expression'} = 'Wyrażenie';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Wyszukiwanie pełnotekstowe w zmianie i zadaniach';
-    $Self->{Translation}->{'ITSMCondition'} = 'Warunek';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'Zadanie';
-    $Self->{Translation}->{'Link another object to the change'} = 'Połącz zmianę z innym obiektem';
-    $Self->{Translation}->{'Link another object to the workorder'} = 'Połącz zadanie z innym obiektem';
-    $Self->{Translation}->{'Move all workorders in time'} = 'Przesuń wszystkie zadania w czasie';
-    $Self->{Translation}->{'My CABs'} = 'Moje CABy';
-    $Self->{Translation}->{'My Changes'} = 'Moje zmiany';
-    $Self->{Translation}->{'My Workorders'} = 'Moje zadania';
-    $Self->{Translation}->{'No XXX settings'} = 'Brak ustawień \'%s\'';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'Zaznacz najpierw proszę klasę z katalogu!';
-    $Self->{Translation}->{'Print the change'} = 'Wydrukuj zmianę';
-    $Self->{Translation}->{'Print the workorder'} = 'Wydrukuj zadanie';
-    $Self->{Translation}->{'RequestedTime'} = 'Żądany czas';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'Zapisz CAB jako szablon';
-    $Self->{Translation}->{'Save change as a template'} = 'Zapisz zmianę jako szablon';
-    $Self->{Translation}->{'Save workorder as a template'} = 'Zapisz zadanie jako szablon';
-    $Self->{Translation}->{'Search Changes'} = 'Wyszukiwanie zmian';
-    $Self->{Translation}->{'Set the agent for the workorder'} = 'Przypisz agenta do zadania';
-    $Self->{Translation}->{'Take Workorder'} = 'Weź zadanie';
-    $Self->{Translation}->{'Take the workorder'} = 'Weź zadanie';
-    $Self->{Translation}->{'Template Overview'} = 'Przegląd szablonu';
-    $Self->{Translation}->{'The planned end time is invalid!'} = 'Planowany czas końca jest niepoprawny!';
-    $Self->{Translation}->{'The planned start time is invalid!'} = 'Planowany czas rozpoczęcia jest niepoprawny!';
-    $Self->{Translation}->{'The planned time is invalid!'} = 'Planowany czas jest niepoprawny!';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'Żądany czas jest niepoprawny!';
-    $Self->{Translation}->{'New (from template)'} = 'Nowy (z szablonu)';
-    $Self->{Translation}->{'Add from template'} = '';
-    $Self->{Translation}->{'Add Workorder (from template)'} = '';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Zadanie (ID=%s) osiągnęło rzeczywisty czas końca.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Zadanie (ID=%s) osiągnęło rzeczywisty czas startu.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'Nowe zadanie (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderAddWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = '(ID=%s) Nowy załącznik do zadania: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Usunięty załącznik z zadania: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'Zadanie (ID=%s) usunięte';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'Utworzony odnośnik do %s (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'Usynięty odnośnik do %s (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'Powiadomienie wysłane do %s (Zdarzenie: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'Zadanie (ID=%s) osiągnęło planowany czas końca.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        'Zadanie (ID=%s) osiągnęło planowany czas końca.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Zadanie (ID=%s) osiągnęło planowany czas startu.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        'Zadanie (ID=%s) osiągnęło planowany czas startu.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: Nowe: %s <- Stare: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = 'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID';
-    $Self->{Translation}->{'WorkOrderNumber'} = 'Numer zadania';
-    $Self->{Translation}->{'accepted'} = 'zaakceptowane';
-    $Self->{Translation}->{'any'} = 'dowolne';
-    $Self->{Translation}->{'approval'} = 'zatwierdzanie';
-    $Self->{Translation}->{'approved'} = 'zatwierdzone';
-    $Self->{Translation}->{'backout'} = 'wycofanie';
-    $Self->{Translation}->{'begins with'} = 'zaczyna się od';
-    $Self->{Translation}->{'canceled'} = 'anulowane';
-    $Self->{Translation}->{'contains'} = 'zawiera';
-    $Self->{Translation}->{'created'} = 'utworzone';
-    $Self->{Translation}->{'decision'} = 'decyzja';
-    $Self->{Translation}->{'ends with'} = 'kończy się na';
-    $Self->{Translation}->{'failed'} = 'zakończone niepomyślnie';
-    $Self->{Translation}->{'in progress'} = 'w toku';
-    $Self->{Translation}->{'is'} = 'jest';
-    $Self->{Translation}->{'is after'} = 'po';
-    $Self->{Translation}->{'is before'} = 'przed';
-    $Self->{Translation}->{'is empty'} = 'puste';
-    $Self->{Translation}->{'is greater than'} = 'jest większe od';
-    $Self->{Translation}->{'is less than'} = 'jest mniejsze od';
-    $Self->{Translation}->{'is not'} = 'nie jest';
-    $Self->{Translation}->{'is not empty'} = 'niepuste';
-    $Self->{Translation}->{'not contains'} = 'nie zawiera';
-    $Self->{Translation}->{'pending approval'} = 'czeka na zgodę';
-    $Self->{Translation}->{'pending pir'} = 'czeka na recenzję (PIR)';
-    $Self->{Translation}->{'pir'} = 'recenzja (PIR)';
-    $Self->{Translation}->{'ready'} = 'gotowe';
-    $Self->{Translation}->{'rejected'} = 'odrzucone';
-    $Self->{Translation}->{'requested'} = 'żądanie';
-    $Self->{Translation}->{'retracted'} = 'wycofane';
-    $Self->{Translation}->{'set'} = 'ustaw';
-    $Self->{Translation}->{'successful'} = 'zakończone pomyślnie';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategoria <-> Wpływ <-> Priorytet';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Ostatnia zmiana';
     $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'ITSMChange'} = 'ZmianaITSM';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = 'Pobierz załącznik';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = 'Moje CABy';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = 'Moje zmiany';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = 'żądanie';
+    $Self->{Translation}->{'pending approval'} = 'czeka na zgodę';
+    $Self->{Translation}->{'rejected'} = 'odrzucone';
+    $Self->{Translation}->{'approved'} = 'zatwierdzone';
+    $Self->{Translation}->{'in progress'} = 'w toku';
+    $Self->{Translation}->{'pending pir'} = 'czeka na recenzję (PIR)';
+    $Self->{Translation}->{'successful'} = 'zakończone pomyślnie';
+    $Self->{Translation}->{'failed'} = 'zakończone niepomyślnie';
+    $Self->{Translation}->{'canceled'} = 'anulowane';
+    $Self->{Translation}->{'retracted'} = 'wycofane';
+    $Self->{Translation}->{'created'} = 'utworzone';
+    $Self->{Translation}->{'accepted'} = 'zaakceptowane';
+    $Self->{Translation}->{'ready'} = 'gotowe';
+    $Self->{Translation}->{'approval'} = 'zatwierdzanie';
+    $Self->{Translation}->{'workorder'} = 'zadanie';
+    $Self->{Translation}->{'backout'} = 'wycofanie';
+    $Self->{Translation}->{'decision'} = 'decyzja';
+    $Self->{Translation}->{'pir'} = 'recenzja (PIR)';
+    $Self->{Translation}->{'is'} = 'jest';
+    $Self->{Translation}->{'is not'} = 'nie jest';
+    $Self->{Translation}->{'is empty'} = 'puste';
+    $Self->{Translation}->{'is not empty'} = 'niepuste';
+    $Self->{Translation}->{'is greater than'} = 'jest większe od';
+    $Self->{Translation}->{'is less than'} = 'jest mniejsze od';
+    $Self->{Translation}->{'is before'} = 'przed';
+    $Self->{Translation}->{'is after'} = 'po';
+    $Self->{Translation}->{'contains'} = 'zawiera';
+    $Self->{Translation}->{'not contains'} = 'nie zawiera';
+    $Self->{Translation}->{'begins with'} = 'zaczyna się od';
+    $Self->{Translation}->{'ends with'} = 'kończy się na';
+    $Self->{Translation}->{'set'} = 'ustaw';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         '';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         '';
+    $Self->{Translation}->{'Add Workorder'} = 'Dodaj zadanie';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add from template'} = '';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Zarządzanie macierzą KWP';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Zarządzanie maszyną stanów';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Limit przeglądu zmian "Małe"';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
+    $Self->{Translation}->{'Change Schedule'} = 'Harmonogram zmiany';
     $Self->{Translation}->{'Change Schedule.'} = 'Harmonogram zmiany.';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = '';
+    $Self->{Translation}->{'Condition Edit'} = 'Edycja warunku';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         '';
+    $Self->{Translation}->{'Create Change'} = 'Utwórz zmianę';
     $Self->{Translation}->{'Create Change (from Template)'} = '';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
+    $Self->{Translation}->{'ITSM Changes'} = 'Zmiany ITSM';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         '';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'Zadanie';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -907,10 +792,12 @@ sub Data {
         '';
     $Self->{Translation}->{'Move Time Slot.'} = '';
     $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Nowy (z szablonu)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         '';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
+    $Self->{Translation}->{'Search Changes'} = 'Wyszukiwanie zmian';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         '';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'Maszyna stanów';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
+    $Self->{Translation}->{'Take Workorder'} = 'Weź zadanie';
     $Self->{Translation}->{'Take Workorder.'} = '';
     $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Template Overview'} = 'Przegląd szablonu';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         '';

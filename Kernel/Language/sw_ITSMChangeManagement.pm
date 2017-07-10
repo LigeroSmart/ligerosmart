@@ -15,168 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
-    $Self->{Translation}->{'ITSMChange'} = 'BadiliITSM';
-    $Self->{Translation}->{'ITSMChanges'} = 'MabadilikoITSM';
-    $Self->{Translation}->{'ITSM Changes'} = 'Mabadiliko ya ITSM';
-    $Self->{Translation}->{'workorder'} = 'oda ya kazi';
-    $Self->{Translation}->{'A change must have a title!'} = 'Mabadiliko lazima yawe na kichwa cha habari!';
-    $Self->{Translation}->{'A condition must have a name!'} = 'Sharti lazima liwe na jina!';
-    $Self->{Translation}->{'A template must have a name!'} = 'Kiolezo lazima kiwe na jina!';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'Oda ya kazi lazima iwe na kichwa cha habari!';
-    $Self->{Translation}->{'Add CAB Template'} = 'Ongeza kiolezo cha CAB';
-    $Self->{Translation}->{'Add Workorder'} = 'Ongeza Oda ya kazi';
-    $Self->{Translation}->{'Add a workorder to the change'} = 'Ongeza  oda ya kazi kwenye mabadiliko';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'Ongeza sharti jipya na kazi';
-    $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} =
-        'Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya MenejaMabadiliko.';
-    $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = 'Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya CABYangu.';
-    $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = 'Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya MabadilikoYangu.';
-    $Self->{Translation}->{'Agent interface module to show the MyWorkOrders overview icon.'} =
-        'Moduli ya kiolesura cha wakala kuonyesha ikoni ya mapitio ya OdaZanguzaKazi.';
-    $Self->{Translation}->{'CABAgents'} = 'MawakalaCAB';
-    $Self->{Translation}->{'CABCustomers'} = 'WatejaCAB';
-    $Self->{Translation}->{'Change Overview'} = 'Mapitio ya Mabadiliko';
-    $Self->{Translation}->{'Change Schedule'} = 'Badili Ratiba';
-    $Self->{Translation}->{'Change involved persons of the change'} = 'Mabadiliko yanayohusisha watu wa mabadiliko';
-    $Self->{Translation}->{'ChangeHistory::ActionAdd'} = 'BadiliHistoria::OngezaKitendo';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'BadiliHistoria::KitambulishoOngezaKitendo';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'BadiliHistoria::FutaKitendo';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'BadiliHistoria::FutaHistoriaZote';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'BadiliHistoria::TekelezaKitendo';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = 'BadiliHistoria::SasishaKitendo';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'BadiliHistoria::BadiliMudaKumalizaUmefikiwa';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'BadiliHistoria::BadiliMudaKuanzaUmefikiwa';
-    $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'BadiliHistoria::OngezaMabadiliko';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'BadiliHistoria::BadiliKiambatanishoOngeza';
-    $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'BadiliHistoria::BadiliKiambatanishoFuta';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'BadiliHistoria::BadiliCABFuta';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = 'BadiliHistoria::BadiliCABFuta';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'BadiliHistoria::BadiliKiungoOngeza';
-    $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'BadiliHistoria::BadiliKiungoFuta';
-    $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'BadiliHistoria::BadiliTaarifaImetumwa';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'BadiliHistoria::BadiliMudaUliopangwaKumalizaUmefikiwa';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'BadiliHistoria::BadiliMudaUliopangwaKunzaUmefikiwa';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'BadiliHistoria::BadiliMudaUlioombwaUmefikiwa';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = 'BadiliHistoria::BadiliKisasisho';
-    $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = 'BadiliHistoria::Sharti';
-    $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'BadiliHistoria::ShartiOngezaKitambulisho';
-    $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'BadiliHistoria::ShartiFuta';
-    $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'BadiliHistoria::ShartiFutaZote';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = 'BadiliHistoria::ShartiSasisha';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = 'BadiliHistoria::UsemiOngeza';
-    $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'BadiliHistoria::UsemiOngezaKitambulisho';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'BadiliHistoria::UsemiFuta';
-    $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'BadiliHistoria::UsemiFutaZote';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = 'BadiliHistoria::UsemiSasisha';
-    $Self->{Translation}->{'ChangeNumber'} = 'BadiliNambari';
-    $Self->{Translation}->{'Condition Edit'} = 'Sharti Hariri';
-    $Self->{Translation}->{'Create Change'} = 'Tengeneza Mabadiliko';
-    $Self->{Translation}->{'Create a change from this ticket!'} = 'Tengeneza Mabadiliko kutoka kwenye hii tiketi!';
-    $Self->{Translation}->{'Delete Workorder'} = 'Futa Oda ya kazi';
-    $Self->{Translation}->{'Edit the change'} = 'Hariri mabadiliko';
-    $Self->{Translation}->{'Edit the conditions of the change'} = 'Hariri masharti ya mabadiliko';
-    $Self->{Translation}->{'Edit the workorder'} = 'Hariri oda ya kazi';
-    $Self->{Translation}->{'Expression'} = 'Usemi';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Tafuta Nakala-Kamili katika Mabadiliko na Oda ya kazi';
-    $Self->{Translation}->{'ITSMCondition'} = 'MashartiITSM';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMOdaYaKazi';
-    $Self->{Translation}->{'Link another object to the change'} = 'Unganisha kitu kingine kwenye mabadiliko';
-    $Self->{Translation}->{'Link another object to the workorder'} = 'Unganisha kitu kingine kwenye oda ya kazi';
-    $Self->{Translation}->{'Move all workorders in time'} = 'Hamisha oda zote za kazi kwa muda';
-    $Self->{Translation}->{'My CABs'} = 'CAB zangu';
-    $Self->{Translation}->{'My Changes'} = 'Mabadiliko Yangu';
-    $Self->{Translation}->{'My Workorders'} = 'Oda zangu za kazi';
-    $Self->{Translation}->{'No XXX settings'} = 'Hakuna mipangilio XXX';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'Baada ya utekelezaji wa mapitio (PIR)';
-    $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'Makadirio huduma upatikanaji (PSA)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'Tafadhali chagua tabaka la kwanza la katalogi!';
-    $Self->{Translation}->{'Print the change'} = 'Chapisha mabadiliko';
-    $Self->{Translation}->{'Print the workorder'} = 'Chapisha oda ya kazi';
-    $Self->{Translation}->{'RequestedTime'} = 'MudaUlioombwa';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'Hifadhi Mabadiliko ya CAB kama Kiolezo';
-    $Self->{Translation}->{'Save change as a template'} = 'Hifadhi mabadiliko kama kiolezo';
-    $Self->{Translation}->{'Save workorder as a template'} = 'Hifadhi oda ya kazi kama kiolezo';
-    $Self->{Translation}->{'Search Changes'} = 'Tafuta Mabadiliko';
-    $Self->{Translation}->{'Set the agent for the workorder'} = 'Seti wakala kwa oda ya kazi';
-    $Self->{Translation}->{'Take Workorder'} = 'Chukua Oda ya kazi';
-    $Self->{Translation}->{'Take the workorder'} = 'Chukua oda ya kazi';
-    $Self->{Translation}->{'Template Overview'} = 'Mapitio ya Kiolezo';
-    $Self->{Translation}->{'The planned end time is invalid!'} = 'Muda wa kumaliza uliopangwa ni batili!';
-    $Self->{Translation}->{'The planned start time is invalid!'} = 'Muda wa kuanza uliopangwa ni batili!';
-    $Self->{Translation}->{'The planned time is invalid!'} = 'Muda uliopangwa ni batili!';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'Muda ulioombwa ni batili!';
-    $Self->{Translation}->{'New (from template)'} = 'Mpya (kutoka kwenye kiolezo)';
-    $Self->{Translation}->{'Add from template'} = 'Ongeza kutoka kwenye kiolezo';
-    $Self->{Translation}->{'Add Workorder (from template)'} = 'Ongeza Oda ya kazi (kutoka kwenye kiolezo)';
-    $Self->{Translation}->{'Add a workorder (from template) to the change'} = 'Ongeza oda ya kazi (kutoka kwenye kiolezo) kwenye mabadiliko';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'OdaYaKaziHistoria::OdaYaKaziMudaHalisiKumalizaUmefikiwa';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} =
-        'OdaYaKaziHistoria::OdaYaKaziMudaHalisiKumalizaUmefikiwaWenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'OdaYaKaziHistoria::OdaYaKaziMudaHalisiKunzaUmefikiwa';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} =
-        'OdaYaKaziHistoria::OdaYaKaziMudaHalisiKunzaUmefikiwaWenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'OdaYaKaziHistoria::OdaYaKaziOngeza';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziOngezaYenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = 'OdaYaKaziHistoria::OdaYaKaziKiambatanishoOngeza';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziKiambatanishoOngezaYenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'OdaYaKaziHistoria::OdaYaKaziKiambatanishoFuta';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziKiambatanishoFutaYenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAdd'} = 'OdaYaKaziHistoria::OdaYaKaziOngezaKiambatanishoChaRipoti';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'} =
-        'OdaYaKaziHistoria::OdaYaKaziOngezaKiambatanishoChaRipotiChenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDelete'} = 'OdaYaKaziHistoria::OdaYaKaziFutaKiambatanishoChaRipoti';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'} =
-        'OdaYaKaziHistoria::OdaYaKaziFutaKiambatanishoChaRipotiChenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDelete'} = 'OdaYaKaziHistoria::OdaYaKaziFuta';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziFutaYenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAdd'} = 'OdaYaKaziHistoria::OdaYaKaziOngezaKiungo';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziOngezaKiungoChenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDelete'} = 'OdaYaKaziHistoria::OdaYaKaziFutaKiungo';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziFutaKiungoChenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'OdaYaKaziHistoria::OdaYaKaziTaarifaImetumwa';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziTaarifaImetumwaYenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'OdaYaKaziHistoria::OdaYaKaziMudaKumalizaUliopangwaUmefikiwa';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} =
-        'OdaYaKaziHistoria::OdaYaKaziMudaKumalizaUliopangwaUmefikiwaWenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'OdaYaKaziHistoria::OdaYaKaziMudaKuanzaUliopangwaUmefikiwa';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} =
-        'OdaYaKaziHistoria::OdaYaKaziMudaKuanzaUliopangwaUmefikiwaWenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = 'OdaYaKaziHistoria::OdaYaKaziSasisha';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = 'OdaYaKaziHistoria::OdaYaKaziSasishaYenyeKitambulishoChaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderNumber'} = 'NambariYaOdaYaKazi';
-    $Self->{Translation}->{'accepted'} = 'kubaliwa';
-    $Self->{Translation}->{'any'} = 'yoyote';
-    $Self->{Translation}->{'approval'} = 'kibali';
-    $Self->{Translation}->{'approved'} = 'kubaliwa';
-    $Self->{Translation}->{'backout'} = 'kujitoa';
-    $Self->{Translation}->{'begins with'} = 'inaanza na';
-    $Self->{Translation}->{'canceled'} = 'sitishwa';
-    $Self->{Translation}->{'contains'} = 'vyenye';
-    $Self->{Translation}->{'created'} = 'tengenezwa';
-    $Self->{Translation}->{'decision'} = 'maamuzi';
-    $Self->{Translation}->{'ends with'} = 'inaishia na';
-    $Self->{Translation}->{'failed'} = 'Shindwa';
-    $Self->{Translation}->{'in progress'} = 'kwenye maendeleo';
-    $Self->{Translation}->{'is'} = 'ni';
-    $Self->{Translation}->{'is after'} = 'ni baada';
-    $Self->{Translation}->{'is before'} = 'ni kabla';
-    $Self->{Translation}->{'is empty'} = 'ni tupu';
-    $Self->{Translation}->{'is greater than'} = 'ni kubwa zaidi ya';
-    $Self->{Translation}->{'is less than'} = 'ni ndogo zaidi ya';
-    $Self->{Translation}->{'is not'} = 'siyo';
-    $Self->{Translation}->{'is not empty'} = 'siyo tupu';
-    $Self->{Translation}->{'not contains'} = 'haina kitu';
-    $Self->{Translation}->{'pending approval'} = 'kibali kinasubiri';
-    $Self->{Translation}->{'pending pir'} = 'pir inasubiri';
-    $Self->{Translation}->{'pir'} = 'baada ya utekelezaji wa mapitio';
-    $Self->{Translation}->{'ready'} = 'tayari';
-    $Self->{Translation}->{'rejected'} = 'kataliwa';
-    $Self->{Translation}->{'requested'} = 'ombwa';
-    $Self->{Translation}->{'retracted'} = 'ondoa';
-    $Self->{Translation}->{'set'} = 'seti';
-    $Self->{Translation}->{'successful'} = 'mafanikio';
-
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategoria<-> Athari<-> Kipaumbele';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
@@ -331,6 +169,7 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Mara ya mwisho imebadilishwa';
     $Self->{Translation}->{'Last changed by'} = 'Mara ya mwisho imebadilishwa na';
     $Self->{Translation}->{'Ok'} = 'Sawa';
+    $Self->{Translation}->{'ITSMChange'} = 'BadiliITSM';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = 'Pakua Kiambatanisho';
@@ -592,19 +431,60 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
     $Self->{Translation}->{'Title: %s | Type: %s'} = '';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
+    $Self->{Translation}->{'My CABs'} = 'CAB zangu';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
+    $Self->{Translation}->{'My Changes'} = 'Mabadiliko Yangu';
+
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = '';
+
+    # Database XML Definition: ITSMChangeManagement.sopm
+    $Self->{Translation}->{'requested'} = 'ombwa';
+    $Self->{Translation}->{'pending approval'} = 'kibali kinasubiri';
+    $Self->{Translation}->{'rejected'} = 'kataliwa';
+    $Self->{Translation}->{'approved'} = 'kubaliwa';
+    $Self->{Translation}->{'in progress'} = 'kwenye maendeleo';
+    $Self->{Translation}->{'pending pir'} = 'pir inasubiri';
+    $Self->{Translation}->{'successful'} = 'mafanikio';
+    $Self->{Translation}->{'failed'} = 'Shindwa';
+    $Self->{Translation}->{'canceled'} = 'sitishwa';
+    $Self->{Translation}->{'retracted'} = 'ondoa';
+    $Self->{Translation}->{'created'} = 'tengenezwa';
+    $Self->{Translation}->{'accepted'} = 'kubaliwa';
+    $Self->{Translation}->{'ready'} = 'tayari';
+    $Self->{Translation}->{'approval'} = 'kibali';
+    $Self->{Translation}->{'workorder'} = 'oda ya kazi';
+    $Self->{Translation}->{'backout'} = 'kujitoa';
+    $Self->{Translation}->{'decision'} = 'maamuzi';
+    $Self->{Translation}->{'pir'} = 'baada ya utekelezaji wa mapitio';
+    $Self->{Translation}->{'is'} = 'ni';
+    $Self->{Translation}->{'is not'} = 'siyo';
+    $Self->{Translation}->{'is empty'} = 'ni tupu';
+    $Self->{Translation}->{'is not empty'} = 'siyo tupu';
+    $Self->{Translation}->{'is greater than'} = 'ni kubwa zaidi ya';
+    $Self->{Translation}->{'is less than'} = 'ni ndogo zaidi ya';
+    $Self->{Translation}->{'is before'} = 'ni kabla';
+    $Self->{Translation}->{'is after'} = 'ni baada';
+    $Self->{Translation}->{'contains'} = 'vyenye';
+    $Self->{Translation}->{'not contains'} = 'haina kitu';
+    $Self->{Translation}->{'begins with'} = 'inaanza na';
+    $Self->{Translation}->{'ends with'} = 'inaishia na';
+    $Self->{Translation}->{'set'} = 'seti';
 
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Orodha ya mawakala wenye ruhusa ya kuchukua oda za kazi. Muhimu ni jina la kuingia. Iliyomo ni 0 au 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Orodha ya hali za oda ya kazi, ambapo MudaHalisiKuanza wa oda ya kazi utasetiwa kama ulikuwa wazi katika pointi hii.';
+    $Self->{Translation}->{'Add Workorder'} = 'Ongeza Oda ya kazi';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add from template'} = 'Ongeza kutoka kwenye kiolezo';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Msimamizi wa matriki ya CIP.';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Msimamizi wa mashine ya hali.';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
@@ -626,6 +506,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Mapitio ya Mabadiliko Kikomo "cha chini"';
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
+    $Self->{Translation}->{'Change Schedule'} = 'Badili Ratiba';
     $Self->{Translation}->{'Change Schedule.'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -634,11 +515,13 @@ sub Data {
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko.';
+    $Self->{Translation}->{'Condition Edit'} = 'Sharti Hariri';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
         '';
     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} =
         'Ina sanidi ni kwa mara ngapi taarifa zinatumwa pale muda uliopangwa wa kuanza au mida mingine inapofikiwa/kupitwa.';
+    $Self->{Translation}->{'Create Change'} = 'Tengeneza Mabadiliko';
     $Self->{Translation}->{'Create Change (from Template)'} = '';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
@@ -865,6 +748,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
+    $Self->{Translation}->{'ITSM Changes'} = 'Mabadiliko ya ITSM';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
     $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
     $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
@@ -885,6 +769,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'Moduli ya matukio ya ITSM inayopiga upya hesabu ya nambari ya oda za kazi.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'Moduli ya matukio ya ITSM inayoseti muda halisi wa kuanza na kumaliza oda za kazi.';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMOdaYaKazi';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -907,10 +792,12 @@ sub Data {
         'Moduli ya kuonyesha kiungo cha kutengeneza mabadiliko kutoka kwenye hii tiketi. Tiketi itaunganishwa kiotomatiki na mabadiliko mapya.';
     $Self->{Translation}->{'Move Time Slot.'} = '';
     $Self->{Translation}->{'Move all workorders in time.'} = '';
+    $Self->{Translation}->{'New (from template)'} = 'Mpya (kutoka kwenye kiolezo)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika "Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko" kama kipengele "Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli" kimewezeshwa.';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'Baada ya utekelezaji wa mapitio (PIR)';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'Vigezo kwa ajili ya kipengele Barakoa ijayo ya mpangilio kazi wa kutengenezwa na mtumiaji katika mandhari ya mapendeleo ya kiolesura cha wakala.';
@@ -976,6 +863,7 @@ sub Data {
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Skrini baada ya kutengeneza oda ya kazi.';
+    $Self->{Translation}->{'Search Changes'} = 'Tafuta Mabadiliko';
     $Self->{Translation}->{'Search Changes.'} = '';
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Chagua module ya kutengeneza namba ya badiliko. "Kuongezeka kwa otomatiki" inaongeza namba ya badiliko, kitambulisho cha mfumo na kihesabuji zinatumika na kitambulisho cha mfumo.umbizo la kihesabuji (mfano 100118, 100119). Na "Tarehe" namba za mabadiliko zitatengenezwa na tarehe ya sasa na kihesabuji; Umbizo linafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062400001, 2010062400002. Na "Kuangalia jumla kwa tarehe"  kihesabuji kitaambatanishwa kama kiangaliaji jumla kwenye tungo ya tarehe na kitambulisho. Kiangalia jumla kitazungushwa kwa mishingi ya kila siku. Umbizo litafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062410000017, 2010062410000026.';
@@ -1037,8 +925,10 @@ sub Data {
     $Self->{Translation}->{'State Machine'} = 'Mashine ya Hali';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         'Inahifadhi vitambulisho vya mabadiliko na oda za kazi sambamba na kitambulisho cha kiolezo, wakati mtumiaji anahariri kiolezo.';
+    $Self->{Translation}->{'Take Workorder'} = 'Chukua Oda ya kazi';
     $Self->{Translation}->{'Take Workorder.'} = '';
     $Self->{Translation}->{'Take the workorder.'} = '';
+    $Self->{Translation}->{'Template Overview'} = 'Mapitio ya Kiolezo';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Kitambulisho cha mabadiliko, mf. Mabadiliko#, MabadilikoYangu#. Chaguo-msingi ni Mabadiliko#.';
