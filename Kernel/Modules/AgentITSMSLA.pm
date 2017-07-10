@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMSLA;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -74,7 +76,7 @@ sub Run {
 
     # output header
     my $Output = $LayoutObject->Header(
-        Title   => 'Overview',
+        Title   => Translatable('Overview'),
         Refresh => $Refresh,
     );
     $Output .= $LayoutObject->NavigationBar();

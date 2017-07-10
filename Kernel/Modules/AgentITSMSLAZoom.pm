@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMSLAZoom;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -35,8 +37,8 @@ sub Run {
     # check needed stuff
     if ( !$SLAID ) {
         return $LayoutObject->ErrorScreen(
-            Message => "No SLAID is given!",
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No SLAID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -47,8 +49,8 @@ sub Run {
     );
     if ( !$SLA{SLAID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => "SLAID $SLAID not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'SLAID %s not found in database!', $SLAID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -61,7 +63,7 @@ sub Run {
             . $ConfigObject->Get( "TimeZone::Calendar" . $SLA{Calendar} . "Name" );
     }
     else {
-        $SLA{CalendarName} = 'Calendar Default';
+        $SLA{CalendarName} = Translatable('Calendar Default');
     }
 
     # run config item menu modules

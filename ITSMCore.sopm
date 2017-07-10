@@ -51,7 +51,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMServiceMenu/Link.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenu/Generic.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/LinkObject/Service.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AAAITSMCore.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMCIPAllocate.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminService.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminSLA.tt" />
@@ -130,7 +129,7 @@
         </TableAlter>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
-            <Data Key="name" Type="Quote">Operational</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Operational</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -139,7 +138,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
-            <Data Key="name" Type="Quote">Warning</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Warning</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -148,7 +147,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Core::IncidentState</Data>
-            <Data Key="name" Type="Quote">Incident</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Incident</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -157,7 +156,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">End User Service</Data>
+            <Data Key="name" Type="Quote" Translatable="1">End User Service</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -166,7 +165,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Front End</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Front End</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -175,7 +174,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Back End</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Back End</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -184,7 +183,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">IT Management</Data>
+            <Data Key="name" Type="Quote" Translatable="1">IT Management</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -193,7 +192,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Reporting</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Reporting</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -202,7 +201,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">IT Operational</Data>
+            <Data Key="name" Type="Quote" Translatable="1">IT Operational</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -211,7 +210,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Demonstration</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Demonstration</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -220,7 +219,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Project</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Project</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -229,7 +228,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Training</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Training</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -238,7 +237,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Underpinning Contract</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Underpinning Contract</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -247,7 +246,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::Service::Type</Data>
-            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Other</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -256,7 +255,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Availability</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Availability</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -265,7 +264,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Response Time</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Response Time</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -274,7 +273,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Recovery Time</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Recovery Time</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -283,7 +282,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Resolution Rate</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Resolution Rate</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -292,7 +291,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Transactions</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Transactions</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -301,7 +300,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Errors</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Errors</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>
@@ -310,7 +309,7 @@
         </Insert>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::SLA::Type</Data>
-            <Data Key="name" Type="Quote">Other</Data>
+            <Data Key="name" Type="Quote" Translatable="1">Other</Data>
             <Data Key="valid_id">1</Data>
             <Data Key="create_time">current_timestamp</Data>
             <Data Key="create_by">1</Data>

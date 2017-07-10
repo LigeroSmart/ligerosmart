@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMServiceZoom;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -35,8 +37,8 @@ sub Run {
     # check needed stuff
     if ( !$ServiceID ) {
         return $LayoutObject->ErrorScreen(
-            Message => 'No ServiceID is given!',
-            Comment => 'Please contact the admin.',
+            Message => Translatable('No ServiceID is given!'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -48,8 +50,8 @@ sub Run {
     );
     if ( !$Service{ServiceID} ) {
         return $LayoutObject->ErrorScreen(
-            Message => "ServiceID $ServiceID not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => $LayoutObject->{LanguageObject}->Translate( 'ServiceID %s not found in database!', $ServiceID ),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
