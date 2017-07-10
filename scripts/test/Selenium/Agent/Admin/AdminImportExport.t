@@ -119,7 +119,7 @@ $Selenium->RunTest(
         );
         $Selenium->execute_script("\$('#Format').val('CSV').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Comment", 'css' )->send_keys('SeleniumTest');
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@class='Primary CallForAction'][\@type='submit']")->VerifiedClick();
 
         # check and input step 2 of 5 screen
         for my $StepTwoID (
@@ -133,7 +133,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#ClassID').val('$LocationConfigItemID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@class='Primary CallForAction'][\@type='submit']")->VerifiedClick();
 
         # check and input step 3 of 5 screen
         for my $StepThreeID (
@@ -147,7 +147,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#ColumnSeparator').val('Comma').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@class='Primary CallForAction'][\@type='submit']")->VerifiedClick();
 
         # check and input step 4 of 5 screen
         $Selenium->find_element( "#MappingAddButton", 'css' )->VerifiedClick();
@@ -208,7 +208,7 @@ $Selenium->RunTest(
             "\$('#DeplStateIDs').val('$ProductionDeplStateID').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->execute_script("\$('#InciStateIDs').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element("//button[\@value='SubmitNext'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@class='Primary CallForAction'][\@type='submit']")->VerifiedClick();
 
         # get needed objects
         my $ImportExportObject = $Kernel::OM->Get('Kernel::System::ImportExport');
