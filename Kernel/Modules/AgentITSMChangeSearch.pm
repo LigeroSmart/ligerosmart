@@ -526,7 +526,8 @@ sub Run {
                     $Info{ $UserType . 'RightParenthesis' } = ')';
 
                     # set user full name
-                    $Info{$UserType} = $User{UserFullname};
+                    $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
+                        . $User{UserLastname} . ')';
                 }
 
                 # to store the linked service data
@@ -754,7 +755,8 @@ sub Run {
                     );
 
                     # set user full name
-                    $Info{$UserType} = $User{UserFullname};
+                    $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
+                        . $User{UserLastname} . ')';
                 }
 
                 my $ChangeTitle = $LayoutObject->Output(
@@ -885,7 +887,8 @@ sub Run {
             # output "printed by"
             $PDFObject->Text(
                 Text => $PrintedBy . ' '
-                    . $Self->{UserFullname} . ' ('
+                    . $Self->{UserFirstname} . ' '
+                    . $Self->{UserLastname} . ' ('
                     . $Self->{UserEmail} . ') '
                     . $Time,
                 FontSize => 9,
@@ -1100,8 +1103,9 @@ sub _MaskForm {
         );
 
         # set user frenly CABAgent string
-        my $UserValue = sprintf '"%s" <%s>',
-            $UserData{UserFullname},
+        my $UserValue = sprintf '"%s %s" <%s>',
+            $UserData{UserFirstname},
+            $UserData{UserLastname},
             $UserData{UserEmail};
 
         $Param{CABAgentSearch} = $UserValue;

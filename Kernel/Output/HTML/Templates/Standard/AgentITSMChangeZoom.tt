@@ -189,8 +189,8 @@
 [% RenderBlockEnd("EmptyChangeInitiators") %]
 [% RenderBlockStart("ChangeInitiatorExists") %]
 [% RenderBlockStart("ChangeInitiator") %]
-                        <p class="Value" title="[% Data.UserFullname | html %]">
-                            [% Data.UserFullname | html %]
+                        <p class="Value" title="[% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])">
+                            [% Data.UserLogin | truncate(15) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
                         </p>
 [% RenderBlockEnd("ChangeInitiator") %]
 [% RenderBlockEnd("ChangeInitiatorExists") %]

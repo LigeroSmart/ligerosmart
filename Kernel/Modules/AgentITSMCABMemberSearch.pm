@@ -99,8 +99,9 @@ sub Run {
                 UserID => $UserID,
                 Valid  => $Param{Valid},
             );
-            my $UserValuePlain = sprintf '"%s" <%s>',
-                $User{UserFullname},
+            my $UserValuePlain = sprintf '"%s %s" <%s>',
+                $User{UserFirstname},
+                $User{UserLastname},
                 $User{UserEmail};
 
             push @Data, {

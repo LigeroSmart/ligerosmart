@@ -364,7 +364,7 @@ sub Run {
     );
 
     # all postfixes needed for user information
-    my @Postfixes = qw(UserFullname);
+    my @Postfixes = qw(UserLogin UserFirstname UserLastname);
 
     # get user information for ChangeBuilder, CreateBy, ChangeBy
     for my $Postfix (@Postfixes) {
@@ -522,7 +522,7 @@ sub Run {
     }
 
     # get change manager information
-    for my $Postfix (qw(UserFullname)) {
+    for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
         $Change->{ 'ChangeManager' . $Postfix } = $ChangeManagerUser{$Postfix} || '';
     }
 
@@ -690,7 +690,10 @@ sub Run {
             $User{UserFirstname} ||= '';
             $User{UserLastname}  ||= '';
 
-            $ChangeInitiators .= $User{UserFullname};
+            $ChangeInitiators .= sprintf "%s (%s %s)",
+                $User{UserLogin},
+                $User{UserFirstname},
+                $User{UserLastname};
         }
     }
 

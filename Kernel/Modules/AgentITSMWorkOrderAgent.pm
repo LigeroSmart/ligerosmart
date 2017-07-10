@@ -179,8 +179,9 @@ sub Run {
         );
 
         $Param{UserID} = $UserData{UserID};
-        $Param{User}   = sprintf '"%s" <%s>',
-            $UserData{UserFullname},
+        $Param{User}   = sprintf '"%s %s" <%s>',
+            $UserData{UserFirstname},
+            $UserData{UserLastname},
             $UserData{UserEmail};
     }
 
@@ -253,8 +254,9 @@ sub _CheckWorkOrderAgent {
         else {
 
             # compare input value with user data
-            my $CheckString = sprintf '"%s" <%s>',
-                $User{UserFullname},
+            my $CheckString = sprintf '"%s %s" <%s>',
+                $User{UserFirstname},
+                $User{UserLastname},
                 $User{UserEmail};
 
             # show error
