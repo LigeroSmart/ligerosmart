@@ -15,39 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = '替代';
-    $Self->{Translation}->{'Availability'} = '可用性';
-    $Self->{Translation}->{'Back End'} = '后端';
-    $Self->{Translation}->{'Connected to'} = '连接到';
-    $Self->{Translation}->{'Current State'} = '当前状态';
-    $Self->{Translation}->{'Demonstration'} = '演示';
-    $Self->{Translation}->{'Depends on'} = '依赖';
-    $Self->{Translation}->{'End User Service'} = '最终用户服务';
-    $Self->{Translation}->{'Errors'} = '错误';
-    $Self->{Translation}->{'Front End'} = '前端';
-    $Self->{Translation}->{'IT Management'} = 'IT管理';
-    $Self->{Translation}->{'IT Operational'} = 'IT运营';
-    $Self->{Translation}->{'Impact'} = '影响';
-    $Self->{Translation}->{'Incident State'} = '故障状态';
-    $Self->{Translation}->{'Includes'} = '包括';
-    $Self->{Translation}->{'Other'} = '其它';
-    $Self->{Translation}->{'Part of'} = '属于';
-    $Self->{Translation}->{'Project'} = '项目';
-    $Self->{Translation}->{'Recovery Time'} = '恢复时间';
-    $Self->{Translation}->{'Relevant to'} = '关联';
-    $Self->{Translation}->{'Reporting'} = '报告';
-    $Self->{Translation}->{'Required for'} = '被...需要';
-    $Self->{Translation}->{'Resolution Rate'} = '解决率';
-    $Self->{Translation}->{'Response Time'} = '响应时间';
-    $Self->{Translation}->{'SLA Overview'} = 'SLA概览';
-    $Self->{Translation}->{'Service Overview'} = '服务概览';
-    $Self->{Translation}->{'Service-Area'} = '服务区';
-    $Self->{Translation}->{'Training'} = '培训';
-    $Self->{Translation}->{'Transactions'} = '交易';
-    $Self->{Translation}->{'Underpinning Contract'} = '支持合同';
-    $Self->{Translation}->{'allocation'} = '分配';
-
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = '紧急度 <-> 影响 <-> 优先级';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
@@ -71,15 +38,52 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = '当前故障状态';
     $Self->{Translation}->{'Associated SLAs'} = '关联的SLA';
 
+    # Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+    $Self->{Translation}->{'Impact'} = '影响';
+
+    # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+    $Self->{Translation}->{'No SLAID is given!'} = '';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
+    $Self->{Translation}->{'Calendar Default'} = '';
+
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'No ServiceID is given!'} = '';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
     $Self->{Translation}->{'Current Incident State'} = '当前故障状态';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+    $Self->{Translation}->{'Incident State'} = '故障状态';
+
+    # Database XML Definition: ITSMCore.sopm
+    $Self->{Translation}->{'Operational'} = '正常';
+    $Self->{Translation}->{'Incident'} = '故障';
+    $Self->{Translation}->{'End User Service'} = '最终用户服务';
+    $Self->{Translation}->{'Front End'} = '前端';
+    $Self->{Translation}->{'Back End'} = '后端';
+    $Self->{Translation}->{'IT Management'} = 'IT管理';
+    $Self->{Translation}->{'Reporting'} = '报告';
+    $Self->{Translation}->{'IT Operational'} = 'IT运营';
+    $Self->{Translation}->{'Demonstration'} = '演示';
+    $Self->{Translation}->{'Project'} = '项目';
+    $Self->{Translation}->{'Training'} = '培训';
+    $Self->{Translation}->{'Underpinning Contract'} = '支持合同';
+    $Self->{Translation}->{'Other'} = '其它';
+    $Self->{Translation}->{'Availability'} = '可用性';
+    $Self->{Translation}->{'Response Time'} = '响应时间';
+    $Self->{Translation}->{'Recovery Time'} = '恢复时间';
+    $Self->{Translation}->{'Resolution Rate'} = '解决率';
+    $Self->{Translation}->{'Transactions'} = '交易';
+    $Self->{Translation}->{'Errors'} = '错误';
+
     # SysConfig
+    $Self->{Translation}->{'Alternative to'} = '替代';
     $Self->{Translation}->{'Both'} = '兼具';
+    $Self->{Translation}->{'Connected to'} = '连接到';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         '定义链接对象小部件(LinkObject::ViewMode = \"complex\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和CSS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '定义链接的服务小部件(LinkObject::ViewMode = "complex")要显示的列。注意：只有服务属性才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。';
+    $Self->{Translation}->{'Depends on'} = '依赖';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         '为系统管理区中的 AdminITSMCIPAllocate 配置注册前端模块。';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -96,21 +100,26 @@ sub Data {
         '为服务人员界面中的 AgentITSMServiceZoom 对象注册前端模块。';
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA概览';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM服务概览';
-    $Self->{Translation}->{'Incident'} = '故障';
     $Self->{Translation}->{'Incident State Type'} = '故障状态类型';
     $Self->{Translation}->{'Incident State Type.'} = '故障状态类型。';
+    $Self->{Translation}->{'Includes'} = '包括';
     $Self->{Translation}->{'Manage priority matrix.'} = '管理优先级矩阵。';
     $Self->{Translation}->{'Module to show back link in service menu.'} = '服务菜单中显示后退链接的模块。';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'SLA菜单中显示后退链接的模块。';
     $Self->{Translation}->{'Module to show print link in service menu.'} = '服务菜单中显示打印链接的模块。';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'SLA菜单中显示打印链接的模块。';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '服务菜单中显示当前链接的链接的模块。';
-    $Self->{Translation}->{'Operational'} = '正常';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '选项视图中用于表示故障状态的参数。';
+    $Self->{Translation}->{'Part of'} = '属于';
+    $Self->{Translation}->{'Relevant to'} = '关联';
+    $Self->{Translation}->{'Required for'} = '被...需要';
+    $Self->{Translation}->{'SLA Overview'} = 'SLA概览';
     $Self->{Translation}->{'SLA Print.'} = 'SLA打印。';
     $Self->{Translation}->{'SLA Zoom.'} = 'SLA详情。';
+    $Self->{Translation}->{'Service Overview'} = '服务概览';
     $Self->{Translation}->{'Service Print.'} = '服务打印。';
     $Self->{Translation}->{'Service Zoom.'} = '服务详情。';
+    $Self->{Translation}->{'Service-Area'} = '服务区';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =

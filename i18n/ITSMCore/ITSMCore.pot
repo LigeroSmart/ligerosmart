@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMCore\n"
-"POT-Creation-Date: 2017-07-07 13:21+0000\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,130 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr ""
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -182,12 +58,124 @@ msgstr ""
 msgid "Associated SLAs"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr ""
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr ""
+
+#. SysConfig
+msgid "Alternative to"
+msgstr ""
+
 #. SysConfig
 msgid "Both"
+msgstr ""
+
+#. SysConfig
+msgid "Connected to"
 msgstr ""
 
 #. SysConfig
@@ -196,6 +184,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgstr ""
+
+#. SysConfig
+msgid "Depends on"
 msgstr ""
 
 #. SysConfig
@@ -235,15 +227,15 @@ msgid "ITSM Service Overview."
 msgstr ""
 
 #. SysConfig
-msgid "Incident"
-msgstr ""
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr ""
 
 #. SysConfig
 msgid "Incident State Type."
+msgstr ""
+
+#. SysConfig
+msgid "Includes"
 msgstr ""
 
 #. SysConfig
@@ -271,11 +263,23 @@ msgid "Module to show the link link in service menu."
 msgstr ""
 
 #. SysConfig
-msgid "Operational"
+msgid "Parameters for the incident states in the preference view."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the incident states in the preference view."
+msgid "Part of"
+msgstr ""
+
+#. SysConfig
+msgid "Relevant to"
+msgstr ""
+
+#. SysConfig
+msgid "Required for"
+msgstr ""
+
+#. SysConfig
+msgid "SLA Overview"
 msgstr ""
 
 #. SysConfig
@@ -287,11 +291,19 @@ msgid "SLA Zoom."
 msgstr ""
 
 #. SysConfig
+msgid "Service Overview"
+msgstr ""
+
+#. SysConfig
 msgid "Service Print."
 msgstr ""
 
 #. SysConfig
 msgid "Service Zoom."
+msgstr ""
+
+#. SysConfig
+msgid "Service-Area"
 msgstr ""
 
 #. SysConfig

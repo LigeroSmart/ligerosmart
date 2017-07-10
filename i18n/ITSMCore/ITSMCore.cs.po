@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Czech (http://www.transifex.com/otrs/OTRS/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -13,130 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "Alternativní k"
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "Dostupnost"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "Základní rozhraní/Backend"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "Spojen s"
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "Současný Stav"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "Ukázka"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "Závisí na"
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "Služby koncovým uživatelům"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "Chyby"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "Zákaznické rozhraní/Frontend"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "Řízení IT"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "IT Operace"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "Vliv"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "Stav Incidentu"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "Zahrnuje"
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "Další"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "Část z"
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "Projekt"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "Čas obnovy"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "Relevantní k"
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "Reporting"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "Požadovaný pro"
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "Čas řešeni"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "Čas odpovědi"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "SLA Přehled"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "Přehled Služby"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "Prostor Údržby"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "Školení"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "Transakce"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "Základní smlouva"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "přidělit"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -186,13 +62,125 @@ msgstr ""
 msgid "Associated SLAs"
 msgstr "Přiřazené SLA smlouvy"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Vliv"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "Současný Stav Incidentu"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Stav Incidentu"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "Operační"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Incident"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Služby koncovým uživatelům"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Zákaznické rozhraní/Frontend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Základní rozhraní/Backend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "Řízení IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Reporting"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "IT Operace"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Ukázka"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Projekt"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "Školení"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Základní smlouva"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Další"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Dostupnost"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Čas odpovědi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Čas obnovy"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Čas řešeni"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Transakce"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Chyby"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Alternativní k"
+
 #. SysConfig
 msgid "Both"
 msgstr ""
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Spojen s"
 
 #. SysConfig
 msgid ""
@@ -210,6 +198,10 @@ msgid ""
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
 msgstr ""
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Závisí na"
 
 #. SysConfig
 msgid ""
@@ -262,16 +254,16 @@ msgid "ITSM Service Overview."
 msgstr ""
 
 #. SysConfig
-msgid "Incident"
-msgstr "Incident"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr ""
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr ""
+
+#. SysConfig
+msgid "Includes"
+msgstr "Zahrnuje"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -298,12 +290,24 @@ msgid "Module to show the link link in service menu."
 msgstr ""
 
 #. SysConfig
-msgid "Operational"
-msgstr "Operační"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr ""
+
+#. SysConfig
+msgid "Part of"
+msgstr "Část z"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Relevantní k"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Požadovaný pro"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "SLA Přehled"
 
 #. SysConfig
 msgid "SLA Print."
@@ -314,12 +318,20 @@ msgid "SLA Zoom."
 msgstr ""
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "Přehled Služby"
+
+#. SysConfig
 msgid "Service Print."
 msgstr ""
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr ""
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Prostor Údržby"
 
 #. SysConfig
 msgid ""
@@ -333,9 +345,9 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr ""
 
 #. SysConfig

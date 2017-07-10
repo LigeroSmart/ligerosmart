@@ -15,39 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = '代替：';
-    $Self->{Translation}->{'Availability'} = '可用性';
-    $Self->{Translation}->{'Back End'} = 'バックエンド';
-    $Self->{Translation}->{'Connected to'} = '接続：';
-    $Self->{Translation}->{'Current State'} = '状態';
-    $Self->{Translation}->{'Demonstration'} = 'デモンストレーション';
-    $Self->{Translation}->{'Depends on'} = '依存：';
-    $Self->{Translation}->{'End User Service'} = 'エンドユーザ・サービス';
-    $Self->{Translation}->{'Errors'} = 'エラー';
-    $Self->{Translation}->{'Front End'} = 'フロントエンド';
-    $Self->{Translation}->{'IT Management'} = 'ITマネージメント';
-    $Self->{Translation}->{'IT Operational'} = 'ITオペレーション';
-    $Self->{Translation}->{'Impact'} = '影響';
-    $Self->{Translation}->{'Incident State'} = 'インシデントの状態';
-    $Self->{Translation}->{'Includes'} = '含む：';
-    $Self->{Translation}->{'Other'} = 'その他';
-    $Self->{Translation}->{'Part of'} = '一部：';
-    $Self->{Translation}->{'Project'} = 'プロジェクト';
-    $Self->{Translation}->{'Recovery Time'} = 'リカバリ・タイム';
-    $Self->{Translation}->{'Relevant to'} = '関連項目：';
-    $Self->{Translation}->{'Reporting'} = 'レポート';
-    $Self->{Translation}->{'Required for'} = '必須：';
-    $Self->{Translation}->{'Resolution Rate'} = '解像度レート';
-    $Self->{Translation}->{'Response Time'} = 'レスポンスタイム';
-    $Self->{Translation}->{'SLA Overview'} = 'SLAの概観';
-    $Self->{Translation}->{'Service Overview'} = 'サービスの概観';
-    $Self->{Translation}->{'Service-Area'} = 'サービス・エリア';
-    $Self->{Translation}->{'Training'} = 'トレーニング';
-    $Self->{Translation}->{'Transactions'} = '取引';
-    $Self->{Translation}->{'Underpinning Contract'} = '支持する契約';
-    $Self->{Translation}->{'allocation'} = '配分';
-
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = '重要度 <-> 影響度 <-> 優先度';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
@@ -71,15 +38,52 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'インシデントの状態';
     $Self->{Translation}->{'Associated SLAs'} = '関連するSLA';
 
+    # Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+    $Self->{Translation}->{'Impact'} = '影響';
+
+    # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+    $Self->{Translation}->{'No SLAID is given!'} = '';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
+    $Self->{Translation}->{'Calendar Default'} = '';
+
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'No ServiceID is given!'} = '';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
     $Self->{Translation}->{'Current Incident State'} = 'インシデントの状態';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+    $Self->{Translation}->{'Incident State'} = 'インシデントの状態';
+
+    # Database XML Definition: ITSMCore.sopm
+    $Self->{Translation}->{'Operational'} = '通常運用';
+    $Self->{Translation}->{'Incident'} = 'インシデント';
+    $Self->{Translation}->{'End User Service'} = 'エンドユーザ・サービス';
+    $Self->{Translation}->{'Front End'} = 'フロントエンド';
+    $Self->{Translation}->{'Back End'} = 'バックエンド';
+    $Self->{Translation}->{'IT Management'} = 'ITマネージメント';
+    $Self->{Translation}->{'Reporting'} = 'レポート';
+    $Self->{Translation}->{'IT Operational'} = 'ITオペレーション';
+    $Self->{Translation}->{'Demonstration'} = 'デモンストレーション';
+    $Self->{Translation}->{'Project'} = 'プロジェクト';
+    $Self->{Translation}->{'Training'} = 'トレーニング';
+    $Self->{Translation}->{'Underpinning Contract'} = '支持する契約';
+    $Self->{Translation}->{'Other'} = 'その他';
+    $Self->{Translation}->{'Availability'} = '可用性';
+    $Self->{Translation}->{'Response Time'} = 'レスポンスタイム';
+    $Self->{Translation}->{'Recovery Time'} = 'リカバリ・タイム';
+    $Self->{Translation}->{'Resolution Rate'} = '解像度レート';
+    $Self->{Translation}->{'Transactions'} = '取引';
+    $Self->{Translation}->{'Errors'} = 'エラー';
+
     # SysConfig
+    $Self->{Translation}->{'Alternative to'} = '代替：';
     $Self->{Translation}->{'Both'} = '両方';
+    $Self->{Translation}->{'Connected to'} = '接続：';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         '';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
+    $Self->{Translation}->{'Depends on'} = '依存：';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         '管理エリアでのAdminITSMCIPAllocateのフロントエンドモジュールの登録';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -96,21 +100,26 @@ sub Data {
         '担当者インタフェースのAgentITSMServiceZoomオブジェクト　フロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA の概要';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM サービスの概要';
-    $Self->{Translation}->{'Incident'} = 'インシデント';
     $Self->{Translation}->{'Incident State Type'} = 'インシデント状態のタイプ';
     $Self->{Translation}->{'Incident State Type.'} = 'インシデント状態のタイプ';
+    $Self->{Translation}->{'Includes'} = '含む：';
     $Self->{Translation}->{'Manage priority matrix.'} = '優先度の関連性を管理';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'サービスメニューでバックリンクを表示するためのモジュール';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'SLAメニューでバックリンクを表示するためのモジュール';
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'サービスメニューで印刷を表示するためのモジュール';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'SLAメニューで印刷を表示するためのモジュール';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'サービスメニューで「リンク」リンクを表示するためのモジュール';
-    $Self->{Translation}->{'Operational'} = '通常運用';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '設定ビューでのインシデントステータスのパラメーター';
+    $Self->{Translation}->{'Part of'} = '一部：';
+    $Self->{Translation}->{'Relevant to'} = '関連項目：';
+    $Self->{Translation}->{'Required for'} = '必須：';
+    $Self->{Translation}->{'SLA Overview'} = 'SLAの概観';
     $Self->{Translation}->{'SLA Print.'} = 'SLA の印刷';
     $Self->{Translation}->{'SLA Zoom.'} = 'SLA ズーム';
+    $Self->{Translation}->{'Service Overview'} = 'サービスの概観';
     $Self->{Translation}->{'Service Print.'} = 'サービスの印刷';
     $Self->{Translation}->{'Service Zoom.'} = 'サービス・ズーム';
+    $Self->{Translation}->{'Service-Area'} = 'サービス・エリア';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =

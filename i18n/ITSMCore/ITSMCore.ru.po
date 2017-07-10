@@ -6,139 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-01 00:02+0000\n"
-"PO-Revision-Date: 2017-03-29 12:58+0000\n"
-"Last-Translator: Anatoly A <aaksinenko@gmail.com>\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "Замена для"
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "Доступность"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "Серверная часть"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "Связан с"
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "Текущее состояние"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "Демонстрация"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "Зависит от"
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "Конечный сервис пользователя"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "Ошибки"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "Интерфейсная часть"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "Управление ИТ"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "Эксплуатация ИТ"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "Влияние"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "Состояние инцидента"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "Включает"
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "Другое"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "Часть от"
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "Планирование"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "Время восстановления"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "Относится к"
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "Составление отчетов"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "Требуется для"
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "Относительная скорость решения"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "Время реакции"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "Список SLA"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "Список сервисов"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "Обзор сервисов"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "Обучение"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "Финансовые операции"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "Контракт поддержки"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "Назначение приоритетов "
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -188,13 +64,125 @@ msgstr "Текущее состояние инцидента"
 msgid "Associated SLAs"
 msgstr "Связанные SLA"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Влияние"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "Текущее состояние инцидента"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Состояние инцидента"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "В эксплуатации"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Инцидент"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Конечный сервис пользователя"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Интерфейсная часть"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Серверная часть"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "Управление ИТ"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Составление отчетов"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "Эксплуатация ИТ"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Демонстрация"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Планирование"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "Обучение"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Контракт поддержки"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Другое"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Доступность"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Время реакции"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Время восстановления"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Относительная скорость решения"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Финансовые операции"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Ошибки"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Замена для"
+
 #. SysConfig
 msgid "Both"
 msgstr "Оба"
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Связан с"
 
 #. SysConfig
 msgid ""
@@ -212,6 +200,10 @@ msgid ""
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
 msgstr "Определить, какие столбцы отображаются в связанном виджете служб (LinkObject::ViewMode = \"complex\"). Примечание: Только сервисные атрибуты разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию."
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Зависит от"
 
 #. SysConfig
 msgid ""
@@ -264,16 +256,16 @@ msgid "ITSM Service Overview."
 msgstr "Обзор ITSM сервисов."
 
 #. SysConfig
-msgid "Incident"
-msgstr "Инцидент"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr "Тип состояния инцидента"
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr "Тип состояния инцидента"
+
+#. SysConfig
+msgid "Includes"
+msgstr "Включает"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -300,12 +292,24 @@ msgid "Module to show the link link in service menu."
 msgstr "Показать кнопку Связать/Link в меню Сервис"
 
 #. SysConfig
-msgid "Operational"
-msgstr "В эксплуатации"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Параметры для состояния инцидента в preference view."
+
+#. SysConfig
+msgid "Part of"
+msgstr "Часть от"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Относится к"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Требуется для"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "Список SLA"
 
 #. SysConfig
 msgid "SLA Print."
@@ -316,12 +320,20 @@ msgid "SLA Zoom."
 msgstr "Подробности SLA."
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "Список сервисов"
+
+#. SysConfig
 msgid "Service Print."
 msgstr "Печать сервиса."
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr "Подробности сервиса."
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Обзор сервисов"
 
 #. SysConfig
 msgid ""
@@ -335,10 +347,10 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr "Задает тип и направление связи для использования при вычислении состояния инцидента. Ключ это имя типа связи (как это задано в LinkObject::Type), а Значение это направление IncidentLinkType на основании которого вычисляется состояние инцидента. Например, если IncidentLinkType установлен в 'DependsOn', и Направление - 'Source', то только связи 'Depends on' будут использоваться (а не противоположная 'Required for') для вычисления состояния инцидента. Вы можете добавить другие дополнительные типы связи и направления по своему желанию, например,  'Includes' с направлением 'Target'. допускаются все типы связи, заданные параметром LinkObject::Type и направления могут быть 'Source', 'Target', или 'Both'. ВАЖНО: ПОСЛЕ ИЗМЕНЕНИЯ ЗНАЧЕНИЙ ЭТОГО ПАРАМЕТРАНЕОБХОДИМО ВЫПОЛНИТЬ СКРИПТ bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl ДЛЯ ПЕРЕРАСЧЕТА ВСЕХ СОСТОЯНИЙ ИНЦИДЕНТА НА ОСНОВЕ НОВЫХ ЗНАЧЕНИЙ!"
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
 
 #. SysConfig
 msgid ""

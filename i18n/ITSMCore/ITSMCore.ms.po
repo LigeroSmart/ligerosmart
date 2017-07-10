@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -14,130 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "Alternatif kepada"
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "Verfügbarkeit"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "Backend"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "Dihungkan kepada"
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "Status sedia ada"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "Demostrasi"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "Bergantung kepada"
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "Pengguna Akhir Servis"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "Kesilapan"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "Frontend"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "Pengurusan IT"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "Operasi IT"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "Kesan"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "insiden keadaan"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "Termasuk"
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "Selain"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "Sebahagian daripada"
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "Projek"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "Masa Sembuhan"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "Berkaitan kepada"
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "Melaporkan"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "Diperlukan untuk"
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "kadar Resolusi"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "Masa Tindak balas"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "Lihat semula SLA"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "Lihat semula servis"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "Kawasan-Servis"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "Latihan"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "Transaksi"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "Underpinning Contract"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "Menempatkan semula"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -187,13 +63,125 @@ msgstr "Kejadian keadaan semasa"
 msgid "Associated SLAs"
 msgstr "SLA Bersekutu"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Kesan"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "Insiden status semasa"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "insiden keadaan"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "operasi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "insiden"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Pengguna Akhir Servis"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Frontend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Backend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "Pengurusan IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Melaporkan"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "Operasi IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Demostrasi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Projek"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "Latihan"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Underpinning Contract"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Selain"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Verfügbarkeit"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Masa Tindak balas"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Masa Sembuhan"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "kadar Resolusi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Transaksi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Kesilapan"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Alternatif kepada"
+
 #. SysConfig
 msgid "Both"
 msgstr "Kedua-duanya"
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Dihungkan kepada"
 
 #. SysConfig
 msgid ""
@@ -202,7 +190,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Takrifkan Tindakan dimana butang tetapan itu ada dalam widget objek bersambung (LinkObject::ViewMode = \"complex\"). Sila pastikan yang Tindakan ini perlu didaftarkan yang berikut fail-fail JS dan CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid ""
@@ -210,7 +198,11 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Takrifkan lajur-lajur yang mana ditunjukkan dalam widget perkhidmatan bersambung (ObjekSambungan::ModPemandangan:: \"kompleks\"). Nota: Hanya sifat-sifat perkhidmatan yang dibenarkan untuk LajurLalai. Tetapan Mustahil: 0 = Tidak Dibolehkan, 1 = Ada, 2 = Dibolehkan dengan lalai."
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Bergantung kepada"
 
 #. SysConfig
 msgid ""
@@ -263,16 +255,16 @@ msgid "ITSM Service Overview."
 msgstr "Tinjauan Servis ITSM"
 
 #. SysConfig
-msgid "Incident"
-msgstr "insiden"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr "Jenis Keadaan Kejadian"
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr "Jenis Keadaan Kejadian."
+
+#. SysConfig
+msgid "Includes"
+msgstr "Termasuk"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -299,12 +291,24 @@ msgid "Module to show the link link in service menu."
 msgstr "Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan."
 
 #. SysConfig
-msgid "Operational"
-msgstr "operasi"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Parameter untuk keadaan insiden memandangkan keutamaan."
+
+#. SysConfig
+msgid "Part of"
+msgstr "Sebahagian daripada"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Berkaitan kepada"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Diperlukan untuk"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "Lihat semula SLA"
 
 #. SysConfig
 msgid "SLA Print."
@@ -315,12 +319,20 @@ msgid "SLA Zoom."
 msgstr "Zum SLA."
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "Lihat semula servis"
+
+#. SysConfig
 msgid "Service Print."
 msgstr "Cetakan Servis."
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr "Zum Servis."
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Kawasan-Servis"
 
 #. SysConfig
 msgid ""
@@ -334,10 +346,10 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr "Menetapkan jenis dan arah pautan yang digunakan untuk mengira keadaan insiden. Kuncinya adalah nama jenis link (sebagaimana ditakrifkan dalam PautanObjek::Jenis) , dan nilai adalah arah JenisPautanInsiden yang perlu diikuti untuk mengira keadaan insiden itu. Sebagai contoh jika JenisPautanInsiden ditetapkan kepada ' Bergantung Kepada ', dan Arah adalah ' Sumber' , hanya ' Bergantung Kepada ' pautan akan diikuti (dan bukan pautan bertentangan ' Yang diperlukan untuk' ) untuk mengira keadaan insiden. Anda boleh menambah lebih banyak arahan jenis pautan yang anda suka, contohnya ' Termasuk' dengan arah ' Sasaran '. Semua jenis pautan yang ditakrifkan dalam pilihan konfigsis PautanObjek::Jenis adalah mungkin dan arahnya mungkin ' Sumber ', ' Sasaran ', atau ' Kedua-dua' . PENTING: SELEPAS ANDA MEMBUAT PERUBAHAN KEPADA TETAPAN KONFIGSIS ANDA PERLU MENJALANKAN SKRIP bin / otrs.ITSMKonfigurasiKiraansemulaKeadaanInsidenItem.pl SUPAYA SEMUA KEADAAN INSIDEN akan dikira semula BERDASARKAN TETAPAN BARU!"
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
 
 #. SysConfig
 msgid ""

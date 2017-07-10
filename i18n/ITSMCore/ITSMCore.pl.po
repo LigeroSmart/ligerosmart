@@ -4,139 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "Alternatywa dla"
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "Dostępność"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "Zaplecze"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "Połączone z"
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "Bieżący Stan"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "Demonstracja"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "Zależne od"
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "Usługa Użytkownika Końcowego"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "Błędy"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "Frontend"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "IT zarządzanie"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "IT operacyjne"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "Wpływ"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "Stan zdarzenia"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "Zawiera"
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "Inne"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "Część"
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "Projekt"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "Czas odzyskania"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "Odpowiednie do"
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "Raportowanie"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "Potrzebne do"
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "Czas rozwiązania"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "Czas odpowiedzi"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "Przegląd SLA"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "Przegląd usług"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "Sekcja serwisowa"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "Trening"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "Transakcje"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "Podstawy Umowy"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "alokacja"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -186,13 +62,125 @@ msgstr "Aktualny stan incydentu"
 msgid "Associated SLAs"
 msgstr "Połączone SLA"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Wpływ"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "Aktualny stan incydentu"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Stan zdarzenia"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "Operacyjny"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Zdarzenie"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Usługa Użytkownika Końcowego"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Frontend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Zaplecze"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "IT zarządzanie"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Raportowanie"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "IT operacyjne"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Demonstracja"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Projekt"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "Trening"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Podstawy Umowy"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Inne"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Dostępność"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Czas odpowiedzi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Czas odzyskania"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Czas rozwiązania"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Transakcje"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Błędy"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Alternatywa dla"
+
 #. SysConfig
 msgid "Both"
 msgstr ""
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Połączone z"
 
 #. SysConfig
 msgid ""
@@ -210,6 +198,10 @@ msgid ""
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
 msgstr ""
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Zależne od"
 
 #. SysConfig
 msgid ""
@@ -262,16 +254,16 @@ msgid "ITSM Service Overview."
 msgstr ""
 
 #. SysConfig
-msgid "Incident"
-msgstr "Zdarzenie"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr ""
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr ""
+
+#. SysConfig
+msgid "Includes"
+msgstr "Zawiera"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -298,12 +290,24 @@ msgid "Module to show the link link in service menu."
 msgstr "Moduł pokazywania linku w menu serwisowym."
 
 #. SysConfig
-msgid "Operational"
-msgstr "Operacyjny"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Parametry dla stanów zdarzeń w widoku preferencji."
+
+#. SysConfig
+msgid "Part of"
+msgstr "Część"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Odpowiednie do"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Potrzebne do"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "Przegląd SLA"
 
 #. SysConfig
 msgid "SLA Print."
@@ -314,12 +318,20 @@ msgid "SLA Zoom."
 msgstr ""
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "Przegląd usług"
+
+#. SysConfig
 msgid "Service Print."
 msgstr ""
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr ""
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Sekcja serwisowa"
 
 #. SysConfig
 msgid ""
@@ -333,9 +345,9 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr ""
 
 #. SysConfig

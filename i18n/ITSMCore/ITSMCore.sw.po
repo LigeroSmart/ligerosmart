@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -13,130 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "Badala ya "
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "Upatikanaji"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "Mazingira ya nyuma"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "Imeunganishwa na"
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "Hali ya sasa"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "Maonyesho"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "Inategemeana na "
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "Huduma ya mtumiaji wa mwihso"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "Makosa"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "Mazingira ya mbele"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "Usimamizi wa IT"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "Uendeshaji wa IT"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "Madhara"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "Hali ya tukio"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "Inahusisha"
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "Engine"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "Sehemu ya"
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "Mradi"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "Muda wa kupona"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "Husiana na"
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "Uarifu"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "Inahitajika kwa"
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "Kiwango cha muonekano"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "Muda wa majibu"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "Marejeo ya SLA"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "Marejeo ya huduma"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "Eneo la huduma"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "Mafunzo"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "Miamala"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "Mkataba wa kuimarisha"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "Ugawaji"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -186,13 +62,125 @@ msgstr "Hali ya tukio la sasa"
 msgid "Associated SLAs"
 msgstr "SLA zinazohusika"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Madhara"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "Hali ya tukio la sasa"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Hali ya tukio"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "Uendeshaji"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Tukio"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Huduma ya mtumiaji wa mwihso"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Mazingira ya mbele"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Mazingira ya nyuma"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "Usimamizi wa IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Uarifu"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "Uendeshaji wa IT"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Maonyesho"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Mradi"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "Mafunzo"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Mkataba wa kuimarisha"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Engine"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Upatikanaji"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Muda wa majibu"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Muda wa kupona"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Kiwango cha muonekano"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Miamala"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Makosa"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Badala ya "
+
 #. SysConfig
 msgid "Both"
 msgstr ""
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Imeunganishwa na"
 
 #. SysConfig
 msgid ""
@@ -210,6 +198,10 @@ msgid ""
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
 msgstr ""
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Inategemeana na "
 
 #. SysConfig
 msgid ""
@@ -262,16 +254,16 @@ msgid "ITSM Service Overview."
 msgstr ""
 
 #. SysConfig
-msgid "Incident"
-msgstr "Tukio"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr ""
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr ""
+
+#. SysConfig
+msgid "Includes"
+msgstr "Inahusisha"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -298,12 +290,24 @@ msgid "Module to show the link link in service menu."
 msgstr "Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma."
 
 #. SysConfig
-msgid "Operational"
-msgstr "Uendeshaji"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Vigezo ya hali ya matukio katika mandhari ya mapendeleo."
+
+#. SysConfig
+msgid "Part of"
+msgstr "Sehemu ya"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Husiana na"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Inahitajika kwa"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "Marejeo ya SLA"
 
 #. SysConfig
 msgid "SLA Print."
@@ -314,12 +318,20 @@ msgid "SLA Zoom."
 msgstr ""
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "Marejeo ya huduma"
+
+#. SysConfig
 msgid "Service Print."
 msgstr ""
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr ""
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Eneo la huduma"
 
 #. SysConfig
 msgid ""
@@ -333,10 +345,10 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr "Weka aina na mwelekeo wa viungo vitakavyotumika kutafuta hali ya tukio. Funguo ni jina la aina ya kiungo (kama ilivyofafanuliwa katika Kipengee cha Kiungo:: Aina), na thamani ni mweleko wa Aina ya kiungo cha tukio ambacho kifatwe ili kutafuta hali ya tukio. Kwa mfano kama Aina ya kiungo ya tukio imewekwa kwenye 'Inategemeana na', na mwelekeo ni 'Chanzo', viungo 'Inategemeana na' tu vitafwata (na sio kiungo cha tofauti 'Inahitajika kwa')kutafuta halii ya tukio. Unaweza kuongeza zaidi aina na mielekeo kama upendavyo mfano 'Inahusisha' na mwelekeo 'Lengo'. Viungo vyote vilivyofafanuliwa katika chaguo la mfumo la usanidi KipengeeKiungo::Aina vinawezekana na mwelekeo unaweza kuwa 'Chanzo' , 'Lengo' au 'Yote'. MUHIMU: BAADA YA KUFANYA MABADILIKO KATIKA CHAGUO HILI LA USANIDI MFUMO  UNAHITAJI KUWASHA MAANDIKO bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl ILI HALI YA MATUKIO YOTE YAWEZE KUTAFUTWA KUTEGEMEANA NA MIPANGILIO MIPYA! "
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
 
 #. SysConfig
 msgid ""

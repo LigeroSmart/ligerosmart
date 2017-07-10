@@ -5,139 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-01 00:02+0000\n"
-"PO-Revision-Date: 2017-04-25 11:45+0000\n"
-"Last-Translator: Peter Værlien <pvarlien@online.no>\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "Alternativ til"
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "Tilgjengelighet"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "Backend"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "Koblet til"
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "Nåværende tilstand"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "Demonstrasjon"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "Avhenger av"
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "Sluttbruker-tjeneste"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "Feil"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "Frontend"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "IT-ledelse"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "IT-drift"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "Omfang"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "Hendelsestilstand"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "Inkluderer"
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "Andre"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "Del av"
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "Prosjekt"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "Gjenoppretningstid"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "Relevant for"
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "Rapportering"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "Påkrevd for"
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "Opprettingsratio"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "Responstid"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "SLA-oversikt"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "Tjeneste-oversikt"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "Tjenesteområde"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "Trening"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "Transaksjoner"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "Underliggende kontrakt"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "tildeling"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -187,13 +63,125 @@ msgstr "Tilstand på nåværende hendelse"
 msgid "Associated SLAs"
 msgstr "Tilknyttede SLAer"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "Omfang"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "Tilstand på nåværende hendelse"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "Hendelsestilstand"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "Operativ"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "Hendelse"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "Sluttbruker-tjeneste"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "Frontend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "Backend"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "IT-ledelse"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "Rapportering"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "IT-drift"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "Demonstrasjon"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "Prosjekt"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "Trening"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "Underliggende kontrakt"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "Andre"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "Tilgjengelighet"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "Responstid"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "Gjenoppretningstid"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "Opprettingsratio"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "Transaksjoner"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "Feil"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "Alternativ til"
+
 #. SysConfig
 msgid "Both"
 msgstr "Begge"
+
+#. SysConfig
+msgid "Connected to"
+msgstr "Koblet til"
 
 #. SysConfig
 msgid ""
@@ -211,6 +199,10 @@ msgid ""
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
 msgstr ""
+
+#. SysConfig
+msgid "Depends on"
+msgstr "Avhenger av"
 
 #. SysConfig
 msgid ""
@@ -263,16 +255,16 @@ msgid "ITSM Service Overview."
 msgstr "ITSM-Tjenesteoversikt"
 
 #. SysConfig
-msgid "Incident"
-msgstr "Hendelse"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr "Type hendelsestilstand"
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr "Type hendelsestilstand."
+
+#. SysConfig
+msgid "Includes"
+msgstr "Inkluderer"
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -299,12 +291,24 @@ msgid "Module to show the link link in service menu."
 msgstr "Modul som viser lenke-lenken i tjeneste-menyen"
 
 #. SysConfig
-msgid "Operational"
-msgstr "Operativ"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "Parametre for hendelsestilstander i valgvisningen"
+
+#. SysConfig
+msgid "Part of"
+msgstr "Del av"
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "Relevant for"
+
+#. SysConfig
+msgid "Required for"
+msgstr "Påkrevd for"
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "SLA-oversikt"
 
 #. SysConfig
 msgid "SLA Print."
@@ -315,12 +319,20 @@ msgid "SLA Zoom."
 msgstr "SLA-detaljer."
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "Tjeneste-oversikt"
+
+#. SysConfig
 msgid "Service Print."
 msgstr "Tjenesteutskrift"
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr "Tjenestedetaljer"
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "Tjenesteområde"
 
 #. SysConfig
 msgid ""
@@ -334,9 +346,9 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr ""
 
 #. SysConfig

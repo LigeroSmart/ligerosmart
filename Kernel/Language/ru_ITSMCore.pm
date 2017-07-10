@@ -15,39 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = 'Замена для';
-    $Self->{Translation}->{'Availability'} = 'Доступность';
-    $Self->{Translation}->{'Back End'} = 'Серверная часть';
-    $Self->{Translation}->{'Connected to'} = 'Связан с';
-    $Self->{Translation}->{'Current State'} = 'Текущее состояние';
-    $Self->{Translation}->{'Demonstration'} = 'Демонстрация';
-    $Self->{Translation}->{'Depends on'} = 'Зависит от';
-    $Self->{Translation}->{'End User Service'} = 'Конечный сервис пользователя';
-    $Self->{Translation}->{'Errors'} = 'Ошибки';
-    $Self->{Translation}->{'Front End'} = 'Интерфейсная часть';
-    $Self->{Translation}->{'IT Management'} = 'Управление ИТ';
-    $Self->{Translation}->{'IT Operational'} = 'Эксплуатация ИТ';
-    $Self->{Translation}->{'Impact'} = 'Влияние';
-    $Self->{Translation}->{'Incident State'} = 'Состояние инцидента';
-    $Self->{Translation}->{'Includes'} = 'Включает';
-    $Self->{Translation}->{'Other'} = 'Другое';
-    $Self->{Translation}->{'Part of'} = 'Часть от';
-    $Self->{Translation}->{'Project'} = 'Планирование';
-    $Self->{Translation}->{'Recovery Time'} = 'Время восстановления';
-    $Self->{Translation}->{'Relevant to'} = 'Относится к';
-    $Self->{Translation}->{'Reporting'} = 'Составление отчетов';
-    $Self->{Translation}->{'Required for'} = 'Требуется для';
-    $Self->{Translation}->{'Resolution Rate'} = 'Относительная скорость решения';
-    $Self->{Translation}->{'Response Time'} = 'Время реакции';
-    $Self->{Translation}->{'SLA Overview'} = 'Список SLA';
-    $Self->{Translation}->{'Service Overview'} = 'Список сервисов';
-    $Self->{Translation}->{'Service-Area'} = 'Обзор сервисов';
-    $Self->{Translation}->{'Training'} = 'Обучение';
-    $Self->{Translation}->{'Transactions'} = 'Финансовые операции';
-    $Self->{Translation}->{'Underpinning Contract'} = 'Контракт поддержки';
-    $Self->{Translation}->{'allocation'} = 'Назначение приоритетов ';
-
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Критичность <-> Влияние <-> Приоритет';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
@@ -71,15 +38,52 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'Текущее состояние инцидента';
     $Self->{Translation}->{'Associated SLAs'} = 'Связанные SLA';
 
+    # Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+    $Self->{Translation}->{'Impact'} = 'Влияние';
+
+    # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+    $Self->{Translation}->{'No SLAID is given!'} = '';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
+    $Self->{Translation}->{'Calendar Default'} = '';
+
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+    $Self->{Translation}->{'No ServiceID is given!'} = '';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
     $Self->{Translation}->{'Current Incident State'} = 'Текущее состояние инцидента';
 
+    # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+    $Self->{Translation}->{'Incident State'} = 'Состояние инцидента';
+
+    # Database XML Definition: ITSMCore.sopm
+    $Self->{Translation}->{'Operational'} = 'В эксплуатации';
+    $Self->{Translation}->{'Incident'} = 'Инцидент';
+    $Self->{Translation}->{'End User Service'} = 'Конечный сервис пользователя';
+    $Self->{Translation}->{'Front End'} = 'Интерфейсная часть';
+    $Self->{Translation}->{'Back End'} = 'Серверная часть';
+    $Self->{Translation}->{'IT Management'} = 'Управление ИТ';
+    $Self->{Translation}->{'Reporting'} = 'Составление отчетов';
+    $Self->{Translation}->{'IT Operational'} = 'Эксплуатация ИТ';
+    $Self->{Translation}->{'Demonstration'} = 'Демонстрация';
+    $Self->{Translation}->{'Project'} = 'Планирование';
+    $Self->{Translation}->{'Training'} = 'Обучение';
+    $Self->{Translation}->{'Underpinning Contract'} = 'Контракт поддержки';
+    $Self->{Translation}->{'Other'} = 'Другое';
+    $Self->{Translation}->{'Availability'} = 'Доступность';
+    $Self->{Translation}->{'Response Time'} = 'Время реакции';
+    $Self->{Translation}->{'Recovery Time'} = 'Время восстановления';
+    $Self->{Translation}->{'Resolution Rate'} = 'Относительная скорость решения';
+    $Self->{Translation}->{'Transactions'} = 'Финансовые операции';
+    $Self->{Translation}->{'Errors'} = 'Ошибки';
+
     # SysConfig
+    $Self->{Translation}->{'Alternative to'} = 'Замена для';
     $Self->{Translation}->{'Both'} = 'Оба';
+    $Self->{Translation}->{'Connected to'} = 'Связан с';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         'Задает Действия/Actions когда кнопка настройки доступна в связанном виджете (LinkObject::ViewMode = "complex"). Обратите внимание, что эти Действия/Actions должны иметь зарегистрированные JS или CSS файлы: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Определить, какие столбцы отображаются в связанном виджете служб (LinkObject::ViewMode = "complex"). Примечание: Только сервисные атрибуты разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию.';
+    $Self->{Translation}->{'Depends on'} = 'Зависит от';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Frontend module registration для параметров AdminITSMCIPAllocate в панели администратора.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -96,21 +100,26 @@ sub Data {
         'Frontend module registration для объекта AgentITSMServiceZoom в панели администратора.';
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'Обзор ITSM SLA';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'Обзор ITSM сервисов.';
-    $Self->{Translation}->{'Incident'} = 'Инцидент';
     $Self->{Translation}->{'Incident State Type'} = 'Тип состояния инцидента';
     $Self->{Translation}->{'Incident State Type.'} = 'Тип состояния инцидента';
+    $Self->{Translation}->{'Includes'} = 'Включает';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Управление матрицей приоритетов';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Показать кнопку "назад" в меню Сервис';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Показать кнопку "назад" в меню SLA';
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'Показать кнопку "Печать" в меню Сервис';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Показать кнопку "Печать" в меню SLA';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Показать кнопку Связать/Link в меню Сервис';
-    $Self->{Translation}->{'Operational'} = 'В эксплуатации';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Параметры для состояния инцидента в preference view.';
+    $Self->{Translation}->{'Part of'} = 'Часть от';
+    $Self->{Translation}->{'Relevant to'} = 'Относится к';
+    $Self->{Translation}->{'Required for'} = 'Требуется для';
+    $Self->{Translation}->{'SLA Overview'} = 'Список SLA';
     $Self->{Translation}->{'SLA Print.'} = 'Печать SLA.';
     $Self->{Translation}->{'SLA Zoom.'} = 'Подробности SLA.';
+    $Self->{Translation}->{'Service Overview'} = 'Список сервисов';
     $Self->{Translation}->{'Service Print.'} = 'Печать сервиса.';
     $Self->{Translation}->{'Service Zoom.'} = 'Подробности сервиса.';
+    $Self->{Translation}->{'Service-Area'} = 'Обзор сервисов';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         '';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =

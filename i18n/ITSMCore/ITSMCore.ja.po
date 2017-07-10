@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 13:21+0000\n"
-"PO-Revision-Date: 2016-12-10 12:21+0000\n"
+"POT-Creation-Date: 2017-07-10 14:53+0000\n"
+"PO-Revision-Date: 2017-07-10 12:53+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -14,130 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AAAITSMCore
-msgid "Alternative to"
-msgstr "代替："
-
-#. Template: AAAITSMCore
-msgid "Availability"
-msgstr "可用性"
-
-#. Template: AAAITSMCore
-msgid "Back End"
-msgstr "バックエンド"
-
-#. Template: AAAITSMCore
-msgid "Connected to"
-msgstr "接続："
-
-#. Template: AAAITSMCore
-msgid "Current State"
-msgstr "状態"
-
-#. Template: AAAITSMCore
-msgid "Demonstration"
-msgstr "デモンストレーション"
-
-#. Template: AAAITSMCore
-msgid "Depends on"
-msgstr "依存："
-
-#. Template: AAAITSMCore
-msgid "End User Service"
-msgstr "エンドユーザ・サービス"
-
-#. Template: AAAITSMCore
-msgid "Errors"
-msgstr "エラー"
-
-#. Template: AAAITSMCore
-msgid "Front End"
-msgstr "フロントエンド"
-
-#. Template: AAAITSMCore
-msgid "IT Management"
-msgstr "ITマネージメント"
-
-#. Template: AAAITSMCore
-msgid "IT Operational"
-msgstr "ITオペレーション"
-
-#. Template: AAAITSMCore
-msgid "Impact"
-msgstr "影響"
-
-#. Template: AAAITSMCore
-msgid "Incident State"
-msgstr "インシデントの状態"
-
-#. Template: AAAITSMCore
-msgid "Includes"
-msgstr "含む："
-
-#. Template: AAAITSMCore
-msgid "Other"
-msgstr "その他"
-
-#. Template: AAAITSMCore
-msgid "Part of"
-msgstr "一部："
-
-#. Template: AAAITSMCore
-msgid "Project"
-msgstr "プロジェクト"
-
-#. Template: AAAITSMCore
-msgid "Recovery Time"
-msgstr "リカバリ・タイム"
-
-#. Template: AAAITSMCore
-msgid "Relevant to"
-msgstr "関連項目："
-
-#. Template: AAAITSMCore
-msgid "Reporting"
-msgstr "レポート"
-
-#. Template: AAAITSMCore
-msgid "Required for"
-msgstr "必須："
-
-#. Template: AAAITSMCore
-msgid "Resolution Rate"
-msgstr "解像度レート"
-
-#. Template: AAAITSMCore
-msgid "Response Time"
-msgstr "レスポンスタイム"
-
-#. Template: AAAITSMCore
-msgid "SLA Overview"
-msgstr "SLAの概観"
-
-#. Template: AAAITSMCore
-msgid "Service Overview"
-msgstr "サービスの概観"
-
-#. Template: AAAITSMCore
-msgid "Service-Area"
-msgstr "サービス・エリア"
-
-#. Template: AAAITSMCore
-msgid "Training"
-msgstr "トレーニング"
-
-#. Template: AAAITSMCore
-msgid "Transactions"
-msgstr "取引"
-
-#. Template: AAAITSMCore
-msgid "Underpinning Contract"
-msgstr "支持する契約"
-
-#. Template: AAAITSMCore
-msgid "allocation"
-msgstr "配分"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality <-> Impact <-> Priority"
@@ -187,13 +63,125 @@ msgstr "インシデントの状態"
 msgid "Associated SLAs"
 msgstr "関連するSLA"
 
+#. Perl Module: Kernel/Modules/AdminITSMCIPAllocate.pm
+msgid "Impact"
+msgstr "影響"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "No SLAID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "SLAID %s not found in database!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
+msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "No ServiceID is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
+msgid "ServiceID %s not found in database!"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
 msgstr "インシデントの状態"
 
+#. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
+msgid "Incident State"
+msgstr "インシデントの状態"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Operational"
+msgstr "通常運用"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Incident"
+msgstr "インシデント"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "End User Service"
+msgstr "エンドユーザ・サービス"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Front End"
+msgstr "フロントエンド"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Back End"
+msgstr "バックエンド"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Management"
+msgstr "ITマネージメント"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Reporting"
+msgstr "レポート"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "IT Operational"
+msgstr "ITオペレーション"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Demonstration"
+msgstr "デモンストレーション"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Project"
+msgstr "プロジェクト"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Training"
+msgstr "トレーニング"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Underpinning Contract"
+msgstr "支持する契約"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Other"
+msgstr "その他"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Availability"
+msgstr "可用性"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Response Time"
+msgstr "レスポンスタイム"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Recovery Time"
+msgstr "リカバリ・タイム"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Resolution Rate"
+msgstr "解像度レート"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Transactions"
+msgstr "取引"
+
+#. Database XML Definition: ITSMCore.sopm
+msgid "Errors"
+msgstr "エラー"
+
+#. SysConfig
+msgid "Alternative to"
+msgstr "代替："
+
 #. SysConfig
 msgid "Both"
 msgstr "両方"
+
+#. SysConfig
+msgid "Connected to"
+msgstr "接続："
 
 #. SysConfig
 msgid ""
@@ -211,6 +199,10 @@ msgid ""
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
 msgstr ""
+
+#. SysConfig
+msgid "Depends on"
+msgstr "依存："
 
 #. SysConfig
 msgid ""
@@ -263,16 +255,16 @@ msgid "ITSM Service Overview."
 msgstr "ITSM サービスの概要"
 
 #. SysConfig
-msgid "Incident"
-msgstr "インシデント"
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr "インシデント状態のタイプ"
 
 #. SysConfig
 msgid "Incident State Type."
 msgstr "インシデント状態のタイプ"
+
+#. SysConfig
+msgid "Includes"
+msgstr "含む："
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -299,12 +291,24 @@ msgid "Module to show the link link in service menu."
 msgstr "サービスメニューで「リンク」リンクを表示するためのモジュール"
 
 #. SysConfig
-msgid "Operational"
-msgstr "通常運用"
-
-#. SysConfig
 msgid "Parameters for the incident states in the preference view."
 msgstr "設定ビューでのインシデントステータスのパラメーター"
+
+#. SysConfig
+msgid "Part of"
+msgstr "一部："
+
+#. SysConfig
+msgid "Relevant to"
+msgstr "関連項目："
+
+#. SysConfig
+msgid "Required for"
+msgstr "必須："
+
+#. SysConfig
+msgid "SLA Overview"
+msgstr "SLAの概観"
 
 #. SysConfig
 msgid "SLA Print."
@@ -315,12 +319,20 @@ msgid "SLA Zoom."
 msgstr "SLA ズーム"
 
 #. SysConfig
+msgid "Service Overview"
+msgstr "サービスの概観"
+
+#. SysConfig
 msgid "Service Print."
 msgstr "サービスの印刷"
 
 #. SysConfig
 msgid "Service Zoom."
 msgstr "サービス・ズーム"
+
+#. SysConfig
+msgid "Service-Area"
+msgstr "サービス・エリア"
 
 #. SysConfig
 msgid ""
@@ -334,10 +346,10 @@ msgid ""
 "directions as you like, e.g. 'Includes' with the direction 'Target'. All "
 "link types defined in the sysconfig options LinkObject::Type are possible "
 "and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE SCRIPT "
-"bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO THAT ALL INCIDENT "
-"STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr "インシデントの状況を割り出すために、利用されるリンクのタイプと方向を設定してください。 インシデントの状況を割り出すために、フォローされるキーはリンクのタイプ名 (デフォルトでは LinkObject::Type)、値はIncidentLinkTypeの方向を用いられます。例えばIncidentLinkTypeがDependsOn「~に依存する」そして、方向がソースの時は、DependsOnだけがフォローされ(そして、反対のRequired for「~に必須」ではない)、インシデントの状況を割り出すのに利用されます。\nさらにリンクタイプを希望する方向に追加できます。例 Includes「含む」の方向としてTarget「対象」。LinkObject::Typeの管理で作成されたすべてのタイプが利用可能、方向は'Source'「ソース」 'Target'「ターゲット」, または 'Both'「両方」が利用可能です。重要: この管理項目の変更行ったあとに必ず bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl  を実行する必要があります。実行後すべてのインシデント状況が新しい設定値に更新されます。"
+" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
+"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
+"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
 
 #. SysConfig
 msgid ""
