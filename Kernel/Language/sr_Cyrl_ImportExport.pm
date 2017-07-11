@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'Потребан ИД шаблона!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Догодила се грешка. Увоз је немогућ! За детаље погледајте у системски дневник.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Догодила се грешка. Извоз је немогућ! За детаље погледајте у системски дневник.';
-    $Self->{Translation}->{'Template List'} = '';
+    $Self->{Translation}->{'Template List'} = 'Листа шаблона';
     $Self->{Translation}->{'number'} = 'број';
     $Self->{Translation}->{'number bigger than zero'} = 'број већи од нула';
     $Self->{Translation}->{'integer'} = 'цео број';
@@ -65,7 +65,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Тачка и запета (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Двотачка (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Тачка (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Зарез (,)';
     $Self->{Translation}->{'Charset'} = 'Карактерсет';
     $Self->{Translation}->{'Include Column Headers'} = 'Укључи наслове колона';
     $Self->{Translation}->{'Column'} = 'Колона';
