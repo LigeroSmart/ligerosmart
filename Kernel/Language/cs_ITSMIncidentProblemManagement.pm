@@ -40,7 +40,7 @@ sub Data {
     $Self->{Translation}->{'Due Date'} = '';
 
     # Database XML Definition: ITSMIncidentProblemManagement.sopm
-    $Self->{Translation}->{'closed with workaround'} = '';
+    $Self->{Translation}->{'closed with workaround'} = 'uzavřeno dočasným řešením';
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Doplňte řešení!';

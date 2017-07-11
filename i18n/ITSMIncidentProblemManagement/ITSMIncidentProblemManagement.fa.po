@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-04 09:11+0000\n"
-"PO-Revision-Date: 2017-05-03 14:57+0000\n"
+"POT-Creation-Date: 2017-07-07 13:48+0000\n"
+"PO-Revision-Date: 2017-07-07 11:25+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -76,6 +76,10 @@ msgstr "تاریخ تصمیم"
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Due Date"
 msgstr "تاریخ انجام"
+
+#. Database XML Definition: ITSMIncidentProblemManagement.sopm
+msgid "closed with workaround"
+msgstr "موقتا بسته شد"
 
 #. SysConfig
 msgid "Add a decision!"

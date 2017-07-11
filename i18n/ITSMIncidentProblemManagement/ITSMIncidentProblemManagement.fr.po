@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-04 09:11+0000\n"
-"PO-Revision-Date: 2017-06-29 08:34+0000\n"
-"Last-Translator: Patrick Lentz\n"
+"POT-Creation-Date: 2017-07-07 13:48+0000\n"
+"PO-Revision-Date: 2017-07-07 11:25+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,6 +77,10 @@ msgstr "Date de décision"
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Due Date"
 msgstr "Échéance"
+
+#. Database XML Definition: ITSMIncidentProblemManagement.sopm
+msgid "closed with workaround"
+msgstr "Fermé avec contournement"
 
 #. SysConfig
 msgid "Add a decision!"
