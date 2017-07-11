@@ -153,7 +153,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
            // check if the entered value only consists of allowed values
            // if not, we do not eval for security reasons
-           if (FieldValue.match(/^[0-9\.+\- ]+$/)) {
+           if (FieldValue.match(/^[0-9.+\- ]+$/)) {
                // Calculation
                try {
                    /*eslint-disable no-eval */
