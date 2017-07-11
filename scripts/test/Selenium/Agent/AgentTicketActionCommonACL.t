@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - f3598c2953e75270670e9fe6d793074892cd701e - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# $origin: otrs - 42ea51915a8e2e7fd4474d27aea3ba8f74c274b5 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -435,9 +435,9 @@ EOF
         $Selenium->execute_script(
             "return \$('#NewStateID').val('2').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( '#Subject',  'css' )->send_keys('Close');
-        $Selenium->find_element( '#RichText', 'css' )->send_keys('Closing...');
-        $Selenium->find_element( '#submitRichText', 'css'  )->click();
+        $Selenium->find_element( '#Subject',        'css' )->send_keys('Close');
+        $Selenium->find_element( '#RichText',       'css' )->send_keys('Closing...');
+        $Selenium->find_element( '#submitRichText', 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
