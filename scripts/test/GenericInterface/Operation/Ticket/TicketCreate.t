@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - ac9063f9e29ae799b6d3de6a062252b5165564a9 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: otrs - 9e688b9643d45ddd9ce334dbf03262a9039201bf - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -434,7 +434,7 @@ $DynamicFieldMultiselectConfig{ID} = $FieldMultiselectID;
 # add date-time dynamic field
 my %DynamicFieldDateTimeConfig = (
     Name       => "Unittest4$RandomID",
-    FieldOrder => 9991,
+    FieldOrder => 9994,
     FieldType  => 'DateTime',
     ObjectType => 'Ticket',
     Label      => 'Description',
@@ -458,6 +458,34 @@ $Self->True(
 
 # add ID
 $DynamicFieldDateTimeConfig{ID} = $FieldDateTimeID;
+
+# add date-time dynamic field
+my %DynamicFieldDateConfig = (
+    Name       => "Unittest5$RandomID",
+    FieldOrder => 9995,
+    FieldType  => 'Date',
+    ObjectType => 'Ticket',
+    Label      => 'Description',
+    Config     => {
+        DefaultValue  => 0,
+        YearsInFuture => 0,
+        YearsInPast   => 0,
+        YearsPeriod   => 0,
+    },
+    ValidID => 1,
+);
+my $FieldDateID = $DynamicFieldObject->DynamicFieldAdd(
+    %DynamicFieldDateConfig,
+    UserID  => 1,
+    Reorder => 0,
+);
+$Self->True(
+    $FieldDateID,
+    "Dynamic Field $FieldDateID",
+);
+
+# add ID
+$DynamicFieldDateConfig{ID} = $FieldDateID;
 
 # create webservice object
 my $WebserviceObject = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice');
@@ -4022,6 +4050,59 @@ my @Tests        = (
         },
         Operation => 'TicketCreate',
     },
+    {
+        Name           => 'Ticket with the date dynamic field without a time',
+        SuccessRequest => 1,
+        SuccessCreate  => 1,
+        RequestData    => {
+            Ticket => {
+                Title        => 'Ticket Title',
+                CustomerUser => $TestCustomerUserLogin,
+                Queue        => $Queues[0]->{Name},
+                Type         => $TypeData{Name},
+                Service      => $ServiceData{Name},
+                SLA          => $SLAData{Name},
+                State        => $StateData{Name},
+                Priority     => $PriorityData{Name},
+                Owner        => $TestOwnerLogin,
+                Responsible  => $TestResponsibleLogin,
+                PendingTime  => {
+                    Year   => 2012,
+                    Month  => 12,
+                    Day    => 16,
+                    Hour   => 20,
+                    Minute => 48,
+                },
+            },
+            Article => {
+                Subject                         => 'Article subject äöüßÄÖÜ€ис',
+                Body                            => 'Article body',
+                AutoResponseType                => 'auto reply',
+                ArticleType                     => 'email-external',
+                SenderType                      => 'agent',
+                From                            => 'enjoy@otrs.com',
+                ContentType                     => 'text/plain; charset=UTF8',
+                HistoryType                     => 'NewTicket',
+                HistoryComment                  => '% % ',
+                TimeUnit                        => 25,
+                ForceNotificationToUserID       => [1],
+                ExcludeNotificationToUserID     => [1],
+                ExcludeMuteNotificationToUserID => [1],
+            },
+            DynamicField => {
+                Name      => $DynamicFieldDateConfig{Name},
+                Value     => '2012-01-17',
+                FieldType => 'Date',
+            },
+            Attachment => {
+                Content     => 'VGhpcyBpcyBhIHRlc3QgdGV4dC4=',
+                ContentType => 'text/plain; charset=UTF8',
+                Filename    => 'Test.txt',
+                Disposition => 'attachment',
+            },
+        },
+        Operation => 'TicketCreate',
+    },
 );
 
 # debugger object
@@ -4269,6 +4350,11 @@ for my $Test (@Tests) {
             @RequestedDynamicFields = @{ $Test->{RequestData}->{DynamicField} };
         }
         for my $DynamicField (@RequestedDynamicFields) {
+
+            if ( $DynamicField->{FieldType} eq 'Date' && $DynamicField->{Value} =~ m{ \A \d{4}-\d{2}-\d{2} \z }xms ) {
+                $DynamicField->{Value} .= ' 00:00:00';
+            }
+
             $Self->IsDeeply(
                 $LocalTicketData{ 'DynamicField_' . $DynamicField->{Name} } // '',
                 $DynamicField->{Value},

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 89413fb7ae90e8cbe69cf08484e92d43060092a8 - scripts/test/Ticket/TicketACL.t
+# $origin: otrs - 4cadf02910f12373281d26ee9e59d20d7a0e1f1c - scripts/test/Ticket/TicketACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2707,6 +2707,35 @@ $Self->True(
             1 => 'new',
             3 => 'closed',
         },
+    },
+    {
+        Name => 'ACL DB-DynamicField - restrict action',
+        ACLs => {
+            'DB-DynamicField' => {
+                Properties => {
+                    DynamicField => {
+                        'DynamicField_' . $DynamicFieldNames[0] => ['Item1'],
+                    },
+                },
+                PossibleNot => {
+                    Action => ['AgentTicketClose'],
+                },
+            },
+        },
+        Config => {
+            Data => {
+                1 => 'AgentTicketPrint',
+                2 => 'AgentTicketClose',
+            },
+            ReturnType    => 'Action',
+            ReturnSubType => '-',
+            TicketID      => $TicketID,
+            UserID        => $UserID,
+        },
+        SuccessMatch     => 1,
+        ReturnActionData => {
+            1 => 'AgentTicketPrint',
+            }
     },
 
     # user based tests
