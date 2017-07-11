@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-07-10 14:53+0000\n"
-"PO-Revision-Date: 2017-07-10 12:53+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-07-10 18:36+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,23 +68,23 @@ msgstr "Hatás"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "No SLAID is given!"
-msgstr ""
+msgstr "Nincs SLA-azonosító megadva!"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "SLAID %s not found in database!"
-msgstr ""
+msgstr "A(z) %s SLA-azonosító nem található az adatbázisban!"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "Calendar Default"
-msgstr ""
+msgstr "Alapértelmezett naptár"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
-msgstr ""
+msgstr "Nincs szolgáltatásazonosító megadva!"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "ServiceID %s not found in database!"
-msgstr ""
+msgstr "A(z) %s szolgáltatásazonosító nem található az adatbázisban!"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
@@ -160,7 +160,7 @@ msgstr "Helyreállítási idő"
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Resolution Rate"
-msgstr "Felbontási arány"
+msgstr "Megoldási arány"
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Transactions"

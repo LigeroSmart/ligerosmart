@@ -42,13 +42,13 @@ sub Data {
     $Self->{Translation}->{'Impact'} = 'Hatás';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
-    $Self->{Translation}->{'No SLAID is given!'} = '';
-    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
-    $Self->{Translation}->{'Calendar Default'} = '';
+    $Self->{Translation}->{'No SLAID is given!'} = 'Nincs SLA-azonosító megadva!';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = 'A(z) %s SLA-azonosító nem található az adatbázisban!';
+    $Self->{Translation}->{'Calendar Default'} = 'Alapértelmezett naptár';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
-    $Self->{Translation}->{'No ServiceID is given!'} = '';
-    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
+    $Self->{Translation}->{'No ServiceID is given!'} = 'Nincs szolgáltatásazonosító megadva!';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = 'A(z) %s szolgáltatásazonosító nem található az adatbázisban!';
     $Self->{Translation}->{'Current Incident State'} = 'Jelenlegi incidensállapot';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
@@ -71,7 +71,7 @@ sub Data {
     $Self->{Translation}->{'Availability'} = 'Elérhetőség';
     $Self->{Translation}->{'Response Time'} = 'Válaszidő';
     $Self->{Translation}->{'Recovery Time'} = 'Helyreállítási idő';
-    $Self->{Translation}->{'Resolution Rate'} = 'Felbontási arány';
+    $Self->{Translation}->{'Resolution Rate'} = 'Megoldási arány';
     $Self->{Translation}->{'Transactions'} = 'Tranzakciók';
     $Self->{Translation}->{'Errors'} = 'Hibák';
 
