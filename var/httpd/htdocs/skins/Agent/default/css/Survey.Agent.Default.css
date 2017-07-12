@@ -36,6 +36,7 @@ fieldset.SurveyGraphs .Answer {
     text-shadow: 0 1px 0 #FAFAFA;
     width: 25%;
     margin-bottom: 5px;
+    clear: left;
 }
 
 div.SurveyGraph {
