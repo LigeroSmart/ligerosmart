@@ -130,10 +130,37 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveyStatus' ) {
 
+        # Challenge token check for write action.
+        $LayoutObject->ChallengeTokenCheck();
+
         my $NewStatus = $ParamObject->GetParam( Param => "NewStatus" );
 
+        my $Access = 0;
+        my $GroupsForChangeStatus
+            = $Kernel::OM->Get('Kernel::Config')->Get('Survey::Frontend::ChangeSurveyStatusGroups');
+        my %UserGroups = $Kernel::OM->Get('Kernel::System::Group')->PermissionUserGet(
+            UserID => $Self->{UserID},
+            Type   => 'rw',
+        );
+        %UserGroups = reverse %UserGroups;
+
+        # If config array is empty, group can change survey status. Otherwise, checking permissions.
+        if ( !IsArrayRefWithData($GroupsForChangeStatus) ) {
+            $Access = 1;
+        }
+        else {
+
+            GROUPS:
+            for my $SurveyGroup ( @{$GroupsForChangeStatus} ) {
+                if ( $UserGroups{$SurveyGroup} ) {
+                    $Access = 1;
+                    last GROUPS;
+                }
+            }
+        }
+
         # check if survey exists
-        if ( $SurveyExists ne 'Yes' ) {
+        if ( $SurveyExists ne 'Yes' || $Access == 0 ) {
 
             return $LayoutObject->NoPermission(
                 Message    => Translatable('You have no permission for this survey!'),
