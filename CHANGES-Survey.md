@@ -1,6 +1,7 @@
 #6.0.0.beta1 2017-??-??
 
 #5.0.5 2017-??-??
+ - 2017-07-14 Improved close button text, thanks to Balázs Úr.
  - 2017-07-12 Fixed bug#[9304](https://bugs.otrs.org/show_bug.cgi?id=9304) - Rendering of survey results is broken.
  - 2017-07-12 Fixed bug#[11739](https://bugs.otrs.org/show_bug.cgi?id=11739) - If a user can see AgentSurveyZoom of a survey, the user can always change status of the survey.
 

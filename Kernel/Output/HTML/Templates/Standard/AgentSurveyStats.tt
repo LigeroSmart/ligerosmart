@@ -70,7 +70,7 @@
 
     </div>
     <div class="Footer">
-        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close") | html %]</span></button>
+        <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close this window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close this window") | html %]</span></button>
     </div>
 </div>
 [% WRAPPER JSOnDocumentComplete %]
