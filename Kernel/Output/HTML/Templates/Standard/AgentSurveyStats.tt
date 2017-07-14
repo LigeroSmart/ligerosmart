@@ -87,7 +87,7 @@
 [% RenderBlockStart("StatsDetail") %]
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
-        <h1>[% Translate("Survey Stat Details") | html %] : [% Translate("Ticket") | html %]#[% Data.TicketNumber %] : [% Config("Survey::Hook") %][% Data.SurveyNumber %] - [% Data.Title %] :  </h1>
+        <h1>[% Translate("Survey Stat Details") | html %] : [% Config("Ticket::Hook") %][% Config("Ticket::HookDivider") %][% Data.TicketNumber %] : [% Config("Survey::Hook") %][% Data.SurveyNumber %] - [% Data.Title %] :  </h1>
         <p>
             <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             [% Translate("or") | html %]

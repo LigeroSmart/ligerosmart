@@ -18,7 +18,7 @@
             [% Translate("Ticket") | html %]
         </div>
         <div class="Content">
-            [% Config("Ticket::Hook") | html %][% Data.TicketNumber | html %] <span>&mdash;</span> [% Data.Title | truncate(100) %]
+            [% Config("Ticket::Hook") | html %][% Config("Ticket::HookDivider") | html %][% Data.TicketNumber | html %] <span>&mdash;</span> [% Data.Title | truncate(100) %]
         </div>
     </div>
 
