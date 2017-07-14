@@ -1,5 +1,9 @@
-#5.0.7 2016-??-??
+#6.0.0.beta1 2017-??-??
+
+#5.0.7 2017-??-??
+ - 2017-07-11 Removed unnecessary escape character from regex list.
  - 2017-07-07 Replaced UserFistname, UserLastname in favor of a more flexible UserFullname, thanks to Dian Tong Software.
+ - 2017-05-10 Added workaround for issues with empty values in project and task dropdown fields.
 
 #5.0.6 2017-01-01
  - 2017-01-01 Updated copyright.
