@@ -38,6 +38,7 @@ sub Data {
         'Nach dem Bearbeiten der Umfrage dieses Fenster einfach schliessen';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Wollen Sie diese Frage wirklich löschen? Alle darin enthaltenen Daten werden GELÖSCHT!';
+    $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Frage bearbeiten';
     $Self->{Translation}->{'go back to questions'} = 'Zurück zu den Fragen';
     $Self->{Translation}->{'Question:'} = 'Frage:';
@@ -154,6 +155,8 @@ sub Data {
         'Voreingestellter Betreff für Benachrichtigungs-E-Mails an den Kunden über neue Umfragen.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Definiert ein Übersichtsmodul, dass eine Liste aller Umfragen anzeigt.';
+    $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Definiert die maximale Anzahl von Umfragen die ein Kunde innerhalb von 30 Tagen zugesandt bekommt. ( 0 steht für kein Maximum, alle Umfrage-E-Mails werden versandt.)';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =

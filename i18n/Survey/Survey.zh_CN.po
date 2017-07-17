@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 23:21+0000\n"
-"PO-Revision-Date: 2017-03-28 00:43+0000\n"
-"Last-Translator: 汇民 王 <whuim@163.com>\n"
+"POT-Creation-Date: 2017-07-17 07:31+0000\n"
+"PO-Revision-Date: 2017-07-17 12:35+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,6 +79,10 @@ msgid ""
 "Do you really want to delete this question? ALL associated data will be "
 "LOST!"
 msgstr "您真的要删除这个问题吗？所有相关数据都将丢失！"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Close this window"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -417,6 +421,12 @@ msgstr "发送给客户的新调查通知邮件的默认主题。"
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
 msgstr "定义一个显示调查列表简洁视图的概览模块。"
+
+#. SysConfig
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
 
 #. SysConfig
 msgid ""

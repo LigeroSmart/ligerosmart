@@ -38,6 +38,7 @@ sub Data {
         'Khi kết thúc việc sửa câu hỏi khảo sát, chỉ cần đóng màn hình này lại.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!';
+    $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Sửa câu hỏi';
     $Self->{Translation}->{'go back to questions'} = 'quay lại';
     $Self->{Translation}->{'Question:'} = 'Câu hỏi:';
@@ -154,6 +155,8 @@ sub Data {
         'Chủ đề ngầm định cho email thông báo tới khách hàng về khảo sát mới.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Định nghĩa một mô-đun tổng quát để hiển thị một danh sách khảo sát.';
+    $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Định nghĩa số khảo sát tối đa mà được gửi đến khách hàng mỗi tháng. (0 nghĩa là không giới hạn, tất cả yêu cầu khảo sát sẽ được gửi).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =

@@ -3,13 +3,13 @@
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # David B <link.bigpoint@outlook.com>, 2017
-# juanman <juanma@gnutn.org.ar>, 2016
+# juanman <juanma@gnutn.org.ar>, 2016-2017
 # Luigy, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 23:21+0000\n"
-"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"POT-Creation-Date: 2017-07-17 07:31+0000\n"
+"PO-Revision-Date: 2017-07-17 12:35+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -85,6 +85,10 @@ msgid ""
 msgstr "¿Realmente desea eliminar esta pregunta? TODOS los datos asociados se PERDERÁN!"
 
 #. Template: AgentSurveyEditQuestions
+msgid "Close this window"
+msgstr ""
+
+#. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
 msgstr "Editar Pregunta"
 
@@ -142,7 +146,7 @@ msgstr "Asunto de Notificación"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
-msgstr "Modificaco por"
+msgstr "Modificado por"
 
 #. Template: AgentSurveyStats
 msgid "Stats Overview of"
@@ -186,7 +190,7 @@ msgstr "Encuestas recibidas"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
-msgstr "Detalles de Encuesta"
+msgstr "Detalles de encuesta"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -194,7 +198,7 @@ msgstr "Servicios de Tickets"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
-msgstr "Grafica de Resultados de Encuesta"
+msgstr "Gráfica de Resultados de Encuesta"
 
 #. Template: AgentSurveyZoom
 msgid "No stat results."
@@ -310,7 +314,7 @@ msgstr "- No se ha seleccionado ninguna cola -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
-msgstr "-No se ha seleccionado ningún tipo de ticket-"
+msgstr "- No se ha seleccionado ningún tipo de ticket -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket service selected -"
@@ -424,6 +428,12 @@ msgstr "Define una módulo resumen para mostrar la vista pequeña de la lista de
 
 #. SysConfig
 msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
 msgstr "Define la cantidad máxima de encuestas que se mandarán a un cliente cada 30 días. ( 0 significa que no hay un máximo, todas las encuestas serán enviadas)."
@@ -452,11 +462,11 @@ msgstr "Define las columnas que se mostrarán en el resumen de encuestas. Esta o
 
 #. SysConfig
 msgid "Edit survey general information."
-msgstr ""
+msgstr "Editar información general de la encuesta."
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "Editar preguntas de la encuesta."
 
 #. SysConfig
 msgid ""
@@ -559,7 +569,7 @@ msgstr "Modulo de Detalle de Encuesta."
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr ""
+msgstr "Límite de encuestas por página para la vista general de encuesta «pequeña»."
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -583,4 +593,4 @@ msgstr "Desencadenar el envío de solicitudes de encuesta con retraso."
 
 #. SysConfig
 msgid "Zoom into statistics details."
-msgstr ""
+msgstr "Ir a los detalles de la Estadística."

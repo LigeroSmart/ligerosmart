@@ -38,6 +38,7 @@ sub Data {
         '当您完成编辑调查问题后，关闭这个窗口即可。';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '您真的要删除这个问题吗？所有相关数据都将丢失！';
+    $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = '编辑问题';
     $Self->{Translation}->{'go back to questions'} = '返回到问题';
     $Self->{Translation}->{'Question:'} = '问题:';
@@ -154,6 +155,8 @@ sub Data {
         '发送给客户的新调查通知邮件的默认主题。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         '定义一个显示调查列表简洁视图的概览模块。';
+    $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '定义每30天发送给一个客户的最大调查数（ 0 代表没有最大数限制，将发送所有的调查请求）。';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =

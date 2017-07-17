@@ -38,6 +38,7 @@ sub Data {
         'Cuando termine de editar las preguntas de la encuesta, cierre esta ventana.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         '¿Realmente desea eliminar esta pregunta? TODOS los datos asociados se PERDERÁN!';
+    $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pregunta';
     $Self->{Translation}->{'go back to questions'} = 'regresar a preguntas';
     $Self->{Translation}->{'Question:'} = 'Pregunta:';
@@ -57,7 +58,7 @@ sub Data {
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Remitente de Notificacion';
     $Self->{Translation}->{'Notification Subject'} = 'Asunto de Notificación';
-    $Self->{Translation}->{'Changed By'} = 'Modificaco por';
+    $Self->{Translation}->{'Changed By'} = 'Modificado por';
 
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Resumen de Estadísticas de';
@@ -72,9 +73,9 @@ sub Data {
     $Self->{Translation}->{'Survey Information'} = 'Información de Encuesta';
     $Self->{Translation}->{'Sent requests'} = 'Solicitudes enviadas';
     $Self->{Translation}->{'Received surveys'} = 'Encuestas recibidas';
-    $Self->{Translation}->{'Survey Details'} = 'Detalles de Encuesta';
+    $Self->{Translation}->{'Survey Details'} = 'Detalles de encuesta';
     $Self->{Translation}->{'Ticket Services'} = 'Servicios de Tickets';
-    $Self->{Translation}->{'Survey Results Graph'} = 'Grafica de Resultados de Encuesta';
+    $Self->{Translation}->{'Survey Results Graph'} = 'Gráfica de Resultados de Encuesta';
     $Self->{Translation}->{'No stat results.'} = 'No hay graficas de resultados.';
 
     # Template: PublicSurvey
@@ -115,7 +116,7 @@ sub Data {
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '¡No se puede establecer un nuevo estado! Preguntas incompletas.';
     $Self->{Translation}->{'Status changed.'} = 'Estado cambiado.';
     $Self->{Translation}->{'- No queue selected -'} = '- No se ha seleccionado ninguna cola -';
-    $Self->{Translation}->{'- No ticket type selected -'} = '-No se ha seleccionado ningún tipo de ticket-';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- No se ha seleccionado ningún tipo de ticket -';
     $Self->{Translation}->{'- No ticket service selected -'} = '- No se seleccionó el servicio de ticket-';
     $Self->{Translation}->{'- Change Status -'} = '- Cambiar Estado -';
     $Self->{Translation}->{'master'} = 'maestro';
@@ -154,6 +155,8 @@ sub Data {
         'Asunto default para el email de notificación a los clientes sobre la encuesta.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Define una módulo resumen para mostrar la vista pequeña de la lista de encuestas.';
+    $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Define la cantidad máxima de encuestas que se mandarán a un cliente cada 30 días. ( 0 significa que no hay un máximo, todas las encuestas serán enviadas).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
@@ -164,8 +167,8 @@ sub Data {
         'Define la altura máxima para las vistas de texto enriquecido para los elementos de zoom de encuesta.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Define las columnas que se mostrarán en el resumen de encuestas. Esta opción no tienen ningún efecto en la posición de las columnas.';
-    $Self->{Translation}->{'Edit survey general information.'} = '';
-    $Self->{Translation}->{'Edit survey questions.'} = '';
+    $Self->{Translation}->{'Edit survey general information.'} = 'Editar información general de la encuesta.';
+    $Self->{Translation}->{'Edit survey questions.'} = 'Editar preguntas de la encuesta.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Activa o desactiva la pantalla de "Mostrar Datos de Votos" en la interface pública para mostrar los resultados de una encuesta específica cuando un cliente quiere responder una encuesta por segunda vez.';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Activa o desactiva la comprobación de la condición de envío para el servicio.';
@@ -199,14 +202,14 @@ sub Data {
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limite de la vista de resumen pequeña.';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Módulo de Stadísticas de Encuesta.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modulo de Detalle de Encuesta.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Límite de encuestas por página para la vista general de encuesta «pequeña».';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Las encuestas no de mandarán a las direcciones de correo electrónico aquí configuradas.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de ticket que manda correos electrónicos de encuestas hacia los clientes si un ticket es cerrado.';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Desencadenar el envío de solicitudes de encuesta con retraso.';
-    $Self->{Translation}->{'Zoom into statistics details.'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = 'Ir a los detalles de la Estadística.';
 
 }
 

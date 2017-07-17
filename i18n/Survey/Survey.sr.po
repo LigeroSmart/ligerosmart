@@ -1,12 +1,12 @@
 # 
 # Translators:
 # Dusan Vuckovic, 2015
-# Милорад Јовановић <j.milorad@gmail.com>, 2014-2016
+# Милорад Јовановић <j.milorad@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 23:21+0000\n"
-"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"POT-Creation-Date: 2017-07-17 07:31+0000\n"
+"PO-Revision-Date: 2017-07-17 12:35+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -80,6 +80,10 @@ msgid ""
 "Do you really want to delete this question? ALL associated data will be "
 "LOST!"
 msgstr "Да ли заиста желите да обришете ово питање? СВИ повезани подаци ће бити ИЗГУБЉЕНИ!"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Close this window"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -421,6 +425,12 @@ msgstr "Дефинише модул прегледа за мали приказ 
 
 #. SysConfig
 msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
 msgstr "Дефинише максимални број анкета који ће бити послат кориснику током 30 дана. (0 значи да нема максимума, сви захтеви ће бити послати)."
@@ -449,11 +459,11 @@ msgstr "Дефинише приказане колоне у прегледу а�
 
 #. SysConfig
 msgid "Edit survey general information."
-msgstr ""
+msgstr "Уреди опште информације о анкети."
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "Уреди анкетна питања."
 
 #. SysConfig
 msgid ""
@@ -556,7 +566,7 @@ msgstr "Модул за детаљни приказ анкете."
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr ""
+msgstr "Ограничење анкете по страни за преглед - „мало”"
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -580,4 +590,4 @@ msgstr "Окидач одложеног слања захтева за анке�
 
 #. SysConfig
 msgid "Zoom into statistics details."
-msgstr ""
+msgstr "Улаз у детаљни приказ статистике."

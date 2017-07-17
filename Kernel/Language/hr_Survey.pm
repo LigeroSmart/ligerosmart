@@ -38,6 +38,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Želite li zaista izbrisati ovo pitanje? Svi podaci pri tome će biti izgubljeni!';
+    $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Uredi pitanje';
     $Self->{Translation}->{'go back to questions'} = 'vrati se natrag na pitanja';
     $Self->{Translation}->{'Question:'} = '';
@@ -153,6 +154,8 @@ sub Data {
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
+        '';
+    $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 23:21+0000\n"
-"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"POT-Creation-Date: 2017-07-17 07:31+0000\n"
+"PO-Revision-Date: 2017-07-17 12:35+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/otrs/OTRS/language/vi_VN/)\n"
 "MIME-Version: 1.0\n"
@@ -79,6 +79,10 @@ msgid ""
 "Do you really want to delete this question? ALL associated data will be "
 "LOST!"
 msgstr "Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!"
+
+#. Template: AgentSurveyEditQuestions
+msgid "Close this window"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -417,6 +421,12 @@ msgstr "Chủ đề ngầm định cho email thông báo tới khách hàng về
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
 msgstr "Định nghĩa một mô-đun tổng quát để hiển thị một danh sách khảo sát."
+
+#. SysConfig
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
 
 #. SysConfig
 msgid ""

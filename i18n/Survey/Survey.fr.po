@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-03-24 23:21+0000\n"
-"PO-Revision-Date: 2017-03-25 05:23+0000\n"
+"POT-Creation-Date: 2017-07-17 07:31+0000\n"
+"PO-Revision-Date: 2017-07-17 12:35+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -82,6 +82,10 @@ msgid ""
 "Do you really want to delete this question? ALL associated data will be "
 "LOST!"
 msgstr "Etes vous sur de vouloir supprimer cette question ? Toutes les données associées seront perdues."
+
+#. Template: AgentSurveyEditQuestions
+msgid "Close this window"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -420,6 +424,12 @@ msgstr "Sujet par défaut pour la notification Client par mail à propos d'une n
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
 msgstr "Définir un module d’aperçu où montrer la liste des sondages"
+
+#. SysConfig
+msgid ""
+"Defines groups which have a permission to change survey status. Array is "
+"empty by default and agents from all groups can change survey status."
+msgstr ""
 
 #. SysConfig
 msgid ""

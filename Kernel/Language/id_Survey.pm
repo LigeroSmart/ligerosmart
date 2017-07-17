@@ -38,6 +38,7 @@ sub Data {
         'Ketika anda selesai mengubah pertanyaan survey ini, silahkan tutup tampilan ini.';
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
         'Apakah anda yakin ingin menghapus pertanyaan ini? SEMUA data yang berhubungan akan HILANG!';
+    $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Ubah pertanyaan';
     $Self->{Translation}->{'go back to questions'} = 'Kembali ke pertanyaan.';
     $Self->{Translation}->{'Question:'} = 'Pertanyaan: ';
@@ -154,6 +155,8 @@ sub Data {
         'Subject default untuk email pemberitahuan tentang survey baru kepada pelanggan.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Definisikan gambaran modul untuk menampilkan tampilan kecil daftar survey';
+    $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Definisikan Jumlah survey maksimum yang dikirimkan kepada pelanggan per 30 hari. ( 0 berarti tidak ada batas maksimum, semua permintaan survey akan dikirim).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
