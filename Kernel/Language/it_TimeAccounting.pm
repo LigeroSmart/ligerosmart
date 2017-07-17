@@ -173,7 +173,9 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Si è verificato un errore nell\'inserimento di date multiple!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Inserimento di date multiple avvenuto con successo!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'La data inserita non è valida! E\' stata impostata la data di oggi.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Ultimi progetti selezionati';
     $Self->{Translation}->{'All Projects'} = 'Tutti i progetti';
@@ -184,17 +186,16 @@ sub Data {
     $Self->{Translation}->{'Reporting'} = 'Reportistica';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Si prega di contattare l\'amministratore';
-    $Self->{Translation}->{'Project added!'} = '';
-    $Self->{Translation}->{'Project updated!'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = 'Impossibile aggiornare le impostazioni utente!';
+    $Self->{Translation}->{'Project added!'} = 'Progetto aggiunto!';
+    $Self->{Translation}->{'Project updated!'} = 'Progetto aggiornato!';
     $Self->{Translation}->{'Task added!'} = '';
     $Self->{Translation}->{'Task updated!'} = '';
-    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'The UserID is not valid!'} = 'Lo UserID non è valido!';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'User updated!'} = '';
-    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'User updated!'} = 'Utente aggiornato!';
+    $Self->{Translation}->{'User added!'} = 'Utente inserito!';
     $Self->{Translation}->{'New User'} = 'Nuovo utente';
     $Self->{Translation}->{'Period Status'} = 'Stato di periodo';
 
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Questo modulo forza gli inserimenti in TimeAccounting.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Questo modulo di notifica genera un avviso se ci sono troppi giorni lavorativi non completi.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Modifica rendicontazione tempo.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Panoramica sulla contabilizzazione tempo.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Reportistica sulla contabilizzazione tempo.';

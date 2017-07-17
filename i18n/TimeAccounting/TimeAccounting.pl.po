@@ -1,19 +1,20 @@
 # 
 # Translators:
+# Daniel Lisiecki, 2017
 # Jerzy Ruszczak <orcio6@o2.pl>, 2015-2016
 # Marcin G. <mgorak@opteam.pl>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-22 16:47+0000\n"
-"PO-Revision-Date: 2016-07-04 11:22+0000\n"
-"Last-Translator: Jerzy Ruszczak <orcio6@o2.pl>\n"
+"POT-Creation-Date: 2017-07-17 11:01+0000\n"
+"PO-Revision-Date: 2017-07-17 16:02+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -105,7 +106,7 @@ msgstr "Uwaga"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "Proszę dodać uwagę zawierającą więcej niż 8 znaków!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -511,7 +512,7 @@ msgstr "Brak danych dotyczących wybranego dnia."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "Nie udało się wstawić jednostek pracy!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
@@ -519,17 +520,17 @@ msgstr "Ostatnie projekty"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "Nie można zapisać ustawień, ponieważ doba ma tylko 24 godziny!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "Nie udało się usunąć jednostek pracy!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "Wprowadzona data jest poza zakresem, ale nie wprowadziłeś jeszcze tego dnia, masz więc jedyną(!) okazję"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -558,7 +559,12 @@ msgstr "Wprowadzono nieprawidłową datę! Została ona zmieniona na bieżącą.
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
-"time periods. Please contact the time accounting admin to update your time "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time "
 "periods!"
 msgstr ""
 
@@ -572,11 +578,11 @@ msgstr "Wszystkie projekty"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "Raportowanie projektu: Wymagany ProjectID"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "Raportowanie projektu"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -584,47 +590,43 @@ msgstr "Raportowanie"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-msgid "Please contact your administrator."
-msgstr "Prosimy, o kontakt z twoim administratorem."
+msgstr "Nie można zmienić ustawień użytkownika!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "Projekt dodany!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "Projekt zmieniony!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "Zadanie dodane!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "Zadanie zmienione!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "Identyfikator UserID jest nieprawidłowy!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "Nie udało się wstawić danych użytkownika!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "Nie można dodać cyklu!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "Użytkownik zmieniony!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "Użytkownik dodany!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -636,7 +638,7 @@ msgstr "Stan cyklu"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "Widok: Potrzebny %s!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -707,11 +709,11 @@ msgstr "Określa, czy moduł statystyczny może generować informacje o rozlicze
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "Edytuj ustawienia rozliczania czasu pracy."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "Edycja ewidencji czasu pracy."
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -763,11 +765,11 @@ msgstr "Maksymalna liczba dni roboczych, bez uzupełniania czasu pracy, po któr
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "Przegląd."
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "Raportowanie czasu projektu."
 
 #. SysConfig
 msgid ""
@@ -797,6 +799,10 @@ msgid ""
 "This notification module gives a warning if there are too many incomplete "
 "working days."
 msgstr "Moduł ten ostrzega o zbyt dużej liczbie nierozliczonych dni roboczych."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."

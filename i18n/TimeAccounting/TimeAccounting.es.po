@@ -1,13 +1,15 @@
 # 
 # Translators:
+# Anatoli F. Peña Castillo <anatoli1993@yahoo.com>, 2017
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
+# David B <link.bigpoint@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 14:04+0000\n"
-"PO-Revision-Date: 2016-04-29 12:06+0000\n"
+"POT-Creation-Date: 2017-07-17 11:01+0000\n"
+"PO-Revision-Date: 2017-07-17 16:02+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +24,7 @@ msgstr "¿Realmente desea eliminar la Contabilidad de Tiempo de este día?"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Edit Time Record"
-msgstr "Modificar Registro de Horas"
+msgstr "Modificar registro de horas"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Go to settings"
@@ -30,7 +32,7 @@ msgstr "Ir a configuraciones"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
-msgstr "Navegación por Fecha"
+msgstr "Navegación por fecha"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Previous day"
@@ -74,11 +76,11 @@ msgstr "Ausente por haber trabajado horas extras"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose at least one day!"
-msgstr "Por favor seleccione al menos un día."
+msgstr "¡Por favor seleccione al menos un día!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose a reason for absence!"
-msgstr "Por favor escoja una razón por ausencia."
+msgstr "¡Por favor escoja una razón por ausencia!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Mass Entry"
@@ -106,7 +108,7 @@ msgstr "Comentario"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "¡Por favor, añade un comentario con mas de 8 caracteres!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -122,7 +124,7 @@ msgstr "No se permite la inserción de horas repetidas. La hora de inicio está 
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
-msgstr "Formato inválido! Por favor introduzca las horas con el formato HH:MM."
+msgstr "¡Formato no válido! Por favor introduzca las horas con el formato HH:MM."
 
 #. Template: AgentTimeAccountingEdit
 msgid "24:00 is only permitted as end time."
@@ -130,7 +132,7 @@ msgstr "24:00 es solo permitido como tiempo final."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
-msgstr "Hora inválida! Un día solo tiene 24 horas."
+msgstr "¡Hora no válida! Un día solo tiene 24 horas."
 
 #. Template: AgentTimeAccountingEdit
 msgid "End Time"
@@ -146,7 +148,7 @@ msgstr "No se permite la inserción de horas repetidas. La hora de finalización
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
-msgstr "¡Periodo inválido! Un día sólo tiene 24 horas."
+msgstr "¡Periodo no válido! Un día sólo tiene 24 horas."
 
 #. Template: AgentTimeAccountingEdit
 msgid "A valid period must be greater than zero."
@@ -154,7 +156,7 @@ msgstr "Un periodo válido debe ser mayor a cero."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! Negative periods are not allowed."
-msgstr "¡Periodo inválido! No se permiten periodos negativos."
+msgstr "¡Periodo no válido! No se permiten periodos negativos."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Add one row"
@@ -166,7 +168,7 @@ msgstr "Total"
 
 #. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
-msgstr "¡Sólo se permite elegir un elemento checkbox!"
+msgstr "¡Sólo se permite elegir un elemento de la casilla de verificación!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Show all items"
@@ -222,7 +224,7 @@ msgstr "Vacaciones (días)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (this month)"
-msgstr "Vacaciones (este mes)"
+msgstr "Vacaciones tomadas (este mes)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (total)"
@@ -395,7 +397,7 @@ msgstr "Filtro para Usuarios"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Los períodos de tiempo no se pueden borrar."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -512,64 +514,69 @@ msgstr "No se encontraron datos de este día."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "¡No se pueden insertar unidades de trabajo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr ""
+msgstr "Últimos Proyectos"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "¡No se puede guardar la configuración, porque un día sólo tiene 24 horas!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "¡No se pueden borrar unidades de trabajo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "Esta fecha está fuera del límite, pero no ha insertado todavía este día, por lo que obtiene una ( ¡solo una!) oportunidad de insertar"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
-msgstr ""
+msgstr "Días Laborales Incompletos"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Please insert your working hours!"
-msgstr "For favor inserte sus horas de trabajo!"
+msgstr "¡Por favor inserte sus horas de trabajo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
-msgstr "Inserción exitosa!"
+msgstr "¡Inserción exitosa!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Error while inserting multiple dates!"
-msgstr "Error al insertar multiples fechas!"
+msgstr "¡Error al insertar múltiples fechas!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successfully inserted entries for several dates!"
-msgstr "Se han insertado satisfactoriamente entradas para varias fechas!"
+msgstr "¡Se han insertado satisfactoriamente entradas para varias fechas!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Entered date was invalid! Date was changed to today."
-msgstr "La fecha errada es inválida! La fechas fue cambiada a hoy."
+msgstr "¡La fecha introducida no era válida! La fecha se cambió a hoy."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
-"time periods. Please contact the time accounting admin to update your time "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time "
 "periods!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Últimos Proyectos seleccionados"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "Todos los Proyectos"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
@@ -577,7 +584,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "Proyecto de Reportes"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -585,63 +592,59 @@ msgstr "Reportes"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-msgid "Please contact your administrator."
-msgstr "Contacte con su administrador."
+msgstr "¡No se puede actualizar la configuración del usuario!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "¡Proyecto añadido!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "¡Proyecto actualizado!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "¡Tarea añadida!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "¡Tarea actualizada!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "¡La ID de usuario no es valida!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "¡No puede insertar datos de usuario!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "¡No se puede añadir un período de tiempo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "¡Usuario actualizado!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "¡Usuario añadido!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Nuevo Usuario"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
-msgstr ""
+msgstr "Estado del período"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "Ver: ¡Necesita %s!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Días laborales incompletos"
 
 #. SysConfig
 msgid ""
@@ -708,11 +711,11 @@ msgstr "Determina si el módulo de estadísticas debe generar información de co
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "Editar la configuración de Contabilidad de tiempo."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "Editar registro de tiempo."
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -728,7 +731,7 @@ msgstr "Si se habilita, solamente los usuarios que han registrado sus tiempos en
 msgid ""
 "If enabled, the dropdown elements in the edit screen are changed to "
 "modernized autocompletion fields."
-msgstr ""
+msgstr "Si se habilita, los elementos desplegables en la pantalla de edición se cambiaran a mordernos campos de autocompletado."
 
 #. SysConfig
 msgid ""
@@ -764,11 +767,11 @@ msgstr "Número máximo de días laborales sin registro de horas trabajadas desp
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "Vista general."
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "Reporte del tiempo del proyecto."
 
 #. SysConfig
 msgid ""
@@ -798,6 +801,10 @@ msgid ""
 "This notification module gives a warning if there are too many incomplete "
 "working days."
 msgstr "Módulo de notificación que muestra una advertencia si hay demasiados días sin registro de horas trabajadas."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."

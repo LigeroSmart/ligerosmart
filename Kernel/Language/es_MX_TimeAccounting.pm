@@ -173,7 +173,9 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Error al insertar múltiples fechas!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Se insertaron satisfactoriamente las entradas de varias fechas! ';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'La fecha entrada es incorrecta! La fecha de ha cambiado a hoy.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Los Últimos Proyectos Seleccionados';
     $Self->{Translation}->{'All Projects'} = 'Todos los Proyectos';
@@ -185,13 +187,12 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Por favor, contacte a su administrador.';
     $Self->{Translation}->{'Project added!'} = '';
     $Self->{Translation}->{'Project updated!'} = '';
     $Self->{Translation}->{'Task added!'} = '';
     $Self->{Translation}->{'Task updated!'} = '';
     $Self->{Translation}->{'The UserID is not valid!'} = '';
-    $Self->{Translation}->{'Can\'t insert user data!'} = '';
+    $Self->{Translation}->{'Can\'t insert user data!'} = '¡No se puede insertar datos del usuario!';
     $Self->{Translation}->{'Unable to add time period!'} = '';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Este módulo hace obligatoria la inserción de horas trabajadas.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Módulo de notificación que muestra una advertencia si hay demasiados días sin registro de horas trabajadas.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Editar contabilidad de tiempo';
     $Self->{Translation}->{'Time accounting overview.'} = 'Resumen de contabilidad de tiempo';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Reporte de contabilidad de tiempo';

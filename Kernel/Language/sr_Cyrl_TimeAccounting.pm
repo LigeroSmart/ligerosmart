@@ -173,8 +173,10 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Грешка при уносу више датума!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Успешно убачени уноси за више датума!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Унети датум је неважећи! Датум је промењен на данашњи.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        'Није конфигурисан временски период или је наведени датум ван дефинисаних временских периода. Молимо да контактирате администратора обрачуна времена за ажурирање временских периода!';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Последњи изабрани пројекти';
     $Self->{Translation}->{'All Projects'} = 'Сви пројекти';
 
@@ -185,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Корисничка подешавања се не могу ажурирати!';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Молимо, контактирајте вашег администратора.';
     $Self->{Translation}->{'Project added!'} = 'Додат пројекат!';
     $Self->{Translation}->{'Project updated!'} = 'Ажуриран пројекат!';
     $Self->{Translation}->{'Task added!'} = 'Додат задатак!';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Овај модул намеће унос у обрачун времена.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Овај модул за обавештавање даје упозорење ако има превише некомплетних радних дана.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Уређивање обрачунавања времена.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Преглед обрачунавања времена.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Извештаји обрачунавања времена.';

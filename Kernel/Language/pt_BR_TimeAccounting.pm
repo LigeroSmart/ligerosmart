@@ -173,8 +173,10 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Erro ao inserir múltiplas datas!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Entrada de várias datas inserida com sucesso!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Data inserida é inválida! Data foi alterada para hoje.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        'Nenhum período de tempo configurado, ou o tempo especificado está fora dos períodos temporais definidos. Gentileza entrar em contato com o admin de contabilidade do tempo para atualizar seus períodos.';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Últimos projetos selecionados';
     $Self->{Translation}->{'All Projects'} = 'Todos os projetos';
 
@@ -185,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Impossível atualizar configurações de usuário!';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Por favor, entre em contato com seu administrador.';
     $Self->{Translation}->{'Project added!'} = 'Projeto adicionado!';
     $Self->{Translation}->{'Project updated!'} = 'Projeto atualizado!';
     $Self->{Translation}->{'Task added!'} = 'Atividade adicionada!';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Esse módulo força preencher o TimeAccounting.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Este módulo de notificação dá um aviso se houver muitos dias de trabalho não registrados.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Editar contabilidade de tempo';
     $Self->{Translation}->{'Time accounting overview.'} = 'Visão geral de contabilidade de tempo';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Relatório de contabilidade de tempo';

@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 12:24+0000\n"
-"PO-Revision-Date: 2016-06-22 06:23+0000\n"
-"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
+"POT-Creation-Date: 2017-07-17 11:01+0000\n"
+"PO-Revision-Date: 2017-07-17 16:02+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -558,9 +558,14 @@ msgstr "入力された日付は不正です ! 日付は本日に変更されま
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
-"time periods. Please contact the time accounting admin to update your time "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time "
 "periods!"
-msgstr "期間が未設定であるか、指定された日付が期間外です。工数管理責任者の方に期間の見直しなどについてご相談ください。"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -585,10 +590,6 @@ msgstr "報告する"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
 msgstr "ユーザー設定を更新できません！"
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-msgid "Please contact your administrator."
-msgstr "システム管理者に連絡してください。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
@@ -797,6 +798,10 @@ msgid ""
 "This notification module gives a warning if there are too many incomplete "
 "working days."
 msgstr "あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えます。"
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."

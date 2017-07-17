@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Feladat';
     $Self->{Translation}->{'Remark'} = 'Észrevétel';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Adjon hozzá egy 8 karakternél hosszabb észrevételt!';
     $Self->{Translation}->{'Start Time'} = 'Kezdési idő';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negatív időpontok nem engedélyezettek.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -161,45 +161,46 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Nem található adat erre a napra.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = 'Nem lehet beilleszteni a munkaegységeket!';
     $Self->{Translation}->{'Last Projects'} = 'Legutóbbi projektek';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Nem lehet elmenteni a beállításokat, mert egy napnak csak 24 órája van!';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Nem lehet törölni a munkaegységeket!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        'Ez a dátum a határon kívül van, de még nem illesztette be ez a napot, így kap még egy(!) esélyt a beillesztésre';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Befejezetlen munkanapok';
     $Self->{Translation}->{'Please insert your working hours!'} = 'Illessze be a munkaidejét!';
     $Self->{Translation}->{'Successful insert!'} = 'Sikeres beillesztés!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Hiba történt több dátum beillesztése közben!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'A bejegyzések sikeresen beillesztve a különböző dátumokhoz!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'A megadott dátum érvénytelen volt! A dátum a mai napra lett módosítva.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Legutóbb kiválasztott projektek';
     $Self->{Translation}->{'All Projects'} = 'Minden projekt';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
-    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
-    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'Jelentés projekt: projektazonosító szükséges';
+    $Self->{Translation}->{'Reporting Project'} = 'Jelentés projekt';
     $Self->{Translation}->{'Reporting'} = 'Jelentés';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Lépjen kapcsolatba az adminisztrátorral.';
-    $Self->{Translation}->{'Project added!'} = '';
-    $Self->{Translation}->{'Project updated!'} = '';
-    $Self->{Translation}->{'Task added!'} = '';
-    $Self->{Translation}->{'Task updated!'} = '';
-    $Self->{Translation}->{'The UserID is not valid!'} = '';
-    $Self->{Translation}->{'Can\'t insert user data!'} = '';
-    $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'User updated!'} = '';
-    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = 'Nem lehet frissíteni a felhasználói beállításokat!';
+    $Self->{Translation}->{'Project added!'} = 'Projekt hozzáadva!';
+    $Self->{Translation}->{'Project updated!'} = 'Projekt frissítve!';
+    $Self->{Translation}->{'Task added!'} = 'Feladat hozzáadva!';
+    $Self->{Translation}->{'Task updated!'} = 'Feladat frissítve!';
+    $Self->{Translation}->{'The UserID is not valid!'} = 'A felhasználó-azonosító nem érvényes!';
+    $Self->{Translation}->{'Can\'t insert user data!'} = 'Nem lehet beilleszteni a felhasználóadatokat!';
+    $Self->{Translation}->{'Unable to add time period!'} = 'Nem lehet hozzáadni időszakot!';
+    $Self->{Translation}->{'User updated!'} = 'Felhasználó frissítve!';
+    $Self->{Translation}->{'User added!'} = 'Felhasználó hozzáadva!';
     $Self->{Translation}->{'New User'} = 'Új felhasználó';
     $Self->{Translation}->{'Period Status'} = 'Időszak állapot';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
-    $Self->{Translation}->{'View: Need %s!'} = '';
+    $Self->{Translation}->{'View: Need %s!'} = 'Nézet: %s szükséges!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Befejezetlen munkanapok';
@@ -222,8 +223,8 @@ sub Data {
         'Meghatározza azokat a projekteket, amelyekhez észrevétel szükséges. Ha a reguláris kifejezés illeszkedik a projektre, akkor be kell illesztenie egy észrevételt is. A reguláris kifejezés az smx paramétert használja.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Meghatározza, hogy a statisztika modul előállíthat-e időelszámolási információkat.';
-    $Self->{Translation}->{'Edit time accounting settings.'} = '';
-    $Self->{Translation}->{'Edit time record.'} = '';
+    $Self->{Translation}->{'Edit time accounting settings.'} = 'Időelszámolás beállításainak szerkesztése.';
+    $Self->{Translation}->{'Edit time record.'} = 'Időfeljegyzés szerkesztése.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Hány nappal ezelőtthöz illeszthet be munkaegységeket.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Ha engedélyezve van, akkor csak azok a felhasználók lesznek megjelenítve, akik munkaidőt adtak hozzá a kijelölt projekthez.';
@@ -239,8 +240,8 @@ sub Data {
         'A munkanapok legnagyobb száma, amelyek után a munkaegységeket be kell szúrni.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'A munkaegységek bejegyzés nélküli munkanapok legnagyobb száma, amelyek után egy figyelmeztetés lesz megjelenítve.';
-    $Self->{Translation}->{'Overview.'} = '';
-    $Self->{Translation}->{'Project time reporting.'} = '';
+    $Self->{Translation}->{'Overview.'} = 'Áttekintés.';
+    $Self->{Translation}->{'Project time reporting.'} = 'Projektidő jelentés.';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Reguláris kifejezések a kijelölt projekt szerinti korlátozó művelet listájához. A kulcs a projektekhez tartalmaz reguláris kifejezést, a tartalom pedig a műveletekhez.';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Ez a modul kikényszeríti a beszúrásokat az időelszámolásban.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Ez az értesítési modul egy figyelmeztetést ad, ha túl sok befejezetlen munkanap található.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Időelszámolás szerkesztés.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Időelszámolás áttekintő.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Időelszámolás jelentés.';

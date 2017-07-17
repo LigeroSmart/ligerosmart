@@ -173,9 +173,10 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Ошибка при вводе нескольких дат!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Данные для разных дат введены успешно!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Введенная дата неверна! Заменена на текущую!';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        'Не задан временный период или заданная дата вне диапазона указанного периода.
-Пожалуйста свяжитесь с администратором ответственным за расписания для обновления ваших временных периодов!';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Последние выбранные проекты';
     $Self->{Translation}->{'All Projects'} = 'Все проекты';
 
@@ -186,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Не удалось обновить настройки пользователя!';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Пожалуйста, свяжитесь с вашим администратором.';
     $Self->{Translation}->{'Project added!'} = 'Добавлено планирование!';
     $Self->{Translation}->{'Project updated!'} = 'Планирование обновлено!';
     $Self->{Translation}->{'Task added!'} = 'Задача добавлена!';
@@ -251,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Этот модуль ускоряет ввод данных в TimeAccounting.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Редактирование затрат времени.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Обзор затрат времени.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Отчеты о затртах времени.';

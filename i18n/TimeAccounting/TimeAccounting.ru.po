@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-05-10 12:24+0000\n"
-"PO-Revision-Date: 2016-06-01 18:43+0000\n"
-"Last-Translator: Владислав Тырышкин\n"
+"POT-Creation-Date: 2017-07-17 11:01+0000\n"
+"PO-Revision-Date: 2017-07-17 16:02+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -560,9 +560,14 @@ msgstr "Введенная дата неверна! Заменена на тек
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
-"time periods. Please contact the time accounting admin to update your time "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time "
 "periods!"
-msgstr "Не задан временный период или заданная дата вне диапазона указанного периода.\nПожалуйста свяжитесь с администратором ответственным за расписания для обновления ваших временных периодов!"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -587,10 +592,6 @@ msgstr "Отчетность"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
 msgstr "Не удалось обновить настройки пользователя!"
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-msgid "Please contact your administrator."
-msgstr "Пожалуйста, свяжитесь с вашим администратором."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
@@ -799,6 +800,10 @@ msgid ""
 "This notification module gives a warning if there are too many incomplete "
 "working days."
 msgstr "Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."

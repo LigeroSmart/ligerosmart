@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-06-22 16:47+0000\n"
-"PO-Revision-Date: 2016-09-02 01:44+0000\n"
-"Last-Translator: 汇民 王 <whuim@163.com>\n"
+"POT-Creation-Date: 2017-07-17 11:01+0000\n"
+"PO-Revision-Date: 2017-07-17 16:02+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -557,9 +557,14 @@ msgstr "输入时间无效！日期改为当前日期。"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
-"time periods. Please contact the time accounting admin to update your time "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time "
 "periods!"
-msgstr "没有配置时间段或指定的日期超出了定义的时间段。请联系工时管理员更新你的时间段！"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -584,10 +589,6 @@ msgstr "报告"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
 msgstr "无法更新用户设置！"
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-msgid "Please contact your administrator."
-msgstr "请联系系统管理员。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
@@ -796,6 +797,10 @@ msgid ""
 "This notification module gives a warning if there are too many incomplete "
 "working days."
 msgstr "如有有太多不完整的工日，该通知模块会发出告警。"
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."

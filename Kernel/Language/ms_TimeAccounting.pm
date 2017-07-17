@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Projek';
     $Self->{Translation}->{'Task'} = 'Tugas';
     $Self->{Translation}->{'Remark'} = 'Komen';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Sila tambah komen dengan lebih daripada 8 karakter!';
     $Self->{Translation}->{'Start Time'} = 'Waktu Mula';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Waktu negatif tidak dibenarkan.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -161,45 +161,46 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Tiada data dijumpai pada hari ini.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = 'Tidak boleh memasukkan Unit Kerja!';
     $Self->{Translation}->{'Last Projects'} = 'Projek Lepas';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Tidak boleh menyimpan tetapan-tetapan, kerana sehari hanya ada 24 jam!';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Tidak boleh membuang Unit Kerja!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        'Tarikh ini telah terlebih had, tetapi anda masih belum memasukkan hari ini lagi, jadi anda mendapat satu(!) peluang untuk masukkan';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Hari Bekerja Tidak Lengkap';
     $Self->{Translation}->{'Please insert your working hours!'} = 'Sila masukkan waktu kerja anda! ';
     $Self->{Translation}->{'Successful insert!'} = 'Berjaya dimasukkan!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Ralat semasa memasukkan beberapa tarikh!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Berjaya dimasukkan penyertaan untuk beberapa tarikh!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Tarikh yang dimasukkan tidak sah! Tarikh telah ditukar kepada hari ini.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Projek Dipilih Lepas';
     $Self->{Translation}->{'All Projects'} = 'Semua Projek';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
-    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
-    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'MelaporkanProjek: Perlukan ProjectID';
+    $Self->{Translation}->{'Reporting Project'} = 'Melaporkan Projek';
     $Self->{Translation}->{'Reporting'} = 'Melaporkan';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Sila hubungi pentadbir anda.';
-    $Self->{Translation}->{'Project added!'} = '';
-    $Self->{Translation}->{'Project updated!'} = '';
-    $Self->{Translation}->{'Task added!'} = '';
-    $Self->{Translation}->{'Task updated!'} = '';
-    $Self->{Translation}->{'The UserID is not valid!'} = '';
-    $Self->{Translation}->{'Can\'t insert user data!'} = '';
-    $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'User updated!'} = '';
-    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = 'Tidak boleh untuk kemaskini tetapan-tetapan pengguna!';
+    $Self->{Translation}->{'Project added!'} = 'Projek telah ditambah!';
+    $Self->{Translation}->{'Project updated!'} = 'Projek telah dikemaskini!';
+    $Self->{Translation}->{'Task added!'} = 'Tugasan telah ditambah!';
+    $Self->{Translation}->{'Task updated!'} = 'Tugasan telah dikemaskini!';
+    $Self->{Translation}->{'The UserID is not valid!'} = 'ID Pengguna tidak sah!';
+    $Self->{Translation}->{'Can\'t insert user data!'} = 'Tidak boleh memasukkan data pengguna!';
+    $Self->{Translation}->{'Unable to add time period!'} = 'Tidak boleh menambah tempoh masa!';
+    $Self->{Translation}->{'User updated!'} = 'Pengguna telah dikemaskini!';
+    $Self->{Translation}->{'User added!'} = 'Pengguna telah ditambah!';
     $Self->{Translation}->{'New User'} = 'Pengguna Baharu';
     $Self->{Translation}->{'Period Status'} = 'Status Tempoh';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
-    $Self->{Translation}->{'View: Need %s!'} = '';
+    $Self->{Translation}->{'View: Need %s!'} = 'Pandangan: Perlu %s!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Hari bekerja tidak lengkap';
@@ -222,8 +223,8 @@ sub Data {
         'Mentakrifkan projek-projek yang mana komen diperlukan. Jika UngkapanBiasa padan dalam projek ini, anda perlu memasukkan komen juga. UngkapanBiasa menggunakan parameter smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Menentukan jika modul statistik boleh menjana masa maklumat perakaunan.';
-    $Self->{Translation}->{'Edit time accounting settings.'} = '';
-    $Self->{Translation}->{'Edit time record.'} = '';
+    $Self->{Translation}->{'Edit time accounting settings.'} = 'Sunting tetapan-tetapan perakaunan masa.';
+    $Self->{Translation}->{'Edit time record.'} = 'Sunting rekod masa.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Untuk berapa hari yang lalu, anda boleh memasukkan unit kerja.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Jika dibolehkan, hanya pengguna yang telah ditambah masa kerja untuk projek yang dipilih akan ditunjukkan.';
@@ -239,8 +240,8 @@ sub Data {
         'Bilangan maksimum hari bekerja selepas unit kerja perlu dimasukkan.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Bilangan maksimum hari bekerja tanpa kemasukan unit bekerja selepas di mana amaran akan ditunjukkan.';
-    $Self->{Translation}->{'Overview.'} = '';
-    $Self->{Translation}->{'Project time reporting.'} = '';
+    $Self->{Translation}->{'Overview.'} = 'Pandangan keseluruhan.';
+    $Self->{Translation}->{'Project time reporting.'} = 'melaporkan masa projek';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Ungkapan biasa untuk mengekang senarai tindakan mengikut projek yang dipilih. Kunci mengandungi ungkapan biasa untuk projek (projek-projek), kandungan mengandungi ungkapan biasa untuk tindakan (tindakan-tindakan).';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Modul ini memaksa kemasukan dalam PerakaunanSemasa.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Modul pemberitahuan ini memberi amaran jika terdapat terlalu banyak hari bekerja tidak lengkap.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Sunting perakaunan semasa.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Gambaran keseluruhan perakaunan semasa.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Melapor perakaunan semasa.';

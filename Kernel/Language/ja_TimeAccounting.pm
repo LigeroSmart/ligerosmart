@@ -173,8 +173,10 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '複数日を入力中にエラーが発生しました !';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '入力された日付は不正です ! 日付は本日に変更されました';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        '期間が未設定であるか、指定された日付が期間外です。工数管理責任者の方に期間の見直しなどについてご相談ください。';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = '前回選択されたプロジェクト';
     $Self->{Translation}->{'All Projects'} = '全プロジェクト';
 
@@ -185,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'ユーザー設定を更新できません！';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'システム管理者に連絡してください。';
     $Self->{Translation}->{'Project added!'} = 'プロジェクトを追加しました！';
     $Self->{Translation}->{'Project updated!'} = 'プロジェクトを更新しました！';
     $Self->{Translation}->{'Task added!'} = 'タスクを追加しました！';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'TimeAccountingモジュールと同等の項目が設定必須となります。';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えます。';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'タイムアカウンティングを編集する';
     $Self->{Translation}->{'Time accounting overview.'} = 'タイムアカウンティングの概要';
     $Self->{Translation}->{'Time accounting reporting.'} = 'タイムアカウンティングの報告';

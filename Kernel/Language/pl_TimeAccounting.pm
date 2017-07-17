@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Zadanie';
     $Self->{Translation}->{'Remark'} = 'Uwaga';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Proszę dodać uwagę zawierającą więcej niż 8 znaków!';
     $Self->{Translation}->{'Start Time'} = 'Czas rozpoczęcia';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Ujemne czasy są niedozwolone.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
@@ -161,45 +161,46 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'Brak danych dotyczących wybranego dnia.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = 'Nie udało się wstawić jednostek pracy!';
     $Self->{Translation}->{'Last Projects'} = 'Ostatnie projekty';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Nie można zapisać ustawień, ponieważ doba ma tylko 24 godziny!';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Nie udało się usunąć jednostek pracy!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        'Wprowadzona data jest poza zakresem, ale nie wprowadziłeś jeszcze tego dnia, masz więc jedyną(!) okazję';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Niepełne dni pracy';
     $Self->{Translation}->{'Please insert your working hours!'} = 'Proszę wprowadzić swój czas pracy!';
     $Self->{Translation}->{'Successful insert!'} = 'Wprowadanie powiodło się!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Wystąpił błąd podczas wprowadzania wielu dat jednocześnie!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Pomyślnie wprowadzono wiele dat jednocześnie!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Wprowadzono nieprawidłową datę! Została ona zmieniona na bieżącą.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Ostatnio wybrane projekty';
     $Self->{Translation}->{'All Projects'} = 'Wszystkie projekty';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
-    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
-    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'Raportowanie projektu: Wymagany ProjectID';
+    $Self->{Translation}->{'Reporting Project'} = 'Raportowanie projektu';
     $Self->{Translation}->{'Reporting'} = 'Raportowanie';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Prosimy, o kontakt z twoim administratorem.';
-    $Self->{Translation}->{'Project added!'} = '';
-    $Self->{Translation}->{'Project updated!'} = '';
-    $Self->{Translation}->{'Task added!'} = '';
-    $Self->{Translation}->{'Task updated!'} = '';
-    $Self->{Translation}->{'The UserID is not valid!'} = '';
-    $Self->{Translation}->{'Can\'t insert user data!'} = '';
-    $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'User updated!'} = '';
-    $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = 'Nie można zmienić ustawień użytkownika!';
+    $Self->{Translation}->{'Project added!'} = 'Projekt dodany!';
+    $Self->{Translation}->{'Project updated!'} = 'Projekt zmieniony!';
+    $Self->{Translation}->{'Task added!'} = 'Zadanie dodane!';
+    $Self->{Translation}->{'Task updated!'} = 'Zadanie zmienione!';
+    $Self->{Translation}->{'The UserID is not valid!'} = 'Identyfikator UserID jest nieprawidłowy!';
+    $Self->{Translation}->{'Can\'t insert user data!'} = 'Nie udało się wstawić danych użytkownika!';
+    $Self->{Translation}->{'Unable to add time period!'} = 'Nie można dodać cyklu!';
+    $Self->{Translation}->{'User updated!'} = 'Użytkownik zmieniony!';
+    $Self->{Translation}->{'User added!'} = 'Użytkownik dodany!';
     $Self->{Translation}->{'New User'} = 'Nowy Użytkownik';
     $Self->{Translation}->{'Period Status'} = 'Stan cyklu';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
-    $Self->{Translation}->{'View: Need %s!'} = '';
+    $Self->{Translation}->{'View: Need %s!'} = 'Widok: Potrzebny %s!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Niepełne dni pracy';
@@ -222,8 +223,8 @@ sub Data {
         'Określa projekty, które wymagają dodawania komentarzy. Jeżeli wyrażenie regularne pasuje do projektu, trzeba dodać komentarz. Wyrażenia regularne korzystają z parametrów serwera makr (SMX).';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Określa, czy moduł statystyczny może generować informacje o rozliczeniach czasu pracy.';
-    $Self->{Translation}->{'Edit time accounting settings.'} = '';
-    $Self->{Translation}->{'Edit time record.'} = '';
+    $Self->{Translation}->{'Edit time accounting settings.'} = 'Edytuj ustawienia rozliczania czasu pracy.';
+    $Self->{Translation}->{'Edit time record.'} = 'Edycja ewidencji czasu pracy.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Liczba dni wstecz, dla których można rozliczać czas pracy.';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Jeśli aktywne, widoczni są tylko użytkownicy, którzy rozliczyli czas pracy w wybranym projekcie.';
@@ -239,8 +240,8 @@ sub Data {
         'Maksymalna liczba dni roboczych, w ciągu których należy uzupełnić czas pracy.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Maksymalna liczba dni roboczych, bez uzupełniania czasu pracy, po których pokazane zostanie ostrzeżenie.';
-    $Self->{Translation}->{'Overview.'} = '';
-    $Self->{Translation}->{'Project time reporting.'} = '';
+    $Self->{Translation}->{'Overview.'} = 'Przegląd.';
+    $Self->{Translation}->{'Project time reporting.'} = 'Raportowanie czasu projektu.';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Wyrażenia regularne do ograniczenia listy zadań wybranych projektów. Klucz zawiera wyrażenie regularne dla projektu(ów), zawartość określa wyrażenie regularne dla akcji.';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Ten moduł wymusza uzupełnianie rozliczeń czasu pracy.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Moduł ten ostrzega o zbyt dużej liczbie nierozliczonych dni roboczych.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Edycja rozliczeń czasu pracy.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Opis rozliczania czasu pracy.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Raportowanie rozliczeń czasu pracy.';

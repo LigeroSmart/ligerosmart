@@ -173,8 +173,10 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '插入多个时间时出现错误！';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '成功插入记录。';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '输入时间无效！日期改为当前日期。';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        '没有配置时间段或指定的日期超出了定义的时间段。请联系工时管理员更新你的时间段！';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = '最后被选中的项目';
     $Self->{Translation}->{'All Projects'} = '所有项目';
 
@@ -185,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '无法更新用户设置！';
-    $Self->{Translation}->{'Please contact your administrator.'} = '请联系系统管理员。';
     $Self->{Translation}->{'Project added!'} = '项目已添加！';
     $Self->{Translation}->{'Project updated!'} = '项目已更新！';
     $Self->{Translation}->{'Task added!'} = '任务已添加！';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '本模块功能插入到工时管理中。';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         '如有有太多不完整的工日，该通知模块会发出告警。';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = '工时管理编辑。';
     $Self->{Translation}->{'Time accounting overview.'} = '工时管理概览。';
     $Self->{Translation}->{'Time accounting reporting.'} = '工时管理报告。';

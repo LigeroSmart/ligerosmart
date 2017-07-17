@@ -173,8 +173,10 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Fehler bei der Eingabe für mehrere Tage!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Daten für mehrere Tage erfolgreich erfasst!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Eingegebenes Datum ungültig! Datum wurde auf \'heute\' geändert.';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
-        'Es ist keine Zeitperiode konfiguriert, oder das angegebene Datum liegt außerhalb der konfigurierten Zeitperioden. Bitte kontaktieren Sie ihren Zeiterfassungs-Administrator, um die Zeitperioden zu aktualisieren.';
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
+        '';
     $Self->{Translation}->{'Last Selected Projects'} = 'Zuletzt ausgewählte Projekte';
     $Self->{Translation}->{'All Projects'} = 'Alle Projekte';
 
@@ -185,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Benutzereinstellungen können nicht aktualisiert werden!';
-    $Self->{Translation}->{'Please contact your administrator.'} = 'Bitte kontaktieren Sie Ihren Administrator.';
     $Self->{Translation}->{'Project added!'} = 'Projekt hinzugefügt!';
     $Self->{Translation}->{'Project updated!'} = 'Projekt aktualisiert';
     $Self->{Translation}->{'Task added!'} = 'Aufgabe hinzugefügt!';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Dieses Modul zwingt zur Eingabe von Stunden.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = 'Zeitabrechnung Bearbeitung.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Zeitabrechnungsübersicht.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Zeitabrechnung Berichterstattung.';

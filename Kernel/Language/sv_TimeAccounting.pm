@@ -173,7 +173,9 @@ sub Data {
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
-    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods. Please contact the time accounting admin to update your time periods!'} =
+    $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
+        '';
+    $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = '';
     $Self->{Translation}->{'All Projects'} = '';
@@ -185,7 +187,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Please contact your administrator.'} = '';
     $Self->{Translation}->{'Project added!'} = '';
     $Self->{Translation}->{'Project updated!'} = '';
     $Self->{Translation}->{'Task added!'} = '';
@@ -250,6 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         '';
+    $Self->{Translation}->{'Time Accounting'} = '';
     $Self->{Translation}->{'Time accounting edit.'} = '';
     $Self->{Translation}->{'Time accounting overview.'} = '';
     $Self->{Translation}->{'Time accounting reporting.'} = '';

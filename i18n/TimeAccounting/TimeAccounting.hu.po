@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2015
+# Balázs Úr <urbalazs@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-04-29 14:04+0000\n"
-"PO-Revision-Date: 2016-04-29 12:06+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"POT-Creation-Date: 2017-07-17 11:01+0000\n"
+"PO-Revision-Date: 2017-07-17 16:02+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,7 +104,7 @@ msgstr "Észrevétel"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "Adjon hozzá egy 8 karakternél hosszabb észrevételt!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Start Time"
@@ -510,7 +510,7 @@ msgstr "Nem található adat erre a napra."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "Nem lehet beilleszteni a munkaegységeket!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
@@ -518,17 +518,17 @@ msgstr "Legutóbbi projektek"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "Nem lehet elmenteni a beállításokat, mert egy napnak csak 24 órája van!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "Nem lehet törölni a munkaegységeket!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "Ez a dátum a határon kívül van, de még nem illesztette be ez a napot, így kap még egy(!) esélyt a beillesztésre"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -557,7 +557,12 @@ msgstr "A megadott dátum érvénytelen volt! A dátum a mai napra lett módosí
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
-"time periods. Please contact the time accounting admin to update your time "
+"time periods."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"Please contact the time accounting administrator to update your time "
 "periods!"
 msgstr ""
 
@@ -571,11 +576,11 @@ msgstr "Minden projekt"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "Jelentés projekt: projektazonosító szükséges"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "Jelentés projekt"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -583,47 +588,43 @@ msgstr "Jelentés"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-msgid "Please contact your administrator."
-msgstr "Lépjen kapcsolatba az adminisztrátorral."
+msgstr "Nem lehet frissíteni a felhasználói beállításokat!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "Projekt hozzáadva!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "Projekt frissítve!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "Feladat hozzáadva!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "Feladat frissítve!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "A felhasználó-azonosító nem érvényes!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "Nem lehet beilleszteni a felhasználóadatokat!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "Nem lehet hozzáadni időszakot!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "Felhasználó frissítve!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "Felhasználó hozzáadva!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -635,7 +636,7 @@ msgstr "Időszak állapot"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "Nézet: %s szükséges!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -706,11 +707,11 @@ msgstr "Meghatározza, hogy a statisztika modul előállíthat-e időelszámolá
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "Időelszámolás beállításainak szerkesztése."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "Időfeljegyzés szerkesztése."
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -762,11 +763,11 @@ msgstr "A munkaegységek bejegyzés nélküli munkanapok legnagyobb száma, amel
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "Áttekintés."
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "Projektidő jelentés."
 
 #. SysConfig
 msgid ""
@@ -796,6 +797,10 @@ msgid ""
 "This notification module gives a warning if there are too many incomplete "
 "working days."
 msgstr "Ez az értesítési modul egy figyelmeztetést ad, ha túl sok befejezetlen munkanap található."
+
+#. SysConfig
+msgid "Time Accounting"
+msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."
