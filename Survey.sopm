@@ -13,6 +13,7 @@
     <Filelist>
         <File Permission="644" Location="doc/survey-database.png" />
         <File Permission="644" Location="Kernel/Config/Files/Survey.xml" />
+        <File Permission="644" Location="Kernel/Language/bg_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/da_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/de_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/es_Survey.pm" />
@@ -35,6 +36,7 @@
         <File Permission="644" Location="Kernel/Language/sr_Cyrl_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/sw_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/th_TH_Survey.pm" />
+        <File Permission="644" Location="Kernel/Language/uk_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/vi_VN_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/zh_TW_Survey.pm" />
         <File Permission="644" Location="Kernel/Language/zh_CN_Survey.pm" />

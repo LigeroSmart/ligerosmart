@@ -1,7 +1,8 @@
 #6.0.0.beta1 2017-??-??
 
 #5.0.5 2017-??-??
- - 2017-07-17 Updted translations, thanks to all translators.
+ - 2017-07-17 Added Bulgarian and Ukrainian translations, thanks to all translators.
+ - 2017-07-17 Updated translations, thanks to all translators.
  - 2017-07-14 Fixed bug#[12936](https://bugs.otrs.org/show_bug.cgi?id=12936) - Hardcoded ticket hook in stats detail screen , thanks to Balázs Úr.
  - 2017-07-14 Improved close button text, thanks to Balázs Úr.
  - 2017-07-12 Fixed bug#[9304](https://bugs.otrs.org/show_bug.cgi?id=9304) - Rendering of survey results is broken.
