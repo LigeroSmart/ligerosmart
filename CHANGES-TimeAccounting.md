@@ -1,7 +1,7 @@
 #6.0.0.beta1 2017-??-??
 
 #5.0.8 2017-??-??
- - 2016-09-14 Updated translations, thanks to all translators.
+ - 2017-07-17 Updated translations, thanks to all translators.
 
 #5.0.7 2017-07-18
  - 2017-07-11 Removed unnecessary escape character from regex list.
