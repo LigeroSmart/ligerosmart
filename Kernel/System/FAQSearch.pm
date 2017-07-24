@@ -404,7 +404,7 @@ sub FAQSearch {
         $Param{Number} =~ s/%%/%/g;
         $Param{Number} = $DBObject->Quote( $Param{Number}, 'Like' );
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= " LOWER(i.f_number) LIKE LOWER('" . $Param{Number} . "') $Self->{LikeEscapeString}";
     }
@@ -416,7 +416,7 @@ sub FAQSearch {
         $Param{Title} =~ s/%%/%/g;
         $Param{Title} = $DBObject->Quote( $Param{Title}, 'Like' );
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= " LOWER(i.f_subject) LIKE LOWER('" . $Param{Title} . "') $Self->{LikeEscapeString}";
     }
@@ -430,7 +430,7 @@ sub FAQSearch {
         );
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= $InString;
     }
@@ -444,7 +444,7 @@ sub FAQSearch {
         );
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= $InString;
     }
@@ -467,7 +467,7 @@ sub FAQSearch {
         );
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= $InString;
     }
@@ -485,7 +485,7 @@ sub FAQSearch {
         );
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= $InString;
     }
@@ -498,7 +498,7 @@ sub FAQSearch {
         $Param{Keyword} =~ s/ /&&/g;
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
 
         # add the SQL for the keyword search
@@ -513,7 +513,7 @@ sub FAQSearch {
     # show only approved FAQ articles for public and customer interface
     if ( $Param{Interface}->{Name} eq 'public' || $Param{Interface}->{Name} eq 'external' ) {
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= ' i.approved = 1';
     }
@@ -522,7 +522,7 @@ sub FAQSearch {
     elsif ( defined $Param{Approved} ) {
         my $ApprovedValue = $Param{Approved} ? 1 : 0;
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= " i.approved = $ApprovedValue";
     }
@@ -541,7 +541,7 @@ sub FAQSearch {
         );
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= $InString;
     }
@@ -560,7 +560,7 @@ sub FAQSearch {
         );
 
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= $InString;
     }
