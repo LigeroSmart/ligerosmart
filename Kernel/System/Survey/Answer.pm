@@ -574,6 +574,12 @@ sub PublicAnswerSet {
 
     return if !$RequestID;
 
+    # Prevent to write something that oracle store as NULL in database.
+    # See bug #9575.
+    if ( ( $DBObject->{'DB::Type'} eq 'oracle' ) && ( $Param{VoteValue} eq '' ) ) {
+        $Param{VoteValue} = 0;
+    }
+
     # insert vote
     return if !$DBObject->Do(
         SQL => '

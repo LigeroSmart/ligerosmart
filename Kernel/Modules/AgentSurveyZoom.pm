@@ -530,9 +530,14 @@ sub Run {
                 }
             }
             elsif ( $Question->{Type} eq 'Textarea' ) {
+
+                my $VoteValue = '';
+                if ( $Kernel::OM->Get('Kernel::System::DB')->{'DB::Type'} eq 'oracle' ) {
+                    $VoteValue = 0;
+                }
                 my $AnswerNo = $SurveyObject->VoteCount(
                     QuestionID => $Question->{QuestionID},
-                    VoteValue  => '',
+                    VoteValue  => $VoteValue,
                 );
                 my $Percent = 0;
 
@@ -547,7 +552,7 @@ sub Run {
                     $Data{AnswerPercent} = 0;
                 }
                 else {
-                    $Data{AnswerPercent} = 100 - $Percent;
+                    $Data{AnswerPercent} = sprintf( "%.2f", 100 - $Percent );
                 }
                 push( @Answers, \%Data );
                 my %Data2;

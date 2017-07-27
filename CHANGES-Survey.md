@@ -1,6 +1,7 @@
 #6.0.0.beta1 2017-??-??
 
 #5.0.5 2017-??-??
+ - 2017-07-26 Fixed bug#[9575](https://bugs.otrs.org/show_bug.cgi?id=9575) - NOT NULL restrictions violation occurs in the vote on Oracle Database.
  - 2017-07-20 Fixed bug#[10991](https://bugs.otrs.org/show_bug.cgi?id=10991) - Survey percentage won't add 100%.
  - 2017-07-17 Added Bulgarian and Ukrainian translations, thanks to all translators.
  - 2017-07-17 Updated translations, thanks to all translators.
