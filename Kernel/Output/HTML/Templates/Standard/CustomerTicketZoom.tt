@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - d770645718b49a1da77103affac791dd2caa18f9 - Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
+# $origin: otrs - 110fb0330c3c0de2c3e4076532d84e742a7832e4 - Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,7 +78,7 @@
                         <span class="Age" title="[% Data.Created | Localize("TimeLong") | html %]">[% Data.Age %]</span>
                         <div class="Clear"></div>
                     </div>
-                    <input type="hidden" name="ArticleState" value="untouched" />
+                    <input type="hidden" name="ArticleState" value="" />
                     <div class="MessageBody">
                         <div class="Details SeperatorRow">
 [% RenderBlockStart("ArticleRow") %]

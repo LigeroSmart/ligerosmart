@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 74a863dbd8b93075e469398a38d4ee0130a76a10 - Kernel/Modules/AgentTicketZoom.pm
+# $origin: otrs - 1a6191a820b45ac08c1f5dd79dba1bfb22cf2c45 - Kernel/Modules/AgentTicketZoom.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2126,23 +2126,11 @@ sub _ArticleTree {
         );
     }
 
-    # check if expand/collapse view is usable (not available for too many
-    # articles)
-    if ( $Self->{ZoomExpand} && $#ArticleBox < $ArticleMaxLimit ) {
-        $LayoutObject->Block(
-            Name => 'Collapse',
-            Data => {
-                %Ticket,
-                ArticleID      => $ArticleID,
-                ZoomExpand     => $Self->{ZoomExpand},
-                ZoomExpandSort => $Self->{ZoomExpandSort},
-                Page           => $Param{Page},
-            },
-        );
-    }
-    elsif ( $Self->{ZoomTimeline} ) {
+    # Check which view is usable.
+    # If expand/collapse view is usable, check number of articles (not available for too many articles).
+    if ( $Self->{ZoomTimeline} ) {
 
-        # show trigger for timeline view
+        # Show trigger for timeline view.
         $LayoutObject->Block(
             Name => 'Timeline',
             Data => {
@@ -2155,8 +2143,10 @@ sub _ArticleTree {
         );
     }
     elsif ( $#ArticleBox < $ArticleMaxLimit ) {
+        my $BlockName = $Self->{ZoomExpand} ? 'Collapse' : 'Expand';
+
         $LayoutObject->Block(
-            Name => 'Expand',
+            Name => $BlockName,
             Data => {
                 %Ticket,
                 ArticleID      => $ArticleID,
