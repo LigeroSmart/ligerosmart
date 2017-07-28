@@ -669,8 +669,31 @@ sub ImportWrapper {
     return \%Param;
 }
 
-sub _GetStatData {
+sub GetExtendedTitle {
+    my ( $Self, %Param ) = @_;
 
+    return if $Param{Restrictions}->{TimeAccountingPeriodStart} ||  $Param{Restrictions}->{TimeAccountingPeriodStop};
+
+    my %DateIndexToName = (
+        'Second' => 0,
+        'Minute' => 1,
+        'Hour'   => 2,
+        'Day'    => 3,
+        'Month'  => 4,
+        'Year'   => 5,
+    );
+
+    my %PreviousMonthDates = $Self->_GetPreviousMonthDates(
+        DateIndexToName => \%DateIndexToName,
+    );
+
+    my $StartDate = sprintf "%04d-%02d-%02d 00:00:00", $PreviousMonthDates{NewStartDate}->[0], $PreviousMonthDates{NewStartDate}->[1], $PreviousMonthDates{NewStartDate}->[2];
+    my $StopDate = sprintf "%04d-%02d-%02d 00:00:00", $PreviousMonthDates{NewStopDate}->[0], $PreviousMonthDates{NewStopDate}->[1], $PreviousMonthDates{NewStopDate}->[2];
+
+    return "$StartDate-$StopDate";
+}
+
+sub _GetStatData {
     my ( $Self, %Param ) = @_;
 
     my @Return;
@@ -709,55 +732,23 @@ sub _GetStatData {
 
             # IMPORTANT:
             # If no time period had been selected previous month will be used as period!
-
-            # get current date values
-            my @CurrentDate = $TimeObject->SystemTime2Date(
-                SystemTime => $TimeObject->SystemTime(),
+            my %PreviousMonthDates = $Self->_GetPreviousMonthDates(
+                DateIndexToName => \%DateIndexToName,
             );
 
-            # get first day of previous month
-            my @NewStartDate = Add_Delta_YMD(
-                $CurrentDate[ $DateIndexToName{'Year'} ],
-                $CurrentDate[ $DateIndexToName{'Month'} ],
-                1,
-                0,
-                -1,
-                0,
-            );
-
-            # get first day of next month relative to previous month
-            my @NewStopDate = Add_Delta_YMD(
-                $NewStartDate[0],
-                $NewStartDate[1],
-                $NewStartDate[2],
-                0,
-                +1,
-                0,
-            );
-
-            # get last of day previous month
-            @NewStopDate = Add_Delta_YMD(
-                $NewStopDate[0],
-                $NewStopDate[1],
-                $NewStopDate[2],
-                0,
-                0,
-                -1,
-            );
-
-            # calculate UNIX timestamps for start and stop date
+            # Calculate UNIX timestamps for start and stop date.
             $StartDate = $TimeObject->Date2SystemTime(
-                Year   => $NewStartDate[0],
-                Month  => $NewStartDate[1],
-                Day    => $NewStartDate[2],
+                Year   => $PreviousMonthDates{NewStartDate}->[0],
+                Month  => $PreviousMonthDates{NewStartDate}->[1],
+                Day    => $PreviousMonthDates{NewStartDate}->[2],
                 Hour   => 0,
                 Minute => 0,
                 Second => 0,
             );
             $StopDate = $TimeObject->Date2SystemTime(
-                Year   => $NewStopDate[0],
-                Month  => $NewStopDate[1],
-                Day    => $NewStopDate[2],
+                Year   => $PreviousMonthDates{NewStopDate}->[0],
+                Month  => $PreviousMonthDates{NewStopDate}->[1],
+                Day    => $PreviousMonthDates{NewStopDate}->[2],
                 Hour   => 23,
                 Minute => 59,
                 Second => 59,
@@ -851,6 +842,61 @@ sub _GetStatData {
     }
 
     return \@Return;
+}
+
+sub _GetPreviousMonthDates {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{DateIndexToName} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need DateIndexToName!",
+        );
+
+        return;
+    }
+
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    # Get current date values.
+    my @CurrentDate = $TimeObject->SystemTime2Date(
+        SystemTime => $TimeObject->SystemTime(),
+    );
+
+    # Get first day of previous month.
+    my @NewStartDate = Add_Delta_YMD(
+        $CurrentDate[ $Param{DateIndexToName}->{'Year'} ],
+        $CurrentDate[ $Param{DateIndexToName}->{'Month'} ],
+        1,
+        0,
+        -1,
+        0,
+    );
+
+    # Get first day of next month relative to previous month.
+    my @NewStopDate = Add_Delta_YMD(
+        $NewStartDate[0],
+        $NewStartDate[1],
+        $NewStartDate[2],
+        0,
+        +1,
+        0,
+    );
+
+    # Get last of day previous month.
+    @NewStopDate = Add_Delta_YMD(
+        $NewStopDate[0],
+        $NewStopDate[1],
+        $NewStopDate[2],
+        0,
+        0,
+        -1,
+    );
+
+    return (
+        NewStartDate => \@NewStartDate,
+        NewStopDate  => \@NewStopDate,
+    );
 }
 
 1;
