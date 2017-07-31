@@ -672,7 +672,7 @@ sub ImportWrapper {
 sub GetExtendedTitle {
     my ( $Self, %Param ) = @_;
 
-    return if $Param{Restrictions}->{TimeAccountingPeriodStart} ||  $Param{Restrictions}->{TimeAccountingPeriodStop};
+    return if $Param{Restrictions}->{TimeAccountingPeriodStart} || $Param{Restrictions}->{TimeAccountingPeriodStop};
 
     my %DateIndexToName = (
         'Second' => 0,
@@ -687,8 +687,10 @@ sub GetExtendedTitle {
         DateIndexToName => \%DateIndexToName,
     );
 
-    my $StartDate = sprintf "%04d-%02d-%02d 00:00:00", $PreviousMonthDates{NewStartDate}->[0], $PreviousMonthDates{NewStartDate}->[1], $PreviousMonthDates{NewStartDate}->[2];
-    my $StopDate = sprintf "%04d-%02d-%02d 00:00:00", $PreviousMonthDates{NewStopDate}->[0], $PreviousMonthDates{NewStopDate}->[1], $PreviousMonthDates{NewStopDate}->[2];
+    my $StartDate = sprintf "%04d-%02d-%02d 00:00:00", $PreviousMonthDates{NewStartDate}->[0],
+        $PreviousMonthDates{NewStartDate}->[1], $PreviousMonthDates{NewStartDate}->[2];
+    my $StopDate = sprintf "%04d-%02d-%02d 00:00:00", $PreviousMonthDates{NewStopDate}->[0],
+        $PreviousMonthDates{NewStopDate}->[1], $PreviousMonthDates{NewStopDate}->[2];
 
     return "$StartDate-$StopDate";
 }
