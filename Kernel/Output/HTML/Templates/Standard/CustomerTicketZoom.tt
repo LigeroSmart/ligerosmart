@@ -215,7 +215,6 @@
 # ITSMIncidentProblemManagement
 # ---
 [% RenderBlockStart("TicketDynamicField") %]
-[% USE Dumper; Dumper.dump(Data) %]
                     <li>
                         <span class="Key">[% Translate(Data.Label) | html %]:</span>
 [% RenderBlockStart("TicketDynamicFieldLink") %]
