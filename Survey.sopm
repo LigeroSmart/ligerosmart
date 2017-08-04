@@ -67,6 +67,7 @@
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm" />
         <File Permission="644" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t" />
         <File Permission="644" Location="scripts/test/Survey/GetRequestRecipient.t" />
+        <File Permission="644" Location="scripts/test/Survey/PublicAnswerSet.t" />
         <File Permission="644" Location="scripts/test/Survey.t" />
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyAdd.t" />
         <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyEdit.t" />
