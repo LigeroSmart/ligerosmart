@@ -205,13 +205,13 @@
             </Unique>
         </TableCreate>
         <Insert Table="faq_state_type">
-            <Data Key="name" Type="Quote">internal</Data>
+            <Data Key="name" Type="Quote" Translatable="1">internal</Data>
         </Insert>
         <Insert Table="faq_state_type">
-            <Data Key="name" Type="Quote">external</Data>
+            <Data Key="name" Type="Quote" Translatable="1">external</Data>
         </Insert>
         <Insert Table="faq_state_type">
-            <Data Key="name" Type="Quote">public</Data>
+            <Data Key="name" Type="Quote" Translatable="1">public</Data>
         </Insert>
         <TableCreate Name="faq_state">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT" />
