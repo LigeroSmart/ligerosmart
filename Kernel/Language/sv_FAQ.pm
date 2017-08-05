@@ -134,9 +134,9 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = 'Inga FAQ artiklar funna.';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'Dessa artiklar kan vara användbara';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'Hittade inga användbara artiklar för detta ämnet och texten';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Skriv ett ämne eller text för att få en lista över hjälpfulla artiklar';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Fulltext-sök i FAQ-artiklar (e. g. "John*n" eller "Will*")';
@@ -159,8 +159,8 @@ sub Data {
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Tillbaka till FAQ-utforskaren';
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
-    $Self->{Translation}->{'You need rw permission!'} = '';
-    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'You need rw permission!'} = 'Du behöver rw-behörighet';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Inga kategorier hittades där användaren har läs/skriv-rättigheter';
     $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
@@ -183,7 +183,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'FAQ History'} = 'FAQ-historik';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ-loggboken';
@@ -211,11 +211,11 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'Inget resultat!';
     $Self->{Translation}->{'FAQ Number'} = 'FAQ-nummer';
-    $Self->{Translation}->{'Last Changed by'} = '';
-    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'Last Changed by'} = 'Senast ändrad av';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ-Artikel Skapad Tid (före/efter)';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ-Artikel Skapad Tid (mellan)';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ Artikel Ändrad Tid (före/efter)';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ-Artikel Ändrad Tid (mellan)';
     $Self->{Translation}->{'Equals'} = '';
     $Self->{Translation}->{'Greater than'} = '';
     $Self->{Translation}->{'Greater than equals'} = '';
@@ -269,6 +269,11 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = '';
+
+    # Database XML Definition: FAQ.sopm
+    $Self->{Translation}->{'internal'} = 'intern';
+    $Self->{Translation}->{'external'} = 'extern';
+    $Self->{Translation}->{'public'} = 'offentlig';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =

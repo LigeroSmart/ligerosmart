@@ -134,9 +134,9 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = '未找到FAQ文章。';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'This might be helpful'} = '这有助于';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '没有找到有用的主题和正文资源。';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '键入主题或正文以获取有用的资源清单。';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = '在FAQ中进行全文本搜索（例如：“John*n”或“Will*”）';
@@ -268,7 +268,12 @@ sub Data {
     $Self->{Translation}->{'Top 10 FAQ articles'} = '最常用的文章';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
-    $Self->{Translation}->{'Content Type'} = '';
+    $Self->{Translation}->{'Content Type'} = '内容类型';
+
+    # Database XML Definition: FAQ.sopm
+    $Self->{Translation}->{'internal'} = '内部';
+    $Self->{Translation}->{'external'} = '外部';
+    $Self->{Translation}->{'public'} = '公开';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -281,7 +286,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '客户FAQ详情。';
     $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索';
     $Self->{Translation}->{'Customer FAQ.'} = '客户FAQ。';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '客户常见问题相关文章。';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '以十分制显示评分结果。';
     $Self->{Translation}->{'Default category name.'} = '默认的目录名称。';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '单语言模式下FAQ文章的默认语言。';
@@ -374,7 +379,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = '编辑FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '在FAQ模块中启用多种语言。';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
-        '';
+        '启用客户前端的相关文章功能。';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '在FAQ模块中启用投票机制。';
     $Self->{Translation}->{'Explorer'} = '浏览';
     $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX Responder';
@@ -400,10 +405,10 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '快速搜索时显示的界面';
     $Self->{Translation}->{'Journal'} = '日志';
     $Self->{Translation}->{'Language Management'} = '管理语言';
-    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '为建立关键字FAQ文章列表的搜索限制。';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象到这个FAQ条目';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
-        '';
+        '启用相关文章功能的队列名称列表。';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         '在服务人员界面中能够使用的状态类型列表。';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -439,11 +444,11 @@ sub Data {
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.'} =
         '在服务人员界面中，FAQ日志视图显示FAQ文章标题的最长字符数。';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.'} =
-        '';
+        '在客户界面中，用于简短的FAQ搜索而生成HTML开放式搜索配置文件的模块。';
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         '在公共界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
-        '';
+        '在服务人员界面中，用于简短的FAQ搜索而生成HTML开放式搜索配置文件的模块。';
     $Self->{Translation}->{'New FAQ Article'} = '创建FAQ文章';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新建的FAQ文章在发布之前需要审批。';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
@@ -458,8 +463,8 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last created.'} = '显示最新创建条目的数量。';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '按Top10格式显示的条目数。';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
-        '';
-    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
+        '添加Javascript到客户工单消息窗口的输出过滤器。';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '相关FAQ文章的输出限制。';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         '显示FAQ条目的微型FAQ日志概览的页面参数。';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -495,7 +500,7 @@ sub Data {
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '在定义的界面上显示最近更改的条目。';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '在定义的界面上显示最新创建的条目。';
     $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
-        '';
+        '显示文章的星级等于或高于定义的值（设置值“0”则输出为空）。';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '在定义的界面上显示点击量前十个条目。';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '在定义的界面上显示文章评分。';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -513,7 +518,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = '解决方案';
     $Self->{Translation}->{'Symptom'} = '症状';
     $Self->{Translation}->{'Text Only'} = '仅文本';
-    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '相关FAQ文章的默认语言。';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'FAQ 的标识符, 例如 (常见问题解答)FAQ#, (知识库)KB#, 默认为 FAQ#。';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

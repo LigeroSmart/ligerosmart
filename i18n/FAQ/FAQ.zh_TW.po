@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -682,6 +682,18 @@ msgstr "首10篇常見問題文章"
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
 msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "內部的"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "外部的"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "公開的"
 
 #. SysConfig
 msgid ""

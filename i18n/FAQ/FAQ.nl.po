@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/otrs/OTRS/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -683,6 +683,18 @@ msgstr "Populairste artikelen"
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
 msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "intern"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "extern"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "publiek"
 
 #. SysConfig
 msgid ""

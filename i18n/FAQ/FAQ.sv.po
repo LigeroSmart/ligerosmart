@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -351,15 +351,15 @@ msgstr "Inga FAQ artiklar funna."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Dessa artiklar kan vara användbara"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "Hittade inga användbara artiklar för detta ämnet och texten"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "Skriv ett ämne eller text för att få en lista över hjälpfulla artiklar"
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -411,11 +411,11 @@ msgstr "Tillbaka till FAQ-utforskaren"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "You need rw permission!"
-msgstr ""
+msgstr "Du behöver rw-behörighet"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr ""
+msgstr "Inga kategorier hittades där användaren har läs/skriv-rättigheter"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
@@ -475,7 +475,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "FAQ-historik"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -543,23 +543,23 @@ msgstr "FAQ-nummer"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Last Changed by"
-msgstr ""
+msgstr "Senast ändrad av"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (before/after)"
-msgstr ""
+msgstr "FAQ-Artikel Skapad Tid (före/efter)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (between)"
-msgstr ""
+msgstr "FAQ-Artikel Skapad Tid (mellan)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (before/after)"
-msgstr ""
+msgstr "FAQ Artikel Ändrad Tid (före/efter)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (between)"
-msgstr ""
+msgstr "FAQ-Artikel Ändrad Tid (mellan)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Equals"
@@ -684,6 +684,18 @@ msgstr "Topp 10 FAQ-artiklar"
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
 msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "intern"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "extern"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "offentlig"
 
 #. SysConfig
 msgid ""

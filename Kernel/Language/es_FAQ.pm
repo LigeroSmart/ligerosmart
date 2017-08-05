@@ -134,7 +134,7 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = 'No se encontraron artículos FAQ';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'Esto podría ser útil';
     $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
     $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
 
@@ -269,6 +269,11 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = '';
+
+    # Database XML Definition: FAQ.sopm
+    $Self->{Translation}->{'internal'} = 'interno';
+    $Self->{Translation}->{'external'} = 'externo';
+    $Self->{Translation}->{'public'} = 'público';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =

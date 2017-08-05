@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -353,15 +353,15 @@ msgstr "未找到FAQ文章。"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "这有助于"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "没有找到有用的主题和正文资源。"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "键入主题或正文以获取有用的资源清单。"
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -685,7 +685,19 @@ msgstr "最常用的文章"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "内容类型"
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "内部"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "外部"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "公开"
 
 #. SysConfig
 msgid ""
@@ -729,7 +741,7 @@ msgstr "客户FAQ。"
 
 #. SysConfig
 msgid "CustomerFAQRelatedArticles."
-msgstr ""
+msgstr "客户常见问题相关文章。"
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -1016,7 +1028,7 @@ msgstr "在FAQ模块中启用多种语言。"
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
-msgstr ""
+msgstr "启用客户前端的相关文章功能。"
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
@@ -1120,7 +1132,7 @@ msgstr "管理语言"
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
+msgstr "为建立关键字FAQ文章列表的搜索限制。"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1128,7 +1140,7 @@ msgstr "链接对象到这个FAQ条目"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
-msgstr ""
+msgstr "启用相关文章功能的队列名称列表。"
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1230,7 +1242,7 @@ msgstr "在服务人员界面中，FAQ日志视图显示FAQ文章标题的最长
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "customer interface."
-msgstr ""
+msgstr "在客户界面中，用于简短的FAQ搜索而生成HTML开放式搜索配置文件的模块。"
 
 #. SysConfig
 msgid ""
@@ -1240,7 +1252,7 @@ msgstr "在公共界面中，为优化FAQ搜索用于生成HTML开放搜索（Op
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
-msgstr ""
+msgstr "在服务人员界面中，用于简短的FAQ搜索而生成HTML开放式搜索配置文件的模块。"
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1288,11 +1300,11 @@ msgstr "按Top10格式显示的条目数。"
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
-msgstr ""
+msgstr "添加Javascript到客户工单消息窗口的输出过滤器。"
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
-msgstr ""
+msgstr "相关FAQ文章的输出限制。"
 
 #. SysConfig
 msgid ""
@@ -1408,7 +1420,7 @@ msgstr "在定义的界面上显示最新创建的条目。"
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactive the output)."
-msgstr ""
+msgstr "显示文章的星级等于或高于定义的值（设置值“0”则输出为空）。"
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
@@ -1468,7 +1480,7 @@ msgstr "仅文本"
 
 #. SysConfig
 msgid "The default languages for the related FAQ articles."
-msgstr ""
+msgstr "相关FAQ文章的默认语言。"
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."

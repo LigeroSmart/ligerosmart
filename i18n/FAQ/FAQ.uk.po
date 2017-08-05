@@ -2,12 +2,12 @@
 # Translators:
 # Alexander Korsikov <korsikov@rbcgrp.com>, 2015
 # Vira Motorko <ato4ka@i.ua>, 2015
-# Свистун Роман <svystun09@gmail.com>, 2015
+# Роман Свистун <svystun09@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/otrs/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -683,6 +683,18 @@ msgstr "Топ 10 статтей"
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
 msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "внутрішній"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "зовнiшнє"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "публічне"
 
 #. SysConfig
 msgid ""

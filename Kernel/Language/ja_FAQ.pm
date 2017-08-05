@@ -159,22 +159,22 @@ sub Data {
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'FAQエクスプローラーに戻る';
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
-    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'You need rw permission!'} = '読書き(rw)の権限が必要です！';
     $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
     $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
-    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'Need CategoryID!'} = 'カテゴリIDの入力が必要です！';
     $Self->{Translation}->{'A category should have a name!'} = '「名前」は必須項目です。';
     $Self->{Translation}->{'This category already exists'} = 'このカテゴリはすでに存在しています。';
     $Self->{Translation}->{'FAQ category updated!'} = 'カテゴリが更新されました。';
-    $Self->{Translation}->{'This category already exists!'} = '';
+    $Self->{Translation}->{'This category already exists!'} = 'このカテゴリはすでに存在しています！';
     $Self->{Translation}->{'FAQ category added!'} = '新しいカテゴリが追加されました。';
-    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'カテゴリID が指定されていません！';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
-    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'No ItemID is given!'} = 'アイテムID が指定されていません！';
     $Self->{Translation}->{'You have no permission for this category!'} = '';
     $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
 
@@ -193,7 +193,7 @@ sub Data {
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'No LanguageID is given!'} = '言語IDが指定されていません！';
     $Self->{Translation}->{'The name is required!'} = '「名前」は必須項目です。';
     $Self->{Translation}->{'This language already exists!'} = 'この言語は設定済です。';
     $Self->{Translation}->{'FAQ language updated!'} = '言語が更新されました。';
@@ -202,7 +202,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = '最終更新日';
-    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ 動的フィールド';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ ダイナミック・フィールド';
 
     # Perl Module: Kernel/Modules/AgentFAQRichText.pm
     $Self->{Translation}->{'No %s is given!'} = '';
@@ -211,19 +211,19 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '結果がありません。';
     $Self->{Translation}->{'FAQ Number'} = 'FAQナンバー';
-    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'Last Changed by'} = '最終更新';
     $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ項目作成日時 (以前/以後)';
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ項目作成日時 (期間指定)';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ項目変更日時 (以前/以後)';
     $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ項目変更日時 (期間指定)';
     $Self->{Translation}->{'Equals'} = '';
-    $Self->{Translation}->{'Greater than'} = '';
-    $Self->{Translation}->{'Greater than equals'} = '';
-    $Self->{Translation}->{'Smaller than'} = '';
-    $Self->{Translation}->{'Smaller than equals'} = '';
+    $Self->{Translation}->{'Greater than'} = '超';
+    $Self->{Translation}->{'Greater than equals'} = '以上';
+    $Self->{Translation}->{'Smaller than'} = '未満';
+    $Self->{Translation}->{'Smaller than equals'} = '以下';
 
     # Perl Module: Kernel/Modules/AgentFAQZoom.pm
-    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Need FileID!'} = 'ファイルIDが必要です！';
     $Self->{Translation}->{'Thanks for your vote!'} = '評価をいただきありがとうございます。';
     $Self->{Translation}->{'You have already voted!'} = 'あなたはすでに評価済です。';
     $Self->{Translation}->{'No rate selected!'} = '評価が選択されていません。';
@@ -234,10 +234,10 @@ sub Data {
     $Self->{Translation}->{'FAQ Article Print'} = '記事印刷';
 
     # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
-    $Self->{Translation}->{'Created between'} = '';
+    $Self->{Translation}->{'Created between'} = 'この期間内に作成された';
 
     # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
-    $Self->{Translation}->{'Need ItemID!'} = '';
+    $Self->{Translation}->{'Need ItemID!'} = 'アイテムIDの入力が必要です！';
 
     # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
     $Self->{Translation}->{'FAQ Articles (new created)'} = '新着記事';
@@ -245,9 +245,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles (Top 10)'} = '上位10件の記事';
 
     # Perl Module: Kernel/Modules/PublicFAQRSS.pm
-    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'No Type is given!'} = 'タイプが指定されていません！';
     $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
-    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = 'RSSファイルが作成できません！';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '%s (FAQ全文)';
@@ -268,7 +268,12 @@ sub Data {
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 FAQ項目';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
-    $Self->{Translation}->{'Content Type'} = '';
+    $Self->{Translation}->{'Content Type'} = 'コンテンツタイプ';
+
+    # Database XML Definition: FAQ.sopm
+    $Self->{Translation}->{'internal'} = '内部向';
+    $Self->{Translation}->{'external'} = '外部向';
+    $Self->{Translation}->{'public'} = '公開';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -344,33 +349,33 @@ sub Data {
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'FAQのフリーテキストフィールドの定義。';
     $Self->{Translation}->{'Delete this FAQ'} = 'この記事を削除';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQ追加画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
+        '担当者インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQ編集画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
+        '担当者インターフェイスのFAQ編集画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQオーバービュー画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
+        '担当者インターフェイスのFAQオーバービュー画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '公開インターフェイスのFAQ追加画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
+        '公開インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '顧客インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '顧客インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '公開インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '公開インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '担当者インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
+        '担当者インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '顧客インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
+        '顧客インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '公開インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
+        '公開インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ ズームスクリーンで表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '担当者インターフェイスのFAQ ズームスクリーンで表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '顧客インターフェイスのFAQズーム画面に表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '顧客インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '公開インターフェイスのFAQズーム画面に表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+        '公開インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =

@@ -1,18 +1,21 @@
 # 
 # Translators:
 # Felipe Braga <fbobraga@gmail.com>, 2015-2016
+# Gilberto José Souza Coutinho <gilberto.jsc@gmail.com>, 2017
 # Glauber Caires <glaubercaires@gmail.com>, 2016
 # João Paulo Avelar de Araújo Pontes <meunomejoaopaulo@gmail.com>, 2016
 # José Ribeiro <joserribeiro26@gmail.com>, 2014
 # Leandro “Lê Corſetti van Utrecht” Guimarães Faria Corcete DUTRA <l@dutras.org>, 2015
 # Marcos Aurélio Silvério <marcos.aurelio@infracerta.com.br>, 2014
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014-2015
+# Ricardo von Staa <ricardo.von.staa@otrs.com>, 2017
 # Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2015
+# Thales Horta <tph@otrs.com.br>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -355,15 +358,15 @@ msgstr "Nenhum artigo FAQ encontrado."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Isso pode ser útil"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "Não foram encontrados resultados úteis para o assunto ou texto."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "Insira um assunto ou texto para listar os recursos úteis."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -415,19 +418,19 @@ msgstr "Voltar para a lista de entradas da FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "You need rw permission!"
-msgstr ""
+msgstr "Você precisa de permissão rw!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr ""
+msgstr "Não foram encontradas categorias onde o usuário possua permissão de leitura e escrita!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
-msgstr ""
+msgstr "Não foi encontrado um idioma padrão e tão pouco criar um novo."
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
-msgstr ""
+msgstr "Necessária CategoryID!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "A category should have a name!"
@@ -443,7 +446,7 @@ msgstr "Categoria de FAQ atualizada!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
-msgstr ""
+msgstr "Essa categoria já existe!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "FAQ category added!"
@@ -451,35 +454,35 @@ msgstr "Categoria de FAQ adicionada!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
-msgstr ""
+msgstr "Nenhuma CategoryID foi informada!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
-msgstr ""
+msgstr "Não foi possível excluir a categoria %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
-msgstr ""
+msgstr "Nenhum ItemID foi informado."
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
-msgstr ""
+msgstr "Você não possuí informações para essa categoria."
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "Was not able to delete the FAQ article %s!"
-msgstr ""
+msgstr "Não foi possível deletar o artigo %s, do FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
 msgid "The CategoryID %s is invalid."
-msgstr ""
+msgstr "A CategoriaID %S é inválida"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
-msgstr ""
+msgstr "Não é possível mostrar o histórico, não foi informado um ItemID!"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "Histórico de FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -487,19 +490,19 @@ msgstr "Jornal FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Need config option FAQ::Frontend::Overview"
-msgstr ""
+msgstr "Necessária a opção de configuração FAQ::Frontend::Overview"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
-msgstr ""
+msgstr "Opção de configuração FAQ::Frontend::Overview precisa ser um valor HASH"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
-msgstr ""
+msgstr "Não foram encontradas opções de configuração para a visualização \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "No LanguageID is given!"
-msgstr ""
+msgstr "Nenhum IdiomaID informado!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "The name is required!"
@@ -519,7 +522,7 @@ msgstr "Idioma de FAQ adicionado!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
-msgstr ""
+msgstr "Não foi possível apagar o idioma% s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -531,11 +534,11 @@ msgstr "Campos dinâmicos da FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "Nenhum %s informado."
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "Can't load LanguageObject!"
-msgstr ""
+msgstr "Não foi possível carregar LanguageObject!"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
@@ -547,19 +550,19 @@ msgstr "Número da FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Last Changed by"
-msgstr ""
+msgstr "Última modificação por"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (before/after)"
-msgstr ""
+msgstr "FAQ Tempo de Criação de Item (antes/depois)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (between)"
-msgstr ""
+msgstr "FAQ Tempo de Criação de Item (entre)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (before/after)"
-msgstr ""
+msgstr "FAQ Tempo de Alteração do Item (entre)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (between)"
@@ -567,27 +570,27 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Equals"
-msgstr ""
+msgstr "Iguais"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than"
-msgstr ""
+msgstr "Maior que"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than equals"
-msgstr ""
+msgstr "Maior-igual que"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than"
-msgstr ""
+msgstr "Menor que"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than equals"
-msgstr ""
+msgstr "Menor-igual que"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Need FileID!"
-msgstr ""
+msgstr "Necessita do ArquivoID!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Thanks for your vote!"
@@ -603,11 +606,11 @@ msgstr "Nenhuma pontuação selecionada!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The voting mechanism is not enabled!"
-msgstr ""
+msgstr "O mecanismo de votação não está habilitado!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The vote rate is not defined!"
-msgstr ""
+msgstr "O peso dos votos não foi definido!"
 
 #. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
 msgid "FAQ Article Print"
@@ -615,11 +618,11 @@ msgstr "Imprimir artigo da FAQ"
 
 #. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
 msgid "Created between"
-msgstr ""
+msgstr "Criado entre"
 
 #. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
 msgid "Need ItemID!"
-msgstr ""
+msgstr "Necessita do ItemID!"
 
 #. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
 msgid "FAQ Articles (new created)"
@@ -635,15 +638,15 @@ msgstr "Artigos da FAQ (Top 10)"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "No Type is given!"
-msgstr ""
+msgstr "Sem Tipo informado!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Type must be either LastCreate or LastChange or Top10!"
-msgstr ""
+msgstr "Tipo deve ser ÚltimoCriado ou ÚltimoAlterado ou Top10!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Can't create RSS file!"
-msgstr ""
+msgstr "Não foi possível criar o arquivo RSS!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -667,7 +670,7 @@ msgstr "%s - Público (FAQ-TextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Need rate!"
-msgstr ""
+msgstr "Uma proporção é necessária!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -687,7 +690,19 @@ msgstr "Top 10 artigos da FAQ"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "Tipo de conteúdo"
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "interno"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "externo"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "público"
 
 #. SysConfig
 msgid ""
@@ -1018,7 +1033,7 @@ msgstr "Permitir vários idiomas no módulo FAQ."
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
-msgstr ""
+msgstr "Ativar os recursos desse artigo para a interface de cliente."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
@@ -1130,7 +1145,7 @@ msgstr "Link de outro artigo para este item FAQ"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
-msgstr ""
+msgstr "Lista do nomes de filas para os quais o recurso desse artigo está ativado."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1294,7 +1309,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
-msgstr ""
+msgstr "Limite de saída para os artigos desse FAQ."
 
 #. SysConfig
 msgid ""
@@ -1470,7 +1485,7 @@ msgstr "Apenas texto"
 
 #. SysConfig
 msgid "The default languages for the related FAQ articles."
-msgstr ""
+msgstr "O idioma padrão para os artigos desse FAQ."
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."

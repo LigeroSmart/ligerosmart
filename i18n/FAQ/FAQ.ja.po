@@ -1,13 +1,13 @@
 # 
 # Translators:
-# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016
+# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017
 # Kentaro Hori <kentaro0919@gmail.com>, 2014-2015
 # Norihiro Tanaka <noritnk@kcn.ne.jp>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -410,7 +410,7 @@ msgstr "FAQエクスプローラーに戻る"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "You need rw permission!"
-msgstr ""
+msgstr "読書き(rw)の権限が必要です！"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
@@ -422,7 +422,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
-msgstr ""
+msgstr "カテゴリIDの入力が必要です！"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "A category should have a name!"
@@ -438,7 +438,7 @@ msgstr "カテゴリが更新されました。"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
-msgstr ""
+msgstr "このカテゴリはすでに存在しています！"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "FAQ category added!"
@@ -446,7 +446,7 @@ msgstr "新しいカテゴリが追加されました。"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
-msgstr ""
+msgstr "カテゴリID が指定されていません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
@@ -454,7 +454,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
-msgstr ""
+msgstr "アイテムID が指定されていません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
@@ -494,7 +494,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "No LanguageID is given!"
-msgstr ""
+msgstr "言語IDが指定されていません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "The name is required!"
@@ -522,7 +522,7 @@ msgstr "最終更新日"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "FAQ Dynamic Fields"
-msgstr "FAQ 動的フィールド"
+msgstr "FAQ ダイナミック・フィールド"
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "No %s is given!"
@@ -542,7 +542,7 @@ msgstr "FAQナンバー"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Last Changed by"
-msgstr ""
+msgstr "最終更新"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (before/after)"
@@ -566,23 +566,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than"
-msgstr ""
+msgstr "超"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than equals"
-msgstr ""
+msgstr "以上"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than"
-msgstr ""
+msgstr "未満"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than equals"
-msgstr ""
+msgstr "以下"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Need FileID!"
-msgstr ""
+msgstr "ファイルIDが必要です！"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Thanks for your vote!"
@@ -610,11 +610,11 @@ msgstr "記事印刷"
 
 #. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
 msgid "Created between"
-msgstr ""
+msgstr "この期間内に作成された"
 
 #. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
 msgid "Need ItemID!"
-msgstr ""
+msgstr "アイテムIDの入力が必要です！"
 
 #. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
 msgid "FAQ Articles (new created)"
@@ -630,7 +630,7 @@ msgstr "上位10件の記事"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "No Type is given!"
-msgstr ""
+msgstr "タイプが指定されていません！"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Type must be either LastCreate or LastChange or Top10!"
@@ -638,7 +638,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Can't create RSS file!"
-msgstr ""
+msgstr "RSSファイルが作成できません！"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -682,7 +682,19 @@ msgstr "Top 10 FAQ項目"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "コンテンツタイプ"
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "内部向"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "外部向"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "公開"
 
 #. SysConfig
 msgid ""
@@ -920,88 +932,88 @@ msgstr "この記事を削除"
 msgid ""
 "Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
 "settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスのFAQ追加画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+msgstr "担当者インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスのFAQ編集画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+msgstr "担当者インターフェイスのFAQ編集画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスのFAQオーバービュー画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+msgstr "担当者インターフェイスのFAQオーバービュー画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "公開インターフェイスのFAQ追加画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+msgstr "公開インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "担当者インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "顧客インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "顧客インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "公開インターフェイスのFAQ印刷画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "公開インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the agent interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr "担当者インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
+msgstr "担当者インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr "顧客インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
+msgstr "顧客インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
 "default."
-msgstr "公開インターフェイスのFAQ検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
+msgstr "公開インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
 " settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのFAQ ズームスクリーンで表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "担当者インターフェイスのFAQ ズームスクリーンで表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the customer interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "顧客インターフェイスのFAQズーム画面に表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "顧客インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ zoom screen of the public interface. "
 "Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "公開インターフェイスのFAQズーム画面に表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgstr "公開インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
 
 #. SysConfig
 msgid "Edit this FAQ"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2017-05-02 20:50+0000\n"
+"POT-Creation-Date: 2017-08-04 19:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -668,6 +668,18 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
+msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr ""
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
 msgstr ""
 
 #. SysConfig

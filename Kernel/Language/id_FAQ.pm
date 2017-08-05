@@ -270,6 +270,11 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = '';
 
+    # Database XML Definition: FAQ.sopm
+    $Self->{Translation}->{'internal'} = 'internal';
+    $Self->{Translation}->{'external'} = 'eksternal';
+    $Self->{Translation}->{'public'} = 'umum';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Sebuah filter untuk output HTML untuk menambahkan tautan terkait string yang ditentukan. Dua buah masukan diperkenankan untuk Elemen Gambar. Pertama nama dari gambar (contoh: faq.png). Pada kasus ini path gambar OTRS yang digunakan. Kemungkinan kedua adalah memasukkan tautan ke dalam gambar.';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -348,15 +348,15 @@ msgstr "Nem találhatók GyIK bejegyzések."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Ez hasznos lehet"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "Nem találhatók hasznos erőforrások a tárgyhoz és a szöveghez."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "Írjon be egy tárgyat vagy szöveget a hasznos erőforrások listájának lekéréséhez."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -680,7 +680,19 @@ msgstr "Legjobb 10 GyIK bejegyzés"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "Tartalomtípus"
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "belső"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "külső"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "nyilvános"
 
 #. SysConfig
 msgid ""
@@ -724,7 +736,7 @@ msgstr "Ügyfél GyIK."
 
 #. SysConfig
 msgid "CustomerFAQRelatedArticles."
-msgstr ""
+msgstr "Ügyfél GyIK kapcsolódó bejegyzések."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -1011,7 +1023,7 @@ msgstr "Több nyelv engedélyezése a GyIK modulban."
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
-msgstr ""
+msgstr "A kapcsolódó bejegyzések funkció engedélyezése az ügyfél előtétprogramhoz."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
@@ -1115,7 +1127,7 @@ msgstr "Nyelvkezelés"
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
+msgstr "A keresés korlátozása a kulcsszó GyIK bejegyzéslista összeállításához."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1123,7 +1135,7 @@ msgstr "Másik objektum hozzákapcsolása ehhez a GyIK elemhez"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
-msgstr ""
+msgstr "Azon várólistanevek listája, amelyeknél a kapcsolódó bejegyzés funkció engedélyezve van."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1225,7 +1237,7 @@ msgstr "A GyIK naplóban megjelenítendő GyIK bejegyzésben lévő címek legna
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "customer interface."
-msgstr ""
+msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK keresésnél az ügyfélfelületen."
 
 #. SysConfig
 msgid ""
@@ -1235,7 +1247,7 @@ msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK ker
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
-msgstr ""
+msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez."
 
 #. SysConfig
 msgid "New FAQ Article"
@@ -1283,11 +1295,11 @@ msgstr "A megjelenített elemek száma a legjobb 10 szolgáltatásban."
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
-msgstr ""
+msgstr "Kimenetszűrő JavaScript hozzáadásához az ügyféljegy üzenet képernyőhöz."
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
-msgstr ""
+msgstr "Kimenetkorlát a kapcsolódó GyIK bejegyzésekhez."
 
 #. SysConfig
 msgid ""
@@ -1403,7 +1415,7 @@ msgstr "Az utoljára létrehozott elemek megjelenítése a meghatározott felül
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactive the output)."
-msgstr ""
+msgstr "Csillagok megjelenítése a meghatározott értékkel egyenlő vagy annál jobb értékeléssel rendelkező bejegyzéseknél (állítsa az értéket „0”-ra a kimenet kikapcsolásához)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
@@ -1463,7 +1475,7 @@ msgstr "Csak szöveg"
 
 #. SysConfig
 msgid "The default languages for the related FAQ articles."
-msgstr ""
+msgstr "Az alapértelmezett nyelvek a kapcsolódó GyIK bejegyzéseknél."
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."

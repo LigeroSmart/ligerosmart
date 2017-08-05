@@ -1,6 +1,7 @@
 # 
 # Translators:
 # Emil Pandocchi <emil.pandocchi@gmail.com>, 2016
+# Fabrizio Scaletta <fabrizio.scaletta@pharmaidea.com>, 2017
 # Giulio <giulio.compagnone@gmail.com>, 2014
 # Luca Maranzano <liuk@linux.it>, 2014
 # Marthe Ngo Temb <ngotemb@gmail.com>, 2015
@@ -10,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:04+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +105,7 @@ msgstr "FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
-msgstr "Esplorartore di FAQ"
+msgstr "Esploratore di FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "Quick Search"
@@ -688,6 +689,18 @@ msgstr "Top 10 articoli FAQ"
 msgid "Content Type"
 msgstr ""
 
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "interno"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "esterno"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "pubblico"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -710,7 +723,7 @@ msgstr "Tempo di durata nella Cache delle voci di FAQ"
 
 #. SysConfig
 msgid "Category Management"
-msgstr "Category Management"
+msgstr "Gestione Categorie"
 
 #. SysConfig
 msgid "Customer FAQ Print."

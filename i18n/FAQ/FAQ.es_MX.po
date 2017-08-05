@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-05-02 20:19+0000\n"
-"PO-Revision-Date: 2017-05-03 01:20+0000\n"
+"POT-Creation-Date: 2017-08-04 19:00+0000\n"
+"PO-Revision-Date: 2017-08-05 00:42+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -353,15 +353,15 @@ msgstr "No se encontraron artículos FAQ"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Esto podría ser útil"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "No se encontraron recursos útiles para el asunto y texto."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "Escriba un asunto o texto para obtener una lista de recursos útiles."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -485,15 +485,15 @@ msgstr "Bitácora de FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Need config option FAQ::Frontend::Overview"
-msgstr ""
+msgstr "Se requiere la opción de configuración FAQ::Frontend::Overview"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
-msgstr ""
+msgstr "¡La opción de configuración FAQ::Frontend::Overview necesita ser una referencia a un HASH!"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
-msgstr ""
+msgstr "¡No se encontró la opción de configuración para la vista \"1%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "No LanguageID is given!"
@@ -645,7 +645,7 @@ msgstr "No se puede crear el archivo RSS"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "1%s (FAQTextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
@@ -653,7 +653,7 @@ msgstr "%s - Cliente (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "1%s - Cliente (FAQTextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
@@ -661,11 +661,11 @@ msgstr "%s - Público (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "1%s - Público (FAQTextoCompleto)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Need rate!"
-msgstr ""
+msgstr "¡Requiere valoración!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -685,7 +685,19 @@ msgstr "Top 10 de artículos FAQ"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "Tipo de Contenido"
+
+#. Database XML Definition: FAQ.sopm
+msgid "internal"
+msgstr "interno"
+
+#. Database XML Definition: FAQ.sopm
+msgid "external"
+msgstr "externo"
+
+#. Database XML Definition: FAQ.sopm
+msgid "public"
+msgstr "público"
 
 #. SysConfig
 msgid ""
@@ -697,7 +709,7 @@ msgstr "Filtro para el HTML resultante para añadir enlaces a una cadena determi
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "Añadir artículo FAQ."
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -713,19 +725,19 @@ msgstr "Gestión de las Categorías"
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Imprimir FAQ del Cliente."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Detalle FAQ del Cliente."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Búsqueda FAQ del Cliente."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "FAQ del Cliente."
 
 #. SysConfig
 msgid "CustomerFAQRelatedArticles."
@@ -1036,19 +1048,19 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "Area de FAQ"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "Área de FAQ."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "Borrar FAQ."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "Editar FAQ."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1060,7 +1072,7 @@ msgstr "Límite para la vista general «pequeña» de FAQ"
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "Imprimir FAQ."
 
 #. SysConfig
 msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
@@ -1088,7 +1100,7 @@ msgstr "Registro de módulo \"Frontend\" en la interfaz pública."
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "FAQ Completo"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1128,7 +1140,7 @@ msgstr "Enlazar otro objecto a este artículo FAQ"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
-msgstr ""
+msgstr "Lista de nombres de filas para las cuales la funcionalidad de artículos relacionados está habilitada."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1288,7 +1300,7 @@ msgstr "Número de elementos a mostrar en el Top 10."
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
-msgstr ""
+msgstr "Filtro de salida para agregar Java-Script a la pantalla CustomerTicketMessage."
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
@@ -1312,15 +1324,15 @@ msgstr "Imprimir esta FAQ"
 
 #. SysConfig
 msgid "Public FAQ Print."
-msgstr ""
+msgstr "Imprimir FAQ Público"
 
 #. SysConfig
 msgid "Public FAQ Zoom."
-msgstr ""
+msgstr "Detalle FAQ Público"
 
 #. SysConfig
 msgid "Public FAQ search."
-msgstr ""
+msgstr "Búsqueda FAQ Público"
 
 #. SysConfig
 msgid "Public FAQ."
@@ -1336,7 +1348,7 @@ msgstr "Ponderación para la votación. La clave debe expresarse en porcentaje."
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "P"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1390,7 +1402,7 @@ msgstr "¿Mostrar la ruta de la FAQ? sí/no."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Mostrar entradas inválidas en los resultados del Explorador de FAQ en la interfaz del agente."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1468,7 +1480,7 @@ msgstr "Solo Texto"
 
 #. SysConfig
 msgid "The default languages for the related FAQ articles."
-msgstr ""
+msgstr "Idiomas por defecto para los artículos FAQ relacionados."
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
