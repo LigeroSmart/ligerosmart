@@ -102,6 +102,16 @@
         <div class="WidgetSimple SpacingTop SpacingBottomMedium">
             <div class="Header">
                 <h2>[% Translate("Details") | html %]</h2>
+[% RenderBlockStart("NavArrows") %]
+                <div class="Navigation">
+                    <span [% IF !Data.Prev %]class="Disabled"[% END %][% IF !Data.Next %]style="margin-right: 17px;"[% END %] class="SurveyArrow SurveyArrowLeft" title="[% Translate("Previous vote") | html %]">
+                        <a href="[% Env("Baselink") %]Action=AgentSurveyStats;Subaction=StatsDetail;SurveyID=[% Data.SurveyID | uri %];RequestID=[% Data.Prev | uri %];TicketNumber=[% Data.PrevTicketNumber | uri %]"><i class="fa fa-caret-left"></i></a>
+                    </span>
+                    <span [% IF !Data.Next %]class="Disabled"[% END %] class="SurveyArrow SurveyArrowRight" title="[% Translate("Next vote") | html %]">
+                        <a href="[% Env("Baselink") %]Action=AgentSurveyStats;Subaction=StatsDetail;SurveyID=[% Data.SurveyID | uri %];RequestID=[% Data.Next | uri %];TicketNumber=[% Data.NextTicketNumber | uri %]"><i class="fa fa-caret-right"></i></a>
+                    </span>
+                </div>
+[% RenderBlockEnd("NavArrows") %]
             </div>
             <div class="Content">
                 <fieldset class="TableLike FixedLabel">

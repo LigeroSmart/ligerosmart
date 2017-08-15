@@ -92,10 +92,20 @@ sub Run {
             SurveyID => $SurveyID,
         );
 
-        # get ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
+        my $Count     = 0;
+        my $LastIndex = scalar @List - 1;
+
         for my $Vote (@List) {
+            my $CountPlus  = $Count + 1;
+            my $CountMinus = $Count - 1;
+            if ( $Count != 0 ) {
+                $Vote->{Prev} = $List[$CountMinus]->{RequestID};
+            }
+            if ( $Count != $LastIndex ) {
+                $Vote->{Next} = $List[$CountPlus]->{RequestID};
+            }
             $Vote->{SurveyID} = $SurveyID;
             my %Ticket = $TicketObject->TicketGet(
                 TicketID => $Vote->{TicketID},
@@ -105,7 +115,9 @@ sub Run {
                 Name => 'StatsVote',
                 Data => $Vote,
             );
+            $Count++;
         }
+
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentSurveyStats',
             Data         => {%Param},
@@ -123,6 +135,8 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'StatsDetail' ) {
         my $TicketNumber = $ParamObject->GetParam( Param => "TicketNumber" );
+
+        my ( $Prev, $Next, %Results );
 
         # check if survey exists
         if ( $SurveyExists ne 'Yes' || $RequestExists ne 'Yes' ) {
@@ -150,6 +164,54 @@ sub Run {
                 TicketNumber => $TicketNumber,
             },
         );
+
+        # Get Survey vote list.
+        my @List = $SurveyObject->VoteList(
+            SurveyID => $SurveyID,
+        );
+
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+        # Get parameters for url (previous and next vote and their ticket number).
+        my $Count     = 0;
+        my $LastIndex = scalar @List - 1;
+
+        for my $ResultVote (@List) {
+
+            #Finds vote that is viewed.
+            if ( $ResultVote->{RequestID} == $RequestID ) {
+                my $CountPlus  = $Count + 1;
+                my $CountMinus = $Count - 1;
+
+                my %Ticket = $TicketObject->TicketGet(
+                    TicketID => $ResultVote->{TicketID},
+                );
+                $Results{TicketNumber} = $Ticket{TicketNumber};
+
+                if ( $Count != 0 ) {
+                    $Prev ? $Results{Prev} = $Prev : $Results{Prev} = $List[$CountMinus]->{RequestID};
+                    $Results{PrevTicketNumber} = $TicketObject->TicketNumberLookup(
+                        TicketID => $List[$CountMinus]->{TicketID},
+                    );
+                }
+                if ( $Count != $LastIndex ) {
+                    $Next ? $Results{Next} = $Next : $Results{Next} = $List[$CountPlus]->{RequestID};
+                    $Results{NextTicketNumber} = $TicketObject->TicketNumberLookup(
+                        TicketID => $List[$CountPlus]->{TicketID},
+                    );
+                }
+            }
+            $Count++;
+        }
+
+        $LayoutObject->Block(
+            Name => 'NavArrows',
+            Data => {
+                SurveyID => $SurveyID,
+                %Results,
+            },
+        );
+
         my @QuestionList = $SurveyObject->QuestionList(
             SurveyID => $SurveyID,
         );

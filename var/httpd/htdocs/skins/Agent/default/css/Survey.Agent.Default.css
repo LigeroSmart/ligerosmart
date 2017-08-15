@@ -182,4 +182,39 @@ div.Textarea {
     color: #CCC;
 }
 
+.Navigation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding-top: 3px;
+    padding-right: 10px;
+}
+
+.SurveyArrow {
+    transition: transform 0.15s ease;
+    color: #FF9922;
+}
+
+.SurveyArrowLeft {
+    float: left;
+}
+
+.SurveyArrowRight {
+    float: right;
+}
+
+.SurveyArrow i{
+    font-size: 20px;
+    margin: 0 5px;
+}
+
+.SurveyArrow:hover{
+    color: #FF8600;
+}
+
+.Disabled {
+    display: none;
+}
+
 }

@@ -1,4 +1,5 @@
 #6.0.0.beta1 2017-??-??
+ - 2017-08-15 Fixed bug#[7929](https://bugs.otrs.org/show_bug.cgi?id=7929) - Accessing freetext answers is cumbersome.
 
 #5.0.5 2017-??-??
  - 2017-07-26 Fixed bug#[9575](https://bugs.otrs.org/show_bug.cgi?id=9575) - NOT NULL restrictions violation occurs in the vote on Oracle Database.
