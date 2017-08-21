@@ -18,6 +18,18 @@ Survey.Agent = Survey.Agent || {};
  *      This namespace contains the special module functions for SurveyZoom.
  */
 Survey.Agent.SurveyZoom = (function (TargetNS) {
+
+    TargetNS.Init = function () {
+        $('ul.Actions a.AsPopup').on('click', function () {
+            Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
+            return false;
+        });
+
+        $('#NewStatus').on('change', function () {
+            $(this).closest('form').submit();
+        });
+    }
+
     /**
      * @name IframeAutoHeight
      * @memberof Survey.Agent.SurveyZoom

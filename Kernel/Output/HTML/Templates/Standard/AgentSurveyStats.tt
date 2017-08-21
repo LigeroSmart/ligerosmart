@@ -73,14 +73,6 @@
         <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close this window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close this window") | html %]</span></button>
     </div>
 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('a.LinkZoomView').bind('click', function () {
-        window.opener.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
-        window.close();
-    });
-//]]></script>
-[% END %]
 
 [% RenderBlockEnd("Stats") %]
 

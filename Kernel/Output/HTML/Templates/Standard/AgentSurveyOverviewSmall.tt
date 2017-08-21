@@ -5,11 +5,6 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.ActionRow.Init();
-//]]></script>
-[% END %]
 
 <div id="OverviewBody" class="Overview TicketList">
 [% RenderBlockStart("NoDataFoundMsg") %]
@@ -159,15 +154,3 @@
         </table>
     </form>
 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
- $('.MasterAction').bind('click', function (Event) {
-     var $MasterActionLink = $(this).find('.MasterActionLink');
-    // only act if the link was not clicked directly
-    if (Event.target !== $MasterActionLink.get(0)) {
-        window.location = $MasterActionLink.attr('href');
-        return false;
-    }
-});
-//]]></script>
-[% END %]

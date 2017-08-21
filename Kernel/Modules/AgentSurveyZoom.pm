@@ -41,6 +41,8 @@ sub Run {
 
     my $SurveyID = $ParamObject->GetParam( Param => "SurveyID" ) || '';
 
+    my %JSData;
+
     my $SurveyExists = 'no';
     if ($SurveyID) {
         $SurveyExists = $SurveyObject->ElementExists(
@@ -277,6 +279,8 @@ sub Run {
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    $JSData{HTMLRichTextHeightDefault} = $ConfigObject->Get('Survey::Frontend::HTMLRichTextHeightDefault') || 80;
+    $JSData{HTMLRichTextHeightMax}     = $ConfigObject->Get('Survey::Frontend::HTMLRichTextHeightMax')     || 2500;
 
     # print the main table.
     $LayoutObject->Block(
@@ -285,10 +289,6 @@ sub Run {
             %Survey,
             NoQueueMessage  => $NoQueueMessage,
             QueueListString => $QueueListString,
-            HTMLRichTextHeightDefault =>
-                $ConfigObject->Get('Survey::Frontend::HTMLRichTextHeightDefault') || 80,
-            HTMLRichTextHeightMax =>
-                $ConfigObject->Get('Survey::Frontend::HTMLRichTextHeightMax') || 2500,
         },
     );
 
@@ -574,6 +574,11 @@ sub Run {
             }
         }
     }
+
+    $LayoutObject->AddJSData(
+        Key   => 'Survey',
+        Value => \%JSData,
+    );
 
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentSurveyZoom',

@@ -44,6 +44,8 @@ sub SurveyListShow {
     my $Env = $Param{Env};
     delete $Param{Env};
 
+    my %JSData;
+
     # lookup latest used view mode
     if ( !$Param{View} && $Self->{ 'UserSurveyOverview' . $Env->{Action} } ) {
         $Param{View} = $Self->{ 'UserSurveyOverview' . $Env->{Action} };
@@ -142,6 +144,8 @@ sub SurveyListShow {
 
     # back link
     if ( $Param{LinkBack} ) {
+        $JSData{Profile} = $Param{Profile};
+
         $Self->Block(
             Name => 'OverviewNavBarPageBack',
             Data => \%Param,
@@ -260,6 +264,12 @@ sub SurveyListShow {
             );
         }
     }
+
+    $Self->AddJSData(
+        Key   => 'JSData',
+        Value => \%JSData,
+        ,
+    );
 
     # build HTML content
     my $OutputNavBar = $Self->Output(

@@ -79,6 +79,9 @@
         <File Permission="660" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t" />
         <File Permission="660" Location="scripts/test/Selenium/Public/PublicSurvey.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyEditQuestions.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyOverview.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyStats.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css" />

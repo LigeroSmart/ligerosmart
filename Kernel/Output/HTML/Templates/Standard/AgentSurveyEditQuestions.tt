@@ -182,20 +182,6 @@
             </div>
         </div>
 
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('.QuestionDelete').bind('click', function (Event) {
-
-    if (window.confirm([% Translate("Do you really want to delete this question? ALL associated data will be LOST!") | JSON %])) {
-        window.location = '[% Env("Baselink") %]' + $(this).data('query-string');
-    }
-    Event.stopPropagation();
-    Event.preventDefault();
-    return false;
-});
-//]]></script>
-[% END %]
-
     </div>
     <div class="Footer">
         <button type="submit" class="CancelClosePopup Primary CallForAction" value="[% Translate("Close this window") | html %]"><span><i class="fa fa-times"></i> [% Translate("Close this window") | html %]</span></button>
@@ -408,20 +394,6 @@ $('.QuestionDelete').bind('click', function (Event) {
                     </tbody>
                 </table>
 [% RenderBlockEnd("QuestionEditTable") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('.AnswerDelete').bind('click', function (Event) {
-
-    if (window.confirm([% Translate("Do you really want to delete this answer?") | JSON %])) {
-        window.location = '[% Env("Baselink") %]' + $(this).data('query-string');
-    }
-    Event.stopPropagation();
-    Event.preventDefault();
-    return false;
-});
-//]]></script>
-[% END %]
 
 [% RenderBlockStart("QuestionEditTextArea") %]
                 <div class="SpacingTop" id="SurveyEmptyMessageSmall">
