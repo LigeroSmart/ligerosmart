@@ -110,7 +110,7 @@
 
 [% RenderBlockStart("ItemEdit") %]
             <div class="Header">
-                <h2>[% Translate("Item") | html %] [% Translate("Edit") | html %]:</h2>
+                <h2>[% Translate("Edit Catalog Item") | html %]:</h2>
             </div>
             <div class="Content">
 
