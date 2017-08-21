@@ -23,6 +23,7 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Aggiungi Elemento al Catalogo';
     $Self->{Translation}->{'Add Catalog Class'} = 'Aggiungi Classe al Catalogo';
     $Self->{Translation}->{'Catalog Class'} = 'Classe di Catalogo';
+    $Self->{Translation}->{'Edit Catalog Item'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Admin.'} = 'Admin.';
