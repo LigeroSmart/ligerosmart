@@ -668,7 +668,7 @@ set GeneralCatalog preferences
 =cut
 
 sub GeneralCatalogPreferencesSet {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
     # delete cache
     $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
@@ -689,7 +689,7 @@ get GeneralCatalog preferences
 =cut
 
 sub GeneralCatalogPreferencesGet {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
     return $Self->{PreferencesObject}->GeneralCatalogPreferencesGet(@_);
 }
