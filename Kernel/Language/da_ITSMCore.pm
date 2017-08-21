@@ -65,7 +65,6 @@ sub Data {
     $Self->{Translation}->{'IT Operational'} = 'IT operationel';
     $Self->{Translation}->{'Demonstration'} = 'Demonstration';
     $Self->{Translation}->{'Project'} = 'Projekt';
-    $Self->{Translation}->{'Training'} = 'Træning';
     $Self->{Translation}->{'Underpinning Contract'} = 'Underliggende kontrakt';
     $Self->{Translation}->{'Other'} = 'Andre';
     $Self->{Translation}->{'Availability'} = 'Tilgængelighed';

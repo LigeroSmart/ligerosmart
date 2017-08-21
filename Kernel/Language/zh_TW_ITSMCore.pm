@@ -65,7 +65,6 @@ sub Data {
     $Self->{Translation}->{'IT Operational'} = 'IT運營';
     $Self->{Translation}->{'Demonstration'} = '演示';
     $Self->{Translation}->{'Project'} = '項目';
-    $Self->{Translation}->{'Training'} = '培訓';
     $Self->{Translation}->{'Underpinning Contract'} = '依據合同';
     $Self->{Translation}->{'Other'} = '其它';
     $Self->{Translation}->{'Availability'} = '可用性';

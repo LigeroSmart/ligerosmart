@@ -65,7 +65,6 @@ sub Data {
     $Self->{Translation}->{'IT Operational'} = 'ITオペレーション';
     $Self->{Translation}->{'Demonstration'} = 'デモンストレーション';
     $Self->{Translation}->{'Project'} = 'プロジェクト';
-    $Self->{Translation}->{'Training'} = 'トレーニング';
     $Self->{Translation}->{'Underpinning Contract'} = '支持する契約';
     $Self->{Translation}->{'Other'} = 'その他';
     $Self->{Translation}->{'Availability'} = '可用性';

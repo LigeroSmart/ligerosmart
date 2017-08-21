@@ -65,7 +65,6 @@ sub Data {
     $Self->{Translation}->{'IT Operational'} = 'Opérations IT';
     $Self->{Translation}->{'Demonstration'} = 'Démonstration';
     $Self->{Translation}->{'Project'} = 'Projet';
-    $Self->{Translation}->{'Training'} = 'Formation';
     $Self->{Translation}->{'Underpinning Contract'} = 'Contrat externe';
     $Self->{Translation}->{'Other'} = 'Autre';
     $Self->{Translation}->{'Availability'} = 'Disponibilité';
@@ -109,14 +108,14 @@ sub Data {
     $Self->{Translation}->{'Module to show print link in service menu.'} = '';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Paramètres des états d\'incident dans les préférences de visualisation';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Paramètres des états d\'incident dans la vue des préférences.';
     $Self->{Translation}->{'Part of'} = 'Part de';
     $Self->{Translation}->{'Relevant to'} = 'Correspond à';
     $Self->{Translation}->{'Required for'} = 'Requis pour';
-    $Self->{Translation}->{'SLA Overview'} = 'Aperçu des SLA';
+    $Self->{Translation}->{'SLA Overview'} = 'Vue d\'ensemble des SLA';
     $Self->{Translation}->{'SLA Print.'} = '';
     $Self->{Translation}->{'SLA Zoom.'} = '';
-    $Self->{Translation}->{'Service Overview'} = 'Aperçu des services';
+    $Self->{Translation}->{'Service Overview'} = 'Vue d\'ensemble des services';
     $Self->{Translation}->{'Service Print.'} = '';
     $Self->{Translation}->{'Service Zoom.'} = '';
     $Self->{Translation}->{'Service-Area'} = 'Zone de service';

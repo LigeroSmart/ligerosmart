@@ -65,7 +65,6 @@ sub Data {
     $Self->{Translation}->{'IT Operational'} = 'Operación de TI';
     $Self->{Translation}->{'Demonstration'} = 'Demostración';
     $Self->{Translation}->{'Project'} = 'Proyecto';
-    $Self->{Translation}->{'Training'} = 'Entrenamiento';
     $Self->{Translation}->{'Underpinning Contract'} = 'Contrato con Terceros';
     $Self->{Translation}->{'Other'} = 'Otro';
     $Self->{Translation}->{'Availability'} = 'Disponibilidad';

@@ -65,7 +65,6 @@ sub Data {
     $Self->{Translation}->{'IT Operational'} = 'Uendeshaji wa IT';
     $Self->{Translation}->{'Demonstration'} = 'Maonyesho';
     $Self->{Translation}->{'Project'} = 'Mradi';
-    $Self->{Translation}->{'Training'} = 'Mafunzo';
     $Self->{Translation}->{'Underpinning Contract'} = 'Mkataba wa kuimarisha';
     $Self->{Translation}->{'Other'} = 'Engine';
     $Self->{Translation}->{'Availability'} = 'Upatikanaji';
