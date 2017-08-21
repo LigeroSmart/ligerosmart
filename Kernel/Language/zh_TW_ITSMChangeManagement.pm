@@ -89,19 +89,23 @@ sub Data {
     # Template: AgentITSMChangeDelete
     $Self->{Translation}->{'Do you really want to delete this change?'} = '你確定要删除這個變更嗎?';
 
+    # Template: AgentITSMChangeEdit
+    $Self->{Translation}->{'Edit %s%s'} = '';
+
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of'} = '歷史';
+    $Self->{Translation}->{'History of %s%s'} = '';
     $Self->{Translation}->{'Workorder'} = '工作指令';
     $Self->{Translation}->{'Show details'} = '顯示詳情';
     $Self->{Translation}->{'Show workorder'} = '顯示工作指令';
 
     # Template: AgentITSMChangeHistoryZoom
-    $Self->{Translation}->{'Detailed history information of'} = '詳細歷史信息';
+    $Self->{Translation}->{'Detailed history information of %s'} = '';
     $Self->{Translation}->{'Modified'} = '修改';
     $Self->{Translation}->{'Old Value'} = '舊值';
     $Self->{Translation}->{'New Value'} = '新值';
 
     # Template: AgentITSMChangeInvolvedPersons
+    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '';
     $Self->{Translation}->{'Involved Persons'} = '相關人員';
     $Self->{Translation}->{'ChangeManager'} = '變更經理';
     $Self->{Translation}->{'User invalid.'} = '用户無效。';
@@ -120,30 +124,33 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = '每頁顯示的變更個數';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'WorkOrderTitle'} = '工作指令標题';
-    $Self->{Translation}->{'ChangeTitle'} = '變更標题';
-    $Self->{Translation}->{'WorkOrderAgent'} = '工作指令服務人員';
+    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Change Title'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Change Builder'} = '變更創建人';
+    $Self->{Translation}->{'Change Manager'} = '變更經理';
     $Self->{Translation}->{'Workorders'} = '工作指令';
-    $Self->{Translation}->{'ChangeState'} = '變更狀態';
-    $Self->{Translation}->{'WorkOrderState'} = '工作指令狀態';
-    $Self->{Translation}->{'WorkOrderType'} = '工作指令類型';
+    $Self->{Translation}->{'Change State'} = '';
+    $Self->{Translation}->{'Workorder State'} = '';
+    $Self->{Translation}->{'Workorder Type'} = '';
     $Self->{Translation}->{'Requested Time'} = '請求時間';
-    $Self->{Translation}->{'PlannedStartTime'} = '計劃開始時間';
-    $Self->{Translation}->{'PlannedEndTime'} = '計劃結束時間';
-    $Self->{Translation}->{'ActualStartTime'} = '實際開始時間';
-    $Self->{Translation}->{'ActualEndTime'} = '實際結束時間';
+    $Self->{Translation}->{'Planned Start Time'} = '計劃開始時間';
+    $Self->{Translation}->{'Planned End Time'} = '計劃結束時間';
+    $Self->{Translation}->{'Actual Start Time'} = '確實開始時間';
+    $Self->{Translation}->{'Actual End Time'} = '確實結束時間';
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = '你確定要删除這個變更嗎？';
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '';
-    $Self->{Translation}->{'CABAgent'} = 'CAB服務人員';
+    $Self->{Translation}->{'CAB Agent'} = '';
     $Self->{Translation}->{'e.g.'} = '例 ';
-    $Self->{Translation}->{'CABCustomer'} = 'CAB用户';
-    $Self->{Translation}->{'ITSM Workorder'} = '工作指令';
-    $Self->{Translation}->{'Instruction'} = '指示';
-    $Self->{Translation}->{'Report'} = '報告';
+    $Self->{Translation}->{'CAB Customer'} = '';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
+    $Self->{Translation}->{'ITSM Workorder Report'} = '';
+    $Self->{Translation}->{'ITSM Change Priority'} = '';
+    $Self->{Translation}->{'ITSM Change Impact'} = '';
     $Self->{Translation}->{'Change Category'} = '變更類别';
     $Self->{Translation}->{'(before/after)'} = '';
     $Self->{Translation}->{'(between)'} = '';
@@ -161,15 +168,13 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = '變更信息';
-    $Self->{Translation}->{'PlannedEffort'} = '計劃工作量';
+    $Self->{Translation}->{'Planned Effort'} = '';
+    $Self->{Translation}->{'Accounted Time'} = '';
     $Self->{Translation}->{'Change Initiator(s)'} = '變更發起人';
-    $Self->{Translation}->{'Change Manager'} = '變更經理';
-    $Self->{Translation}->{'Change Builder'} = '變更創建人';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = '上次修改';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
     $Self->{Translation}->{'Ok'} = 'Ok';
-    $Self->{Translation}->{'ITSMChange'} = '變更';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = '下載附件';
@@ -191,23 +196,26 @@ sub Data {
     $Self->{Translation}->{'Do you want to proceed?'} = '';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'TemplateID'} = '模板編號';
+    $Self->{Translation}->{'Template ID'} = '';
     $Self->{Translation}->{'Edit Content'} = '編輯內容';
-    $Self->{Translation}->{'CreateBy'} = '創建人';
-    $Self->{Translation}->{'CreateTime'} = '創建時間';
-    $Self->{Translation}->{'ChangeBy'} = '修改人';
-    $Self->{Translation}->{'ChangeTime'} = '修改時間';
+    $Self->{Translation}->{'Create by'} = '';
+    $Self->{Translation}->{'Change by'} = '';
+    $Self->{Translation}->{'Change Time'} = '變更時間';
     $Self->{Translation}->{'Edit Template Content'} = '編輯模板內容';
     $Self->{Translation}->{'Delete Template'} = '刪除模板';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to'} = '將工作指令添加至';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Instruction'} = '指示';
     $Self->{Translation}->{'Invalid workorder type.'} = '無效的工作指令類型';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = '計劃開始時間必須在計劃結束時間之前!';
     $Self->{Translation}->{'Invalid format.'} = '無效的格式.';
 
     # Template: AgentITSMWorkOrderAddFromTemplate
     $Self->{Translation}->{'Select Workorder Template'} = '選擇工作指令模板';
+
+    # Template: AgentITSMWorkOrderAgent
+    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '';
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = '你確定要刪除這個工作指令嗎?';
@@ -216,11 +224,17 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = '此工作指令出現在下列條件中';
 
     # Template: AgentITSMWorkOrderEdit
+    $Self->{Translation}->{'Edit %s%s-%s'} = '';
     $Self->{Translation}->{'Move following workorders accordingly'} = '相應的移動工作指令';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         '如果該工作指令的計劃結束時間改變了，所有後續工作指令的計劃開始時間將相應的改變';
 
+    # Template: AgentITSMWorkOrderHistory
+    $Self->{Translation}->{'History of %s%s-%s'} = '';
+
     # Template: AgentITSMWorkOrderReport
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Report'} = '報告';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = '實際開始時間必須在實際結束時間之前!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
         '設置實際結束時間後必須設置實際開始時間!';
@@ -245,7 +259,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         '';
     $Self->{Translation}->{'Was not able to add change!'} = '';
@@ -322,8 +335,13 @@ sub Data {
         '';
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'unknown change title'} = '';
+    $Self->{Translation}->{'ITSM Workorder'} = '工作指令';
     $Self->{Translation}->{'unknown workorder title'} = '';
     $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
+    $Self->{Translation}->{'PlannedStartTime'} = '計劃開始時間';
+    $Self->{Translation}->{'PlannedEndTime'} = '計劃結束時間';
+    $Self->{Translation}->{'ActualStartTime'} = '實際開始時間';
+    $Self->{Translation}->{'ActualEndTime'} = '實際結束時間';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
@@ -334,29 +352,22 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
     $Self->{Translation}->{'Change Search'} = '';
+    $Self->{Translation}->{'ChangeTitle'} = '變更標题';
     $Self->{Translation}->{'WorkOrders'} = '工作指令';
+    $Self->{Translation}->{'ChangeState'} = '變更狀態';
     $Self->{Translation}->{'Change Search Result'} = '';
     $Self->{Translation}->{'Change Number'} = '';
-    $Self->{Translation}->{'Change Title'} = '';
     $Self->{Translation}->{'Work Order Title'} = '';
-    $Self->{Translation}->{'CAB Agent'} = '';
-    $Self->{Translation}->{'CAB Customer'} = '';
     $Self->{Translation}->{'Change Description'} = '';
     $Self->{Translation}->{'Change Justification'} = '';
     $Self->{Translation}->{'WorkOrder Instruction'} = '';
     $Self->{Translation}->{'WorkOrder Report'} = '';
     $Self->{Translation}->{'Change Priority'} = '';
     $Self->{Translation}->{'Change Impact'} = '';
-    $Self->{Translation}->{'Change State'} = '';
     $Self->{Translation}->{'Created By'} = '';
     $Self->{Translation}->{'WorkOrder State'} = '';
     $Self->{Translation}->{'WorkOrder Type'} = '';
     $Self->{Translation}->{'WorkOrder Agent'} = '';
-    $Self->{Translation}->{'Planned Start Time'} = '計劃開始時間';
-    $Self->{Translation}->{'Planned End Time'} = '計劃結束時間';
-    $Self->{Translation}->{'Actual Start Time'} = '確實開始時間';
-    $Self->{Translation}->{'Actual End Time'} = '確實結束時間';
-    $Self->{Translation}->{'Change Time'} = '變更時間';
     $Self->{Translation}->{'before'} = '之前';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
@@ -769,6 +780,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         '';
+    $Self->{Translation}->{'ITSMChange'} = '變更';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSM工作指令';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
@@ -942,7 +954,6 @@ sub Data {
     $Self->{Translation}->{'User Search'} = '';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
     $Self->{Translation}->{'Workorder Add.'} = '';
-    $Self->{Translation}->{'Workorder Agent'} = '';
     $Self->{Translation}->{'Workorder Agent.'} = '';
     $Self->{Translation}->{'Workorder Delete.'} = '';
     $Self->{Translation}->{'Workorder Edit.'} = '';

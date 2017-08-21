@@ -89,19 +89,23 @@ sub Data {
     # Template: AgentITSMChangeDelete
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Kweli unataka kufuta mabadiliko haya?';
 
+    # Template: AgentITSMChangeEdit
+    $Self->{Translation}->{'Edit %s%s'} = '';
+
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of'} = 'Historia ya';
+    $Self->{Translation}->{'History of %s%s'} = '';
     $Self->{Translation}->{'Workorder'} = 'Oda ya kazi';
     $Self->{Translation}->{'Show details'} = 'Onyesha undani';
     $Self->{Translation}->{'Show workorder'} = 'Onyesha oda ya kazi';
 
     # Template: AgentITSMChangeHistoryZoom
-    $Self->{Translation}->{'Detailed history information of'} = 'Undani wa taarifa ya historia ya';
+    $Self->{Translation}->{'Detailed history information of %s'} = '';
     $Self->{Translation}->{'Modified'} = 'Rekebishwa';
     $Self->{Translation}->{'Old Value'} = 'Thamani ya Zamani';
     $Self->{Translation}->{'New Value'} = 'Thamani Mpya';
 
     # Template: AgentITSMChangeInvolvedPersons
+    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '';
     $Self->{Translation}->{'Involved Persons'} = 'Watu waliohusika';
     $Self->{Translation}->{'ChangeManager'} = 'MenejaMabadiliko';
     $Self->{Translation}->{'User invalid.'} = 'Mtumiaji batili.';
@@ -120,30 +124,33 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = 'Mabadiliko kwa kurasa';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'WorkOrderTitle'} = 'Kichwa cha habari cha Oda ya Kazi';
-    $Self->{Translation}->{'ChangeTitle'} = 'Badili Kicha cha Habari';
-    $Self->{Translation}->{'WorkOrderAgent'} = 'WakalaWaOdaYaKazi';
+    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Change Title'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Change Builder'} = 'Meneja Mjenzi';
+    $Self->{Translation}->{'Change Manager'} = 'Meneja Mabadiliko';
     $Self->{Translation}->{'Workorders'} = 'Oda za kazi';
-    $Self->{Translation}->{'ChangeState'} = 'BadiliHali';
-    $Self->{Translation}->{'WorkOrderState'} = 'HaliYaOdaYaKazi';
-    $Self->{Translation}->{'WorkOrderType'} = 'AinaYaOdaYaKazi';
+    $Self->{Translation}->{'Change State'} = '';
+    $Self->{Translation}->{'Workorder State'} = '';
+    $Self->{Translation}->{'Workorder Type'} = '';
     $Self->{Translation}->{'Requested Time'} = 'Muda Ulioombwa';
-    $Self->{Translation}->{'PlannedStartTime'} = 'MudaKuanzaUliopangwa';
-    $Self->{Translation}->{'PlannedEndTime'} = 'MudaKuishaUliopangwa';
-    $Self->{Translation}->{'ActualStartTime'} = 'MudaHalisiKuanza';
-    $Self->{Translation}->{'ActualEndTime'} = 'MudaHalisiKumaliza';
+    $Self->{Translation}->{'Planned Start Time'} = '';
+    $Self->{Translation}->{'Planned End Time'} = '';
+    $Self->{Translation}->{'Actual Start Time'} = '';
+    $Self->{Translation}->{'Actual End Time'} = '';
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = 'Kweli unataka kuweka upya mabadiliko haya?';
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(mf. 10*5155 au 105658*)';
-    $Self->{Translation}->{'CABAgent'} = 'WakalaCAB';
+    $Self->{Translation}->{'CAB Agent'} = '';
     $Self->{Translation}->{'e.g.'} = 'mf.';
-    $Self->{Translation}->{'CABCustomer'} = 'MtejaCAB';
-    $Self->{Translation}->{'ITSM Workorder'} = 'Oda ya kazi ya ITSM';
-    $Self->{Translation}->{'Instruction'} = 'Melekezo';
-    $Self->{Translation}->{'Report'} = 'Ripoti';
+    $Self->{Translation}->{'CAB Customer'} = '';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
+    $Self->{Translation}->{'ITSM Workorder Report'} = '';
+    $Self->{Translation}->{'ITSM Change Priority'} = '';
+    $Self->{Translation}->{'ITSM Change Impact'} = '';
     $Self->{Translation}->{'Change Category'} = 'Badili Kategoria';
     $Self->{Translation}->{'(before/after)'} = '(kabla/baada)';
     $Self->{Translation}->{'(between)'} = '(katikati)';
@@ -161,15 +168,13 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = 'Badili Taarifa';
-    $Self->{Translation}->{'PlannedEffort'} = 'JuhudiIliyopangwa';
+    $Self->{Translation}->{'Planned Effort'} = '';
+    $Self->{Translation}->{'Accounted Time'} = '';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Badili Vianzishi';
-    $Self->{Translation}->{'Change Manager'} = 'Meneja Mabadiliko';
-    $Self->{Translation}->{'Change Builder'} = 'Meneja Mjenzi';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Mara ya mwisho imebadilishwa';
     $Self->{Translation}->{'Last changed by'} = 'Mara ya mwisho imebadilishwa na';
     $Self->{Translation}->{'Ok'} = 'Sawa';
-    $Self->{Translation}->{'ITSMChange'} = 'BadiliITSM';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = 'Pakua Kiambatanisho';
@@ -191,23 +196,26 @@ sub Data {
     $Self->{Translation}->{'Do you want to proceed?'} = 'Unataka kuendelea?';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'TemplateID'} = 'Kitambulisho cha Kiolezo';
+    $Self->{Translation}->{'Template ID'} = '';
     $Self->{Translation}->{'Edit Content'} = 'Hariri Maudhui';
-    $Self->{Translation}->{'CreateBy'} = 'TengenezaNa';
-    $Self->{Translation}->{'CreateTime'} = 'TengenezaMuda';
-    $Self->{Translation}->{'ChangeBy'} = 'BadiliNa';
-    $Self->{Translation}->{'ChangeTime'} = 'BadilishaMuda';
+    $Self->{Translation}->{'Create by'} = '';
+    $Self->{Translation}->{'Change by'} = '';
+    $Self->{Translation}->{'Change Time'} = '';
     $Self->{Translation}->{'Edit Template Content'} = 'Hariri Maudhui ya Kiolezo';
     $Self->{Translation}->{'Delete Template'} = 'Futa Kiolezo';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to'} = 'Ongeza Oda ya kazi kwenye';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Instruction'} = 'Melekezo';
     $Self->{Translation}->{'Invalid workorder type.'} = 'Aina batili ya oda ya kazi';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'Muda uliopangwa wa kuanza unatakiwa kuwa kabla ya muda uliopangwa wa kumaliza!';
     $Self->{Translation}->{'Invalid format.'} = 'Umbizo batili.';
 
     # Template: AgentITSMWorkOrderAddFromTemplate
     $Self->{Translation}->{'Select Workorder Template'} = 'Chagua Kiolezo cha Oda ya kazi';
+
+    # Template: AgentITSMWorkOrderAgent
+    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '';
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Kweli unataka kufuta oda hii ya kazi?';
@@ -216,11 +224,17 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Hii oda ya kazi inatumika kwenye Masharti yafuatayo.';
 
     # Template: AgentITSMWorkOrderEdit
+    $Self->{Translation}->{'Edit %s%s-%s'} = '';
     $Self->{Translation}->{'Move following workorders accordingly'} = 'Hamisha oda za kazi zifuatazo ipasavyo';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         'Kama muda wa kumaliza wa oda ya kazi hii umebadilishwa, muda wa kuanza wa oda za kazi zote zinazofuata zitabadilika';
 
+    # Template: AgentITSMWorkOrderHistory
+    $Self->{Translation}->{'History of %s%s-%s'} = '';
+
     # Template: AgentITSMWorkOrderReport
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Report'} = 'Ripoti';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'Muda halisi wa kuanza lazima uwe kabla ya muda halisi wa kumaliza!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
         'Muda halisi wa kuanza lazima usetiwe, pale muda wa kumaliza umesetiwa!';
@@ -245,7 +259,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = '';
-    $Self->{Translation}->{'Please contact the admin.'} = '';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         '';
     $Self->{Translation}->{'Was not able to add change!'} = '';
@@ -322,8 +335,13 @@ sub Data {
         '';
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'unknown change title'} = '';
+    $Self->{Translation}->{'ITSM Workorder'} = 'Oda ya kazi ya ITSM';
     $Self->{Translation}->{'unknown workorder title'} = '';
     $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
+    $Self->{Translation}->{'PlannedStartTime'} = 'MudaKuanzaUliopangwa';
+    $Self->{Translation}->{'PlannedEndTime'} = 'MudaKuishaUliopangwa';
+    $Self->{Translation}->{'ActualStartTime'} = 'MudaHalisiKuanza';
+    $Self->{Translation}->{'ActualEndTime'} = 'MudaHalisiKumaliza';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
@@ -334,29 +352,22 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
     $Self->{Translation}->{'Change Search'} = '';
+    $Self->{Translation}->{'ChangeTitle'} = 'Badili Kicha cha Habari';
     $Self->{Translation}->{'WorkOrders'} = 'Oda za kazi';
+    $Self->{Translation}->{'ChangeState'} = 'BadiliHali';
     $Self->{Translation}->{'Change Search Result'} = '';
     $Self->{Translation}->{'Change Number'} = '';
-    $Self->{Translation}->{'Change Title'} = '';
     $Self->{Translation}->{'Work Order Title'} = '';
-    $Self->{Translation}->{'CAB Agent'} = '';
-    $Self->{Translation}->{'CAB Customer'} = '';
     $Self->{Translation}->{'Change Description'} = '';
     $Self->{Translation}->{'Change Justification'} = '';
     $Self->{Translation}->{'WorkOrder Instruction'} = '';
     $Self->{Translation}->{'WorkOrder Report'} = '';
     $Self->{Translation}->{'Change Priority'} = '';
     $Self->{Translation}->{'Change Impact'} = '';
-    $Self->{Translation}->{'Change State'} = '';
     $Self->{Translation}->{'Created By'} = '';
     $Self->{Translation}->{'WorkOrder State'} = '';
     $Self->{Translation}->{'WorkOrder Type'} = '';
     $Self->{Translation}->{'WorkOrder Agent'} = '';
-    $Self->{Translation}->{'Planned Start Time'} = '';
-    $Self->{Translation}->{'Planned End Time'} = '';
-    $Self->{Translation}->{'Actual Start Time'} = '';
-    $Self->{Translation}->{'Actual End Time'} = '';
-    $Self->{Translation}->{'Change Time'} = '';
     $Self->{Translation}->{'before'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
@@ -769,6 +780,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'Moduli ya matukio ya ITSM inayopiga upya hesabu ya nambari ya oda za kazi.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'Moduli ya matukio ya ITSM inayoseti muda halisi wa kuanza na kumaliza oda za kazi.';
+    $Self->{Translation}->{'ITSMChange'} = 'BadiliITSM';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMOdaYaKazi';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
@@ -942,7 +954,6 @@ sub Data {
     $Self->{Translation}->{'User Search'} = '';
     $Self->{Translation}->{'Workorder Add (from template).'} = '';
     $Self->{Translation}->{'Workorder Add.'} = '';
-    $Self->{Translation}->{'Workorder Agent'} = '';
     $Self->{Translation}->{'Workorder Agent.'} = '';
     $Self->{Translation}->{'Workorder Delete.'} = '';
     $Self->{Translation}->{'Workorder Edit.'} = '';

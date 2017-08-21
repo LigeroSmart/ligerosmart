@@ -89,19 +89,23 @@ sub Data {
     # Template: AgentITSMChangeDelete
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Do you really want to delete this change?';
 
+    # Template: AgentITSMChangeEdit
+    $Self->{Translation}->{'Edit %s%s'} = '';
+
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of'} = 'History of';
+    $Self->{Translation}->{'History of %s%s'} = '';
     $Self->{Translation}->{'Workorder'} = 'Workorder';
     $Self->{Translation}->{'Show details'} = 'Show details';
     $Self->{Translation}->{'Show workorder'} = 'Show workorder';
 
     # Template: AgentITSMChangeHistoryZoom
-    $Self->{Translation}->{'Detailed history information of'} = 'Detailed history information of';
+    $Self->{Translation}->{'Detailed history information of %s'} = '';
     $Self->{Translation}->{'Modified'} = 'Modified';
     $Self->{Translation}->{'Old Value'} = 'Old Value';
     $Self->{Translation}->{'New Value'} = 'New Value';
 
     # Template: AgentITSMChangeInvolvedPersons
+    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '';
     $Self->{Translation}->{'Involved Persons'} = 'Involved Persons';
     $Self->{Translation}->{'ChangeManager'} = 'Change Manager';
     $Self->{Translation}->{'User invalid.'} = 'User invalid.';
@@ -120,30 +124,33 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = 'Changes per page';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'WorkOrderTitle'} = 'Workorder Title';
-    $Self->{Translation}->{'ChangeTitle'} = 'Change Title';
-    $Self->{Translation}->{'WorkOrderAgent'} = 'Workorder Agent';
+    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Change Title'} = 'Change Title';
+    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Change Builder'} = 'Change Builder';
+    $Self->{Translation}->{'Change Manager'} = 'Change Manager';
     $Self->{Translation}->{'Workorders'} = 'Workorders';
-    $Self->{Translation}->{'ChangeState'} = 'Change State';
-    $Self->{Translation}->{'WorkOrderState'} = 'Workorder State';
-    $Self->{Translation}->{'WorkOrderType'} = 'Workorder Type';
+    $Self->{Translation}->{'Change State'} = 'Change State';
+    $Self->{Translation}->{'Workorder State'} = '';
+    $Self->{Translation}->{'Workorder Type'} = '';
     $Self->{Translation}->{'Requested Time'} = 'Requested Time';
-    $Self->{Translation}->{'PlannedStartTime'} = 'Planned Start';
-    $Self->{Translation}->{'PlannedEndTime'} = 'Planned End';
-    $Self->{Translation}->{'ActualStartTime'} = 'Actual Start';
-    $Self->{Translation}->{'ActualEndTime'} = 'Actual End';
+    $Self->{Translation}->{'Planned Start Time'} = 'Planned Start Time';
+    $Self->{Translation}->{'Planned End Time'} = 'Planned End Time';
+    $Self->{Translation}->{'Actual Start Time'} = 'Actual Start Time';
+    $Self->{Translation}->{'Actual End Time'} = 'Actual End Time';
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = 'Do you really want to reset this change?';
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(e.g. 10*5155 or 105658*)';
-    $Self->{Translation}->{'CABAgent'} = 'CAB Agent';
+    $Self->{Translation}->{'CAB Agent'} = 'CAB Agent';
     $Self->{Translation}->{'e.g.'} = 'e.g.';
-    $Self->{Translation}->{'CABCustomer'} = 'CAB Customer';
-    $Self->{Translation}->{'ITSM Workorder'} = 'Workorder';
-    $Self->{Translation}->{'Instruction'} = 'Instruction';
-    $Self->{Translation}->{'Report'} = 'Report';
+    $Self->{Translation}->{'CAB Customer'} = 'CAB Customer';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
+    $Self->{Translation}->{'ITSM Workorder Report'} = '';
+    $Self->{Translation}->{'ITSM Change Priority'} = '';
+    $Self->{Translation}->{'ITSM Change Impact'} = '';
     $Self->{Translation}->{'Change Category'} = 'Change Category';
     $Self->{Translation}->{'(before/after)'} = '(before/after)';
     $Self->{Translation}->{'(between)'} = '(between)';
@@ -161,15 +168,13 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = 'Change Information';
-    $Self->{Translation}->{'PlannedEffort'} = 'Planned Effort';
+    $Self->{Translation}->{'Planned Effort'} = '';
+    $Self->{Translation}->{'Accounted Time'} = '';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Change Initiator(s)';
-    $Self->{Translation}->{'Change Manager'} = 'Change Manager';
-    $Self->{Translation}->{'Change Builder'} = 'Change Builder';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Last changed';
     $Self->{Translation}->{'Last changed by'} = 'Last changed by';
     $Self->{Translation}->{'Ok'} = 'Ok';
-    $Self->{Translation}->{'ITSMChange'} = 'Change';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).';
     $Self->{Translation}->{'Download Attachment'} = 'Download Attachment';
@@ -191,23 +196,26 @@ sub Data {
     $Self->{Translation}->{'Do you want to proceed?'} = 'Do you want to proceed?';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'TemplateID'} = 'TemplateID';
+    $Self->{Translation}->{'Template ID'} = '';
     $Self->{Translation}->{'Edit Content'} = 'Edit Content';
-    $Self->{Translation}->{'CreateBy'} = 'Created by';
-    $Self->{Translation}->{'CreateTime'} = 'Created';
-    $Self->{Translation}->{'ChangeBy'} = 'Changed by';
-    $Self->{Translation}->{'ChangeTime'} = 'Changed';
+    $Self->{Translation}->{'Create by'} = '';
+    $Self->{Translation}->{'Change by'} = '';
+    $Self->{Translation}->{'Change Time'} = 'Change Time';
     $Self->{Translation}->{'Edit Template Content'} = 'Edit Template Content';
     $Self->{Translation}->{'Delete Template'} = 'Delete Template';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to'} = 'Add Workorder to';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Instruction'} = 'Instruction';
     $Self->{Translation}->{'Invalid workorder type.'} = 'Invalid workorder type.';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'The planned start time must be before the planned end time!';
     $Self->{Translation}->{'Invalid format.'} = 'Invalid format.';
 
     # Template: AgentITSMWorkOrderAddFromTemplate
     $Self->{Translation}->{'Select Workorder Template'} = 'Select Workorder Template';
+
+    # Template: AgentITSMWorkOrderAgent
+    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '';
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Do you really want to delete this workorder?';
@@ -216,11 +224,17 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'This Workorder is used in the following Condition(s)';
 
     # Template: AgentITSMWorkOrderEdit
+    $Self->{Translation}->{'Edit %s%s-%s'} = '';
     $Self->{Translation}->{'Move following workorders accordingly'} = 'Move following workorders accordingly';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly';
 
+    # Template: AgentITSMWorkOrderHistory
+    $Self->{Translation}->{'History of %s%s-%s'} = '';
+
     # Template: AgentITSMWorkOrderReport
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Report'} = 'Report';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'The actual start time must be before the actual end time!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
         'The actual start time must be set, when the actual end time is set!';
@@ -245,7 +259,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'Ticket with TicketID %s does not exist!';
-    $Self->{Translation}->{'Please contact the admin.'} = 'Please contact the admin.';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!';
     $Self->{Translation}->{'Was not able to add change!'} = 'Was not able to add change!';
@@ -322,8 +335,13 @@ sub Data {
         'Can\'t create output, as the workorder is not attached to a change!';
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Can\'t create output, as no ChangeID is given!';
     $Self->{Translation}->{'unknown change title'} = 'unknown change title';
+    $Self->{Translation}->{'ITSM Workorder'} = 'Workorder';
     $Self->{Translation}->{'unknown workorder title'} = 'unknown workorder title';
     $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM Workorder Overview (%s)';
+    $Self->{Translation}->{'PlannedStartTime'} = 'Planned Start';
+    $Self->{Translation}->{'PlannedEndTime'} = 'Planned End';
+    $Self->{Translation}->{'ActualStartTime'} = 'Actual Start';
+    $Self->{Translation}->{'ActualEndTime'} = 'Actual End';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = 'Was not able to reset WorkOrder %s of Change %s!';
@@ -334,29 +352,22 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
     $Self->{Translation}->{'Change Search'} = 'Change Search';
+    $Self->{Translation}->{'ChangeTitle'} = 'Change Title';
     $Self->{Translation}->{'WorkOrders'} = 'WorkOrders';
+    $Self->{Translation}->{'ChangeState'} = 'Change State';
     $Self->{Translation}->{'Change Search Result'} = 'Change Search Result';
     $Self->{Translation}->{'Change Number'} = 'Change Number';
-    $Self->{Translation}->{'Change Title'} = 'Change Title';
     $Self->{Translation}->{'Work Order Title'} = 'Work Order Title';
-    $Self->{Translation}->{'CAB Agent'} = 'CAB Agent';
-    $Self->{Translation}->{'CAB Customer'} = 'CAB Customer';
     $Self->{Translation}->{'Change Description'} = 'Change Description';
     $Self->{Translation}->{'Change Justification'} = 'Change Justification';
     $Self->{Translation}->{'WorkOrder Instruction'} = 'WorkOrder Instruction';
     $Self->{Translation}->{'WorkOrder Report'} = 'WorkOrder Report';
     $Self->{Translation}->{'Change Priority'} = 'Change Priority';
     $Self->{Translation}->{'Change Impact'} = 'Change Impact';
-    $Self->{Translation}->{'Change State'} = 'Change State';
     $Self->{Translation}->{'Created By'} = 'Created By';
     $Self->{Translation}->{'WorkOrder State'} = 'WorkOrder State';
     $Self->{Translation}->{'WorkOrder Type'} = 'WorkOrder Type';
     $Self->{Translation}->{'WorkOrder Agent'} = 'WorkOrder Agent';
-    $Self->{Translation}->{'Planned Start Time'} = 'Planned Start Time';
-    $Self->{Translation}->{'Planned End Time'} = 'Planned End Time';
-    $Self->{Translation}->{'Actual Start Time'} = 'Actual Start Time';
-    $Self->{Translation}->{'Actual End Time'} = 'Actual End Time';
-    $Self->{Translation}->{'Change Time'} = 'Change Time';
     $Self->{Translation}->{'before'} = 'before';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
@@ -769,6 +780,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'ITSM event module to recalculate the workorder numbers.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'ITSM event module to set the actual start and end times of workorders.';
+    $Self->{Translation}->{'ITSMChange'} = 'Change';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'Workorder';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).';
@@ -942,7 +954,6 @@ sub Data {
     $Self->{Translation}->{'User Search'} = 'User Search';
     $Self->{Translation}->{'Workorder Add (from template).'} = 'Workorder Add (from template).';
     $Self->{Translation}->{'Workorder Add.'} = 'Workorder Add.';
-    $Self->{Translation}->{'Workorder Agent'} = '';
     $Self->{Translation}->{'Workorder Agent.'} = 'Workorder Agent.';
     $Self->{Translation}->{'Workorder Delete.'} = 'Workorder Delete.';
     $Self->{Translation}->{'Workorder Edit.'} = 'Workorder Edit.';

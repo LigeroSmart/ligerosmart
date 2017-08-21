@@ -89,19 +89,23 @@ sub Data {
     # Template: AgentITSMChangeDelete
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Valóban törölni szeretné ezt a változást?';
 
+    # Template: AgentITSMChangeEdit
+    $Self->{Translation}->{'Edit %s%s'} = '';
+
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of'} = 'Előzmények';
+    $Self->{Translation}->{'History of %s%s'} = '';
     $Self->{Translation}->{'Workorder'} = 'Munkamegrendelés';
     $Self->{Translation}->{'Show details'} = 'Részletek megjelenítése';
     $Self->{Translation}->{'Show workorder'} = 'Munkamegrendelés megjelenítése';
 
     # Template: AgentITSMChangeHistoryZoom
-    $Self->{Translation}->{'Detailed history information of'} = 'Részletes előzmény információk:';
+    $Self->{Translation}->{'Detailed history information of %s'} = '';
     $Self->{Translation}->{'Modified'} = 'Módosítva';
     $Self->{Translation}->{'Old Value'} = 'Régi érték';
     $Self->{Translation}->{'New Value'} = 'Új érték';
 
     # Template: AgentITSMChangeInvolvedPersons
+    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '';
     $Self->{Translation}->{'Involved Persons'} = 'Résztvevő személyek';
     $Self->{Translation}->{'ChangeManager'} = 'Változásmenedzser';
     $Self->{Translation}->{'User invalid.'} = 'Érvénytelen felhasználó.';
@@ -120,30 +124,33 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = 'Oldalankénti változások';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'WorkOrderTitle'} = 'Munkamegrendelés cím';
-    $Self->{Translation}->{'ChangeTitle'} = 'Változáscím';
-    $Self->{Translation}->{'WorkOrderAgent'} = 'Munkamegrendelés ügyintéző';
+    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Change Title'} = 'Változáscím';
+    $Self->{Translation}->{'Workorder Agent'} = 'Munkamegrendelés ügyintézője';
+    $Self->{Translation}->{'Change Builder'} = 'Változás-összeállító';
+    $Self->{Translation}->{'Change Manager'} = 'Változásmenedzser';
     $Self->{Translation}->{'Workorders'} = 'Munkamegrendelések';
-    $Self->{Translation}->{'ChangeState'} = 'Változásállapot';
-    $Self->{Translation}->{'WorkOrderState'} = 'Munkamegrendelés-állapot';
-    $Self->{Translation}->{'WorkOrderType'} = 'Munkamegrendelés-típus';
+    $Self->{Translation}->{'Change State'} = 'Változásállapot';
+    $Self->{Translation}->{'Workorder State'} = '';
+    $Self->{Translation}->{'Workorder Type'} = '';
     $Self->{Translation}->{'Requested Time'} = 'Kért idő';
-    $Self->{Translation}->{'PlannedStartTime'} = 'Tervezett kezdési idő';
-    $Self->{Translation}->{'PlannedEndTime'} = 'Tervezett befejezési idő';
-    $Self->{Translation}->{'ActualStartTime'} = 'Tényleges kezdési idő';
-    $Self->{Translation}->{'ActualEndTime'} = 'Tényleges befejezési idő';
+    $Self->{Translation}->{'Planned Start Time'} = 'Tervezett kezdési idő';
+    $Self->{Translation}->{'Planned End Time'} = 'Tervezett befejezési idő';
+    $Self->{Translation}->{'Actual Start Time'} = 'Tényleges kezdési idő';
+    $Self->{Translation}->{'Actual End Time'} = 'Tényleges befejezési idő';
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = 'Valóban vissza szeretné állítani ezt a változást?';
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(például 10*5155 vagy 105658*)';
-    $Self->{Translation}->{'CABAgent'} = 'CAB ügyintéző';
+    $Self->{Translation}->{'CAB Agent'} = 'CAB-ügyintéző';
     $Self->{Translation}->{'e.g.'} = 'például';
-    $Self->{Translation}->{'CABCustomer'} = 'CAB ügyfél';
-    $Self->{Translation}->{'ITSM Workorder'} = 'ITSM munkamegrendelés';
-    $Self->{Translation}->{'Instruction'} = 'Utasítás';
-    $Self->{Translation}->{'Report'} = 'Jelentés';
+    $Self->{Translation}->{'CAB Customer'} = 'CAB-ügyfél';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
+    $Self->{Translation}->{'ITSM Workorder Report'} = '';
+    $Self->{Translation}->{'ITSM Change Priority'} = '';
+    $Self->{Translation}->{'ITSM Change Impact'} = '';
     $Self->{Translation}->{'Change Category'} = 'Kategória módosítása';
     $Self->{Translation}->{'(before/after)'} = '(előtt/után)';
     $Self->{Translation}->{'(between)'} = '(között)';
@@ -161,15 +168,13 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = 'Változás információk';
-    $Self->{Translation}->{'PlannedEffort'} = 'Tervezett ráfordítás';
+    $Self->{Translation}->{'Planned Effort'} = '';
+    $Self->{Translation}->{'Accounted Time'} = '';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Változáskezdeményezők';
-    $Self->{Translation}->{'Change Manager'} = 'Változásmenedzser';
-    $Self->{Translation}->{'Change Builder'} = 'Változás-összeállító';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Utoljára módosítva';
     $Self->{Translation}->{'Last changed by'} = 'Utoljára módosította';
     $Self->{Translation}->{'Ok'} = 'OK';
-    $Self->{Translation}->{'ITSMChange'} = 'ITSM változás';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'A következő leírásblokkokban lévő hivatkozások megnyitásához lehet, hogy meg kell nyomnia a Ctrl vagy a Cmd vagy a Shift billentyűt, miközben a hivatkozásra kattint (a böngészőjétől és az operációs rendszerétől függően).';
     $Self->{Translation}->{'Download Attachment'} = 'Melléklet letöltése';
@@ -191,23 +196,26 @@ sub Data {
     $Self->{Translation}->{'Do you want to proceed?'} = 'Szeretné folytatni?';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'TemplateID'} = 'Sablon-azonosító';
+    $Self->{Translation}->{'Template ID'} = '';
     $Self->{Translation}->{'Edit Content'} = 'Tartalom szerkesztése';
-    $Self->{Translation}->{'CreateBy'} = 'Létrehozta';
-    $Self->{Translation}->{'CreateTime'} = 'Létrehozás ideje';
-    $Self->{Translation}->{'ChangeBy'} = 'Módosította';
-    $Self->{Translation}->{'ChangeTime'} = 'Módosítás ideje';
+    $Self->{Translation}->{'Create by'} = '';
+    $Self->{Translation}->{'Change by'} = '';
+    $Self->{Translation}->{'Change Time'} = 'Idő megváltoztatása';
     $Self->{Translation}->{'Edit Template Content'} = 'Sablontartalom szerkesztése';
     $Self->{Translation}->{'Delete Template'} = 'Sablon törlése';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to'} = 'Munkamegrendelés hozzáadása ehhez:';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Instruction'} = 'Utasítás';
     $Self->{Translation}->{'Invalid workorder type.'} = 'Érvénytelen munkamegrendelés-típus.';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'A tervezett kezdési időnek a tervezett befejezési idő előtt kell lennie!';
     $Self->{Translation}->{'Invalid format.'} = 'Érvénytelen formátum.';
 
     # Template: AgentITSMWorkOrderAddFromTemplate
     $Self->{Translation}->{'Select Workorder Template'} = 'Munkamegrendelés-sablon kiválasztása';
+
+    # Template: AgentITSMWorkOrderAgent
+    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '';
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Valóban törölni szeretné ezt a munkamegrendelést?';
@@ -216,11 +224,17 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Ezt a munkamegrendelést a következő feltételekben használják';
 
     # Template: AgentITSMWorkOrderEdit
+    $Self->{Translation}->{'Edit %s%s-%s'} = '';
     $Self->{Translation}->{'Move following workorders accordingly'} = 'A követő munkamegrendelések áthelyezése eszerint';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         'Ha ennek a munkamegrendelésnek megváltozik a tervezett befejezési ideje, akkor az összes azt követő munkamegrendelés tervezett kezdési ideje is meg fog változni eszerint';
 
+    # Template: AgentITSMWorkOrderHistory
+    $Self->{Translation}->{'History of %s%s-%s'} = '';
+
     # Template: AgentITSMWorkOrderReport
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Report'} = 'Jelentés';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'A tényleges kezdési időnek a tényleges befejezési idő előtt kell lennie!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
         'A tényleges kezdési időnek beállítva kell lennie, amikor a tényleges befejezési idő be van állítva!';
@@ -245,7 +259,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'A(z) %s jegyazonosítóval rendelkező jegy nem létezik!';
-    $Self->{Translation}->{'Please contact the admin.'} = 'Vegye fel a kapcsolatot a rendszergazdával.';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
         'Hiányzó „ITSMChange::AddChangeLinkTicketTypes” rendszerbeállítási lehetőség!';
     $Self->{Translation}->{'Was not able to add change!'} = 'Nem sikerült a változás hozzáadása!';
@@ -322,8 +335,13 @@ sub Data {
         'Nem lehet létrehozni a kimenetet, mivel a munkamegrendelés nincs csatolva egy változáshoz!';
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Nem lehet létrehozni a kimenetet, mivel nincs változásazonosító megadva!';
     $Self->{Translation}->{'unknown change title'} = 'ismeretlen változáscím';
+    $Self->{Translation}->{'ITSM Workorder'} = 'ITSM munkamegrendelés';
     $Self->{Translation}->{'unknown workorder title'} = 'ismeretlen munkamegrendelés-cím';
     $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM munkamegrendelés áttekintés (%s)';
+    $Self->{Translation}->{'PlannedStartTime'} = 'Tervezett kezdési idő';
+    $Self->{Translation}->{'PlannedEndTime'} = 'Tervezett befejezési idő';
+    $Self->{Translation}->{'ActualStartTime'} = 'Tényleges kezdési idő';
+    $Self->{Translation}->{'ActualEndTime'} = 'Tényleges befejezési idő';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = 'Nem sikerült a(z) %s munkamegrendelés visszaállítása a(z) %s változásnál!';
@@ -334,29 +352,22 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
     $Self->{Translation}->{'Change Search'} = 'Változáskeresés';
+    $Self->{Translation}->{'ChangeTitle'} = 'Változáscím';
     $Self->{Translation}->{'WorkOrders'} = 'Munkamegrendelések';
+    $Self->{Translation}->{'ChangeState'} = 'Változásállapot';
     $Self->{Translation}->{'Change Search Result'} = 'Változáskeresési eredmények';
     $Self->{Translation}->{'Change Number'} = 'Változásszám';
-    $Self->{Translation}->{'Change Title'} = 'Változáscím';
     $Self->{Translation}->{'Work Order Title'} = 'Munkamegrendelés-cím';
-    $Self->{Translation}->{'CAB Agent'} = 'CAB-ügyintéző';
-    $Self->{Translation}->{'CAB Customer'} = 'CAB-ügyfél';
     $Self->{Translation}->{'Change Description'} = 'Változásleírás';
     $Self->{Translation}->{'Change Justification'} = 'Változásindoklás';
     $Self->{Translation}->{'WorkOrder Instruction'} = 'Munkamegrendelés-utasítás';
     $Self->{Translation}->{'WorkOrder Report'} = 'Munkamegrendelés-jelentés';
     $Self->{Translation}->{'Change Priority'} = 'Változásprioritás';
     $Self->{Translation}->{'Change Impact'} = 'Változáshatás';
-    $Self->{Translation}->{'Change State'} = 'Változásállapot';
     $Self->{Translation}->{'Created By'} = 'Létrehozta';
     $Self->{Translation}->{'WorkOrder State'} = 'Munkamegrendelés-állapot';
     $Self->{Translation}->{'WorkOrder Type'} = 'Munkamegrendelés-típus';
     $Self->{Translation}->{'WorkOrder Agent'} = 'Munkamegrendelés-ügyintéző';
-    $Self->{Translation}->{'Planned Start Time'} = 'Tervezett kezdési idő';
-    $Self->{Translation}->{'Planned End Time'} = 'Tervezett befejezési idő';
-    $Self->{Translation}->{'Actual Start Time'} = 'Tényleges kezdési idő';
-    $Self->{Translation}->{'Actual End Time'} = 'Tényleges befejezési idő';
-    $Self->{Translation}->{'Change Time'} = 'Idő megváltoztatása';
     $Self->{Translation}->{'before'} = 'előtt';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
@@ -769,6 +780,7 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'ITSM eseménymodul a munkamegrendelés számainak újraszámolásához.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'ITSM eseménymodul a munkamegrendelések tényleges kezdési és befejezési idejének beállításához.';
+    $Self->{Translation}->{'ITSMChange'} = 'ITSM változás';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSM munkamegrendelés';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         'Ha a gyakoriság „rendszeresen”, akkor beállíthatja, hogy az értesítések milyen gyakran legyenek elküldve (minden X. órában).';
@@ -942,7 +954,6 @@ sub Data {
     $Self->{Translation}->{'User Search'} = 'Felhasználókeresés';
     $Self->{Translation}->{'Workorder Add (from template).'} = 'Munkamegrendelés hozzáadása (sablonból).';
     $Self->{Translation}->{'Workorder Add.'} = 'Munkamegrendelés hozzáadása.';
-    $Self->{Translation}->{'Workorder Agent'} = 'Munkamegrendelés ügyintézője';
     $Self->{Translation}->{'Workorder Agent.'} = 'Munkamegrendelés ügyintézője.';
     $Self->{Translation}->{'Workorder Delete.'} = 'Munkamegrendelés törlése.';
     $Self->{Translation}->{'Workorder Edit.'} = 'Munkamegrendelés szerkesztése.';
