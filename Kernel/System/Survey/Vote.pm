@@ -23,11 +23,7 @@ All survey vote functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item VoteGet()
+=head2 VoteGet()
 
 to get all attributes of a vote
 
@@ -79,7 +75,7 @@ sub VoteGet {
     return @List;
 }
 
-=item VoteList()
+=head2 VoteList()
 
 to get a array list of all vote items
 
@@ -131,7 +127,7 @@ sub VoteList {
     return @List;
 }
 
-=item VoteAttributeGet()
+=head2 VoteAttributeGet()
 
 to get all attributes of a vote
 
@@ -175,7 +171,7 @@ sub VoteAttributeGet {
     return $VoteAttributeContent;
 }
 
-=item VoteCount()
+=head2 VoteCount()
 
 to count all votes of a survey
 
@@ -224,8 +220,6 @@ sub VoteCount {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

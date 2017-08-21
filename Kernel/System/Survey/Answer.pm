@@ -23,11 +23,7 @@ All survey answer functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item AnswerAdd()
+=head2 AnswerAdd()
 
 to add a new answer to a question
 
@@ -64,7 +60,7 @@ sub AnswerAdd {
     );
 }
 
-=item AnswerDelete()
+=head2 AnswerDelete()
 
 to delete a answer from a question
 
@@ -100,7 +96,7 @@ sub AnswerDelete {
     );
 }
 
-=item AnswerGet()
+=head2 AnswerGet()
 
 to get all attributes of a answer
 
@@ -152,7 +148,7 @@ sub AnswerGet {
     return %Data;
 }
 
-=item AnswerUpdate()
+=head2 AnswerUpdate()
 
 to update an existing answer
 
@@ -191,7 +187,7 @@ sub AnswerUpdate {
     );
 }
 
-=item AnswerList()
+=head2 AnswerList()
 
 to get a array list of all answer items
 
@@ -241,7 +237,7 @@ sub AnswerList {
     return @List;
 }
 
-=item AnswerSort()
+=head2 AnswerSort()
 
 to sort all answers from a question
 
@@ -301,7 +297,7 @@ sub AnswerSort {
     return 1;
 }
 
-=item AnswerUp()
+=head2 AnswerUp()
 
 to move a answer up
 
@@ -390,7 +386,7 @@ sub AnswerUp {
     return 1;
 }
 
-=item AnswerDown()
+=head2 AnswerDown()
 
 to move a answer down
 
@@ -480,7 +476,7 @@ sub AnswerDown {
     return 1;
 }
 
-=item AnswerCount()
+=head2 AnswerCount()
 
 to count all answers of a question
 
@@ -525,7 +521,7 @@ sub AnswerCount {
     return $CountAnswer;
 }
 
-=item PublicAnswerSet()
+=head2 PublicAnswerSet()
 
 to save a public vote
 
@@ -592,8 +588,6 @@ sub PublicAnswerSet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

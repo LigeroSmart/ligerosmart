@@ -23,11 +23,7 @@ All survey question functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item QuestionAdd()
+=head2 QuestionAdd()
 
 to add a new question to a survey
 
@@ -83,7 +79,7 @@ sub QuestionAdd {
     );
 }
 
-=item QuestionDelete()
+=head2 QuestionDelete()
 
 to delete a question from a survey
 
@@ -132,7 +128,7 @@ sub QuestionDelete {
     return 1;
 }
 
-=item QuestionGet()
+=head2 QuestionGet()
 
 to get all attributes of a question
 
@@ -188,7 +184,7 @@ sub QuestionGet {
     return %Data;
 }
 
-=item QuestionUpdate()
+=head2 QuestionUpdate()
 
 to update an existing question
 
@@ -241,7 +237,7 @@ sub QuestionUpdate {
     );
 }
 
-=item QuestionList()
+=head2 QuestionList()
 
 to get a array list of all question items
 
@@ -293,7 +289,7 @@ sub QuestionList {
     return @List;
 }
 
-=item QuestionSort()
+=head2 QuestionSort()
 
 to sort all questions from a survey
 
@@ -349,7 +345,7 @@ sub QuestionSort {
     return 1;
 }
 
-=item QuestionUp()
+=head2 QuestionUp()
 
 to move a question up
 
@@ -439,7 +435,7 @@ sub QuestionUp {
     return 1;
 }
 
-=item QuestionDown()
+=head2 QuestionDown()
 
 to move a question down
 
@@ -529,7 +525,7 @@ sub QuestionDown {
     return 1;
 }
 
-=item QuestionCount()
+=head2 QuestionCount()
 
 to count all questions of a survey
 
@@ -575,8 +571,6 @@ sub QuestionCount {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

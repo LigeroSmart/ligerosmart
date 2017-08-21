@@ -13,9 +13,9 @@ use warnings;
 
 our $ObjectManagerDisabled = 1;
 
-=over 4
+=head1 PUBLIC INTERFACE
 
-=item SurveyListShow()
+=head2 SurveyListShow()
 
 Returns a list of surveys list with pagination.
 
@@ -321,8 +321,6 @@ sub SurveyListShow {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

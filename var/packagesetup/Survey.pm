@@ -24,17 +24,13 @@ our @ObjectDependencies = (
 
 Survey.pm - code to execute during package installation
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -82,7 +78,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -96,7 +92,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
 run the code reinstall part
 
@@ -110,7 +106,7 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
 run the code upgrade part
 
@@ -124,7 +120,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -138,7 +134,7 @@ sub CodeUninstall {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_2_0_92()
+=head2 CodeUpgradeFromLowerThan_2_0_92()
 
 This function is only executed if the installed module version is smaller than 2.0.92.
 
@@ -181,7 +177,7 @@ sub CodeUpgradeFromLowerThan_2_0_92 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_2_1_5()
+=head2 CodeUpgradeFromLowerThan_2_1_5()
 
 This function is only executed if the installed module version is smaller than 2.1.5.
 
@@ -200,7 +196,7 @@ sub CodeUpgradeFromLowerThan_2_1_5 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_1()
+=head2 CodeUpgradeFromLowerThan_4_0_1()
 
 This function is only executed if the installed module version is smaller than 4.0.1.
 
@@ -217,7 +213,7 @@ sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_91()
+=head2 CodeUpgradeFromLowerThan_4_0_91()
 
 This function is only executed if the installed module version is smaller than 4.0.91.
 
@@ -234,7 +230,7 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=item _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5()
+=head2 _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5()
 
 Inserts 0 into all answer_required records of table suvey_question
 where there is no entry present.
@@ -332,7 +328,7 @@ sub _MigrateDTLInSysConfig {
     return 1;
 }
 
-=item _MigrateConfigs()
+=head2 _MigrateConfigs()
 
 change configurations to match the new module location.
 
@@ -409,8 +405,6 @@ sub _MigrateConfigs {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
