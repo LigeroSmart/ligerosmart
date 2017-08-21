@@ -84,9 +84,6 @@
 [% RenderBlockStart("PublicAnswerTextarea") %]
                 <div class="Question [% Data.Class | html %]"> [% Data.RequiredText | html %][% Data.Question %] </div>
                 [% Data.ErrorText %]
-[% RenderBlockStart("RichText") %]
-                [% InsertTemplate("CustomerRichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
                 <div class="RichTextAnswer[% Data.AnswerID | html %]">
                     <textarea title="[% Data.Question %]" id="RichText[% Data.QuestionID | html %]" name="PublicSurveyVote4[[% Data.QuestionID | html %]]" class="RichText DontPrint" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Value %]</textarea>
                 </div>

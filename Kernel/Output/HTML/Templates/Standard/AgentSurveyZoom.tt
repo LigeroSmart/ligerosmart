@@ -179,20 +179,4 @@
         </div>
     </div>
 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('ul.Actions a.AsPopup').bind('click', function (Event) {
-        Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
-        return false;
-    });
-
-    $('#NewStatus').bind('change', function (Event) {
-        $(this).closest('form').submit();
-    });
-
-    Core.Config.Set('Survey.HTMLRichTextHeightDefault', "[% Data.HTMLRichTextHeightDefault | html %]");
-    Core.Config.Set('Survey.HTMLRichTextHeightMax', "[% Data.HTMLRichTextHeightMax | html %]");
-
-//]]></script>
-[% END %]
 [% RenderBlockEnd("SurveyZoom") %]

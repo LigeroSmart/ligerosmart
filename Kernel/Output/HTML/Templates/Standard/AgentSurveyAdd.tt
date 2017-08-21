@@ -25,10 +25,6 @@
                     </div>
                     <div class="Clear"></div>
 
-[% RenderBlockStart("RichText") %]
-[% InsertTemplate("RichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
-
 [% RenderBlockStart("Introduction") %]
                     <label class="Mandatory" for="Introduction"><span class="Marker">*</span> [% Translate("Introduction") | html %]:</label>
                     <div class="RichTextField">

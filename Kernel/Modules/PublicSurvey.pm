@@ -667,7 +667,9 @@ END
 
                 # check if rich text is enabled
                 if ( $LayoutObject->{BrowserRichText} ) {
-                    $LayoutObject->Block( Name => 'RichText' );
+                    $LayoutObject->CustomerSetRichTextParameters(
+                        Data => {},
+                    );
                 }
             }
         }

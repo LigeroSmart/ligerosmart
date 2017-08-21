@@ -28,10 +28,6 @@
                     <input id="Title" name="Title" type="text" class="W75pc Validate_Required [% Data.TitleServerError | html %]" value="[% Data.Title | html %]" />
                 </div>
 
-[% RenderBlockStart("RichText") %]
-[% InsertTemplate("RichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
-
 [% RenderBlockStart("Introduction") %]
                 <label class="Mandatory" for="Introduction"><span class="Marker">*</span> [% Translate("Introduction") | html %]:</label>
                 <div class="RichTextField">

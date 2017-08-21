@@ -214,8 +214,7 @@ sub _SurveyAddMask {
     # load rich text editor
     my $RichTextEditor = $ConfigObject->Get('Frontend::RichText');
     if ($RichTextEditor) {
-        $LayoutObject->Block(
-            Name => 'RichText',
+        $LayoutObject->SetRichTextParameters(
             Data => {},
         );
     }
