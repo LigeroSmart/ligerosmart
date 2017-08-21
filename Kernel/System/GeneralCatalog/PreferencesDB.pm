@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::GeneralCatalog::PreferencesDB - some preferences functions for general catalog
 
-=head1 SYNOPSIS
-
-some preferences functions for general catalog
-
 =head1 PUBLIC INTERFACE
 
 =over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -57,7 +53,7 @@ sub new {
     return $Self;
 }
 
-=item GeneralCatalogPreferencesSet()
+=head2 GeneralCatalogPreferencesSet()
 
 Set preferences for an item
 
@@ -106,7 +102,7 @@ sub GeneralCatalogPreferencesSet {
     );
 }
 
-=item GeneralCatalogPreferencesGet()
+=head2 GeneralCatalogPreferencesGet()
 
 Get all Preferences for an item
 

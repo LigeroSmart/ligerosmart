@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 GeneralCatalog.pm - code to execute during package installation
 
-=head1 SYNOPSIS
-
-All functions
-
 =head1 PUBLIC INTERFACE
 
 =over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -58,7 +54,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -72,7 +68,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
 run the code reinstall part
 
@@ -86,7 +82,7 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
 run the code upgrade part
 
@@ -105,7 +101,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_91()
+=head2 CodeUpgradeFromLowerThan_4_0_91()
 
 This function is only executed if the installed module version is smaller than 4.0.91.
 
@@ -122,7 +118,7 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -136,7 +132,7 @@ sub CodeUninstall {
     return 1;
 }
 
-=item _MigrateFunctionality()
+=head2 _MigrateFunctionality()
 
 =cut
 
@@ -193,7 +189,7 @@ sub _MigrateFunctionality {
     return 1;
 }
 
-=item _MigrateConfigs()
+=head2 _MigrateConfigs()
 
 change configurations to match the new module location.
 

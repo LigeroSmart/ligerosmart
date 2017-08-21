@@ -24,9 +24,6 @@ our @ObjectDependencies = (
 
 Kernel::System::GeneralCatalog - general catalog lib
 
-=head1 SYNOPSIS
-
-All general catalog functions.
 
 =head1 PUBLIC INTERFACE
 
@@ -34,7 +31,7 @@ All general catalog functions.
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -65,7 +62,7 @@ sub new {
     return $Self;
 }
 
-=item ClassList()
+=head2 ClassList()
 
 return an array reference of all general catalog classes
 
@@ -100,7 +97,7 @@ sub ClassList {
     return \@ClassList;
 }
 
-=item ClassRename()
+=head2 ClassRename()
 
 rename a general catalog class
 
@@ -171,7 +168,7 @@ sub ClassRename {
     );
 }
 
-=item ItemList()
+=head2 ItemList()
 
 returns a list as a hash reference of one general catalog class
 
@@ -281,7 +278,7 @@ sub ItemList {
     return \%Data;
 }
 
-=item ItemGet()
+=head2 ItemGet()
 
 get item attributes
 
@@ -414,7 +411,7 @@ sub ItemGet {
     return \%ItemData;
 }
 
-=item ItemAdd()
+=head2 ItemAdd()
 
 add a new general catalog item
 
@@ -533,7 +530,7 @@ sub ItemAdd {
     return $ItemID;
 }
 
-=item ItemUpdate()
+=head2 ItemUpdate()
 
 update an existing general catalog item
 
@@ -655,7 +652,7 @@ sub ItemUpdate {
     );
 }
 
-=item GeneralCatalogPreferencesSet()
+=head2 GeneralCatalogPreferencesSet()
 
 set GeneralCatalog preferences
 
@@ -678,7 +675,7 @@ sub GeneralCatalogPreferencesSet {
     return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(%Param);
 }
 
-=item GeneralCatalogPreferencesGet()
+=head2 GeneralCatalogPreferencesGet()
 
 get GeneralCatalog preferences
 
