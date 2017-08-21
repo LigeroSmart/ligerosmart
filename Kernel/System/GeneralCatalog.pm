@@ -675,7 +675,7 @@ sub GeneralCatalogPreferencesSet {
         Type => $Self->{CacheType},
     );
 
-    return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(@_);
+    return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(%Param);
 }
 
 =item GeneralCatalogPreferencesGet()
@@ -691,7 +691,7 @@ get GeneralCatalog preferences
 sub GeneralCatalogPreferencesGet {
     my ( $Self, %Param ) = @_;
 
-    return $Self->{PreferencesObject}->GeneralCatalogPreferencesGet(@_);
+    return $Self->{PreferencesObject}->GeneralCatalogPreferencesGet(%Param);
 }
 
 1;

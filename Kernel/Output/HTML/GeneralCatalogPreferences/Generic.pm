@@ -88,13 +88,13 @@ sub Run {
 }
 
 sub Error {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
     return $Self->{Error} || '';
 }
 
 sub Message {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
     return $Self->{Message} || '';
 }
