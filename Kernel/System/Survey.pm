@@ -37,17 +37,13 @@ our @ObjectDependencies = (
 
 Kernel::System::Survey - survey lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All survey functions. E. g. to add survey or and functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -70,7 +66,7 @@ sub new {
     return $Self;
 }
 
-=item SurveyAdd()
+=head2 SurveyAdd()
 
 to add a new survey
 
@@ -173,7 +169,7 @@ sub SurveyAdd {
     return $SurveyID;
 }
 
-=item SurveyGet()
+=head2 SurveyGet()
 
 to get all attributes of a survey
 
@@ -293,7 +289,7 @@ sub SurveyGet {
     return %Data;
 }
 
-=item SurveyUpdate()
+=head2 SurveyUpdate()
 
 to update an existing survey
 
@@ -372,7 +368,7 @@ sub SurveyUpdate {
     );
 }
 
-=item SurveyList()
+=head2 SurveyList()
 
 to get a array list of all survey items
 
@@ -403,7 +399,7 @@ sub SurveyList {
     return @List;
 }
 
-=item SurveySearch()
+=head2 SurveySearch()
 
 search in surveys
 
@@ -800,7 +796,7 @@ sub SurveySearch {
     return @List;
 }
 
-=item SurveyStatusSet()
+=head2 SurveyStatusSet()
 
 to set a new survey status (Valid, Invalid, Master)
 
@@ -986,7 +982,7 @@ sub SurveyStatusSet {
     }
 }
 
-=item SurveyQueueGet()
+=head2 SurveyQueueGet()
 
 get a survey_queue relation as an array reference
 
@@ -1031,7 +1027,7 @@ sub SurveyQueueGet {
     return \@QueueList;
 }
 
-=item SurveyQueueSet()
+=head2 SurveyQueueSet()
 
 add a survey_queue relation
 
@@ -1083,7 +1079,7 @@ sub SurveyQueueSet {
     return 1;
 }
 
-=item PublicSurveyGet()
+=head2 PublicSurveyGet()
 
 to get all public attributes of a survey
 
@@ -1163,7 +1159,7 @@ sub PublicSurveyGet {
     return %Data;
 }
 
-=item PublicSurveyInvalidSet()
+=head2 PublicSurveyInvalidSet()
 
 to set a request invalid
 
@@ -1218,7 +1214,7 @@ sub PublicSurveyInvalidSet {
     return 1;
 }
 
-=item ElementExists()
+=head2 ElementExists()
 
 exists an survey-, question-, answer- or request-element
 
@@ -1288,7 +1284,7 @@ sub ElementExists {
     return $ElementExists;
 }
 
-=item GetRichTextDocumentComplete()
+=head2 GetRichTextDocumentComplete()
 
 get some text ready to show as rich-text attachment in-line
 
@@ -1326,7 +1322,7 @@ sub GetRichTextDocumentComplete {
     return $HTMLDocumentComplete;
 }
 
-=item _BuildSendConditionStrg()
+=head2 _BuildSendConditionStrg()
 
 build send condition string with the single items
 
@@ -1362,8 +1358,6 @@ sub _BuildSendConditionStrg {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
