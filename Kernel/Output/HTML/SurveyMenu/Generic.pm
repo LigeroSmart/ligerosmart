@@ -12,9 +12,10 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
-    'Kernel::System::Log',
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
+    'Kernel::System::Group',
+    'Kernel::System::Log',
 );
 
 sub new {
@@ -64,10 +65,14 @@ sub Run {
 
         # check read only groups
         ROGROUP:
-        for my $RoGroup ( @{$GroupsRo} ) {
+        for my $GroupRo ( @{$GroupsRo} ) {
+            my $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                UserID    => $Self->{UserID},
+                GroupName => $GroupRo,
+                Type      => 'ro',
+            );
 
-            next ROGROUP if !$LayoutObject->{"UserIsGroupRo[$RoGroup]"};
-            next ROGROUP if $LayoutObject->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
+            next ROGROUP if !$HasPermission;
 
             # set access
             $Access = 1;
@@ -78,8 +83,13 @@ sub Run {
         RWGROUP:
         for my $RwGroup ( @{$GroupsRw} ) {
 
-            next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+            my $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                UserID    => $Self->{UserID},
+                GroupName => $RwGroup,
+                Type      => 'rw',
+            );
+
+            next RWGROUP if !$HasPermission;
 
             # set access
             $Access = 1;
