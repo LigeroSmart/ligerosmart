@@ -110,7 +110,7 @@
 [% RenderBlockEnd("DynamicField") %]
 
 [% RenderBlockStart("WorkOrderAgentBlock") %]
-                    <label>[% Translate("WorkOrderAgent") | html %]:</label>
+                    <label>[% Translate("Workorder Agent") | html %]:</label>
 [% RenderBlockStart("EmptyWorkOrderAgent") %]
                     <p class="Value">-</p>
 [% RenderBlockEnd("EmptyWorkOrderAgent") %]
@@ -135,37 +135,37 @@
 [% RenderBlockEnd("Report") %]
 
 [% RenderBlockStart("PlannedEffort") %]
-                    <label>[% Translate("PlannedEffort") | html %]:</label>
+                    <label>[% Translate("Planned Effort") | html %]:</label>
                     <p class="Value">[% Data.PlannedEffort | html %]</p>
                     <div class="Clear"></div>
 [% RenderBlockEnd("PlannedEffort") %]
 
 [% RenderBlockStart("AccountedTime") %]
-                    <label>[% Translate("AccountedTime") | html %]:</label>
+                    <label>[% Translate("Accounted Time") | html %]:</label>
                     <p class="Value">[% Data.AccountedTime | html %]</p>
                     <div class="Clear"></div>
 [% RenderBlockEnd("AccountedTime") %]
 
 [% RenderBlockStart("PlannedStartTime") %]
-                    <label>[% Translate("PlannedStartTime") | html %]:</label>
+                    <label>[% Translate("Planned Start Time") | html %]:</label>
                     <p class="Value">[% Data.PlannedStartTime | Localize("TimeLong") %]</p>
                     <div class="Clear"></div>
 [% RenderBlockEnd("PlannedStartTime") %]
 
 [% RenderBlockStart("PlannedEndTime") %]
-                    <label>[% Translate("PlannedEndTime") | html %]:</label>
+                    <label>[% Translate("Planned End Time") | html %]:</label>
                     <p class="Value">[% Data.PlannedEndTime | Localize("TimeLong") %]</p>
                     <div class="Clear"></div>
 [% RenderBlockEnd("PlannedEndTime") %]
 
 [% RenderBlockStart("ActualStartTime") %]
-                    <label>[% Translate("ActualStartTime") | html %]:</label>
+                    <label>[% Translate("Actual Start Time") | html %]:</label>
                     <p class="Value">[% Data.ActualStartTime | Localize("TimeLong") %][% Data.EmptyActualStartTime | html %]</p>
                     <div class="Clear"></div>
 [% RenderBlockEnd("ActualStartTime") %]
 
 [% RenderBlockStart("ActualEndTime") %]
-                    <label>[% Translate("ActualEndTime") | html %]:</label>
+                    <label>[% Translate("Actual End Time") | html %]:</label>
                     <p class="Value">[% Data.ActualEndTime | Localize("TimeLong") %][% Data.EmptyActualEndTime | html %]</p>
                     <div class="Clear"></div>
 [% RenderBlockEnd("ActualEndTime") %]

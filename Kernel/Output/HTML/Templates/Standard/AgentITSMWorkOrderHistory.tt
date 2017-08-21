@@ -10,7 +10,7 @@
 
     <div class="Header">
         <h1>
-            [% Translate("History of") | html %] [% Config("ITSMWorkOrder::Hook") %]: [% Data.ChangeNumber | html %]-[% Data.WorkOrderNumber | html %] - [% Data.WorkOrderTitle | truncate(60) | html %]
+            [% Translate("History of %s%s-%s", Config("ITSMWorkOrder::Hook"), Data.ChangeNumber, Data.WorkOrderNumber) | html %] &ndash; [% Data.WorkOrderTitle | truncate(60) | html %]
         </h1>
         <p>
             <a href="#" class="CancelClosePopup">[% Translate("Cancel & close") | html %]</a>

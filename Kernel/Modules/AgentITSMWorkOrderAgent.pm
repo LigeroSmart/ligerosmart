@@ -39,7 +39,7 @@ sub Run {
     if ( !$WorkOrderID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No WorkOrderID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -57,7 +57,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -122,7 +122,7 @@ sub Run {
                         'Was not able to set the workorder agent of the workorder "%s" to empty!',
                         $WorkOrder->{WorkOrderID}
                     ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }
@@ -157,7 +157,7 @@ sub Run {
                         Message => $LayoutObject->{LanguageObject}->Translate(
                             'Was not able to update the workorder "%s"!', $WorkOrder->{WorkOrderID}
                         ),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
             }
@@ -196,7 +196,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'Could not find Change for WorkOrder %s!', $WorkOrderID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

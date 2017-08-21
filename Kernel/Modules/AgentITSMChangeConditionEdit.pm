@@ -50,7 +50,7 @@ sub Run {
         if ( !$GetParam{$Needed} ) {
             $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}->Translate( 'No %s is given!', $Needed ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
             return;
         }
@@ -91,7 +91,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -175,7 +175,7 @@ sub Run {
                 if ( !$GetParam{ConditionID} ) {
                     $LayoutObject->ErrorScreen(
                         Message => Translatable('Could not create new condition!'),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                     return;
                 }
@@ -200,7 +200,7 @@ sub Run {
                         Message => $LayoutObject->{LanguageObject}->Translate(
                             'Could not update ConditionID %s!', $GetParam{ConditionID}
                         ),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                     return;
                 }
@@ -252,7 +252,7 @@ sub Run {
                             Message => $LayoutObject->{LanguageObject}->Translate(
                                 'Could not update ExpressionID %s!', $ExpressionID
                             ),
-                            Comment => Translatable('Please contact the admin.'),
+                            Comment => Translatable('Please contact the administrator.'),
                         );
                     }
                 }
@@ -299,7 +299,7 @@ sub Run {
                 if ( !$ExpressionID ) {
                     return $LayoutObject->ErrorScreen(
                         Message => Translatable('Could not add new Expression!'),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
             }
@@ -347,7 +347,7 @@ sub Run {
                         return $LayoutObject->ErrorScreen(
                             Message => $LayoutObject->{LanguageObject}
                                 ->Translate( 'Could not update ActionID %s!', $ActionID ),
-                            Comment => Translatable('Please contact the admin.'),
+                            Comment => Translatable('Please contact the administrator.'),
                         );
                     }
                 }
@@ -392,7 +392,7 @@ sub Run {
                 if ( !$ActionID ) {
                     return $LayoutObject->ErrorScreen(
                         Message => Translatable('Could not add new Action!'),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
             }
@@ -439,7 +439,7 @@ sub Run {
                         Message => $LayoutObject->{LanguageObject}->Translate(
                             'Could not delete ExpressionID %s!', $GetParam{DeleteExpressionID}
                         ),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 
@@ -465,7 +465,7 @@ sub Run {
                         Message => $LayoutObject->{LanguageObject}->Translate(
                             'Could not delete ActionID %s!', $GetParam{DeleteActionID}
                         ),
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 

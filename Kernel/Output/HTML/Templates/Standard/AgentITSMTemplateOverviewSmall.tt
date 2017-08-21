@@ -11,7 +11,7 @@
         <thead>
             <tr>
 [% RenderBlockStart("RecordTemplateIDHeader") %]
-                <th><span>[% Translate("TemplateID") | html %]</span></th>
+                <th><span>[% Translate("Template ID") | html %]</span></th>
 [% RenderBlockEnd("RecordTemplateIDHeader") %]
 [% RenderBlockStart("RecordNameHeader") %]
                 <th class="Name [% Data.SortName | html %]">
@@ -38,19 +38,19 @@
                 <th class="Center Last"><span>[% Translate("Delete") | html %]</span></th>
 [% RenderBlockEnd("RecordDeleteHeader") %]
 [% RenderBlockStart("RecordCreateByHeader") %]
-                <th><span>[% Translate("CreateBy") | html %]</span></th>
+                <th><span>[% Translate("Create by") | html %]</span></th>
 [% RenderBlockEnd("RecordCreateByHeader") %]
 [% RenderBlockStart("RecordCreateTimeHeader") %]
                 <th class="CreateTime [% Data.SortCreateTime | html %]">
-                    <a name="OverviewControl" href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=CreateTime;OrderBy=[% Data.OrderByCreateTime | uri %]">[% Translate("CreateTime") | html %]</a>
+                    <a name="OverviewControl" href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=CreateTime;OrderBy=[% Data.OrderByCreateTime | uri %]">[% Translate("Create Time") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordCreateTimeHeader") %]
 [% RenderBlockStart("RecordChangeByHeader") %]
-                <th><span>[% Translate("ChangeBy") | html %]</span></th>
+                <th><span>[% Translate("Change by") | html %]</span></th>
 [% RenderBlockEnd("RecordChangeByHeader") %]
 [% RenderBlockStart("RecordChangeTimeHeader") %]
                 <th class="ChangeTime [% Data.SortChangeTime | html %]">
-                    <a name="OverviewControl" href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeTime;OrderBy=[% Data.OrderByChangeTime | uri %]">[% Translate("ChangeTime") | html %]</a>
+                    <a name="OverviewControl" href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeTime;OrderBy=[% Data.OrderByChangeTime | uri %]">[% Translate("Change Time") | html %]</a>
                 </th>
 [% RenderBlockEnd("RecordChangeTimeHeader") %]
             </tr>

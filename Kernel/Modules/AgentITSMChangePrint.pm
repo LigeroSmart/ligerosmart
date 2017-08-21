@@ -81,7 +81,7 @@ sub Run {
             return $LayoutObject->ErrorScreen(
                 Message =>
                     $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -93,7 +93,7 @@ sub Run {
             # error page
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('Can\'t create output, as the workorder is not attached to a change!'),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }
@@ -107,7 +107,7 @@ sub Run {
             # error page
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('Can\'t create output, as no ChangeID is given!'),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -139,7 +139,7 @@ sub Run {
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
             Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -304,7 +304,7 @@ sub Run {
                 return $LayoutObject->ErrorScreen(
                     Message => $LayoutObject->{LanguageObject}
                         ->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -345,7 +345,7 @@ sub Run {
             return $LayoutObject->ErrorScreen(
                 Message =>
                     $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 

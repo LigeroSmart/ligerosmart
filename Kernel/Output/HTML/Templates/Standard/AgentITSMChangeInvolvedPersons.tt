@@ -69,8 +69,8 @@
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1 title="[% Translate("Edit") | html %] [% Translate("Involved Persons") | html %] [% Translate("of") | html %] [% Config("ITSMChange::Hook") %]: [% Data.ChangeNumber | html %] &ndash; [% Data.ChangeTitle | html %]">
-                [% Translate("Edit") | html %] [% Translate("Involved Persons") | html %] [% Translate("of") | html %] [% Config("ITSMChange::Hook") %]: [% Data.ChangeNumber | html %] &ndash; [% Data.ChangeTitle | truncate(70) | html %]
+            <h1 title="[% Translate("Edit Involved Persons of %s%s", Config("ITSMChange::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.ChangeTitle | html %]">
+                [% Translate("Edit Involved Persons of %s%s", Config("ITSMChange::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.ChangeTitle | truncate(70) | html %]
             </h1>
 
             <p>
@@ -123,9 +123,9 @@
                         <label for="TemplateID"> [% Translate("CAB Template") | html %]: </label>
                         <div class="Field">
                             [% Data.CABTemplateStrg %]
-                            <button type="submit" name="AddCABTemplateButton" id="AddCABTemplateButton" value="[% Translate("Apply Template") | html %]"> [% Translate("Apply Template") | html %] </button>
+                            <button class="CallForAction" type="submit" name="AddCABTemplateButton" id="AddCABTemplateButton" value="[% Translate("Apply Template") | html %]"><span>[% Translate("Apply Template") | html %]</span></button>
 [% RenderBlockStart("NewTemplateButton") %]
-                            <button type="submit" name="NewTemplateButton" id="NewTemplateButton" value="[% Translate("NewTemplate") | html %]"> [% Translate("Save this CAB as template") | html %] </button>
+                            <button class="CallForAction" type="submit" name="NewTemplateButton" id="NewTemplateButton" value="[% Translate("NewTemplate") | html %]"><span>[% Translate("Save this CAB as template") | html %]</span></button>
 [% RenderBlockEnd("NewTemplateButton") %]
                         </div>
 [% RenderBlockEnd("CABTemplate") %]
@@ -138,7 +138,7 @@
 
                             <div id="NewCABMemberServerError" class="TooltipErrorMessage"><p>[% Translate("User invalid.") | html %]</p></div>
 
-                            <button type="submit" id="AddCABMemberButton" name="AddCABMemberButton" value="[% Translate("Add") | html %]">[% Translate("Add") | html %]</button>
+                            <button class="CallForAction" type="submit" id="AddCABMemberButton" name="AddCABMemberButton" value="[% Translate("Add") | html %]"><span>[% Translate("Add") | html %]</span></button>
                         </div>
 
                         <div id="UserServerError" class="TooltipErrorMessage">

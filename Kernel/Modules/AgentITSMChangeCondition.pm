@@ -44,7 +44,7 @@ sub Run {
     if ( !$GetParam{ChangeID} ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ChangeID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -83,7 +83,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $GetParam{ChangeID} ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -125,7 +125,7 @@ sub Run {
                 return $LayoutObject->ErrorScreen(
                     Message =>
                         $LayoutObject->{LanguageObject}->Translate( 'Could not delete ConditionID %s!', $ConditionID ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 

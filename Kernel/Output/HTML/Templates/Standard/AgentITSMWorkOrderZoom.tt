@@ -29,7 +29,7 @@
                 <div class="Content">
 [% RenderBlockStart("Meta") %]
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label>[% Translate("WorkOrderState") | html %]:</label>
+                        <label>[% Translate("Workorder State") | html %]:</label>
                         <div class="Value">
                             <div class="Flag Small">
                                 <span class="[% Data.WorkOrderStateSignal | html %]">[% Translate(Data.WorkOrderState) | html %]</span>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label>[% Translate("WorkOrderType") | html %]:</label>
+                        <label>[% Translate("Workorder Type") | html %]:</label>
 [% RenderBlockStart("EmptyWorkOrderType") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyWorkOrderType") %]
@@ -49,7 +49,7 @@
                     </fieldset>
 
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label>[% Translate("PlannedStartTime") | html %]:</label>
+                        <label>[% Translate("Planned Start Time") | html %]:</label>
 [% RenderBlockStart("EmptyPlannedStartTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyPlannedStartTime") %]
@@ -59,7 +59,7 @@
                         <div class="Clear"></div>
 
 
-                        <label>[% Translate("PlannedEndTime") | html %]: </label>
+                        <label>[% Translate("Planned End Time") | html %]: </label>
 [% RenderBlockStart("EmptyPlannedEndTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyPlannedEndTime") %]
@@ -68,7 +68,7 @@
 [% RenderBlockEnd("PlannedEndTime") %]
                         <div class="Clear"></div>
 
-                        <label>[% Translate("ActualStartTime") | html %]: </label>
+                        <label>[% Translate("Actual Start Time") | html %]: </label>
 [% RenderBlockStart("EmptyActualStartTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyActualStartTime") %]
@@ -77,7 +77,7 @@
 [% RenderBlockEnd("ActualStartTime") %]
                         <div class="Clear"></div>
 
-                        <label>[% Translate("ActualEndTime") | html %]: </label>
+                        <label>[% Translate("Actual End Time") | html %]: </label>
 [% RenderBlockStart("EmptyActualEndTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyActualEndTime") %]
@@ -89,7 +89,7 @@
 
                     <fieldset class="TableLike FixedLabelSmall">
 [% RenderBlockStart("ShowPlannedEffort") %]
-                        <label>[% Translate("PlannedEffort") | html %]: </label>
+                        <label>[% Translate("Planned Effort") | html %]: </label>
 [% RenderBlockStart("EmptyPlannedEffort") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyPlannedEffort") %]
@@ -100,7 +100,7 @@
 [% RenderBlockEnd("ShowPlannedEffort") %]
 
 [% RenderBlockStart("ShowAccountedTime") %]
-                        <label>[% Translate("AccountedTime") | html %]: </label>
+                        <label>[% Translate("Accounted Time") | html %]: </label>
 [% RenderBlockStart("EmptyAccountedTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyAccountedTime") %]
@@ -171,7 +171,7 @@
                     </fieldset>
 
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label>[% Translate("WorkOrderAgent") | html %]:</label>
+                        <label>[% Translate("Workorder Agent") | html %]:</label>
 [% RenderBlockStart("EmptyWorkOrderAgent") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyWorkOrderAgent") %]
@@ -257,7 +257,7 @@
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label><strong>[% Translate("ITSMChange") | html %]</strong></label>
+                        <label><strong>[% Translate("ITSM Change") | html %]</strong></label>
                         <div class="Value">
                             <div class="Flag Small">
                                 <span class="[% Data.ChangeStateSignal | html %]">[% Translate(Data.ChangeState) | html %]</span>

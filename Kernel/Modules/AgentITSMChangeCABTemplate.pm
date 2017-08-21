@@ -41,7 +41,7 @@ sub Run {
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ChangeID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -79,7 +79,7 @@ sub Run {
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
             Message => $LayoutObject->{LanguageObject}->Translate( 'No change found for changeID %s.', $ChangeID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -118,7 +118,7 @@ sub Run {
                     Message => $LayoutObject->{LanguageObject}->Translate(
                         'The CAB of change "%s" could not be serialized.', $ChangeID
                     ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -136,7 +136,7 @@ sub Run {
             if ( !$TemplateID ) {
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Could not add the template.'),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 

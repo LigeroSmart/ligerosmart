@@ -48,27 +48,27 @@
 [% RenderBlockEnd("RecordWorkOrderNumberHeader") %]
 [% RenderBlockStart("RecordWorkOrderTitleHeader") %]
                     <th class="WorkOrderTitle [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderTitle;OrderBy=[% Data.OrderBy | uri %]">[% Translate("WorkOrderTitle") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderTitle;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Workorder Title") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordWorkOrderTitleHeader") %]
 [% RenderBlockStart("RecordChangeTitleHeader") %]
                     <th class="ChangeTitle [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeTitle;OrderBy=[% Data.OrderBy | uri %]">[% Translate("ChangeTitle") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeTitle;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Change Title") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordChangeTitleHeader") %]
 [% RenderBlockStart("RecordWorkOrderAgentHeader") %]
                     <th class="WorkOrderAgentID [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderAgentID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("WorkOrderAgent") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderAgentID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Workorder Agent") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordWorkOrderAgentHeader") %]
 [% RenderBlockStart("RecordChangeBuilderHeader") %]
                     <th class="ChangeBuilderID [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeBuilderID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("ChangeBuilder") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeBuilderID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Change Builder") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordChangeBuilderHeader") %]
 [% RenderBlockStart("RecordChangeManagerHeader") %]
                     <th class="ChangeBuilderID [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeManagerID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("ChangeManager") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeManagerID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Change Manager") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordChangeManagerHeader") %]
 [% RenderBlockStart("RecordWorkOrderCountHeader") %]
@@ -76,17 +76,17 @@
 [% RenderBlockEnd("RecordWorkOrderCountHeader") %]
 [% RenderBlockStart("RecordChangeStateHeader") %]
                     <th class="ChangeStateID [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeStateID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("ChangeState") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ChangeStateID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Change State") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordChangeStateHeader") %]
 [% RenderBlockStart("RecordWorkOrderStateHeader") %]
                     <th class="WorkOrderStateID [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderStateID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("WorkOrderState") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderStateID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Workorder State") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordWorkOrderStateHeader") %]
 [% RenderBlockStart("RecordWorkOrderTypeHeader") %]
                     <th class="WorkOrderTypeID [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderTypeID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("WorkOrderType") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=WorkOrderTypeID;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Workorder Type") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordWorkOrderTypeHeader") %]
 [% RenderBlockStart("RecordCategoryHeader") %]
@@ -116,22 +116,22 @@
 [% RenderBlockEnd("RecordRequestedTimeHeader") %]
 [% RenderBlockStart("RecordPlannedStartTimeHeader") %]
                     <th class="PlannedStartTime [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=PlannedStartTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("PlannedStartTime") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=PlannedStartTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Planned Start Time") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordPlannedStartTimeHeader") %]
 [% RenderBlockStart("RecordPlannedEndTimeHeader") %]
                     <th class="PlannedEndTime [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=PlannedEndTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("PlannedEndTime") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=PlannedEndTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Planned End Time") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordPlannedEndTimeHeader") %]
 [% RenderBlockStart("RecordActualStartTimeHeader") %]
                     <th class="ActualStartTime [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ActualStartTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("ActualStartTime") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ActualStartTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Actual Start Time") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordActualStartTimeHeader") %]
 [% RenderBlockStart("RecordActualEndTimeHeader") %]
                     <th class="ActualEndTime [% Data.CSS | html %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ActualEndTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("ActualEndTime") | html %]</a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ActualEndTime;OrderBy=[% Data.OrderBy | uri %]">[% Translate("Actual End Time") | html %]</a>
                     </th>
 [% RenderBlockEnd("RecordActualEndTimeHeader") %]
 [% RenderBlockStart("RecordCreateTimeHeader") %]

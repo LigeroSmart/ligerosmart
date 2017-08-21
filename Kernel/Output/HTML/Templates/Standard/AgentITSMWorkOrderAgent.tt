@@ -29,8 +29,8 @@
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1 title="[% Translate("Edit") | html %] [% Translate("WorkOrderAgent") | html %] [% Translate("of") | html %] [% Config("ITSMWorkOrder::Hook") %] [% Data.ChangeNumber | html %] &ndash; [% Data.WorkOrderNumber | html %]: [% Data.WorkOrderTitle | html %]">
-                [% Translate("Edit") | html %] [% Translate("WorkOrderAgent") | html %] [% Translate("of") | html %] [% Config("ITSMWorkOrder::Hook") %] [% Data.ChangeNumber | html %] &ndash; [% Data.WorkOrderNumber | html %]: [% Data.WorkOrderTitle | truncate(70) | html %]
+            <h1 title="[% Translate("Edit Workorder Agent of %s%s", Config("ITSMWorkOrder::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.WorkOrderNumber | html %]: [% Data.WorkOrderTitle | html %]">
+                [% Translate("Edit Workorder Agent of %s%s", Config("ITSMWorkOrder::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.WorkOrderNumber | html %]: [% Data.WorkOrderTitle | truncate(70) | html %]
             </h1>
             <p>
                 <a href="#" class="CancelClosePopup">[% Translate("Cancel & close") | html %]</a>
@@ -40,7 +40,7 @@
         <div class="Content SpacingBottom">
             <fieldset class="TableLike FixedLabel">
 
-                <label for="User"> [% Translate("WorkOrderAgent") | html %]: </label>
+                <label for="User"> [% Translate("Workorder Agent") | html %]: </label>
                 <div class="Field">
                     <input id="User" type="text" name="User" value="[% Data.User | html %]" class="W75pc [% Data.UserServerError %]"/>
                     <input id="UserSelected" type="hidden" name="UserSelected" value="[% Data.UserID | html %]" />

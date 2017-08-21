@@ -60,7 +60,7 @@ sub Run {
     if ( !$TemplateID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No TemplateID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -78,7 +78,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $TemplateID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -123,7 +123,7 @@ sub Run {
 
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Was not able to create change from template!'),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -162,7 +162,7 @@ sub Run {
             if ( !$ChangeID ) {
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Was not able to create change!'),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -181,7 +181,7 @@ sub Run {
                 # show error message, when adding failed
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Was not able to create workorder from template!'),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 

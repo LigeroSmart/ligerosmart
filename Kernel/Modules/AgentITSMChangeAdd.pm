@@ -156,7 +156,7 @@ sub Run {
                 Message => $LayoutObject->{LanguageObject}->Translate(
                     'Ticket with TicketID %s does not exist!', $GetParam{TicketID}
                 ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -183,7 +183,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -207,7 +207,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }
@@ -303,7 +303,7 @@ sub Run {
                     Message => $LayoutObject->{LanguageObject}->Translate(
                         'Could not perform validation on field %s!', $DynamicFieldConfig->{Label}
                     ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -408,7 +408,7 @@ sub Run {
                         # show error message
                         return $LayoutObject->ErrorScreen(
                             Message => $Message,
-                            Comment => Translatable('Please contact the admin.'),
+                            Comment => Translatable('Please contact the administrator.'),
                         );
                     }
                 }
@@ -491,7 +491,7 @@ sub Run {
                 # show error message, when adding failed
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Was not able to add change!'),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }

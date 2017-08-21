@@ -66,7 +66,7 @@ sub Run {
     if ( !$GetParam{TemplateID} ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No TemplateID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -84,7 +84,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message => $LayoutObject->{LanguageObject}
                 ->Translate( 'Template "%s" not found in database!', $GetParam{TemplateID} ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -177,7 +177,7 @@ sub Run {
             return $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}
                     ->Translate( 'Was not able to update Template "%s"!', $GetParam{TemplateID} ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }

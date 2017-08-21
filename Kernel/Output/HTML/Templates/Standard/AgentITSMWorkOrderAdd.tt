@@ -9,7 +9,7 @@
 <div class="LayoutPopup ARIARoleMain">
 
     <div class="Header">
-        <h1>[% Translate("Add Workorder to") | html %] [% Config("ITSMChange::Hook") %]: [% Data.ChangeNumber | html %] &ndash; [% Data.ChangeTitle | html %]</h1>
+        <h1>[% Translate("Add Workorder to %s%s", Config("ITSMChange::Hook"), Data.ChangeNumber) | html %] &ndash; [% Data.ChangeTitle | html %]</h1>
         <p>
             <a href="#" class="CancelClosePopup">[% Translate("Cancel & close") | html %]</a>
         </p>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label for="WorkOrderTypeID">[% Translate("WorkOrderType") | html %]:</label>
+                        <label for="WorkOrderTypeID">[% Translate("Workorder Type") | html %]:</label>
                         <div class="Field">
                             [% Data.WorkOrderTypeStrg %]
                         </div>
@@ -89,7 +89,7 @@
 #                        </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
 
-                        <label>[% Translate("PlannedStartTime") | html %]:</label>
+                        <label>[% Translate("Planned Start Time") | html %]:</label>
                         <div class="Field">
                             [% Data.PlannedStartTimeSelectionString %]
                             <div id="PlannedStartTimeDayError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
@@ -105,7 +105,7 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label>[% Translate("PlannedEndTime") | html %]:</label>
+                        <label>[% Translate("Planned End Time") | html %]:</label>
                         <div class="Field">
                             [% Data.PlannedEndTimeSelectionString %]
                             <div id="PlannedEndTimeDayError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
@@ -122,7 +122,7 @@
                         <div class="Clear"></div>
 
 [% RenderBlockStart("ShowPlannedEffort") %]
-                        <label for="PlannedEffort">[% Translate("PlannedEffort") | html %]:</label>
+                        <label for="PlannedEffort">[% Translate("Planned Effort") | html %]:</label>
                         <div class="Field">
                             <input type="text" name="PlannedEffort" id="PlannedEffort" value="[% Data.PlannedEffort | html %]" class="W10pc Validate [% Data.PlannedEffortInvalid | html %]" maxlength="10"/>
                             <div id="PlannedEffortError" class="TooltipErrorMessage"><p>[% Translate("Invalid format.") | html %]</p></div>

@@ -42,7 +42,7 @@ sub Run {
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ChangeID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -82,7 +82,7 @@ sub Run {
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
             Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -241,7 +241,7 @@ sub Run {
                     Message => $LayoutObject->{LanguageObject}->Translate(
                         'Could not perform validation on field %s!', $DynamicFieldConfig->{Label}
                     ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -480,7 +480,7 @@ sub Run {
                 return $LayoutObject->ErrorScreen(
                     Message =>
                         $LayoutObject->{LanguageObject}->Translate( 'Was not able to update Change!', $ChangeID ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }

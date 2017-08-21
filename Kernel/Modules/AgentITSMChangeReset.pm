@@ -39,7 +39,7 @@ sub Run {
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ChangeID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -76,7 +76,7 @@ sub Run {
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
             Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -145,7 +145,7 @@ sub Run {
                         $WorkOrderID,
                         $ChangeID
                     ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }
@@ -194,7 +194,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}->Translate( 'Was not able to reset Change %s!', $ChangeID ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }

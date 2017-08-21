@@ -30,7 +30,7 @@
                 <div class="Content">
 [% RenderBlockStart("Meta") %]
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label>[% Translate("ChangeState") | html %]:</label>
+                        <label>[% Translate("Change State") | html %]:</label>
                         <div class="Value">
                             <div class="Flag Small">
                                 <span class="[% Data.ChangeStateSignal | html %]">[% Translate(Data.ChangeState) | html %]</span>
@@ -41,7 +41,7 @@
                     </fieldset>
 
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label>[% Translate("PlannedStartTime") | html %]:</label>
+                        <label>[% Translate("Planned Start Time") | html %]:</label>
 [% RenderBlockStart("EmptyPlannedStartTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyPlannedStartTime") %]
@@ -50,7 +50,7 @@
 [% RenderBlockEnd("PlannedStartTime") %]
                         <div class="Clear"></div>
 
-                        <label>[% Translate("PlannedEndTime") | html %]: </label>
+                        <label>[% Translate("Planned End Time") | html %]: </label>
 [% RenderBlockStart("EmptyPlannedEndTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyPlannedEndTime") %]
@@ -59,7 +59,7 @@
 [% RenderBlockEnd("PlannedEndTime") %]
                         <div class="Clear"></div>
 
-                        <label>[% Translate("ActualStartTime") | html %]: </label>
+                        <label>[% Translate("Actual Start Time") | html %]: </label>
 [% RenderBlockStart("EmptyActualStartTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyActualStartTime") %]
@@ -68,7 +68,7 @@
 [% RenderBlockEnd("ActualStartTime") %]
                         <div class="Clear"></div>
 
-                        <label>[% Translate("ActualEndTime") | html %]: </label>
+                        <label>[% Translate("Actual End Time") | html %]: </label>
 [% RenderBlockStart("EmptyActualEndTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyActualEndTime") %]
@@ -93,7 +93,7 @@
 
                     <fieldset class="TableLike FixedLabelSmall">
 [% RenderBlockStart("ShowPlannedEffort") %]
-                        <label>[% Translate("PlannedEffort") | html %]: </label>
+                        <label>[% Translate("Planned Effort") | html %]: </label>
 [% RenderBlockStart("EmptyPlannedEffort") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyPlannedEffort") %]
@@ -104,7 +104,7 @@
 [% RenderBlockEnd("ShowPlannedEffort") %]
 
 [% RenderBlockStart("ShowAccountedTime") %]
-                        <label>[% Translate("AccountedTime") | html %]: </label>
+                        <label>[% Translate("Accounted Time") | html %]: </label>
 [% RenderBlockStart("EmptyAccountedTime") %]
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyAccountedTime") %]
@@ -314,7 +314,7 @@
             <div class="WidgetBox SpacingTop Expanded">
                 <div class="LightRow Header">
                     <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content.") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
-                    <h2>[% Translate("ITSMChange") | html %] - [% Data.ChangeTitle | truncate(70) | html %]</h2>
+                    <h2>[% Translate("ITSM Change") | html %] - [% Data.ChangeTitle | truncate(70) | html %]</h2>
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall">

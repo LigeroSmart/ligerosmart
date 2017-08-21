@@ -40,7 +40,7 @@ sub Run {
     if ( !$ChangeID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ChangeID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -78,7 +78,7 @@ sub Run {
     if ( !$Change ) {
         return $LayoutObject->ErrorScreen(
             Message => $LayoutObject->{LanguageObject}->Translate( 'Change "%s" not found in database!', $ChangeID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

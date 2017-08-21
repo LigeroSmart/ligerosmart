@@ -94,7 +94,7 @@ sub Run {
                 Message => $LayoutObject->{LanguageObject}->Translate(
                     'Ticket with TicketID %s does not exist!', $GetParam{TicketID}
                 ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -121,7 +121,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -145,7 +145,7 @@ sub Run {
             # show error message
             return $LayoutObject->ErrorScreen(
                 Message => $Message,
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }
@@ -229,7 +229,7 @@ sub Run {
                 # show error message, when adding failed
                 return $LayoutObject->ErrorScreen(
                     Message => Translatable('Was not able to create change from template!'),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -263,7 +263,7 @@ sub Run {
                     # show error message
                     return $LayoutObject->ErrorScreen(
                         Message => $Message,
-                        Comment => Translatable('Please contact the admin.'),
+                        Comment => Translatable('Please contact the administrator.'),
                     );
                 }
             }

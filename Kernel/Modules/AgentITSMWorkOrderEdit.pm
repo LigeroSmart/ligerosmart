@@ -40,7 +40,7 @@ sub Run {
     if ( !$WorkOrderID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No WorkOrderID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -58,7 +58,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -273,7 +273,7 @@ sub Run {
                     Message => $LayoutObject->{LanguageObject}->Translate(
                         'Could not perform validation on field %s!', $DynamicFieldConfig->{Label}
                     ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
 
@@ -545,7 +545,7 @@ sub Run {
                                 Message => $LayoutObject->{LanguageObject}->Translate(
                                     'Was not able to update WorkOrder %s!', $WorkOrderID
                                 ),
-                                Comment => Translatable('Please contact the admin.'),
+                                Comment => Translatable('Please contact the administrator.'),
                             );
                         }
                     }
@@ -565,7 +565,7 @@ sub Run {
                 return $LayoutObject->ErrorScreen(
                     Message => $LayoutObject->{LanguageObject}
                         ->Translate( 'Was not able to update WorkOrder %s!', $WorkOrderID ),
-                    Comment => Translatable('Please contact the admin.'),
+                    Comment => Translatable('Please contact the administrator.'),
                 );
             }
         }
@@ -637,7 +637,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'Could not find Change for WorkOrder %s!', $WorkOrderID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 

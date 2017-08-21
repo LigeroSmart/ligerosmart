@@ -20,13 +20,13 @@
                 [% Data.ProfilesStrg %]
                 <div id="SearchProfileAddBlock">
                     <input type="text" name="Name" id="SearchProfileAddName"/>
-                    <button type="button" title="[% Translate("Create Template") | html %]" id="SearchProfileAddAction">[% Translate("Add") | html %]</button>
+                    <button class="CallForAction" type="button" title="[% Translate("Create Template") | html %]" id="SearchProfileAddAction"><span>[% Translate("Add") | html %]</span></button>
                 </div>
             </div>
             <div class="Field">
-                <button id="SearchProfileNew" value="[% Translate("Create New") | html %]">[% Translate("Create New") | html %]</button>
-                <button id="SearchProfileDelete" class="Hidden" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
-                <button id="SearchProfileAsLink" class="Hidden" value="[% Translate("Profile link") | html %]">[% Translate("Profile link") | html %]</button>
+                <button id="SearchProfileNew" class="CallForAction" value="[% Translate("Create New") | html %]"><span>[% Translate("Create New") | html %]</span></button>
+                <button id="SearchProfileDelete" class="CallForAction Hidden" value="[% Translate("Delete") | html %]"><span>[% Translate("Delete") | html %]</span></button>
+                <button id="SearchProfileAsLink" class="CallForAction Hidden" value="[% Translate("Profile link") | html %]"><span>[% Translate("Profile link") | html %]</span></button>
             </div>
             <div class="Clear"></div>
             <label>[% Translate("Save changes in template") | html %]:</label>
@@ -67,26 +67,26 @@
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeTitle" id="LabelChangeTitle">[% Translate("ChangeTitle") | html %]:</label>
+        <label for="ChangeTitle" id="LabelChangeTitle">[% Translate("Change Title") | html %]:</label>
         <div class="Field">
             <input type="text" name="ChangeTitle" value="[% Data.ChangeTitle | html %]" class="W50pc"/>
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderTitle" id="LabelWorkOrderTitle">[% Translate("WorkOrderTitle") | html %]:</label>
+        <label for="WorkOrderTitle" id="LabelWorkOrderTitle">[% Translate("Workorder Title") | html %]:</label>
         <div class="Field">
             <input type="text" name="WorkOrderTitle" value="[% Data.WorkOrderTitle | html %]" class="W50pc"/>
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="CABAgent" id="LabelCABAgent">[% Translate("CABAgent") | html %] ([% Translate("e.g.") | html %] 234231):</label>
+        <label for="CABAgent" id="LabelCABAgent">[% Translate("CAB Agent") | html %] ([% Translate("e.g.") | html %] 234231):</label>
         <div class="Field">
             <input type="hidden" id="CABAgentSelected" value="[% Data.CABAgent | html %]" name="CABAgent">
             <input type="text" name="CABAgentSearch" value="[% Data.CABAgentSearch | html %]" class="W50pc ITSMUserSearch"/>
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="CABCustomer" id="LabelCABCustomer">[% Translate("CABCustomer") | html %] ([% Translate("e.g.") | html %] US4231):</label>
+        <label for="CABCustomer" id="LabelCABCustomer">[% Translate("CAB Customer") | html %] ([% Translate("e.g.") | html %] US4231):</label>
         <div class="Field">
             <input type="hidden" id="CABCustomerSelected" value="[% Data.CABCustomer | html %]" name="CABCustomer">
             <input type="text" name="CABCustomerSearch" value="[% Data.CABCustomerSearch | html %]" class="W50pc ITSMCustomerSearch"/>
@@ -105,13 +105,13 @@
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderInstruction" id="LabelWorkOrderInstruction">[% Translate("ITSM Workorder") | html %] [% Translate("Instruction") | html %] ([% Translate("e.g.") | html %] "Mar*in" [% Translate("or") | html %] "Baue*"):</label>
+        <label for="WorkOrderInstruction" id="LabelWorkOrderInstruction">[% Translate("ITSM Workorder Instruction") | html %] ([% Translate("e.g.") | html %] "Mar*in" [% Translate("or") | html %] "Baue*"):</label>
         <div class="Field">
             <input type="text" name="WorkOrderInstruction" value="[% Data.WorkOrderInstruction | html %]" class="W50pc"/>
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderReport" id="LabelWorkOrderReport">[% Translate("ITSM Workorder") | html %] [% Translate("Report") | html %] ([% Translate("e.g.") | html %] "Mar*in" [% Translate("or") | html %] "Baue*"):</label>
+        <label for="WorkOrderReport" id="LabelWorkOrderReport">[% Translate("ITSM Workorder Report") | html %] ([% Translate("e.g.") | html %] "Mar*in" [% Translate("or") | html %] "Baue*"):</label>
         <div class="Field">
             <input type="text" name="WorkOrderReport" value="[% Data.WorkOrderReport | html %]" class="W50pc"/>
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
@@ -128,13 +128,13 @@
 [% RenderBlockEnd("DynamicField") %]
 
         <div class="Clear"></div>
-        <label for="PriorityIDs" id="LabelPriorityIDs">[% Translate("ITSM Change") | html %] [% Translate("Priority") | html %]:</label>
+        <label for="PriorityIDs" id="LabelPriorityIDs">[% Translate("ITSM Change Priority") | html %]:</label>
         <div class="Field">
             [% Data.ChangePrioritySelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="ImpactIDs" id="LabelImpactIDs">[% Translate("ITSM Change") | html %] [% Translate("Impact") | html %]:</label>
+        <label for="ImpactIDs" id="LabelImpactIDs">[% Translate("ITSM Change Impact") | html %]:</label>
         <div class="Field">
             [% Data.ChangeImpactSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
@@ -146,19 +146,19 @@
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeStateIDs" id="LabelChangeStateIDs">[% Translate("ChangeState") | html %]:</label>
+        <label for="ChangeStateIDs" id="LabelChangeStateIDs">[% Translate("Change State") | html %]:</label>
         <div class="Field">
             [% Data.ChangeStateSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeManagerIDs" id="LabelChangeManagerIDs">[% Translate("ChangeManager") | html %]:</label>
+        <label for="ChangeManagerIDs" id="LabelChangeManagerIDs">[% Translate("Change Manager") | html %]:</label>
         <div class="Field">
             [% Data.ChangeManagerSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeBuilderIDs" id="LabelChangeBuilderIDs">[% Translate("ChangeBuilder") | html %]:</label>
+        <label for="ChangeBuilderIDs" id="LabelChangeBuilderIDs">[% Translate("Change Builder") | html %]:</label>
         <div class="Field">
             [% Data.ChangeBuilderSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
@@ -170,19 +170,19 @@
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderStateIDs" id="LabelWorkOrderStateIDs">[% Translate("WorkOrderState") | html %]:</label>
+        <label for="WorkOrderStateIDs" id="LabelWorkOrderStateIDs">[% Translate("Workorder State") | html %]:</label>
         <div class="Field">
             [% Data.WorkOrderStateSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderTypeIDs" id="LabelWorkOrderTypeIDs">[% Translate("WorkOrderType") | html %]:</label>
+        <label for="WorkOrderTypeIDs" id="LabelWorkOrderTypeIDs">[% Translate("Workorder Type") | html %]:</label>
         <div class="Field">
             [% Data.WorkOrderTypeSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderAgentIDs" id="LabelWorkOrderAgentIDs">[% Translate("WorkOrderAgent") | html %]:</label>
+        <label for="WorkOrderAgentIDs" id="LabelWorkOrderAgentIDs">[% Translate("Workorder Agent") | html %]:</label>
         <div class="Field">
             [% Data.WorkOrderAgentIDSelectionString %]
             <a class="RemoveButton" href="#" title="[% Translate("Remove this entry") | html %]"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove") | html %]</span></a>

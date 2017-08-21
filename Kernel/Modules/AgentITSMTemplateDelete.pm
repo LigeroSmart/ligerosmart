@@ -57,7 +57,7 @@ sub Run {
     if ( !$TemplateID ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No TemplateID is given!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -75,7 +75,7 @@ sub Run {
         return $LayoutObject->ErrorScreen(
             Message =>
                 $LayoutObject->{LanguageObject}->Translate( 'Template "%s" not found in database!', $TemplateID ),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -99,7 +99,7 @@ sub Run {
             return $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}
                     ->Translate( 'Was not able to delete the template %s!', $TemplateID ),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
     }
