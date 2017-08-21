@@ -11,12 +11,12 @@ package Kernel::System::Console::Command::Maint::Survey::RequestsSend;
 use strict;
 use warnings;
 
-use base qw(Kernel::System::Console::BaseCommand);
+use parent qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::Survey',
 );
 
@@ -95,11 +95,8 @@ sub Run {
         return $Self->ExitCodeOk();
     }
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
     # get SystemTime in UnixTime
-    my $SystemTime = $TimeObject->SystemTime();
+    my $SystemTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch();
 
     REQUEST:
     for my $Request (@RequestList) {
@@ -112,9 +109,12 @@ sub Run {
         }
 
         # convert create_time to unixtime
-        my $CreateTime = $TimeObject->TimeStamp2SystemTime(
-            String => $Request->{CreateTime},
-        );
+        my $CreateTime = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Request->{CreateTime},
+            },
+        )->ToString();
 
         $Self->Print(
             "  RequestID: <yellow>$Request->{ID}</yellow>\n   -For TicketID: $Request->{TicketID}\n"
@@ -154,8 +154,6 @@ sub Run {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

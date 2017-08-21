@@ -16,7 +16,7 @@ use Mail::Address;
 
 use Kernel::System::VariableCheck qw(:all);
 
-use base qw(
+use parent qw(
     Kernel::System::Survey::Answer
     Kernel::System::Survey::Question
     Kernel::System::Survey::Request
@@ -25,14 +25,11 @@ use base qw(
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::CustomerUser',
     'Kernel::System::DB',
-    'Kernel::System::Email',
     'Kernel::System::HTMLUtils',
     'Kernel::System::Log',
     'Kernel::System::User',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
     'Kernel::System::YAML',
 );
 

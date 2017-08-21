@@ -19,17 +19,13 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::System::Survey::Request - sub module of Kernel::System::Survey
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All survey request functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item RequestGet()
+=head2 RequestGet()
 
 to get an array list of request elements
 
@@ -83,7 +79,7 @@ sub RequestGet {
     return %RequestData;
 }
 
-=item RequestSend()
+=head2 RequestSend()
 
 to send a request to a customer (if master survey is set)
 
@@ -106,14 +102,14 @@ sub RequestSend {
         return;
     }
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    # get system time
+    my $SystemTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch();
 
     # create PublicSurveyKey
     my $PublicSurveyKey;
     if ( !$Param{PublicSurveyKey} ) {
         my $MD5 = Digest::MD5->new();
-        $MD5->add( $TimeObject->SystemTime() . int( rand(999999999) ) );
+        $MD5->add( $SystemTime . int( rand(999999999) ) );
         $PublicSurveyKey = $MD5->hexdigest();
     }
     else {
@@ -301,11 +297,14 @@ sub RequestSend {
 
         # if we should just send a certain amount of surveys per 30 days & recipient
         if ($AmountOfSurveysPer30Days) {
-            my $Now = $TimeObject->SystemTime();
+
+            # Create a new DateTime object (current time).
+            my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
             # Find all surveys that were created in the last 30 days
-            my $ThirtyDaysAgo = $Now - 30 * 86400;
-            $ThirtyDaysAgo = $TimeObject->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
+            $DateTimeObject->Subtract(
+                Days => 30,
+            );
             my $LastSentTime = 0;
 
             return if !$DBObject->Prepare(
@@ -315,7 +314,7 @@ sub RequestSend {
                     WHERE LOWER(send_to) = ?
                         AND create_time >= ?
                     ORDER BY create_time DESC',
-                Bind => [ \$To, \$ThirtyDaysAgo, ],
+                Bind => [ \$To, \$DateTimeObject->ToString(), ],
             );
 
             # fetch the result
@@ -335,7 +334,7 @@ sub RequestSend {
     # check if a survey is sent in the last time
     my $SendPeriod = $ConfigObject->Get('Survey::SendPeriod');
     if ($SendPeriod) {
-        my $LastSentTime = 0;
+        my $LastSentDateTime;
 
         # get send time
         return if !$DBObject->Prepare(
@@ -350,13 +349,23 @@ sub RequestSend {
 
         # fetch the result
         while ( my @Row = $DBObject->FetchrowArray() ) {
-            $LastSentTime = $Row[0];
+            $LastSentDateTime = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $Row[0],
+                },
+            );
         }
-        if ($LastSentTime) {
-            my $Now = $TimeObject->SystemTime();
-            $LastSentTime = $TimeObject->TimeStamp2SystemTime( String => $LastSentTime );
+        if ($LastSentDateTime) {
+            my $DateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+            );
 
-            return if ( $LastSentTime + $SendPeriod * 60 * 60 * 24 ) > $Now;
+            $LastSentDateTime->Add(
+                Days => $SendPeriod,
+            );
+
+            return if $LastSentDateTime > $DateTimeObject;
 
         }
     }
@@ -472,7 +481,7 @@ sub RequestSend {
     return 1;
 }
 
-=item RequestCount()
+=head2 RequestCount()
 
 to count all requests of a survey
 
@@ -532,9 +541,7 @@ sub RequestCount {
 
 =begin Internal:
 
-=cut
-
-=item _GetRequestRecipient()
+=head2 _GetRequestRecipient()
 
 Extracts and checks the recipient for the request.
 
@@ -609,7 +616,7 @@ sub _GetRequestRecipient {
 
 1;
 
-=back
+=end Internal:
 
 =head1 TERMS AND CONDITIONS
 
