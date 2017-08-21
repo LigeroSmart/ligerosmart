@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>Survey</Name>
     <Version>0.0.0</Version>
-    <Framework>5.0.x</Framework>
+    <Framework>6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -11,77 +11,78 @@
     <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
     <Description Lang="hu">Egy ügyfélkérdőív eszköz.</Description>
     <Filelist>
-        <File Permission="644" Location="doc/survey-database.png" />
-        <File Permission="644" Location="Kernel/Config/Files/Survey.xml" />
-        <File Permission="644" Location="Kernel/Language/bg_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/da_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/de_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/es_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/es_MX_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/fi_FI_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/fr_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/gl_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/hr_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/hu_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/id_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/it_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/ja_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/ms_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/nb_NO_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/nl_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/pl_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/pt_BR_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/pt_PT_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/ru_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/sr_Cyrl_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/sw_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/th_TH_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/uk_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/vi_VN_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/zh_TW_Survey.pm" />
-        <File Permission="644" Location="Kernel/Language/zh_CN_Survey.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyAdd.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyEdit.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyEditQuestions.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyOverview.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyStats.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm" />
-        <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Layout/Survey.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/SurveyMenu/Generic.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/SurveyOverview/Small.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyAdd.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEdit.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEditQuestions.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewNavBar.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewSmall.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyStats.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyZoom.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/PublicSurvey.tt" />
-        <File Permission="644" Location="Kernel/System/Console/Command/Maint/Survey/RequestsSend.pm" />
-        <File Permission="644" Location="Kernel/System/Survey.pm" />
-        <File Permission="644" Location="Kernel/System/Survey/Answer.pm" />
-        <File Permission="644" Location="Kernel/System/Survey/Question.pm" />
-        <File Permission="644" Location="Kernel/System/Survey/Request.pm" />
-        <File Permission="644" Location="Kernel/System/Survey/Vote.pm" />
-        <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm" />
-        <File Permission="644" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t" />
-        <File Permission="644" Location="scripts/test/Survey/GetRequestRecipient.t" />
-        <File Permission="644" Location="scripts/test/Survey/PublicAnswerSet.t" />
-        <File Permission="644" Location="scripts/test/Survey.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyAdd.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyEdit.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyOverview.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyZoom.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyEditQuestions.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Agent/AgentSurveyStats.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t" />
-        <File Permission="644" Location="scripts/test/Selenium/Public/PublicSurvey.t" />
-        <File Permission="644" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css" />
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css" />
-        <File Permission="644" Location="var/packagesetup/Survey.pm" />
+        <File Permission="660" Location="doc/survey-database.png" />
+        <File Permission="660" Location="Kernel/Config/Files/Survey.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/Survey.xml" />
+        <File Permission="660" Location="Kernel/Language/bg_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/da_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/de_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/es_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_FI_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/hu_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/id_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/it_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ms_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_PT_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sw_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_Survey.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyAdd.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyEdit.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyEditQuestions.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyOverview.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyStats.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentSurveyZoom.pm" />
+        <File Permission="660" Location="Kernel/Modules/PublicSurvey.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Layout/Survey.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/SurveyMenu/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/SurveyOverview/Small.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyAdd.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEdit.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyEditQuestions.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewNavBar.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyOverviewSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyStats.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyZoom.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicSurvey.tt" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/Survey/RequestsSend.pm" />
+        <File Permission="660" Location="Kernel/System/Survey.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Answer.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Question.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Request.pm" />
+        <File Permission="660" Location="Kernel/System/Survey/Vote.pm" />
+        <File Permission="660" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t" />
+        <File Permission="660" Location="scripts/test/Survey/GetRequestRecipient.t" />
+        <File Permission="660" Location="scripts/test/Survey/PublicAnswerSet.t" />
+        <File Permission="660" Location="scripts/test/Survey.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyAdd.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyEdit.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyOverview.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyEditQuestions.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentSurveyStats.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Public/PublicSurvey.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css" />
+        <File Permission="660" Location="var/packagesetup/Survey.pm" />
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="survey">
