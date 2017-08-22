@@ -53,8 +53,8 @@ sub Run {
         $LayoutObject->Block(
             Name => 'Overview',
             Data => {
-                Param => \%Param,
-                Class => $Class,
+                Param     => \%Param,
+                Class     => $Class,
                 Subaction => $Self->{Subaction},
             },
         );
@@ -169,10 +169,10 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                Class => $ItemData{Class},
+                Class     => $ItemData{Class},
                 Subaction => $Self->{Subaction},
-                ItemName => $ItemData{Name},
-                ItemEdit => $ItemData{ItemID} eq 'NEW' ? 0 : 1,
+                ItemName  => $ItemData{Name},
+                ItemEdit  => $ItemData{ItemID} eq 'NEW' ? 0 : 1,
             },
         );
 
@@ -192,7 +192,7 @@ sub Run {
             Data => {
                 %ItemData,
                 ValidOptionStrg => $ValidOptionStrg,
-                ItemEdit => $ItemData{ItemID} eq 'NEW' ? 0 : 1,
+                ItemEdit        => $ItemData{ItemID} eq 'NEW' ? 0 : 1,
             },
         );
 
