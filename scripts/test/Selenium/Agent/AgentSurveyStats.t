@@ -104,11 +104,14 @@ $Selenium->RunTest(
             push @TicketIDs,     $TicketID;
             push @TicketNumbers, $TicketNumber;
 
+            my $ArticleInternalBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+                ChannelName => 'Internal',
+            );
+
             # Add article to test created ticket.
-            my $ArticleID = $TicketObject->ArticleCreate(
+            my $ArticleID = $ArticleInternalBackendObject->ArticleCreate(
                 TicketID             => $TicketID,
                 IsVisibleForCustomer => 0,
-                ArticleType          => 'note-internal',
                 SenderType           => 'agent',
                 From                 => 'Some Agent <email@example.com>',
                 To                   => 'Customer<customer-a@example.com>',
@@ -134,8 +137,6 @@ $Selenium->RunTest(
             my $Request = $SurveyObject->RequestSend(
                 TicketID => $TicketID,
             );
-
-            # $Kernel::OM->Get('Kernel::System::Log')->Dumper('Debug - ModuleName', '$Request', \$Request);
 
             $Self->True(
                 $Request,

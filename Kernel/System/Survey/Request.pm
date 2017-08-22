@@ -576,8 +576,7 @@ sub _GetRequestRecipient {
 
         # Since we can't filter by multiple Channels, we need to get all articles visible to the customer.
         my @Articles = $ArticleObject->ArticleList(
-            TicketID             => $Param{TicketID},
-            IsVisibleForCustomer => 1,
+            TicketID => $Param{TicketID},
         );
 
         my $CommunicationChannelObject = $Kernel::OM->Get('Kernel::System::CommunicationChannel');

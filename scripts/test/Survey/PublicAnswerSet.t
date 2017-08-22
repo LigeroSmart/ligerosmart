@@ -105,18 +105,23 @@ $Self->True(
     "TicketCreate() for TicketID $TicketID",
 );
 
-my $ArticleID = $TicketObject->ArticleCreate(
-    TicketID       => $TicketID,
-    ArticleType    => 'phone',
-    SenderType     => 'customer',
-    From           => 'Some Customer <email@example.com>',
-    To             => 'Some Agent <agent@example.com>',
-    Subject        => 'some short description',
-    Body           => 'the message text',
-    ContentType    => 'text/plain; charset=ISO-8859-15',
-    HistoryType    => 'AddNote',
-    HistoryComment => 'Some free text!',
-    UserID         => 1,
+my $ArticleObject                = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+my $ArticleInternalBackendObject = $ArticleObject->BackendForChannel(
+    ChannelName => 'Phone',
+);
+
+my $ArticleID = $ArticleInternalBackendObject->ArticleCreate(
+    TicketID             => $TicketID,
+    IsVisibleForCustomer => 1,
+    SenderType           => 'customer',
+    From                 => 'Some Customer <email@example.com>',
+    To                   => 'Some Agent <agent@example.com>',
+    Subject              => 'some short description',
+    Body                 => 'the message text',
+    ContentType          => 'text/plain; charset=ISO-8859-15',
+    HistoryType          => 'AddNote',
+    HistoryComment       => 'Some free text!',
+    UserID               => 1,
 );
 $Self->True(
     $ArticleID,

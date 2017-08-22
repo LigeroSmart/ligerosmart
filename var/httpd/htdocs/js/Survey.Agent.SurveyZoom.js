@@ -55,5 +55,7 @@ Survey.Agent.SurveyZoom = (function (TargetNS) {
         }
     };
 
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
+
     return TargetNS;
 }(Survey.Agent.SurveyZoom || {}));

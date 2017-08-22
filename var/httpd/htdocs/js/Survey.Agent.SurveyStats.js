@@ -32,5 +32,7 @@ Survey.Agent.SurveyStats = (function (TargetNS) {
         });
     };
 
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
+
     return TargetNS;
 }(Survey.Agent.SurveyStats || {}));

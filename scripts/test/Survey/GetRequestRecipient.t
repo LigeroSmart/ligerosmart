@@ -73,19 +73,25 @@ $Self->IsNot(
     "TicketCreate() for TicketID $TicketID3",
 );
 
+my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+
+my $ArticlePhoneBackendObject = $ArticleObject->BackendForChannel(
+    ChannelName => 'Phone',
+);
+
 # Create articles for the tickets.
-my $ArticleID1 = $TicketObject->ArticleCreate(
-    TicketID       => $TicketID1,
-    ArticleType    => 'phone',
-    SenderType     => 'customer',
-    From           => 'Some Customer <email@example.com>',
-    To             => 'Some Agent <agent@example.com>',
-    Subject        => 'some short description',
-    Body           => 'the message text',
-    ContentType    => 'text/plain; charset=ISO-8859-15',
-    HistoryType    => 'AddNote',
-    HistoryComment => 'Some free text!',
-    UserID         => 1,
+my $ArticleID1 = $ArticlePhoneBackendObject->ArticleCreate(
+    TicketID             => $TicketID1,
+    IsVisibleForCustomer => 1,
+    SenderType           => 'customer',
+    From                 => 'Some Customer <email@example.com>',
+    To                   => 'Some Agent <agent@example.com>',
+    Subject              => 'some short description',
+    Body                 => 'the message text',
+    ContentType          => 'text/plain; charset=ISO-8859-15',
+    HistoryType          => 'AddNote',
+    HistoryComment       => 'Some free text!',
+    UserID               => 1,
 );
 $Self->IsNot(
     $TicketID3,
@@ -93,18 +99,21 @@ $Self->IsNot(
     "ArticleCreate() for ArticleID $ArticleID1",
 );
 
-my $ArticleID2 = $TicketObject->ArticleCreate(
-    TicketID       => $TicketID2,
-    ArticleType    => 'note-external',
-    SenderType     => 'agent',
-    From           => 'Some Agent <agent@example.com>',
-    To             => 'Some Customer <email@example.com>',
-    Subject        => 'some short description',
-    Body           => 'the message text',
-    ContentType    => 'text/plain; charset=ISO-8859-15',
-    HistoryType    => 'AddNote',
-    HistoryComment => 'Some free text!',
-    UserID         => 1,
+my $ArticleInternalBackendObject = $ArticleObject->BackendForChannel(
+    ChannelName => 'Internal',
+);
+my $ArticleID2 = $ArticleInternalBackendObject->ArticleCreate(
+    TicketID             => $TicketID2,
+    IsVisibleForCustomer => 1,
+    SenderType           => 'agent',
+    From                 => 'Some Agent <agent@example.com>',
+    To                   => 'Some Customer <email@example.com>',
+    Subject              => 'some short description',
+    Body                 => 'the message text',
+    ContentType          => 'text/plain; charset=ISO-8859-15',
+    HistoryType          => 'AddNote',
+    HistoryComment       => 'Some free text!',
+    UserID               => 1,
 );
 $Self->IsNot(
     $TicketID3,

@@ -176,22 +176,26 @@ $Selenium->RunTest(
             "Ticket ID $TicketID is created",
         );
 
+        my $ArticleInternalBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+            ChannelName => 'Internal',
+        );
+
         # add article to test created ticket
-        my $ArticleID = $TicketObject->ArticleCreate(
-            TicketID       => $TicketID,
-            ArticleType    => 'note-internal',
-            SenderType     => 'agent',
-            From           => 'Some Agent <email@example.com>',
-            To             => 'Customer A <customer-a@example.com>',
-            Cc             => 'Customer B <customer-b@example.com>',
-            ReplyTo        => 'Customer B <customer-b@example.com>',
-            Subject        => 'some short description',
-            Body           => 'the message text Perl modules provide a range of',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,
+        my $ArticleID = $ArticleInternalBackendObject->ArticleCreate(
+            TicketID             => $TicketID,
+            IsVisibleForCustomer => 0,
+            SenderType           => 'agent',
+            From                 => 'Some Agent <email@example.com>',
+            To                   => 'Customer A <customer-a@example.com>',
+            Cc                   => 'Customer B <customer-b@example.com>',
+            ReplyTo              => 'Customer B <customer-b@example.com>',
+            Subject              => 'some short description',
+            Body                 => 'the message text Perl modules provide a range of',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,
         );
         $Self->True(
             $TicketID,
