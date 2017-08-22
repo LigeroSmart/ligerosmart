@@ -572,14 +572,64 @@ sub _GetRequestRecipient {
     my $ToString = $Param{UserEmail};
 
     if ( !$ToString ) {
-        my %Article = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleLastCustomerArticle(
-            TicketID => $Param{TicketID},
+        my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+
+        # Since we can't filter by multiple Channels, we need to get all articles visible to the customer.
+        my @Articles = $ArticleObject->ArticleList(
+            TicketID             => $Param{TicketID},
+            IsVisibleForCustomer => 1,
         );
-        if ( %Article && $Article{SenderType} eq 'customer' ) {
-            $ToString = $Article{From};
+
+        my $CommunicationChannelObject = $Kernel::OM->Get('Kernel::System::CommunicationChannel');
+
+        my @MIMEBaseChannelIDs;
+        for my $Channel (qw(Email Internal Phone)) {
+            my %CommunicationChannel = $CommunicationChannelObject->ChannelGet(
+                ChannelName => $Channel,
+            );
+            push @MIMEBaseChannelIDs, $CommunicationChannel{ChannelID};
         }
-        else {
-            $ToString = $Article{To};
+
+        # Filter articles that are MIMEBase only.
+        my @MIMEBaseArticles;
+        for my $Article (@Articles) {
+            if ( grep { $Article->{CommunicationChannelID} == $_ } @MIMEBaseChannelIDs ) {
+                push @MIMEBaseArticles, $Article;
+            }
+        }
+
+        # Find last article visible for customer that has From/To field.
+        SENDER_TYPE:
+        for my $SenderType (qw(customer agent)) {
+
+            # Check for articles created by customer
+            my $SenderTypeID = $ArticleObject->ArticleSenderTypeLookup(
+                SenderType => $SenderType,
+            );
+
+            ARTICLE:
+            for my $Article ( reverse @MIMEBaseArticles ) {
+                if ( $Article->{SenderTypeID} == $SenderTypeID ) {
+                    my $ArticleBackendObject = $ArticleObject->BackendForArticle(
+                        TicketID  => $Param{TicketID},
+                        ArticleID => $Article->{ArticleID},
+                    );
+
+                    my %ArticleData = $ArticleBackendObject->ArticleGet(
+                        TicketID  => $Param{TicketID},
+                        ArticleID => $Article->{ArticleID},
+                        UserID    => 1,
+                    );
+                    if ( $SenderType eq 'customer' ) {
+                        $ToString = $ArticleData{From};
+                    }
+                    else {
+                        $ToString = $ArticleData{To};
+                    }
+
+                    last SENDER_TYPE if $ToString;
+                }
+            }
         }
     }
 
