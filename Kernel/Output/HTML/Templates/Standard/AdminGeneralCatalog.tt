@@ -247,7 +247,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button name="SubmitAndContinue" class="CallForAction Primary" id="SubmitAndContinue" type="submit" value="Save"><span>[% Translate("Save") | html %]</span></button>
+                            <button name="SubmitAndContinue" class="CallForAction Primary" id="SubmitAndContinue" type="button" value="Save"><span>[% Translate("Save") | html %]</span></button>
                             [% Translate("or") | html %]
                             <button name="Submit" class="CallForAction Primary" id="Submit" type="submit" value="Finish"><span>[% Translate("Save and finish") | html %]</span></button>
                             [% Translate("or") | html %]
