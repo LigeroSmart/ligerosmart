@@ -112,42 +112,11 @@
 #                </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
 
-[% RenderBlockStart("AttachmentUpload") %]
                     <label>[% Translate("Attachment") | html %]:</label>
                     <div class="Field">
-                        <ul>
-[% RenderBlockStart("Attachment") %]
-                            <li>
-                                [% Data.Filename | html %] ([% Data.Filesize | html %])
-                                <button type="submit" id="AttachmentDelete[% Data.FileID | html %]" name="AttachmentDelete[% Data.FileID | html %]" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#AttachmentDelete[% Data.FileID | html %]').bind('click', function () {
-        Core.Form.Validate.DisableValidation($('#AttachmentDelete[% Data.FileID | html %]').closest('form'));
-    });
-//]]></script>
-[% END %]
-                            </li>
-[% RenderBlockEnd("Attachment") %]
-                            <li>
-                                <input name="FileUpload" id="FileUpload" type="file" size="40"/>
-                                <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
-                            </li>
-                        </ul>
+[% INCLUDE "FormElements/AttachmentList.tt" %]
                     </div>
                     <div class="Clear"></div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#FileUpload').bind('change', function (Event) {
-        var $Form = $('#FileUpload').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.find('#AttachmentUpload').val('1').end().submit();
-    });
-//]]></script>
-[% END %]
-
-[% RenderBlockEnd("AttachmentUpload") %]
 
 [% RenderBlockStart("RichText") %]
 [% InsertTemplate("RichTextEditor.tt") %]
@@ -175,14 +144,3 @@
     </div>
     <div class="Clear"></div>
 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('#FAQSubmit').bind('click', function (Event) {
-    // prevent too fast submitions that could lead into no changes sent to server, due to RTE to
-    // textarea data transfer
-    window.setTimeout(function () {
-        $('#FAQSubmit').closest('form').submit();
-    }, 250);
-});
-//]]></script>
-[% END %]

@@ -468,6 +468,7 @@ Your OTRS Notification Master
                     <Prio>910</Prio>
                 </NavBar>
                 <Loader>
+                    <JavaScript>FAQ.Agent.FAQ.js</JavaScript>
                     <CSS>FAQ.Agent.Detail.css</CSS>
                 </Loader>
             </FrontendModuleReg>
@@ -771,6 +772,7 @@ Your OTRS Notification Master
                     <Prio>920</Prio>
                 </NavBar>
                 <Loader>
+                    <JavaScript>FAQ.Agent.FAQ.js</JavaScript>
                     <CSS>FAQ.Agent.Detail.css</CSS>
                 </Loader>
             </FrontendModuleReg>
@@ -787,6 +789,7 @@ Your OTRS Notification Master
                 <Title Translatable="1">Edit</Title>
                 <NavBarName>FAQ</NavBarName>
                 <Loader>
+                    <JavaScript>FAQ.Agent.FAQ.js</JavaScript>
                     <CSS>FAQ.Agent.Detail.css</CSS>
                 </Loader>
             </FrontendModuleReg>

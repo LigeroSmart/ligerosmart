@@ -1,0 +1,48 @@
+// --
+// Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
+// --
+// This software comes with ABSOLUTELY NO WARRANTY. For details, see
+// the enclosed file COPYING for license information (AGPL). If you
+// did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+// --
+
+"use strict";
+
+var FAQ = FAQ || {};
+FAQ.Agent = FAQ.Agent || {};
+
+/**
+ * @namespace
+ * @exports TargetNS as FAQ.Agent.FAQ
+ * @description
+ *      This namespace contains the special module functions for FAQ.
+ */
+FAQ.Agent.FAQ = (function (TargetNS) {
+
+    /**
+     * @name Init
+     * @memberof FAQ.Agent.FAQ
+     * @function
+     * @description
+     *      This function initialize the FAQ module.
+     */
+    TargetNS.Init = function() {
+
+        // Prevent too fast submitions that could lead into no changes sent to server,
+        // due to RTE to textarea data transfer
+        $('#FAQSubmit').on('click', function () {
+            window.setTimeout(function () {
+                $('#FAQSubmit').closest('form').submit();
+            }, 250);
+        });
+
+        $('#AgentFAQSearch').on('click', function () {
+            Core.Agent.Search.OpenSearchDialog('AgentFAQSearch');
+            return false;
+        });
+    };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
+
+    return TargetNS;
+}(FAQ.Agent.FAQ || {}));

@@ -908,12 +908,6 @@ sub _MaskNew {
         }
     }
 
-    # show the attachment upload button
-    $LayoutObject->Block(
-        Name => 'AttachmentUpload',
-        Data => {%Param},
-    );
-
     # show attachments
     ATTACHMENT:
     for my $Attachment ( @{ $Param{Attachments} } ) {
@@ -924,10 +918,7 @@ sub _MaskNew {
             next ATTACHMENT;
         }
 
-        $LayoutObject->Block(
-            Name => 'Attachment',
-            Data => $Attachment,
-        );
+        push @{ $Param{AttachmentList} }, $Attachment;
     }
 
     # get config of frontend module

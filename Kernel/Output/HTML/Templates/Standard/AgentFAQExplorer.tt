@@ -58,15 +58,6 @@
                         </ul>
                     </div>
                 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#AgentFAQSearch').bind('click', function (Event) {
-        Core.Agent.Search.OpenSearchDialog('AgentFAQSearch');
-        return false;
-    });
-//]]></script>
-[% END %]
-
 [% RenderBlockEnd("QuickSearch") %]
 
 [% RenderBlockStart("InfoBoxFAQMiniList") %]
@@ -148,16 +139,3 @@
             <div class="Clear"></div>
         </div>
     </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('.MasterAction').bind('click', function (Event) {
-        var $MasterActionLink = $(this).find('.MasterActionLink');
-        // only act if the link was not clicked directly
-        if (Event.target !== $MasterActionLink.get(0)) {
-            window.location = $MasterActionLink.attr('href');
-            return false;
-        }
-    });
-//]]></script>
-[% END %]

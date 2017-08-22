@@ -410,6 +410,11 @@ Your OTRS Notification Master
                         <Item>FAQ.Agent.Detail.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>
@@ -853,6 +858,11 @@ Your OTRS Notification Master
                         <Item>FAQ.Agent.Detail.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>
@@ -912,6 +922,11 @@ Your OTRS Notification Master
                 <Item Key="CSS">
                     <Array>
                         <Item>FAQ.Agent.Detail.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
                     </Array>
                 </Item>
             </Hash>
