@@ -33,6 +33,11 @@ sub Run {
     my $ValidObject          = $Kernel::OM->Get('Kernel::System::Valid');
     my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
+    $LayoutObject->AddJSData(
+        Key   => 'GeneralCatalog::Frontend::JSColorPickerPath',
+        Value => $ConfigObject->Get('GeneralCatalog::Frontend::JSColorPickerPath'),
+    );
+
     # ------------------------------------------------------------ #
     # catalog item list
     # ------------------------------------------------------------ #

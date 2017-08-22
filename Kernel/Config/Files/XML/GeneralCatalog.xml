@@ -22,6 +22,19 @@
             </Item>
         </Value>
     </Setting>
+    <Setting Name="Loader::Module::AdminGeneralCatalog###001-GeneralCatalog" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.GeneralCatalog.JSColorPicker.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="Frontend::NavigationModule###AdminGeneralCatalog" Required="0" Valid="1">
         <Description Translatable="1">Admin area navigation for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
@@ -43,6 +56,13 @@
                 <Item Key="IconBig"></Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="GeneralCatalog::Frontend::JSColorPickerPath" Required="1" Valid="1" ConfigLevel="200">
+        <Description Translatable="1">Defines the URL JS Color Picker path.</Description>
+        <Navigation>Frontend::Base</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">&lt;OTRS_CONFIG_Frontend::WebPath&gt;js/thirdparty/jscolor_1.4.1/</Item>
         </Value>
     </Setting>
     <Setting Name="GeneralCatalogPreferences###Comment2" Required="0" Valid="0">

@@ -40,7 +40,6 @@
         <File Permission="660" Location="Kernel/Output/HTML/GeneralCatalogPreferences/Generic.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AAAGeneralCatalog.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminGeneralCatalog.tt" />
-        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/Colorpicker.tt" />
         <File Permission="660" Location="Kernel/System/GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/System/GeneralCatalog/PreferencesDB.pm" />
         <File Permission="660" Location="scripts/test/GeneralCatalog.t" />
@@ -51,6 +50,7 @@
         <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hs.png" />
         <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hv.png" />
         <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/jscolor.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.GeneralCatalog.JSColorPicker.js" />
         <File Permission="660" Location="var/packagesetup/GeneralCatalog.pm" />
     </Filelist>
     <DatabaseInstall Type="post">
