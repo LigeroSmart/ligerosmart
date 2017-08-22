@@ -15,6 +15,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Survey',
     'Kernel::System::Ticket',
+    'Kernel::System::Ticket::Article',
 );
 
 sub new {
@@ -68,11 +69,11 @@ sub Run {
     # send also survey request on ticket creation (on first article)
     if ( $Param{Event} eq 'ArticleCreate' ) {
 
-        my @ArticleIndex = $TicketObject->ArticleIndex(
+        my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
             TicketID => $Param{Data}{TicketID},
         );
 
-        return 1 if scalar @ArticleIndex != 1;
+        return 1 if scalar @Articles != 1;
     }
 
     # send request

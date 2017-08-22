@@ -29,7 +29,6 @@ our @ObjectDependencies = (
     'Kernel::System::HTMLUtils',
     'Kernel::System::Log',
     'Kernel::System::User',
-    'Kernel::System::Ticket',
     'Kernel::System::YAML',
 );
 
