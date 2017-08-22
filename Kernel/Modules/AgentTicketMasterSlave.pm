@@ -405,16 +405,24 @@ sub Run {
                         }
                     }
 
-                    # get time object
-                    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+                    my $DateTimeObject = $Kernel::OM->Create(
+                        'Kernel::System::DateTime',
+                        ObjectParams => {
+                            %GetParam,
+                            Second => 0,
+                        },
+                    );
+
+                    my $CurrentDateTimeObject = $Kernel::OM->Create(
+                        'Kernel::System::DateTime',
+                    );
 
                     # check date
-                    if ( !$TimeObject->Date2SystemTime( %GetParam, Second => 0 ) ) {
+                    if ( !$DateTimeObject ) {
                         $Error{'DateInvalid'} = 'ServerError';
                     }
                     if (
-                        $TimeObject->Date2SystemTime( %GetParam, Second => 0 )
-                        < $TimeObject->SystemTime()
+                        $DateTimeObject < $CurrentDateTimeObject
                         )
                     {
                         $Error{'DateInvalid'} = 'ServerError';

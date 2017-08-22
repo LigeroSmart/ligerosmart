@@ -20,7 +20,7 @@ our @ObjectDependencies = (
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
 );
 
 use Kernel::System::VariableCheck qw(:all);
@@ -393,11 +393,14 @@ sub Run {
             # set the same pending time
             my $TimeStamp = '0000-00-00 00:00:00';
             if ( $Ticket{RealTillTimeNotUsed} ) {
-                my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
-                    = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
-                    SystemTime => $Ticket{RealTillTimeNotUsed},
-                    );
-                $TimeStamp = "$Year-$Month-$Day $Hour:$Min:$Sec";
+                my $DateTimeObject = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        Epoch => $Ticket{RealTillTimeNotUsed},
+                        }
+                );
+
+                $TimeStamp = $DateTimeObject->ToString();
             }
             $TicketObject->TicketPendingTimeSet(
                 String   => $TimeStamp,
@@ -561,15 +564,20 @@ sub _LoopCheck {
     );
 
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $CurrentDateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
     for my $Data ( reverse @Lines ) {
         if ( $Data->{HistoryType} eq 'Misc' && $Data->{Name} eq $Param{String} ) {
-            my $TimeCreated = $TimeObject->TimeStamp2SystemTime(
-                String => $Data->{CreateTime}
-            ) + 15;
-            my $TimeCurrent = $TimeObject->SystemTime();
-            if ( $TimeCreated > $TimeCurrent ) {
+            my $DateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $Data->{CreateTime},
+                    }
+            );
+            $DateTimeObject->Add(
+                Seconds => 15,
+            );
+            if ( $DateTimeObject > $CurrentDateTimeObject ) {
                 $TicketObject->HistoryAdd(
                     TicketID     => $Param{TicketID},
                     CreateUserID => $Param{UserID},
@@ -584,7 +592,7 @@ sub _LoopCheck {
     return 1;
 }
 
-=item _ArticleHistoryTypeGiven()
+=head2 _ArticleHistoryTypeGiven()
 
 Check if history type for article is given
 
