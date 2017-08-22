@@ -27,7 +27,7 @@ All survey answer functions.
 
 to add a new answer to a question
 
-    $SurveyObject->AnswerAdd(
+    my $Success = $SurveyObject->AnswerAdd(
         UserID => 1,
         QuestionID => 10,
         Answer => 'The Answer',
@@ -64,7 +64,7 @@ sub AnswerAdd {
 
 to delete a answer from a question
 
-    $SurveyObject->AnswerDelete(
+    my $Success = $SurveyObject->AnswerDelete(
         QuestionID => 10,
         AnswerID => 4,
     );
@@ -102,6 +102,19 @@ to get all attributes of a answer
 
     my %Answer = $SurveyObject->AnswerGet(
         AnswerID => 123
+    );
+
+returns:
+
+    %Answer = (
+        AnswerID   => 1,
+        QuestionID => 2,
+        Answer     => CheckBoxOne,
+        Position   => 255,
+        CreateTime => '2017-01-01 12:00:00',
+        CreateBy   => 1,
+        ChangeTime => '2017-01-01 12:00:00',
+        ChangeBy   => 1,
     );
 
 =cut
@@ -152,7 +165,7 @@ sub AnswerGet {
 
 to update an existing answer
 
-    $SurveyObject->AnswerUpdate(
+    my $Success = $SurveyObject->AnswerUpdate(
         UserID => 1,
         AnswerID => 6,
         QuestionID => 4,
@@ -193,6 +206,17 @@ to get a array list of all answer items
 
     my @List = $SurveyObject->AnswerList(
         QuestionID => 1
+    );
+
+returns:
+
+    @List = (
+        {
+            AnswerID   => 1,
+            QuestionID => 2,
+            Answer     => 'The Answer',
+        },
+        ...
     );
 
 =cut
@@ -241,7 +265,7 @@ sub AnswerList {
 
 to sort all answers from a question
 
-    $SurveyObject->AnswerSort(
+    my $Success = $SurveyObject->AnswerSort(
         QuestionID => 1,
     );
 
@@ -301,7 +325,7 @@ sub AnswerSort {
 
 to move a answer up
 
-    $SurveyObject->AnswerUp(
+    my $Success = $SurveyObject->AnswerUp(
         QuestionID => 4,
         AnswerID => 1,
     );
@@ -390,7 +414,7 @@ sub AnswerUp {
 
 to move a answer down
 
-    $SurveyObject->AnswerDown(
+    my $Success = $SurveyObject->AnswerDown(
         QuestionID => 4,
         AnswerID => 1,
     );
@@ -525,7 +549,7 @@ sub AnswerCount {
 
 to save a public vote
 
-    $SurveyObject->PublicAnswerSet(
+    my $Success = $SurveyObject->PublicAnswerSet(
         PublicSurveyKey => 'aVkdE82Dw2qw6erCda',
         QuestionID => 4,
         VoteValue => 'The Value',

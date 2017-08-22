@@ -27,7 +27,7 @@ All survey question functions.
 
 to add a new question to a survey
 
-    $SurveyObject->QuestionAdd(
+    my $Success = $SurveyObject->QuestionAdd(
         UserID => 1,
         SurveyID => 10,
         Question => 'The Question',
@@ -83,7 +83,7 @@ sub QuestionAdd {
 
 to delete a question from a survey
 
-    $SurveyObject->QuestionDelete(
+    my $Success = $SurveyObject->QuestionDelete(
         SurveyID => 1,
         QuestionID => 10,
     );
@@ -134,6 +134,21 @@ to get all attributes of a question
 
     my %Question = $SurveyObject->QuestionGet(
         QuestionID => 123
+    );
+
+returns:
+
+    %Question = (
+        QuestionID     => 1,
+        SurveyID       => 2,
+        Question       => 'Question',
+        Type           => 'YesNo',
+        Position       => 12,
+        AnswerRequired => 1,
+        CreateTime     => '2017-01-01 12:00:00',
+        CreateBy       => 1,
+        ChangeTime     => '2017-01-01 12:00:00',
+        ChangeBy       => 1,
     );
 
 =cut
@@ -188,7 +203,7 @@ sub QuestionGet {
 
 to update an existing question
 
-    $SurveyObject->QuestionUpdate(
+    my $Success = $SurveyObject->QuestionUpdate(
         UserID => 1,
         QuestionID => 4,
         SurveyID => 3,
@@ -245,6 +260,18 @@ to get a array list of all question items
         SurveyID => 1
     );
 
+returns:
+    @List = (
+        {
+            QuestionID     => 123,,
+            SurveyID       => 123,
+            Question       => 'Question'
+            Type           => 'YesNo',
+            AnswerRequired => 1,
+        },
+        ...
+    );
+
 =cut
 
 sub QuestionList {
@@ -293,7 +320,7 @@ sub QuestionList {
 
 to sort all questions from a survey
 
-    $SurveyObject->QuestionSort(
+    my $Success = $SurveyObject->QuestionSort(
         SurveyID => 1,
     );
 
@@ -349,7 +376,7 @@ sub QuestionSort {
 
 to move a question up
 
-    $SurveyObject->QuestionUp(
+    my $Success = $SurveyObject->QuestionUp(
         SurveyID => 1,
         QuestionID => 4,
     );
@@ -439,7 +466,7 @@ sub QuestionUp {
 
 to move a question down
 
-    $SurveyObject->QuestionDown(
+    my $Success = $SurveyObject->QuestionDown(
         SurveyID => 1,
         QuestionID => 4,
     );

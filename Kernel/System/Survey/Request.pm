@@ -33,6 +33,19 @@ to get an array list of request elements
         PublicSurveyKey => 'Aw5de3Xf5qA',
     );
 
+returns:
+
+    %RequestData = (
+        RequestID       => 123,
+        TicketID        => 123,
+        SurveyID        => 123,
+        ValidID         => 1,
+        PublicSurveyKey => 'b4c14552919018b51ec792c9b812b691',
+        SendTo          => 'mail@localhost.com',
+        SendTime        => '2017-01-01 12:00:00',
+        VoteTime        => '2017-01-02 12:00:00',
+    );
+
 =cut
 
 sub RequestGet {
@@ -83,7 +96,7 @@ sub RequestGet {
 
 to send a request to a customer (if master survey is set)
 
-    $SurveyObject->RequestSend(
+    my $Success = $SurveyObject->RequestSend(
         TicketID => 123,
     );
 

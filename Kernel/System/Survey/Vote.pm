@@ -32,6 +32,16 @@ to get all attributes of a vote
         QuestionID => 23
     );
 
+returns:
+
+    @Vote = (
+        {
+            RequestID => 123,
+            VoteValue => 'Yes',
+        },
+        ...
+    );
+
 =cut
 
 sub VoteGet {
@@ -81,6 +91,18 @@ to get a array list of all vote items
 
     my @List = $SurveyObject->VoteList(
         SurveyID => 1
+    );
+
+returns:
+
+    @List = (
+        {
+            RequestID => 123,
+            TicketID  => 123,
+            SendTime  => '2017-01-01 12:00:00',
+            VoteTime  => '2017-01-02 12:00:00',
+        },
+        ...
     );
 
 =cut
@@ -134,6 +156,9 @@ to get all attributes of a vote
     my $VoteAttributeContent = $SurveyObject->VoteAttributeGet(
         VoteID => 13,
     );
+
+returns:
+    $VoteAttributeContent = 'Yes';
 
 =cut
 
