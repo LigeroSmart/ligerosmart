@@ -14,13 +14,15 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::CheckItem',
+    'Kernel::System::CommunicationChannel',
     'Kernel::System::CustomerUser',
+    'Kernel::System::DateTime',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Ticket',
-    'Kernel::System::DateTime',
+    'Kernel::System::Ticket::Article',
 );
 
 use Kernel::System::VariableCheck qw(:all);
@@ -124,11 +126,17 @@ sub Run {
 
     # auto response action
     if ( $Param{Event} eq 'ArticleSend' ) {
-        my @Index = $TicketObject->ArticleIndex( TicketID => $Param{Data}->{TicketID} );
+        my @Articles = $$Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+            TicketID => $Param{Data}->{TicketID},
+        );
 
-        return 1 if !@Index;
+        return 1 if !@Articles;
 
-        my %Article = $TicketObject->ArticleGet( ArticleID => $Index[-1] );
+        my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle(
+            TicketID  => $Param{Data}->{TicketID},
+            ArticleID => ArticleID => $Articles[-1],
+        );
+        my %Article = $ArticleBackendObject->ArticleGet( ArticleID => $Articles[-1] );
 
         # check if the send mail is of type forward
         my $IsForward = $Self->_ArticleHistoryTypeGiven(
@@ -145,9 +153,7 @@ sub Run {
         return 1 if $IsForward && !$ForwardSlaves;
 
         # do not send internal communications to end customers of slave tickets
-        if ( $Article{SenderType} eq 'agent' && $Article{ArticleType} =~ m{internal} ) {
-            return 1;
-        }
+        return 1 if $Article{IsVisibleForCustomer};
 
         # mark ticket to prevent a loop
         $TicketObject->HistoryAdd(
@@ -198,13 +204,38 @@ sub Run {
             # we have to get the last Article with SenderType 'customer'
             # and get the UserEmail
             if ( !$Customer{UserEmail} ) {
-                my @Index = $TicketObject->ArticleGet(
+                my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+
+                my @Articles = $ArticleObject->ArticleList(
                     TicketID          => $TicketID,
-                    ArticleSenderType => ['customer'],
+                    ArticleSenderType => 'customer',
                 );
 
-                if (@Index) {
-                    $Customer{UserEmail} = $Index[-1]{From};
+                my $CommunicationChannelObject = $Kernel::OM->Get('Kernel::System::CommunicationChannel');
+
+                my @MIMEBaseChannels;
+                for my $Channel (qw(Email Internal Phone)) {
+                    my %CommunicationChannel = $CommunicationChannelObject->ChannelGet(
+                        ChannelName => $Channel,
+                    );
+
+                    push @MIMEBaseChannels, $CommunicationChannel{ChannelID};
+                }
+
+                ARTICLE:
+                for my $Article ( reverse @Articles ) {
+                    if ( grep { $Article->{CommunicationChannelID} == $_ } @MIMEBaseChannels ) {
+                        my $ArticleBackendObject = $ArticleObject->BackendForArticle( %{$Article} );
+
+                        my %ArticleData = $ArticleBackendObject->ArticleGet(
+                            %{$Article},
+                        );
+
+                        if ( $ArticleData{From} ) {
+                            $Customer{UserEmail} = $ArticleData{From};
+                            last ARTICLE;
+                        }
+                    }
                 }
             }
 
@@ -271,7 +302,7 @@ sub Run {
             }
 
             # send article again
-            $TicketObject->ArticleSend(
+            $ArticleBackendObject->ArticleSend(
                 %Article,
                 Subject        => $Subject,
                 Cc             => '',
@@ -287,11 +318,19 @@ sub Run {
 
     # article create
     elsif ( $Param{Event} eq 'ArticleCreate' ) {
-        my @Index = $TicketObject->ArticleIndex( TicketID => $Param{Data}->{TicketID} );
+        my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+        my @Articles      = $ArticleObject->ArticleList(
+            TicketID => $Param{Data}->{TicketID},
+        );
 
-        return 1 if !@Index;
+        return 1 if !@Articles;
 
-        my %Article = $TicketObject->ArticleGet( ArticleID => $Index[-1] );
+        my $ArticleBackendObject = $ArticleObject->BackendForArticle(
+            TicketID => $Param{Data}->{TicketID},
+            ,
+            ArticleID => $Articles[-1],
+        );
+        my %Article = $ArticleBackendObject->ArticleGet( ArticleID => $Articles[-1] );
 
         # mark ticket to prevent a loop
         $TicketObject->HistoryAdd(
@@ -301,14 +340,21 @@ sub Run {
             Name         => "MasterTicketAction: ArticleCreate",
         );
 
+        my $ChannelName = $ArticleObject->ChannelNameGet();
+
         # do not process email articles (already done in ArticleSend event!)
-        if ( $Article{SenderType} eq 'agent' && $Article{ArticleType} eq 'email-external' ) {
+        if (
+            $Article{SenderType} eq 'agent'
+            && $Article{IsVisibleForCustomer}
+            && $ChannelName eq 'Email'
+            )
+        {
 
             return 1;
         }
 
         # set the same state, but only for notes
-        if ( $Article{ArticleType} !~ /^note-/i ) {
+        if ( $ChannelName eq 'Internal' ) {
 
             return 1;
         }
@@ -324,7 +370,7 @@ sub Run {
             next TICKETID if !$CheckSuccess;
 
             # article create
-            $TicketObject->ArticleCreate(
+            $ArticleBackendObject->ArticleCreate(
                 %Article,
                 HistoryType    => 'AddNote',
                 HistoryComment => 'Added article based on master ticket.',
