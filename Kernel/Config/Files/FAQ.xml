@@ -69,8 +69,8 @@
         <SubGroup>Core::Item::Voting</SubGroup>
         <Setting>
             <Hash>
-                <Item Translatable="1" Key="internal">internal (agent)</Item>
-                <Item Translatable="1" Key="external">external (customer)</Item>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -80,8 +80,8 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -111,7 +111,7 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Hash>
-                <Item Translatable="1" Key="public">public (public)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -121,9 +121,9 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Hash>
-                <Item Translatable="1" Key="internal">internal (agent)</Item>
-                <Item Translatable="1" Key="external">external (customer)</Item>
-                <Item Translatable="1" Key="public">public (public)</Item>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -133,8 +133,8 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -152,9 +152,9 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Hash>
-                <Item Translatable="1" Key="internal">internal (agent)</Item>
-                <Item Translatable="1" Key="external">external (customer)</Item>
-                <Item Translatable="1" Key="public">public (public)</Item>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -164,8 +164,8 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -183,9 +183,9 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Hash>
-                <Item Translatable="1" Key="internal">internal (agent)</Item>
-                <Item Translatable="1" Key="external">external (customer)</Item>
-                <Item Translatable="1" Key="public">public (public)</Item>
+                <Item Key="internal" Translatable="1">internal (agent)</Item>
+                <Item Key="external" Translatable="1">external (customer)</Item>
+                <Item Key="public" Translatable="1">public (public)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -203,8 +203,8 @@
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -238,8 +238,8 @@
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -321,7 +321,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
-                <Item Translatable="1" Key="Caption">Symptom</Item>
+                <Item Key="Caption" Translatable="1">Symptom</Item>
                 <Item Key="Prio">100</Item>
             </Hash>
         </Setting>
@@ -333,7 +333,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
-                <Item Translatable="1" Key="Caption">Problem</Item>
+                <Item Key="Caption" Translatable="1">Problem</Item>
                 <Item Key="Prio">200</Item>
             </Hash>
         </Setting>
@@ -345,7 +345,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
-                <Item Translatable="1" Key="Caption">Solution</Item>
+                <Item Key="Caption" Translatable="1">Solution</Item>
                 <Item Key="Prio">300</Item>
             </Hash>
         </Setting>
@@ -357,7 +357,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show"></Item>
-                <Item Translatable="1" Key="Caption">Field4</Item>
+                <Item Key="Caption" Translatable="1">Field4</Item>
                 <Item Key="Prio">400</Item>
             </Hash>
         </Setting>
@@ -369,7 +369,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show"></Item>
-                <Item Translatable="1" Key="Caption">Field5</Item>
+                <Item Key="Caption" Translatable="1">Field5</Item>
                 <Item Key="Prio">500</Item>
             </Hash>
         </Setting>
@@ -381,7 +381,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Show">internal</Item>
-                <Item Translatable="1" Key="Caption">Comment</Item>
+                <Item Key="Caption" Translatable="1">Comment</Item>
                 <Item Key="Prio">600</Item>
             </Hash>
         </Setting>
@@ -533,11 +533,11 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
-                <Item Translatable="1" Key="Title">Title</Item>
-                <Item Translatable="1" Key="FAQID">Number</Item>
-                <Item Translatable="1" Key="Category">Category</Item>
-                <Item Translatable="1" Key="Language">Language</Item>
-                <Item Translatable="1" Key="State">State</Item>
+                <Item Key="Title" Translatable="1">Title</Item>
+                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="Category" Translatable="1">Category</Item>
+                <Item Key="Language" Translatable="1">Language</Item>
+                <Item Key="State" Translatable="1">State</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -547,8 +547,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
         <Setting>
             <Option SelectedID="Down">
-                <Item Translatable="1" Key="Down">Down</Item>
-                <Item Translatable="1" Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -617,11 +617,11 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
-                <Item Translatable="1" Key="Title">Title</Item>
-                <Item Translatable="1" Key="FAQID">Number</Item>
-                <Item Translatable="1" Key="Category">Category</Item>
-                <Item Translatable="1" Key="Language">Language</Item>
-                <Item Translatable="1" Key="State">State</Item>
+                <Item Key="Title" Translatable="1">Title</Item>
+                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="Category" Translatable="1">Category</Item>
+                <Item Key="Language" Translatable="1">Language</Item>
+                <Item Key="State" Translatable="1">State</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -631,8 +631,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
         <Setting>
             <Option SelectedID="Down">
-                <Item Translatable="1" Key="Down">Down</Item>
-                <Item Translatable="1" Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -663,8 +663,8 @@ Your OTRS Notification Master
         <SubGroup>Core::Item</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -741,7 +741,7 @@ Your OTRS Notification Master
                 </Item>
                 <Item Key="URL1">
                     <Hash>
-                        <Item Translatable="1" Key="Description">FAQ</Item>
+                        <Item Key="Description" Translatable="1">FAQ</Item>
                         <Item Key="URL">/otrs/index.pl?Action=AgentFAQZoom;ItemID=&lt;MATCH2&gt;</Item>
                         <Item Key="Image">/otrs-web/skins/Agent/default/img/help-small.png</Item>
                         <Item Key="Target">_blank</Item>
@@ -908,8 +908,8 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQOverview::Small</Item>
-                <Item Translatable="1" Key="Name">Small</Item>
-                <Item Translatable="1" Key="NameShort">S</Item>
+                <Item Key="Name" Translatable="1">Small</Item>
+                <Item Key="NameShort" Translatable="1">S</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -934,11 +934,11 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
-                <Item Translatable="1" Key="Title">Title</Item>
-                <Item Translatable="1" Key="FAQID">Number</Item>
-                <Item Translatable="1" Key="Category">Category</Item>
-                <Item Translatable="1" Key="Language">Language</Item>
-                <Item Translatable="1" Key="State">State</Item>
+                <Item Key="Title" Translatable="1">Title</Item>
+                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="Category" Translatable="1">Category</Item>
+                <Item Key="Language" Translatable="1">Language</Item>
+                <Item Key="State" Translatable="1">State</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -948,8 +948,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
-                <Item Translatable="1" Key="Down">Down</Item>
-                <Item Translatable="1" Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -982,11 +982,11 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
-                <Item Translatable="1" Key="Title">Title</Item>
-                <Item Translatable="1" Key="FAQID">Number</Item>
-                <Item Translatable="1" Key="Category">Category</Item>
-                <Item Translatable="1" Key="Language">Language</Item>
-                <Item Translatable="1" Key="State">State</Item>
+                <Item Key="Title" Translatable="1">Title</Item>
+                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="Category" Translatable="1">Category</Item>
+                <Item Key="Language" Translatable="1">Language</Item>
+                <Item Key="State" Translatable="1">State</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -996,8 +996,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
         <Setting>
             <Option SelectedID="Down">
-                <Item Translatable="1" Key="Down">Down</Item>
-                <Item Translatable="1" Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1253,11 +1253,11 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
-                <Item Translatable="1" Key="Title">Title</Item>
-                <Item Translatable="1" Key="FAQID">Number</Item>
-                <Item Translatable="1" Key="Category">Category</Item>
-                <Item Translatable="1" Key="Language">Language</Item>
-                <Item Translatable="1" Key="State">State</Item>
+                <Item Key="Title" Translatable="1">Title</Item>
+                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="Category" Translatable="1">Category</Item>
+                <Item Key="Language" Translatable="1">Language</Item>
+                <Item Key="State" Translatable="1">State</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1267,8 +1267,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
-                <Item Translatable="1" Key="Down">Down</Item>
-                <Item Translatable="1" Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1345,11 +1345,11 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
-                <Item Translatable="1" Key="Title">Title</Item>
-                <Item Translatable="1" Key="FAQID">Number</Item>
-                <Item Translatable="1" Key="Category">Category</Item>
-                <Item Translatable="1" Key="Language">Language</Item>
-                <Item Translatable="1" Key="State">State</Item>
+                <Item Key="Title" Translatable="1">Title</Item>
+                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="Category" Translatable="1">Category</Item>
+                <Item Key="Language" Translatable="1">Language</Item>
+                <Item Key="State" Translatable="1">State</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1359,8 +1359,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
-                <Item Translatable="1" Key="Down">Down</Item>
-                <Item Translatable="1" Key="Up">Up</Item>
+                <Item Key="Down" Translatable="1">Down</Item>
+                <Item Key="Up" Translatable="1">Up</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1497,8 +1497,8 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQJournalOverview::Small</Item>
-                <Item Translatable="1" Key="Name">Small</Item>
-                <Item Translatable="1" Key="NameShort">S</Item>
+                <Item Key="Name" Translatable="1">Small</Item>
+                <Item Key="NameShort" Translatable="1">S</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1535,8 +1535,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="Full">
-                <Item Translatable="1" Key="Full">Full FAQ</Item>
-                <Item Translatable="1" Key="Text">Text Only</Item>
+                <Item Key="Full" Translatable="1">Full FAQ</Item>
+                <Item Key="Text" Translatable="1">Text Only</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1546,8 +1546,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1557,8 +1557,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1568,8 +1568,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1579,8 +1579,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1590,8 +1590,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1601,8 +1601,8 @@ Your OTRS Notification Master
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1612,8 +1612,8 @@ Your OTRS Notification Master
         <SubGroup>Core</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1663,8 +1663,8 @@ Your OTRS Notification Master
         <SubGroup>Core</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -1683,7 +1683,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::FAQ</Item>
-                <Item Translatable="1" Key="Title">Latest updated FAQ articles</Item>
+                <Item Key="Title" Translatable="1">Latest updated FAQ articles</Item>
                 <Item Key="Description"></Item>
                 <Item Key="Type">LastChange</Item>
                 <Item Key="Block">ContentSmall</Item>
@@ -1699,7 +1699,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::FAQ</Item>
-                <Item Translatable="1" Key="Title">Latest created FAQ articles</Item>
+                <Item Key="Title" Translatable="1">Latest created FAQ articles</Item>
                 <Item Key="Description"></Item>
                 <Item Key="Type">LastCreate</Item>
                 <Item Key="Block">ContentSmall</Item>
@@ -1828,7 +1828,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ToolBar::Link</Item>
-                <Item Translatable="1" Key="Name">Add FAQ article</Item>
+                <Item Key="Name" Translatable="1">Add FAQ article</Item>
                 <Item Key="Link">Action=AgentFAQAdd</Item>
                 <Item Key="Action">AgentFAQAdd</Item>
                 <Item Key="AccessKey">n</Item>
@@ -2215,8 +2215,8 @@ Your OTRS Notification Master
         <SubGroup>Core</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Translatable="1" Key="0">No</Item>
-                <Item Translatable="1" Key="1">Yes</Item>
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
