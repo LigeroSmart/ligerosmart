@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - c16b30309c93a274ba83438ce7f52b5f2aae4691 - Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: otrs - 238c0824519557c693966a9447fcbddc39a993d6 - Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,6 +25,9 @@
     <input type="hidden" name="ReplyToArticle" value="[% Data.ReplyToArticle | html %]"/>
     <input type="hidden" name="Expand" id="Expand" value=""/>
     <input type="hidden" name="FormID" value="[% Data.FormID | html %]"/>
+    <input type="hidden" name="FormDraftTitle" value="[% Data.FormDraftTitle | html %]"/>
+    <input type="hidden" name="FormDraftID" value="[% Data.FormDraftID | html %]"/>
+    <input type="hidden" name="FormDraftAction" id="FormDraftAction" />
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -77,7 +80,7 @@
 
         </div>
         <div class="Content">
-
+            [% INCLUDE "FormElements/DraftNotifications.tt" %]
 [% RenderBlockStart("WidgetTicketActions") %]
             <div class="WidgetSimple Expanded">
                 <div class="Header">
@@ -106,46 +109,38 @@
                             <div id="TypeIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('#TypeID').bind('change', function (Event) {
-    Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'TypeID', [ 'ServiceID', 'SLAID', 'NewQueueID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-});
-//]]></script>
-[% END %]
 [% RenderBlockEnd("Type") %]
 
 [% RenderBlockStart("Queue") %]
-                        <label for="NewQueueID">[% Translate("Queue") | html %]:</label>
+[% IF Data.QueueMandatory %]
+                            <label class="Mandatory" for="NewQueueID"><span class="Marker">*</span>[% Translate("Queue") | html %]:</label>
+                        [% ELSE %]
+                            <label for="NewQueueID">[% Translate("Queue") | html %]:</label>
+                        [% END %]
                         <div class="Field">
                             [% Data.QueuesStrg %]
-                            <div id="NewQueueIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
-                            <div id="NewQueueIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            [% IF Data.QueueMandatory %]
+                                <div id="NewQueueIDError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            [% END %]
+                            <div id="NewQueueIDServerError" class="TooltipErrorMessage"><p>[% Translate("Queue invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewQueueID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewQueueID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("Queue") %]
 
 [% RenderBlockStart("Service") %]
-                        <label for="ServiceID">[% Translate("Service") | html %]:</label>
+[% IF Data.ServiceMandatory %]
+                            <label class="Mandatory" for="ServiceID"><span class="Marker">*</span>[% Translate("Service") | html %]:</label>
+                        [% ELSE %]
+                            <label for="ServiceID">[% Translate("Service") | html %]:</label>
+                        [% END %]
                         <div class="Field">
                             [% Data.ServiceStrg %]
+                            [% IF Data.ServiceMandatory %]
+                                <div id="ServiceIDError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            [% END %]
                             <div id="ServiceIDServerError" class="TooltipErrorMessage"><p>[% Translate("Service invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewQueueID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("Service") %]
 
 [% RenderBlockStart("ServiceMandatory") %]
@@ -156,28 +151,22 @@ $('#TypeID').bind('change', function (Event) {
                             <div id="ServiceIDServerError" class="TooltipErrorMessage"><p>[% Translate("Service invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewQueueID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ServiceMandatory") %]
 
 [% RenderBlockStart("SLA") %]
-                        <label for="SLAID">[% Translate("Service Level Agreement") | html %]:</label>
+                        [% IF Data.SLAMandatory %]
+                            <label class="Mandatory" for="SLAID"><span class="Marker">*</span>[% Translate("Service Level Agreement") | html %]:</label>
+                        [% ELSE %]
+                            <label for="SLAID">[% Translate("Service Level Agreement") | html %]:</label>
+                        [% END %]
                         <div class="Field">
                             [% Data.SLAStrg %]
+                            [% IF Data.SLAMandatory %]
+                                <div id="SLAIDError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <div id="SLAIDServerError" class="TooltipErrorMessage"><p>[% Translate("SLA invalid.") | html %]</p></div>
+                            [% END %]
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewQueueID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("SLA") %]
 
 [% RenderBlockStart("SLAMandatory") %]
@@ -185,33 +174,25 @@ $('#TypeID').bind('change', function (Event) {
                         <div class="Field">
                             [% Data.SLAStrg %]
                             <div id="SLAIDError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-                            <div id="SLAIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            <div id="SLAIDServerError" class="TooltipErrorMessage"><p>[% Translate("SLA invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewQueueID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("SLAMandatory") %]
 
 [% RenderBlockStart("Owner") %]
-                        <label for="NewOwnerID">[% Translate("New Owner") | html %]:</label>
+                        [% IF Data.OwnerMandatory %]
+                            <label class="Mandatory" for="NewOwnerID"><span class="Marker">*</span>[% Translate("New Owner") | html %]:</label>
+                        [% ELSE %]
+                            <label for="NewOwnerID">[% Translate("New Owner") | html %]:</label>
+                        [% END %]
                         <div class="Field">
                             [% Data.OwnerStrg %]
-                            <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
+                            [% IF Data.OwnerMandatory %]
+                                <div id="NewOwnerIDError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
+                            [% END %]
+                                <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Owner invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewOwnerID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'NewQueueID', 'SLAID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("Owner") %]
 
 [% RenderBlockStart("OwnerMandatory") %]
@@ -219,47 +200,54 @@ $('#TypeID').bind('change', function (Event) {
                         <div class="Field">
                             [% Data.OwnerStrg %]
                             <div id="NewOwnerIDError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
-                            <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Please set a new owner!") | html %]</p></div>
+                            <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>[% Translate("Owner invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewOwnerID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'NewQueueID', 'SLAID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("OwnerMandatory") %]
 
 [% RenderBlockStart("Responsible") %]
-                        <label for="NewResponsibleID">[% Translate("New Responsible") | html %]:</label>
+                        [% IF Data.ResponsibleMandatory %]
+                            <label class="Mandatory" for="NewResponsibleID">
+                                <span class="Marker">*</span>[% Translate("New Responsible") | html %]:
+                            </label>
+                        [% ELSE %]
+                            <label for="NewResponsibleID">[% Translate("New Responsible") | html %]:</label>
+                        [% END %]
                         <div class="Field">
                             [% Data.ResponsibleStrg %]
+                            [% IF Data.ResponsibleMandatory %]
+                                <div id="NewResponsibleIDError" class="TooltipErrorMessage"><p>[% Translate("Please set a new responsible!") | html %]</p></div>
+                                <div id="NewResponsibleIDServerError" class="TooltipErrorMessage"><p>[% Translate("Responsible invalid.") | html %]</p></div>
+                            [% END %]
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewResponsibleID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewResponsibleID', [ 'TypeID', 'ServiceID', 'NewQueueID', 'SLAID', 'NewOwnerID', 'NewStateID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("Responsible") %]
 
-[% RenderBlockStart("State") %]
-                        <label for="NewStateID">[% Translate("Next state") | html %]:</label>
+[% RenderBlockStart("ResponsibleMandatory") %]
+                        <label class="Mandatory" for="NewResponsibleID"><span class="Marker">*</span>[% Translate("New Responsible") | html %]:</label>
                         <div class="Field">
-                    [% Data.StateStrg %]
+                            [% Data.ResponsibleStrg %]
+                            <div id="NewResponsibleIDError" class="TooltipErrorMessage"><p>[% Translate("Please set a new responsible!") | html %]</p></div>
+                            <div id="NewResponsibleIDServerError" class="TooltipErrorMessage"><p>[% Translate("Responsible invalid.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewStateID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewStateID', ['TypeID', 'ServiceID', 'NewQueueID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewPriorityID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
+[% RenderBlockEnd("ResponsibleMandatory") %]
+
+[% RenderBlockStart("State") %]
+                        [% IF Data.StateMandatory %]
+                            <label class="Mandatory" for="NewStateID"><span class="Marker">*</span>[% Translate("Next state") | html %]:</label>
+                        [% ELSE %]
+                            <label for="NewStateID">[% Translate("Next state") | html %]:</label>
+                        [% END %]
+                        <div class="Field">
+                            [% Data.StateStrg %]
+                            [% IF Data.StateMandatory %]
+                                <div id="NewStateIDError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <div id="NewStateIDServerError" class="TooltipErrorMessage"><p>[% Translate("State invalid.") | html %]</p></div>
+                            [% END %]
+                        </div>
+                        <div class="Clear"></div>
+[% RenderBlockEnd("State") %]
 
 [% RenderBlockStart("StatePending") %]
                         <label>[% Translate("Pending date") | html %]:</label>
@@ -271,7 +259,6 @@ $('#TypeID').bind('change', function (Event) {
                         </div>
                         <div class="Clear"></div>
 [% RenderBlockEnd("StatePending") %]
-[% RenderBlockEnd("State") %]
 
 [% RenderBlockStart("Priority") %]
                         <label for="NewPriorityID">[% Translate("Priority") | html %]:</label>
@@ -279,68 +266,43 @@ $('#TypeID').bind('change', function (Event) {
                     [% Data.PriorityStrg %]
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NewPriorityID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewPriorityID', ['TypeID', 'ServiceID', 'NewQueueID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID' [% Data.DynamicFieldNamesStrg %] ]);
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("Priority") %]
-                    </div>
-                </div>
-[% RenderBlockEnd("WidgetTicketActions") %]
 
-[% RenderBlockStart("WidgetDynamicFields") %]
-                <div class="WidgetSimple Expanded">
-                    <div class="Header">
-                        <div class="WidgetAction Toggle">
-                            <a href="#" title="[% Translate("Toggle this widget") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
-                        </div>
-# ---
-# OTRSMasterSlave
-# ---
-#                        <h2>[% Translate("Dynamic Fields") | html %]</h2>
-                        <h2>[% Translate("Set Master/Slave Value") | html %]</h2>
-# ---
-                    </div>
-                    <div class="Content">
-                        <fieldset class="TableLike FixedLabel">
-[% RenderBlockStart("DynamicField") %]
-                            <div class="Row Row_DynamicField_[% Data.Name | html %]">
-                            [% Data.Label %]
-                                <div class="Field">
-                                [% Data.Field %]
-                                </div>
-                                <div class="Clear"></div>
+[% RenderBlockStart("TicketTypeDynamicField") %]
+                        <div class="Row Row_DynamicField_[% Data.Name | html %]">
+                        [% Data.Label %]
+                            <div class="Field">
+                            [% Data.Field %]
                             </div>
-[% RenderBlockEnd("DynamicField") %]
+                            <div class="Clear"></div>
+                        </div>
+[% RenderBlockEnd("TicketTypeDynamicField") %]
 
 # example of how to use fixed dynamic field blocks for customizations
 # Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
 # field names
 #[% RenderBlockStart("DynamicField_Field1") %]
-#                <div class="Row Row_DynamicField_[% Data.Name | html %]">
-#                    [% Data.Label %]
-#                    <div class="Field">
-#                        [% Data.Field %]
-#                    </div>
-#                    <div class="Clear"></div>
-#                </div>
+#                       <div class="Row Row_DynamicField_[% Data.Name | html %]">
+#                           [% Data.Label %]
+#                           <div class="Field">
+#                               [% Data.Field %]
+#                           </div>
+#                           <div class="Clear"></div>
+#                       </div>
 #[% RenderBlockEnd("DynamicField_Field1") %]
 #[% RenderBlockStart("DynamicField_Field2") %]
-#                <div class="Row Row_DynamicField_[% Data.Name | html %]">
-#                    [% Data.Label %]
-#                    <div class="Field">
-#                        [% Data.Field %]
-#                    </div>
-#                    <div class="Clear"></div>
-#                </div>
+#                       <div class="Row Row_DynamicField_[% Data.Name | html %]">
+#                           [% Data.Label %]
+#                           <div class="Field">
+#                               [% Data.Field %]
+#                           </div>
+#                           <div class="Clear"></div>
+#                       </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
                         </fieldset>
                     </div>
                 </div>
-[% RenderBlockEnd("WidgetDynamicFields") %]
+[% RenderBlockEnd("WidgetTicketActions") %]
 
 [% RenderBlockStart("WidgetArticle") %]
                 <div class="WidgetSimple [% Data.WidgetStatus | html %]" id="WidgetArticle">
@@ -358,7 +320,7 @@ $('#TypeID').bind('change', function (Event) {
 [% ELSE %]
                             <label for="CreateArticle">[% Translate("Create an Article") | html %]:</label>
                             <div class="Field">
-                                <input type="checkbox" id="CreateArticle" name="CreateArticle" value="1" />
+                                <input type="checkbox" id="CreateArticle" name="CreateArticle" value="1" [% IF Data.CreateArticle %] checked="checked"[% END %] />
                             </div>
                             <div class="Clear"></div>
 [% END %]
@@ -417,11 +379,6 @@ $('#TypeID').bind('change', function (Event) {
                             <div class="Field">
 
 <!-- OutputFilterHook_TicketOptionsBegin -->
-
-[% RenderBlockStart("SpellCheck") %]
-                                <a href="#" id="OptionSpellCheck">[ [% Translate("Spell check") | html %] ]</a>
-[% RenderBlockEnd("SpellCheck") %]
-
 <!-- OutputFilterHook_TicketOptionsEnd -->
 
                             </div>
@@ -437,16 +394,6 @@ $('#TypeID').bind('change', function (Event) {
                                 <p class="FieldExplanation">[% Translate("Setting a template will overwrite any text or attachment.") %]</p>
                             </div>
                             <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#StandardTemplateID').bind('change', function (Event) {
-        Core.Agent.TicketAction.ConfirmTemplateOverwrite('RichText', $(this), function () {
-            Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'StandardTemplateID', ['RichTextField']);
-        });
-        return false;
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("StandardTemplate") %]
 
 [% RenderBlockStart("RichTextLabel") %]
@@ -457,59 +404,24 @@ $('#TypeID').bind('change', function (Event) {
 [% RenderBlockEnd("RichTextLabelMandatory") %]
 
                             <div id="RichTextField" class="RichTextField">
-[% RenderBlockStart("RichText") %]
-[% InsertTemplate("RichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
                                 <textarea id="RichText" class="RichText Validate [% Data.BodyInvalid %] [% Data.BodyRequired %]" name="Body" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Body | html %]</textarea>
                                 <div id="RichTextError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                 <div id="RichTextServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                             </div>
                             <div class="Clear"></div>
 
-                            <label>[% Translate("Attachment") | html %]:</label>
+                            <label>[% Translate("Attachments") | html %]:</label>
                             <div class="Field">
-                                <ul>
-[% RenderBlockStart("Attachment") %]
-                                    <li>
-                                    [% Data.Filename | html %] ([% Data.Filesize | html %])
-                                        <button type="button" id="AttachmentDeleteButton[% Data.FileID | html %]" name="AttachmentDeleteButton[% Data.FileID | html %]" value="[% Translate("Delete") | html %]" class="CallForAction SpacingLeft"><span>[% Translate("Delete") | html %]</span></button>
-                                        <input type="hidden" id="AttachmentDelete[% Data.FileID | html %]" name="AttachmentDelete[% Data.FileID | html %]" />
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#AttachmentDeleteButton[% Data.FileID | html %]').bind('click', function () {
-        var $Form = $('#AttachmentDeleteButton[% Data.FileID | html %]').closest('form');
-        $('#AttachmentDelete[% Data.FileID | html %]').val(1);
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.trigger('submit');
-    });
-//]]></script>
-[% END %]
-                                    </li>
-[% RenderBlockEnd("Attachment") %]
-                                    <li>
-                                        <input name="FileUpload" id="FileUpload" type="file" size="40"/>
-                                        <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
-                                    </li>
-                                </ul>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#FileUpload').bind('change', function (Event) {
-        var $Form = $('#FileUpload').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.find('#AttachmentUpload').val('1').end().submit();
-    });
-//]]></script>
-[% END %]
+                            [% INCLUDE "FormElements/AttachmentList.tt" %]
                             </div>
                             <div class="Clear"></div>
 
-[% RenderBlockStart("ArticleType") %]
-                            <label for="ArticleTypeID">[% Translate("Note type") | html %]:</label>
+                            <label for="IsVisibleForCustomer">[% Translate("Is visible for customer") | html %]:</label>
                             <div class="Field">
-                            [% Data.ArticleTypeStrg %]
+                                <input type="checkbox" name="IsVisibleForCustomer" id="IsVisibleForCustomer"
+                                    [% IF Data.IsVisibleForCustomer %]checked="checked" [% END %]/>
                             </div>
                             <div class="Clear"></div>
-[% RenderBlockEnd("ArticleType") %]
 
 [% RenderBlockStart("TimeUnitsLabel") %]
                             <label for="TimeUnits">[% Translate("Time units") | html %] [% Translate(Config("Ticket::Frontend::TimeUnits")) | html %]:</label>
@@ -525,6 +437,22 @@ $('#TypeID').bind('change', function (Event) {
                             </div>
                             <div class="Clear"></div>
 [% RenderBlockEnd("TimeUnits") %]
+
+[% RenderBlockStart("ArticleTypeDynamicField") %]
+                            <div class="Row Row_DynamicField_[% Data.Name | html %]">
+                            [% Data.Label %]
+                                <div class="Field">
+                                [% Data.Field %]
+[% RenderBlockStart("ArticleTypeDynamicFieldError") %]
+                                    <div id="DynamicField_[% Data.Name %]Error" class="TooltipErrorMessage">
+                                        <p>[% Translate("This field is required.") | html %]</p>
+                                    </div>
+[% RenderBlockEnd("ArticleTypeDynamicFieldError") %]
+                                </div>
+                                <div class="Clear"></div>
+                            </div>
+[% RenderBlockEnd("ArticleTypeDynamicField") %]
+
                         </fieldset>
                     </div>
                 </div>
@@ -532,16 +460,11 @@ $('#TypeID').bind('change', function (Event) {
 
             </div>
             <div class="Footer">
-                <button class="CallForAction Primary" id="submitRichText" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
+                <button class="CallForAction Primary" id="submitRichText" accesskey="g" title="[% Translate("Submit") | html %] (g)" type="submit" value="[% Translate("Submit") | html %]">
+                    <span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span>
+                </button>
+                [% INCLUDE "FormElements/DraftButtons.tt" %]
             </div>
         </div>
     </form>
 [% RenderBlockEnd("Properties") %]
-
-#Layers
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('Localization.Delete', '[% Translate("Delete") | html %]');
-    Core.Agent.TicketAction.Init();
-//]]></script>
-[% END %]
