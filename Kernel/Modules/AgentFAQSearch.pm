@@ -583,9 +583,6 @@ sub Run {
             );
         }
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
         my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
 
         # CSV and Excel output
@@ -748,15 +745,16 @@ sub Run {
                 }
             }
 
-            # return CSV to download
+            # Return CSV to download.
             my $FileName = 'FAQ_search';
-            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-                SystemTime => $TimeObject->SystemTime(),
-            );
-            $M = sprintf( "%02d", $M );
-            $D = sprintf( "%02d", $D );
-            $h = sprintf( "%02d", $h );
-            $m = sprintf( "%02d", $m );
+
+            my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+            my $DateTime       = $DateTimeObject->Get();
+            my $Y              = $DateTime->{Year};
+            my $M              = sprintf( "%02d", $DateTime->{Month} );
+            my $D              = sprintf( "%02d", $DateTime->{Day} );
+            my $h              = sprintf( "%02d", $DateTime->{Hour} );
+            my $m              = sprintf( "%02d", $DateTime->{Minute} );
 
             my $CSVObject = $Kernel::OM->Get('Kernel::System::CSV');
 
@@ -971,15 +969,17 @@ sub Run {
                 }
             }
 
-            # return the PDF document
+            # Return the PDF document.
             my $Filename = 'FAQ_search';
-            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-                SystemTime => $TimeObject->SystemTime(),
-            );
-            $M = sprintf( "%02d", $M );
-            $D = sprintf( "%02d", $D );
-            $h = sprintf( "%02d", $h );
-            $m = sprintf( "%02d", $m );
+
+            my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+            my $DateTime       = $DateTimeObject->Get();
+            my $Y              = $DateTime->{Year};
+            my $M              = sprintf( "%02d", $DateTime->{Month} );
+            my $D              = sprintf( "%02d", $DateTime->{Day} );
+            my $h              = sprintf( "%02d", $DateTime->{Hour} );
+            my $m              = sprintf( "%02d", $DateTime->{Minute} );
+
             my $PDFString = $PDFObject->DocumentOutput();
             return $LayoutObject->Attachment(
                 Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",

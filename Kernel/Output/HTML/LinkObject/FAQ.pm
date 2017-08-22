@@ -60,7 +60,7 @@ sub new {
         $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
-    # TODO: check if the new instance is still needed with the OM!
+    # TO DO: check if the new instance is still needed with the OM!
 
     # We need our own LayoutObject instance to avoid blockdata collisions
     #   with the main page.
@@ -570,13 +570,13 @@ sub ContentStringCreate {
         return;
     }
 
-    # TODO: check why no return is needed!
+    # TO DO: check why no return is needed!
     return;
 }
 
 =item SelectableObjectList()
 
-return an array hash with selectable objects
+return an array hash with select-able objects
 
     my @SelectableObjectList = $LinkObject->SelectableObjectList(
         Selected => $Identifier,  # (optional)

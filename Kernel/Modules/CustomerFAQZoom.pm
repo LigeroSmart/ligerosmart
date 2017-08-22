@@ -263,16 +263,20 @@ sub Run {
     my $AlreadyVoted;
     if ($VoteData) {
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+        my $ItemChangedSystemTime = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $FAQData{Changed} || '',
+                }
+        )->ToEpoch();
 
-        # item/change_time > voting/create_time
-        my $ItemChangedSystemTime = $TimeObject->TimeStamp2SystemTime(
-            String => $FAQData{Changed} || '',
-        );
-        my $VoteCreatedSystemTime = $TimeObject->TimeStamp2SystemTime(
-            String => $VoteData->{Created} || '',
-        );
+        my $VoteCreatedSystemTime = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $VoteData->{Created} || '',
+                }
+        )->ToEpoch();
+
         if ( $ItemChangedSystemTime <= $VoteCreatedSystemTime ) {
             $AlreadyVoted = 1;
         }

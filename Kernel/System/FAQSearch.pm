@@ -19,7 +19,7 @@ our @ObjectDependencies = (
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
     'Kernel::System::Log',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::Valid',
 );
 
@@ -565,37 +565,27 @@ sub FAQSearch {
         $Ext .= $InString;
     }
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-    # search for create and change times
-    # remember current time to prevent searches for future timestamps
-    my $CurrentSystemTime = $TimeObject->SystemTime();
+    # Search for create and change times.
+    # Remember current time to prevent searches for future timestamps.
+    my $DateTimeObject    = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $CurrentSystemTime = $DateTimeObject->ToEpoch();
 
     # get FAQ items created older than x minutes
     if ( defined $Param{ItemCreateTimeOlderMinutes} ) {
-
         $Param{ItemCreateTimeOlderMinutes} ||= 0;
 
-        my $TimeStamp = $TimeObject->SystemTime();
-        $TimeStamp -= ( $Param{ItemCreateTimeOlderMinutes} * 60 );
-
-        $Param{ItemCreateTimeOlderDate} = $TimeObject->SystemTime2TimeStamp(
-            SystemTime => $TimeStamp,
-        );
+        my $DateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+        $DateTime->Subtract( Seconds => $Param{ItemCreateTimeOlderMinutes} * 60 );
+        $Param{ItemCreateTimeOlderDate} = $DateTime->ToString();
     }
 
     # get FAQ items created newer than x minutes
     if ( defined $Param{ItemCreateTimeNewerMinutes} ) {
-
         $Param{ItemCreateTimeNewerMinutes} ||= 0;
 
-        my $TimeStamp = $TimeObject->SystemTime();
-        $TimeStamp -= ( $Param{ItemCreateTimeNewerMinutes} * 60 );
-
-        $Param{ItemCreateTimeNewerDate} = $TimeObject->SystemTime2TimeStamp(
-            SystemTime => $TimeStamp,
-        );
+        my $DateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+        $DateTime->Subtract( Seconds => $Param{ItemCreateTimeNewerMinutes} * 60 );
+        $Param{ItemCreateTimeNewerDate} = $DateTime->ToString();
     }
 
     # get FAQ items created older than xxxx-xx-xx xx:xx date
@@ -615,9 +605,12 @@ sub FAQSearch {
 
             return;
         }
-        my $Time = $TimeObject->TimeStamp2SystemTime(
-            String => $Param{ItemCreateTimeOlderDate},
-        );
+        my $Time = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Param{ItemCreateTimeOlderDate},
+                }
+        )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -648,9 +641,12 @@ sub FAQSearch {
 
             return;
         }
-        my $Time = $TimeObject->TimeStamp2SystemTime(
-            String => $Param{ItemCreateTimeNewerDate},
-        );
+        my $Time = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Param{ItemCreateTimeNewerDate},
+                }
+        )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -674,28 +670,20 @@ sub FAQSearch {
 
     # get FAQ items changed older than x minutes
     if ( defined $Param{ItemChangeTimeOlderMinutes} ) {
-
         $Param{ItemChangeTimeOlderMinutes} ||= 0;
 
-        my $TimeStamp = $TimeObject->SystemTime();
-        $TimeStamp -= ( $Param{ItemChangeTimeOlderMinutes} * 60 );
-
-        $Param{ItemChangeTimeOlderDate} = $TimeObject->SystemTime2TimeStamp(
-            SystemTime => $TimeStamp,
-        );
+        my $DateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+        $DateTime->Subtract( Seconds => $Param{ItemChangeTimeOlderMinutes} * 60 );
+        $Param{ItemChangeTimeOlderDate} = $DateTime->ToString();
     }
 
     # get FAQ items changed newer than x minutes
     if ( defined $Param{ItemChangeTimeNewerMinutes} ) {
-
         $Param{ItemChangeTimeNewerMinutes} ||= 0;
 
-        my $TimeStamp = $TimeObject->SystemTime();
-        $TimeStamp -= ( $Param{ItemChangeTimeNewerMinutes} * 60 );
-
-        $Param{ItemChangeTimeNewerDate} = $TimeObject->SystemTime2TimeStamp(
-            SystemTime => $TimeStamp,
-        );
+        my $DateTime = $Kernel::OM->Create('Kernel::System::DateTime');
+        $DateTime->Subtract( Seconds => $Param{ItemChangeTimeNewerMinutes} * 60 );
+        $Param{ItemChangeTimeNewerDate} = $DateTime->ToString();
     }
 
     # get FAQ items changed older than xxxx-xx-xx xx:xx date
@@ -715,9 +703,12 @@ sub FAQSearch {
 
             return;
         }
-        my $Time = $TimeObject->TimeStamp2SystemTime(
-            String => $Param{ItemChangeTimeOlderDate},
-        );
+        my $Time = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Param{ItemChangeTimeOlderDate},
+                }
+        )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -748,9 +739,12 @@ sub FAQSearch {
 
             return;
         }
-        my $Time = $TimeObject->TimeStamp2SystemTime(
-            String => $Param{ItemChangeTimeNewerDate},
-        );
+        my $Time = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Param{ItemChangeTimeNewerDate},
+                }
+        )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',

@@ -15,7 +15,7 @@ use MIME::Base64 qw();
 
 use Kernel::System::VariableCheck qw(:all);
 
-use base qw(
+use parent qw(
     Kernel::System::FAQSearch
     Kernel::System::FAQ::Language
     Kernel::System::FAQ::Category
@@ -36,7 +36,7 @@ our @ObjectDependencies = (
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::Type',
     'Kernel::System::User',
     'Kernel::System::Valid',
@@ -1630,8 +1630,8 @@ sub HistoryGet {
 
 =item KeywordList()
 
-TODO: Function not used? Keyword seperator is here a other as at other places...
-TODO: Clarify - Remove function or change the seperator?
+TO DO: Function not used? Keyword separator is here a other as at other places...
+TO DO: Clarify - Remove function or change the separator?
 
 get a list of keywords as a hash, with their count as the value:
 
@@ -1940,22 +1940,12 @@ sub FAQLogAdd {
     my $IP        = $ENV{'REMOTE_ADDR'}     || 'NONE';
     my $UserAgent = $ENV{'HTTP_USER_AGENT'} || 'NONE';
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-    # get current system time
-    my $SystemTime = $TimeObject->SystemTime();
-
-    # define time period where reloads will not be logged (10 minutes)
+    # Define time period when reloads will not be logged (10 minutes).
     my $ReloadBlockTime = 10 * 60;
 
-    # subtract ReloadBlockTime
-    $SystemTime = $SystemTime - $ReloadBlockTime;
-
-    # convert to times-stamp
-    my $TimeStamp = $TimeObject->SystemTime2TimeStamp(
-        SystemTime => $SystemTime,
-    );
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+    $DateTimeObject->Subtract( Seconds => $ReloadBlockTime );
+    my $TimeStamp = $DateTimeObject->ToString();
 
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');

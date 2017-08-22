@@ -582,20 +582,19 @@ $Self->True(
 # add 2 minutes to frozen time
 $Helper->FixedTimeAddSeconds(120);
 
-# get time object
-my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+my $DateTime = $Kernel::OM->Create('Kernel::System::DateTime');
 
-my $SystemTime = $TimeObject->SystemTime();
+# Subtract 2 minutes.
+$DateTime->Subtract( Seconds => 121 );
+my $DateMinus2Mins = $DateTime->ToString();
 
-my $DateMinus2Mins = $TimeObject->SystemTime2TimeStamp(
-    SystemTime => ( $SystemTime - 120 - 1 ),
-);
-my $DateMinus5Mins = $TimeObject->SystemTime2TimeStamp(
-    SystemTime => ( $SystemTime - 300 - 1 ),
-);
-my $DateMinus6Mins = $TimeObject->SystemTime2TimeStamp(
-    SystemTime => ( $SystemTime - 360 - 1 ),
-);
+# Subtract totaly 5 minutes.
+$DateTime->Subtract( Seconds => 180 );
+my $DateMinus5Mins = $DateTime->ToString();
+
+# Subtract totaly 6 minutes.
+$DateTime->Subtract( Seconds => 60 );
+my $DateMinus6Mins = $DateTime->ToString();
 
 @Tests = (
     {

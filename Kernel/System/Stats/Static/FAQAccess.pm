@@ -11,13 +11,11 @@ package Kernel::System::Stats::Static::FAQAccess;
 use strict;
 use warnings;
 
-use Date::Pcalc qw(Days_in_Month);
-
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::FAQ',
     'Kernel::System::Log',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
 );
 
 sub new {
@@ -36,15 +34,14 @@ sub Param {
 
     my @Params = ();
 
-    # get current time
-    my ( $s, $m, $h, $D, $M, $Y ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
-        SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
-    );
-    $D = sprintf( "%02d", $D );
-    $M = sprintf( "%02d", $M );
-    $Y = sprintf( "%02d", $Y );
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $DateTime       = $DateTimeObject->Get();
 
-    # create possible time selections
+    my $D = sprintf( "%02d", $DateTime->{Day} );
+    my $M = sprintf( "%02d", $DateTime->{Month} );
+    my $Y = sprintf( "%02d", $DateTime->{Year} );
+
+    # Create possible time selections.
     my %Year = map { $_ => $_ } ( $Y - 10 .. $Y + 1 );
     my %Month = map { sprintf( "%02d", $_ ) => sprintf( "%02d", $_ ) } ( 1 .. 12 );
     my %Day   = map { sprintf( "%02d", $_ ) => sprintf( "%02d", $_ ) } ( 1 .. 31 );
