@@ -377,6 +377,13 @@ sub Run {
             return $LayoutObject->ErrorScreen();
         }
 
+        my $ContinueAfterSave = $ParamObject->GetParam( Param => 'ContinueAfterSave' );
+        if ($ContinueAfterSave) {
+            return $LayoutObject->Redirect(
+                OP => "Action=$Self->{Action};Subaction=ItemEdit;Class=$ItemData{Class};ItemID=$ItemData{ItemID}"
+            );
+        }
+
         # redirect to overview class list
         return $LayoutObject->Redirect(
             OP => "Action=$Self->{Action};Subaction=ItemList;Class=$ItemData{Class}"
