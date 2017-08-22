@@ -3,7 +3,7 @@
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Interface</SubGroup>
+        <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <Array>
                 <Item>internal</Item>
@@ -15,7 +15,7 @@
     <ConfigItem Name="FAQ::Customer::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Interface</SubGroup>
+        <SubGroup>Frontend::Customer</SubGroup>
         <Setting>
             <Array>
                 <Item>external</Item>
@@ -26,7 +26,7 @@
     <ConfigItem Name="FAQ::Public::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Interface</SubGroup>
+        <SubGroup>Frontend::Public</SubGroup>
         <Setting>
             <Array>
                 <Item>public</Item>
@@ -703,7 +703,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Frontend::Output::FilterElementPost###FAQ" Required="0" Valid="1">
         <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent</SubGroup>
+        <SubGroup>Frontend::Base::OutputFilter</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQ</Item>
@@ -730,7 +730,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
         <Description Translatable="1">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Web</SubGroup>
+        <SubGroup>Frontend::Base::OutputFilter</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="RegExp">
@@ -1621,7 +1621,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Loader::Agent::CommonCSS###200-FAQ" Required="1" Valid="1">
         <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Web</SubGroup>
+        <SubGroup>Frontend::Base::Loader</SubGroup>
         <Setting>
             <Array>
                 <Item>FAQ.Agent.Default.css</Item>
@@ -1631,7 +1631,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Loader::Agent::CommonJS###200-FAQ" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Web</SubGroup>
+        <SubGroup>Frontend::Base::Loader</SubGroup>
         <Setting>
             <Array>
                 <Item>FAQ.Agent.TicketCompose.js</Item>
@@ -1641,7 +1641,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Loader::Customer::CommonCSS###200-FAQ" Required="1" Valid="1">
         <Description Translatable="1">List of CSS files to always be loaded for the customer interface.</Description>
         <Group>OTRSCustomerPortal</Group>
-        <SubGroup>Core::Web</SubGroup>
+        <SubGroup>Frontend::Base::Loader</SubGroup>
         <Setting>
             <Array>
                 <!-- Both can be moved in OTRS 6 to the CustomerTicketMessage frontend -->
@@ -2216,7 +2216,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Frontend::Output::FilterElementPost###OutputFilterPostFAQRelatedArticles" Required="0" Valid="1">
         <Description Translatable="1">Output filter to add Java-script to CustomerTicketMessage screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer</SubGroup>
+        <SubGroup>Frontend::Base::OutputFilter</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQRelatedArticles</Item>
