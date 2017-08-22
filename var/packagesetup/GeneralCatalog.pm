@@ -11,6 +11,8 @@ package var::packagesetup::GeneralCatalog;    ## no critic
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
@@ -214,14 +216,32 @@ sub _MigrateConfigs {
             next CONFIGITEM;
         }
 
+        my %GeneralCatalogPreferencesSetting = $SysConfigObject->SettingGet(
+            Name    => 'GeneralCatalogPreferences###' . $MenuModule,
+            Default => 1,
+        );
+
+        my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+            UserID    => 1,
+            Force     => 1,
+            DefaultID => $GeneralCatalogPreferencesSetting{DefaultID},
+        );
+
         $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::GeneralCatalogPreferences::Generic";
 
-        # set new setting,
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'GeneralCatalogPreferences###' . $MenuModule,
-            Value => $Setting->{$MenuModule},
+        # set new setting
+        $SysConfigObject->SettingUpdate(
+            Name              => 'GeneralCatalogPreferences###' . $MenuModule,
+            EffectiveValue    => $Setting->{$MenuModule},
+            ExclusiveLockGUID => $ExclusiveLockGUID,
+            UserID            => 1,
         );
+
+        $SysConfigObject->SettingUnlock(
+            UserID    => 1,
+            DefaultID => $GeneralCatalogPreferencesSetting{DefaultID},
+        );
+
     }
 
     return 1;
