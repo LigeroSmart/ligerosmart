@@ -57,30 +57,13 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # rebuild ZZZ* files
-    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
-
-    # define the ZZZ files
-    my @ZZZFiles = (
-        'ZZZAAuto.pm',
-        'ZZZAuto.pm',
-    );
-
-    # reload the ZZZ files (mod_perl workaround)
-    for my $ZZZFile (@ZZZFiles) {
-
-        PREFIX:
-        for my $Prefix (@INC) {
-            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
-            next PREFIX if !-f $File;
-            do $File;
-            last PREFIX;
+    # Force a reload of ZZZAuto.pm to get the fresh configuration values.
+    for my $Module ( sort keys %INC ) {
+        if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
+            delete $INC{$Module};
         }
     }
 
-    # always discard the config object before package code is executed,
-    # to make sure that the config object will be created newly, so that it
-    # will use the recently written new config from the package
     $Kernel::OM->ObjectsDiscard(
         Objects => ['Kernel::Config'],
     );
