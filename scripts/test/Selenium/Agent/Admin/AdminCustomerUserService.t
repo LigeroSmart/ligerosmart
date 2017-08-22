@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# $origin: otrs - 32e2ee9e20388db9ae10a1c7414b274272b7c936 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -87,6 +87,12 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Customers",          'css' );
         $Selenium->find_element( "#Service",            'css' );
 
+        # check breadcrumb on Overview screen
+        $Self->True(
+            $Selenium->find_element( '.BreadCrumb', 'css' ),
+            "Breadcrumb is found on Overview screen.",
+        );
+
         # test search filter for CustomerUser
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->send_keys($CustomerUserName);
@@ -108,8 +114,29 @@ $Selenium->RunTest(
 
         # allocate test service to test customer user
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
+
+        # check breadcrumb on allocate screen
+        my $Count = 1;
+        my $IsLinkedBreadcrumbText;
+        for my $BreadcrumbText (
+            'Manage Customer-Services Relations',
+            'Allocate Services to Customer \''
+            . $CustomerUserName . ' '
+            . $CustomerUserName . ' ('
+            . $CustomerUserName . ')\''
+            )
+        {
+            $Self->Is(
+                $Selenium->execute_script("return \$('.BreadCrumb li:eq($Count)').text().trim()"),
+                $BreadcrumbText,
+                "Breadcrumb text '$BreadcrumbText' is found on screen"
+            );
+
+            $Count++;
+        }
+
         $Selenium->find_element("//input[\@value='$ServiceID']")->VerifiedClick();
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
         # check test customer user allocation to test service
         $Selenium->find_element( $ServiceName, 'link_text' )->VerifiedClick();
@@ -122,7 +149,7 @@ $Selenium->RunTest(
 
         # remove test customer user allocations from test service
         $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->VerifiedClick();
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
         # check if there is any test service allocation towards test customer user
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
@@ -168,13 +195,14 @@ $Selenium->RunTest(
             );
         }
 
-        # make sure the cache is correct
-        for my $Cache (qw(CustomerUser Service)) {
+        # make sure the cache is correct.
+        for my $Cache (qw( CustomerUser Service )) {
             $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
                 Type => $Cache,
             );
         }
     }
+
 );
 
 1;

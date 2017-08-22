@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/System/Service.pm
+# $origin: otrs - 0d146e924d345eb8905134c986a4263104c71bbc - Kernel/System/Service.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,22 +36,16 @@ our @ObjectDependencies = (
 
 Kernel::System::Service - service lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All service functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
-    use Kernel::System::ObjectManager;
-    local $Kernel::OM = Kernel::System::ObjectManager->new();
     my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
 =cut
@@ -62,8 +56,6 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
-
-    $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
 
     $Self->{CacheType} = 'Service';
     $Self->{CacheTTL}  = 60 * 60 * 24 * 20;
@@ -98,13 +90,13 @@ sub new {
     my $GeneratorModule = $Kernel::OM->Get('Kernel::Config')->Get('Service::PreferencesModule')
         || 'Kernel::System::Service::PreferencesDB';
     if ( $Kernel::OM->Get('Kernel::System::Main')->Require($GeneratorModule) ) {
-        $Self->{PreferencesObject} = $GeneratorModule->new( %{$Self} );
+        $Self->{PreferencesObject} = $GeneratorModule->new();
     }
 
     return $Self;
 }
 
-=item ServiceList()
+=head2 ServiceList()
 
 return a hash list of services
 
@@ -145,15 +137,18 @@ sub ServiceList {
     );
     return %{$Cache} if ref $Cache eq 'HASH';
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => 'SELECT id, name, valid_id FROM service',
     );
 
     # fetch the result
     my %ServiceList;
     my %ServiceValidList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $ServiceList{ $Row[0] }      = $Row[1];
         $ServiceValidList{ $Row[0] } = $Row[2];
     }
@@ -218,7 +213,7 @@ sub ServiceList {
     return %ServiceList;
 }
 
-=item ServiceListGet()
+=head2 ServiceListGet()
 
 return a list of services with the complete list of attributes for each service
 
@@ -320,15 +315,18 @@ sub ServiceListGet {
 
     $SQL .= ' ORDER BY name';
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # ask database
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL => $SQL,
     );
 
     # fetch the result
     my @ServiceList;
     my %ServiceName2ID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         my %ServiceData;
         $ServiceData{ServiceID}  = $Row[0];
         $ServiceData{Name}       = $Row[1];
@@ -398,7 +396,7 @@ sub ServiceListGet {
     return \@ServiceList;
 }
 
-=item ServiceGet()
+=head2 ServiceGet()
 
 return a service as hash
 
@@ -494,8 +492,11 @@ sub ServiceGet {
     );
     return %{$Cache} if ref $Cache eq 'HASH';
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # get service from db
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL =>
             'SELECT id, name, valid_id, comments, create_time, create_by, change_time, change_by '
 # ---
@@ -510,7 +511,7 @@ sub ServiceGet {
 
     # fetch the result
     my %ServiceData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $ServiceData{ServiceID}  = $Row[0];
         $ServiceData{Name}       = $Row[1];
         $ServiceData{ValidID}    = $Row[2];
@@ -581,7 +582,7 @@ sub ServiceGet {
     return %ServiceData;
 }
 
-=item ServiceLookup()
+=head2 ServiceLookup()
 
 return a service name and id
 
@@ -619,15 +620,18 @@ sub ServiceLookup {
         );
         return $Cache if defined $Cache;
 
+        # get database object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
         # lookup
-        $Self->{DBObject}->Prepare(
+        $DBObject->Prepare(
             SQL   => 'SELECT name FROM service WHERE id = ?',
             Bind  => [ \$Param{ServiceID} ],
             Limit => 1,
         );
 
         my $Result = '';
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             $Result = $Row[0];
         }
 
@@ -650,15 +654,18 @@ sub ServiceLookup {
         );
         return $Cache if defined $Cache;
 
+        # get database object
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
         # lookup
-        $Self->{DBObject}->Prepare(
+        $DBObject->Prepare(
             SQL   => 'SELECT id FROM service WHERE name = ?',
             Bind  => [ \$Param{Name} ],
             Limit => 1,
         );
 
         my $Result = '';
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        while ( my @Row = $DBObject->FetchrowArray() ) {
             $Result = $Row[0];
         }
 
@@ -673,7 +680,7 @@ sub ServiceLookup {
     }
 }
 
-=item ServiceAdd()
+=head2 ServiceAdd()
 
 add a service
 
@@ -746,14 +753,18 @@ sub ServiceAdd {
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # find existing service
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM service WHERE name = ?',
         Bind  => [ \$Param{FullName} ],
         Limit => 1,
     );
+
     my $Exists;
-    while ( $Self->{DBObject}->FetchrowArray() ) {
+    while ( $DBObject->FetchrowArray() ) {
         $Exists = 1;
     }
 
@@ -761,12 +772,12 @@ sub ServiceAdd {
     if ($Exists) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Can\'t add service! Service with same name and parent already exists.'
+            Message  => "A service with the name and parent '$Param{FullName}' already exists.",
         );
         return;
     }
 
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
 # ---
 # ITSMCore
 # ---
@@ -789,13 +800,13 @@ sub ServiceAdd {
     );
 
     # get service id
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM service WHERE name = ?',
         Bind  => [ \$Param{FullName} ],
         Limit => 1,
     );
     my $ServiceID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $ServiceID = $Row[0];
     }
 
@@ -807,7 +818,7 @@ sub ServiceAdd {
     return $ServiceID;
 }
 
-=item ServiceUpdate()
+=head2 ServiceUpdate()
 
 update an existing service
 
@@ -906,14 +917,17 @@ sub ServiceUpdate {
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # find exists service
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL   => 'SELECT id FROM service WHERE name = ?',
         Bind  => [ \$Param{FullName} ],
         Limit => 1,
     );
     my $Exists;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         if ( $Param{ServiceID} ne $Row[0] ) {
             $Exists = 1;
         }
@@ -923,14 +937,14 @@ sub ServiceUpdate {
     if ($Exists) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Can\'t update service! Service with same name and parent already exists.'
+            Message  => "A service with the name and parent '$Param{FullName}' already exists.",
         );
         return;
 
     }
 
     # update service
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
 # ---
 # ITSMCore
 # ---
@@ -950,16 +964,16 @@ sub ServiceUpdate {
 # ---
     );
 
-    my $LikeService = $Self->{DBObject}->Quote( $OldServiceName, 'Like' ) . '::%';
+    my $LikeService = $DBObject->Quote( $OldServiceName, 'Like' ) . '::%';
 
     # find all childs
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL  => "SELECT id, name FROM service WHERE name LIKE ?",
         Bind => [ \$LikeService ],
     );
 
     my @Childs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         my %Child;
         $Child{ServiceID} = $Row[0];
         $Child{Name}      = $Row[1];
@@ -969,7 +983,7 @@ sub ServiceUpdate {
     # update childs
     for my $Child (@Childs) {
         $Child->{Name} =~ s{ \A ( \Q$OldServiceName\E ) :: }{$Param{FullName}::}xms;
-        $Self->{DBObject}->Do(
+        $DBObject->Do(
             SQL  => 'UPDATE service SET name = ? WHERE id = ?',
             Bind => [ \$Child->{Name}, \$Child->{ServiceID} ],
         );
@@ -983,7 +997,7 @@ sub ServiceUpdate {
     return 1;
 }
 
-=item ServiceSearch()
+=head2 ServiceSearch()
 
 return service ids as an array
 
@@ -1019,13 +1033,15 @@ sub ServiceSearch {
     # create sql query
     my $SQL
         = "SELECT id FROM service WHERE valid_id IN ( ${\(join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet())} )";
-
     my @Bind;
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     if ( $Param{Name} ) {
 
         # quote
-        $Param{Name} = $Self->{DBObject}->Quote( $Param{Name}, 'Like' );
+        $Param{Name} = $DBObject->Quote( $Param{Name}, 'Like' );
 
         # replace * with % and clean the string
         $Param{Name} =~ s{ \*+ }{%}xmsg;
@@ -1064,20 +1080,20 @@ sub ServiceSearch {
     $SQL .= ' ORDER BY name';
 
     # search service in db
-    $Self->{DBObject}->Prepare(
+    $DBObject->Prepare(
         SQL  => $SQL,
         Bind => \@Bind,
     );
 
     my @ServiceList;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @ServiceList, $Row[0];
     }
 
     return @ServiceList;
 }
 
-=item CustomerUserServiceMemberList()
+=head2 CustomerUserServiceMemberList()
 
 returns a list of customeruser/service members
 
@@ -1170,12 +1186,15 @@ sub CustomerUserServiceMemberList {
         return @{$Cache} if ref $Cache eq 'ARRAY';
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # db quote
     for ( sort keys %Param ) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} );
+        $Param{$_} = $DBObject->Quote( $Param{$_} );
     }
     for (qw(ServiceID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
+        $Param{$_} = $DBObject->Quote( $Param{$_}, 'Integer' );
     }
 
     # sql
@@ -1195,9 +1214,9 @@ sub CustomerUserServiceMemberList {
         $SQL .= " scu.customer_user_login = '$Param{CustomerUserLogin}'";
     }
 
-    $Self->{DBObject}->Prepare( SQL => $SQL );
+    $DBObject->Prepare( SQL => $SQL );
 
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
 
         my $Value = '';
         if ( $Param{ServiceID} ) {
@@ -1247,7 +1266,7 @@ sub CustomerUserServiceMemberList {
     return @Data;
 }
 
-=item CustomerUserServiceMemberAdd()
+=head2 CustomerUserServiceMemberAdd()
 
 to add a member to a service
 
@@ -1276,8 +1295,11 @@ sub CustomerUserServiceMemberAdd {
         }
     }
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # delete existing relation
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL  => 'DELETE FROM service_customer_user WHERE customer_user_login = ? AND service_id = ?',
         Bind => [ \$Param{CustomerUserLogin}, \$Param{ServiceID} ],
     );
@@ -1291,7 +1313,7 @@ sub CustomerUserServiceMemberAdd {
     }
 
     # insert new relation
-    my $Success = $Self->{DBObject}->Do(
+    my $Success = $DBObject->Do(
         SQL => 'INSERT INTO service_customer_user '
             . '(customer_user_login, service_id, create_time, create_by) '
             . 'VALUES (?, ?, current_timestamp, ?)',
@@ -1301,10 +1323,11 @@ sub CustomerUserServiceMemberAdd {
     $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => $Self->{CacheType},
     );
+
     return $Success;
 }
 
-=item ServicePreferencesSet()
+=head2 ServicePreferencesSet()
 
 set service preferences
 
@@ -1318,9 +1341,9 @@ set service preferences
 =cut
 
 sub ServicePreferencesSet {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
-    $Self->{PreferencesObject}->ServicePreferencesSet(@_);
+    $Self->{PreferencesObject}->ServicePreferencesSet(%Param);
 
     $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
         Type => $Self->{CacheType},
@@ -1328,7 +1351,7 @@ sub ServicePreferencesSet {
     return 1;
 }
 
-=item ServicePreferencesGet()
+=head2 ServicePreferencesGet()
 
 get service preferences
 
@@ -1340,12 +1363,12 @@ get service preferences
 =cut
 
 sub ServicePreferencesGet {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
-    return $Self->{PreferencesObject}->ServicePreferencesGet(@_);
+    return $Self->{PreferencesObject}->ServicePreferencesGet(%Param);
 }
 
-=item ServiceParentsGet()
+=head2 ServiceParentsGet()
 
 return an ordered list all parent service IDs for the given service from the root parent to the
 current service parent
@@ -1434,7 +1457,7 @@ sub ServiceParentsGet {
     return \@Data;
 }
 
-=item GetAllCustomServices()
+=head2 GetAllCustomServices()
 
 get all custom services of one user
 
@@ -1449,7 +1472,7 @@ sub GetAllCustomServices {
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need UserID!'
+            Message  => 'Need UserID!',
         );
         return;
     }
@@ -1463,8 +1486,11 @@ sub GetAllCustomServices {
 
     return @{$Cache} if $Cache;
 
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
     # search all custom services
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => '
             SELECT service_id
             FROM personal_services
@@ -1474,7 +1500,7 @@ sub GetAllCustomServices {
 
     # fetch the result
     my @ServiceIDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @ServiceIDs, $Row[0];
     }
 
@@ -1492,7 +1518,7 @@ sub GetAllCustomServices {
 # ITSMCore
 # ---
 
-=item _ServiceGetCurrentIncidentState()
+=head2 _ServiceGetCurrentIncidentState()
 
 Returns a hash with the original service data,
 enhanced with additional service data about the current incident state,
@@ -1723,8 +1749,6 @@ sub _ServiceGetCurrentIncidentState {
 # ---
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

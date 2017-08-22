@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 04f244c480bab7b3874948d1501565d45f46b9d6 - Kernel/System/Console/Command/Admin/Service/Add.pm
+# $origin: otrs - 5f547d87673aabe7736a288b77a1f65b25b3677f - Kernel/System/Console/Command/Admin/Service/Add.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - fd7cceb8373782599ad2c379ed7db1dbd768d6c1 - Kernel/Modules/AdminService.pm
+# $origin: otrs - f407d4862a60a1654b6374beab45b0d01b8e9896 - Kernel/Modules/AdminService.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -201,8 +201,22 @@ sub Run {
                     }
                 }
 
-                # redirect to overview
-                return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
+                # if the user would like to continue editing the service, just redirect to the edit screen
+                if (
+                    defined $ParamObject->GetParam( Param => 'ContinueAfterSave' )
+                    && ( $ParamObject->GetParam( Param => 'ContinueAfterSave' ) eq '1' )
+                    )
+                {
+                    my $ID = $ParamObject->GetParam( Param => 'ServiceID' ) || '';
+                    return $LayoutObject->Redirect(
+                        OP => "Action=$Self->{Action};Subaction=ServiceEdit;ServiceID=$ID"
+                    );
+                }
+                else {
+
+                    # otherwise return to overview
+                    return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
+                }
             }
         }
 
@@ -223,6 +237,7 @@ sub Run {
             %Param,
         );
         $Output .= $LayoutObject->Footer();
+        return $Output;
 
     }
 
@@ -242,7 +257,7 @@ sub Run {
                 Data     => $LayoutObject->{LanguageObject}->Translate( "Please activate %s first!", "Service" ),
                 Link =>
                     $LayoutObject->{Baselink}
-                    . 'Action=AdminSysConfig;Subaction=Edit;SysConfigGroup=Ticket;SysConfigSubGroup=Core::Ticket#Ticket::Service',
+                    . 'Action=AdminSystemConfiguration;Subaction=View;Setting=Ticket%3A%3AService;',
             );
         }
 
@@ -254,6 +269,7 @@ sub Run {
 
         $LayoutObject->Block( Name => 'ActionList' );
         $LayoutObject->Block( Name => 'ActionAdd' );
+        $LayoutObject->Block( Name => 'Filter' );
 
         # output overview result
         $LayoutObject->Block(
@@ -307,6 +323,7 @@ sub Run {
 
         return $Output;
     }
+    return;
 }
 
 sub _MaskNew {
@@ -329,7 +346,11 @@ sub _MaskNew {
     # output overview
     $LayoutObject->Block(
         Name => 'Overview',
-        Data => { %Param, },
+        Data => {
+            ServiceID   => $ServiceData{ServiceID},
+            ServiceName => $ServiceData{Name},
+            %Param,
+        },
     );
 
     $LayoutObject->Block( Name => 'ActionList' );
@@ -396,17 +417,6 @@ sub _MaskNew {
         Name => 'ServiceEdit',
         Data => { %Param, %ServiceData, },
     );
-
-    # shows header
-    if ( $ServiceData{ServiceID} ne 'NEW' ) {
-        $LayoutObject->Block(
-            Name => 'HeaderEdit',
-            Data => {%ServiceData},
-        );
-    }
-    else {
-        $LayoutObject->Block( Name => 'HeaderAdd' );
-    }
 
     # show each preferences setting
     my %Preferences = ();

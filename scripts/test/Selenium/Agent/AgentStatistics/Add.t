@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 1ed1e1a41778f1f5191d2cc2dfe4c2f4cd83c3c3 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: otrs - dcfe3c0438b98da1edb1f47a458293f90179978e - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -169,20 +169,20 @@ $Selenium->RunTest(
             {
                 Title            => 'Statistic - TicketAccountedTime' . $Helper->GetRandomID(),
                 Object           => 'Kernel::System::Stats::Dynamic::TicketAccountedTime',
-                Type             => 'DynamicList',
-                XAxis            => 'XAxisServiceIDs',
+                Type             => 'DynamicMatrix',
+                XAxis            => 'XAxisKindsOfReporting',
                 YAxis            => 'YAxisSLAIDs',
-                RestrictionID    => 'RestrictionsKindsOfReporting',
-                Restrictionvalue => 'TotalTime',
+                RestrictionID    => 'RestrictionsServiceIDs',
+                Restrictionvalue => $ServiceIDs[0],
             },
             {
                 Title            => 'Statistic - TicketSolutionResponseTime' . $Helper->GetRandomID(),
                 Object           => 'Kernel::System::Stats::Dynamic::TicketSolutionResponseTime',
-                Type             => 'DynamicList',
-                XAxis            => 'XAxisServiceIDs',
+                Type             => 'DynamicMatrix',
+                XAxis            => 'XAxisKindsOfReporting',
                 YAxis            => 'YAxisSLAIDs',
-                RestrictionID    => 'RestrictionsKindsOfReporting',
-                Restrictionvalue => 'SolutionAverageAllOver',
+                RestrictionID    => 'RestrictionsServiceIDs',
+                Restrictionvalue => $ServiceIDs[0],
             },
             {
                 Title            => 'Statistic - TicketList' . $Helper->GetRandomID(),
@@ -377,7 +377,6 @@ JAVASCRIPT
                     == -1,
                 "StatsData statistic is deleted - $StatsData->{Title} "
             );
-
         }
 
         # get DB object

@@ -1,13 +1,14 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 9bd14399f1da09aaefdf64b0732bdcd1d14f40eb - scripts/test/Selenium/Output/ToolBar/TicketService.t
+# $origin: otrs - f917b8b5569446abee5a366c18b829a91c773917 - scripts/test/Selenium/Output/ToolBar/TicketService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
@@ -36,7 +37,7 @@ $Selenium->RunTest(
 
         $Helper->ConfigSettingChange(
             Valid => 1,
-            Key   => 'Frontend::ToolBarModule###10-Ticket::AgentTicketService',
+            Key   => 'Frontend::ToolBarModule###200-Ticket::AgentTicketService',
             Value => \%AgentTicketService,
         );
 
@@ -44,7 +45,7 @@ $Selenium->RunTest(
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Ticket::Service',
-            Value => 1
+            Value => 1,
         );
 
         # Create test service.

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/System/SLA.pm
+# $origin: otrs - 0d146e924d345eb8905134c986a4263104c71bbc - Kernel/System/SLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,22 +31,16 @@ our @ObjectDependencies = (
 
 Kernel::System::SLA - sla lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All sla functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
+=head2 new()
 
-=cut
+Don't use the constructor directly, use the ObjectManager instead:
 
-=item new()
-
-create an object. Do not use it directly, instead use:
-
-    use Kernel::System::ObjectManager;
-    local $Kernel::OM = Kernel::System::ObjectManager->new();
     my $SLAObject = $Kernel::OM->Get('Kernel::System::SLA');
 
 =cut
@@ -71,7 +65,7 @@ sub new {
     return $Self;
 }
 
-=item SLAList()
+=head2 SLAList()
 
 return a hash list of slas
 
@@ -146,7 +140,7 @@ sub SLAList {
     return %SLAList;
 }
 
-=item SLAGet()
+=head2 SLAGet()
 
 Returns an SLA as a hash
 
@@ -161,17 +155,13 @@ Returns:
           'SLAID'               => '2',
           'Name'                => 'Diamond Pacific - S2',
           'Calendar'            => '2',
-          'FirstResponseTime'   => '60',  # in minutes according to business hours
-          'FirstResponseNotify' => '70',  # in percent
-          'UpdateTime'          => '360', # in minutes according to business hours
-          'UpdateNotify'        => '70',  # in percent
-          'SolutionTime'        => '960', # in minutes according to business hours
-          'SolutionNotify'      => '80',  # in percent
-          'ServiceIDs'          => [
-                                     '4'
-                                     '7'
-                                     '8'
-                                   ],
+          'FirstResponseTime'   => '60',   # in minutes according to business hours
+          'FirstResponseNotify' => '70',   # in percent
+          'UpdateTime'          => '360',  # in minutes according to business hours
+          'UpdateNotify'        => '70',   # in percent
+          'SolutionTime'        => '960',  # in minutes according to business hours
+          'SolutionNotify'      => '80',   # in percent
+          'ServiceIDs'          => [ '4', '7', '8' ],
           'ValidID'             => '1',
           'Comment'             => 'Some Comment',
 # ---
@@ -318,7 +308,7 @@ sub SLAGet {
     return %SLAData;
 }
 
-=item SLALookup()
+=head2 SLALookup()
 
 returns the name or the sla id
 
@@ -429,7 +419,7 @@ sub SLALookup {
     }
 }
 
-=item SLAAdd()
+=head2 SLAAdd()
 
 add a sla
 
@@ -532,7 +522,7 @@ sub SLAAdd {
     if ($NoAdd) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Can't add new SLA! '$Param{Name}' already exists.",
+            Message  => "An SLA with the name '$Param{Name}' already exists.",
         );
         return;
     }
@@ -609,7 +599,7 @@ sub SLAAdd {
     return $SLAID;
 }
 
-=item SLAUpdate()
+=head2 SLAUpdate()
 
 update a existing sla
 
@@ -715,7 +705,7 @@ sub SLAUpdate {
     if ($Update) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Can't update SLA! '$Param{Name}' already exists.",
+            Message  => "An SLA with the name '$Param{Name}' already exists.",
         );
         return;
     }
@@ -784,45 +774,43 @@ sub SLAUpdate {
     return 1;
 }
 
-=item SLAPreferencesSet()
+=head2 SLAPreferencesSet()
 
 set SLA preferences
 
     $SLAObject->SLAPreferencesSet(
-        SLAID => 123,
-        Key       => 'UserComment',
-        Value     => 'some comment',
-        UserID    => 123,
+        SLAID  => 123,
+        Key    => 'UserComment',
+        Value  => 'some comment',
+        UserID => 123,
     );
 
 =cut
 
 sub SLAPreferencesSet {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
-    return $Self->{PreferencesObject}->SLAPreferencesSet(@_);
+    return $Self->{PreferencesObject}->SLAPreferencesSet(%Param);
 }
 
-=item SLAPreferencesGet()
+=head2 SLAPreferencesGet()
 
 get SLA preferences
 
     my %Preferences = $SLAObject->SLAPreferencesGet(
-        SLAID => 123,
-        UserID    => 123,
+        SLAID  => 123,
+        UserID => 123,
     );
 
 =cut
 
 sub SLAPreferencesGet {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
 
-    return $Self->{PreferencesObject}->SLAPreferencesGet(@_);
+    return $Self->{PreferencesObject}->SLAPreferencesGet(%Param);
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
