@@ -15,6 +15,7 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::Log',
+    'Kernel::System::Group',
 );
 
 sub new {
@@ -68,13 +69,20 @@ sub Run {
 
         # deny access by default, when there are groups to check
         $Access = 0;
+        my $HasPermission;
 
         # check read only groups
         ROGROUP:
         for my $RoGroup ( @{$GroupsRo} ) {
 
-            next ROGROUP if !$LayoutObject->{"UserIsGroupRo[$RoGroup]"};
-            next ROGROUP if $LayoutObject->{"UserIsGroupRo[$RoGroup]"} ne 'Yes';
+            $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                UserID    => $Self->{UserID},
+                GroupName => $RoGroup,
+                Type      => 'ro',
+            );
+
+            next ROGROUP if !$HasPermission;
+            next ROGROUP if $HasPermission != 1;
 
             # set access
             $Access = 1;
@@ -85,8 +93,14 @@ sub Run {
         RWGROUP:
         for my $RwGroup ( @{$GroupsRw} ) {
 
-            next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+            $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                UserID    => $Self->{UserID},
+                GroupName => $RwGroup,
+                Type      => 'rw',
+            );
+
+            next RWGROUP if !$HasPermission;
+            next RWGROUP if $HasPermission != 1;
 
             # set access
             $Access = 1;

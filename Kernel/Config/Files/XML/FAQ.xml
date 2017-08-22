@@ -880,7 +880,7 @@ Your OTRS Notification Master
                     <Array>
                     </Array>
                 </Item>
-                <Item Key="Description" Translatable="1">New FAQ Article</Item>
+                <Item Key="Description" Translatable="1">New FAQ Article.</Item>
                 <Item Key="Name" Translatable="1">New</Item>
                 <Item Key="Link">Action=AgentFAQAdd</Item>
                 <Item Key="LinkOption"></Item>
@@ -981,7 +981,7 @@ Your OTRS Notification Master
                     <Array>
                     </Array>
                 </Item>
-                <Item Key="Description" Translatable="1">Language Management</Item>
+                <Item Key="Description" Translatable="1">Language Management.</Item>
                 <Item Key="Name" Translatable="1">Language Management</Item>
                 <Item Key="Link">Action=AgentFAQLanguage</Item>
                 <Item Key="LinkOption"></Item>
@@ -1042,7 +1042,7 @@ Your OTRS Notification Master
                     <Array>
                     </Array>
                 </Item>
-                <Item Key="Description" Translatable="1">Category Management</Item>
+                <Item Key="Description" Translatable="1">Category Management.</Item>
                 <Item Key="Name" Translatable="1">Category Management</Item>
                 <Item Key="Link">Action=AgentFAQCategory</Item>
                 <Item Key="LinkOption"></Item>
@@ -1070,6 +1070,7 @@ Your OTRS Notification Master
                             <Item>faq</Item>
                         </Array>
                     </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
                     <Item Key="Title" Translatable="1">FAQ</Item>
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
@@ -1099,7 +1100,7 @@ Your OTRS Notification Master
                         <Item>faq</Item>
                     </Array>
                 </Item>
-                <Item Key="Description" Translatable="1">Search FAQ</Item>
+                <Item Key="Description" Translatable="1">Search FAQ.</Item>
                 <Item Key="Name" Translatable="1">Search</Item>
                 <Item Key="Link">Action=AgentFAQSearch</Item>
                 <Item Key="LinkOption">onclick="Core.Agent.Search.OpenSearchDialog('AgentFAQSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</Item>
@@ -1127,6 +1128,7 @@ Your OTRS Notification Master
                             <Item>faq</Item>
                         </Array>
                     </Item>
+                    <Item Key="Description" Translatable="1">Search FAQ Small.</Item>
                     <Item Key="Title" Translatable="1">FAQ</Item>
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
@@ -1811,6 +1813,7 @@ Your OTRS Notification Master
                             <Item>faq</Item>
                         </Array>
                     </Item>
+                    <Item Key="Description" Translatable="1">FAQ Area.</Item>
                     <Item Key="Title" Translatable="1">FAQ</Item>
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
@@ -1932,6 +1935,7 @@ Your OTRS Notification Master
                             <Item>faq</Item>
                         </Array>
                     </Item>
+                    <Item Key="Description" Translatable="1">FAQ History.</Item>
                     <Item Key="Title" Translatable="1">History</Item>
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
