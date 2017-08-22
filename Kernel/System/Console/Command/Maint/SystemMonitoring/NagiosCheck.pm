@@ -11,7 +11,7 @@ package Kernel::System::Console::Command::Maint::SystemMonitoring::NagiosCheck;
 use strict;
 use warnings;
 
-use base qw(Kernel::System::Console::BaseCommand);
+use parent qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
     'Kernel::System::Main',
@@ -171,8 +171,6 @@ sub Run {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

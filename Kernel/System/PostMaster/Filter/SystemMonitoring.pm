@@ -22,7 +22,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
 );
 
 #the base name for dynamic fields
@@ -63,6 +63,9 @@ sub new {
         ArticleType       => 'note-report',
     };
 
+    # get communication log object and MessageID
+    $Self->{CommunicationLogObject} = $Param{CommunicationLogObject} || die "Got no CommunicationLogObject!";
+
     return $Self;
 }
 
@@ -71,6 +74,14 @@ sub _GetDynamicFieldDefinition {
 
     for my $Argument (qw(Config Key Default Base Name ObjectType)) {
         if ( !$Param{$Argument} ) {
+
+            $Self->{CommunicationLogObject}->ObjectLog(
+                ObjectLogType => 'Message',
+                Priority      => 'Error',
+                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+                Value         => "Need $Argument!",
+            );
+
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
@@ -91,27 +102,38 @@ sub _GetDynamicFieldDefinition {
 
     if ( !$ConfigFreeText ) {
         $ConfigFreeText = $Default;
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Missing CI Config $Key, using value $Default!"
+
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Missing CI Config $Key, using value $Default!",
         );
     }
 
     if ( $ConfigFreeText =~ /^\d+$/ ) {
         if ( ( $ConfigFreeText < 1 ) || ( $ConfigFreeText > 16 ) ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Bad value $ConfigFreeText for CI Config $Key, must be between 1 and 16!"
+
+            $Self->{CommunicationLogObject}->ObjectLog(
+                ObjectLogType => 'Message',
+                Priority      => 'Error',
+                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+                Value         => "Bad value $ConfigFreeText for CI Config $Key, must be between 1 and 16!",
             );
+
             die "Bad value $ConfigFreeText for CI Config $Key!";
         }
     }
     else
     {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Bad value $ConfigFreeText for CI Config $Key, must be numeric!"
+
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Bad value $ConfigFreeText for CI Config $Key, must be numeric!",
         );
+
         die "Bad value $ConfigFreeText for CI Config $Key!";
     }
 
@@ -221,9 +243,12 @@ sub _MailParse {
     my ( $Self, %Param ) = @_;
 
     if ( !$Param{GetParam} || !$Param{GetParam}->{Subject} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Need Subject!",
+
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Need Subject!",
         );
 
         return;
@@ -280,9 +305,12 @@ sub _LogMessage {
     my ( $Self, %Param ) = @_;
 
     if ( !$Param{MessageText} ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Need MessageText!",
+
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Need MessageText!",
         );
 
         return;
@@ -301,9 +329,11 @@ sub _LogMessage {
         . "State: $Self->{State}, "
         . "Service: $Self->{Service}";
 
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'notice',
-        Message  => 'SystemMonitoring Mail: ' . $LogMessage,
+    $Self->{CommunicationLogObject}->ObjectLog(
+        ObjectLogType => 'Message',
+        Priority      => 'Notice',
+        Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+        Value         => 'SystemMonitoring Mail: ' . $LogMessage,
     );
 
     return 1;
@@ -347,15 +377,19 @@ sub _TicketSearch {
         );
 
         if ( !IsHashRefWithData($DynamicField) || $FreeTextField !~ m{\d+}xms ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "DynamicField "
+
+            $Self->{CommunicationLogObject}->ObjectLog(
+                ObjectLogType => 'Message',
+                Priority      => 'Error',
+                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+                Value         => "DynamicField "
                     . $DynamicFieldTicketTextPrefix
                     . $FreeTextField
                     . " does not exists or misnamed."
                     . " The configuration is based on Dynamic fields, so the number of the dynamic field is expected"
                     . " (wrong value for dynamic field FreeText" . $Type . " is set).",
             );
+
             $Errors = 1;
         }
     }
@@ -366,15 +400,19 @@ sub _TicketSearch {
     );
 
     if ( !IsHashRefWithData($DynamicFieldArticle) || $ArticleFreeTextField !~ m{\d+}xms ) {
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "DynamicField "
+
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "DynamicField "
                 . $DynamicFieldArticleTextPrefix
                 . $ArticleFreeTextField
                 . " does not exists or misnamed."
                 . " The configuration is based on dynamic fields, so the number of the dynamic field is expected"
                 . " (wrong value for dynamic field FreeTextState is set).",
         );
+
         $Errors = 1;
     }
 
@@ -396,9 +434,12 @@ sub _TicketUpdate {
 
     for my $Needed (qw(TicketID Param)) {
         if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!",
+
+            $Self->{CommunicationLogObject}->ObjectLog(
+                ObjectLogType => 'Message',
+                Priority      => 'Error',
+                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+                Value         => "Need $Needed",
             );
 
             return;
@@ -441,14 +482,15 @@ sub _TicketUpdate {
         if ( $Self->{Config}->{CloseActionState} ne 'OLD' ) {
             $Param->{GetParam}->{'X-OTRS-FollowUp-State'} = $Self->{Config}->{CloseActionState};
 
-            # get time object
-            my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-            my $TimeStamp = $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $TimeObject->SystemTime()
-                    + $Self->{Config}->{ClosePendingTime},
+            # get datetime object
+            my $DateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime'
             );
-            $Param->{GetParam}->{'X-OTRS-FollowUp-State-PendingTime'} = $TimeStamp;
+            $DateTimeObject->Add(
+                Seconds => $Self->{Config}->{ClosePendingTime},
+            );
+
+            $Param->{GetParam}->{'X-OTRS-FollowUp-State-PendingTime'} = $DateTimeObject->ToString();
         }
 
         # set log message
@@ -550,9 +592,11 @@ sub Run {
     # we need State and Host to proceed
     if ( !$Self->{State} || !$Self->{Host} ) {
 
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'notice',
-            Message  => 'SystemMonitoring Mail: '
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => 'SystemMonitoring Mail: '
                 . 'SystemMonitoring: Could not find host address '
                 . 'and/or state in mail => Ignoring',
         );
@@ -588,9 +632,12 @@ sub _SetIncidentState {
     # check needed stuff
     for my $Argument (qw(Name IncidentState )) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
+
+            $Self->{CommunicationLogObject}->ObjectLog(
+                ObjectLogType => 'Message',
+                Priority      => 'Error',
+                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+                Value         => "Need $Argument",
             );
 
             return;
@@ -609,9 +656,11 @@ sub _SetIncidentState {
     if ( !$ConfigItemIDs || ref $ConfigItemIDs ne 'ARRAY' || !@{$ConfigItemIDs} ) {
 
         # log error
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Could not find any CI with the name '$Param{Name}'. ",
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Could not find any CI with the name '$Param{Name}'. ",
         );
 
         return;
@@ -621,9 +670,11 @@ sub _SetIncidentState {
     if ( scalar @{$ConfigItemIDs} > 1 ) {
 
         # log error
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Can not set incident state for CI with the name '$Param{Name}'. "
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Can not set incident state for CI with the name '$Param{Name}'. "
                 . "More than one CI with this name was found!",
         );
 
@@ -661,9 +712,11 @@ sub _SetIncidentState {
     if ( !$ReverseInciStateList{ $Param{IncidentState} } ) {
 
         # log error
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Invalid incident state '$Param{IncidentState}'!",
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Invalid incident state '$Param{IncidentState}'!",
         );
 
         return;
@@ -685,9 +738,12 @@ sub _LinkTicketWithCI {
     # check needed stuff
     for my $Argument (qw(Name TicketID)) {
         if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
+
+            $Self->{CommunicationLogObject}->ObjectLog(
+                ObjectLogType => 'Message',
+                Priority      => 'Error',
+                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+                Value         => "Need $Argument",
             );
 
             return;
@@ -706,9 +762,11 @@ sub _LinkTicketWithCI {
     if ( !$ConfigItemIDs || ref $ConfigItemIDs ne 'ARRAY' || !@{$ConfigItemIDs} ) {
 
         # log error
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Could not find any CI with the name '$Param{Name}'. ",
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Could not find any CI with the name '$Param{Name}'. ",
         );
 
         return;
@@ -718,9 +776,11 @@ sub _LinkTicketWithCI {
     if ( scalar @{$ConfigItemIDs} > 1 ) {
 
         # log error
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'error',
-            Message  => "Can not set incident state for CI with the name '$Param{Name}'. "
+        $Self->{CommunicationLogObject}->ObjectLog(
+            ObjectLogType => 'Message',
+            Priority      => 'Error',
+            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
+            Value         => "Can not set incident state for CI with the name '$Param{Name}'. "
                 . "More than one CI with this name was found!",
         );
 
@@ -746,8 +806,6 @@ sub _LinkTicketWithCI {
 
 1;
 
-=back
-
 =head1 TERMS AND CONDITIONS
 
 This software is part of the OTRS project (L<http://otrs.org/>).
@@ -755,7 +813,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
 
 =cut

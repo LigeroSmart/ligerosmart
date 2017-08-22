@@ -88,9 +88,19 @@ my $FileArray = $MainObject->FileRead(
     Result   => 'ARRAY',                                                                     # optional - SCALAR|ARRAY
 );
 
+my $CommunicationLogObject = $Kernel::OM->Create(
+    'Kernel::System::CommunicationLog',
+    ObjectParams => {
+        Transport => 'Email',
+        Direction => 'Incoming',
+    },
+);
+$CommunicationLogObject->ObjectLogStart( ObjectLogType => 'Message' );
+
 my $PostMasterObject = Kernel::System::PostMaster->new(
     %{$Self},
-    Email => $FileArray,
+    Email                  => $FileArray,
+    CommunicationLogObject => $CommunicationLogObject,
 );
 
 my @Return = $PostMasterObject->Run();
@@ -102,6 +112,14 @@ $Self->Is(
 $Self->True(
     $Return[1] || 0,
     "Run() - NewTicket/TicketID",
+);
+
+$CommunicationLogObject->ObjectLogStop(
+    ObjectLogType => 'Message',
+    Status        => 'Successful',
+);
+$CommunicationLogObject->CommunicationStop(
+    Status => 'Successful',
 );
 
 my $TicketObject = Kernel::System::Ticket->new( %{$Self} );
@@ -132,9 +150,19 @@ $FileArray = $MainObject->FileRead(
     Result   => 'ARRAY',                                                                     # optional - SCALAR|ARRAY
 );
 
+my $CommunicationLogObject2 = $Kernel::OM->Create(
+    'Kernel::System::CommunicationLog',
+    ObjectParams => {
+        Transport => 'Email',
+        Direction => 'Incoming',
+    },
+);
+$CommunicationLogObject2->ObjectLogStart( ObjectLogType => 'Message' );
+
 $PostMasterObject = Kernel::System::PostMaster->new(
     %{$Self},
-    Email => $FileArray,
+    Email                  => $FileArray,
+    CommunicationLogObject => $CommunicationLogObject2,
 );
 
 @Return = $PostMasterObject->Run();
@@ -146,6 +174,14 @@ $Self->Is(
 $Self->True(
     $Return[1] == $Ticket{TicketID},
     "Run() - NewTicket/TicketID",
+);
+
+$CommunicationLogObject2->ObjectLogStop(
+    ObjectLogType => 'Message',
+    Status        => 'Successful',
+);
+$CommunicationLogObject2->CommunicationStop(
+    Status => 'Successful',
 );
 
 # get ticket object

@@ -290,7 +290,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 <!-- ******* -->
 <chapter>
     <title>Tests</title>
-    <para>This module has been tested on the current state of the art in quality.</para>
+    <para>This module has been quality assured according to the current OTRS guidelines.</para>
     <section>
         <title>Unit Tests</title>
         <para>

@@ -1,3 +1,6 @@
+#6.0.0.beta1 2017-08-22
+ - 2017-08-22 Initial version for OTRS 6.
+
 #5.0.2 2016-??-??
  - 2016-11-04 Added Hungarian translation, thanks to Balázs Úr.
  - 2016-09-20 Fixed bug#[11190](http://bugs.otrs.org/show_bug.cgi?id=11190) - When Installaling SM "ArticleFreeText1" field is created as Ticket DF.
