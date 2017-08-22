@@ -10,6 +10,40 @@
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
     <h1>[% Translate("General Catalog Management") | html %]</h1>
 
+    [%- BreadcrumbPath = [
+            {
+                Name => Translate('General Catalog Management'),
+                Link => 'AdminGeneralCatalog',
+            },
+        ];
+
+        IF Data.Class && Data.Class == 'NEW';
+
+            BreadcrumbPath.push({
+                Name => 'Add Class',
+            });
+
+        ELSIF Data.Class;
+
+            ClassURI = Data.Class | uri;
+
+            BreadcrumbPath.push({
+                Name => 'Items in ' _ Data.Class,
+                Link => 'AdminGeneralCatalog;Subaction=ItemList;Class=' _ ClassURI,
+            });
+
+            IF Data.Subaction && Data.Subaction == 'ItemEdit';
+                BreadcrumbPath.push({
+                    Name => Data.ItemEdit ? 'Edit Item: ' _ Data.ItemName : 'Add Item',
+                });
+
+            END;
+
+        END;
+    %]
+
+    [% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath %]
+
     <div class="SidebarColumn">
         <div class="WidgetSimple">
             <div class="Header">
@@ -88,7 +122,7 @@
                 <table class="DataTable">
                     <thead>
                         <tr>
-                            <th class="W60pc">[% Data.Class | html %]</th>
+                            <th class="W60pc">[% Translate("Name") | html %]</th>
                             <th class="Center">[% Translate("Validity") | html %]</th>
                         </tr>
                     </thead>
@@ -108,7 +142,15 @@
 
 [% RenderBlockStart("ItemEdit") %]
             <div class="Header">
-                <h2>[% Translate("Edit Catalog Item") | html %]:</h2>
+                <h2>[%-
+                IF Data.Class && Data.Class == 'NEW';
+                    Translate("Add Catalog Class") | html;
+                ELSIF Data.ItemEdit;
+                    Translate("Edit Catalog Item") | html;
+                ELSE;
+                    Translate("Add Catalog Item") | html;
+                END;
+                %]</h2>
             </div>
             <div class="Content">
 
