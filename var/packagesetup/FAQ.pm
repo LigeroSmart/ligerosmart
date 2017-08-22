@@ -60,33 +60,45 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # rebuild ZZZ* files
-    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
+    $Kernel::OM->ObjectsDiscard();
 
-    # define the ZZZ files
-    my @ZZZFiles = (
-        'ZZZAAuto.pm',
-        'ZZZAuto.pm',
-    );
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-    # reload the ZZZ files (mod_perl workaround)
-    for my $ZZZFile (@ZZZFiles) {
+    # Convert XML files to entries in the database
+    if (
+        !$SysConfigObject->ConfigurationXML2DB(
+            CleanUp => 1,
+            Force   => 1,
+            UserID  => 1,
+        )
+        )
+    {
+        return;
+    }
 
-        PREFIX:
-        for my $Prefix (@INC) {
-            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
-            next PREFIX if !-f $File;
-            do $File;
-            last PREFIX;
+    # Rebuild ZZZAAuto.pm with current values
+    if (
+        !$SysConfigObject->ConfigurationDeploy(
+            Comments => $Param{Comments} || "Configuration Rebuild",
+            AllSettings  => 1,
+            Force        => 1,
+            NoValidation => 1,
+            UserID       => 1,
+        )
+        )
+    {
+        return;
+    }
+
+    # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
+    for my $Module ( sort keys %INC ) {
+        if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
+            delete $INC{$Module};
         }
     }
 
-    # always discard the config object before package code is executed,
-    # to make sure that the config object will be created newly, so that it
-    # will use the recently written new config from the package
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::Config'],
-    );
+    # Create common objects with fresh default config.
+    $Kernel::OM->ObjectsDiscard();
 
     # the stats object needs a UserID parameter for the constructor
     # we need to discard any existing stats object before
@@ -245,43 +257,6 @@ sub CodeUpgradeSpecial {
 
     # start normal code upgrade
     $Self->CodeUpgrade();
-
-    return 1;
-}
-
-=item CodeUpgradeFromLowerThan_4_0_1()
-
-This function is only executed if the installed module version is smaller than 4.0.1.
-
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_1();
-
-=cut
-
-sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
-    my ( $Self, %Param ) = @_;
-
-    # migrate the DTL Content in the SysConfig
-    $Self->_MigrateDTLInSysConfig();
-
-    return 1;
-}
-
-=item CodeUpgradeFromLowerThan_4_0_91()
-
-This function is only executed if the installed module version is smaller than 4.0.91.
-
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
-
-=cut
-
-sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
-    my ( $Self, %Param ) = @_;
-
-    # change configurations to match the new module location.
-    $Self->_MigrateConfigs();
-
-    # set content type
-    $Self->_SetContentType();
 
     return 1;
 }
@@ -784,169 +759,6 @@ sub _DynamicFieldsDelete {
     }
 
     return 1;
-}
-
-sub _MigrateDTLInSysConfig {
-
-    # create needed objects
-    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-    my $ProviderObject  = Kernel::Output::Template::Provider->new();
-
-    # get setting's content
-    my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
-    return if !$Setting;
-
-    MENUMODULE:
-    for my $MenuModule ( sort keys %{$Setting} ) {
-
-        SETTINGITEM:
-        for my $SettingItem ( sort keys %{ $Setting->{$MenuModule} } ) {
-
-            my $SettingContent = $Setting->{$MenuModule}->{$SettingItem};
-
-            # do nothing no value for migrating
-            next SETTINGITEM if !$SettingContent;
-
-            my $TTContent;
-            eval {
-                $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $SettingContent );
-            };
-            if ($@) {
-                $Kernel::OM->Get('Kernel::System::Log')->Log(
-                    Priority => 'error',
-                    Message  => "$MenuModule->$SettingItem : $@!",
-                );
-            }
-            else {
-                $Setting->{$MenuModule}->{$SettingItem} = $TTContent;
-            }
-        }
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'FAQ::Frontend::MenuModule',
-            Value => $Setting,
-        );
-    }
-    return 1;
-}
-
-sub _MigrateConfigs {
-
-    # create needed objects
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
-
-    # migrate FAQ menu modules
-    # get setting content for FAQ menu modules
-    my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
-
-    MENUMODULE:
-    for my $MenuModule ( sort keys %{$Setting} ) {
-
-        # update module location
-        my $Module = $Setting->{$MenuModule}->{'Module'};
-        if ( $Module !~ m{Kernel::Output::HTML::FAQMenu(\w+)} ) {
-            next MENUMODULE;
-        }
-
-        $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::FAQMenu::Generic";
-
-        # set new setting,
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'FAQ::Frontend::MenuModule###' . $MenuModule,
-            Value => $Setting->{$MenuModule},
-        );
-    }
-
-    # migrate FAQ config items
-    my @Configs = (
-        {
-            Name       => 'Frontend::HeaderMetaModule',
-            ConfigItem => '3-FAQSearch',
-            Module     => 'Kernel::Output::HTML::HeaderMeta::AgentFAQSearch',
-        },
-        {
-            Name       => 'CustomerFrontend::HeaderMetaModule',
-            ConfigItem => '3-FAQSearch',
-            Module     => 'Kernel::Output::HTML::HeaderMeta::CustomerFAQSearch',
-        },
-        {
-            Name       => 'PublicFrontend::HeaderMetaModule',
-            ConfigItem => '3-FAQSearch',
-            Module     => 'Kernel::Output::HTML::HeaderMeta::PublicFAQSearch',
-        },
-        {
-            Name       => 'Frontend::Output::FilterElementPost',
-            ConfigItem => 'FAQ',
-            Module     => 'Kernel::Output::HTML::FilterElementPost::FAQ',
-        },
-        {
-            Name       => 'FAQ::Frontend::Overview',
-            ConfigItem => 'Small',
-            Module     => 'Kernel::Output::HTML::FAQOverview::Small',
-        },
-        {
-            Name       => 'FAQ::Frontend::JournalOverview',
-            ConfigItem => 'Small',
-            Module     => 'Kernel::Output::HTML::FAQJournalOverview::Small',
-        },
-        {
-            Name       => 'PreferencesGroups',
-            ConfigItem => 'FAQOverviewSmallPageShown',
-            Module     => 'Kernel::Output::HTML::Preferences::Generic',
-        },
-        {
-            Name       => 'PreferencesGroups',
-            ConfigItem => 'FAQJournalOverviewSmallPageShown',
-            Module     => 'Kernel::Output::HTML::Preferences::Generic',
-        },
-        {
-            Name       => 'DashboardBackend',
-            ConfigItem => '0398-FAQ-LastChange',
-            Module     => 'Kernel::Output::HTML::Dashboard::FAQ',
-        },
-        {
-            Name       => 'DashboardBackend',
-            ConfigItem => '0399-FAQ-LastCreate',
-            Module     => 'Kernel::Output::HTML::Dashboard::FAQ',
-        },
-        {
-            Name       => 'Frontend::ToolBarModule',
-            ConfigItem => '90-FAQ::AgentFAQAdd',
-            Module     => 'Kernel::Output::HTML::ToolBar::Link',
-        },
-    );
-
-    CONFIGITEM:
-    for my $Config (@Configs) {
-
-        # get setting content for header meta FAQ search
-        my $Setting = $ConfigObject->Get( $Config->{Name} );
-        next CONFIGITEM if !$Setting;
-
-        my $ConfigItem = $Config->{ConfigItem};
-        next CONFIGITEM if !$Setting->{$ConfigItem}->{'Module'};
-
-        # set module
-        $Setting->{$ConfigItem}->{'Module'} = $Config->{Module};
-
-        # set new setting,
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => $Config->{Name} . '###' . $ConfigItem,
-            Value => $Setting->{$ConfigItem},
-        );
-
-    }
-
-    return 1;
-}
-
-sub _SetContentType {
-
-    return $Kernel::OM->Get('Kernel::System::FAQ')->FAQContentTypeSet();
 }
 
 1;
