@@ -356,17 +356,17 @@ sub RequestSend {
                 },
             );
         }
+
         if ($LastSentDateTime) {
             my $DateTimeObject = $Kernel::OM->Create(
                 'Kernel::System::DateTime',
             );
 
             $LastSentDateTime->Add(
-                Days => $SendPeriod,
+                Seconds => $SendPeriod * 24 * 60 * 60,
             );
 
             return if $LastSentDateTime > $DateTimeObject;
-
         }
     }
     my $SendInHoursAfterClose = $ConfigObject->Get('Survey::SendInHoursAfterClose');

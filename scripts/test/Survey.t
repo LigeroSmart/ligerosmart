@@ -46,9 +46,11 @@ $Self->True(
 # get type object
 my $TypeObject = $Kernel::OM->Get('Kernel::System::Type');
 
+my $Random = $HelperObject->GetRandomNumber();
+
 # create a test type
 my $TicketTypeID = $TypeObject->TypeAdd(
-    Name    => 'Unit Test New Type' . int rand 1_000_000,
+    Name    => 'Unit Test New Type' . $Random,
     ValidID => 1,
     UserID  => 1,
 );
@@ -58,7 +60,7 @@ my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
 
 # create a test service
 my $ServiceID = $ServiceObject->ServiceAdd(
-    Name    => 'Unit Test New Service' . int rand 1_000_000,
+    Name    => 'Unit Test New Service' . $Random,
     ValidID => 1,
     Comment => 'Unit Test Comment',
     UserID  => 1,
@@ -173,18 +175,19 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             1,
@@ -206,18 +209,19 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <SOME@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <SOME@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -239,18 +243,19 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'SOME@unittest.com',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'SOME@unittest.com',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -273,18 +278,19 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'SOME@unittest.com',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'SOME@unittest.com',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             1,
@@ -307,18 +313,19 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'SOME@unittest.com',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'SOME@unittest.com',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -339,18 +346,19 @@ my @Tests = (
             UserID       => 1,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'My Name',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                   # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'My Name',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Result => [
             0,
@@ -393,25 +401,30 @@ for my $Test (@Tests) {
         %{ $Test->{Ticket} },
     );
 
-    my $ArticleID = $TicketObject->ArticleCreate(
+    my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+        ChannelName => $Test->{Article}->{CommunicationChannel},
+    );
+
+    my $ArticleID = $ArticleBackendObject->ArticleCreate(
         TicketID => $TicketID,
         %{ $Test->{Article} },
     );
 
     # send survey first time
-    my ( $HeaderRef, $BodyRef ) = $SurveyObject->RequestSend(
+    my $Response = $SurveyObject->RequestSend(
         TicketID => $TicketID,
+        Test     => $Test->{Name},
     );
 
     # check if survey got sent
     if ( $Test->{Result}->[0] ) {
 
         $Self->True(
-            ${$HeaderRef},
+            $Response->{Success},
             "$Test->{Name} RequestSend() - survey got sent",
         );
 
-        ${$HeaderRef} =~ m{ ^ Subject: [ ] ( .+? ) \n \S+: [ ] }xms;
+        $Response->{Data}->{Header} =~ m{ ^ Subject: [ ] ( .+? ) \n \S+: [ ] }xms;
         $Self->Is(
             $1,
             'Help us with your feedback! =?UTF-8?Q?=C3=84=C3=96=C3=9C?=',
@@ -443,7 +456,7 @@ body></html>=
 END
 
         # copy mail body
-        my $Mailbody2 = ${$BodyRef};
+        my $Mailbody2 = $Response->{Data}->{Body};
 
         # prepare mail body
         $Mailbody2 =~ s{ \d{8,12} - \d{3,6} - \d{1,3} }{MESSAGEID}xmsg;
@@ -456,26 +469,26 @@ END
     }
     else {
         $Self->False(
-            ${$HeaderRef},
+            $Response->{Success},
             "$Test->{Name} RequestSend() - no survey got sent",
         );
     }
 
     # send survey second time
-    ( $HeaderRef, $BodyRef ) = $SurveyObject->RequestSend(
+    $Response = $SurveyObject->RequestSend(
         TicketID => $TicketID,
     );
 
     # check if survey got sent
     if ( $Test->{Result}->[1] ) {
         $Self->True(
-            ${$HeaderRef},
+            $Response->{Success},
             "$Test->{Name} 2 RequestSend() - survey got sent",
         );
     }
     else {
         $Self->False(
-            ${$HeaderRef},
+            $Response,
             "$Test->{Name} 2 RequestSend() - no survey got sent",
         );
     }
@@ -505,18 +518,19 @@ my @SendConditionTests = (
             ServiceID    => 0,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 1,
     },
@@ -537,18 +551,19 @@ my @SendConditionTests = (
             TypeID       => $TicketTypeID,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 1,
     },
@@ -569,18 +584,19 @@ my @SendConditionTests = (
             TypeID       => 0,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -601,18 +617,19 @@ my @SendConditionTests = (
             ServiceID    => $ServiceID,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 1,
     },
@@ -633,18 +650,19 @@ my @SendConditionTests = (
             ServiceID    => 0,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -666,18 +684,19 @@ my @SendConditionTests = (
             ServiceID    => $ServiceID,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 1,
     },
@@ -699,18 +718,19 @@ my @SendConditionTests = (
             ServiceID    => $ServiceID,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -732,18 +752,19 @@ my @SendConditionTests = (
             ServiceID    => 0,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -766,18 +787,19 @@ my @SendConditionTests = (
             ServiceID    => 0,
         },
         Article => {
-            ArticleType    => 'email-external',
-            SenderType     => 'customer',
-            From           => 'Some Customer <some@unittest.com>',
-            To             => 'Some To <to@unittest.com>',
-            Subject        => 'Some Subject',
-            Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@unittest.com>',
-            ContentType    => 'text/plain; charset=ISO-8859-15',
-            HistoryType    => 'OwnerUpdate',
-            HistoryComment => 'Some free text!',
-            UserID         => 1,
-            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+            CommunicationChannel => 'Email',
+            IsVisibleForCustomer => 1,
+            SenderType           => 'customer',
+            From                 => 'Some Customer <some@unittest.com>',
+            To                   => 'Some To <to@unittest.com>',
+            Subject              => 'Some Subject',
+            Body                 => 'the message text',
+            MessageID            => '<asdasdasd.123@unittest.com>',
+            ContentType          => 'text/plain; charset=ISO-8859-15',
+            HistoryType          => 'OwnerUpdate',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+            NoAgentNotify        => 1,                                   # if you don't want to send agent notifications
         },
         Success => 0,
     },
@@ -803,13 +825,18 @@ for my $Test (@SendConditionTests) {
     my $TicketID = $TicketObject->TicketCreate(
         %{ $Test->{Ticket} },
     );
-    my $ArticleID = $TicketObject->ArticleCreate(
+
+    my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+        ChannelName => $Test->{Article}->{CommunicationChannel},
+    );
+
+    my $ArticleID = $ArticleBackendObject->ArticleCreate(
         TicketID => $TicketID,
         %{ $Test->{Article} },
     );
 
     # send survey first time
-    my ( $HeaderRef, $BodyRef ) = $SurveyObject->RequestSend(
+    my $Response = $SurveyObject->RequestSend(
         TicketID => $TicketID,
     );
 
@@ -817,14 +844,14 @@ for my $Test (@SendConditionTests) {
     if ( $Test->{Success} ) {
 
         $Self->True(
-            ${$HeaderRef},
+            $Response->{Success},
             "$Test->{Name} RequestSend() - survey got sent",
         );
     }
     else {
 
         $Self->False(
-            ${$HeaderRef},
+            $Response,
             "$Test->{Name} RequestSend() - no survey got sent",
         );
     }
