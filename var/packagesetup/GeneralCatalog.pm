@@ -23,8 +23,6 @@ GeneralCatalog.pm - code to execute during package installation
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
 =head2 new()
@@ -230,8 +228,6 @@ sub _MigrateConfigs {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

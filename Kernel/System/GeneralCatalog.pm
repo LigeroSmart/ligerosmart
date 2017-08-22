@@ -24,10 +24,7 @@ our @ObjectDependencies = (
 
 Kernel::System::GeneralCatalog - general catalog lib
 
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
@@ -692,8 +689,6 @@ sub GeneralCatalogPreferencesGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

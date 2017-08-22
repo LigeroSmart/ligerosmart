@@ -23,8 +23,6 @@ Kernel::System::GeneralCatalog::PreferencesDB - some preferences functions for g
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
 =head2 new()
@@ -148,8 +146,6 @@ sub GeneralCatalogPreferencesGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
