@@ -1,5 +1,5 @@
-#6.0.0.beta1 2017-08-22
- - 2017-08-22 Initial version for OTRS 6.
+#6.0.0.beta1 2017-10-03
+ - 2017-08-22 Ported to OTRS 6.
 
 #5.0.2 2016-??-??
  - 2016-11-04 Added Hungarian translation, thanks to Balázs Úr.

@@ -48,35 +48,35 @@
     </Setting>
     <Setting Name="SystemMonitoring::SetIncidentState" Required="0" Valid="1">
         <Description Translatable="1">Set the incident state of a CI automatically when a system monitoring email arrives.</Description>
-        <Navigation>Core::ConfigItem</Navigation>
+        <Navigation>Core::SystemMonitoring</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="SystemMonitoring::LinkTicketWithCI" Required="0" Valid="1">
         <Description Translatable="1">Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</Description>
-        <Navigation>Core::ConfigItem</Navigation>
+        <Navigation>Core::SystemMonitoring</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::FreeField::Host" Required="1" Valid="1">
         <Description Translatable="1">Name of the Dynamic Field for Host.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText1</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::FreeField::Service" Required="1" Valid="1">
         <Description Translatable="1">Name of the Dynamic Field for Service.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText2</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::Type" Required="0" Valid="1">
         <Description Translatable="1">Define Nagios acknowledge type.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="">
                 <Item ValueType="Option" Value="">-</Item>
@@ -87,28 +87,28 @@
     </Setting>
     <Setting Name="Nagios::Acknowledge::NamedPipe::CMD" Required="0" Valid="1">
         <Description Translatable="1">Named pipe acknowledge command.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">echo '&lt;OUTPUTSTRING&gt;' > /usr/local/nagios/var/rw/nagios.cmd</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::NamedPipe::Host" Required="0" Valid="1">
         <Description Translatable="1">Named pipe acknowledge format for host.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_HOST_PROBLEM;&lt;HOST_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::NamedPipe::Service" Required="0" Valid="1">
         <Description Translatable="1">Named pipe acknowledge format for service.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">[&lt;UNIXTIME&gt;] ACKNOWLEDGE_SVC_PROBLEM;&lt;HOST_NAME&gt;;&lt;SERVICE_NAME&gt;;1;1;1;&lt;LOGIN&gt;;&lt;a href="&lt;CONFIG_HttpType&gt;://&lt;CONFIG_FQDN&gt;/&lt;CONFIG_ScriptAlias&gt;index.pl?Action=AgentTicketZoom&amp;TicketID=&lt;TicketID&gt;"&gt;&lt;CONFIG_Ticket::Hook&gt;&lt;TicketNumber&gt;&lt;/a&gt;</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::EventModulePost###9-NagiosAcknowledge" Required="1" Valid="1">
         <Description Translatable="1">Ticket event module to send an acknowledge to Nagios.</Description>
-        <Navigation>Core::Event::NagiosAcknowledge</Navigation>
+        <Navigation>Core::Event::Nagios</Navigation>
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::NagiosAcknowledge</Item>
@@ -118,21 +118,21 @@
     </Setting>
     <Setting Name="Nagios::Acknowledge::HTTP::URL" Required="0" Valid="1">
         <Description Translatable="1">The HTTP acknowledge URL.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">http://nagios.example.com/nagios/cgi-bin/cmd.cgi?cmd_typ=&lt;CMD_TYP&gt;&amp;cmd_mod=2&amp;host=&lt;HOST_NAME&gt;&amp;service=&lt;SERVICE_NAME&gt;&amp;sticky_ack=on&amp;send_notification=on&amp;persistent=on&amp;com_data=&lt;TicketNumber&gt;&amp;btnSubmit=Commit</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::HTTP::User" Required="0" Valid="1">
         <Description Translatable="1">The HTTP acknowledge user.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">John</Item>
         </Value>
     </Setting>
     <Setting Name="Nagios::Acknowledge::HTTP::Password" Required="0" Valid="1">
         <Description Translatable="1">The HTTP acknowledge password.</Description>
-        <Navigation>Core::Nagios::Acknowledge</Navigation>
+        <Navigation>Core::SystemMonitoring::Nagios</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">some_pass</Item>
         </Value>
