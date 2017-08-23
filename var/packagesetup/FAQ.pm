@@ -52,7 +52,7 @@ create an object
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {};
     bless( $Self, $Type );
 
@@ -60,7 +60,7 @@ sub new {
 
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-    # Convert XML files to entries in the database
+    # Convert XML files to entries in the database.
     if (
         !$SysConfigObject->ConfigurationXML2DB(
             CleanUp => 1,
@@ -72,7 +72,6 @@ sub new {
         return;
     }
 
-    # Rebuild ZZZAAuto.pm with current values
     if (
         !$SysConfigObject->ConfigurationDeploy(
             Comments => $Param{Comments} || "Configuration Rebuild",
@@ -86,7 +85,7 @@ sub new {
         return;
     }
 
-    # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
+    # Force a reload of ZZZAuto.pm to get the fresh configuration values.
     for my $Module ( sort keys %INC ) {
         if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
             delete $INC{$Module};
@@ -96,20 +95,20 @@ sub new {
     # Create common objects with fresh default config.
     $Kernel::OM->ObjectsDiscard();
 
-    # the stats object needs a UserID parameter for the constructor
-    # we need to discard any existing stats object before
+    # The stats object needs a UserID parameter for the constructor.
+    # We need to discard any existing stats object before.
     $Kernel::OM->ObjectsDiscard(
         Objects => ['Kernel::System::Stats'],
     );
 
-    # define UserID parameter for the constructor of the stats object
+    # Define UserID parameter for the constructor of the stats object.
     $Kernel::OM->ObjectParamAdd(
         'Kernel::System::Stats' => {
             UserID => 1,
         },
     );
 
-    # define file prefix
+    # Define file prefix.
     $Self->{FilePrefix} = 'FAQ';
 
     return $Self;
