@@ -120,17 +120,26 @@ sub Run {
         },
     );
 
-    # check if a dialog has to be shown
-    if ( $Param{Config}->{DialogTitle} ) {
+    if ( $Param{MenuID} eq 'Menu050-Delete' ) {
 
-        # output confirmation dialog
-        $LayoutObject->Block(
-            Name => 'ShowConfirmationDialog',
-            Data => {
-                %Param,
-                %{ $Param{FAQItem} },
-                %{ $Param{Config} },
+        # Create structure for JS.
+        my %JSData;
+        $JSData{ $Param{MenuID} } = {
+            ElementID                  => $Param{MenuID},
+            ElementSelector            => '#' . $Param{MenuID},
+            DialogContentQueryString   => 'Action=AgentFAQDelete;ItemID=' . $Param{FAQItem}->{ItemID},
+            ConfirmedActionQueryString => 'Action=AgentFAQDelete;Subaction=Delete;ItemID=' . $Param{FAQItem}->{ItemID},
+            DialogTitle                => $LayoutObject->{LanguageObject}->Translate('Delete'),
+            TranslatedText             => {
+                Yes => $LayoutObject->{LanguageObject}->Translate('Yes'),
+                No  => $LayoutObject->{LanguageObject}->Translate('No'),
+                Ok  => $LayoutObject->{LanguageObject}->Translate('Ok'),
             },
+        };
+
+        $LayoutObject->AddJSData(
+            Key   => 'FAQData',
+            Value => \%JSData,
         );
     }
 

@@ -566,9 +566,29 @@ sub _Overview {
             UserID => $Self->{UserID},
         );
 
+        my %JSData;
+
         # if there are any languages, they are shown
         if (%Languages) {
             for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
+
+                # Create structure for JS.
+                $JSData{$LanguageID} = {
+                    ElementID                  => 'DeleteLanguageID' . $LanguageID,
+                    ElementSelector            => '#DeleteLanguageID' . $LanguageID,
+                    DialogContentQueryString   => 'Action=AgentFAQLanguage;Subaction=Delete;LanguageID=' . $LanguageID,
+                    ConfirmedActionQueryString => 'Action=AgentFAQLanguage;Subaction=DeleteAction;LanguageID='
+                        . $LanguageID,
+                    DialogTitle => $LayoutObject->{LanguageObject}->Translate(
+                        'Delete Language %s',
+                        $Languages{$LanguageID},
+                    ),
+                    TranslatedText => {
+                        Yes => $LayoutObject->{LanguageObject}->Translate('Yes'),
+                        No  => $LayoutObject->{LanguageObject}->Translate('No'),
+                        Ok  => $LayoutObject->{LanguageObject}->Translate('Ok'),
+                    },
+                };
 
                 # get languages result
                 my %LanguageData = $FAQObject->LanguageGet(
@@ -582,6 +602,11 @@ sub _Overview {
                     Data => {%LanguageData},
                 );
             }
+
+            $LayoutObject->AddJSData(
+                Key   => 'FAQData',
+                Value => \%JSData,
+            );
         }
 
         # otherwise a no data found message is displayed
@@ -598,6 +623,8 @@ sub _Overview {
             Data => {},
         );
     }
+
+    return 1;
 }
 
 1;

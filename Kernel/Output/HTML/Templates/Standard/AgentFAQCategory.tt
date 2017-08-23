@@ -72,24 +72,6 @@
                                     <span class="InvisibleText">[% Translate("Delete") | html %]: [% Data.Name | html %]</span>
                                 </a>
                             </td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global FAQ: true */
-    FAQ.Agent.ConfirmationDialog.BindConfirmationDialog({
-        ElementID:                  'DeleteCategoryID[% Data.CategoryID | html %]',
-        ElementSelector:            '#DeleteCategoryID[% Data.CategoryID | html %]',
-        DialogContentQueryString:   'Action=AgentFAQCategory;Subaction=Delete;CategoryID=[% Data.CategoryID | uri %]',
-        ConfirmedActionQueryString: 'Action=AgentFAQCategory;Subaction=DeleteAction;CategoryID=[% Data.CategoryID | uri %]',
-        DialogTitle:                [% Translate("Delete Category") | JSON %],
-        TranslatedText:             {
-            Yes: [% Translate("Yes") | JSON %],
-            No:  [% Translate("No") | JSON %],
-            Ok:  [% Translate("Ok") | JSON %]
-        }
-    });
-//]]></script>
-[% END %]
-
                         </tr>
 [% RenderBlockEnd("OverviewResultRow") %]
                     </tbody>

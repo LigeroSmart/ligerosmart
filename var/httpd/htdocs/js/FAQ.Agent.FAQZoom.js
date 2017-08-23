@@ -41,11 +41,11 @@ FAQ.Agent.FAQZoom = (function (TargetNS) {
             if (NewHeight === 0) {
                 $Iframe.closest('.WidgetSimple').removeClass('Expanded').addClass('Collapsed');
             } else if (!NewHeight || isNaN(NewHeight)) {
-                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightDefault');
+                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Default;
             }
             else {
-                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax')) {
-                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax');
+                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Max) {
+                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Max;
                 }
             }
 
@@ -57,14 +57,51 @@ FAQ.Agent.FAQZoom = (function (TargetNS) {
         }
     };
 
-    // init browser link message close button
-    if ($('.FAQMessageBrowser').length) {
-        $('.FAQMessageBrowser a.Close').on('click', function () {
-            $('.FAQMessageBrowser').fadeOut("slow");
-            Core.Agent.PreferencesUpdate('UserAgentDoNotShowBrowserLinkMessage', 1);
+    /**
+     * @name Init
+     * @memberof FAQ.Agent.FAQZoom
+     * @function
+     * @description
+     *      This function initialize the FAQZoom module.
+     */
+    TargetNS.Init = function() {
+
+        // init browser link message close button
+        if ($('.FAQMessageBrowser').length) {
+            $('.FAQMessageBrowser a.Close').on('click', function () {
+                $('.FAQMessageBrowser').fadeOut("slow");
+                Core.Agent.PreferencesUpdate('UserAgentDoNotShowBrowserLinkMessage', 1);
+                return false;
+            });
+        }
+
+            $('ul.Actions a.AsPopup').on('click', function () {
+            Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
             return false;
         });
-    }
+
+        $('.RateButton').on('click', function () {
+            var RateNumber = parseInt($(this).closest('li').attr('id').replace(/RateButton/, ''), 10);
+            $('#RateValue').val(RateNumber);
+            $('#RateSubmitButton').fadeIn(250);
+            $('#FAQVoting').find('.RateButton').each(function() {
+                var ItemRateNumber = parseInt($(this).closest('li').attr('id').replace(/RateButton/, ''), 10);
+                if (ItemRateNumber <= RateNumber) {
+                    $(this).addClass('RateChecked');
+                    $(this).removeClass('RateUnChecked');
+                }
+                else {
+                    $(this).addClass('RateUnChecked');
+                    $(this).removeClass('RateChecked');
+                }
+            });
+        });
+
+        // Initialize allocation list for link object table.
+        Core.Agent.TableFilters.SetAllocationList();
+    };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(FAQ.Agent.FAQZoom || {}));

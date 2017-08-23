@@ -101,23 +101,6 @@
                                     <span class="InvisibleText">[% Translate("Delete") | html %]: [% Data.Name | html %]</span>
                                 </a>
                             </td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global FAQ: true */
-    FAQ.Agent.ConfirmationDialog.BindConfirmationDialog({
-        ElementID:                  'DeleteLanguageID[% Data.LanguageID | html %]',
-        ElementSelector:            '#DeleteLanguageID[% Data.LanguageID | html %]',
-        DialogContentQueryString:   'Action=AgentFAQLanguage;Subaction=Delete;LanguageID=[% Data.LanguageID | uri %]',
-        ConfirmedActionQueryString: 'Action=AgentFAQLanguage;Subaction=DeleteAction;LanguageID=[% Data.LanguageID | uri %]',
-        DialogTitle:                [% Translate("Delete Language %s", Data.Name) | JSON %],
-        TranslatedText:             {
-            Yes: [% Translate("Yes") | JSON %],
-            No:  [% Translate("No") | JSON %],
-            Ok:  [% Translate("Ok") | JSON %]
-        }
-    });
-//]]></script>
-[% END %]
                         </tr>
 [% RenderBlockEnd("OverviewResultRow") %]
                     </tbody>

@@ -126,7 +126,6 @@
 #                </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
 
-[% RenderBlockStart("AttachmentUpload") %]
                         <label>[% Translate("Attachment") | html %]:</label>
                         <div class="Field">
 [% INCLUDE "FormElements/AttachmentList.tt" %]

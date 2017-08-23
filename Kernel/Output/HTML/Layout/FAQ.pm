@@ -20,6 +20,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Web::Request',
+    'Kernel::Output::HTML::Layout',
 );
 
 =head1 NAME
@@ -70,7 +71,7 @@ sub GetFAQItemVotingRateColor {
 
 =item FAQListShow()
 
-Returns a list of FAQ items as sortable list with pagination.
+Returns a list of FAQ items as sort-able list with pagination.
 
 This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow()>
 in F<Kernel/Output/HTML/Layout/Ticket.pm>.
@@ -383,10 +384,10 @@ sub FAQListShow {
 
 =item FAQContentShow()
 
-Outputs the necessary DTL blocks to display the FAQ item fields for the supplied FAQ item ID.
+Outputs the necessary blocks to display the FAQ item fields for the supplied FAQ item ID.
 The fields displayed are also restricted by the permissions represented by the supplied interface
 
-If exist ReturnContent parameter it returns the FAQ items fields on a HTML formated string
+If exist ReturnContent parameter it returns the FAQ items fields on a HTML formatted string
 
     $LayoutObject->FAQContentShow(
         FAQObject       => $FAQObject,                 # needed for core module interaction
@@ -513,6 +514,15 @@ sub FAQContentShow {
             );
         }
 
+        # Send config to JS.
+        $Kernel::OM->Get('Kernel::Output::HTML::Layout')->AddJSData(
+            Key   => 'AgentHTMLFieldHeight',
+            Value => {
+                Default => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightDefault'),
+                Max     => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightMax'),
+                }
+        );
+
         # store the field to return all FAQ Body
         if ( $Param{ReturnContent} && $Content ) {
 
@@ -556,7 +566,7 @@ sub FAQContentShow {
 
 =item FAQPathShow()
 
-if its allowed by the configuration, outputs the necessary DTL blocks to display the FAQ item path,
+if its allowed by the configuration, outputs the necessary blocks to display the FAQ item path,
 and returns the value 1.
 
     my $ShowPathOk = $LayoutObject->FAQPathShow(
@@ -652,7 +662,7 @@ sub FAQPathShow {
 
 =item FAQRatingStarsShow()
 
-Outputs the necessary DTL blocks to represent the FAQ item rating
+Outputs the necessary blocks to represent the FAQ item rating
 as "Stars" in the scale from 1 to 5.
 
     $LayoutObject->FAQRatingStarsShow(

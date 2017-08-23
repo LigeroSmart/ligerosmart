@@ -757,8 +757,25 @@ sub _Overview {
         # sort the category ids by the long category name
         my @CategoryIDsSorted = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
 
+        my %JSData;
+
         # show all categories
         for my $CategoryID (@CategoryIDsSorted) {
+
+            # Create structure for JS.
+            $JSData{$CategoryID} = {
+                ElementID                  => 'DeleteCategoryID' . $CategoryID,
+                ElementSelector            => '#DeleteCategoryID' . $CategoryID,
+                DialogContentQueryString   => 'Action=AgentFAQCategory;Subaction=Delete;CategoryID=' . $CategoryID,
+                ConfirmedActionQueryString => 'Action=AgentFAQCategory;Subaction=DeleteAction;CategoryID='
+                    . $CategoryID,
+                DialogTitle    => $LayoutObject->{LanguageObject}->Translate('Delete Category'),
+                TranslatedText => {
+                    Yes => $LayoutObject->{LanguageObject}->Translate('Yes'),
+                    No  => $LayoutObject->{LanguageObject}->Translate('No'),
+                    Ok  => $LayoutObject->{LanguageObject}->Translate('Ok'),
+                },
+            };
 
             # get category data
             my %CategoryData = $FAQObject->CategoryGet(
@@ -778,6 +795,11 @@ sub _Overview {
                 Data => {%CategoryData},
             );
         }
+
+        $LayoutObject->AddJSData(
+            Key   => 'FAQData',
+            Value => \%JSData,
+        );
     }
 
     # otherwise a no data found message is displayed

@@ -111,19 +111,27 @@ FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
     };
 
     /**
-     * @name BindConfirmationDialog
-     * @memberof FAQ.Agent.ConfirmationDialog
+     * @name Init
+     * @memberof FAQ.Agent.Init
      * @function
      * @param {Object} Data - The data that should be binded
      * @description
      *      This function binds a click event to the defined element
      */
-    TargetNS.BindConfirmationDialog = function (Data) {
-        DialogData[Data.ElementID] = Data;
+    TargetNS.Init = function () {
+        var ID,
+        FAQData = Core.Config.Get('FAQData');
 
-        // binding a click event to the defined element
-        $(DialogData[Data.ElementID].ElementSelector).bind('click', FAQ.Agent.ConfirmationDialog.ShowConfirmationDialog);
+        // Binding a click event to the defined element.
+        if (typeof FAQData !== 'undefined') {
+            for (ID in FAQData) {
+                DialogData[FAQData[ID].ElementID] = FAQData[ID];
+                $(FAQData[ID].ElementSelector).on('click', TargetNS.ShowConfirmationDialog);
+            }
+        }
     };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(FAQ.Agent.ConfirmationDialog || {}));

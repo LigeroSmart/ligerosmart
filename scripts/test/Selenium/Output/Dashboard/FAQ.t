@@ -38,7 +38,7 @@ $Selenium->RunTest(
         # set FAQ dashboard modules on default settings
         for my $DefaultSysConfig (@FAQDashboard) {
 
-            my %Setting = $SysConfigObject->ConfigItemGet(
+            my %Setting = $SysConfigObject->SettingGet(
                 Name    => $DefaultSysConfig->{Name},
                 Default => 1,
             );
