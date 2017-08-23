@@ -18,21 +18,20 @@ use Kernel::System::VariableCheck qw(:all);
 our @ObjectDependencies = (
     'Kernel::System::FAQ',
     'Kernel::System::Log',
+    'Kernel::System::Web::Request',
 );
 
 =head1 NAME
 
 Kernel::System::DynamicField::ObjectType::FAQ
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 FAQ object handler for DynamicFields
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item new()
+=head2 new()
 
 usually, you want to create an instance of this
 by using Kernel::System::DynamicField::ObjectType::FAQ->new();
@@ -49,7 +48,7 @@ sub new {
     return $Self;
 }
 
-=item PostValueSet()
+=head2 PostValueSet()
 
 perform specific functions after the Value set for this object type.
 
@@ -129,9 +128,98 @@ sub PostValueSet {
     return 1;
 }
 
-1;
+=head2 ObjectDataGet()
 
-=back
+retrieves the data of the current object.
+
+    my %ObjectData = $DynamicFieldFAQHandlerObject->ObjectDataGet(
+        DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+        UserID             => 123,
+    );
+
+returns:
+
+    %ObjectData = (
+        ObjectID => 123,
+        Data     => {
+            FAQID             => 32,
+            Number            => 100032,
+            CategoryID        => '2',
+            # ...
+        }
+    );
+
+=cut
+
+sub ObjectDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # Check needed stuff.
+    for my $Needed (qw(DynamicFieldConfig UserID)) {
+        if ( !$Param{$Needed} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    # Check DynamicFieldConfig (general).
+    if ( !IsHashRefWithData( $Param{DynamicFieldConfig} ) ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "The field configuration is invalid",
+        );
+        return;
+    }
+
+    # Check DynamicFieldConfig (internally).
+    for my $Needed (qw(ID FieldType ObjectType)) {
+        if ( !$Param{DynamicFieldConfig}->{$Needed} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed in DynamicFieldConfig!",
+            );
+            return;
+        }
+    }
+
+    my $ItemID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
+        Param => 'ItemID',
+    );
+
+    return if !$ItemID;
+
+    my %FAQ = $Kernel::OM->Get('Kernel::System::FAQ')->FAQGet(
+        ItemID     => $ItemID,
+        ItemFields => 1,
+        UserID     => $Param{UserID},
+    );
+
+    if ( !%FAQ ) {
+
+        return (
+            ObjectID => $ItemID,
+            Data     => {}
+        );
+    }
+
+    my %Result = (
+        ObjectID => $ItemID,
+    );
+
+    ATTRIBUTE:
+    for my $Attribute ( sort keys %FAQ ) {
+
+        $Result{Data}->{$Attribute} = $FAQ{$Attribute};
+    }
+
+    return %Result;
+
+}
+
+1;
 
 =head1 TERMS AND CONDITIONS
 

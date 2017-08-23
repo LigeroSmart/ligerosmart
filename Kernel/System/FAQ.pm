@@ -147,8 +147,11 @@ Returns:
 Returns:
 
     %FAQ = (
+
+        # var for old versions
         ID                => 32,
         ItemID            => 32,
+
         FAQID             => 32,
         Number            => 100032,
         CategoryID        => '2',

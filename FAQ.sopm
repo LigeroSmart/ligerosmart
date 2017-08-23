@@ -16,6 +16,7 @@
         <File Permission="660" Location="Kernel/Config/Files/FAQ.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/FAQ.xml" />
         <File Permission="660" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm" />
+        <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/FAQ.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/LanguageList.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm" />
@@ -128,12 +129,14 @@
         <File Permission="660" Location="scripts/webservices/GenericFAQConnectorREST.yml" />
         <File Permission="660" Location="scripts/webservices/GenericFAQConnectorSOAP.yml" />
         <File Permission="660" Location="scripts/test/Console/Command/Maint/FAQ/ContentTypeSet.t" />
+        <File Permission="660" Location="scripts/test/DynamicField/ObjectType/FAQ/ObjectDataGet.t" />
         <File Permission="660" Location="scripts/test/FAQSearch/InConditionGet.t" />
         <File Permission="660" Location="scripts/test/FAQ.t" />
         <File Permission="660" Location="scripts/test/FAQSearch.t" />
         <File Permission="660" Location="scripts/test/FAQ/RelatedArticle.t" />
         <File Permission="660" Location="scripts/test/FAQ/Category/CheckCategoryUserPermission.t" />
         <File Permission="660" Location="scripts/test/GenericInterface/FAQConnector.t" />
+        <File Permission="660" Location="scripts/test/GenericInterface/Event/ObjectType/FAQ/DataGet.t" />
         <File Permission="660" Location="scripts/test/sample/FAQ-Test1.doc" />
         <File Permission="660" Location="scripts/test/sample/FAQ-Test1.pdf" />
         <File Permission="660" Location="scripts/test/sample/FAQ.csv" />
