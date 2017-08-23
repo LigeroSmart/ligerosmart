@@ -5,6 +5,7 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+## nofilter(TidyAll::Plugin::OTRS::TT::ScriptUsage)
 
 <div id="MainBox" class="TicketZoom ARIARoleMain">
 
@@ -110,12 +111,6 @@ function CheckIFrameHeight(IFrameID) {
                     <iframe sandbox="allow-same-origin allow-popups ms-allow-popups allow-popups-to-escape-sandbox" class="FAQField" id="IframeFAQ[% Data.Field | html %]" onload="window.setTimeout( function (){ CheckIFrameHeight('IframeFAQ[% Data.Field | html %]'); }, 500);" src="[% Env("Baselink") %]Action=PublicFAQZoom;Subaction=HTMLView;ItemID=[% Data.ItemID | html %];Field=[% Data.Field | html %];"></iframe>
                 </div>
 [% RenderBlockEnd("FAQContentHTML") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightDefault', parseInt("[% Config("FAQ::Frontend::CustomerHTMLFieldHeightDefault") %]" || 0, 10));
-    Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightMax', parseInt("[% Config("FAQ::Frontend::CustomerHTMLFieldHeightMax") %]" || 0, 10));
-//]]></script>
-[% END %]
 [% RenderBlockStart("FAQContentPlain") %]
                 <div class="ArticleFAQContent">
                     <div class="message">
@@ -195,15 +190,3 @@ function CheckIFrameHeight(IFrameID) {
         </div>
     </div>
 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">
-/*global FAQ: true */
-FAQ.Customer.FAQZoom.Init();
-
-$('a.AsPopup').bind('click', function (Event) {
-    Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
-    return false;
-});
-</script>
-[% END %]

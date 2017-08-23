@@ -588,6 +588,7 @@ Your OTRS Notification Master
                     <Prio>400</Prio>
                 </NavBar>
                 <Loader>
+                    <JavaScript>FAQ.Customer.FAQZoom.js</JavaScript>
                     <CSS>FAQ.Customer.Detail.css</CSS>
                     <CSS>FAQ.Customer.Default.css</CSS>
                     <CSS>FAQ.Widget.css</CSS>

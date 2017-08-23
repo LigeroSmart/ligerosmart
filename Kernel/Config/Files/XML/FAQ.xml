@@ -642,6 +642,11 @@ Your OTRS Notification Master
                         <Item>FAQ.Widget.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Customer.FAQZoom.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>

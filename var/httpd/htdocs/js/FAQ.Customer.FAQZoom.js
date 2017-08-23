@@ -41,11 +41,11 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
             if (NewHeight === 0) {
                 $Iframe.closest('.WidgetSimple').removeClass('Expanded').addClass('Collapsed');
             } else if (!NewHeight || isNaN(NewHeight)) {
-                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Default;
+                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightDefault');
             }
             else {
-                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Max) {
-                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Max;
+                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax')) {
+                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax');
                 }
             }
 
@@ -112,7 +112,38 @@ FAQ.Customer.FAQZoom = (function (TargetNS) {
                 return false;
             });
         }
+
+        $('a.AsPopup').on('click', function () {
+            Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
+            return false;
+        });
+
+        $('.RateButton').on('click', function () {
+            var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+            $('#RateValue').val(RateNumber);
+            $('#RateSubmitButton').fadeIn(250);
+            $('#FAQVoting').find('.RateButton').each(function() {
+                var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+                if (ItemRateNumber <= RateNumber) {
+                    $(this).addClass('RateChecked');
+                    $(this).removeClass('RateUnChecked');
+                }
+                else {
+                    $(this).addClass('RateUnChecked');
+                    $(this).removeClass('RateChecked');
+                }
+            });
+        });
+
+        // Make whole FAQ Item row clickable, but not the headers, can't use Core.Customer.ClickableRow()
+        // since it uses "table tr" as selector, see bug#9329.
+        $("tbody tr").click(function(){
+            window.location.href = $("a", this).attr("href");
+            return false;
+        });
     };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(FAQ.Customer.FAQZoom || {}));

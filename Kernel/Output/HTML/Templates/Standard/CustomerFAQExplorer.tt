@@ -215,14 +215,3 @@
         </div>
     </div>
 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">
-// make whole FAQ Item row clickable, but not the headers, can't use Core.Customer.ClickableRow()
-// since it uses "table tr" as selector, see bug#9329
-$("tbody tr").click(function(){
-    window.location.href = $("a", this).attr("href");
-    return false;
-});
-</script>
-[% END %]

@@ -515,12 +515,14 @@ sub FAQContentShow {
         }
 
         # Send config to JS.
-        $Kernel::OM->Get('Kernel::Output::HTML::Layout')->AddJSData(
-            Key   => 'AgentHTMLFieldHeight',
-            Value => {
-                Default => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightDefault'),
-                Max     => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightMax'),
-                }
+        my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+        $LayoutObject->AddJSData(
+            Key   => 'AgentHTMLFieldHeightDefault',
+            Value => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightDefault'),
+        );
+        $LayoutObject->AddJSData(
+            Key   => 'AgentHTMLFieldHeightMax',
+            Value => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightMax'),
         );
 
         # store the field to return all FAQ Body

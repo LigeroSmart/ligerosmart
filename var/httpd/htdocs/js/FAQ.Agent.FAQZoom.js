@@ -41,11 +41,11 @@ FAQ.Agent.FAQZoom = (function (TargetNS) {
             if (NewHeight === 0) {
                 $Iframe.closest('.WidgetSimple').removeClass('Expanded').addClass('Collapsed');
             } else if (!NewHeight || isNaN(NewHeight)) {
-                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Default;
+                NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightDefault');
             }
             else {
-                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Max) {
-                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeight').Max;
+                if (NewHeight > Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax')) {
+                    NewHeight = Core.Config.Get('FAQ::Frontend::AgentHTMLFieldHeightMax');
                 }
             }
 
