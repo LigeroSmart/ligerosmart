@@ -106,8 +106,9 @@ my %LinkKeyList = $LinkObject->LinkKeyList(
     Direction => 'Target',
     UserID    => 1,
 );
+
 $Self->True(
-    IsHashRefWithData( \%LinkKeyList ),
+    IsHashRefWithData( \%LinkKeyList ) ? 1 : 0,
     "LinkKeyList() Master/Slave link found - Ticket ID $TicketIDs[0] and $TicketIDs[1]",
 );
 

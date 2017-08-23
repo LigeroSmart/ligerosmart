@@ -339,10 +339,17 @@ sub _SetDynamicFields {
         ? $DynamicFields{$MasterSlaveDynamicField}
         : 1;
 
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
-        Value => \%DynamicFields,
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    return 0 if !$SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'OTRSMasterSlave - deploy AgentTicketZoom dynamic fields',
+        Settings => [
+            {
+                Name           => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
+                EffectiveValue => \%DynamicFields,
+                IsValid        => 1,
+            },
+        ],
     );
 
     return 1;

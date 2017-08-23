@@ -88,10 +88,11 @@ sub Run {
         Key1      => $Param{Data}->{TicketID},
         Object2   => 'Ticket',
         State     => 'Valid',
-        Type      => 'ParentChild',              # (optional)
-        Direction => 'Target',                   # (optional) default Both (Source|Target|Both)
+        Type      => 'ParentChild',
+        Direction => 'Source',                   # TODO: Update once LinkObject is fixed.
         UserID    => $Param{UserID},
     );
+
     my @TicketIDs;
     TICKETID:
     for my $TicketID ( sort keys %Links ) {
@@ -104,6 +105,7 @@ sub Run {
         );
 
         my $TicketValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
+
         next TICKETID if !$TicketValue;
         next TICKETID if $TicketValue !~ /^SlaveOf:(.*?)$/;
 
@@ -126,17 +128,21 @@ sub Run {
 
     # auto response action
     if ( $Param{Event} eq 'ArticleSend' ) {
-        my @Articles = $$Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+
+        my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
             TicketID => $Param{Data}->{TicketID},
         );
 
         return 1 if !@Articles;
 
         my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle(
-            TicketID  => $Param{Data}->{TicketID},
-            ArticleID => ArticleID => $Articles[-1],
+            TicketID  => $Articles[-1]->{TicketID},
+            ArticleID => $Articles[-1]->{ArticleID},
         );
-        my %Article = $ArticleBackendObject->ArticleGet( ArticleID => $Articles[-1] );
+        my %Article = $ArticleBackendObject->ArticleGet(
+            TicketID  => $Articles[-1]->{TicketID},
+            ArticleID => $Articles[-1]->{ArticleID},
+        );
 
         # check if the send mail is of type forward
         my $IsForward = $Self->_ArticleHistoryTypeGiven(
@@ -326,11 +332,13 @@ sub Run {
         return 1 if !@Articles;
 
         my $ArticleBackendObject = $ArticleObject->BackendForArticle(
-            TicketID => $Param{Data}->{TicketID},
-            ,
-            ArticleID => $Articles[-1],
+            TicketID  => $Articles[-1]->{TicketID},
+            ArticleID => $Articles[-1]->{ArticleID},
         );
-        my %Article = $ArticleBackendObject->ArticleGet( ArticleID => $Articles[-1] );
+        my %Article = $ArticleBackendObject->ArticleGet(
+            TicketID  => $Articles[-1]->{TicketID},
+            ArticleID => $Articles[-1]->{ArticleID},
+        );
 
         # mark ticket to prevent a loop
         $TicketObject->HistoryAdd(
@@ -340,7 +348,7 @@ sub Run {
             Name         => "MasterTicketAction: ArticleCreate",
         );
 
-        my $ChannelName = $ArticleObject->ChannelNameGet();
+        my $ChannelName = $ArticleBackendObject->ChannelNameGet();
 
         # do not process email articles (already done in ArticleSend event!)
         if (

@@ -88,17 +88,21 @@ $Self->True(
     "TicketCreate() Ticket ID $MasterTicketID",
 );
 
+my $EmailBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+    ChannelName => 'Email',
+);
+
 # create article for test ticket
-my $ArticleID = $TicketObject->ArticleCreate(
-    TicketID       => $MasterTicketID,
-    ArticleType    => 'email-external',
-    SenderType     => 'agent',
-    Subject        => 'Master Article',
-    Body           => 'Unit test MasterTicket',
-    ContentType    => 'text/plain; charset=ISO-8859-15',
-    HistoryType    => 'EmailCustomer',
-    HistoryComment => 'Unit test article',
-    UserID         => 1,
+my $ArticleID = $EmailBackendObject->ArticleCreate(
+    TicketID             => $MasterTicketID,
+    IsVisibleForCustomer => 1,
+    SenderType           => 'agent',
+    Subject              => 'Master Article',
+    Body                 => 'Unit test MasterTicket',
+    ContentType          => 'text/plain; charset=ISO-8859-15',
+    HistoryType          => 'EmailCustomer',
+    HistoryComment       => 'Unit test article',
+    UserID               => 1,
 );
 $Self->True(
     $ArticleID,
@@ -181,20 +185,20 @@ my $MasterNewSubject = $TicketObject->TicketSubjectBuild(
     Subject      => 'Master Article',
     Action       => 'Forward',
 );
-my $ForwardArticleID = $TicketObject->ArticleSend(
-    TicketID       => $MasterTicketID,
-    ArticleType    => 'email-external',
-    SenderType     => 'agent',
-    From           => 'Some Agent <email@example.com>',
-    To             => 'Some Customer A <customer-a@example.com>',
-    Subject        => $MasterNewSubject,
-    Body           => 'Unit test forwarded article',
-    Charset        => 'iso-8859-15',
-    MimeType       => 'text/plain',
-    HistoryType    => 'Forward',
-    HistoryComment => 'Frowarded article',
-    NoAgentNotify  => 0,
-    UserID         => 1,
+my $ForwardArticleID = $EmailBackendObject->ArticleSend(
+    TicketID             => $MasterTicketID,
+    IsVisibleForCustomer => 1,
+    SenderType           => 'agent',
+    From                 => 'Some Agent <email@example.com>',
+    To                   => 'Some Customer A <customer-a@example.com>',
+    Subject              => $MasterNewSubject,
+    Body                 => 'Unit test forwarded article',
+    Charset              => 'iso-8859-15',
+    MimeType             => 'text/plain',
+    HistoryType          => 'Forward',
+    HistoryComment       => 'Frowarded article',
+    NoAgentNotify        => 0,
+    UserID               => 1,
 );
 $Self->True(
     $Success,
@@ -206,6 +210,7 @@ my @MasterHistoryLines = $TicketObject->HistoryGet(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
+
 my $MasterLastHistoryEntry = $MasterHistoryLines[-1];
 
 # verify master ticket article is created
@@ -232,18 +237,21 @@ $Self->IsDeeply(
 # ------------------------------------------------------------ #
 # test event ArticleCreate
 # ------------------------------------------------------------ #
+my $InternalBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+    ChannelName => 'Internal',
+);
 
 # create note article for master ticket
-my $ArticleIDCreate = $TicketObject->ArticleCreate(
-    TicketID       => $MasterTicketID,
-    ArticleType    => 'note-internal',
-    SenderType     => 'agent',
-    Subject        => 'Note article',
-    Body           => 'Unit test MasterTicket',
-    ContentType    => 'text/plain; charset=ISO-8859-15',
-    HistoryType    => 'AddNote',
-    HistoryComment => 'Unit test article',
-    UserID         => 1,
+my $ArticleIDCreate = $InternalBackendObject->ArticleCreate(
+    TicketID             => $InternalBackendObject,
+    IsVisibleForCustomer => 0,
+    SenderType           => 'agent',
+    Subject              => 'Note article',
+    Body                 => 'Unit test MasterTicket',
+    ContentType          => 'text/plain; charset=ISO-8859-15',
+    HistoryType          => 'AddNote',
+    HistoryComment       => 'Unit test article',
+    UserID               => 1,
 );
 $Self->True(
     $ArticleIDCreate,
