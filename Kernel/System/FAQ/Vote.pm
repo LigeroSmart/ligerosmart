@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQ::Vote - sub module of Kernel::System::FAQ
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ vote functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item VoteAdd()
+=head2 VoteAdd()
 
 add a vote
 
@@ -85,7 +81,7 @@ sub VoteAdd {
     return 1;
 }
 
-=item VoteDelete()
+=head2 VoteDelete()
 
 delete a vote
 
@@ -125,7 +121,7 @@ sub VoteDelete {
     return 1;
 }
 
-=item VoteGet()
+=head2 VoteGet()
 
 get a vote information
 
@@ -216,7 +212,7 @@ sub VoteGet {
     return \%Data;
 }
 
-=item VoteSearch()
+=head2 VoteSearch()
 
 returns an array with VoteIDs
 
@@ -269,7 +265,7 @@ sub VoteSearch {
     return \@VoteIDs;
 }
 
-=item ItemVoteDataGet()
+=head2 ItemVoteDataGet()
 
 Returns a hash reference with the number of votes and the vote result.
 
@@ -346,8 +342,6 @@ sub ItemVoteDataGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

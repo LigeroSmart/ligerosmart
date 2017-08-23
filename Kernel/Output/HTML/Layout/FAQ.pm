@@ -27,17 +27,13 @@ our @ObjectDependencies = (
 
 Kernel::Output::HTML::Layout::FAQ - all FAQ-related HTML functions
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ-related HTML functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item GetFAQItemVotingRateColor()
+=head2 GetFAQItemVotingRateColor()
 Returns a color depending on the FAQ rate
 
     my $VotingResultColor = $LayoutObject->GetFAQItemVotingRateColor(
@@ -69,7 +65,7 @@ sub GetFAQItemVotingRateColor {
     return $CssTmp;
 }
 
-=item FAQListShow()
+=head2 FAQListShow()
 
 Returns a list of FAQ items as sort-able list with pagination.
 
@@ -382,7 +378,7 @@ sub FAQListShow {
     return $OutputRaw;
 }
 
-=item FAQContentShow()
+=head2 FAQContentShow()
 
 Outputs the necessary blocks to display the FAQ item fields for the supplied FAQ item ID.
 The fields displayed are also restricted by the permissions represented by the supplied interface
@@ -566,7 +562,7 @@ sub FAQContentShow {
     return 1;
 }
 
-=item FAQPathShow()
+=head2 FAQPathShow()
 
 if its allowed by the configuration, outputs the necessary blocks to display the FAQ item path,
 and returns the value 1.
@@ -662,7 +658,7 @@ sub FAQPathShow {
     return 1;
 }
 
-=item FAQRatingStarsShow()
+=head2 FAQRatingStarsShow()
 
 Outputs the necessary blocks to represent the FAQ item rating
 as "Stars" in the scale from 1 to 5.
@@ -736,7 +732,7 @@ sub FAQRatingStarsShow {
     return 1;
 }
 
-=item FAQShowLatestNewsBox()
+=head2 FAQShowLatestNewsBox()
 
 Shows an info box with the last updated or last created FAQ articles.
 Depending on the uses interface (agent, customer, public) only the appropriate
@@ -918,7 +914,7 @@ sub FAQShowLatestNewsBox {
     return $Result;
 }
 
-=item FAQShowTop10()
+=head2 FAQShowTop10()
 
 Shows an info box with the Top 10 FAQ articles.
 Depending on the uses interface (agent, customer, public) only the appropriate
@@ -1077,7 +1073,7 @@ sub FAQShowTop10 {
     return $Result;
 }
 
-=item FAQShowQuickSearch()
+=head2 FAQShowQuickSearch()
 
 Shows an info box with the Quick Search.
 
@@ -1152,8 +1148,6 @@ sub FAQShowQuickSearch {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

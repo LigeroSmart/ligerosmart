@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQ::State - sub module of Kernel::System::FAQ
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ state functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item StateAdd()
+=head2 StateAdd()
 
 add a state
 
@@ -72,7 +68,7 @@ sub StateAdd {
     return 1;
 }
 
-=item StateGet()
+=head2 StateGet()
 
 get a state as hash
 
@@ -131,7 +127,7 @@ sub StateGet {
     return %Data;
 }
 
-=item StateList()
+=head2 StateList()
 
 get the state list as hash
 
@@ -180,7 +176,7 @@ sub StateList {
     return %List;
 }
 
-=item StateUpdate()
+=head2 StateUpdate()
 
 update a state
 
@@ -224,7 +220,7 @@ sub StateUpdate {
     return 1;
 }
 
-=item StateTypeGet()
+=head2 StateTypeGet()
 
 get a state as hash reference
 
@@ -318,7 +314,7 @@ sub StateTypeGet {
     return \%Data;
 }
 
-=item StateTypeList()
+=head2 StateTypeList()
 
 get the state type list as hash reference
 
@@ -405,8 +401,6 @@ sub StateTypeList {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

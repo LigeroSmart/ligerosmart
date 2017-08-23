@@ -46,17 +46,13 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQ -  FAQ lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ functions. E. g. to add FAQs or to get FAQs.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object. Do not use it directly, instead use:
 
@@ -95,7 +91,7 @@ sub new {
     return $Self;
 }
 
-=item FAQGet()
+=head2 FAQGet()
 
 get an FAQ item
 
@@ -488,7 +484,7 @@ sub ItemFieldGet {
     return $Field;
 }
 
-=item FAQAdd()
+=head2 FAQAdd()
 
 add an article
 
@@ -719,7 +715,7 @@ sub FAQAdd {
     return $ID;
 }
 
-=item FAQUpdate()
+=head2 FAQUpdate()
 
 update an article
 
@@ -857,7 +853,7 @@ sub FAQUpdate {
     return 1;
 }
 
-=item AttachmentAdd()
+=head2 AttachmentAdd()
 
 add article attachments, returns the attachment id
 
@@ -987,7 +983,7 @@ sub AttachmentAdd {
     return $AttachmentID;
 }
 
-=item AttachmentGet()
+=head2 AttachmentGet()
 
 get attachment of article
 
@@ -1053,7 +1049,7 @@ sub AttachmentGet {
     return %File;
 }
 
-=item AttachmentDelete()
+=head2 AttachmentDelete()
 
 delete attachment of article
 
@@ -1092,7 +1088,7 @@ sub AttachmentDelete {
     return 1;
 }
 
-=item AttachmentIndex()
+=head2 AttachmentIndex()
 
 return an attachment index of an article
 
@@ -1201,7 +1197,7 @@ sub AttachmentIndex {
     return @Index;
 }
 
-=item FAQCount()
+=head2 FAQCount()
 
 Count the number of articles for a defined category. Only valid FAQ articles will be counted.
 
@@ -1314,7 +1310,7 @@ sub FAQCount {
     return $Count;
 }
 
-=item FAQDelete()
+=head2 FAQDelete()
 
 Delete an article.
 
@@ -1398,7 +1394,7 @@ sub FAQDelete {
     return 1;
 }
 
-=item FAQHistoryAdd()
+=head2 FAQHistoryAdd()
 
 add an history to an article
 
@@ -1441,7 +1437,7 @@ sub FAQHistoryAdd {
     return 1;
 }
 
-=item FAQHistoryGet()
+=head2 FAQHistoryGet()
 
 get an array with hash reference with the history of an article
 
@@ -1507,7 +1503,7 @@ sub FAQHistoryGet {
     return \@Data;
 }
 
-=item FAQHistoryDelete()
+=head2 FAQHistoryDelete()
 
 delete the history of an article
 
@@ -1544,7 +1540,7 @@ sub FAQHistoryDelete {
     return 1;
 }
 
-=item HistoryGet()
+=head2 HistoryGet()
 
 get the system history
 
@@ -1631,7 +1627,7 @@ sub HistoryGet {
     return \@Data;
 }
 
-=item KeywordList()
+=head2 KeywordList()
 
 TO DO: Function not used? Keyword separator is here a other as at other places...
 TO DO: Clarify - Remove function or change the separator?
@@ -1701,7 +1697,7 @@ sub KeywordList {
     return %Data;
 }
 
-=item FAQKeywordCustomerArticleList()
+=head2 FAQKeywordCustomerArticleList()
 
 Get a keyword and related faq articles lookup list (optional only for the given languages).
 At the moment only for the interface 'external' (to use only approved article) and the
@@ -1846,7 +1842,7 @@ sub FAQKeywordCustomerArticleList {
     return %KeywordArticeList;
 }
 
-=item FAQPathListGet()
+=head2 FAQPathListGet()
 
 returns a category array reference
 
@@ -1908,7 +1904,7 @@ sub FAQPathListGet {
 
 }
 
-=item FAQLogAdd()
+=head2 FAQLogAdd()
 
 adds accessed FAQ article to the access log table
 
@@ -1983,7 +1979,7 @@ sub FAQLogAdd {
     return 1;
 }
 
-=item FAQTop10Get()
+=head2 FAQTop10Get()
 
 Returns an array with the top 10 FAQ article ids.
 
@@ -2155,7 +2151,7 @@ sub FAQTop10Get {
     return \@Result;
 }
 
-=item FAQInlineAttachmentURLUpdate()
+=head2 FAQInlineAttachmentURLUpdate()
 
 Updates the URLs of uploaded inline attachments.
 
@@ -2251,7 +2247,7 @@ sub FAQInlineAttachmentURLUpdate {
     return 1;
 }
 
-=item FAQArticleTitleClean()
+=head2 FAQArticleTitleClean()
 
 strip/clean up a FAQ article title
 
@@ -2285,7 +2281,7 @@ sub FAQArticleTitleClean {
     return $Title;
 }
 
-=item FAQContentTypeSet()
+=head2 FAQContentTypeSet()
 
 Sets the content type of 1, some or all FAQ items, by a given parameter or determined by the FAQ item content
 
@@ -2430,7 +2426,7 @@ sub FAQContentTypeSet {
 
 =begin Internal:
 
-=item _FAQApprovalUpdate()
+=head2 _FAQApprovalUpdate()
 
 update the approval state of an article
 
@@ -2516,7 +2512,7 @@ sub _FAQApprovalUpdate {
     return 1;
 }
 
-=item _FAQApprovalTicketCreate()
+=head2 _FAQApprovalTicketCreate()
 
 creates an approval ticket
 
@@ -2728,8 +2724,6 @@ sub _DeleteFromFAQCache {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

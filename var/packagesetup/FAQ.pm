@@ -33,17 +33,13 @@ our @ObjectDependencies = (
 
 FAQ.pm - code to execute during package installation
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -119,7 +115,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -169,7 +165,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
 run the code reinstall part
 
@@ -213,7 +209,7 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
 run the code upgrade part
 
@@ -241,7 +237,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeSpecial()
+=head2 CodeUpgradeSpecial()
 
 run special code upgrade part
 
@@ -261,7 +257,7 @@ sub CodeUpgradeSpecial {
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -302,7 +298,7 @@ sub CodeUninstall {
     return 1;
 }
 
-=item _InsertFAQStates()
+=head2 _InsertFAQStates()
 
 inserts needed FAQ states into table
 
@@ -342,7 +338,7 @@ sub _InsertFAQStates {
     return 1;
 }
 
-=item _ConvertNewlines()
+=head2 _ConvertNewlines()
 
 coverts all \n into <br> for Fields 1-6 in all existing FAQ articles
 
@@ -404,7 +400,7 @@ sub _ConvertNewlines {
     return 1;
 }
 
-=item _GroupAdd()
+=head2 _GroupAdd()
 
 add a group
 
@@ -501,7 +497,7 @@ sub _GroupAdd {
     return 1;
 }
 
-=item _GroupDeactivate()
+=head2 _GroupDeactivate()
 
 deactivate a group
 
@@ -556,7 +552,7 @@ sub _GroupDeactivate {
     return 1;
 }
 
-=item _LinkDelete()
+=head2 _LinkDelete()
 
 delete all existing links to FAQ articles
 
@@ -592,7 +588,7 @@ sub _LinkDelete {
     return 1;
 }
 
-=item _CreateAditionalFAQLanguages()
+=head2 _CreateAditionalFAQLanguages()
 
 creates additional FAQ languages for system default language and user language
 
@@ -631,7 +627,7 @@ sub _CreateAditionalFAQLanguages {
     return 1;
 }
 
-=item _CategoryGroupSet()
+=head2 _CategoryGroupSet()
 
 Adds the given group permissions to the given category.
 
@@ -701,7 +697,7 @@ sub _CategoryGroupSet {
     return 1;
 }
 
-=item _DynamicFieldsDelete()
+=head2 _DynamicFieldsDelete()
 
 delete all existing dynamic fields for FAQ
 
@@ -762,8 +758,6 @@ sub _DynamicFieldsDelete {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

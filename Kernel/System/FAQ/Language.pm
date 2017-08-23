@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQ::Language - sub module of Kernel::System::FAQ
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ language functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item LanguageAdd()
+=head2 LanguageAdd()
 
 add a language
 
@@ -71,7 +67,7 @@ sub LanguageAdd {
     return 1;
 }
 
-=item LanguageDelete()
+=head2 LanguageDelete()
 
 Delete a language.
 
@@ -112,7 +108,7 @@ sub LanguageDelete {
     return 1;
 }
 
-=item LanguageDuplicateCheck()
+=head2 LanguageDuplicateCheck()
 
 check a language
 
@@ -171,7 +167,7 @@ sub LanguageDuplicateCheck {
     return $Exists;
 }
 
-=item LanguageGet()
+=head2 LanguageGet()
 
 get a language details as a hash
 
@@ -228,7 +224,7 @@ sub LanguageGet {
     return %Data;
 }
 
-=item LanguageList()
+=head2 LanguageList()
 
 get the language list as a hash
 
@@ -278,7 +274,7 @@ sub LanguageList {
     return %List;
 }
 
-=item LanguageLookup()
+=head2 LanguageLookup()
 
 This method does a lookup for a FAQ language.
 If a language id is given, it returns the name of the language.
@@ -369,7 +365,7 @@ sub LanguageLookup {
     return $Lookup;
 }
 
-=item LanguageUpdate()
+=head2 LanguageUpdate()
 
 update a language
 
@@ -421,8 +417,6 @@ sub LanguageUpdate {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

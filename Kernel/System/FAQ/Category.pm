@@ -26,17 +26,13 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQ::Category - sub module of Kernel::System::FAQ
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ category functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item CategoryAdd()
+=head2 CategoryAdd()
 
 add a category
 
@@ -129,7 +125,7 @@ sub CategoryAdd {
     return $CategoryID;
 }
 
-=item CategoryCount()
+=head2 CategoryCount()
 
 Count the number of categories.
 
@@ -208,7 +204,7 @@ sub CategoryCount {
     return $Count;
 }
 
-=item CategoryDelete()
+=head2 CategoryDelete()
 
 Delete a category.
 
@@ -260,7 +256,7 @@ sub CategoryDelete {
     return 1;
 }
 
-=item CategoryDuplicateCheck()
+=head2 CategoryDuplicateCheck()
 
 check a category for duplicate name under the same parent
 
@@ -333,7 +329,7 @@ sub CategoryDuplicateCheck {
     return $Exists;
 }
 
-=item CategoryGet()
+=head2 CategoryGet()
 
 get a category as hash
 
@@ -425,7 +421,7 @@ sub CategoryGet {
     return %Data;
 }
 
-=item CategoryGroupGet()
+=head2 CategoryGroupGet()
 
 get groups of a category
 
@@ -479,7 +475,7 @@ sub CategoryGroupGet {
     return \@Groups;
 }
 
-=item CategoryGroupGetAll()
+=head2 CategoryGroupGetAll()
 
 get all category-groups
 
@@ -556,7 +552,7 @@ sub CategoryGroupGetAll {
     return \%Groups;
 }
 
-=item CategoryList()
+=head2 CategoryList()
 
 get the category list as hash
 
@@ -635,7 +631,7 @@ sub CategoryList {
     return \%Data;
 }
 
-=item CategorySearch()
+=head2 CategorySearch()
 
 get the category search as an array ref
 
@@ -773,7 +769,7 @@ sub CategorySearch {
     return \@List;
 }
 
-=item CategorySubCategoryIDList()
+=head2 CategorySubCategoryIDList()
 
 get all subcategory ids of a category
 
@@ -870,7 +866,7 @@ sub CategorySubCategoryIDList {
     return \@SubCategoryIDs;
 }
 
-=item CategoryTreeList()
+=head2 CategoryTreeList()
 
 get all categories as tree (with their long names)
 
@@ -978,7 +974,7 @@ sub CategoryTreeList {
     return \%CategoryTree;
 }
 
-=item CategoryUpdate()
+=head2 CategoryUpdate()
 
 update a category
 
@@ -1065,7 +1061,7 @@ sub CategoryUpdate {
     return 1;
 }
 
-=item AgentCategorySearch()
+=head2 AgentCategorySearch()
 
 get the category search as array ref
 
@@ -1113,7 +1109,7 @@ sub AgentCategorySearch {
     return \@CategoryIDs;
 }
 
-=item CustomerCategorySearch()
+=head2 CustomerCategorySearch()
 
 get the category search as hash
 
@@ -1223,7 +1219,7 @@ sub CustomerCategorySearch {
     return \@AllowedCategoryIDs;
 }
 
-=item PublicCategorySearch()
+=head2 PublicCategorySearch()
 
 get the category search as hash
 
@@ -1328,7 +1324,7 @@ sub PublicCategorySearch {
 
 }
 
-=item GetUserCategories()
+=head2 GetUserCategories()
 
 get user category-groups
 
@@ -1395,7 +1391,7 @@ sub GetUserCategories {
     return $UserCategories;
 }
 
-=item GetUserCategoriesLongNames()
+=head2 GetUserCategoriesLongNames()
 
 get user category-groups (show category long names)
 
@@ -1461,7 +1457,7 @@ sub GetUserCategoriesLongNames {
     return \%UserCategoriesLongNames;
 }
 
-=item GetCustomerCategories()
+=head2 GetCustomerCategories()
 
 get customer user categories
 
@@ -1539,7 +1535,7 @@ sub GetCustomerCategories {
     return $CustomerCategories;
 }
 
-=item GetCustomerCategoriesLongNames()
+=head2 GetCustomerCategoriesLongNames()
 
 get customer category-groups (show category long names)
 
@@ -1638,7 +1634,7 @@ sub GetCustomerCategoriesLongNames {
     return \%CustomerCategoriesLongNames;
 }
 
-=item GetPublicCategoriesLongNames()
+=head2 GetPublicCategoriesLongNames()
 
 get public category-groups (show category long names)
 
@@ -1731,7 +1727,7 @@ sub GetPublicCategoriesLongNames {
     return \%PublicCategoriesLongNames;
 }
 
-=item CheckCategoryUserPermission()
+=head2 CheckCategoryUserPermission()
 
 get user permission for a category
 
@@ -1793,7 +1789,7 @@ sub CheckCategoryUserPermission {
     return '';
 }
 
-=item CheckCategoryCustomerPermission()
+=head2 CheckCategoryCustomerPermission()
 
 get customer user permission for a category
 
@@ -1844,7 +1840,7 @@ sub CheckCategoryCustomerPermission {
     return '';
 }
 
-=item SetCategoryGroup()
+=head2 SetCategoryGroup()
 
 set groups to a category
 
@@ -1908,7 +1904,7 @@ sub SetCategoryGroup {
 
 =begin Internal:
 
-=item _UserCategories()
+=head2 _UserCategories()
 
 reduces the categories ( from CategoryList() ) to only the ones where the user has privileges.
 
@@ -1989,8 +1985,6 @@ sub _UserCategories {
 =cut
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

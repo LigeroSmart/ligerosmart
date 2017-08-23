@@ -14,7 +14,7 @@ use warnings;
 use MIME::Base64;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
 
-use base qw(
+use parent qw(
     Kernel::GenericInterface::Operation::Common
 );
 
@@ -24,15 +24,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::GenericInterface::Operation::FAQ::PublicFAQGet - GenericInterface FAQ PublicFAQGet Operation backend
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 usually, you want to create an instance of this
 by using Kernel::GenericInterface::Operation->new();
@@ -61,7 +55,7 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
 perform PublicFAQGet Operation. This will return a Public FAQ entry.
 
@@ -310,8 +304,6 @@ sub Run {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

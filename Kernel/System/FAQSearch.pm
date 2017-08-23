@@ -27,15 +27,11 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQSearch - FAQ search lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All FAQ search functions.
 
-=over 4
-
-=cut
-
-=item FAQSearch()
+=head2 FAQSearch()
 
 search in FAQ articles
 
@@ -1043,7 +1039,7 @@ sub FAQSearch {
 
 =cut
 
-=item _InConditionGet()
+=head2 _InConditionGet()
 
 internal function to create an
 
@@ -1109,8 +1105,6 @@ sub _InConditionGet {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

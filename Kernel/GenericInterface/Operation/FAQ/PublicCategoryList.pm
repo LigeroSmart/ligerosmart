@@ -13,7 +13,7 @@ use warnings;
 
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
 
-use base qw(
+use parent qw(
     Kernel::GenericInterface::Operation::Common
 );
 
@@ -23,15 +23,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::GenericInterface::Operation::FAQ::PublicCategoryList - GenericInterface FAQ PublicCategoryList Operation backend
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 usually, you want to create an instance of this
 by using Kernel::GenericInterface::Operation->new();
@@ -60,7 +54,7 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
 perform PublicCategoryList Operation. This will return the current FAQ Categories.
 
@@ -137,8 +131,6 @@ sub Run {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

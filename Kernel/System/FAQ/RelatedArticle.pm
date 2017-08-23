@@ -23,17 +23,13 @@ our @ObjectDependencies = (
 
 Kernel::System::FAQ::RelatedArticle - sub module of Kernel::System::FAQ
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All related faq article functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item RelatedArticleList()
+=head2 RelatedArticleList()
 
 Get the related faq article list for the given subject and body.
 
@@ -191,7 +187,7 @@ sub RelatedCustomerArticleList {
 
 =begin Internal:
 
-=item _RemoveLinksFromContent()
+=head2 _RemoveLinksFromContent()
 
 Remove links from the given content.
 
@@ -217,8 +213,6 @@ sub _RemoveLinksFromContent {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
