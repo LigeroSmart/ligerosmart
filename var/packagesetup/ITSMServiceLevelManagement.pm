@@ -13,24 +13,17 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::Stats',
-    'Kernel::System::SysConfig',
 );
 
 =head1 NAME
 
-ITSMServiceLevelManagement.pm - code to excecute during package installation
-
-=head1 SYNOPSIS
-
-All functions
+ITSMServiceLevelManagement.pm - code to execute during package installation
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -47,39 +40,15 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # rebuild ZZZ* files
-    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
-
-    # define the ZZZ files
-    my @ZZZFiles = (
-        'ZZZAAuto.pm',
-        'ZZZAuto.pm',
-    );
-
-    # reload the ZZZ files (mod_perl workaround)
-    for my $ZZZFile (@ZZZFiles) {
-
-        PREFIX:
-        for my $Prefix (@INC) {
-            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
-            next PREFIX if !-f $File;
-            do $File;
-            last PREFIX;
+    # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
+    for my $Module ( sort keys %INC ) {
+        if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
+            delete $INC{$Module};
         }
     }
 
-    # always discard the config object before package code is executed,
-    # to make sure that the config object will be created newly, so that it
-    # will use the recently written new config from the package
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::Config'],
-    );
-
-    # the stats object needs a UserID parameter for the constructor
-    # we need to discard any existing stats object before
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::System::Stats'],
-    );
+    # Create common objects with fresh default config.
+    $Kernel::OM->ObjectsDiscard();
 
     # define UserID parameter for the constructor of the stats object
     $Kernel::OM->ObjectParamAdd(
@@ -94,7 +63,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -114,7 +83,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
 run the code reinstall part
 
@@ -134,7 +103,7 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
 run the code upgrade part
 
@@ -154,7 +123,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -175,8 +144,6 @@ sub CodeUninstall {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
