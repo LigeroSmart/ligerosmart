@@ -13,16 +13,18 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
+# Get Selenium object.
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper          = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+        my $FAQObject       = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # set FAQ dashboard SysConfig param
+        # Set FAQ dashboard SysConfig param.
         my @FAQDashboard = (
             {
                 Name => 'DashboardBackend###0398-FAQ-LastChange',
@@ -32,10 +34,7 @@ $Selenium->RunTest(
             },
         );
 
-        # Get SysConfig object.
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-        # set FAQ dashboard modules on default settings
+        # Set FAQ dashboard modules on default settings.
         for my $DefaultSysConfig (@FAQDashboard) {
 
             my %Setting = $SysConfigObject->SettingGet(
@@ -43,22 +42,16 @@ $Selenium->RunTest(
                 Default => 1,
             );
 
-            my %Value = map { $_->{Key} => $_->{Content} }
-                grep { defined $_->{Key} } @{ $Setting{Setting}->[1]->{Hash}->[1]->{Item} };
-
-            $DefaultSysConfig->{Value} = \%Value;
+            $DefaultSysConfig->{Value} = $Setting{EffectiveValue};
 
             $Helper->ConfigSettingChange(
                 Valid => 1,
                 Key   => $DefaultSysConfig->{Name},
-                Value => \%Value,
+                Value => $DefaultSysConfig->{Value},
             );
         }
 
-        # get FAQ object
-        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
-
-        # create test FAQ
+        # Create test FAQ.
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
         my $FAQID    = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
@@ -75,7 +68,7 @@ $Selenium->RunTest(
             "Test FAQ item is created - ID $FAQID",
         );
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users', 'faq', 'faq_admin' ],
         ) || die "Did not get test user";
@@ -86,15 +79,12 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # Get config object.
-        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-        # get script alias
+        # Get script alias.
         my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
 
         for my $Test (@FAQDashboard) {
 
-            # disable all dashboard plug-ins
+            # Disable all dashboard plug-ins.
             my $Config = $ConfigObject->Get('DashboardBackend');
             $Helper->ConfigSettingChange(
                 Valid => 0,
@@ -102,30 +92,30 @@ $Selenium->RunTest(
                 Value => \%$Config,
             );
 
-            # enable FAQ dashboard
+            # Enable FAQ dashboard.
             $Helper->ConfigSettingChange(
                 Valid => 1,
                 Key   => $Test->{Name},
                 Value => $Test->{Value},
             );
 
-            # navigate to dashboard screen
+            # Navigate to dashboard screen.
             $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentDashboard");
 
-            # check title for test created FAQ
+            # Check title for test created FAQ.
             $Self->True(
                 index( $Selenium->get_page_source(), $FAQTitle ) > -1,
                 "Test FAQ title is found",
             );
 
-            # check link for test created FAQ
+            # Check link for test created FAQ.
             $Self->True(
                 index( $Selenium->get_page_source(), "${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID" ) > -1,
                 "Test FAQ link is found",
             );
         }
 
-        # delete test created FAQ
+        # Delete test created FAQ.
         my $Success = $FAQObject->FAQDelete(
             ItemID => $FAQID,
             UserID => 1,
@@ -135,7 +125,7 @@ $Selenium->RunTest(
             "Test FAQ item is deleted - ID $FAQID",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );

@@ -104,9 +104,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # delete link relation
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
-        $Selenium->find_element("//input[\@id='SelectAllLinks0']")->VerifiedClick();
-        $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->VerifiedClick();
+        $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
+        $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
         $Selenium->close();
 
         # back to AgentFAQZoom

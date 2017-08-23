@@ -274,39 +274,39 @@ $Selenium->RunTest(
         # Check for "updated" visible columns in the Linked FAQ widget.
         $Self->Is(
             $Selenium->execute_script(
-                "return \$('#WidgetFAQ .DataTable thead tr th:nth-child(1)').text();"
+                "return \$('#WidgetFAQ .DataTable thead tr th:eq(0)').text().trim();"
             ),
-            ' FAQ# ',
+            'FAQ#',
             'Updated 1st column name',
         );
         $Self->Is(
             $Selenium->execute_script(
-                "return \$('#WidgetFAQ .DataTable thead tr th:nth-child(2)').text();"
+                "return \$('#WidgetFAQ .DataTable thead tr th:eq(1)').text().trim();"
             ),
-            ' Approved ',
+            'Approved',
             'Updated 2nd column name',
         );
         $Self->Is(
             $Selenium->execute_script(
-                "return \$('#WidgetFAQ .DataTable thead tr th:nth-child(3)').text();"
+                "return \$('#WidgetFAQ .DataTable thead tr th:eq(2)').text().trim();"
             ),
-            ' Title ',
-            'Updated 3th column name',
+            'Title',
+            'Updated 3rd column name',
         );
         $Self->Is(
             $Selenium->execute_script(
-                "return \$('#WidgetFAQ .DataTable thead tr th:nth-child(4)').text();"
+                "return \$('#WidgetFAQ .DataTable thead tr th:eq(3)').text().trim();"
             ),
-            ' Created ',
-            'Updated 5th column name',
+            'Created',
+            'Updated 4th column name',
         );
 
         $Self->Is(
             $Selenium->execute_script(
-                "return \$('#WidgetFAQ .DataTable thead tr th:nth-child(5)').text();"
+                "return \$('#WidgetFAQ .DataTable thead tr th:eq(4)').text().trim();"
             ),
-            ' Linked as ',
-            'Updated 6th column name',
+            'State',
+            'Updated 5th column name',
         );
 
         # Click on 'Link'.
@@ -319,7 +319,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
 
         # Click on 'go to link delete screen'.
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete;' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->VerifiedClick();
 
         # Check for long FAQ title in LinkDelete screen.
 
@@ -335,25 +335,15 @@ $Selenium->RunTest(
             "$ShortTitle - found in LinkDelete screen",
         );
 
-        # Select all links.
-        $Selenium->find_element( "#SelectAllLinks0", "css" )->VerifiedClick();
-
-        # Make sure it's selected.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SelectAllLinks0:checked").length' );
-
-        # Click on delete links.
-        $Selenium->find_element( ".Primary", "css" )->VerifiedClick();
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#LinkAddCloseLink").length' );
-
-        $Selenium->find_element( "#LinkAddCloseLink", "css" )->click();
+        $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
+        $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
+        $Selenium->close();
 
         # Wait till popup is closed.
         $Selenium->WaitFor( WindowCount => 1 );
 
         # Switch to 1st window.
-        $Handles = $Selenium->get_window_handles();
+        # $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[0] );
 
         # delete created test tickets

@@ -123,6 +123,7 @@ sub Run {
 var QueuesEnabled = [ $QueuesEnabledStrg ],
 LastData;
 
+Core.App.Subscribe('Event.UI.RichTextEditor.InstanceReady', function() {
 \$('#Dest').on('change.RelatedFAQArticle', function () {
     var SelectedQueue = \$(this).val(),
         SelectedQueueName = SelectedQueue.replace(/\\d*\\|\\|-?/, '');
@@ -231,6 +232,8 @@ if ( !\$('#Dest').length ) {
 else {
     \$('#Dest').trigger('change.RelatedFAQArticle');
 }
+
+});
 
 EOF
 

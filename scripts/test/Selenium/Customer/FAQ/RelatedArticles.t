@@ -94,7 +94,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerTicketMessage");
 
         # Check CustomerTicketMessage overview screen.
-        for my $ID (qw(Dest Subject RichText Attachment PriorityID submitRichText)) {
+        for my $ID (qw(Dest Subject RichText PriorityID submitRichText)) {
             my $Element = $Selenium->find_element( "#$ID", 'css' );
             $Element->is_enabled();
             $Element->is_displayed();
