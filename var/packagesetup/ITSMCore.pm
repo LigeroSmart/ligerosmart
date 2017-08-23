@@ -31,17 +31,11 @@ our @ObjectDependencies = (
 
 ITSMCore.pm - code to execute during package installation
 
-=head1 SYNOPSIS
-
-All functions
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -68,7 +62,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -108,7 +102,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
 run the code reinstall part
 
@@ -140,7 +134,7 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_3_2_91()
+=head2 CodeUpgradeFromLowerThan_3_2_91()
 
 This function is only executed if the installed module version is smaller than 3.2.91 (3.3.0 Beta 1).
 
@@ -157,7 +151,7 @@ sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_2()
+=head2 CodeUpgradeFromLowerThan_4_0_2()
 
 This function is only executed if the installed module version is smaller than 4.0.2.
 
@@ -174,7 +168,7 @@ sub CodeUpgradeFromLowerThan_4_0_2 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_91()
+=head2 CodeUpgradeFromLowerThan_4_0_91()
 
 This function is only executed if the installed module version is smaller than 4.0.91.
 
@@ -191,7 +185,7 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
 run the code upgrade part
 
@@ -220,7 +214,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -239,7 +233,7 @@ sub CodeUninstall {
     return 1;
 }
 
-=item _GetITSMDynamicFieldsDefinition()
+=head2 _GetITSMDynamicFieldsDefinition()
 
 returns the definition for ITSMCore related dynamic fields
 
@@ -297,7 +291,7 @@ sub _GetITSMDynamicFieldsDefinition {
     return @DynamicFields;
 }
 
-=item _CreateITSMDynamicFields()
+=head2 _CreateITSMDynamicFields()
 
 creates all dynamic fields that are necessary for ITSMCore
 
@@ -408,7 +402,7 @@ sub _CreateITSMDynamicFields {
     return 1;
 }
 
-=item _MigrateCriticalityAndImpactToDynamicFields()
+=head2 _MigrateCriticalityAndImpactToDynamicFields()
 
 This function migrates the values for C<Criticality> and the Impact from GeneralCatalog to DynamicFields.
 
@@ -639,7 +633,7 @@ sub _MigrateCriticalityAndImpactToDynamicFields {
     return 1;
 }
 
-=item _SetPreferences()
+=head2 _SetPreferences()
 
     my $Result = $CodeObject->_SetPreferences()
 
@@ -673,7 +667,7 @@ sub _SetPreferences {
     return 1;
 }
 
-=item _CIPDefaultMatrixSet()
+=head2 _CIPDefaultMatrixSet()
 
 set the default C<CIP> matrix
 
@@ -788,7 +782,7 @@ sub _CIPDefaultMatrixSet {
     return 1;
 }
 
-=item _GroupAdd()
+=head2 _GroupAdd()
 
 add a group
 
@@ -881,7 +875,7 @@ sub _GroupAdd {
     return 1;
 }
 
-=item _GroupDeactivate()
+=head2 _GroupDeactivate()
 
 deactivate a group
 
@@ -932,7 +926,7 @@ sub _GroupDeactivate {
     return 1;
 }
 
-=item _FillupEmptyServiceTypeID()
+=head2 _FillupEmptyServiceTypeID()
 
 fill up empty entries in the type_id column of the service table
 
@@ -970,7 +964,7 @@ sub _FillupEmptyServiceTypeID {
     );
 }
 
-=item _FillupEmptyServiceCriticality()
+=head2 _FillupEmptyServiceCriticality()
 
 fill up empty entries in the C<criticality> column of the service table
 
@@ -1023,7 +1017,7 @@ sub _FillupEmptyServiceCriticality {
     );
 }
 
-=item _FillupEmptySLATypeID()
+=head2 _FillupEmptySLATypeID()
 
 fill up empty entries in the type_id column of the sla table
 
@@ -1061,7 +1055,7 @@ sub _FillupEmptySLATypeID {
     );
 }
 
-=item _MakeDynamicFieldsInternal()
+=head2 _MakeDynamicFieldsInternal()
 
 Converts the dynamic fields to internal fields, which means that they can not be deleted in the admin interface.
 
@@ -1090,7 +1084,7 @@ sub _MakeDynamicFieldsInternal {
     return 1;
 }
 
-=item _MigrateDTLInSysConfig()
+=head2 _MigrateDTLInSysConfig()
 
 Converts C<DTL> settings in sysconfig to C<TT>.
 
@@ -1150,7 +1144,7 @@ sub _MigrateDTLInSysConfig {
     return 1;
 }
 
-=item _MigrateConfigs()
+=head2 _MigrateConfigs()
 
 change configurations to match the new module location.
 
@@ -1194,8 +1188,6 @@ sub _MigrateConfigs {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

@@ -20,17 +20,11 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMCIPAllocate - C<criticality>, impact and priority allocation lib
 
-=head1 SYNOPSIS
-
-All C<criticality>, impact and priority allocation functions.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -50,7 +44,7 @@ sub new {
     return $Self;
 }
 
-=item AllocateList()
+=head2 AllocateList()
 
 return a two dimensional hash reference of allocations
 
@@ -103,7 +97,7 @@ sub AllocateList {
     return \%AllocateData;
 }
 
-=item AllocateUpdate()
+=head2 AllocateUpdate()
 
 update the allocation of C<criticality>, impact and priority
 
@@ -178,7 +172,7 @@ sub AllocateUpdate {
     return 1;
 }
 
-=item PriorityAllocationGet()
+=head2 PriorityAllocationGet()
 
 return the priority id of a C<criticality> and an impact
 
@@ -221,8 +215,6 @@ sub PriorityAllocationGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
