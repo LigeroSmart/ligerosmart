@@ -1,0 +1,46 @@
+// --
+// Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
+// --
+// This software comes with ABSOLUTELY NO WARRANTY. For details, see
+// the enclosed file COPYING for license information (AGPL). If you
+// did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+// --
+
+"use strict";
+
+var ITSM = ITSM || {};
+ITSM.Agent = ITSM.Agent || {};
+
+
+/**
+ * @namespace Agent
+ * @author OTRS AG
+ * @description
+ *      This namespace contains the special module behaviours for ITSM Service.
+ */
+ ITSM.Agent.Service = (function (TargetNS) {
+
+    /**
+     * @name Init
+     * @memberof Agent.Service
+     * @function
+     * @description
+     *      This function initializes actions for ITSM Service.
+     */
+    TargetNS.Init = function() {
+
+        $('.MasterAction').bind('click', function (Event) {
+            var $MasterActionLink = $(this).find('.MasterActionLink');
+            // only act if the link was not clicked directly
+            if (Event.target !== $MasterActionLink.get(0)) {
+                window.location = $MasterActionLink.attr('href');
+                return false;
+            }
+        });
+
+    };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
+
+    return TargetNS;
+}(ITSM.Agent.Service || {}));

@@ -95,7 +95,10 @@
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmDialog.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.IncidentState.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.Service.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ServiceZoom.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.SLA.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.SLAZoom.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.css" />

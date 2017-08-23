@@ -31,6 +31,10 @@
                     <AccessKey></AccessKey>
                     <Prio>100</Prio>
                 </NavBar>
+                <Loader>
+                    <JavaScript>ITSM.Agent.Service.js</JavaScript>
+                </Loader>
+
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -54,6 +58,9 @@
                     <AccessKey></AccessKey>
                     <Prio>200</Prio>
                 </NavBar>
+                <Loader>
+                    <JavaScript>ITSM.Agent.SLA.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -73,6 +80,7 @@
                     <JavaScript>Core.UI.Table.Sort.js</JavaScript>
                     <JavaScript>Core.Agent.TableFilters.js</JavaScript>
                     <JavaScript>Core.Agent.LinkObject.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ServiceZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -100,6 +108,9 @@
                 <Description Translatable="1">SLA Zoom.</Description>
                 <Title Translatable="1">Zoom</Title>
                 <NavBarName>Service</NavBarName>
+                <Loader>
+                    <JavaScript>ITSM.Agent.SLAZoom.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
