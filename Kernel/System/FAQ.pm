@@ -40,6 +40,7 @@ our @ObjectDependencies = (
     'Kernel::System::Type',
     'Kernel::System::User',
     'Kernel::System::Valid',
+    'Kernel::System::Ticket::Article',
 );
 
 =head1 NAME
@@ -2652,16 +2653,21 @@ sub _FAQApprovalTicketCreate {
         # create from string
         my $From = "\"$User{UserFullname}\" <$User{UserEmail}>";
 
+        my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+        my $InternalArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
+
         # create article
-        my $ArticleID = $TicketObject->ArticleCreate(
-            TicketID    => $TicketID,
-            ArticleType => 'note-internal',
-            SenderType  => 'agent',
-            From        => $From,
-            Subject     => $Subject,
-            Body        => $Body,
-            ContentType => 'text/plain; charset=utf-8',
-            UserID      => $Param{UserID},
+        my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
+            TicketID   => $TicketID,
+            SenderType => 'agent',
+
+            # Visible for customer only if FAQ state is not internal (agent).
+            IsVisibleForCustomer => ( $Param{StateID} == 2 ) ? 0 : 1,
+            From                 => $From,
+            Subject              => $Subject,
+            Body                 => $Body,
+            ContentType          => 'text/plain; charset=utf-8',
+            UserID               => $Param{UserID},
             HistoryType =>
                 $ConfigObject->Get('Ticket::Frontend::AgentTicketNote')->{HistoryType}
                 || 'AddNote',
