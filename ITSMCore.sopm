@@ -58,7 +58,6 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMCIPAllocate.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminService.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminSLA.tt" />
-        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMCustomerSearch.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMService.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMServiceZoom.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMSLA.tt" />
