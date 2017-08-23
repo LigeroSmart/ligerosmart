@@ -82,14 +82,17 @@ $Selenium->RunTest(
         );
 
         # get general catalog preference Comment2 default sysconfig
-        my %PreferenceComment2Config = $SysConfigObject->ConfigItemGet(
+        my %PreferenceComment2Config = $SysConfigObject->SettingGet(
             Name    => 'GeneralCatalogPreferences###Comment2',
             Default => 1,
         );
 
         # set general catalog preference Comment2 to valid
         my %PreferenceComment2ConfigUpdate = map { $_->{Key} => $_->{Content} }
-            grep { defined $_->{Key} } @{ $PreferenceComment2Config{Setting}->[1]->{Hash}->[1]->{Item} };
+            grep { defined $_->{Key} }
+            @{ $PreferenceComment2Config{XMLContentParsed}->{Value}->[0]->{Hash}->[0]->{Item} };
+
+        #@{ $PreferenceComment2Config{Setting}->[1]->{Hash}->[1]->{Item} };
 
         $Helper->ConfigSettingChange(
             Valid => 1,
@@ -185,22 +188,22 @@ $Selenium->RunTest(
         );
 
         # get general catalog preference Permission default sysconfig
-        my %PreferencePermissionsConfig = $SysConfigObject->ConfigItemGet(
+        my %PreferencePermissionsConfig = $SysConfigObject->SettingGet(
             Name    => 'GeneralCatalogPreferences###Permissions',
             Default => 1,
         );
 
-        # set Class for GeneralCatalogPreferences###Permissions as test CatalogClass
-        $PreferencePermissionsConfig{Setting}->[1]->{Hash}->[1]->{Item}->[5]->{Content} = $CatalogClassDsc;
+        my $PreferencePermissionsEffectiveConfig = $SysConfigObject->SettingEffectiveValueGet(
+            Value => $PreferencePermissionsConfig{XMLContentParsed}->{Value},
+        );
 
-        # set general catalog preference Permission to valid
-        my %PreferencePermissionsConfigUpdate = map { $_->{Key} => $_->{Content} }
-            grep { defined $_->{Key} } @{ $PreferencePermissionsConfig{Setting}->[1]->{Hash}->[1]->{Item} };
+        # set Class for GeneralCatalogPreferences###Permissions as test CatalogClass
+        $PreferencePermissionsEffectiveConfig->{Class} = $CatalogClassDsc;
 
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'GeneralCatalogPreferences###Permissions',
-            Value => \%PreferencePermissionsConfigUpdate,
+            Value => $PreferencePermissionsEffectiveConfig,
         );
 
         # refresh screen for sysconfig update to take effect

@@ -437,7 +437,7 @@ sub ItemAdd {
     }
 
     # name must be not empty, but number zero (0) is allowed
-    if ( $Param{Name} eq '' ) {
+    if ( !( defined $Param{Name} ) || !( length $Param{Name} ) ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
             Message  => "Need Name!",
