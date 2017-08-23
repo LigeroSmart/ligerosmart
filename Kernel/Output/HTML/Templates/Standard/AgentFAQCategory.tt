@@ -8,7 +8,26 @@
 
 [% RenderBlockStart("Overview") %]
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
-    <h1>[% Translate("FAQ Category Management") | html %]</h1>
+    <h1 class="InvisibleText">[% Translate("FAQ Category Management") | html %]</h1>
+
+    [% BreadcrumbPath = [
+            {
+                Name => Translate('FAQ Category Management'),
+                Link => Env("Action"),
+            },
+        ]
+    %]
+
+    [% SWITCH Data.Action %]
+        [% CASE 'Add' %]
+            [% BreadcrumbPath.push({ Name => Translate("Add FAQ Category"),}) %]
+        [% CASE 'Change' %]
+            [% USE EditTitle = String(Translate("Edit FAQ Category")) %]
+            [% BreadcrumbPath.push({ Name => EditTitle.append( ': ', Data.Name ) }) %]
+    [% END %]
+
+    [% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath Type = "Agent" %]
+
     <div class="SidebarColumn">
 [% RenderBlockStart("ActionList") %]
         <div class="WidgetSimple">

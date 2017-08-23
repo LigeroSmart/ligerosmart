@@ -8,8 +8,25 @@
 
 [% RenderBlockStart("Overview") %]
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="InvisibleText">[% Translate("FAQ Language Management") | html %]</h1>
 
-    <h1>[% Translate("FAQ Language Management") | html %]</h1>
+    [% BreadcrumbPath = [
+            {
+                Name => Translate('FAQ Language Management'),
+                Link => Env("Action"),
+            },
+        ]
+    %]
+
+    [% SWITCH Data.Action %]
+        [% CASE 'Add' %]
+            [% BreadcrumbPath.push({ Name => Translate("Add FAQ Language"),}) %]
+        [% CASE 'Change' %]
+            [% USE EditTitle = String(Translate("Edit FAQ Language")) %]
+            [% BreadcrumbPath.push({ Name => EditTitle.append( ': ', Data.Name ) }) %]
+    [% END %]
+
+    [% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath Type = "Agent" %]
 
     <div class="SidebarColumn">
 
