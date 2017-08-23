@@ -84,13 +84,14 @@ sub Run {
 
     # find slaves
     my %Links = $LinkObject->LinkKeyList(
-        Object1   => 'Ticket',
-        Key1      => $Param{Data}->{TicketID},
-        Object2   => 'Ticket',
-        State     => 'Valid',
-        Type      => 'ParentChild',
-        Direction => 'Source',                   # TODO: Update once LinkObject is fixed.
-        UserID    => $Param{UserID},
+        Object1 => 'Ticket',
+        Key1    => $Param{Data}->{TicketID},
+        Object2 => 'Ticket',
+        State   => 'Valid',
+        Type    => 'ParentChild',
+
+        # Direction => 'Source',                   # TODO: Uncomment this line, once LinkObject is fixed.
+        UserID => $Param{UserID},
     );
 
     my @TicketIDs;
@@ -128,7 +129,6 @@ sub Run {
 
     # auto response action
     if ( $Param{Event} eq 'ArticleSend' ) {
-
         my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
             TicketID => $Param{Data}->{TicketID},
         );
@@ -159,7 +159,7 @@ sub Run {
         return 1 if $IsForward && !$ForwardSlaves;
 
         # do not send internal communications to end customers of slave tickets
-        return 1 if $Article{IsVisibleForCustomer};
+        return 1 if !$Article{IsVisibleForCustomer};
 
         # mark ticket to prevent a loop
         $TicketObject->HistoryAdd(

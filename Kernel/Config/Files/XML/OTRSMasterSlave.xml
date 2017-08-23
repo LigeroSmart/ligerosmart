@@ -83,7 +83,7 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::MasterSlave</Item>
-                <Item Key="Event">(ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate)</Item>
+                <Item Key="Event">ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate</Item>
             </Hash>
         </Value>
     </Setting>

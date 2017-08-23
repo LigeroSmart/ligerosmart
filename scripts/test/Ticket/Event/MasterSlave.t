@@ -196,7 +196,7 @@ my $ForwardArticleID = $EmailBackendObject->ArticleSend(
     Charset              => 'iso-8859-15',
     MimeType             => 'text/plain',
     HistoryType          => 'Forward',
-    HistoryComment       => 'Frowarded article',
+    HistoryComment       => 'Forwarded article',
     NoAgentNotify        => 0,
     UserID               => 1,
 );
