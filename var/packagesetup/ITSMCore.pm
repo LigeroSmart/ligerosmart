@@ -670,6 +670,7 @@ sub _SetPreferences {
             Value  => $Map{$Name},
         );
     }
+    return 1;
 }
 
 =item _CIPDefaultMatrixSet()

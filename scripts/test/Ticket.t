@@ -36,6 +36,8 @@ my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 # set fixed time
 $Helper->FixedTimeSet();
 
+my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+
 my $TicketID = $TicketObject->TicketCreate(
     Title        => 'Some Ticket_Title',
     Queue        => 'Raw',
@@ -56,6 +58,7 @@ my %Ticket = $TicketObject->TicketGet(
     TicketID => $TicketID,
     Extended => 1,
 );
+
 $Self->Is(
     $Ticket{Title},
     'Some Ticket_Title',

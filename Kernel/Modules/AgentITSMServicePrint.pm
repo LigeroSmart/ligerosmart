@@ -164,20 +164,12 @@ sub Run {
         Type     => 'Attachment',
     );
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-    my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
-    );
-    $M = sprintf( "%02d", $M );
-    $D = sprintf( "%02d", $D );
-    $h = sprintf( "%02d", $h );
-    $m = sprintf( "%02d", $m );
+    # get datetime object
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
     # return the pdf document
     return $LayoutObject->Attachment(
-        Filename    => 'service_' . $Filename . "_$Y-$M-$D\_$h-$m.pdf",
+        Filename    => "service_${Filename}_" . $DateTimeObject->Format( Format => '%Y-%m-%d_%H:%M' ) . '.pdf',
         ContentType => 'application/pdf',
         Content     => $PDFObject->DocumentOutput(),
         Type        => 'inline',
