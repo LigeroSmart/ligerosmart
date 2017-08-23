@@ -1661,17 +1661,17 @@ Result for the collection (FAQArticleID => Calculated Quantifier):
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ --test FAQSearch --test FAQSearch/InConditionGet
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory FAQ
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test GenericInterface/FAQConnector
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/FAQ/Import:Console/Command/Maint/FAQ/ContentTypeSet
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/FAQ/Import --test Console/Command/Maint/FAQ/ContentTypeSet
         </screen>
         <para>Selenium unit tests</para>
         <para>
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer:AgentFAQLanguage:AgentFAQLinkObject:AgentFAQPrint:AgentFAQSearch:AgentFAQZoom
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer:CustomerFAQPrint:CustomerFAQSearch:CustomerFAQZoom:Customer/FAQ/RelatedArticles
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicFAQExplorer:PublicFAQPrint:PublicFAQRSS:PublicFAQSearch:PublicFAQZoom
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ:FAQJournalOverview/Small:FAQMenu/Generic:FAQOverview/Small:HeaderMeta/AgentFAQSearch:HeaderMeta/CustomerFAQSearch:HeaderMeta/PublicFAQSearch:LinkObject/FAQ
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer --test AgentFAQLanguage --test AgentFAQLinkObject --test AgentFAQPrint --test AgentFAQSearch:AgentFAQZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer --test CustomerFAQPrint --test CustomerFAQSearch --test CustomerFAQZoom --test Customer/FAQ/RelatedArticles
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicFAQExplorer --test PublicFAQPrint --test PublicFAQRSS --test PublicFAQSearch --test PublicFAQZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ --test FAQJournalOverview/Small --test FAQMenu/Generic --test FAQOverview/Small --test HeaderMeta/AgentFAQSearch --test HeaderMeta/CustomerFAQSearch --test HeaderMeta/PublicFAQSearch --test LinkObject/FAQ
         </screen>
         <para>Run all available unit tests</para>
         <para>
