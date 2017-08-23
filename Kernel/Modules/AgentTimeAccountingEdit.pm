@@ -11,7 +11,7 @@ package Kernel::Modules::AgentTimeAccountingEdit;
 use strict;
 use warnings;
 
-use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
+use DateTime qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Kernel::Language qw(Translatable);
 use Time::Local;
 
@@ -34,7 +34,7 @@ sub PreRun {
     return 1 if !$Self->{AccessRo};
 
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $TimeObject     = $Kernel::OM->Get('Kernel::System::Time');
 
     my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
         SystemTime => $TimeObject->SystemTime(),
@@ -259,7 +259,18 @@ sub Run {
 
     # check if the given date is a valid date
     # if not valid, set the date to today
-    if ( !check_date( $Param{Year}, $Param{Month}, $Param{Day} ) ) {
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $DateTimeValid  = $DateTimeObject->Validate(
+        Year     => $Param{Year},
+        Month    => $Param{Month},
+        Day      => $Param{Day},
+        Hour     => 0,
+        Minute   => 0,
+        Second   => 0,
+        TimeZone => 'UTC',
+    );
+
+    if (!$DateTimeValid) {
         $Param{Year}        = $Year;
         $Param{Month}       = $Month;
         $Param{Day}         = $Day;

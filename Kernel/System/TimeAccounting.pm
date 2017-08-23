@@ -11,13 +11,13 @@ package Kernel::System::TimeAccounting;
 use strict;
 use warnings;
 
-use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
+use DateTime qw(Today Days_in_Month Day_of_Week);
 
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DB',
     'Kernel::System::Log',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::User',
 );
 
@@ -174,7 +174,17 @@ sub UserReporting {
     }
 
     # check valid date values
-    return if !check_date( $Param{Year}, $Param{Month}, $Param{Day} || 1 );
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $DateTimeValid  = $DateTimeObject->Validate(
+        Year     => $Param{Year},
+        Month    => $Param{Month},
+        Day      => $Param{Day} || 1,
+        Hour     => 0,
+        Minute   => 0,
+        Second   => 0,
+        TimeZone => 'UTC',
+    );
+    return if !$DateTimeValid;
 
     # get days of month if not provided
     $Param{Day} ||= Days_in_Month( $Param{Year}, $Param{Month} );
@@ -192,13 +202,23 @@ sub UserReporting {
     USERID:
     for my $UserID ( sort keys %UserCurrentPeriod ) {
 
-        if ( $UserCurrentPeriod{$UserID}{DateStart} =~ m{ \A (\d{4})-(\d{2})-(\d{2}) }xms ) {
+        if ( $UserCurrentPeriod{$UserID}->{DateStart} =~ m{ \A (\d{4})-(\d{2})-(\d{2}) }xms ) {
             $YearStart  = $1;
             $MonthStart = $2;
             $DayStart   = $3;
         }
 
-        if ( !check_date( $YearStart, $MonthStart, $DayStart ) ) {
+        $DateTimeValid = $DateTimeObject->Validate(
+            Year     => $YearStart,
+            Month    => $MonthStart,
+            Day      => $DayStart,
+            Hour     => 0,
+            Minute   => 0,
+            Second   => 0,
+            TimeZone => 'UTC',
+        );
+
+        if (!$DateTimeValid) {
 
             $LogObject->Log(
                 Priority => 'notice',

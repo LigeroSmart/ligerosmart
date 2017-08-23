@@ -11,7 +11,6 @@ package Kernel::Modules::AgentTimeAccountingOverview;
 use strict;
 use warnings;
 
-use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Kernel::Language qw(Translatable);
 use Time::Local;
 
@@ -107,12 +106,48 @@ sub Run {
 
     $Param{Month_to_Text} = $MonthArray[ $Param{Month} ];
 
-    ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
-        = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, -1, 0 );
-    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} ) = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
+    # create one base object
+    my $DateTimeObjectCurrent = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Year     => $Param{Year},
+            Month    => $Param{Month},
+            Day      => 1,
+        }
+    );
+
+
+    my $DateTimeObjectNext = $DateTimeObjectCurrent->Clone();
+    my $DateTimeObjectPrev = $DateTimeObjectCurrent->Clone();
+    my $DateParamsCurrent  = $DateTimeObjectCurrent->Get();
+
+    # calculate the next month
+    $DateTimeObjectNext->Add(
+        Years         => 0,
+        Months        => 1,
+        Days          => 0,
+    );
+
+    my $DateParamsNext = $DateTimeObjectNext->Get();
+    $Param{YearNext}  =  $DateTimeObjectNext->{Year};
+    $Param{MonthNext} =  $DateTimeObjectNext->{Month};
+    $Param{DayNext}   =  $DateTimeObjectNext->{Day};
+
+    # calculate the next month
+    $DateTimeObjectPrev->Subtract(
+        Years         => 0,
+        Months        => 1,
+        Days          => 0,
+    );
+
+    my $DateParamsBack = $DateTimeObjectPrev->Get();
+    $Param{YearBack}  =  $DateTimeObjectPrev->{Year};
+    $Param{MonthBack} =  $DateTimeObjectPrev->{Month};
+    $Param{DayBack}   =  $DateTimeObjectPrev->{Day};
 
     # Overview per day
-    my $DaysOfMonth = Days_in_Month( $Param{Year}, $Param{Month} );
+    my $LastDayOfMonth = $DateTimeObjectCurrent->LastDayOfMonthGet();
+    my $DaysOfMonth    = $LastDayOfMonth->{Day};
 
     # get time accounting object
     my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
@@ -123,7 +158,7 @@ sub Run {
 
     for my $Day ( 1 .. $DaysOfMonth ) {
         $Param{Day} = sprintf( "%02d", $Day );
-        $Param{Weekday} = Day_of_Week( $Param{Year}, $Param{Month}, $Day ) - 1;
+        $Param{Weekday} = $DateParamsCurrent->{DayOfWeek};
         my $VacationCheck = $TimeObject->VacationCheck(
             Year     => $Param{Year},
             Month    => $Param{Month},

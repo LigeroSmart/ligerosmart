@@ -11,7 +11,7 @@ package Kernel::Modules::AgentTimeAccountingReporting;
 use strict;
 use warnings;
 
-use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
+use DateTime qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Kernel::Language qw(Translatable);
 use Time::Local;
 

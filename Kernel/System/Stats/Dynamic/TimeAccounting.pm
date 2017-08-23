@@ -11,7 +11,7 @@ package Kernel::System::Stats::Dynamic::TimeAccounting;
 use strict;
 use warnings;
 
-use Date::Pcalc qw( Add_Delta_Days Add_Delta_YMD );
+use DateTime qw( Add_Delta_Days Add_Delta_YMD );
 use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(IsArrayRefWithData);
 

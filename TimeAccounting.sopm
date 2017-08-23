@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
-    <Framework>5.0.x</Framework>
+    <Framework>6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -12,6 +12,7 @@
     <Filelist>
         <File Permission="644" Location="doc/timeaccounting-database.png" />
         <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml" />
+        <File Permission="644" Location="Kernel/Config/Files/XML/TimeAccounting.xml" />
         <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm" />
         <File Permission="644" Location="Kernel/Language/da_TimeAccounting.pm" />
         <File Permission="644" Location="Kernel/Language/es_MX_TimeAccounting.pm" />
