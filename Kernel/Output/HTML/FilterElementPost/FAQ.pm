@@ -15,6 +15,7 @@ our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::Web::Request',
+    'Kernel::System::Group',
 );
 
 sub new {
@@ -40,7 +41,12 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check permission
-    return if !$LayoutObject->{EnvRef}->{'UserIsGroupRo[faq]'};
+    my $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+        UserID    => $LayoutObject->{EnvRef}->{UserID},
+        GroupName => 'faq',
+        Type      => 'ro',
+    );
+    return if !$HasPermission;
 
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
