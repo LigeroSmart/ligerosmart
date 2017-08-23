@@ -86,11 +86,11 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
-                <Item Key="Label">Permissions</Item>
-                <Item Key="Desc">Define the group with permissions.</Item>
+                <Item Key="Label" Translatable="1">Permission</Item>
+                <Item Key="Desc" Translatable="1">Define the group with permissions.</Item>
                 <Item Key="Block">Permission</Item>
                 <Item Key="Class">ITSM::ConfigItem::Class</Item>
-                <Item Key="PrefKey">Permissions</Item>
+                <Item Key="PrefKey">Permission</Item>
             </Hash>
         </Value>
     </Setting>
