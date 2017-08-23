@@ -14,6 +14,7 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
+    'Kernel::System::Group',
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
 );
@@ -63,8 +64,11 @@ sub Run {
         RWGROUP:
         for my $RwGroup ( @{$GroupsRw} ) {
 
-            next RWGROUP if !$LayoutObject->{"UserIsGroup[$RwGroup]"};
-            next RWGROUP if $LayoutObject->{"UserIsGroup[$RwGroup]"} ne 'Yes';
+            next RWGROUP if !$Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                UserID    => $Self->{UserID},
+                GroupName => $RwGroup,
+                Type      => 'rw',
+            );
 
             # set access
             $Access = 1;
