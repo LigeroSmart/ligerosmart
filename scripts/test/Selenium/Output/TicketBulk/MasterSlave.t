@@ -98,8 +98,8 @@ $Selenium->RunTest(
 
         # search test created tickets by title
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( ".AddButton", 'css' )->VerifiedClick();
-        $Selenium->find_element( "Title",      'name' )->send_keys($TicketTitle);
+
+        $Selenium->find_element( "Title", 'name' )->send_keys($TicketTitle);
         $Selenium->find_element("//button[\@id='SearchFormSubmit'][\@value='Run search']")->VerifiedClick();
 
         # select first test created ticket
