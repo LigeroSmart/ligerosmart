@@ -52,12 +52,15 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # always discard the config object before package code is executed,
-    # to make sure that the config object will be created newly, so that it
-    # will use the recently written new config from the package
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::Config'],
-    );
+    # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
+    for my $Module ( sort keys %INC ) {
+        if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
+            delete $INC{$Module};
+        }
+    }
+
+    # Create common objects with fresh default config.
+    $Kernel::OM->ObjectsDiscard();
 
     return $Self;
 }
