@@ -88,11 +88,11 @@
     <ConfigItem Name="Ticket::EventModulePost###MasterSlave" Required="0" Valid="1">
         <Description Translatable="1">Registration of the ticket event module.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Core::MasterSlave</SubGroup>
+        <SubGroup>Core::Event::MasterSlave</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::MasterSlave</Item>
-                <Item Key="Event">(ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate)</Item>
+                <Item Key="Event">ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -115,6 +115,7 @@
                 <NavBarName>Ticket</NavBarName>
                 <Loader>
                     <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketMasterSlave.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -518,6 +519,7 @@
                 <Loader>
                     <CSS>Core.Agent.Admin.DynamicField.css</CSS>
                     <JavaScript>Core.Agent.Admin.DynamicField.js</JavaScript>
+                    <JavaScript>Core.Agent.Admin.DynamicFieldMasterSlave.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>

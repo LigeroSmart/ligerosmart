@@ -75,13 +75,14 @@ $Selenium->RunTest(
         # navigate to AgentTicketPhone screen
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 
-        # create master test phone ticket
-        my $AutoCompleteStringPhone
-            = "\"$TestCustomerLoginPhone $TestCustomerLoginPhone\" <$TestCustomerLoginPhone\@localunittest.com> ($TestCustomerLoginPhone)";
         my $MasterTicketSubject = "Master Ticket";
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomerLoginPhone);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringPhone']")->VerifiedClick();
+
+        $Selenium->execute_script(
+            "\$('li.ui-menu-item:nth-child(1) a').trigger('click')",
+        );
+
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Subject",  'css' )->send_keys($MasterTicketSubject);
         $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium body test');
@@ -119,12 +120,12 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketEmail");
 
         # create slave test email ticket
-        my $AutoCompleteStringEmail
-            = "\"$TestCustomerLoginsEmail $TestCustomerLoginsEmail\" <$TestCustomerLoginsEmail\@localunittest.com> ($TestCustomerLoginsEmail)";
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#ToCustomer", 'css' )->send_keys($TestCustomerLoginsEmail);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringEmail']")->VerifiedClick();
+        $Selenium->execute_script(
+            "\$('li.ui-menu-item:nth-child(1) a').trigger('click')",
+        );
         $Selenium->find_element( "#Subject",  'css' )->send_keys('Slave Ticket');
         $Selenium->find_element( "#RichText", 'css' )->send_keys('Selenium body test');
         $Selenium->execute_script(

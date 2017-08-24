@@ -2934,6 +2934,18 @@ sub _GetFieldsToUpdate {
     # get config of frontend module
     my $Config = $Kernel::OM->Get('Kernel::Config')->Get("Ticket::Frontend::$Self->{Action}");
 
+# ---
+# OTRSMasterSlave
+# ---
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::DynamicField') || '';
+    my $MasterSlaveAdvancedEnabled = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::AdvancedEnabled') || 0;
+
+    if ($MasterSlaveAdvancedEnabled) {
+        $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
+    }
+# ---
+
     # only screens that add notes can modify Article dynamic fields
     if ( $Config->{Note} ) {
         $ObjectType = [ 'Ticket', 'Article' ];
