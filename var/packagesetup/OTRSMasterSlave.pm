@@ -454,11 +454,20 @@ sub _MigrateOTRSMasterSlave {
     my $ExistingSetting = $ConfigObject->Get($KeyString) || {};
     my %ValuesToSet     = %{ $ExistingSetting->{DynamicField} || {} };
     $ValuesToSet{MasterSlave} = 1;
-    return $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 1,
-        Key   => $KeyString . "###DynamicField",
-        Value => \%ValuesToSet,
+
+    return if !$Kernel::OM->Get('Kernel::System::SysConfig')->SettingsSet(
+        UserID   => 1,
+        Comments => 'OTRSMasterSlave - deploy dynamic fields.',
+        Settings => [
+            {
+                Name           => $KeyString . "###DynamicField",
+                EffectiveValue => \%ValuesToSet,
+                IsValid        => 1,
+            },
+        ],
     );
+
+    return 1;
 }
 
 sub _CheckMasterSlaveData {
@@ -665,21 +674,29 @@ sub _RemoveDynamicFields {
         }
     }
 
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
     # disable SysConfig settings
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 0,
-        Key   => 'DynamicFields::Driver###MasterSlave',
-        Value => {
-            DisplayName  => 'Master / Slave',
-            Module       => 'Kernel::System::DynamicField::Driver::MasterSlave',
-            ConfigDialog => 'AdminDynamicFieldMasterSlave',
-            DisabledAdd  => 1,
-        },
-    );
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 0,
-        Key   => 'PreApplicationModule###AgentPreMasterSlave',
-        Value => 'Kernel::Modules::AgentPreMasterSlave',
+    return if !$SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'OTRSMasterSlave - # disable SysConfig settings.',
+        Settings => [
+            {
+                Name           => 'DynamicFields::Driver###MasterSlave',
+                EffectiveValue => {
+                    DisplayName  => 'Master / Slave',
+                    Module       => 'Kernel::System::DynamicField::Driver::MasterSlave',
+                    ConfigDialog => 'AdminDynamicFieldMasterSlave',
+                    DisabledAdd  => 1,
+                },
+                IsValid => 0,
+            },
+            {
+                Name           => 'PreApplicationModule###AgentPreMasterSlave',
+                EffectiveValue => 'Kernel::Modules::AgentPreMasterSlave',
+                IsValid        => 0,
+            },
+        ],
     );
 
     # discard config object and dynamic field backend to prevent error messages due missing driver
@@ -696,10 +713,16 @@ sub _RemoveDynamicFields {
         $DynamicFields{$MasterSlaveDynamicField} = 0;
     }
 
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
-        Value => \%DynamicFields,
+    return if !$SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'OTRSMasterSlave - deploy dynamic fields.',
+        Settings => [
+            {
+                Name           => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
+                EffectiveValue => \%DynamicFields,
+                IsValid        => 1,
+            },
+        ],
     );
 
     return 1;
@@ -746,21 +769,27 @@ sub _SetDashboardConfig {
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # write configurations
-    $SysConfigObject->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'DashboardBackend###0900-TicketMaster',
-        Value => {
-            %CommonConfig,
-            %MasterConfig,
-        },
-    );
-    $SysConfigObject->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'DashboardBackend###0910-TicketSlave',
-        Value => {
-            %CommonConfig,
-            %SlaveConfig,
-        },
+    return if !$SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'OTRSMasterSlave - deploy dynamic fields for dashboard.',
+        Settings => [
+            {
+                Name           => 'DashboardBackend###0900-TicketMaster',
+                EffectiveValue => {
+                    %CommonConfig,
+                    %MasterConfig,
+                },
+                IsValid => 1,
+            },
+            {
+                Name           => 'DashboardBackend###0910-TicketSlave',
+                EffectiveValue => {
+                    %CommonConfig,
+                    %SlaveConfig,
+                },
+                IsValid => 1,
+            },
+        ],
     );
 
     return 1;
@@ -782,10 +811,16 @@ sub _MigrateConfigs {
         $Setting->{'480-MasterSlave'}->{Module} = "Kernel::Output::HTML::TicketMenu::Generic";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Ticket::Frontend::MenuModule###480-MasterSlave',
-            Value => $Setting->{'480-MasterSlave'},
+        $SysConfigObject->SettingsSet(
+            UserID   => 1,
+            Comments => 'OTRSMasterSlave - deploy menu module settings.',
+            Settings => [
+                {
+                    Name           => 'Ticket::Frontend::MenuModule###480-MasterSlave',
+                    EffectiveValue => $Setting->{'480-MasterSlave'},
+                    IsValid        => 1,
+                },
+            ],
         );
     }
 
@@ -801,10 +836,16 @@ sub _MigrateConfigs {
         $Setting->{$Backend}->{Module} = "Kernel::Output::HTML::Dashboard::TicketGeneric";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => "DashboardBackend###$Backend",
-            Value => $Setting->{$Backend},
+        $SysConfigObject->SettingsSet(
+            UserID   => 1,
+            Comments => 'OTRSMasterSlave - deploy dashboard backend settings.',
+            Settings => [
+                {
+                    Name           => "DashboardBackend###$Backend",
+                    EffectiveValue => $Setting->{$Backend},
+                    IsValid        => 1,
+                },
+            ],
         );
     }
 
