@@ -243,7 +243,7 @@ my $InternalBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')-
 
 # create note article for master ticket
 my $ArticleIDCreate = $InternalBackendObject->ArticleCreate(
-    TicketID             => $InternalBackendObject,
+    TicketID             => $MasterTicketID,
     IsVisibleForCustomer => 0,
     SenderType           => 'agent',
     Subject              => 'Note article',
@@ -263,7 +263,7 @@ $Self->True(
     TicketID => $MasterTicketID,
     UserID   => 1,
 );
-$MasterLastHistoryEntry = $MasterHistoryLines[-1];
+($MasterLastHistoryEntry) = grep { $_->{Name} eq 'MasterTicketAction: ArticleCreate' } @MasterHistoryLines;
 
 # verify master ticket article is created
 $Self->IsDeeply(
@@ -277,7 +277,7 @@ $Self->IsDeeply(
     TicketID => $SlaveTicketID,
     UserID   => 1,
 );
-$SlaveLastHistoryEntry = $SlaveHistoryLines[-1];
+($SlaveLastHistoryEntry) = grep { $_->{Name} eq 'Added article based on master ticket.' } @SlaveHistoryLines;
 
 # verify slave ticket article is created
 $Self->IsDeeply(

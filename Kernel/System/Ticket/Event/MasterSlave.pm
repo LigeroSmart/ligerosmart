@@ -256,13 +256,19 @@ sub Run {
 
             # if we still have no UserEmail, drop an error
             if ( !$Customer{UserEmail} ) {
-                $TicketObject->HistoryAdd(
+                my $Success = $TicketObject->HistoryAdd(
                     TicketID     => $TicketID,
                     CreateUserID => $Param{UserID},
                     HistoryType  => 'Misc',
                     Name =>
                         "MasterTicket: no customer email found, send no master message to customer.",
                 );
+                if ( !$Success ) {
+                    $Kernel::OM->Get('Kernel::System::Log')->Log(
+                        Priority => 'error',
+                        Message  => 'System was unable to add a new history entry (no customer email found',
+                    );
+                }
                 next TICKETID;
             }
 
@@ -324,6 +330,7 @@ sub Run {
 
     # article create
     elsif ( $Param{Event} eq 'ArticleCreate' ) {
+
         my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
         my @Articles      = $ArticleObject->ArticleList(
             TicketID => $Param{Data}->{TicketID},
@@ -362,7 +369,7 @@ sub Run {
         }
 
         # set the same state, but only for notes
-        if ( $ChannelName eq 'Internal' ) {
+        if ( $ChannelName ne 'Internal' ) {
 
             return 1;
         }
