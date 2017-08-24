@@ -166,7 +166,7 @@ $Selenium->RunTest(
 
         # verify dynamic field master ticket update
         $Self->True(
-            index( $Selenium->get_page_source(), 'FieldName=MasterSlave;Value=Master' ) > -1,
+            index( $Selenium->get_page_source(), 'Changed dynamic field MasterSlave from "" to "Master".' ) > -1,
             "Master dynamic field update value - found",
         );
 
@@ -184,7 +184,7 @@ $Selenium->RunTest(
 
         # verify dynamic field slave ticket update
         $Self->True(
-            index( $Selenium->get_page_source(), "FieldName=MasterSlave;Value=SlaveOf:$MasterTicketNumber" ) > -1,
+            index( $Selenium->get_page_source(), 'Changed dynamic field MasterSlave from "" to "SlaveOf:' ) > -1,
             "Slave dynamic field update value - found",
         );
 
