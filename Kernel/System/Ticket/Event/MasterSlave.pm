@@ -84,14 +84,13 @@ sub Run {
 
     # find slaves
     my %Links = $LinkObject->LinkKeyList(
-        Object1 => 'Ticket',
-        Key1    => $Param{Data}->{TicketID},
-        Object2 => 'Ticket',
-        State   => 'Valid',
-        Type    => 'ParentChild',
-
-        # Direction => 'Source',                   # TODO: Uncomment this line, once LinkObject is fixed.
-        UserID => $Param{UserID},
+        Object1   => 'Ticket',
+        Key1      => $Param{Data}->{TicketID},
+        Object2   => 'Ticket',
+        State     => 'Valid',
+        Type      => 'ParentChild',
+        Direction => 'Source',
+        UserID    => $Param{UserID},
     );
 
     my @TicketIDs;
