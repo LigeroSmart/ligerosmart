@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 238c0824519557c693966a9447fcbddc39a993d6 - Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: otrs - 91511fb060f9fdaf0212e42be740a450bb044ff6 - Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -112,7 +112,7 @@
 [% RenderBlockEnd("Type") %]
 
 [% RenderBlockStart("Queue") %]
-[% IF Data.QueueMandatory %]
+                        [% IF Data.QueueMandatory %]
                             <label class="Mandatory" for="NewQueueID"><span class="Marker">*</span>[% Translate("Queue") | html %]:</label>
                         [% ELSE %]
                             <label for="NewQueueID">[% Translate("Queue") | html %]:</label>
@@ -128,7 +128,7 @@
 [% RenderBlockEnd("Queue") %]
 
 [% RenderBlockStart("Service") %]
-[% IF Data.ServiceMandatory %]
+                        [% IF Data.ServiceMandatory %]
                             <label class="Mandatory" for="ServiceID"><span class="Marker">*</span>[% Translate("Service") | html %]:</label>
                         [% ELSE %]
                             <label for="ServiceID">[% Translate("Service") | html %]:</label>
@@ -252,7 +252,7 @@
 [% RenderBlockStart("StatePending") %]
                         <label>[% Translate("Pending date") | html %]:</label>
                         <div class="Field">
-                    [% Data.DateString %]
+                            [% Data.DateString %]
                             <div id="DayServerError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
                             <div id="HourServerError" class="TooltipErrorMessage"><p>[% Translate("Date invalid!") | html %]</p></div>
                             <p class="FieldExplanation">[% Translate("For all pending* states.") | html %]</p>
@@ -299,9 +299,9 @@
 #                           <div class="Clear"></div>
 #                       </div>
 #[% RenderBlockEnd("DynamicField_Field2") %]
-                        </fieldset>
-                    </div>
+                    </fieldset>
                 </div>
+            </div>
 [% RenderBlockEnd("WidgetTicketActions") %]
 
 [% RenderBlockStart("WidgetArticle") %]
@@ -412,7 +412,7 @@
 
                             <label>[% Translate("Attachments") | html %]:</label>
                             <div class="Field">
-                            [% INCLUDE "FormElements/AttachmentList.tt" %]
+[% INCLUDE "FormElements/AttachmentList.tt" %]
                             </div>
                             <div class="Clear"></div>
 

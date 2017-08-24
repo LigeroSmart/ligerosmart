@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 87452faeb98d315563bee18b00d27716960c5007 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 238c0824519557c693966a9447fcbddc39a993d6 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -403,7 +403,6 @@ sub Run {
     for my $DynamicFieldItem ( sort keys %DynamicFieldValues ) {
         next DYNAMICFIELD if !$DynamicFieldItem;
         next DYNAMICFIELD if !defined $DynamicFieldValues{$DynamicFieldItem};
-        next DYNAMICFIELD if !defined $DynamicFieldValues{$DynamicFieldItem};
 
         $DynamicFieldACLParameters{ 'DynamicField_' . $DynamicFieldItem } = $DynamicFieldValues{$DynamicFieldItem};
     }
@@ -601,7 +600,7 @@ sub Run {
                     },
                 );
 
-               # get current system epoch
+                # get current system epoch
                 my $CurSystemDateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
                 # check date
@@ -798,100 +797,100 @@ sub Run {
             # Do not validate only if object type is Article and CreateArticle value is not defined.
             if ( !( $DynamicFieldConfig->{ObjectType} eq 'Article' && !$GetParam{CreateArticle} ) ) {
 
-            $ValidationResult = $DynamicFieldBackendObject->EditFieldValueValidate(
-                DynamicFieldConfig   => $DynamicFieldConfig,
-                PossibleValuesFilter => $PossibleValuesFilter,
-                ParamObject          => $ParamObject,
-                Mandatory =>
-                    $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-            );
+                $ValidationResult = $DynamicFieldBackendObject->EditFieldValueValidate(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    ParamObject          => $ParamObject,
+                    Mandatory =>
+                        $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                );
 
-            if ( !IsHashRefWithData($ValidationResult) ) {
-                return $LayoutObject->ErrorScreen(
-                    Message =>
-                        $LayoutObject->{LanguageObject}->Translate(
+                if ( !IsHashRefWithData($ValidationResult) ) {
+                    return $LayoutObject->ErrorScreen(
+                        Message =>
+                            $LayoutObject->{LanguageObject}->Translate(
                             'Could not perform validation on field %s!', $DynamicFieldConfig->{Label}
                             ),
-                    Comment => Translatable('Please contact the administrator.'),
-                );
-            }
+                        Comment => Translatable('Please contact the administrator.'),
+                    );
+                }
 
-            # Propagate validation error to the Error variable to be detected by the frontend.
-            if ( $ValidationResult->{ServerError} )
-            {
-                $Error{ $DynamicFieldConfig->{Name} } = ' ServerError';
-            }
-        }
-
-        if ( $DynamicFieldConfig->{ObjectType} eq 'Ticket' ) {
-
-            # Get field html.
-            my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
-                DynamicFieldConfig   => $DynamicFieldConfig,
-                PossibleValuesFilter => $PossibleValuesFilter,
-                ServerError          => $ValidationResult->{ServerError} || '',
-                ErrorMessage         => $ValidationResult->{ErrorMessage} || '',
-                Mandatory            => $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-                LayoutObject         => $LayoutObject,
-                ParamObject          => $ParamObject,
-                AJAXUpdate           => 1,
-                UpdatableFields      => $Self->_GetFieldsToUpdate(),
-            );
-
-            push @TicketTypeDynamicFields, {
-                Name  => $DynamicFieldConfig->{Name},
-                Label => $DynamicFieldHTML->{Label},
-                Field => $DynamicFieldHTML->{Field},
-            };
-        }
-        elsif ( $DynamicFieldConfig->{ObjectType} eq 'Article' ) {
-            my $Class            = '';
-            my $MandatoryTooltip = 0;
-
-            if ( $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2 ) {
-                if (
-                    $Config->{NoteMandatory} ||
-                    $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
-                    )
+                # Propagate validation error to the Error variable to be detected by the frontend.
+                if ( $ValidationResult->{ServerError} )
                 {
-                    $Class = 'Validate_Required';
-                }
-                else {
-                    $Class            = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
-                    $MandatoryTooltip = 1;
+                    $Error{ $DynamicFieldConfig->{Name} } = ' ServerError';
                 }
             }
 
-            # Get field html.
-            my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
-                DynamicFieldConfig   => $DynamicFieldConfig,
-                PossibleValuesFilter => $PossibleValuesFilter,
-                ServerError          => $ValidationResult->{ServerError} || '',
-                ErrorMessage         => $ValidationResult->{ErrorMessage} || '',
-                Mandatory            => ( $Class eq 'Validate_Required' ) ? 1 : 0,
-                Class                => $Class,
-                LayoutObject         => $LayoutObject,
-                ParamObject          => $ParamObject,
-                AJAXUpdate           => 1,
-                UpdatableFields      => $Self->_GetFieldsToUpdate(),
-            );
+            if ( $DynamicFieldConfig->{ObjectType} eq 'Ticket' ) {
 
-            push @ArticleTypeDynamicFields, {
-                Name             => $DynamicFieldConfig->{Name},
-                Label            => $DynamicFieldHTML->{Label},
-                Field            => $DynamicFieldHTML->{Field},
-                MandatoryTooltip => $MandatoryTooltip,
-            };
+                # Get field html.
+                my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    ServerError          => $ValidationResult->{ServerError} || '',
+                    ErrorMessage         => $ValidationResult->{ErrorMessage} || '',
+                    Mandatory            => $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                    LayoutObject         => $LayoutObject,
+                    ParamObject          => $ParamObject,
+                    AJAXUpdate           => 1,
+                    UpdatableFields      => $Self->_GetFieldsToUpdate(),
+                );
+
+                push @TicketTypeDynamicFields, {
+                    Name  => $DynamicFieldConfig->{Name},
+                    Label => $DynamicFieldHTML->{Label},
+                    Field => $DynamicFieldHTML->{Field},
+                };
+            }
+            elsif ( $DynamicFieldConfig->{ObjectType} eq 'Article' ) {
+                my $Class            = '';
+                my $MandatoryTooltip = 0;
+
+                if ( $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2 ) {
+                    if (
+                        $Config->{NoteMandatory} ||
+                        $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
+                        )
+                    {
+                        $Class = 'Validate_Required';
+                    }
+                    else {
+                        $Class            = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
+                        $MandatoryTooltip = 1;
+                    }
+                }
+
+                # Get field html.
+                my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    ServerError          => $ValidationResult->{ServerError} || '',
+                    ErrorMessage         => $ValidationResult->{ErrorMessage} || '',
+                    Mandatory            => ( $Class eq 'Validate_Required' ) ? 1 : 0,
+                    Class                => $Class,
+                    LayoutObject         => $LayoutObject,
+                    ParamObject          => $ParamObject,
+                    AJAXUpdate           => 1,
+                    UpdatableFields      => $Self->_GetFieldsToUpdate(),
+                );
+
+                push @ArticleTypeDynamicFields, {
+                    Name             => $DynamicFieldConfig->{Name},
+                    Label            => $DynamicFieldHTML->{Label},
+                    Field            => $DynamicFieldHTML->{Field},
+                    MandatoryTooltip => $MandatoryTooltip,
+                };
+            }
         }
-    }
 
-    # Make sure we don't save form if a draft was loaded.
-    if ( $Self->{LoadedFormDraftID} ) {
-        %Error = ( LoadedFormDraft => 1 );
-    }
+        # Make sure we don't save form if a draft was loaded.
+        if ( $Self->{LoadedFormDraftID} ) {
+            %Error = ( LoadedFormDraft => 1 );
+        }
 
-    # check errors
-    if (%Error) {
+        # check errors
+        if (%Error) {
 
             my $Output = $LayoutObject->Header(
                 Type      => 'Small',
@@ -2353,7 +2352,7 @@ sub _Mask {
             $Param{BodyRequired}    = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
         }
 
-# set customer visibility of this note to the same value as the article for whom this is the reply
+        # set customer visibility of this note to the same value as the article for whom this is the reply
         if ( $Self->{ReplyToArticle} && !defined $Param{IsVisibleForCustomer} ) {
             $Param{IsVisibleForCustomer} = $Self->{ReplyToArticleContent}->{IsVisibleForCustomer};
         }
@@ -2945,7 +2944,6 @@ sub _GetFieldsToUpdate {
         $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
     }
 # ---
-
     # only screens that add notes can modify Article dynamic fields
     if ( $Config->{Note} ) {
         $ObjectType = [ 'Ticket', 'Article' ];
