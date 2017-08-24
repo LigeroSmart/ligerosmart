@@ -93,6 +93,12 @@ sub new {
         $Self->{PreferencesObject} = $GeneratorModule->new();
     }
 
+# ---
+# ITSMCore
+# ---
+    $Self->{DBObject} = $Kernel::OM->Get('Kernel::System::DB');
+# ---
+
     return $Self;
 }
 
