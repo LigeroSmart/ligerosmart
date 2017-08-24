@@ -73,9 +73,13 @@
 [% RenderBlockEnd("Row") %]
                         </tbody>
                     </table>
-                    <div class="SpacingTop">
-                        <button type="submit" class="Primary">[% Translate("Submit") | html %]</button>
-                    </div>
+                    <fieldset class="TableLike">
+                        <div class="Field SpacingTop SaveButtons">
+                            <button class="Primary CallForAction" id="Submit" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]"><span>[% Translate("Cancel") | html %]</span></a>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
 
