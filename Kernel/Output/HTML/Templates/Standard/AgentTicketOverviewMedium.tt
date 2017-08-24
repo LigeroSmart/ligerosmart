@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - ad3122195fdba73a8857b4af020b7940fa5cbbc1 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt
+# $origin: otrs - 39a1cb275b257d16ba38ddcf05ef0bb827cc9118 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,25 +30,6 @@
 [% RenderBlockEnd("DocumentActionRow") %]
 
 [% RenderBlockStart("DocumentHeader") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.ActionRow.Init();
-
-    $('a.AsPopup').bind('click', function (Event) {
-        var Matches,
-            PopupType = 'TicketAction';
-
-        Matches = $(this).attr('class').match(/PopupType_(\w+)/);
-        if (Matches) {
-            PopupType = Matches[1];
-        }
-
-        Core.UI.Popup.OpenPopup($(this).attr('href'), PopupType);
-        return false;
-    });
-//]]></script>
-[% END %]
-
 <ul id="TicketOverviewMedium" class="Overview OverviewMedium">
 [% RenderBlockEnd("DocumentHeader") %]
 
@@ -71,18 +52,6 @@
                 [% Data.HTML %]
 [% RenderBlockEnd("InlineActionRowItemHTML") %]
             </ul>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    // Stop propagation on click on a part of the InlienActionRow without a link
-    // Otherwise that would trigger the li-wide link to the ticketzoom
-    $('ul.InlineActions').click(function (Event) {
-        Event.cancelBubble = true;
-        if (Event.stopPropagation) {
-            Event.stopPropagation();
-        }
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("InlineActionRow") %]
 [% RenderBlockStart("Bulk") %]
             <div class="Checkbox">
@@ -110,7 +79,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            <label>[% Translate("From") | html %]</label><div title="[% Data.From | html %]">[% Data.FromRealname | html %]</div>
+                            <label>[% Translate("Sender") | html %]</label><div title="[% Data.ArticleFields.Sender.Value | html %]">[% Data.ArticleFields.Sender.Realname | truncate(36) | html %]</div>
                         </td>
                         <td>
                             <label>[% Translate("Age") | html %]</label>[% Data.Age | html %]
@@ -123,10 +92,10 @@
 # ---
 #                        <td>
 #[% RenderBlockStart("CustomerIDRW") %]
-#                            <label>[% Translate("CustomerID") | html %]</label>[% IF Data.CustomerID %]<a href="[% Config("CustomerDBLink") | Interpolate %]" class="AsPopup PopupType_TicketAction" [% Config("CustomerDBLinkTarget") %]>[% Data.CustomerID | html %]</a>[% END %]
+#                            <label>[% Translate("Customer ID") | html %]</label>[% IF Data.CustomerID %]<a href="[% Config("CustomerDBLink") | Interpolate %]" class="AsPopup PopupType_TicketAction" [% Config("CustomerDBLinkTarget") %]>[% Data.CustomerID | html %]</a>[% END %]
 #[% RenderBlockEnd("CustomerIDRW") %]
 #[% RenderBlockStart("CustomerIDRO") %]
-#                            <label>[% Translate("CustomerID") | html %]</label>[% Data.CustomerID | html %]
+#                            <label>[% Translate("Customer ID") | html %]</label>[% Data.CustomerID | html %]
 #[% RenderBlockEnd("CustomerIDRO") %]
 #                            <br /><div title="[% Data.CustomerName | html %]">[% Data.CustomerName | html %]</div>
 #                        </td>
@@ -169,9 +138,6 @@
 # ---
                     </tr>
                     <tr>
-                        <td>
-                            <label>[% Translate("To") | html %]</label><div title="[% Data.To | html %]">[% Data.ToRealname | html %]</div>
-                        </td>
                         <td>
                             <label>[% Translate("Created") | html %]</label>[% Data.Created | Localize("TimeLong") %]
                         </td>
@@ -217,11 +183,19 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>[% Translate("Subject") | html %]</label><div title="[% Data.Subject | html %]">[% Data.Subject | html %]</div>
+                            <label>[% Translate("Subject") | html %]</label><div title="[% Data.ArticleFields.Subject.Value | html %]">[% Data.ArticleFields.Subject.Value | truncate(36) | html %]</div>
                         </td>
+[% RenderBlockStart("OwnerResponsible") %]
+[% IF Config('Ticket::Responsible') %]
                         <td>
-                            <label>[% Translate("Owner") | html %]</label><div title="[% Data.UserFirstname | html %] [% Data.UserLastname | html %] ([% Data.Owner | html %])">[% Data.UserFullname | html %]</div>
+                            <label>[% Translate("Owner") | html %] / [% Translate("Responsible") | html %]</label><div title="[% Data.OwnerFullname | html %] ([% Data.Owner | html %]) / [% Data.ResponsibleFullname | html %] ([% Data.Responsible | html %])">[% Data.OwnerFullname | html %] / [% Data.ResponsibleFullname | html %]</div>
                         </td>
+[% ELSE %]
+                        <td>
+                            <label>[% Translate("Owner") | html %]</label><div title="[% Data.OwnerFullname | html %] ([% Data.Owner | html %])">[% Data.OwnerFullname | html %]</div>
+                        </td>
+[% END %]
+[% RenderBlockEnd("OwnerResponsible") %]
                         <td>
                             <label>[% Translate("Lock") | html %]</label><div title="[% Translate(Data.Lock) | html %]">[% Translate(Data.Lock) | html %]</div>
                         </td>
@@ -326,75 +300,5 @@
         <label for="DestQueueID" class="InvisibleText">[% Translate("Change queue") | html %]:</label>
         [% Data.MoveQueuesStrg %]
     </form>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('.InlineActions, .OverviewActions').on('change', 'select[name=DestQueueID]', function (Event) {
-        $(this).closest('form').submit();
-    });
-//]]></script>
-[% END %]
 </li>
 [% RenderBlockEnd("DocumentMenuItemMoveForm") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-[% RenderBlockStart("DocumentReadyActionRowAdd") %]
-[% FOREACH MenuElement IN Data.Data %]
-    [% MenuElement.Name = Interpolate(MenuElement.Name) %]
-    [% MenuElement.Link = Interpolate(MenuElement.Link) %]
-    [% MenuElement.Description = Interpolate(MenuElement.Description) %]
-[% END %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.ActionRow.AddActions($('#TicketID_[% Data.TicketID | html %]'), [% JSON(Data.Data) %]);
-//]]></script>
-[% RenderBlockEnd("DocumentReadyActionRowAdd") %]
-[% RenderBlockStart("DocumentReadyStart") %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.InitCheckboxSelection($('div.Checkbox'));
-    $('.MasterAction').bind('click', function (Event) {
-        var $MasterActionLink = $(this).find('.MasterActionLink');
-        // prevent MasterAction on Dynamic Fields links
-        if ($(Event.target).hasClass('DynamicFieldLink')) {
-            return true;
-        }
-        // only act if the link was not clicked directly
-        if (Event.target !== $MasterActionLink.get(0)) {
-            if (Event.ctrlKey || Event.metaKey) {
-                window.open($MasterActionLink.attr('href'));
-            }
-            else {
-                window.location = $MasterActionLink.attr('href');
-            }
-            return false;
-        }
-    });
-
-    if ($('body').hasClass('TouchDevice')) {
-        $('ul.InlineActions li:not(.ResponsiveActionMenu)').hide();
-    }
-    $('li.ResponsiveActionMenu').on('click.ToggleResponsiveActionMenu', function () {
-        $(this).siblings().toggle();
-        $(this).toggleClass('Opened')
-        return false;
-    });
-
-    $('.OverviewMedium li').on('mouseenter', function() {
-        $(this).find('ul.InlineActions').css('top', '0px');
-    });
-    $('.OverviewMedium li').on('mouseleave', function(Event) {
-
-        // Workaround for bug#12403: The inlineActions would hide if hovering
-        // over the queue selection due to a bug in IE. As this is working fine
-        // in MS Edge with the former pure css solution, this whole function
-        // TargetNS.InitInlineActions could be dropped as soon as IE11 support is
-        // ceased for OTRS. Remember to re-add the needed css in this case:
-        //      .OverviewLarge > li:hover ul.InlineActions { top: 0px; }    (Core.OverviewLarge.css)
-        //      .OverviewPreview > li:hover ul.InlineActions { top: 0px; }  (Core.OverviewMedium.css)
-        if (Event.target.tagName.toLowerCase() === 'select') {
-            return false;
-        }
-        $(this).find('ul.InlineActions').css('top', '-30px');
-    });
-
-//]]></script>
-[% RenderBlockEnd("DocumentReadyStart") %]
-[% END %]

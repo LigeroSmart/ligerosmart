@@ -1,14 +1,13 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 16269dfbe5641d64ea99e55b302e1f4ade2899bd - Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt
+# $origin: otrs - 4953e6a400bb93016b775a773bfb7fd801d5f623 - Kernel/Output/HTML/Templates/Standard/AgentTicketPhone.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-[% InsertTemplate("AgentCustomerSearch.tt") %]
 <div class="MainBox ARIARoleMain FormScreen">
 
     [% IF Data.TicketID %]
@@ -70,13 +69,6 @@
                         [% Data.TypeStrg %]
                         <div id="TypeIDError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                         <div id="TypeIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#TypeID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'TypeID', ['Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
                     </div>
                     <div class="Clear"></div>
 [% RenderBlockEnd("TicketType") %]
@@ -147,69 +139,32 @@
 [% RenderBlockEnd("MultipleCustomerCounter") %]
                     </div>
                     <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('.CustomerTicketRadio').bind('change', function () {
-        var CustomerKey;
-        if ( $(this).prop('checked') ){
 
-            CustomerKey = $( '#CustomerKey_' +$(this).val() ).val();
-            // get customer tickets
-            Core.Agent.CustomerSearch.ReloadCustomerInfo(CustomerKey);
-        }
-        return false;
-    });
-
-    $('.CustomerTicketRemove').bind('click', function () {
-        Core.Agent.CustomerSearch.RemoveCustomerTicket( $(this) );
-        return false;
-    });
-//]]></script>
-[% END %]
-
-[% RenderBlockStart("FromExternalCustomer") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.Agent.CustomerSearch.AddTicketCustomer( 'FromCustomer', "[% Data.Email | html %]", "[% Data.Customer | html %]", true );
-//]]></script>
-[% END %]
-[% RenderBlockEnd("FromExternalCustomer") %]
-
-                    <label for="CustomerID">[% Translate("CustomerID") | html %]:</label>
-                    <div class="Field">
-                        <input type="text" name="CustomerID" id="CustomerID" value="[% Data.CustomerID | html %]" [% IF Config("Ticket::Frontend::AgentTicketPhone::CustomerIDReadOnly") %] readonly [% END %] class="W75pc"/>
-                    </div>
-                    <div class="Clear"></div>
+                    [% INCLUDE "CustomerCompany/TicketCustomerIDSelection.tt" Required = 0 Readonly = Config("Ticket::Frontend::AgentTicketPhone::CustomerIDReadOnly") %]
 
                     <label class="Mandatory" for="Dest"><span class="Marker">*</span> [% Translate("To queue") | html %]:</label>
                     <div class="Field">
                         [% Data.ToStrg %]
                         <div id="DestError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
                         <div id="DestServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#Dest').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'Dest', ['TypeID', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
                     </div>
                     <div class="Clear"></div>
 
 [% RenderBlockStart("TicketService") %]
-                    <label for="ServiceID">[% Translate("Service") | html %]:</label>
+                    [% IF Data.ServiceMandatory %]
+                        <label class="Mandatory" for="ServiceID"><span class="Marker">*</span> [% Translate("Service") | html %]:</label>
+                    [% ELSE %]
+                        <label for="ServiceID">[% Translate("Service") | html %]:</label>
+                    [% END %]
                     <div class="Field">
                         [% Data.ServiceStrg %]
+                        [% IF Data.ServiceMandatory %]
+                            <div id="ServiceIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
+                        [% END %]
                         <div id="ServiceIDServerError" class="TooltipErrorMessage"><p>[% Translate("Service invalid.") | html %]</p></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
 # ---
 # ITSMIncidentProblemManagement
 # ---
-#    });
-
 /*global ITSM: true */
         // show service incident state and signal for the selected service
         ITSM.Agent.IncidentState.ShowIncidentState({
@@ -218,8 +173,6 @@
         });
 });
 # ---
-//]]></script>
-[% END %]
                     </div>
                     <div class="Clear"></div>
 # ---
@@ -235,77 +188,21 @@
 # ---
 [% RenderBlockEnd("TicketService") %]
 
-[% RenderBlockStart("TicketServiceMandatory") %]
-                    <label class="Mandatory" for="ServiceID"><span class="Marker">*</span> [% Translate("Service") | html %]:</label>
-                    <div class="Field">
-                        [% Data.ServiceStrg %]
-                        <div id="ServiceIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
-                        <div id="ServiceIDServerError" class="TooltipErrorMessage"><p>[% Translate("Service invalid.") | html %]</p></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-# ---
-# ITSMIncidentProblemManagement
-# ---
-#    });
-
-/*global ITSM: true */
-        // show service incident state and signal for the selected service
-        ITSM.Agent.IncidentState.ShowIncidentState({
-            Action: '[% Env("Action") %]',
-            ServiceID: $('#ServiceID').val()
-        });
-});
-# ---
-//]]></script>
-[% END %]
-                    </div>
-                    <div class="Clear"></div>
-# ---
-# ITSMIncidentProblemManagement
-# ---
-                    <label for="ServiceIncidentStateContainer" style="display:none;">[% Translate("Service Incident State") | html %]:</label>
-                    <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
-                        <div class="Flag Small">
-                            <span id="ServiceIncidentStateSignal"></span>
-                        </div>
-                        <span id="ServiceIncidentState">&nbsp;</span>
-                    </div>
-# ---
-[% RenderBlockEnd("TicketServiceMandatory") %]
-
 [% RenderBlockStart("TicketSLA") %]
-                    <label for="SLAID">[% Translate("Service Level Agreement") | html %]:</label>
+                    [% IF Data.SLAMandatory %]
+                        <label class="Mandatory" for="SLAID"><span class="Marker">*</span> [% Translate("Service Level Agreement") | html %]:</label>
+                    [% ELSE %]
+                        <label for="SLAID">[% Translate("Service Level Agreement") | html %]:</label>
+                    [% END %]
                     <div class="Field">
                         [% Data.SLAStrg %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'SLAID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'ServiceID', 'NextStateID', 'PriorityID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
+                        [% IF Data.SLAMandatory %]
+                            <div id="SLAIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
+                            <div id="SLAIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                        [% END %]
                     </div>
                     <div class="Clear"></div>
 [% RenderBlockEnd("TicketSLA") %]
-
-[% RenderBlockStart("TicketSLAMandatory") %]
-                    <label class="Mandatory" for="SLAID"><span class="Marker">*</span> [% Translate("Service Level Agreement") | html %]:</label>
-                    <div class="Field">
-                        [% Data.SLAStrg %]
-                        <div id="SLAIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
-                        <div id="SLAIDServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'SLAID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'ServiceID', 'NextStateID', 'PriorityID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
-                    </div>
-                    <div class="Clear"></div>
-[% RenderBlockEnd("TicketSLAMandatory") %]
 
 [% RenderBlockStart("OwnerSelection") %]
                     <label for="NewUserID">[% Translate("Owner") | html %]:</label>
@@ -315,21 +212,6 @@
                             <span>[% Translate("Get all") | html %]</span>
                             <i class="fa fa-refresh"></i>
                         </a>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#OwnerSelectionGetAll').bind('click', function (Event) {
-        $('#OwnerAll').val('1'); // Needed? Why?
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'OwnerAll', ['NewUserID'], function() {
-            $('#NewUserID').focus();
-        });
-        return false;
-    });
-
-    $('#NewUserID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'NewUserID', [ 'TypeID', 'Dest', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
                     </div>
                     <div class="Clear"></div>
 [% RenderBlockEnd("OwnerSelection") %]
@@ -342,21 +224,6 @@
                             <span>[% Translate("Get all") | html %]</span>
                             <i class="fa fa-refresh"></i>
                         </a>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#ResponsibleSelectionGetAll').bind('click', function (Event) {
-        $('#ResponsibleAll').val('1'); // Needed? Why?
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ResponsibleAll', ['NewResponsibleID'], function() {
-            $('#NewResponsibleID').focus();
-        });
-        return false;
-    });
-
-    $('#NewResponsibleID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'NewResponsibleID', [ 'TypeID', 'Dest', 'NewUserID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
                     </div>
                     <div class="Clear"></div>
 [% RenderBlockEnd("ResponsibleSelection") %]
@@ -378,10 +245,6 @@
                     <div class="Field">
 
 <!-- OutputFilterHook_TicketOptionsBegin -->
-
-[% RenderBlockStart("SpellCheck") %]
-                        <a href="#" id="OptionSpellCheck">[ [% Translate("Spell check") | html %] ]</a>
-[% RenderBlockEnd("SpellCheck") %]
 
 [% RenderBlockStart("OptionCustomer") %]
                         <a href="#" id="OptionCustomer">[ [% Translate("Customer user") | html %] ]</a>
@@ -407,24 +270,10 @@
                         <p class="FieldExplanation">[% Translate("Setting a template will overwrite any text or attachment.") %]</p>
                     </div>
                     <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#StandardTemplateID').bind('change', function (Event) {
-        Core.Agent.TicketAction.ConfirmTemplateOverwrite('RichText', $(this), function () {
-            Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'StandardTemplateID', ['RichTextField']);
-        });
-        return false;
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("StandardTemplate") %]
 
                     <label class="Mandatory" for="RichText"><span class="Marker">*</span> [% Translate("Text") | html %]:</label>
                     <div id="RichTextField" class="RichTextField">
-
-[% RenderBlockStart("RichText") %]
-[% InsertTemplate("RichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
                         <textarea id="RichText" class="RichText Validate_Required [% Data.RichTextInvalid | html %]" name="Body" title="[% Translate("Message body") | html %]" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Body | html %]</textarea>
                         <div id="RichTextError" class="TooltipErrorMessage">
                             <p>[% Translate("This field is required.") | html %]</p>
@@ -435,40 +284,9 @@
                     </div>
                     <div class="Clear"></div>
 
-                    <label>[% Translate("Attachment") | html %]:</label>
+                    <label>[% Translate("Attachments") | html %]:</label>
                     <div class="Field">
-                        <ul>
-[% RenderBlockStart("Attachment") %]
-                            <li>
-                                [% Data.Filename | html %] ([% Data.Filesize | html %])
-                                <button type="button" id="AttachmentDeleteButton[% Data.FileID | html %]" name="AttachmentDeleteButton[% Data.FileID | html %]" value="[% Translate("Delete") | html %]" class="CallForAction SpacingLeft"><span>[% Translate("Delete") | html %]</span></button>
-                                <input type="hidden" id="AttachmentDelete[% Data.FileID | html %]" name="AttachmentDelete[% Data.FileID | html %]" />
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#AttachmentDeleteButton[% Data.FileID | html %]').bind('click', function () {
-        var $Form = $('#AttachmentDeleteButton[% Data.FileID | html %]').closest('form');
-        $('#AttachmentDelete[% Data.FileID | html %]').val(1);
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.trigger('submit');
-    });
-//]]></script>
-[% END %]
-                            </li>
-[% RenderBlockEnd("Attachment") %]
-                            <li>
-                                <input id="FileUpload" name="FileUpload" type="file" size="40" />
-                                <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
-                            </li>
-                        </ul>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#FileUpload').bind('change', function () {
-        var $Form = $('#FileUpload').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.find('#AttachmentUpload').val('1').end().submit();
-    });
-//]]></script>
-[% END %]
+[% INCLUDE "FormElements/AttachmentList.tt" %]
                     </div>
                     <div class="Clear"></div>
 
@@ -476,7 +294,7 @@
                     <label>[% Translate("Chat protocol") | html %]:</label>
                     <div class="Field">
                         <div class="ChatProtocol">
-[% INCLUDE "ChatDisplay.tt" %]
+[% INCLUDE "ArticleContent/Chat.tt" %]
                         </div>
                         <p class="FieldExplanation">[% Translate('The chat will be appended as a separate article.') | html %]
                         </div>
@@ -487,13 +305,6 @@
                         <label for="NextStateID">[% Translate("Next ticket state") | html %]:</label>
                         <div class="Field">
                         [% Data.NextStatesStrg %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#NextStateID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'NextStateID', [ 'TypeID', 'Dest', 'NewUserID','NewResponsibleID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
                         </div>
                         <div class="Clear"></div>
 
@@ -524,13 +335,6 @@
                         <label for="PriorityID">[% Translate("Priority") | html %]:</label>
                         <div class="Field">
                         [% Data.PriorityStrg %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#PriorityID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'PriorityID', [ 'TypeID', 'Dest', 'NewUserID','NewResponsibleID', 'NextStateID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'To', 'Cc', 'Bcc', 'StandardTemplateID' [% Data.DynamicFieldNamesStrg %]]);
-    });
-//]]></script>
-[% END %]
                         </div>
                         <div class="Clear"></div>
 
@@ -590,11 +394,6 @@
         </div>
         <div id="CustomerTickets"></div>
     </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.Agent.TicketAction.Init();
-    Core.Config.Set('Localization.Delete', [% Translate("Delete") | JSON %]);
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -607,8 +406,6 @@
             ServiceID: $('#ServiceID').val()
         });
 # ---
-//]]></script>
-[% END %]
 
 # example template form for customizations
 #<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" id="Template1">
