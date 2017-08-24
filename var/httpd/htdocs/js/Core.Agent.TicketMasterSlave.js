@@ -13,18 +13,30 @@
 var Core = Core || {};
 Core.Agent = Core.Agent || {};
 
+// ---
+// OTRSMasterSlave
+// ---
+///**
+// * @namespace Core.Agent.TicketActionCommon
+// * @memberof Core.Agent
+// * @author OTRS AG
+// * @description
+// *      This namespace contains special module functions for AgentTicketActionCommon.
+// */
+//Core.Agent.TicketActionCommon = (function (TargetNS) {
 /**
  * @namespace Core.Agent.TicketMasterSlave
  * @memberof Core.Agent
  * @author OTRS AG
  * @description
- *      This namespace contains special module functions for AgentTicketMasterSlave.
+ *      This namespace contains special module functions for TicketMasterSlave.
  */
 Core.Agent.TicketMasterSlave = (function (TargetNS) {
+// ---
 
     /**
      * @name Init
-     * @memberof Core.Agent.TicketMasterSlave
+     * @memberof Core.Agent.TicketActionCommon
      * @function
      * @description
      *      This function initializes the module functionality.
@@ -99,7 +111,7 @@ Core.Agent.TicketMasterSlave = (function (TargetNS) {
     /**
      * @private
      * @name FieldUpdate
-     * @memberof Core.Agent.TicketMasterSlave
+     * @memberof Core.Agent.TicketActionCommon
      * @function
      * @param {String} Value - FieldID
      * @param {Array} ModifiedFields - Fields
@@ -115,4 +127,9 @@ Core.Agent.TicketMasterSlave = (function (TargetNS) {
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
+// ---
+// OTRSMasterSlave
+// ---
+//}(Core.Agent.TicketActionCommon || {}));
 }(Core.Agent.TicketMasterSlave || {}));
+// ---
