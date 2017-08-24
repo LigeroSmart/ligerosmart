@@ -135,7 +135,7 @@ $Selenium->RunTest(
 
         # check page
         for my $ID (
-            qw(DynamicField_MasterSlave Subject RichText FileUpload ArticleTypeID submitRichText)
+            qw(DynamicField_MasterSlave Subject RichText FileUpload IsVisibleForCustomer submitRichText)
             )
         {
             my $Element = $Selenium->find_element( "#$ID", 'css' );
@@ -176,7 +176,7 @@ $Selenium->RunTest(
 
         # verify dynamic field master ticket update
         $Self->True(
-            index( $Selenium->get_page_source(), 'FieldName=MasterSlave;Value=Master' ) > -1,
+            index( $Selenium->get_page_source(), 'Changed dynamic field MasterSlave from "" to "Master".' ) > -1,
             "Master dynamic field update value - found",
         );
 
@@ -234,7 +234,8 @@ $Selenium->RunTest(
 
         # verify dynamic field slave ticket update
         $Self->True(
-            index( $Selenium->get_page_source(), "FieldName=MasterSlave;Value=SlaveOf:$TicketNumbers[0]" ) > -1,
+            index( $Selenium->get_page_source(),
+                'Changed dynamic field MasterSlave from "" to "SlaveOf:' . $TicketNumbers[0] ) > -1,
             "Slave dynamic field update value - found",
         );
 
