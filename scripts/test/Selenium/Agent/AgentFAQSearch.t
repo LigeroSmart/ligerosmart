@@ -114,12 +114,10 @@ $Selenium->RunTest(
 
         # add search filter by title and run it
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( ".AddButton", 'css' )->VerifiedClick();
-        $Selenium->find_element( "Title",      'name' )->send_keys('FAQ*');
+        $Selenium->find_element( "Title", 'name' )->send_keys('FAQ*');
         $Selenium->execute_script(
             "\$('#Attribute').val('CategoryIDs').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( ".AddButton", 'css' )->VerifiedClick();
         $Selenium->execute_script(
             "\$('#CategoryIDs').val('$CategoryID').trigger('redraw.InputField').trigger('change');"
         );

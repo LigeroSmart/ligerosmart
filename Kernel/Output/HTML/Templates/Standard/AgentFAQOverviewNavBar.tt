@@ -40,14 +40,6 @@
                         <a id="[% Data.LinkBackID | uri %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkBack | html %]">[% Translate("Change search options") | html %]</a>
                     </li>
                 </ul>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#FAQSearch').bind('click', function (Event) {
-        Core.Agent.Search.OpenSearchDialog( 'AgentFAQSearch', "[% Data.Profile | html %]" );
-        return false;
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("OverviewNavBarPageBack") %]
 
 [% RenderBlockStart("ContextSettings") %]
@@ -75,26 +67,6 @@
                         </fieldset>
                     </form>
                 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    // bind the ContextSettingsDialogContainer
-    $('#ShowContextSettingsDialog').bind('click', function (Event) {
-        Core.UI.Dialog.ShowContentDialog($('#ContextSettingsDialogContainer'), [% Translate("Settings") | JSON %], '20%', 'Center', true,
-            [
-                {
-                    Label: [% Translate("Submit") | JSON %],
-                    Type: 'Submit',
-                    Class: 'Primary'
-                }
-            ]
-        );
-        Event.preventDefault();
-        Event.stopPropagation();
-        return false;
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ContextSettings") %]
 
             </div>

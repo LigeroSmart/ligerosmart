@@ -1118,10 +1118,13 @@ sub Run {
     # show default search screen
     $Output = $LayoutObject->Header();
     $Output .= $LayoutObject->NavigationBar();
-    $LayoutObject->Block(
-        Name => 'Search',
-        Data => \%Param,
+
+    # Send data to JS.
+    $LayoutObject->AddJSData(
+        Key   => 'AgentFAQSearch',
+        Value => 1,
     );
+
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentFAQSearch',
         Data         => \%Param,
@@ -1706,7 +1709,15 @@ sub _MaskForm {
     }
 
     # show attributes
+    my @SearchAttributes;
     my %AlreadyShown;
+    if ($Profile) {
+        $LayoutObject->AddJSData(
+            Key   => 'FAQSearchProfile',
+            Value => $Profile,
+        );
+    }
+
     ITEM:
     for my $Item (@Attributes) {
         my $Key = $Item->{Key};
@@ -1716,12 +1727,7 @@ sub _MaskForm {
 
         next ITEM if $AlreadyShown{$Key};
         $AlreadyShown{$Key} = 1;
-        $LayoutObject->Block(
-            Name => 'SearchAJAXShow',
-            Data => {
-                Attribute => $Key,
-            },
-        );
+        push @SearchAttributes, $Key;
     }
 
     # if no attribute is shown, show full-text search
@@ -1744,31 +1750,29 @@ sub _MaskForm {
                 next DEFAULT if $Key eq 'DynamicField';    # Ignore entry for DF config
                 next DEFAULT if $AlreadyShown{$Key};
                 $AlreadyShown{$Key} = 1;
-
-                $LayoutObject->Block(
-                    Name => 'SearchAJAXShow',
-                    Data => {
-                        Attribute => $Key,
-                    },
-                );
+                push @SearchAttributes, $Key;
             }
         }
         else {
-            $LayoutObject->Block(
-                Name => 'SearchAJAXShow',
-                Data => {
-                    Attribute => 'Fulltext',
-                },
-            );
+
+            # If no attribute is shown, show fulltext search.
+            if ( !keys %AlreadyShown ) {
+                push @SearchAttributes, 'Fulltext';
+            }
         }
     }
+
+    $LayoutObject->AddJSData(
+        Key   => 'SearchAttributes',
+        Value => \@SearchAttributes,
+    );
 
     # build output
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentFAQSearch',
-        Data         => {%Param},
+        Data         => \%Param,
+        AJAX         => 1,
     );
-
     return $Output;
 }
 

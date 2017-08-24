@@ -97,6 +97,49 @@ FAQ.Agent.FAQZoom = (function (TargetNS) {
             });
         });
 
+        // Create events for AgentFAQZoomSmall screen.
+        if (Core.Config.Get('AgentFAQZoomSmall') === '1') {
+
+            $('#Cancel').on('click', function () {
+                parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
+            });
+
+            $('#InsertText').on('click', function () {
+                var InsertText = 1,
+                    InsertLink = 0;
+
+                FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
+            });
+
+            $('#InsertLink').on('click', function () {
+                var InsertText = 0,
+                    InsertLink = 1;
+
+                FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
+            });
+
+            $('#InsertTextAndLink').on('click', function () {
+                var InsertText = 1,
+                    InsertLink = 1;
+
+                FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
+            });
+
+            $('#InsertFull').on('click', function () {
+                var InsertText = 1,
+                    InsertLink = 0;
+
+                FAQ.Agent.TicketCompose.SetFullFAQ(InsertText, InsertLink);
+            });
+
+            $('#InsertFullAndLink').on('click', function () {
+                var InsertText = 1,
+                    InsertLink = 1;
+
+                FAQ.Agent.TicketCompose.SetFullFAQ(InsertText, InsertLink);
+            });
+        }
+
         // Initialize allocation list for link object table.
         Core.Agent.TableFilters.SetAllocationList();
     };

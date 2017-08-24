@@ -756,6 +756,12 @@ sub Run {
             );
         }
 
+        # Send data to JS.
+        $LayoutObject->AddJSData(
+            Key   => 'TicketCompose.UpdateArticleSubject',
+            Value => $Param{UpdateArticleSubject},
+        );
+
         my $ShowOrBlock;
 
         # show "Insert Text" button
@@ -837,6 +843,12 @@ sub Run {
             # set the $CancelButtonClass to '';
             $CancelButtonClass = '';
         }
+
+        # Send data to JS.
+        $LayoutObject->AddJSData(
+            Key   => 'AgentFAQZoomSmall',
+            Value => 1,
+        );
 
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQZoomSmall',

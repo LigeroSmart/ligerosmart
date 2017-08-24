@@ -27,6 +27,7 @@ FAQ.Agent.FAQ = (function (TargetNS) {
      *      This function initialize the FAQ module.
      */
     TargetNS.Init = function() {
+        var FAQSearchProfile = Core.Config.Get('FAQSearchProfile');
 
         // Prevent too fast submitions that could lead into no changes sent to server,
         // due to RTE to textarea data transfer
@@ -40,6 +41,32 @@ FAQ.Agent.FAQ = (function (TargetNS) {
             Core.Agent.Search.OpenSearchDialog('AgentFAQSearch');
             return false;
         });
+
+        if (FAQSearchProfile !== 'undefined') {
+            $('#FAQSearch').on('click', function () {
+                Core.Agent.Search.OpenSearchDialog(Core.Config.Get('Action'), FAQSearchProfile);
+                return false;
+            });
+        }
+
+        $('#ShowContextSettingsDialog').on('click', function (Event) {
+            Core.UI.Dialog.ShowContentDialog($('#ContextSettingsDialogContainer'), Core.Language.Translate("Settings"), '20%', 'Center', true,
+                [
+                    {
+                        Label: Core.Language.Translate("Submit"),
+                        Type: 'Submit',
+                        Class: 'Primary'
+                    }
+                ]
+            );
+            Event.preventDefault();
+            Event.stopPropagation();
+            return false;
+        });
+
+        if (Core.Config.Get('AgentFAQSearch') === 1) {
+            Core.Agent.Search.OpenSearchDialog(Core.Config.Get('Action'), FAQSearchProfile);
+        }
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');

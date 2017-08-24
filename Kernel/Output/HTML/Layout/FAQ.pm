@@ -204,6 +204,13 @@ sub FAQListShow {
         );
     }
 
+    # Send data to JS.
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    $LayoutObject->AddJSData(
+        Key   => 'FAQSearchProfile',
+        Value => $Param{Profile},
+    );
+
     # get filters
     if ( $Param{Filters} ) {
 

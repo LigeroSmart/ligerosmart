@@ -14,7 +14,7 @@
         <input type="hidden" name="EmptySearch" value="[% Data.EmptySearch | html %]" id="EmptySearch"/>
         <input type="hidden" name="Nav" value="[% Data.Nav | html %]"/>
         <fieldset class="TableLike">
-            <legend>[% Translate("Templates") | html %]</legend>
+            <legend><span>[% Translate("Templates") | html %]</span></legend>
             <label>[% Translate("Search template") | html %]:</label>
             <div class="Field">
                 [% Data.ProfilesStrg %]
@@ -35,14 +35,13 @@
             </div>
         </fieldset>
         <fieldset class="TableLike" id="SearchInsert">
-            <legend>[% Translate("Filters in use") | html %]</legend>
+            <legend><span>[% Translate("Filters in use") | html %]</span></legend>
         </fieldset>
         <fieldset class="TableLike">
-            <legend>[% Translate("Additional filters") | html %]</legend>
+            <legend><span>[% Translate("Additional filters") | html %]</span></legend>
             <label>[% Translate("Add another attribute") | html %]:</label>
             <div class="Field">
                 [% Data.AttributesStrg %]
-                <a class="AddButton" href="#" title="[% Translate("Add entry") | html %]"><i class="fa fa-plus-square-o"></i><span class="InvisibleText">[% Translate("Add") | html %]</span></a>
             </div>
             <div class="Clear"></div>
             <label>[% Translate("Output") | html %]:</label>
@@ -198,23 +197,4 @@
     <button id="SearchFormSubmit" class="Primary CallForAction" value="Run search"><span><i class="fa fa-search"></i> [% Translate("Run search") | html %]</span></button>
 </div>
 
-<script type="text/javascript">//<![CDATA[
-    window.setTimeout(function (){
-[% RenderBlockStart("SearchAJAXShow") %]
-        Core.Agent.Search.SearchAttributeAdd("[% Data.Attribute | html %]");
-[% RenderBlockEnd("SearchAJAXShow") %]
-        Core.Agent.Search.AdditionalAttributeSelectionRebuild();
-    }, 0);
-//]]></script>
-
 [% RenderBlockEnd("SearchAJAX") %]
-
-[% RenderBlockStart("Search") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.Agent.Search.OpenSearchDialog( '[% Env("Action") %]' );
-//]]></script>
-[% END %]
-
-[% RenderBlockEnd("Search") %]

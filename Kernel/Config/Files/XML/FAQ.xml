@@ -505,6 +505,11 @@ Your OTRS Notification Master
                         <Item>FAQ.Widget.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Customer.FAQZoom.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>
@@ -1087,6 +1092,11 @@ Your OTRS Notification Master
         <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
         <Value>
             <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>FAQ.Agent.FAQ.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>

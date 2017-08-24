@@ -5,6 +5,7 @@
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+## nofilter(TidyAll::Plugin::OTRS::TT::ScriptUsage)
 
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
@@ -136,13 +137,6 @@ function CheckIFrameHeight(IFrameID) {
                             <iframe sandbox="allow-same-origin allow-popups ms-allow-popups allow-popups-to-escape-sandbox" class="FAQField" id="IframeFAQ[% Data.Field | html %]" onload="window.setTimeout( function (){ CheckIFrameHeight('IframeFAQ[% Data.Field | html %]'); }, 500);" src="[% Env("Baselink") %]Action=AgentFAQZoom;Subaction=HTMLView;ItemID=[% Data.ItemID | html %];Field=[% Data.Field | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]"></iframe>
                         </div>
 [% RenderBlockEnd("FAQContentHTML") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-
-    Core.Config.Set('FAQ::Frontend::AgentHTMLFieldHeightDefault', parseInt("[% Config("FAQ::Frontend::AgentHTMLFieldHeightDefault") %]" || 0, 10));
-    Core.Config.Set('FAQ::Frontend::AgentHTMLFieldHeightMax', parseInt("[% Config("FAQ::Frontend::AgentHTMLFieldHeightMax") %]" || 0, 10));
-//]]></script>
-[% END %]
 [% RenderBlockStart("FAQContentPlain") %]
                         <div class="ArticleFAQContent">
                             <div class="message">
@@ -200,49 +194,3 @@ function CheckIFrameHeight(IFrameID) {
     <br />
 
 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global FAQ: true */
-Core.Config.Set('TicketCompose.UpdateArticleSubject', "[% Data.UpdateArticleSubject | html %]");
-
-$('#Cancel').bind('click', function (event) {
-    parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
-});
-
-$('#InsertText').bind('click', function (event) {
-    var InsertText = 1,
-        InsertLink = 0;
-
-    FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
-});
-
-$('#InsertLink').bind('click', function (event) {
-    var InsertText = 0,
-        InsertLink = 1;
-
-    FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
-});
-
-$('#InsertTextAndLink').bind('click', function (event) {
-    var InsertText = 1,
-        InsertLink = 1;
-
-    FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
-});
-
-$('#InsertFull').bind('click', function (event) {
-    var InsertText = 1,
-        InsertLink = 0;
-
-    FAQ.Agent.TicketCompose.SetFullFAQ(InsertText, InsertLink);
-});
-
-$('#InsertFullAndLink').bind('click', function (event) {
-    var InsertText = 1,
-        InsertLink = 1;
-
-    FAQ.Agent.TicketCompose.SetFullFAQ(InsertText, InsertLink);
-});
-//]]></script>
-[% END %]
