@@ -43,7 +43,10 @@ ITSM.Agent.ConfirmDialog = (function (TargetNS) {
      * @description Shows waiting dialog until search screen is ready.
      */
     function ShowWaitingDialog(PositionTop){
-        Core.UI.Dialog.ShowContentDialog('<div class="Spacing Center"><span class="AJAXLoader" title="' + Core.Config.Get('LoadingMsg') + '"></span></div>', '', PositionTop, 'Center', true);
+        var DivHTML = Core.Template.Render('Agent/ITSMCore/LoadingDialog', {
+            SpanText: Core.Config.Get('LoadingMsg')
+        });
+        Core.UI.Dialog.ShowContentDialog(DivHTML, '', PositionTop, 'Center', true);
     }
 
     /**
