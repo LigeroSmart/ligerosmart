@@ -1135,12 +1135,30 @@ sub _MigrateDTLInSysConfig {
                 }
             }
 
-            # update the config item
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
-                Key   => $Name,
-                Value => $Setting,
+            my %MenuModuleSetting = $SysConfigObject->SettingGet(
+                Name    => $Name . '###' . $MenuModule,
+                Default => 1
             );
+
+            my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+                UserID    => 1,
+                Force     => 1,
+                DefaultID => $MenuModuleSetting{DefaultID},
+            );
+
+            # update the config item
+            $SysConfigObject->SettingUpdate(
+                Name              => $Name . '###' . $MenuModule,
+                EffectiveValue    => $Setting->{$MenuModule},
+                ExclusiveLockGUID => $ExclusiveLockGUID,
+                UserID            => 1,
+            );
+
+            $SysConfigObject->SettingUnlock(
+                UserID    => 1,
+                DefaultID => $MenuModuleSetting{DefaultID},
+            );
+
         }
     }
 
@@ -1159,9 +1177,13 @@ sub _MigrateConfigs {
 
     for my $Type (qw(ITSMService ITSMSLA)) {
 
+        # create needed objects
+        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');    # ?
+        my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
         # migrate ITSMCore Preferences
         # get setting content for ITSMCore Preferences
-        my $Setting = $Kernel::OM->Get('Kernel::Config')->Get( $Type . '::Frontend::MenuModule' );
+        my $Setting = $ConfigObject->Get( $Type . '::Frontend::MenuModule' );
 
         CONFIGITEM:
         for my $MenuModule ( sort keys %{$Setting} ) {
@@ -1178,12 +1200,33 @@ sub _MigrateConfigs {
             $Module =~ s{Kernel::Output::HTML::$OldMenu(\w+)}{Kernel::Output::HTML::$NewMenu}xmsg;
             $Setting->{$MenuModule}->{Module} = $Module;
 
-            # set new setting
-            my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-                Valid => 1,
-                Key   => $Type . '::Frontend::MenuModule###' . $MenuModule,
-                Value => $Setting->{$MenuModule},
+            # Get Setting
+            my %FrontendModuleSetting = $SysConfigObject->SettingGet(
+                Name    => $Type . '::Frontend::MenuModule###' . $MenuModule,
+                Default => 1,
             );
+
+            # Lock Setting
+            my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+                UserID    => 1,
+                Force     => 1,
+                DefaultID => $FrontendModuleSetting{DefaultID},
+            );
+
+            # Set new setting
+            $SysConfigObject->SettingUpdate(
+                Name              => $Type . '::Frontend::MenuModule###' . $MenuModule,
+                EffectiveValue    => $Setting->{$MenuModule},
+                ExclusiveLockGUID => $ExclusiveLockGUID,
+                UserID            => 1,
+            );
+
+            # Unlock setting
+            $SysConfigObject->SettingUnlock(
+                UserID    => 1,
+                DefaultID => $FrontendModuleSetting{DefaultID},
+            );
+
         }
     }
 
