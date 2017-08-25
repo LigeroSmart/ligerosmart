@@ -234,8 +234,10 @@ $Selenium->RunTest(
 
         # verify dynamic field slave ticket update
         $Self->True(
-            index( $Selenium->get_page_source(),
-                'Changed dynamic field MasterSlave from "" to "SlaveOf:' . $TicketNumbers[0] ) > -1,
+            index(
+                $Selenium->get_page_source(),
+                'Changed dynamic field MasterSlave from "" to "SlaveOf:' . $TicketNumbers[0]
+                ) > -1,
             "Slave dynamic field update value - found",
         );
 
