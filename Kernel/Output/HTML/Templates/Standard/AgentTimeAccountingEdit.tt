@@ -35,30 +35,14 @@
                 <h2>[% Translate("Date Navigation") | html %]</h2>
             </div>
             <div class="Content">
-                <div class="MonthSelection">
-                    <a class="Arrow" title="[% Translate("Previous day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearBack | uri %];Month=[% Data.MonthBack | uri %];Day=[% Data.DayBack | uri %]">
-                        <i class="fa fa-caret-left"></i>
-                    </a>
-                    [% Data.Year | html %]-[% Data.Month | html %]-[% Data.Day | html %]
-                    <a class="Arrow" title="[% Translate("Next day") | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.YearNext | uri %];Month=[% Data.MonthNext | uri %];Day=[% Data.DayNext | uri %]">
-                        <i class="fa fa-caret-right"></i>
-                    </a>
-                </div>
                 <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate" name="DateSelection" id="DateSelectionForm">
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="Edit" />
                     [% Data.Date %]
+                    <a href="#" id="NavigationSelect" class="CallForAction Inline">
+                        <span><i class="fa fa-arrow-circle-o-right"></i></span>
+                    </a>
                 </form>
-                <a href="#" id="NavigationSelect" class="CallForAction SpacingTopSmall Fullsize Center">
-                    <span><i class="fa fa-arrow-circle-o-right"></i>[% Translate("Go to this date") | html %]</span>
-                </a>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('#NavigationSelect').bind('click', function(){
-    $('#DateSelectionForm').submit();
-});
-//]]></script>
-[% END %]
             </div>
         </div>
 
@@ -69,16 +53,6 @@ $('#NavigationSelect').bind('click', function(){
             </div>
             <div class="Content">
                 [% Data.IncompleteWorkingDaysSelect %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#IncompleteWorkingDaysList').unbind('change.IncompleteWorkingDays').bind('change.IncompleteWorkingDays', function () {
-        var Date = $(this).val().split('-');
-        if (Date[0] && Date[1] && Date[2]) {
-            location.href = "[% Env("Baselink") %]Action=[% Env("Action") %];Year=" + Date[0] + ";Month=" + Date[1] + ";Day=" + Date[2];
-        }
-    });
-//]]></script>
-[% END %]
             </div>
         </div>
 [% RenderBlockEnd("IncompleteWorkingDays") %]
@@ -89,13 +63,31 @@ $('#NavigationSelect').bind('click', function(){
                 <h2>[% Translate("Days without entries") | html %]</h2>
             </div>
             <div class="Content">
-                <ul class="IncompleteWorkingDays">
-                    <li id="SelectAllDays"><input type="checkbox" id="IncompleteWorkingDay-All" name="IncompleteWorkingDay-All" /><label for="IncompleteWorkingDay-All"><em>[% Translate("Select all days") | html %]</em></label></li>
-[% RenderBlockStart("IncompleteWorkingDaysMassEntrySingleDay") %]
-                    <li><input type="checkbox" id="IncompleteWorkingDay-[% Data.Date | html %]" name="IncompleteWorkingDay-[% Data.Date | html %]" /><label for="IncompleteWorkingDay-[% Data.Date | html %]">[% Data.Date | html %]</label> - <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %]">[% Translate("Edit") | html %]</a></li>
-[% RenderBlockEnd("IncompleteWorkingDaysMassEntrySingleDay") %]
-                </ul>
-                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" id="MassEntry" name="MassEntry" class="SpacingTop">
+
+                <table class="DataTable IncompleteWorkingDays">
+                    <thead>
+                        <tr>
+                            <th id="SelectAllDays"><input type="checkbox" id="IncompleteWorkingDay-All" name="IncompleteWorkingDay-All" /></th>
+                            <th>[% Translate("Date") | html %]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    [% RenderBlockStart("IncompleteWorkingDaysMassEntrySingleDay") %]
+                        <tr>
+                            <td class="W10pc"><input type="checkbox" id="IncompleteWorkingDay-[% Data.Date | html %]" name="IncompleteWorkingDay-[% Data.Date | html %]" /></td>
+                            <td><label for="IncompleteWorkingDay-[% Data.Date | html %]">[% Data.DateHR | Localize("Date") %] - [% Translate(Data.Weekday) | html %]</label></td>
+                            <td class="W10pc"><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];Day=[% Data.Day | uri %]"><i class="fa fa-edit"></i></a></td>
+                        </tr>
+                    [% RenderBlockEnd("IncompleteWorkingDaysMassEntrySingleDay") %]
+                    </tbody>
+                </table>
+
+                <!-- <ul class="IncompleteWorkingDays">
+                    <li id="SelectAllDays"><label for="IncompleteWorkingDay-All"><em>[% Translate("Select all days") | html %]</em></label></li>
+                    <li> - </li>
+                </ul> -->
+                <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" id="MassEntry" name="MassEntry" class="SpacingTopSmall">
                     <input type="hidden" name="Action" value="[% Env("Action") %]" />
                     <input type="hidden" name="Subaction" value="MassEntry" />
                     <input type="hidden" name="Dates" value="" />
@@ -112,18 +104,6 @@ $('#NavigationSelect').bind('click', function(){
                         <li><input type="radio" data-absence="Overtime" name="Absence[]" id="ConfirmOvertime" /><label for="ConfirmOvertime">[% Translate("On overtime leave") | html %]</label></li>
                     </ul>
                 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global TimeAccounting: true */
-    TimeAccounting.Agent.EditTimeRecords.MassEntryInit({
-        MsgChooseOneDay:    [% Translate("Please choose at least one day!") | JSON %],
-        MsgAbsenceReason:   [% Translate("Please choose a reason for absence!") | JSON %],
-        MassEntry:          [% Translate("Mass Entry") | JSON %],
-        Submit:             [% Translate("Submit") | JSON %],
-        Cancel:             [% Translate("Cancel") | JSON %]
-    });
-//]]></script>
-[% END %]
             </div>
         </div>
 [% RenderBlockEnd("IncompleteWorkingDaysMassEntry") %]
@@ -322,61 +302,6 @@ $('#NavigationSelect').bind('click', function(){
                         <a href="[% Env("Baselink") %]Action=[% Env("Action") %];">[% Translate("Cancel") | html %]</a>
                     </div>
                     <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global TimeAccounting: true */
-    TimeAccounting.Agent.EditTimeRecords.ActionList = [% Data.JSActionList | html %];
-    TimeAccounting.Agent.EditTimeRecords.ActionListConstraints = [% Data.JSActionListConstraints | html %];
-    TimeAccounting.Agent.EditTimeRecords.Init({
-        RemarkRegExpContent: "[% Data.RemarkRegExp | html %]",
-        Language: {
-            ShowAllItems: [% Translate("Show all items") | JSON %],
-            ProjectTitle: [% Translate("Project") | JSON %],
-            TaskTitle: [% Translate("Task") | JSON %]
-        }
-    });
-    TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({
-        ElementID:                  'DeleteTimeAccountingEntry',
-        ElementSelector:            '#DeleteTimeAccountingEntry',
-        DialogContentQueryString:   'Action=AgentTimeAccountingEdit;DeleteDialog=1;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
-        ConfirmedActionQueryString: 'Action=AgentTimeAccountingEdit;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]',
-        DialogTitle:                [% Translate("Delete Time Accounting Entry") | JSON %],
-        TranslatedText:             {
-            Yes: [% Translate("Yes") | JSON %],
-            No:  [% Translate("No") | JSON %]
-        }
-    });
-//]]></script>
-[% END %]
-
-[% RenderBlockStart("ShowConfirmation") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    // define yes and no buttons
-    var Buttons = [{
-        Label: [% Translate("Yes") | JSON %],
-        Class: "Primary",
-        Type: "Close",
-        }, {
-        Label: [% Translate("No") | JSON %],
-
-        // define the function that is called when the 'No' button is pressed
-        Function: function(){
-
-            // disable Yes and No buttons to prevent multiple submits
-            $('div.Dialog:visible div.ContentFooter button').attr('disabled', 'disabled');
-
-            // redirect to the module that deletes the saved entry after pressing the No button
-            location.href = Core.Config.Get('Baselink') + 'Action=AgentTimeAccountingEdit;Subaction=Delete;Year=[% Data.Year | html %];Month=[% Data.Month | html %];Day=[% Data.Day | html %]';
-        }
-    }];
-    // show the confirmation dialog to confirm the action
-    Core.UI.Dialog.ShowContentDialog($('#[% Data.BlockName | html %]'), [% Translate("Confirm insert") | JSON %], '20%', 'Center', true, Buttons);
-
-//]]></script>
-[% END %]
-[% RenderBlockEnd("ShowConfirmation") %]
-
                 </form>
             </div>
         </div>

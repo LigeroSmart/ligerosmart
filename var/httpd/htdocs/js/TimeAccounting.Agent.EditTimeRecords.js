@@ -20,10 +20,7 @@ TimeAccounting.Agent = TimeAccounting.Agent || {};
  */
 TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
-    TargetNS.ActionList = "";
-    TargetNS.ActionListConstraints = "";
     // Adds option to a selection
-
     function AddSelectionOption($SelectionElement, OptionText, OptionValue, SelectedOption) {
         var $Option = $('<option value="' + OptionValue + '">' + OptionText + '</option>');
 
@@ -44,8 +41,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      */
     TargetNS.FillActionList = function (WorkingUnitID) {
         var ProjectName = $('#ProjectID' + WorkingUnitID + ' option:selected').text(),
-            ActionList = TargetNS.ActionList,
-            ActionListConstraints = TargetNS.ActionListConstraints,
+            ActionList = Core.Config.Get('ActionList'),
+            ActionListConstraints = Core.Config.Get('ActionListConstraints'),
             $ActionSelection = $("#ActionID" + WorkingUnitID),
             SelectedActionID = $ActionSelection.val(),
             OptionCount = 0;
@@ -230,14 +227,12 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      * @name Init
      * @memberof TimeAccounting.Agent.EditTimeRecords
      * @function
-     * @param {Object} Options the different possible options:
-     *                  RemarkRegExpContent - the regular expression for the remark validation check
      * @description
      *      This function initializes all needed JS for the Edit screen
      */
-    TargetNS.Init = function (Options) {
-        var LocalOptions = Options || {},
-            RemarkRegExpContent = LocalOptions.RemarkRegExpContent,
+    TargetNS.Init = function () {
+
+        var RemarkRegExpContent = Core.Config.Get('RemarkRegExpContent'),
             // Add some special validation methods for the edit screen
             // Define all available elements (only the prefixes) in a row
             ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'];
@@ -352,30 +347,30 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      * @description
      *      This function initializes the javascript for the mass entry functionality
      */
-    TargetNS.MassEntryInit = function(Language) {
+    TargetNS.MassEntryInit = function() {
         $('#IncompleteWorkingDay-All').unbind('click.SelectAllDays').bind('click.SelectAllDays', function () {
             var State = $(this).prop('checked');
-            $('ul.IncompleteWorkingDays li input:checkbox').prop('checked', State);
+            $('.IncompleteWorkingDays tbody input:checkbox').prop('checked', State);
         });
         $('#MassEntrySubmit').unbind('click.MassEntrySubmit').bind('click.MassEntrySubmit', function () {
-            var $WorkingDayCheckboxes = $('ul.IncompleteWorkingDays li input:checkbox:checked').filter('[name!=IncompleteWorkingDay-All]');
+            var $WorkingDayCheckboxes = $('.IncompleteWorkingDays tbody input:checkbox:checked').filter('[name!=IncompleteWorkingDay-All]');
 
             if (!$WorkingDayCheckboxes.length) {
-                alert(Language.MsgChooseOneDay);
+                alert(Core.Language.Translate('Please choose at least one day!'));
                 return false;
             }
 
             // Show overlay
-            Core.UI.Dialog.ShowContentDialog($('#MassEntryConfirmDialog'), Language.MassEntry, '150px', 'Center', true, [
+            Core.UI.Dialog.ShowContentDialog($('#MassEntryConfirmDialog'), Core.Language.Translate('Mass Entry'), '150px', 'Center', true, [
                 {
-                    Label: Language.Submit,
+                    Label: Core.Language.Translate('Submit'),
                     Function: function () {
                         var $SelectedRadio = $('#MassEntryConfirmRadio li input:radio:checked'),
                             AbsenceReason,
                             CollectedDates = '';
 
                         if (!$SelectedRadio.length) {
-                            alert(Language.MsgAbsenceReason);
+                            alert(Core.Language.Translate('Please choose a reason for absence!'));
                             return false;
                         }
 
@@ -392,7 +387,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                         }
 
                         // collect dates
-                        $('ul.IncompleteWorkingDays li input:checkbox:checked').each(function () {
+                        $('.IncompleteWorkingDays tbody input:checkbox:checked').each(function () {
                             var DateItem = $(this).attr('name').replace(/IncompleteWorkingDay-/, "");
                             if (DateItem !== 'All') {
                                 CollectedDates += DateItem + '|';
@@ -416,7 +411,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                     Class: 'Primary'
                 },
                 {
-                    Label: Language.Cancel,
+                    Label: Core.Language.Translate('Cancel'),
                     Function: function () {
                         Core.UI.Dialog.CloseDialog($('.Dialog:visible'));
                     }
@@ -425,6 +420,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             return false;
         });
     };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(TimeAccounting.Agent.EditTimeRecords || {}));

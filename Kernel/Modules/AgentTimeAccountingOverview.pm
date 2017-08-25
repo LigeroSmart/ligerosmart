@@ -12,7 +12,6 @@ use strict;
 use warnings;
 
 use Kernel::Language qw(Translatable);
-use Time::Local;
 
 use Kernel::System::VariableCheck qw(:all);
 
@@ -24,6 +23,12 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
+
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+
+    $Self->{TimeZone} = $Param{TimeZone}
+        || $Param{UserTimeZone}
+        || $DateTimeObject->OTRSTimeZoneGet();
 
     return $Self;
 }
@@ -39,13 +44,14 @@ sub Run {
     my @WeekdayArray = ( 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', );
 
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $DateTimeObjectCurrent = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $TimeAccountingObject  = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     # ---------------------------------------------------------- #
     # overview about the users time accounting
     # ---------------------------------------------------------- #
-    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
+    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeAccountingObject->SystemTime2Date(
+        SystemTime => $DateTimeObjectCurrent->ToEpoch(),
     );
 
     # get layout object
@@ -107,7 +113,7 @@ sub Run {
     $Param{Month_to_Text} = $MonthArray[ $Param{Month} ];
 
     # create one base object
-    my $DateTimeObjectCurrent = $Kernel::OM->Create(
+    my $DateTimeObjectGiven = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
             Year     => $Param{Year},
@@ -117,9 +123,9 @@ sub Run {
     );
 
 
-    my $DateTimeObjectNext = $DateTimeObjectCurrent->Clone();
-    my $DateTimeObjectPrev = $DateTimeObjectCurrent->Clone();
-    my $DateParamsCurrent  = $DateTimeObjectCurrent->Get();
+    my $DateTimeObjectNext = $DateTimeObjectGiven->Clone();
+    my $DateTimeObjectPrev = $DateTimeObjectGiven->Clone();
+    my $DateParamsCurrent  = $DateTimeObjectGiven->Get();
 
     # calculate the next month
     $DateTimeObjectNext->Add(
@@ -129,9 +135,10 @@ sub Run {
     );
 
     my $DateParamsNext = $DateTimeObjectNext->Get();
-    $Param{YearNext}  =  $DateTimeObjectNext->{Year};
-    $Param{MonthNext} =  $DateTimeObjectNext->{Month};
-    $Param{DayNext}   =  $DateTimeObjectNext->{Day};
+
+    $Param{YearNext}  =  $DateParamsNext->{Year};
+    $Param{MonthNext} =  $DateParamsNext->{Month};
+    $Param{DayNext}   =  $DateParamsNext->{Day};
 
     # calculate the next month
     $DateTimeObjectPrev->Subtract(
@@ -141,16 +148,13 @@ sub Run {
     );
 
     my $DateParamsBack = $DateTimeObjectPrev->Get();
-    $Param{YearBack}  =  $DateTimeObjectPrev->{Year};
-    $Param{MonthBack} =  $DateTimeObjectPrev->{Month};
-    $Param{DayBack}   =  $DateTimeObjectPrev->{Day};
+    $Param{YearBack}  =  $DateParamsBack->{Year};
+    $Param{MonthBack} =  $DateParamsBack->{Month};
+    $Param{DayBack}   =  $DateParamsBack->{Day};
 
     # Overview per day
-    my $LastDayOfMonth = $DateTimeObjectCurrent->LastDayOfMonthGet();
+    my $LastDayOfMonth = $DateTimeObjectGiven->LastDayOfMonthGet();
     my $DaysOfMonth    = $LastDayOfMonth->{Day};
-
-    # get time accounting object
-    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     my %UserData = $TimeAccountingObject->UserGet(
         UserID => $Param{UserID},
@@ -158,8 +162,10 @@ sub Run {
 
     for my $Day ( 1 .. $DaysOfMonth ) {
         $Param{Day} = sprintf( "%02d", $Day );
-        $Param{Weekday} = $DateParamsCurrent->{DayOfWeek};
-        my $VacationCheck = $TimeObject->VacationCheck(
+
+        $Param{Weekday} = $TimeAccountingObject->DayOfWeek( $Param{Year}, $Param{Month}, $Param{Day} );
+
+        my $VacationCheck = $TimeAccountingObject->VacationCheck(
             Year     => $Param{Year},
             Month    => $Param{Month},
             Day      => $Day,
@@ -167,12 +173,21 @@ sub Run {
         );
 
         my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Day );
-        my $DayStartTime = $TimeObject->TimeStamp2SystemTime(
-            String => $Date . ' 00:00:00',
+        my $DateTimeObjectStart = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Date . ' 00:00:00',
+            }
         );
-        my $DayStopTime = $TimeObject->TimeStamp2SystemTime(
-            String => $Date . ' 23:59:59',
+        my $DayStartTime = $DateTimeObjectStart->ToEpoch();
+
+        my $DateTimeObjectStop = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Date . ' 23:59:59',
+            }
         );
+        my $DayStopTime = $DateTimeObjectStop->ToEpoch();
 
         # add time zone to calculation
         my $UserCalendar = $UserData{Calendar} || '';
@@ -183,7 +198,7 @@ sub Run {
             $DayStopTime  = $DayStopTime - $ZoneSeconds;
         }
 
-        my $ThisDayWorkingTime = $TimeObject->WorkingTime(
+        my $ThisDayWorkingTime = $TimeAccountingObject->WorkingTime(
             StartTime => $DayStartTime,
             StopTime  => $DayStopTime,
             Calendar  => $UserCalendar,
@@ -218,7 +233,7 @@ sub Run {
 
         $Param{WorkingHours} = $Data{Total} ? sprintf( "%.2f", $Data{Total} ) : '';
 
-        $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} ];
+        $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} - 1 ];
         $LayoutObject->Block(
             Name => 'Row',
             Data => {%Param},
@@ -394,7 +409,7 @@ sub _CheckValidityUserPeriods {
     my %GetParam;
 
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     for ( my $Period = 1; $Period <= $Param{Period}; $Period++ ) {
 
@@ -408,7 +423,7 @@ sub _CheckValidityUserPeriods {
             }
         }
         my ( $Year, $Month, $Day ) = split( '-', $GetParam{DateStart} );
-        my $StartDate = $TimeObject->Date2SystemTime(
+        my $StartDate = $TimeAccountingObject->Date2SystemTime(
             Year   => $Year,
             Month  => $Month,
             Day    => $Day,
@@ -417,7 +432,7 @@ sub _CheckValidityUserPeriods {
             Second => 0,
         );
         ( $Year, $Month, $Day ) = split( '-', $GetParam{DateEnd} );
-        my $EndDate = $TimeObject->Date2SystemTime(
+        my $EndDate = $TimeAccountingObject->Date2SystemTime(
             Year   => $Year,
             Month  => $Month,
             Day    => $Day,

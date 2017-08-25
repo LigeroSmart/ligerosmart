@@ -36,9 +36,9 @@
                 </Item>
                 <Item Key="JavaScript">
                     <Array>
+                        <Item>TimeAccounting.Agent.js</Item>
                         <Item>TimeAccounting.Agent.ConfirmationDialog.js</Item>
                         <Item>TimeAccounting.Agent.EditTimeRecords.js</Item>
-                        <Item>TimeAccounting.Agent.Datepicker.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -198,7 +198,7 @@
                 </Item>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>TimeAccounting.Agent.Datepicker.js</Item>
+                        <Item>TimeAccounting.Agent.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -359,7 +359,7 @@
             </Hash>
         </Value>
     </Setting>
- 
+
     <Setting Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new projects.</Description>
         <Navigation>Frontend::Agent::TimeAccounting::ViewSetting</Navigation>

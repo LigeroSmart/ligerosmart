@@ -29,6 +29,15 @@
     background-color: #CFCFCF;
 }
 
+.TimeAccountingTable input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.TimeAccountingTable td {
+    padding: 10px !important;
+}
+
 /**
  * @subsection  special table height
  */
@@ -110,15 +119,6 @@ tr.MasterAction td.RowSpan {
 td.RowSpan{
     border-bottom: 1px dotted #ccc;
     background-color: white !important;
-}
-
-.DataTable a.DatepickerIcon i {
-    color: #000;
-    margin-left: 2px;
-}
-
-.DataTable a.DatepickerIcon:hover i {
-    color: #f72;
 }
 
 #TimeAccountingEmptyMessageSmall {

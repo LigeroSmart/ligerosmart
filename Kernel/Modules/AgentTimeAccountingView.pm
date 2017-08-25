@@ -11,9 +11,6 @@ package Kernel::Modules::AgentTimeAccountingView;
 use strict;
 use warnings;
 
-use DateTime qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
-use Time::Local;
-
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -22,6 +19,12 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
+
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+
+    $Self->{TimeZone} = $Param{TimeZone}
+        || $Param{UserTimeZone}
+        || $DateTimeObject->OTRSTimeZoneGet();
 
     return $Self;
 }
@@ -73,28 +76,38 @@ sub Run {
     # if no UserID posted use the current user
     $Param{UserID} ||= $Self->{UserID};
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    # get time and timeaccounting object
+    my $DateTimeObjectCurrent = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $TimeAccountingObject  = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     # get current date and time
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeAccountingObject->SystemTime2Date(
+        SystemTime => $DateTimeObjectCurrent->ToEpoch(),
     );
 
     my $MaxAllowedInsertDays = $Kernel::OM->Get('Kernel::Config')->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
     ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
-        = Add_Delta_YMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
+        = $TimeAccountingObject->AddDeltaYMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
 
-    # redirect to the edit screen, if necessary
-    if (
-        timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 ) > timelocal(
-            1, 0, 0, $Param{DayAllowed},
-            $Param{MonthAllowed} - 1,
-            $Param{YearAllowed} - 1900
-        ) && $Param{UserID} == $Self->{UserID}
-        )
-    {
+    my $DateTimeObjectGiven = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Year     => $Param{Year},
+            Month    => $Param{Month},
+            Day      => $Param{Day},
+        }
+    );
 
+    my $DateTimeObjectAllowed = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Year     => $Param{YearAllowed},
+            Month    => $Param{MonthAllowed},
+            Day      => $Param{DayAllowed},
+        }
+    );
+
+    if ( $DateTimeObjectGiven->Compare( DateTimeObject => $DateTimeObjectAllowed ) > 0 && $Param{UserID} == $Self->{UserID} ) {
         return $LayoutObject->Redirect(
             OP =>
                 "Action=AgentTimeAccountingEdit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}",
@@ -114,15 +127,15 @@ sub Run {
         );
     }
 
-    $Param{Weekday}         = Day_of_Week( $Param{Year}, $Param{Month}, $Param{Day} );
+    $Param{Weekday}         = $TimeAccountingObject->DayOfWeek( $Param{Year}, $Param{Month}, $Param{Day} );
     $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} - 1 ];
     $Param{Month_to_Text}   = $MonthArray[ $Param{Month} ];
 
     # Values for the link icons <>
     ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
-        = Add_Delta_YMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, -1 );
+        = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, -1 );
     ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
-        = Add_Delta_YMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, 1 );
+        = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, $Param{Day}, 0, 0, 1 );
 
     $Param{DateSelection} = $LayoutObject->BuildDateSelection(
         %Param,
@@ -131,9 +144,6 @@ sub Run {
         Validate => 1,
         Class    => $Param{Errors}->{DateInvalid},
     );
-
-    # get time accounting object
-    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     # Show Working Units
     # get existing working units
@@ -203,7 +213,7 @@ sub Run {
         UserID => $Param{UserID},
     );
 
-    my $Vacation = $TimeObject->VacationCheck(
+    my $Vacation = $TimeAccountingObject->VacationCheck(
         Year     => $Param{Year},
         Month    => $Param{Month},
         Day      => $Param{Day},

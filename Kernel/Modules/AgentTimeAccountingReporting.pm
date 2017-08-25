@@ -11,9 +11,7 @@ package Kernel::Modules::AgentTimeAccountingReporting;
 use strict;
 use warnings;
 
-use DateTime qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Kernel::Language qw(Translatable);
-use Time::Local;
 
 use Kernel::System::VariableCheck qw(:all);
 
@@ -25,6 +23,12 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
+
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+
+    $Self->{TimeZone} = $Param{TimeZone}
+        || $Param{UserTimeZone}
+        || $DateTimeObject->OTRSTimeZoneGet();
 
     return $Self;
 }
@@ -40,11 +44,11 @@ sub Run {
     my @WeekdayArray = ( 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', );
 
     # get needed objects
-    my $LayoutObject         = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $ParamObject          = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
-    my $TimeObject           = $Kernel::OM->Get('Kernel::System::Time');
-    my $UserObject           = $Kernel::OM->Get('Kernel::System::User');
+    my $LayoutObject          = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ParamObject           = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $TimeAccountingObject  = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+    my $DateTimeObjectCurrent = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $UserObject            = $Kernel::OM->Get('Kernel::System::User');
 
     # ---------------------------------------------------------- #
     # time accounting project reporting
@@ -95,8 +99,8 @@ sub Run {
         }
 
         # necessary because the ProjectActionReporting is not reworked
-        my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime(),
+        my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeAccountingObject->SystemTime2Date(
+            SystemTime => $DateTimeObjectCurrent->ToEpoch(),
         );
         my %ProjectData = ();
         my %ProjectTime = ();
@@ -285,8 +289,8 @@ sub Run {
         Type  => 'Long',
         Valid => 0
     );
-    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
+    my ( $Sec, $Min, $Hour, $CurrentDay, $Month, $Year ) = $TimeAccountingObject->SystemTime2Date(
+        SystemTime => $DateTimeObjectCurrent->ToEpoch(),
     );
 
     # permission check
@@ -344,8 +348,8 @@ sub Run {
     );
 
     ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
-        = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, -1, 0 );
-    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} ) = Add_Delta_YMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
+        = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, 1, 0, -1, 0 );
+    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} ) = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
 
     my %UserReport = $TimeAccountingObject->UserReporting(
         Year   => $Param{Year},

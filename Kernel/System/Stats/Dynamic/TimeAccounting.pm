@@ -11,13 +11,12 @@ package Kernel::System::Stats::Dynamic::TimeAccounting;
 use strict;
 use warnings;
 
-use DateTime qw( Add_Delta_Days Add_Delta_YMD );
 use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(IsArrayRefWithData);
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::TimeAccounting',
     'Kernel::System::User',
 );
@@ -41,8 +40,10 @@ sub GetObjectName {
 sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
+    my $DateTimeObjectCurrent = $Kernel::OM->Create('Kernel::System::DateTime');
+
     # set predefined start time
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
+    my $TimeStamp = $DateTimeObjectCurrent->ToEpoch();
     my ($Date) = split /\s+/, $TimeStamp;
     my $Today = sprintf "%s 23:59:59", $Date;
 
@@ -710,23 +711,23 @@ sub _GetStatData {
         'Year'   => 5,
     );
 
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+
     # looping over all or selected users
     for my $UserID (@UserIDs) {
 
         my $StartDate;
         my $StopDate;
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
         # check if time period has been selected
         if ( $Param{Param}->{Restrictions}->{TimeAccountingPeriodStart} ) {
 
             # get UNIX time-stamp of start and end values
-            $StartDate = $TimeObject->TimeStamp2SystemTime(
+            $StartDate = $TimeAccountingObject->TimeStamp2SystemTime(
                 String => $Param{Param}->{Restrictions}->{TimeAccountingPeriodStart},
             );
-            $StopDate = $TimeObject->TimeStamp2SystemTime(
+            $StopDate = $TimeAccountingObject->TimeStamp2SystemTime(
                 String => $Param{Param}->{Restrictions}->{TimeAccountingPeriodStop},
             );
         }
@@ -739,7 +740,7 @@ sub _GetStatData {
             );
 
             # Calculate UNIX timestamps for start and stop date.
-            $StartDate = $TimeObject->Date2SystemTime(
+            $StartDate = $TimeAccountingObject->Date2SystemTime(
                 Year   => $PreviousMonthDates{NewStartDate}->[0],
                 Month  => $PreviousMonthDates{NewStartDate}->[1],
                 Day    => $PreviousMonthDates{NewStartDate}->[2],
@@ -747,7 +748,7 @@ sub _GetStatData {
                 Minute => 0,
                 Second => 0,
             );
-            $StopDate = $TimeObject->Date2SystemTime(
+            $StopDate = $TimeAccountingObject->Date2SystemTime(
                 Year   => $PreviousMonthDates{NewStopDate}->[0],
                 Month  => $PreviousMonthDates{NewStopDate}->[1],
                 Day    => $PreviousMonthDates{NewStopDate}->[2],
@@ -760,8 +761,6 @@ sub _GetStatData {
         # calculate number of days within the given range
         my $Days = int( ( $StopDate - $StartDate ) / 86400 ) + 1;
 
-        # get time accounting object
-        my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
         DAY:
         for my $Day ( 0 .. $Days ) {
@@ -770,7 +769,7 @@ sub _GetStatData {
             my $DateOfPeriod = $StartDate + $Day * 86400;
 
             # get needed date values out of time-stamp
-            my @DateValues = $TimeObject->SystemTime2Date(
+            my @DateValues = $TimeAccountingObject->SystemTime2Date(
                 SystemTime => $DateOfPeriod,
             );
 
@@ -858,15 +857,17 @@ sub _GetPreviousMonthDates {
         return;
     }
 
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    # get time accounting object
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+    my $DateTimeObjectCurrent = $Kernel::OM->Create('Kernel::System::DateTime');
 
     # Get current date values.
-    my @CurrentDate = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
+    my @CurrentDate = $TimeAccountingObject->SystemTime2Date(
+        SystemTime => $DateTimeObjectCurrent->ToEpoch(),
     );
 
     # Get first day of previous month.
-    my @NewStartDate = Add_Delta_YMD(
+    my @NewStartDate = $TimeAccountingObject->AddDeltaYMD(
         $CurrentDate[ $Param{DateIndexToName}->{'Year'} ],
         $CurrentDate[ $Param{DateIndexToName}->{'Month'} ],
         1,
@@ -876,7 +877,7 @@ sub _GetPreviousMonthDates {
     );
 
     # Get first day of next month relative to previous month.
-    my @NewStopDate = Add_Delta_YMD(
+    my @NewStopDate = $TimeAccountingObject->AddDeltaYMD(
         $NewStartDate[0],
         $NewStartDate[1],
         $NewStartDate[2],
@@ -886,7 +887,7 @@ sub _GetPreviousMonthDates {
     );
 
     # Get last of day previous month.
-    @NewStopDate = Add_Delta_YMD(
+    @NewStopDate = $TimeAccountingObject->AddDeltaYMD(
         $NewStopDate[0],
         $NewStopDate[1],
         $NewStopDate[2],

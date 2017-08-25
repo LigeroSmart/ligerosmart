@@ -60,4 +60,12 @@ div.MonthSelection {
     width: 300px;
 }
 
+.SidebarColumn .DatepickerIcon {
+    vertical-align: middle;
+}
+
+.SidebarColumn th input[type=checkbox] {
+    margin: 0px;
+}
+
 } /* end @media */

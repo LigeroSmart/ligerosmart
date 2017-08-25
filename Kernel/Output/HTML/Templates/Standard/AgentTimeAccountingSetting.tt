@@ -146,14 +146,10 @@
 [% RenderBlockEnd("ActionAddTask") %]
 [% RenderBlockStart("ActionAddUser") %]
                     <li>
-                        <div class="SpacingTop"></div>
-                        <form action="[% Env("CGIHandle") %]" method="post">
+                        <form action="[% Env("CGIHandle") %]" method="post" id="ActionAddUser">
                             <input type="hidden" name="Action" value="[% Env("Action") %]"/>
                             <input type="hidden" name="Subaction" value="AddUser"/>
                             [% Data.NewUserOption %]
-                            <button class="CallForAction Fullsize Center" type="submit" value="[% Translate("New user") | html %]">
-                                <span><i class="fa fa-user"></i>[% Translate("New user") | html %]</span>
-                            </button>
                         </form>
                     </li>
 [% RenderBlockEnd("ActionAddUser") %]
@@ -168,38 +164,16 @@
         </div>
 [% RenderBlockEnd("ActionListSetting") %]
 
-[% RenderBlockStart("ProjectFilter") %]
+    [% IF !Env("Subaction") %]
         <div class="WidgetSimple">
             <div class="Header">
-                <h2><label for="FilterProjects">[% Translate("Filter for Projects") | html %]</label></h2>
+                <h2>[% Translate("Filter") | html %]</h2>
             </div>
             <div class="Content">
-                <input type="text" id="FilterProjects" class="FilterBox" placeholder="Just start typing to filter..." name="FilterProjects" value="" title="[% Translate("Filter for Projects") | html %]" />
+                <input type="text" class="FilterBox" placeholder="[% Translate("Just start typing to filter...") | html %]" value="" title="[% Translate("Filter for projects, tasks or users") | html %]" />
             </div>
         </div>
-[% RenderBlockEnd("ProjectFilter") %]
-
-[% RenderBlockStart("TaskFilter") %]
-        <div class="WidgetSimple">
-            <div class="Header">
-                <h2><label for="FilterTasks">[% Translate("Filter for Tasks") | html %]</label></h2>
-            </div>
-            <div class="Content">
-                <input type="text" id="FilterTasks" class="FilterBox" placeholder="Just start typing to filter..." name="FilterTasks" value="" title="[% Translate("Filter for Tasks") | html %]" />
-            </div>
-        </div>
-[% RenderBlockEnd("TaskFilter") %]
-
-[% RenderBlockStart("UserFilter") %]
-        <div class="WidgetSimple">
-            <div class="Header">
-                <h2><label for="FilterUsers">[% Translate("Filter for Users") | html %]</label></h2>
-            </div>
-            <div class="Content">
-                <input type="text" id="FilterUsers" class="FilterBox" placeholder="Just start typing to filter..." name="FilterUsers" value="" title="[% Translate("Filter for Users") | html %]" />
-            </div>
-        </div>
-[% RenderBlockEnd("UserFilter") %]
+    [% END %]
 
 [% RenderBlockStart("Reference") %]
         <div class="WidgetSimple SpacingTop">
@@ -238,8 +212,8 @@
                 <table class="DataTable" id="Projects">
                     <thead>
                         <tr>
-                            <th>[% Translate("Project") | html %]</th>
-                            <th>[% Translate("Comment") | html %]</th>
+                            <th class="W33pc">[% Translate("Project") | html %]</th>
+                            <th class="W33pc">[% Translate("Comment") | html %]</th>
                             <th>[% Translate("Status") | html %]</th>
                         </tr>
                     </thead>
@@ -263,12 +237,6 @@
         </div>
 [% RenderBlockEnd("OverviewResultProject") %]
 
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.Table.InitTableFilter($('#FilterProjects'), $('#Projects'));
-//]]></script>
-[% END %]
-
 [% RenderBlockStart("OverviewResultSetting") %]
         <div class="WidgetSimple">
             <div class="Header">
@@ -287,7 +255,7 @@
                 <table class="DataTable" id="Tasks">
                     <thead>
                         <tr>
-                            <th>[% Translate("Task") | html %]</th>
+                            <th class="W33pc">[% Translate("Task") | html %]</th>
                             <th>[% Translate("Status") | html %]</th>
                         </tr>
                     </thead>
@@ -310,12 +278,6 @@
             </div>
         </div>
 [% RenderBlockEnd("OverviewResultSetting") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.Table.InitTableFilter($('#FilterTasks'), $('#Tasks'));
-//]]></script>
-[% END %]
 
 [% RenderBlockStart("OverviewUpdateTask") %]
         <div class="WidgetSimple">
@@ -391,8 +353,8 @@
                 <table class="DataTable" id="Users">
                     <thead>
                         <tr>
-                            <th>[% Translate("User") | html %]</th>
-                            <th>[% Translate("Comment") | html %]</th>
+                            <th class="W33pc">[% Translate("User") | html %]</th>
+                            <th class="W33pc">[% Translate("Comment") | html %]</th>
                             <th>[% Translate("Calendar") | html %]</th>
                         </tr>
                     </thead>
@@ -417,148 +379,134 @@
         </div>
 [% RenderBlockEnd("OverviewResultUser") %]
 
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    Core.UI.Table.InitTableFilter($('#FilterUsers'), $('#Users'));
-    Core.UI.InitWidgetActionToggle();
-//]]></script>
-[% END %]
-
 [% RenderBlockStart("OverviewUpdateUser") %]
+    <form action="[% Env("CGIHandle") %]" method="post" name="UserUpdate" class="Validate PreventMultipleSubmits">
+        <input type="hidden" name="Action" value="[% Env("Action") %]" />
+        <input type="hidden" name="Subaction" value="[% Data.Subaction | html %]" />
+        <input type="hidden" name="UserID" value="[% Data.UserID | html %]" />
+
         <div class="WidgetSimple">
             <div class="Header">
-[% RenderBlockStart("HeaderAddUser") %]
-                <h2>[% Translate("New User Settings") | html %]: [% Data.UserFullname | html %] ([% Data.UserLogin | html %])</h2>
-[% RenderBlockEnd("HeaderAddUser") %]
-[% RenderBlockStart("HeaderEditUser") %]
-                <h2>[% Translate("Edit User Settings") | html %]</h2>
-[% RenderBlockEnd("HeaderEditUser") %]
+                <h2>[% Translate("User Settings") | html %]</h2>
             </div>
             <div class="Content">
-                <form action="[% Env("CGIHandle") %]" method="post" name="UserUpdate" class="Validate PreventMultipleSubmits">
-                    <input type="hidden" name="Action" value="[% Env("Action") %]" />
-                    <input type="hidden" name="Subaction" value="[% Data.Subaction | html %]" />
-                    <input type="hidden" name="UserID" value="[% Data.UserID | html %]" />
+                <fieldset class="TableLike">
+                    <label for="Name">[% Translate("Name") | html %] ([% Translate("Username") | html %]):</label>
+                    <div class="Value">[% Data.UserFullname | html %] ([% Data.UserLogin | html %])</div>
+                    <div class="Clear"></div>
 
-                    <fieldset class="TableLike">
-                        <label for="Name">[% Translate("Name") | html %]:</label>
-                        <div class="Value">[% Data.UserFullname | html %]</div>
-                        <div class="Clear"></div>
+                    <label for="Description">[% Translate("Description") | html %]:</label>
+                    <div class="Field">
+                        <input type="text" name="Description" id="Description" class="W50pc" value="[% Data.Description | html %]" />
+                    </div>
+                    <div class="Clear"></div>
 
-                        <label for="Name">[% Translate("Username") | html %]:</label>
-                        <div class="Value">[% Data.UserLogin | html %]</div>
-                        <div class="Clear"></div>
+                    <label for="ShowOvertime">[% Translate("User is allowed to see overtimes") | html %]</label>
+                    <div class="Field">
+                        <input type="checkbox" name="ShowOvertime" id="ShowOvertime" value="1" title="[% Translate("Show Overtime") | html %]" [% Data.ShowOvertime %] />
+                    </div>
+                    <div class="Clear"></div>
 
-                        <label for="Description">[% Translate("Comments") | html %]:</label>
-                        <div class="Field">
-                            <textarea rows="1" name="Description" id="Description" cols="40">[% Data.Description %]</textarea>
-                        </div>
-                        <div class="Clear"></div>
+                    <label for="CreateProject">[% Translate("User is allowed to create projects") | html %]</label>
+                    <div class="Field">
+                        <input type="checkbox" name="CreateProject" id="CreateProject" value="1" title="[% Translate("Allow project creation") | html %]" [% Data.CreateProject %] />
+                    </div>
+                    <div class="Clear"></div>
 
-                        <div class="Field">
-                            <input type="checkbox" name="ShowOvertime" id="ShowOvertime" value="1" title="[% Translate("Show Overtime") | html %]" [% Data.ShowOvertime %] />[% Translate("Show Overtime") | html %]
-                        </div>
-                        <div class="Clear"></div>
+                    <label for="Calendar">[% Translate("Calendar") | html %]:</label>
+                    <div class="Field">
+                        [% Data.CalendarOption %]
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+            </div>
+        </div>
 
-                        <div class="Field">
-                            <input type="checkbox" name="CreateProject" id="CreateProject" value="1" title="[% Translate("Allow project creation") | html %]" [% Data.CreateProject %] />[% Translate("Allow project creation") | html %]
-                        </div>
-                        <div class="Clear"></div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Time Spans") | html %]</h2>
+            </div>
+            <div class="Content">
 
-                        <label for="Calendar">[% Translate("Calendar") | html %]:</label>
-                        <div class="Field">
-                            [% Data.CalendarOption %]
-                        </div>
-                        <div class="Clear"></div>
-                    </fieldset>
-
-                    <table class="DataTable NoHover">
-                        <thead>
-                            <tr>
-                                <th><span class="Marker">*</span> [% Translate("Period Begin") | html %]</th>
-                                <th><span class="Marker">*</span> [% Translate("Period End") | html %]</th>
-                                <th><span class="Marker">*</span> [% Translate("Days of Vacation") | html %]</th>
-                                <th>[% Translate("Hours per Week") | html %]</th>
-                                <th>[% Translate("Authorized Overtime") | html %]</th>
-                                <th>[% Translate("Status") | html %]</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <table class="DataTable NoHover TimeAccountingTable">
+                    <thead>
+                        <tr>
+                            <th><span class="Marker">*</span> [% Translate("Period Begin") | html %]</th>
+                            <th><span class="Marker">*</span> [% Translate("Period End") | html %]</th>
+                            <th><span class="Marker">*</span> [% Translate("Days of Vacation") | html %]</th>
+                            <th>[% Translate("Hours per Week") | html %]</th>
+                            <th>[% Translate("Authorized Overtime") | html %]</th>
+                            <th>[% Translate("Status") | html %]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 [% RenderBlockStart("PeriodOverviewRow") %]
-                            <tr>
-                                <td>
-                                    <input type="text" id="DateStart-[% Data.Period | html %]" name="DateStart[[% Data.Period | html %]]" value="[% Data.DateStart | html %]" class="DatepickerElement Validate_Required [% Data.DateStartInvalid | html %]" title="[% Translate("Start Date") | html %]" />
-                                    <div id="DateStart-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
+                        <tr>
+                            <td>
+                                <input type="text" id="DateStart-[% Data.Period | html %]" name="DateStart[[% Data.Period | html %]]" value="[% Data.DateStart | html %]" class=" Validate_Required [% Data.DateStartInvalid | html %]" title="[% Translate("Start Date") | html %]" />
+                                <div id="DateStart-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
 [% RenderBlockStart("DateStartInvalid") %]
-                                    <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+                                <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
 [% RenderBlockEnd("DateStartInvalid") %]
 [% RenderBlockStart("DateStartMissingValue") %]
-                                    <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <div id="DateStart-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
 [% RenderBlockEnd("DateStartMissingValue") %]
-                                </td>
-                                <td>
-                                    <input type="text" id="DateEnd-[% Data.Period | html %]" name="DateEnd[[% Data.Period | html %]]" value="[% Data.DateEnd | html %]" class="DatepickerElement Validate_Required [% Data.DateEndInvalid | html %]" title="[% Translate("End Date") | html %]" />
-                                    <div id="DateEnd-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
+                            </td>
+                            <td>
+                                <input type="text" id="DateEnd-[% Data.Period | html %]" name="DateEnd[[% Data.Period | html %]]" value="[% Data.DateEnd | html %]" class=" Validate_Required [% Data.DateEndInvalid | html %]" title="[% Translate("End Date") | html %]" />
+                                <div id="DateEnd-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %] [% Translate("Please insert a valid date.") | html %]</p></div>
 [% RenderBlockStart("DateEndInvalid") %]
-                                    <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
+                                <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Invalid date!") | html %]</p></div>
 [% RenderBlockEnd("DateEndInvalid") %]
 [% RenderBlockStart("DateEndMissingValue") %]
-                                    <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
 [% RenderBlockEnd("DateEndMissingValue") %]
 [% RenderBlockStart("DateEndBeforeDateStart") %]
-                                    <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Period end must be after period begin.") | html %]</p></div>
+                                <div id="DateEnd-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("Period end must be after period begin.") | html %]</p></div>
 [% RenderBlockEnd("DateEndBeforeDateStart") %]
-                                </td>
-                                <td>
-                                    <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="Validate_Required [% Data.LeaveDaysInvalid | html %]" title="[% Translate("Leave Days") | html %]" />
-                                    <div id="LeaveDays-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-                                    <div id="LeaveDays-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
-                                </td>
-                                <td>
-                                    <input type="text" id="WeeklyHours-[% Data.Period | html %]" name="WeeklyHours[[% Data.Period | html %]]" value="[% Data.WeeklyHours | html %]" title="[% Translate("Weekly Hours") | html %]" />
-                                </td>
-                                <td>
-                                    <input type="text" id="Overtime-[% Data.Period | html %]" name="Overtime[[% Data.Period | html %]]" value="[% Data.Overtime | html %]" title="[% Translate("Overtime") | html %]" />
-                                </td>
-                                <td>
-                                    [% Data.PeriodStatusOption %]
-                                </td>
-                            </tr>
+                            </td>
+                            <td>
+                                <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="Validate_Required [% Data.LeaveDaysInvalid | html %]" title="[% Translate("Leave Days") | html %]" />
+                                <div id="LeaveDays-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                                <div id="LeaveDays-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
+                            </td>
+                            <td>
+                                <input type="text" id="WeeklyHours-[% Data.Period | html %]" name="WeeklyHours[[% Data.Period | html %]]" value="[% Data.WeeklyHours | html %]" title="[% Translate("Weekly Hours") | html %]" />
+                            </td>
+                            <td>
+                                <input type="text" id="Overtime-[% Data.Period | html %]" name="Overtime[[% Data.Period | html %]]" value="[% Data.Overtime | html %]" title="[% Translate("Overtime") | html %]" />
+                            </td>
+                            <td>
+                                [% Data.PeriodStatusOption %]
+                            </td>
+                        </tr>
 [% RenderBlockEnd("PeriodOverviewRow") %]
 
 [% RenderBlockStart("PeriodOverviewRowNoData") %]
-                            <tr>
-                                <td colspan="6">
-                                    [% Translate("No time periods found.") | html %]
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="6">
+                                [% Translate("No time periods found.") | html %]
+                            </td>
+                        </tr>
 [% RenderBlockEnd("PeriodOverviewRowNoData") %]
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
 
-                    <div class="W100pc Right SpacingTopSmall">
-                        <button type="submit" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" name="AddPeriod" class="CallForAction Plus"><span><i class="fa fa-plus-square"></i> [% Translate("Add time period") | html %]</span></button>
-                    </div>
-
-                    <fieldset class="TableLike">
-                        <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" name="SubmitUserData"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
-                            [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
-                        </div>
-                    </fieldset>
-                </form>
+                <button type="button" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" id="AddPeriod" class="CallForAction Plus SpacingTopSmall"><span><i class="fa fa-plus-square"></i> [% Translate("Add time period") | html %]</span></button>
             </div>
         </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global TimeAccounting: true */
-    TimeAccounting.Agent.Datepicker.Init($('.DatepickerElement'), {
-        DateInFuture: false,
-        WeekDayStart: 1
-    });
-//]]></script>
-[% END %]
+        <div class="WidgetSimple">
+            <div class="Content">
+                <fieldset class="TableLike">
+                    <div class="Field">
+                        <button class="Primary CallForAction" type="submit" value="[% Translate("Submit") | html %]" id="SubmitUserData"><span><i class="fa fa-check-square-o"></i> [% Translate("Submit") | html %]</span></button>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </form>
 [% RenderBlockEnd("OverviewUpdateUser") %]
     </div>
 </div>

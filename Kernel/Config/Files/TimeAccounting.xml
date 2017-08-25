@@ -35,9 +35,9 @@
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
+                    <JavaScript>TimeAccounting.Agent.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.ConfirmationDialog.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.EditTimeRecords.js</JavaScript>
-                    <JavaScript>TimeAccounting.Agent.Datepicker.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -96,7 +96,7 @@
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
-                    <JavaScript>TimeAccounting.Agent.Datepicker.js</JavaScript>
+                    <JavaScript>TimeAccounting.Agent.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>

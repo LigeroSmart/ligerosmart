@@ -12,7 +12,6 @@ use strict;
 use warnings;
 
 use Kernel::Language qw(Translatable);
-use Time::Local;
 
 our $ObjectManagerDisabled = 1;
 
@@ -42,6 +41,7 @@ sub Run {
         || $ParamObject->GetParam( Param => 'SubmitUserData' )
         )
     {
+
         my %GetParam = ();
 
         $GetParam{UserID} = $ParamObject->GetParam( Param => 'UserID' );
@@ -771,8 +771,7 @@ sub _CheckValidityUserPeriods {
     my %Errors = ();
     my %GetParam;
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $TimeAccountingObject  = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     for ( my $Period = 1; $Period <= $Param{Period}; $Period++ ) {
 
@@ -786,7 +785,7 @@ sub _CheckValidityUserPeriods {
             }
         }
         my ( $Year, $Month, $Day ) = split( '-', $GetParam{DateStart} );
-        my $StartDate = $TimeObject->Date2SystemTime(
+        my $StartDate = $TimeAccountingObject->Date2SystemTime(
             Year   => $Year,
             Month  => $Month,
             Day    => $Day,
@@ -795,7 +794,7 @@ sub _CheckValidityUserPeriods {
             Second => 0,
         );
         ( $Year, $Month, $Day ) = split( '-', $GetParam{DateEnd} );
-        my $EndDate = $TimeObject->Date2SystemTime(
+        my $EndDate = $TimeAccountingObject->Date2SystemTime(
             Year   => $Year,
             Month  => $Month,
             Day    => $Day,
@@ -941,7 +940,9 @@ sub _SettingOverview {
             delete $ShownUsers{$UserInfo};
         }
 
-        if (%ShownUsers) {
+        $ShownUsers{'-'} = $LayoutObject->{LanguageObject}->Translate("Add a user to time accounting...");
+
+        if ( scalar keys %ShownUsers > 1 ) {
             my $NewUserOption = $LayoutObject->BuildSelection(
                 Data         => \%ShownUsers,
                 SelectedID   => '',
@@ -958,22 +959,6 @@ sub _SettingOverview {
                 },
             );
         }
-    }
-
-    $LayoutObject->Block(
-        Name => 'ProjectFilter',
-        Data => {},
-    );
-
-    if ( $Self->{AccessRw} ) {
-        $LayoutObject->Block(
-            Name => 'TaskFilter',
-            Data => {},
-        );
-        $LayoutObject->Block(
-            Name => 'UserFilter',
-            Data => {},
-        );
     }
 
     # Show project data
@@ -1195,10 +1180,6 @@ sub _UserSettingsEdit {
     # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # the date-picker used in this screen is non-standard
-    # Therefor we have to define this var in the LayoutObject for automatic config generation in the JS footer
-    $LayoutObject->{HasDatepicker} = 1;
-
     $LayoutObject->Block(
         Name => 'Setting',
         Data => \%Param,
@@ -1264,20 +1245,6 @@ sub _UserSettingsEdit {
             : '',
             }
     );
-
-    # shows header
-    if ( $Param{Action} eq 'EditUser' ) {
-        $LayoutObject->Block(
-            Name => 'HeaderEditUser',
-            Data => {},
-        );
-    }
-    else {
-        $LayoutObject->Block(
-            Name => 'HeaderAddUser',
-            Data => \%Param,
-        );
-    }
 
     # if there are errors to show
     if ( $Param{Errors} && %{ $Param{Errors} } ) {
