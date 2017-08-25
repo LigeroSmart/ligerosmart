@@ -216,5 +216,8 @@ div.Textarea {
 .Disabled {
     display: none;
 }
+.WidgetSpacingRight {
+    margin-right: 13px;
+}
 
 }
