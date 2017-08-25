@@ -167,7 +167,8 @@ sub RequestSend {
 
     # ticket data
     my %Ticket = $TicketObject->TicketGet(
-        TicketID => $Param{TicketID},
+        TicketID      => $Param{TicketID},
+        DynamicFields => 1,
     );
 
     # check if ticket is in a send queue
