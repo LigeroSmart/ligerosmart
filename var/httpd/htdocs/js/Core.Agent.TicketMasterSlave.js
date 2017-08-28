@@ -1,7 +1,7 @@
 // --
 // Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 // --
-// $origin: otrs - 4953e6a400bb93016b775a773bfb7fd801d5f623 - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
+// $origin: otrs - e94706e9d37c2d6af908b3dfa6f682cd7b428174 - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -43,9 +43,7 @@ Core.Agent.TicketMasterSlave = (function (TargetNS) {
      */
     TargetNS.Init = function () {
 
-        var $Form,
-            FieldID,
-            DynamicFieldNames = Core.Config.Get('DynamicFieldNames'),
+        var DynamicFieldNames = Core.Config.Get('DynamicFieldNames'),
             Fields = ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID'],
             ModifiedFields;
 
@@ -68,15 +66,6 @@ Core.Agent.TicketMasterSlave = (function (TargetNS) {
                 Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'StandardTemplateID', ['RichTextField']);
             });
             return false;
-        });
-
-        // Bind event to AttachmentDelete button.
-        $('button[id*=AttachmentDeleteButton]').on('click', function () {
-            $Form = $(this).closest('form');
-            FieldID = $(this).attr('id').split('AttachmentDeleteButton')[1];
-            $('#AttachmentDelete' + FieldID).val(1);
-            Core.Form.Validate.DisableValidation($Form);
-            $Form.trigger('submit');
         });
 
         // Bind click event to CreateArticle checkbox and toggle widget.

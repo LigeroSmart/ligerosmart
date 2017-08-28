@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 238c0824519557c693966a9447fcbddc39a993d6 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - db018b8f7cb3dd306ea61e315545d91e8cba408f - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -172,7 +172,7 @@ sub Run {
     {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('Loading draft failed!'),
-            Comment => Translatable('Please contact the admin.'),
+            Comment => Translatable('Please contact the administrator.'),
         );
     }
 
@@ -459,7 +459,7 @@ sub Run {
         if ( $FormDraftAction && !$Config->{FormDraft} ) {
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('FormDraft functionality disabled!'),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -1285,7 +1285,7 @@ sub Run {
         {
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('Could not delete draft!'),
-                Comment => Translatable('Please contact the admin.'),
+                Comment => Translatable('Please contact the administrator.'),
             );
         }
 
@@ -1517,6 +1517,12 @@ sub Run {
                 @TicketAttachments = $UploadCacheObject->FormIDGetAllFilesMeta(
                     FormID => $Self->{FormID},
                 );
+
+                for my $Attachment (@TicketAttachments) {
+                    $Attachment->{Filesize} = $LayoutObject->HumanReadableDataSize(
+                        Size => $Attachment->{Filesize},
+                    );
+                }
             }
 
             @TemplateAJAX = (
@@ -2932,7 +2938,6 @@ sub _GetFieldsToUpdate {
 
     # get config of frontend module
     my $Config = $Kernel::OM->Get('Kernel::Config')->Get("Ticket::Frontend::$Self->{Action}");
-
 # ---
 # OTRSMasterSlave
 # ---
@@ -2944,6 +2949,7 @@ sub _GetFieldsToUpdate {
         $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
     }
 # ---
+
     # only screens that add notes can modify Article dynamic fields
     if ( $Config->{Note} ) {
         $ObjectType = [ 'Ticket', 'Article' ];
