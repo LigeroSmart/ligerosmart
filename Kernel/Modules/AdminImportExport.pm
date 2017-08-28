@@ -442,6 +442,11 @@ sub Run {
         $LayoutObject->Block( Name => 'ActionList' );
         $LayoutObject->Block( Name => 'ActionOverview' );
 
+        $LayoutObject->AddJSData(
+            Key   => 'TemplateEdit4',
+            Value => 1,
+        );
+
         # output headline
         $LayoutObject->Block(
             Name => 'TemplateEdit4',
@@ -1535,7 +1540,20 @@ sub _MaskTemplateEdit2 {
         return;
     }
 
-    $Param{BackURL} = "Action=$Self->{Action};Subaction=TemplateEdit1;TemplateID=$TemplateID";
+    $LayoutObject->AddJSData(
+        Key   => 'BackURL',
+        Value => "Action=$Self->{Action};Subaction=TemplateEdit1;TemplateID=$TemplateID",
+    );
+
+    $LayoutObject->AddJSData(
+        Key   => 'BaseLink',
+        Value => $LayoutObject->{Baselink},
+    );
+
+    $LayoutObject->AddJSData(
+        Key   => 'TemplateOverview',
+        Value => 1,
+    );
 
     # output overview
     $LayoutObject->Block(
