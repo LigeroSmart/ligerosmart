@@ -55,6 +55,7 @@
         <File Permission="660" Location="Kernel/Output/HTML/ITSMServiceMenu/Link.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/ITSMSLAMenu/Generic.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/LinkObject/Service.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/Agent/ITSMCore/LoadingDialog.html.tmpl" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMCIPAllocate.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminService.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminSLA.tt" />
