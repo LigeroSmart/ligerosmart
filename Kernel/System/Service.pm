@@ -92,7 +92,6 @@ sub new {
     if ( $Kernel::OM->Get('Kernel::System::Main')->Require($GeneratorModule) ) {
         $Self->{PreferencesObject} = $GeneratorModule->new();
     }
-
 # ---
 # ITSMCore
 # ---

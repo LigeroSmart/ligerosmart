@@ -56,7 +56,6 @@ my %Ticket = $TicketObject->TicketGet(
     TicketID => $TicketID,
     Extended => 1,
 );
-
 $Self->Is(
     $Ticket{Title},
     'Some Ticket_Title',
