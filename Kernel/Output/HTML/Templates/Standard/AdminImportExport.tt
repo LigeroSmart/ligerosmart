@@ -482,7 +482,7 @@
     <div class="W50pc SpacingTopLarge SpacingBottomLarge CenterBox">
         <div class="WidgetSimple">
             <div class="Header">
-                <h2>[% Translate("Import summary for") | html %] [% Data.Object | html %]</h2>
+                <h2>[% Translate("Import summary for %s", Data.Object) | html %]</h2>
             </div>
             <div class="Content">
 
