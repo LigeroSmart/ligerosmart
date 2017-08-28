@@ -25,7 +25,7 @@
     <ConfigItem Name="ImportExport::FormatBackendRegistration###CSV" Required="0" Valid="1">
         <Description Translatable="1">Format backend module registration for the import/export module.</Description>
         <Group>ImportExport</Group>
-        <SubGroup>FormatBackend::ModuleRegistration</SubGroup>
+        <SubGroup>Core::ImportExport</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ImportExport::FormatBackend::CSV</Item>
