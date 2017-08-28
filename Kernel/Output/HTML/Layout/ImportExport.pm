@@ -13,11 +13,15 @@ use warnings;
 
 our $ObjectManagerDisabled = 1;
 
-=over
+=head1 NAME
 
-=item ImportExportFormInputCreate()
+Kernel::Output::HTML::Layout::ImportExport
 
-returns a input field html string
+=cut
+
+=head2 ImportExportFormInputCreate()
+
+Returns a input field html string
 
     my $String = $LayoutObject->ImportExportFormInputCreate(
         Item  => $ItemRef,
@@ -51,9 +55,9 @@ sub ImportExportFormInputCreate {
     return $String;
 }
 
-=item ImportExportFormDataGet()
+=head2 ImportExportFormDataGet()
 
-returns the values from the html form as hash reference
+Returns the values from the html form as hash reference
 
     my $FormData = $LayoutObject->ImportExportFormDataGet(
         Item => $ItemRef,
@@ -86,9 +90,9 @@ sub ImportExportFormDataGet {
     return $FormData;
 }
 
-=item _ImportExportLoadLayoutBackend()
+=head2 _ImportExportLoadLayoutBackend()
 
-to load a import/export layout backend module
+To load a import/export layout backend module
 
     my $Backend = $LayoutObject->_ImportExportLoadLayoutBackend(
         Type => 'Selection',
@@ -143,4 +147,12 @@ sub _ImportExportLoadLayoutBackend {
 
 1;
 
-=back
+=head1 TERMS AND CONDITIONS
+
+This software is part of the OTRS project (L<http://otrs.org/>).
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+
+=cut

@@ -21,17 +21,15 @@ our @ObjectDependencies = (
 
 Kernel::Output::HTML::ImportExport::LayoutText - layout backend module
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All layout functions for text elements
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object
 
     $BackendObject = Kernel::Output::HTML::ImportExport::LayoutText->new(
         %Param,
@@ -49,9 +47,9 @@ sub new {
     return $Self;
 }
 
-=item FormInputCreate()
+=head2 FormInputCreate()
 
-create a input string
+Create a input string
 
     my $Value = $BackendObject->FormInputCreate(
         Item     => $ItemRef,
@@ -133,9 +131,9 @@ sub FormInputCreate {
     return $String;
 }
 
-=item FormDataGet()
+=head2 FormDataGet()
 
-get form data
+Get form data
 
     my $FormData = $BackendObject->FormDataGet(
         Item   => $ItemRef,
@@ -180,8 +178,6 @@ sub FormDataGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

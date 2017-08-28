@@ -22,19 +22,17 @@ our @ObjectDependencies = (
 
 Kernel::System::ImportExport - import, export lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All import and export functions.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -52,9 +50,9 @@ sub new {
     return $Self;
 }
 
-=item TemplateList()
+=head2 TemplateList()
 
-return a list of templates as array reference
+Return a list of templates as array reference
 
     my $TemplateList = $ImportExportObject->TemplateList(
         Object => 'Ticket',  # (optional)
@@ -110,9 +108,9 @@ sub TemplateList {
     return \@TemplateList;
 }
 
-=item TemplateGet()
+=head2 TemplateGet()
 
-get a import export template
+Get a import export template
 
 Return
     $TemplateData{TemplateID}
@@ -186,9 +184,9 @@ sub TemplateGet {
     return \%TemplateData;
 }
 
-=item TemplateAdd()
+=head2 TemplateAdd()
 
-add a new import/export template
+Add a new import/export template
 
     my $TemplateID = $ImportExportObject->TemplateAdd(
         Object  => 'Ticket',
@@ -295,9 +293,9 @@ sub TemplateAdd {
     return $TemplateID;
 }
 
-=item TemplateUpdate()
+=head2 TemplateUpdate()
 
-update a existing import/export template
+Update a existing import/export template
 
     my $True = $ImportExportObject->TemplateUpdate(
         TemplateID => 123,
@@ -402,9 +400,9 @@ sub TemplateUpdate {
     );
 }
 
-=item TemplateDelete()
+=head2 TemplateDelete()
 
-delete existing import/export templates
+Delete existing import/export templates
 
     my $True = $ImportExportObject->TemplateDelete(
         TemplateID => 123,
@@ -490,9 +488,9 @@ sub TemplateDelete {
     );
 }
 
-=item ObjectList()
+=head2 ObjectList()
 
-return a list of available objects as hash reference
+Return a list of available objects as hash reference
 
     my $ObjectList = $ImportExportObject->ObjectList();
 
@@ -516,9 +514,9 @@ sub ObjectList {
     return $ObjectList;
 }
 
-=item ObjectAttributesGet()
+=head2 ObjectAttributesGet()
 
-get the attributes of an object backend as array/hash reference
+Get the attributes of an object backend as array/hash reference
 
     my $Attributes = $ImportExportObject->ObjectAttributesGet(
         TemplateID => 123,
@@ -574,9 +572,9 @@ sub ObjectAttributesGet {
     return $Attributes;
 }
 
-=item ObjectDataGet()
+=head2 ObjectDataGet()
 
-get the object data from a template
+Get the object data from a template
 
     my $ObjectDataRef = $ImportExportObject->ObjectDataGet(
         TemplateID => 3,
@@ -617,9 +615,9 @@ sub ObjectDataGet {
     return \%ObjectData;
 }
 
-=item ObjectDataSave()
+=head2 ObjectDataSave()
 
-save the object data of a template
+Save the object data of a template
 
     my $True = $ImportExportObject->ObjectDataSave(
         TemplateID => 123,
@@ -680,9 +678,9 @@ sub ObjectDataSave {
     return 1;
 }
 
-=item ObjectDataDelete()
+=head2 ObjectDataDelete()
 
-delete the existing object data of a template
+Delete the existing object data of a template
 
     my $True = $ImportExportObject->ObjectDataDelete(
         TemplateID => 123,
@@ -739,9 +737,9 @@ sub ObjectDataDelete {
     );
 }
 
-=item FormatList()
+=head2 FormatList()
 
-return a list of available formats as hash reference
+Return a list of available formats as hash reference
 
     my $FormatList = $ImportExportObject->FormatList();
 
@@ -765,9 +763,9 @@ sub FormatList {
     return $FormatList;
 }
 
-=item FormatAttributesGet()
+=head2 FormatAttributesGet()
 
-get the attributes of a format backend as array/hash reference
+Get the attributes of a format backend as array/hash reference
 
     my $Attributes = $ImportExportObject->FormatAttributesGet(
         TemplateID => 123,
@@ -823,9 +821,9 @@ sub FormatAttributesGet {
     return $Attributes;
 }
 
-=item FormatDataGet()
+=head2 FormatDataGet()
 
-get the format data from a template
+Get the format data from a template
 
     my $FormatDataRef = $ImportExportObject->FormatDataGet(
         TemplateID => 3,
@@ -866,9 +864,9 @@ sub FormatDataGet {
     return \%FormatData;
 }
 
-=item FormatDataSave()
+=head2 FormatDataSave()
 
-save the format data of a template
+Save the format data of a template
 
     my $True = $ImportExportObject->FormatDataSave(
         TemplateID => 123,
@@ -928,9 +926,9 @@ sub FormatDataSave {
     return 1;
 }
 
-=item FormatDataDelete()
+=head2 FormatDataDelete()
 
-delete the existing format data of a template
+Delete the existing format data of a template
 
     my $True = $ImportExportObject->FormatDataDelete(
         TemplateID => 123,
@@ -987,9 +985,9 @@ sub FormatDataDelete {
     );
 }
 
-=item MappingList()
+=head2 MappingList()
 
-return a list of mapping data ids sorted by position as array reference
+Return a list of mapping data ids sorted by position as array reference
 
     my $MappingList = $ImportExportObject->MappingList(
         TemplateID => 123,
@@ -1030,9 +1028,9 @@ sub MappingList {
     return \@MappingList;
 }
 
-=item MappingAdd()
+=head2 MappingAdd()
 
-add a new mapping data row
+Add a new mapping data row
 
     my $MappingID = $ImportExportObject->MappingAdd(
         TemplateID => 123,
@@ -1097,9 +1095,9 @@ sub MappingAdd {
     return $MappingID;
 }
 
-=item MappingDelete()
+=head2 MappingDelete()
 
-delete existing mapping data rows
+Delete existing mapping data rows
 
     my $True = $ImportExportObject->MappingDelete(
         MappingID  => 123,
@@ -1192,9 +1190,9 @@ sub MappingDelete {
     }
 }
 
-=item MappingUp()
+=head2 MappingUp()
 
-move an mapping data row up
+Move an mapping data row up
 
     my $True = $ImportExportObject->MappingUp(
         MappingID  => 123,
@@ -1258,9 +1256,9 @@ sub MappingUp {
     return 1;
 }
 
-=item MappingDown()
+=head2 MappingDown()
 
-move an mapping data row down
+Move an mapping data row down
 
     my $True = $ImportExportObject->MappingDown(
         MappingID  => 123,
@@ -1322,9 +1320,9 @@ sub MappingDown {
     return 1;
 }
 
-=item MappingPositionRebuild()
+=head2 MappingPositionRebuild()
 
-rebuild the positions of a mapping list
+Rebuild the positions of a mapping list
 
     my $True = $ImportExportObject->MappingPositionRebuild(
         TemplateID => 123,
@@ -1366,9 +1364,9 @@ sub MappingPositionRebuild {
     return 1;
 }
 
-=item MappingObjectAttributesGet()
+=head2 MappingObjectAttributesGet()
 
-get the attributes of an object backend as array/hash reference
+Get the attributes of an object backend as array/hash reference
 
     my $Attributes = $ImportExportObject->MappingObjectAttributesGet(
         TemplateID => 123,
@@ -1425,9 +1423,9 @@ sub MappingObjectAttributesGet {
     return $Attributes;
 }
 
-=item MappingObjectDataDelete()
+=head2 MappingObjectDataDelete()
 
-delete the existing object data of a mapping
+Delete the existing object data of a mapping
 
     my $True = $ImportExportObject->MappingObjectDataDelete(
         MappingID => 123,
@@ -1484,9 +1482,9 @@ sub MappingObjectDataDelete {
     );
 }
 
-=item MappingObjectDataSave()
+=head2 MappingObjectDataSave()
 
-save the object data of a mapping
+Save the object data of a mapping
 
     my $True = $ImportExportObject->MappingObjectDataSave(
         MappingID         => 123,
@@ -1546,9 +1544,9 @@ sub MappingObjectDataSave {
     return 1;
 }
 
-=item MappingObjectDataGet()
+=head2 MappingObjectDataGet()
 
-get the object data of a mapping
+Get the object data of a mapping
 
     my $ObjectDataRef = $ImportExportObject->MappingObjectDataGet(
         MappingID => 123,
@@ -1589,9 +1587,9 @@ sub MappingObjectDataGet {
     return \%MappingObjectData;
 }
 
-=item MappingFormatAttributesGet()
+=head2 MappingFormatAttributesGet()
 
-get the attributes of an format backend as array/hash reference
+Get the attributes of an format backend as array/hash reference
 
     my $Attributes = $ImportExportObject->MappingFormatAttributesGet(
         TemplateID => 123,
@@ -1647,9 +1645,9 @@ sub MappingFormatAttributesGet {
     return $Attributes;
 }
 
-=item MappingFormatDataDelete()
+=head2 MappingFormatDataDelete()
 
-delete the existing format data of a mapping
+Delete the existing format data of a mapping
 
     my $True = $ImportExportObject->MappingFormatDataDelete(
         MappingID => 123,
@@ -1706,9 +1704,9 @@ sub MappingFormatDataDelete {
     );
 }
 
-=item MappingFormatDataSave()
+=head2 MappingFormatDataSave()
 
-save the format data of a mapping
+Save the format data of a mapping
 
     my $True = $ImportExportObject->MappingFormatDataSave(
         MappingID         => 123,
@@ -1768,9 +1766,9 @@ sub MappingFormatDataSave {
     return 1;
 }
 
-=item MappingFormatDataGet()
+=head2 MappingFormatDataGet()
 
-get the format data of a mapping
+Get the format data of a mapping
 
     my $ObjectDataRef = $ImportExportObject->MappingFormatDataGet(
         MappingID => 123,
@@ -1811,9 +1809,9 @@ sub MappingFormatDataGet {
     return \%MappingFormatData;
 }
 
-=item SearchAttributesGet()
+=head2 SearchAttributesGet()
 
-get the search attributes of a object backend as array/hash reference
+Get the search attributes of a object backend as array/hash reference
 
     my $Attributes = $ImportExportObject->SearchAttributesGet(
         TemplateID => 123,
@@ -1870,9 +1868,9 @@ sub SearchAttributesGet {
     return $Attributes;
 }
 
-=item SearchDataGet()
+=head2 SearchDataGet()
 
-get the search data from a template
+Get the search data from a template
 
     my $SearchDataRef = $ImportExportObject->SearchDataGet(
         TemplateID => 3,
@@ -1913,9 +1911,9 @@ sub SearchDataGet {
     return \%SearchData;
 }
 
-=item SearchDataSave()
+=head2 SearchDataSave()
 
-save the search data of a template
+Save the search data of a template
 
     my $True = $ImportExportObject->SearchDataSave(
         TemplateID => 123,
@@ -1976,9 +1974,9 @@ sub SearchDataSave {
     return 1;
 }
 
-=item SearchDataDelete()
+=head2 SearchDataDelete()
 
-delete the existing search data of a template
+Delete the existing search data of a template
 
     my $True = $ImportExportObject->SearchDataDelete(
         TemplateID => 123,
@@ -2035,9 +2033,9 @@ sub SearchDataDelete {
     );
 }
 
-=item Export()
+=head2 Export()
 
-export function
+Export function
 
     my $ResultRef = $ImportExportObject->Export(
         TemplateID => 123,
@@ -2192,9 +2190,9 @@ sub Export {
     return \%Result;
 }
 
-=item Import()
+=head2 Import()
 
-import function
+Import function
 
     my $ResultRef = $ImportExportObject->Import(
         TemplateID    => 123,
@@ -2331,8 +2329,6 @@ sub Import {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

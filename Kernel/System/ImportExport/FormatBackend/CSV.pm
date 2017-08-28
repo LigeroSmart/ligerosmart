@@ -23,17 +23,15 @@ our @ObjectDependencies = (
 
 Kernel::System::ImportExport::FormatBackend::CSV - import/export backend for CSV
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions to import and export a csv format
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -68,9 +66,9 @@ sub new {
     return $Self;
 }
 
-=item FormatAttributesGet()
+=head2 FormatAttributesGet()
 
-get the format attributes of a format as array/hash reference
+Get the format attributes of a format as array/hash reference
 
     my $Attributes = $FormatBackend->FormatAttributesGet(
         UserID => 1,
@@ -139,9 +137,9 @@ sub FormatAttributesGet {
     return $Attributes;
 }
 
-=item MappingFormatAttributesGet()
+=head2 MappingFormatAttributesGet()
 
-get the mapping attributes of an format as array/hash reference
+Get the mapping attributes of an format as array/hash reference
 
     my $Attributes = $FormatBackend->MappingFormatAttributesGet(
         UserID => 1,
@@ -176,9 +174,9 @@ sub MappingFormatAttributesGet {
     return $Attributes;
 }
 
-=item ImportDataGet()
+=head2 ImportDataGet()
 
-get import data as 2D-array reference
+Get import data as C<2D-array> reference
 
     my $ImportData = $FormatBackend->ImportDataGet(
         TemplateID    => 123,
@@ -320,9 +318,9 @@ sub ImportDataGet {
     return \@ImportData;
 }
 
-=item ExportDataSave()
+=head2 ExportDataSave()
 
-export one row of the export data
+Export one row of the export data
 
     my $DestinationContent = $FormatBackend->ExportDataSave(
         TemplateID    => 123,
@@ -434,8 +432,6 @@ sub ExportDataSave {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

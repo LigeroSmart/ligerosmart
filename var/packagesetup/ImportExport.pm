@@ -19,21 +19,15 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-ImportExport.pm - code to excecute during package installation
-
-=head1 SYNOPSIS
-
-All functions
+ImportExport.pm - code to execute during package installation
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -58,9 +52,9 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
-run the code install part
+Run the code install part
 
     my $Result = $CodeObject->CodeInstall();
 
@@ -72,9 +66,9 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
-run the code reinstall part
+Run the code reinstall part
 
     my $Result = $CodeObject->CodeReinstall();
 
@@ -86,9 +80,9 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
-run the code upgrade part
+Run the code upgrade part
 
     my $Result = $CodeObject->CodeUpgrade();
 
@@ -100,7 +94,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeFromBefore_2_0_3()
+=head2 CodeUpgradeFromBefore_2_0_3()
 
 This function is only executed if the installed module version is smaller than 2.0.3.
 
@@ -117,7 +111,7 @@ sub CodeUpgradeFromBefore_2_0_3 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_91()
+=head2 CodeUpgradeFromLowerThan_4_0_91()
 
 This function is only executed if the installed module version is smaller than 4.0.91.
 
@@ -134,7 +128,7 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -148,9 +142,9 @@ sub CodeUninstall {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
-=item _FixDatabaseTypo()
+=head2 _FixDatabaseTypo()
 
     my $Result = $CodeObject->_FixDatabaseTypo();
 
@@ -169,7 +163,7 @@ sub _FixDatabaseTypo {
     return 1;
 }
 
-=item _MigrateConfigs()
+=head2 _MigrateConfigs()
 
 change configurations to match the new module location.
 
@@ -201,10 +195,6 @@ sub _MigrateConfigs {
 }
 
 1;
-
-=end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
