@@ -247,7 +247,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            [% IF (Data.Class && Data.Class == 'NEW') || Data.ItemEdit  %]
+                            [% IF (Data.Class && Data.Class == 'NEW') || Data.ItemID == 'NEW' %]
                                 <button name="Submit" class="CallForAction Primary" id="Submit" type="submit" value="Submit"><span>[% Translate("Save") | html %]</span></button>
                             [% ELSE %]
                                 <button name="SubmitAndContinue" class="CallForAction Primary" id="SubmitAndContinue" type="button" value="Submit"><span>[% Translate("Save") | html %]</span></button>
