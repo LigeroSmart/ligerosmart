@@ -4,7 +4,7 @@
         <Description Translatable="1">Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.</Description>
         <Navigation>Core</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">OTRS::ITSM 5s</Item>
+            <Item ValueType="String" ValueRegex="">OTRS::ITSM 6</Item>
         </Value>
     </Setting>
     <Setting Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -22,7 +22,7 @@
         <Navigation>Core::Package</Navigation>
         <Value>
             <Hash>
-                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages5/">OTRS::ITSM 5 Master</Item>
+                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages6/">OTRS::ITSM 6 Master</Item>
             </Hash>
         </Value>
     </Setting>
