@@ -32,6 +32,11 @@
                         <Item>ITSM.ImportExport.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.Admin.ImportExport.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>

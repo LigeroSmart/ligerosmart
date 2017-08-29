@@ -14,6 +14,7 @@
     <Filelist>
         <File Permission="660" Location="doc/import-export-database.dia" />
         <File Permission="660" Location="doc/import-export-database.png" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/ImportExport.xml" />
         <File Permission="660" Location="Kernel/Config/Files/ImportExport.xml" />
         <File Permission="660" Location="Kernel/Language/cs_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/da_ImportExport.pm" />
@@ -92,6 +93,7 @@
         <File Permission="660" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV008-OpenOffice-Semicolon.csv" />
         <File Permission="660" Location="scripts/test/sample/ImportExport/TemplateExport.csv" />
         <File Permission="660" Location="var/packagesetup/ImportExport.pm" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Admin.ImportExport.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ImportExport.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_up.png" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_up_disabled.png" />

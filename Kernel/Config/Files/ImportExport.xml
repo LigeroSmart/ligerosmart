@@ -18,6 +18,7 @@
                 </NavBarModule>
                 <Loader>
                     <CSS>ITSM.ImportExport.css</CSS>
+                    <JavaScript>ITSM.Admin.ImportExport.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
