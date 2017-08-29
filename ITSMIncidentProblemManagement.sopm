@@ -13,6 +13,8 @@
     <Description Lang="es">Paquete Incident and Problem Management de OTRS::ITSM.</Description>
     <Description Lang="hu">Az OTRS::ITSM incidens- és problémamenedzsment csomag.</Description>
     <Filelist>
+        <File Permission="660" Location="Kernel/Config/Files/XML/ITSMTicket.xml" />
+        <File Permission="660" Location="Kernel/Config/Files/XML/TicketITSMTicket.xml" />
         <File Permission="660" Location="Kernel/Config/Files/ITSMTicket.xml" />
         <File Permission="660" Location="Kernel/Config/Files/TicketITSMTicket.xml" />
         <File Permission="660" Location="Kernel/Language/bg_ITSMIncidentProblemManagement.pm" />

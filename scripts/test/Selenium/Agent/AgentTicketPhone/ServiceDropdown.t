@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - scripts/test/Selenium/Agent/AgentTicketPhone/ServiceDropdown.t
+# $origin: otrs - 5fdf3471d4e2e7505470e5f44eebe82911267e72 - scripts/test/Selenium/Agent/AgentTicketPhone/ServiceDropdown.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -113,17 +113,20 @@ $Selenium->RunTest(
         );
 
         # create an article for the test ticket
-        my $ArticleID = $TicketObject->ArticleCreate(
-            TicketID       => $TicketID,
-            ArticleType    => 'note-internal',
-            SenderType     => 'agent',
-            Subject        => 'Selenium test',
-            Body           => 'Just a test body for selenium testing',
-            Charset        => 'ISO-8859-15',
-            MimeType       => 'text/plain',
-            HistoryType    => 'AddNote',
-            HistoryComment => 'Selenium testing',
-            UserID         => 1,
+        my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+            ChannelName => 'Internal',
+        );
+        my $ArticleID = $ArticleBackendObject->ArticleCreate(
+            TicketID             => $TicketID,
+            IsVisibleForCustomer => 0,
+            SenderType           => 'agent',
+            Subject              => 'Selenium test',
+            Body                 => 'Just a test body for selenium testing',
+            Charset              => 'ISO-8859-15',
+            MimeType             => 'text/plain',
+            HistoryType          => 'AddNote',
+            HistoryComment       => 'Selenium testing',
+            UserID               => 1,
         );
 
         $Self->True(
