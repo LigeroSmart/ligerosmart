@@ -150,7 +150,6 @@
 [% RenderBlockEnd("SLARow") %]
                         </tbody>
                     </table>
-
                 </div>
             </div>
 [% RenderBlockEnd("SLA") %]

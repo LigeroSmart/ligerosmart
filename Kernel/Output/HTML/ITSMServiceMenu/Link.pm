@@ -39,7 +39,7 @@ sub Run {
     if ( !$Param{Service} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need Service!'
+            Message  => 'Need Service!',
         );
         return;
     }

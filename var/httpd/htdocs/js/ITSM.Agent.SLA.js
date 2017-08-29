@@ -37,7 +37,6 @@ ITSM.Agent = ITSM.Agent || {};
                 return false;
             }
         });
-
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');

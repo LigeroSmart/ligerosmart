@@ -38,7 +38,7 @@ sub Run {
     if ( !$Param{SLA} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need SLA!'
+            Message  => 'Need SLA!',
         );
         return;
     }

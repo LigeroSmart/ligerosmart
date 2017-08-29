@@ -41,8 +41,6 @@ ITSM.Agent = ITSM.Agent || {};
 
         // Initialize allocation list for link object table.
         Core.Agent.TableFilters.SetAllocationList();
-
-
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
