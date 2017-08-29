@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - be4010f3365da552dcfd079c36ad31cc90e06c32 - Kernel/Output/HTML/TicketOverview/Medium.pm
+# $origin: otrs - 2507dc88a3350adc362580b4fd57b368b7265c7f - Kernel/Output/HTML/TicketOverview/Medium.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,10 +21,12 @@ our @ObjectDependencies = (
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
     'Kernel::Config',
+    'Kernel::System::Group',
     'Kernel::System::Log',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::User',
     'Kernel::System::Ticket',
+    'Kernel::System::Ticket::Article',
     'Kernel::System::Main',
     'Kernel::System::Queue'
 );
@@ -60,10 +62,15 @@ sub ActionRow {
             $BulkFeature = 1;
         }
         else {
+            my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
             GROUP:
             for my $Group (@Groups) {
-                next GROUP if !$LayoutObject->{"UserIsGroup[$Group]"};
-                if ( $LayoutObject->{"UserIsGroup[$Group]"} eq 'Yes' ) {
+                my $HasPermission = $GroupObject->PermissionCheck(
+                    UserID    => $Self->{UserID},
+                    GroupName => $Group,
+                    Type      => 'rw',
+                );
+                if ($HasPermission) {
                     $BulkFeature = 1;
                     last GROUP;
                 }
@@ -161,12 +168,6 @@ sub ActionRow {
         }
     }
 
-    # init for table control
-    $LayoutObject->Block(
-        Name => 'DocumentReadyStart',
-        Data => \%Param,
-    );
-
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentTicketOverviewMedium',
         Data         => \%Param,
@@ -185,11 +186,11 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(TicketIDs PageShown StartHit)) {
-        if ( !$Param{$_} ) {
+    for my $Item (qw(TicketIDs PageShown StartHit)) {
+        if ( !$Param{$Item} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
-                Message  => "Need $_!"
+                Message  => "Need $Item!",
             );
             return;
         }
@@ -210,10 +211,15 @@ sub Run {
             $BulkFeature = 1;
         }
         else {
+            my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
             GROUP:
             for my $Group (@Groups) {
-                next GROUP if !$LayoutObject->{"UserIsGroup[$Group]"};
-                if ( $LayoutObject->{"UserIsGroup[$Group]"} eq 'Yes' ) {
+                my $HasPermission = $GroupObject->PermissionCheck(
+                    UserID    => $Self->{UserID},
+                    GroupName => $Group,
+                    Type      => 'rw',
+                );
+                if ($HasPermission) {
                     $BulkFeature = 1;
                     last GROUP;
                 }
@@ -268,6 +274,12 @@ sub Run {
                 }
             }
         }
+
+        # send data to JS
+        $LayoutObject->AddJSData(
+            Key   => 'ActionRowTickets',
+            Value => $Self->{ActionRowTickets},
+        );
     }
     else {
         $LayoutObject->Block( Name => 'NoTicketFound' );
@@ -309,36 +321,67 @@ sub _Show {
     if ( !$Param{TicketID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need TicketID!'
+            Message  => 'Need TicketID!',
         );
         return;
     }
 
-    # get needed objects
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $LayoutObject  = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $TicketObject  = $Kernel::OM->Get('Kernel::System::Ticket');
+    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
 
-    # get move queues
-    my %MoveQueues = $TicketObject->MoveList(
-        TicketID => $Param{TicketID},
-        UserID   => $Self->{UserID},
-        Action   => $LayoutObject->{Action},
-        Type     => 'move_into',
+    # Get last customer article.
+    my @Articles = $ArticleObject->ArticleList(
+        TicketID   => $Param{TicketID},
+        SenderType => 'customer',
+        OnlyLast   => 1,
     );
 
-    # get last customer article
-    my %Article = $TicketObject->ArticleLastCustomerArticle(
-        TicketID      => $Param{TicketID},
-        DynamicFields => 0,
-    );
+    # If the ticket has no customer article, get the last agent article.
+    if ( !@Articles ) {
+        @Articles = $ArticleObject->ArticleList(
+            TicketID   => $Param{TicketID},
+            SenderType => 'agent',
+            OnlyLast   => 1,
+        );
+    }
 
-    # get ticket data
+    # Finally, if everything failed, get latest article.
+    if ( !@Articles ) {
+        @Articles = $ArticleObject->ArticleList(
+            TicketID => $Param{TicketID},
+            OnlyLast => 1,
+        );
+    }
+
+    my %Article;
+    for my $Article (@Articles) {
+        %Article = $ArticleObject->BackendForArticle( %{$Article} )->ArticleGet(
+            %{$Article},
+            DynamicFields => 0,
+        );
+
+        my %ArticleFields = $LayoutObject->ArticleFields(
+            %{$Article},
+        );
+
+        $Article{ArticleFields} = \%ArticleFields;
+    }
+
+    # Get ticket data.
     my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Param{TicketID},
-        DynamicFields => 0,
+# ---
+# ITSMIncidentProblemManagement
+# ---
+#        DynamicFields => 0,
+        DynamicFields => 1,
+# ---
     );
 
-    # Fallback for tickets without articles: get at least basic ticket data
+    %Article = ( %Article, %Ticket );
+
+    # Fallback for tickets without articles: get at least basic ticket data.
     if ( !%Article ) {
         %Article = %Ticket;
         if ( !$Article{Title} ) {
@@ -365,10 +408,15 @@ sub _Show {
     );
     %Article = ( %UserInfo, %Article );
 
+    # get responsible info from Ticket
+    my %TicketResponsible = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
+        UserID => $Ticket{ResponsibleID},
+    );
+
     # create human age
     $Article{Age} = $LayoutObject->CustomerAge(
         Age   => $Article{Age},
-        Space => ' '
+        Space => ' ',
     );
 
     # fetch all std. templates ...
@@ -510,7 +558,20 @@ sub _Show {
 
     $LayoutObject->Block(
         Name => 'DocumentContent',
-        Data => { %Param, %Article },
+        Data => {
+            %Param,
+            %Article,
+        },
+    );
+
+    $LayoutObject->Block(
+        Name => 'OwnerResponsible',
+        Data => {
+            Owner               => $UserInfo{'UserLogin'},
+            OwnerFullname       => $UserInfo{'UserFullname'},
+            Responsible         => $TicketResponsible{'UserLogin'},
+            ResponsibleFullname => $TicketResponsible{'UserFullname'},
+        },
     );
 
     # if "Actions per Ticket" (Inline Action Row) is active
@@ -606,7 +667,8 @@ sub _Show {
                 # run module
                 my @Data = $Object->Check(
                     Article => \%Article,
-                    %Param, Config => $Jobs{$Job}
+                    %Param,
+                    Config => $Jobs{$Job},
                 );
 
                 for my $DataRef (@Data) {
@@ -619,7 +681,8 @@ sub _Show {
                 # filter option
                 $Object->Filter(
                     Article => \%Article,
-                    %Param, Config => $Jobs{$Job}
+                    %Param,
+                    Config => $Jobs{$Job},
                 );
             }
         }
@@ -628,7 +691,11 @@ sub _Show {
     # create output
     $LayoutObject->Block(
         Name => 'AgentAnswer',
-        Data => { %Param, %Article, %AclAction },
+        Data => {
+            %Param,
+            %Article,
+            %AclAction,
+        },
     );
     if (
         $ConfigObject->Get('Frontend::Module')->{AgentTicketCompose}
@@ -650,7 +717,11 @@ sub _Show {
             if ($Access) {
                 $LayoutObject->Block(
                     Name => 'AgentAnswerCompose',
-                    Data => { %Param, %Article, %AclAction },
+                    Data => {
+                        %Param,
+                        %Article,
+                        %AclAction,
+                    },
                 );
             }
         }
@@ -679,7 +750,11 @@ sub _Show {
         if ($Access) {
             $LayoutObject->Block(
                 Name => 'AgentAnswerPhoneOutbound',
-                Data => { %Param, %Article, %AclAction },
+                Data => {
+                    %Param,
+                    %Article,
+                    %AclAction,
+                },
             );
         }
     }
@@ -688,7 +763,10 @@ sub _Show {
     if ( $ConfigObject->Get('Ticket::Type') ) {
         $LayoutObject->Block(
             Name => 'Type',
-            Data => { %Param, %Article },
+            Data => {
+                %Param,
+                %Article,
+            },
         );
     }
 
@@ -696,70 +774,91 @@ sub _Show {
     if ( $ConfigObject->Get('Ticket::Service') && $Article{Service} ) {
         $LayoutObject->Block(
             Name => 'Service',
-            Data => { %Param, %Article },
+            Data => {
+                %Param,
+                %Article,
+            },
         );
         if ( $Article{SLA} ) {
             $LayoutObject->Block(
                 Name => 'SLA',
-                Data => { %Param, %Article },
+                Data => {
+                    %Param,
+                    %Article,
+                },
             );
         }
     }
 
     # show first response time if needed
     if ( defined $Article{FirstResponseTime} ) {
-        $Article{FirstResponseTimeHuman} = $LayoutObject->CustomerAgeInHours(
-            Age   => $Article{FirstResponseTime},
-            Space => ' ',
+        $Article{FirstResponseTimeHuman} = $LayoutObject->CustomerAge(
+            Age                => $Article{FirstResponseTime},
+            TimeShowAlwaysLong => 1,
+            Space              => ' ',
         );
-        $Article{FirstResponseTimeWorkingTime} = $LayoutObject->CustomerAgeInHours(
-            Age   => $Article{FirstResponseTimeWorkingTime},
-            Space => ' ',
+        $Article{FirstResponseTimeWorkingTime} = $LayoutObject->CustomerAge(
+            Age                => $Article{FirstResponseTimeWorkingTime},
+            TimeShowAlwaysLong => 1,
+            Space              => ' ',
         );
         if ( 60 * 60 * 1 > $Article{FirstResponseTime} ) {
             $Article{FirstResponseTimeClass} = 'Warning'
         }
         $LayoutObject->Block(
             Name => 'FirstResponseTime',
-            Data => { %Param, %Article },
+            Data => {
+                %Param,
+                %Article,
+            },
         );
     }
 
     # show update time if needed
     if ( defined $Article{UpdateTime} ) {
-        $Article{UpdateTimeHuman} = $LayoutObject->CustomerAgeInHours(
-            Age   => $Article{UpdateTime},
-            Space => ' ',
+        $Article{UpdateTimeHuman} = $LayoutObject->CustomerAge(
+            Age                => $Article{UpdateTime},
+            TimeShowAlwaysLong => 1,
+            Space              => ' ',
         );
-        $Article{UpdateTimeWorkingTime} = $LayoutObject->CustomerAgeInHours(
-            Age   => $Article{UpdateTimeWorkingTime},
-            Space => ' ',
+        $Article{UpdateTimeWorkingTime} = $LayoutObject->CustomerAge(
+            Age                => $Article{UpdateTimeWorkingTime},
+            TimeShowAlwaysLong => 1,
+            Space              => ' ',
         );
         if ( 60 * 60 * 1 > $Article{UpdateTime} ) {
             $Article{UpdateTimeClass} = 'Warning'
         }
         $LayoutObject->Block(
             Name => 'UpdateTime',
-            Data => { %Param, %Article },
+            Data => {
+                %Param,
+                %Article,
+            },
         );
     }
 
     # show solution time if needed
     if ( defined $Article{SolutionTime} ) {
-        $Article{SolutionTimeHuman} = $LayoutObject->CustomerAgeInHours(
-            Age   => $Article{SolutionTime},
-            Space => ' ',
+        $Article{SolutionTimeHuman} = $LayoutObject->CustomerAge(
+            Age                => $Article{SolutionTime},
+            TimeShowAlwaysLong => 1,
+            Space              => ' ',
         );
-        $Article{SolutionTimeWorkingTime} = $LayoutObject->CustomerAgeInHours(
-            Age   => $Article{SolutionTimeWorkingTime},
-            Space => ' ',
+        $Article{SolutionTimeWorkingTime} = $LayoutObject->CustomerAge(
+            Age                => $Article{SolutionTimeWorkingTime},
+            TimeShowAlwaysLong => 1,
+            Space              => ' ',
         );
         if ( 60 * 60 * 1 > $Article{SolutionTime} ) {
-            $Article{SolutionTimeClass} = 'Warning'
+            $Article{SolutionTimeClass} = 'Warning';
         }
         $LayoutObject->Block(
             Name => 'SolutionTime',
-            Data => { %Param, %Article },
+            Data => {
+                %Param,
+                %Article,
+            },
         );
     }
 
@@ -945,53 +1044,43 @@ sub _Show {
     my $CustomerIDBlock = $Access ? 'CustomerIDRW' : 'CustomerIDRO';
     $LayoutObject->Block(
         Name => $CustomerIDBlock,
-        Data => { %Param, %Article },
+        Data => {
+            %Param,
+            %Article,
+        },
     );
 
-    # get MoveQueuesStrg
-    if ( $ConfigObject->Get('Ticket::Frontend::MoveType') =~ /^form$/i ) {
-        $Param{MoveQueuesStrg} = $LayoutObject->AgentQueueListOption(
-            Name       => 'DestQueueID',
-            Data       => \%MoveQueues,
-            SelectedID => $Article{QueueID},
-        );
-    }
-    if (
-        $ConfigObject->Get('Frontend::Module')->{AgentTicketMove}
-        && ( !defined $AclAction{AgentTicketMove} || $AclAction{AgentTicketMove} )
-        )
-    {
-        my $Access = $TicketObject->TicketPermission(
-            Type     => 'move',
-            TicketID => $Param{TicketID},
-            UserID   => $Self->{UserID},
-            LogNo    => 1,
-        );
-        if ($Access) {
-            $LayoutObject->Block(
-                Name => 'Move',
-                Data => { %Param, %AclAction },
-            );
-        }
-    }
+    my %ActionRowTickets;
 
     # add action items as js
     if ( @ActionItems && !$Param{Config}->{TicketActionsPerTicket} ) {
-        $LayoutObject->Block(
-            Name => 'DocumentReadyActionRowAdd',
-            Data => {
-                TicketID => $Param{TicketID},
-                Data     => \@ActionItems,
-            },
+
+        # replace TT directives from string with values
+        for my $ActionItem (@ActionItems) {
+            $ActionItem->{Link} = $LayoutObject->Output(
+                Template => $ActionItem->{Link},
+                Data     => {
+                    TicketID => $Article{TicketID},
+                },
+            );
+        }
+
+        $Self->{ActionRowTickets}->{ $Param{TicketID} } = $LayoutObject->JSONEncode(
+            Data => \@ActionItems,
         );
     }
 
     # create & return output
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentTicketOverviewMedium',
-        Data         => { %Param, %Article, %AclAction },
+        Data         => {
+            %Param,
+            %Article,
+            %AclAction,
+        },
     );
 
     return \$Output;
 }
+
 1;

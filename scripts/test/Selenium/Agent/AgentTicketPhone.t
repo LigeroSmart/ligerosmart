@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 39ba17a8547504ecd027f4d0c9cb80a2741c9e25 - scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: otrs - c76ef0087a18f7310dc28553670ef3ff66097c91 - scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -155,6 +155,10 @@ $Selenium->RunTest(
 
         # Navigate to AgentTicketPhone screen again.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
+
+        # create test phone ticket
+        my $TicketSubject = "Selenium Ticket";
+        my $TicketBody    = "Selenium body test";
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -196,14 +200,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
 # ---
-
-        # Create test phone ticket.
-        my $AutoCompleteString = "\"$TestCustomer $TestCustomer\" <$TestCustomer\@localhost.com> ($TestCustomer)";
-        my $TicketSubject      = "Selenium Ticket";
-        my $TicketBody         = "Selenium body test";
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteString']")->VerifiedClick();
+        $Selenium->find_element("//*[text()='$TestCustomer']")->VerifiedClick();
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -284,7 +283,7 @@ $Selenium->RunTest(
         # add customer again
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteString']")->VerifiedClick();
+        $Selenium->find_element("//*[text()='$TestCustomer']")->VerifiedClick();
 
         # Make sure that Customer email is not a link.
         $LinkVisible = $Selenium->execute_script("return \$('.SidebarColumn fieldset a.AsPopup').length;");
@@ -393,21 +392,17 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 
         # select <Queue>
-        $Selenium->execute_script(
-            "\$('#Dest option').filter(function () { return this.text == '<Queue>$RandomID'; }).attr('selected',true);"
-                . " \$('#Dest').trigger('redraw.InputField').trigger('change');"
-        );
+        my $QueueValue = "$QueueID1||<Queue>$RandomID";
+        $Selenium->execute_script("\$('#Dest').val('$QueueValue').trigger('redraw.InputField').trigger('change');");
 
         # Wait for loader.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
         # Check Queue #1 is displayed as selected.
-        $Self->True(
-            $Selenium->WaitFor(
-                JavaScript =>
-                    "return typeof(\$) === \"function\" && \$('div.Text').filter(function () { return this.textContent == '<Queue>$RandomID'; }).length;"
-            ),
-            'Make sure that Queue #1 is displayed.',
+        $Self->Is(
+            $Selenium->find_element( '#Dest', 'css' )->get_value(),
+            $QueueValue,
+            'Queue #1 is selected.',
         );
 
         # Check Queue #1 is displayed properly.
@@ -420,16 +415,17 @@ $Selenium->RunTest(
         # Select SubQueue on loading screen.
         # bug#12819 ( https://bugs.otrs.org/show_bug.cgi?id=12819 ) - queue contains spaces in the name.
         # Navigate to AgentTicketPhone screen again to check selecting a queue after loading screen.
+        $QueueValue = $QueueID2 . "||Junk::SubQueue $RandomID  $RandomID";
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
-        $Selenium->execute_script(
-            "\$('#Dest option').filter(function () { return this.textContent == '\\u00A0\\u00A0SubQueue $RandomID  $RandomID'; }).attr('selected',true);"
-                . " \$('#Dest').trigger('redraw.InputField').trigger('change');"
-        );
+        $Selenium->execute_script("\$('#Dest').val('$QueueValue').trigger('redraw.InputField').trigger('change');");
+
+        # Wait for loader.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
         # Check SubQueue is displayed properly.
         $Self->Is(
             $Selenium->find_element( '#Dest', 'css' )->get_value(),
-            $QueueID2 . "||Junk::SubQueue $RandomID  $RandomID",
+            $QueueValue,
             'Queue #2 is selected.',
         );
 

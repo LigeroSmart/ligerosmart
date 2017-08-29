@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 9d3cf392c7d06a4db8a7e0641b88584191db4715 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# $origin: otrs - 48a0dca5ccbd6411f5b58440192d63abcf07d2b6 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -549,7 +549,7 @@ EOF
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketID");
 
         # Verify that the ticket was indeed closed successfully.
-        my $CloseMsg = 'Old: "new" New: "closed successful"';
+        my $CloseMsg = 'Changed state from "new" to "closed successful".';
         $Self->True(
             index( $Selenium->get_page_source(), $CloseMsg ) > -1,
             'Ticket closed successfully'

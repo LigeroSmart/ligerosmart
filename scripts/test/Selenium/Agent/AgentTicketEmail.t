@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - f7df6fc2e713d53a214cb84ac46d10cf6b9e4846 - scripts/test/Selenium/Agent/AgentTicketEmail.t
+# $origin: otrs - 93b82fdfbf76b97afa7534e0e495f93e6c0bd54b - scripts/test/Selenium/Agent/AgentTicketEmail.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -248,10 +248,11 @@ $Selenium->RunTest(
         # Select customer user.
         my $AutoCompleteString
             = "\"$TestData[0]->{UserFirstName} $TestData[0]->{UserLastName}\" <$TestData[0]->{UserLogin}\@localhost.com> ($TestData[0]->{UserLogin})";
-        $Selenium->find_element( "#ToCustomer", 'css' )->send_keys($RandomID);
+        $Selenium->find_element( "#ToCustomer", 'css' )->send_keys( $TestData[0]->{UserLogin} );
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteString']")->click();
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestData[0]->{UserFirstName})').click()");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#CustomerSelected_1").length' );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
         $SignatureText = "Customer First Name: $TestData[0]->{UserFirstName}";
@@ -261,11 +262,11 @@ $Selenium->RunTest(
             Time => 5,
         );
 
-        # Input subject data
+        # Input subject data.
         my $TicketSubject = "Selenium Ticket";
         $Selenium->find_element( "#Subject", 'css' )->send_keys($TicketSubject);
 
-        # Queue and customer are selected, signature have replaced tags.
+        # Queue and customer are selected, signature has replaced tags.
         $Self->Is(
             $Selenium->execute_script('return $("#Signature").val()'),
             $SignatureText,
@@ -292,7 +293,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#ToCustomer", 'css' )->send_keys( $TestData[1]->{UserLogin} );
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteString']")->click();
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestData[1]->{UserFirstName})').click()");
 
         # Change selected customer, trigger replacement tag in signature.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#CustomerSelected_2").length' );
@@ -448,13 +449,14 @@ $Selenium->RunTest(
         );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
-        # Select the first customer user.
+        # Select customer user.
         $AutoCompleteString
             = "\"$TestData[0]->{UserFirstName} $TestData[0]->{UserLastName}\" <$TestData[0]->{UserLogin}\@localhost.com> ($TestData[0]->{UserLogin})";
-        $Selenium->find_element( "#ToCustomer", 'css' )->send_keys($RandomID);
+        $Selenium->find_element( "#ToCustomer", 'css' )->send_keys( $TestData[0]->{UserLogin} );
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteString']")->click();
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestData[0]->{UserFirstName})').click()");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#CustomerSelected_1").length' );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
         $SignatureText = "Customer First Name: $TestData[0]->{UserFirstName}";
