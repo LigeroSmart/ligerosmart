@@ -103,7 +103,6 @@
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.css" />
-        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.IE7.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Search.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Print.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Table.css" />
