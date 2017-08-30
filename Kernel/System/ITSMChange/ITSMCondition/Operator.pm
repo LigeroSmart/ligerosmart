@@ -17,15 +17,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::System::ITSMChange::ITSMCondition::Operator - condition operator lib
 
-=head1 SYNOPSIS
-
-All functions for condition operators in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item OperatorAdd()
+=head2 OperatorAdd()
 
 Add a new condition operator.
 
@@ -93,7 +87,7 @@ sub OperatorAdd {
     return $OperatorID;
 }
 
-=item OperatorUpdate()
+=head2 OperatorUpdate()
 
 Update a condition operator.
 
@@ -162,7 +156,7 @@ sub OperatorUpdate {
     return 1;
 }
 
-=item OperatorGet()
+=head2 OperatorGet()
 
 Get a condition operator for a given operator id.
 Returns a hash reference of the operator data.
@@ -235,7 +229,7 @@ sub OperatorGet {
     return \%OperatorData;
 }
 
-=item OperatorLookup()
+=head2 OperatorLookup()
 
 This method does a lookup for a condition operator. If an operator
 id is given, it returns the name of the operator. If the name of the
@@ -334,7 +328,7 @@ sub OperatorLookup {
     return $Lookup;
 }
 
-=item OperatorList()
+=head2 OperatorList()
 
 Returns a list of all condition operators as hash reference
 
@@ -390,7 +384,7 @@ sub OperatorList {
     return \%OperatorList;
 }
 
-=item OperatorDelete()
+=head2 OperatorDelete()
 
 Deletes a condition operator.
 
@@ -444,7 +438,7 @@ sub OperatorDelete {
     return 1;
 }
 
-=item OperatorExecute()
+=head2 OperatorExecute()
 
 Executes the operator and returns true on success.
 
@@ -561,7 +555,7 @@ sub OperatorExecute {
 
 =begin Internal:
 
-=item _OperatorExecute()
+=head2 _OperatorExecute()
 
 Returns true or false (1/undef).
 
@@ -656,7 +650,7 @@ sub _OperatorExecute {
     return $Result;
 }
 
-=item _OperatorActionExecute()
+=head2 _OperatorActionExecute()
 
 Returns true or false (1/undef) if given action could be
 executed successfully.
@@ -741,7 +735,7 @@ sub _OperatorActionExecute {
     return $Result;
 }
 
-=item _OperatorEqual()
+=head2 _OperatorEqual()
 
 Returns true or false (1/undef) if given values are equal.
 
@@ -770,7 +764,7 @@ sub _OperatorEqual {
     return $Param{Value1} eq $Param{Value2};
 }
 
-=item _OperatorNotEqual()
+=head2 _OperatorNotEqual()
 
 Returns true or false (1/undef) if given values are not equal.
 
@@ -799,7 +793,7 @@ sub _OperatorNotEqual {
     return !$Self->_OperatorEqual(%Param);
 }
 
-=item _OperatorIsEmpty()
+=head2 _OperatorIsEmpty()
 
 Returns true or false (1/undef) if given value is empty.
 
@@ -830,7 +824,7 @@ sub _OperatorIsEmpty {
     return $ValueLength == 0;
 }
 
-=item _OperatorIsNotEmpty()
+=head2 _OperatorIsNotEmpty()
 
 Returns true or false (1/undef) if given value is not empty.
 
@@ -858,7 +852,7 @@ sub _OperatorIsNotEmpty {
     return !$Self->_OperatorIsEmpty(%Param);
 }
 
-=item _OperatorIsGreaterThan()
+=head2 _OperatorIsGreaterThan()
 
 Returns true or false (1/undef) if Value1 is greater than
 the compare Value2.
@@ -897,7 +891,7 @@ sub _OperatorIsGreaterThan {
     return $Param{Value1} > $Param{Value2};
 }
 
-=item _OperatorIsLessThan()
+=head2 _OperatorIsLessThan()
 
 Returns true or false (1/undef) if Value1 is less than
 the compare Value2.
@@ -936,7 +930,7 @@ sub _OperatorIsLessThan {
     return $Param{Value1} < $Param{Value2};
 }
 
-=item _OperatorIsBefore()
+=head2 _OperatorIsBefore()
 
 Returns true or false (1/undef) if Value1 is before the compare Value2.
 
@@ -974,7 +968,7 @@ sub _OperatorIsBefore {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Param{$Date}
-            }
+                }
         )->ToEpoch();
 
         # check for time
@@ -985,7 +979,7 @@ sub _OperatorIsBefore {
     return $Timestamp{Value1} < $Timestamp{Value2};
 }
 
-=item _OperatorIsAfter()
+=head2 _OperatorIsAfter()
 
 Returns true or false (1/undef) if Value1 is after the compare Value2.
 
@@ -1018,7 +1012,7 @@ sub _OperatorIsAfter {
     return !$Self->_OperatorIsBefore(%Param);
 }
 
-=item _OperatorContains()
+=head2 _OperatorContains()
 
 Returns true or false (1/undef) if value1 contains value2.
 
@@ -1054,7 +1048,7 @@ sub _OperatorContains {
     return $Contains;
 }
 
-=item _OperatorNotContains()
+=head2 _OperatorNotContains()
 
 Returns true or false (1/undef) if value1 not contains value2.
 
@@ -1083,7 +1077,7 @@ sub _OperatorNotContains {
     return !$Self->_OperatorContains(%Param);
 }
 
-=item _OperatorBeginsWith()
+=head2 _OperatorBeginsWith()
 
 Returns true or false (1/undef) if value1 begins with value2.
 
@@ -1119,7 +1113,7 @@ sub _OperatorBeginsWith {
     return $BeginsWith;
 }
 
-=item _OperatorEndsWith()
+=head2 _OperatorEndsWith()
 
 Returns true or false (1/undef) if value1 ends with value2.
 
@@ -1155,7 +1149,7 @@ sub _OperatorEndsWith {
     return $EndsWith;
 }
 
-=item _OperatorSet()
+=head2 _OperatorSet()
 
 Returns the success of setting a new value.
 
@@ -1275,8 +1269,6 @@ sub _OperatorSet {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

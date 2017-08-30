@@ -17,15 +17,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::System::ITSMChange::ITSMCondition::Expression - condition expression lib
 
-=head1 SYNOPSIS
-
-All functions for condition expressions in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item ExpressionAdd()
+=head2 ExpressionAdd()
 
 Add a new condition expression.
 
@@ -161,7 +155,7 @@ sub ExpressionAdd {
     return $ExpressionID;
 }
 
-=item ExpressionUpdate()
+=head2 ExpressionUpdate()
 
 Update a condition expression.
 
@@ -283,7 +277,7 @@ sub ExpressionUpdate {
     return 1;
 }
 
-=item ExpressionGet()
+=head2 ExpressionGet()
 
 Get a condition expression for a given expression id.
 Returns a hash reference of the expression data.
@@ -370,7 +364,7 @@ sub ExpressionGet {
     return \%ExpressionData;
 }
 
-=item ExpressionList()
+=head2 ExpressionList()
 
 Returns a list of all condition expression ids for
 a given ConditionID as array reference.
@@ -428,7 +422,7 @@ sub ExpressionList {
     return \@ExpressionList;
 }
 
-=item ExpressionDelete()
+=head2 ExpressionDelete()
 
 Deletes a condition expression.
 
@@ -513,7 +507,7 @@ sub ExpressionDelete {
     return 1;
 }
 
-=item ExpressionDeleteAll()
+=head2 ExpressionDeleteAll()
 
 Deletes all condition expressions for a given condition id.
 
@@ -601,7 +595,7 @@ sub ExpressionDeleteAll {
     return 1;
 }
 
-=item ExpressionMatch()
+=head2 ExpressionMatch()
 
 Returns the boolean value of an expression.
 
@@ -745,7 +739,7 @@ sub ExpressionMatch {
     return $Result;
 }
 
-=item _ExpressionMatchInit()
+=head2 _ExpressionMatchInit()
 
 Returns object, attribute and operator of a given expression.
 
@@ -814,8 +808,6 @@ sub _ExpressionMatchInit {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

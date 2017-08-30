@@ -20,19 +20,13 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder - condition itsm workorder object lib
-
-=head1 SYNOPSIS
-
-All ITSMWorkOrder object functions for conditions in ITSMChangeManagement.
+Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder - condition itsm C<workorder> object lib
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -52,9 +46,9 @@ sub new {
     return $Self;
 }
 
-=item DataGet()
+=head2 DataGet()
 
-Returns workorder data in an array reference.
+Returns C<workorder> data in an array reference.
 
     my $WorkOrderDataRef = $ConditionObjectITSMWorkOrder->DataGet(
         Selector => 1234,
@@ -99,16 +93,16 @@ sub DataGet {
     return $WorkOrderData;
 }
 
-=item CompareValueList()
+=head2 CompareValueList()
 
-Returns a list of available CompareValues for the given attribute id of a workorder object as hash reference.
+Returns a list of available CompareValues for the given attribute id of a C<workorder> object as hash reference.
 
     my $CompareValueList = $ConditionObjectITSMWorkOrder->CompareValueList(
         AttributeName => 'WorkOrderStateID',
         UserID        => 1,
     );
 
-Returns a hash reference like this, for the workorder attribute 'WorkOrderStateID':
+Returns a hash reference like this, for the C<workorder> attribute 'WorkOrderStateID':
 
     $CompareValueList = {
         10    => 'created',
@@ -169,9 +163,9 @@ sub CompareValueList {
     return $CompareValueList;
 }
 
-=item SelectorList()
+=head2 SelectorList()
 
-Returns a list of all selectors available for the given workorder object id and condition id as hash reference
+Returns a list of all selectors available for the given C<workorder> object id and condition id as hash reference
 
     my $SelectorList = $ConditionObjectITSMWorkOrder->SelectorList(
         ObjectID    => 1234,
@@ -231,7 +225,7 @@ sub SelectorList {
 
 =begin Internal:
 
-=item _DataGetAll()
+=head2 _DataGetAll()
 
     my $WorkOrderDataArrayRef = $ConditionObjectITSMWorkOrder->_DataGetAll(
         ConditionID => 123,
@@ -286,8 +280,6 @@ sub _DataGetAll {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

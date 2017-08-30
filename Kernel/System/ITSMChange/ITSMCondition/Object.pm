@@ -17,15 +17,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::System::ITSMChange::ITSMCondition::Object - condition object lib
 
-=head1 SYNOPSIS
-
-All functions for condition objects in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item ObjectAdd()
+=head2 ObjectAdd()
 
 Add a new condition object.
 
@@ -95,7 +89,7 @@ sub ObjectAdd {
     return $ObjectID;
 }
 
-=item ObjectUpdate()
+=head2 ObjectUpdate()
 
 Update a condition object.
 
@@ -164,7 +158,7 @@ sub ObjectUpdate {
     return 1;
 }
 
-=item ObjectGet()
+=head2 ObjectGet()
 
 Get a condition object for a given object id.
 Returns a hash reference of the object data.
@@ -176,8 +170,8 @@ Returns a hash reference of the object data.
 
 The returned hash reference contains following elements:
 
-    $ConditionObject{ObjectID}
-    $ConditionObject{Name}
+    $ConditionObject->{ObjectID}
+    $ConditionObject->{Name}
 
 =cut
 
@@ -237,7 +231,7 @@ sub ObjectGet {
     return \%ObjectData;
 }
 
-=item ObjectLookup()
+=head2 ObjectLookup()
 
 This method does a lookup for a condition object. If an object
 id is given, it returns the name of the object. If the name of the
@@ -336,7 +330,7 @@ sub ObjectLookup {
     return $Lookup;
 }
 
-=item ObjectList()
+=head2 ObjectList()
 
 Returns a list of all condition objects as hash reference
 
@@ -392,7 +386,7 @@ sub ObjectList {
     return \%ObjectList;
 }
 
-=item ObjectDelete()
+=head2 ObjectDelete()
 
 Deletes a condition object.
 
@@ -446,7 +440,7 @@ sub ObjectDelete {
     return 1;
 }
 
-=item ObjectSelectorList()
+=head2 ObjectSelectorList()
 
 Returns a list of all selectors available for the given object id and condition id as hash reference
 
@@ -456,7 +450,7 @@ Returns a list of all selectors available for the given object id and condition 
         UserID      => 1,
     );
 
-Returns a hash reference like this (for workorder objects)
+Returns a hash reference like this (for C<workorder> objects)
 
     $SelectorList = {
         10    => '1 - WorkorderTitle of Workorder 1',
@@ -532,7 +526,7 @@ sub ObjectSelectorList {
     return $SelectorList;
 }
 
-=item ObjectCompareValueList()
+=head2 ObjectCompareValueList()
 
 Returns a list of available CompareValues for the given object id and attribute id as hash reference.
 
@@ -542,7 +536,7 @@ Returns a list of available CompareValues for the given object id and attribute 
         UserID        => 1,
     );
 
-Returns a hash reference like this, for a workorder object and the attribute 'WorkOrderStateID':
+Returns a hash reference like this, for a C<workorder> object and the attribute 'WorkOrderStateID':
 
     $CompareValueList = {
         10    => 'created',
@@ -606,7 +600,7 @@ sub ObjectCompareValueList {
     return $CompareValueList;
 }
 
-=item ObjectDataGet()
+=head2 ObjectDataGet()
 
 Return the data of a given type and selector of a certain object.
 
@@ -691,8 +685,6 @@ sub ObjectDataGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

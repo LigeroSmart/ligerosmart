@@ -21,17 +21,11 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange - condition itsm change object lib
 
-=head1 SYNOPSIS
-
-All ITSMChange object functions for conditions in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -51,7 +45,7 @@ sub new {
     return $Self;
 }
 
-=item DataGet()
+=head2 DataGet()
 
 Returns change data in an array reference.
 
@@ -94,7 +88,7 @@ sub DataGet {
     return $ChangeData;
 }
 
-=item CompareValueList()
+=head2 CompareValueList()
 
 Returns a list of available CompareValues for the given attribute id of a change object as hash reference.
 
@@ -171,7 +165,7 @@ sub CompareValueList {
     return $CompareValueList;
 }
 
-=item SelectorList()
+=head2 SelectorList()
 
 Returns a list of all selectors available for the given change object id and condition id as hash reference
 
@@ -210,8 +204,6 @@ sub SelectorList {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
