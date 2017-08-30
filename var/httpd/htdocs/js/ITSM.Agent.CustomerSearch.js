@@ -45,8 +45,8 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
                         $Element.removeData('AutoCompleteXHR');
                         $.each(Result, function () {
                             ValueData.push({
-                                label: this.CustomerValue + " (" + this.CustomerKey + ")",
-                                value: this.CustomerValue
+                                label: this.Label + " (" + this.Value + ")",
+                                value: this.Value
                             });
                         });
                         Response(ValueData);
