@@ -970,9 +970,12 @@ sub _OperatorIsBefore {
     for my $Date (qw(Value1 Value2)) {
 
         # convert time
-        $Timestamp{$Date} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-            String => $Param{$Date},
-        );
+        $Timestamp{$Date} = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Param{$Date}
+            }
+        )->ToEpoch();
 
         # check for time
         return if !$Timestamp{$Date};

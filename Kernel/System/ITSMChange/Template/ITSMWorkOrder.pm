@@ -15,29 +15,27 @@ use warnings;
 use Data::Dumper;
 
 our @ObjectDependencies = (
+    'Kernel::System::DateTime',
     'Kernel::System::ITSMChange::ITSMStateMachine',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Main',
-    'Kernel::System::Time',
 );
 
 =head1 NAME
 
 Kernel::System::ITSMChange::Template::ITSMChange - all template functions for workorders
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-All functions for workorder templates in ITSMChangeManagement.
+All functions for work order templates in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -60,11 +58,11 @@ sub new {
     return $Self;
 }
 
-=item Serialize()
+=head2 Serialize()
 
-Serialize a workorder. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The workorder actions
-are "wrapped" within a hashreference...
+Serialize a C<workorder>. This is done with Data::Dumper. It returns
+a serialized string of the data structure. The C<workorder> actions
+are "wrapped" within a hash reference...
 
     my $TemplateString = $TemplateObject->Serialize(
         WorkOrderID => 1,
@@ -77,7 +75,7 @@ returns
 
     '{WorkOrderAdd => { ChangeID => 123, ... }}'
 
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
+If parameter C<Return> is set to C<HASH>, the Perl data structure
 is returned
 
     {
@@ -211,7 +209,7 @@ sub Serialize {
     return $SerializedData;
 }
 
-=item DeSerialize()
+=head2 DeSerialize()
 
 DeSerialize() is a wrapper for all the _XXXAdd methods.
 
@@ -260,10 +258,10 @@ sub DeSerialize {
     return $Self->$Sub(%Param);
 }
 
-=item _WorkOrderAdd()
+=head2 _WorkOrderAdd()
 
-Creates a new workorder based on a template. It returns the
-change id it was created for and the new workorder id.
+Creates a new C<workorder> based on a template. It returns the
+change id it was created for and the new C<workorder> id.
 
     my ( $ChangeID, $WorkOrderID ) = $TemplateObject->_WorkOrderAdd(
         Data => {
@@ -333,15 +331,20 @@ sub _WorkOrderAdd {
                     if ( $Param{MoveTimeType} eq 'PlannedEndTime' ) {
 
                         # calculate the old planned start time into epoch seconds
-                        my $OldPlannedStartTimeInSeconds
-                            = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                            String => $Data{PlannedStartTime},
-                            );
+                        my $OldPlannedStartTimeInSeconds = $Kernel::OM->Create(
+                            'Kernel::System::DateTime',
+                            ObjectParams => {
+                                String => $Data{PlannedStartTime},
+                                }
+                        )->ToEpoch();
 
                         # calculate the old planned end time into epoch seconds
-                        my $OldPlannedEndTimeInSeconds = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                            String => $Data{PlannedEndTime},
-                        );
+                        my $OldPlannedEndTimeInSeconds = $Kernel::OM->Create(
+                            'Kernel::System::DateTime',
+                            ObjectParams => {
+                                String => $Data{PlannedEndTime},
+                                }
+                        )->ToEpoch();
 
                         # the time length of the workorder in seconds
                         $WorkOrderLengthInSeconds = $OldPlannedEndTimeInSeconds - $OldPlannedStartTimeInSeconds;
@@ -389,7 +392,7 @@ sub _WorkOrderAdd {
 
 =begin Internal:
 
-=item _GetTimeDifference()
+=head2 _GetTimeDifference()
 
 If a new planned start/end time was given, the difference is needed
 to move all time values
@@ -416,16 +419,19 @@ sub _GetTimeDifference {
     }
 
     # get current time as timestamp
-    my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-        String => $Param{CurrentTime},
-    );
+    my $CurrentSystemTime = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $Param{CurrentTime},
+            }
+    )->ToEpoch();
 
     my $DiffSeconds = $Param{NewTimeInEpoche} - $CurrentSystemTime;
 
     return $DiffSeconds;
 }
 
-=item _MoveTime()
+=head2 _MoveTime()
 
 This method returns the new value for a time column based on the
 difference.
@@ -453,21 +459,27 @@ sub _MoveTime {
     }
 
     # get current time as timestamp
-    my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-        String => $Param{CurrentTime},
-    );
+    my $CurrentSystemTime = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $Param{CurrentTime},
+            }
+    )->ToEpoch();
 
     # get planned time as timestamp
-    my $NewTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
-        SystemTime => $CurrentSystemTime + $Param{Difference},
-    );
+    my $NewTime = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Epoch => $CurrentSystemTime + $Param{Difference},
+            }
+    )->ToEpoch();
 
     return $NewTime;
 }
 
-=item _AttachmentAdd()
+=head2 _AttachmentAdd()
 
-Creates new attachments for a change or a workorder based on the given template.
+Creates new attachments for a change or a C<workorder> based on the given template.
 It returns a hash of information (with just one key - "Success")
 
     my %Info = $TemplateObject->_AttachmentAdd(
@@ -518,9 +530,9 @@ sub _AttachmentAdd {
     return %Info;
 }
 
-=item _LinkAdd()
+=head2 _LinkAdd()
 
-Creates new links for a change or a workorder based on the given template. It
+Creates new links for a change or a C<workorder> based on the given template. It
 returns a hash of information (with just one key - "Success")
 
     my %Info = $TemplateObject->_LinkAdd(
@@ -581,8 +593,6 @@ sub _LinkAdd {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

@@ -29,9 +29,7 @@ sub ChangeNumberCreate {
     while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
 
         # get current time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
-            SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
-        );
+        my $CurrentDateTime = $Kernel::OM->Create('Kernel::System::DateTime')->Get();
 
         # read count
         my $Count      = 0;
@@ -59,7 +57,9 @@ sub ChangeNumberCreate {
         }
 
         # check if we need to reset the counter
-        if ( !$LastModify || $LastModify ne "$Year-$Month-$Day" ) {
+        if (  !$LastModify
+            || $LastModify ne "$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day}" )
+        {
             $Count = 0;
         }
 
@@ -69,7 +69,7 @@ sub ChangeNumberCreate {
         # increase the the counter faster if we are in loop pretection mode
         $Count += $LoopProtectionCounter;
 
-        my $Content = $Count . ";$Year-$Month-$Day;";
+        my $Content = $Count . ";$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day};";
 
         # write new count
         my $Write = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
@@ -90,7 +90,7 @@ sub ChangeNumberCreate {
         $Count = sprintf "%05d", $Count;
 
         # create new change number
-        my $ChangeNumber = $Year . $Month . $Day . $Count;
+        my $ChangeNumber = $CurrentDateTime->{Year} . $CurrentDateTime->{Month} . $CurrentDateTime->{Day} . $Count;
 
         # lookup if change number exists already
         my $ChangeID = $Self->ChangeLookup(

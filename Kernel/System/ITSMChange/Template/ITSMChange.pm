@@ -15,6 +15,7 @@ use warnings;
 use Data::Dumper;
 
 our @ObjectDependencies = (
+    'Kernel::System::DateTime',
     'Kernel::System::ITSMChange',
     'Kernel::System::ITSMChange::ITSMCondition',
     'Kernel::System::ITSMChange::ITSMStateMachine',
@@ -23,24 +24,21 @@ our @ObjectDependencies = (
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Main',
-    'Kernel::System::Time',
 );
 
 =head1 NAME
 
 Kernel::System::ITSMChange::Template::ITSMChange - all template functions for changes
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions for change templates in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -63,11 +61,11 @@ sub new {
     return $Self;
 }
 
-=item Serialize()
+=head2 Serialize()
 
 Serialize a change. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The change actions
-are "wrapped" within an arrayreference...
+a serialized string of the data structure. The change actions
+are "wrapped" within an array reference...
 
     my $TemplateString = $TemplateObject->Serialize(
         ChangeID   => 1,
@@ -80,7 +78,7 @@ returns
 
     '{ChangeAdd => {Title => 'title', ...}}, {WorkOrderAdd => { ChangeID => 123, ... }}'
 
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
+If parameter C<Return> is set to C<HASH>, the Perl data structure
 is returned
 
     {
@@ -254,7 +252,7 @@ sub Serialize {
     return $SerializedData;
 }
 
-=item DeSerialize()
+=head2 DeSerialize()
 
 DeSerialize() is a wrapper for all the _XXXAdd methods.
 
@@ -305,7 +303,7 @@ sub DeSerialize {
 
 =begin Internal:
 
-=item _ChangeAdd()
+=head2 _ChangeAdd()
 
 Creates a new change based on a template. It returns a hash with additional
 info like ChangeID.
@@ -399,7 +397,7 @@ sub _ChangeAdd {
     return %Info;
 }
 
-=item _GetTimeDifference()
+=head2 _GetTimeDifference()
 
 If a new planned start/end time was given, the difference is needed
 to move all time values
@@ -426,16 +424,19 @@ sub _GetTimeDifference {
     }
 
     # get current time as timestamp
-    my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-        String => $Param{CurrentTime},
-    );
+    my $CurrentSystemTime = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $Param{CurrentTime},
+            }
+    )->ToEpoch();
 
     my $DiffSeconds = $Param{NewTimeInEpoche} - $CurrentSystemTime;
 
     return $DiffSeconds;
 }
 
-=item _AttachmentAdd()
+=head2 _AttachmentAdd()
 
 Creates new attachments for a change or a workorder based on the given template.
 It returns a hash of information (with just one key - "Success")
@@ -482,7 +483,7 @@ sub _AttachmentAdd {
     return %Info;
 }
 
-=item _LinkAdd()
+=head2 _LinkAdd()
 
 Creates new links for a change or a workorder based on the given template. It
 returns a hash of information (with just one key - "Success")
@@ -545,8 +546,6 @@ sub _LinkAdd {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

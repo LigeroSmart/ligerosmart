@@ -13,10 +13,10 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::System::DateTime',
     'Kernel::System::ITSMChange::ITSMStateMachine',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     'Kernel::System::Log',
-    'Kernel::System::Time',
 );
 
 sub new {
@@ -66,7 +66,7 @@ sub Run {
         my %ActualStartTimeSetStates = map { $_ => 1 } @{$ConfiguredWorkOrderStartStates};
 
         # get current time stamp
-        my $CurrentTimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
+        my $CurrentTimeStamp = $Kernel::OM->Create('Kernel::System::DateTime')->ToString();
 
         # check if ActualStartTime is empty,
         # and WorkOrderState is in an ActualStartTimeSetState
@@ -114,12 +114,19 @@ sub Run {
 
                 # increase the current time stamp by one second to avoid the case that
                 # actual start and end times are the same
-                my $CurrentSystemTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                    String => $CurrentTimeStamp,
-                );
-                my $ActualEndTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
-                    SystemTime => $CurrentSystemTime + 1,
-                );
+                my $CurrentSystemTime = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        String => $CurrentTimeStamp,
+                        }
+                )->ToEpoch();
+
+                my $ActualEndTime = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        Epoch => $CurrentSystemTime + 1,
+                        }
+                )->ToString();
 
                 # set the actual end time,
                 # and if the actual start time was not set, set it also

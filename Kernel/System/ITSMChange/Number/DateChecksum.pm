@@ -8,10 +8,10 @@
 
 # The algorithm to calculate the checksum is derived from the one
 # Deutsche Bundesbahn (german railway company) uses for calculation
-# of the check digit of their vehikel numbering.
+# of the check digit of their vehicle numbering.
 # The checksum is calculated by alternately multiplying the digits
-# with 1 and 2 and adding the resulsts from left to right of the
-# vehikel number. The modulus to 10 of this sum is substracted from
+# with 1 and 2 and adding the results from left to right of the
+# vehicle number. The modulus to 10 of this sum is substracted from
 # 10. See: http://www.pruefziffernberechnung.de/F/Fahrzeugnummer.shtml
 # (german)
 #
@@ -39,9 +39,7 @@ sub ChangeNumberCreate {
     while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
 
         # get current time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2Date(
-            SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
-        );
+        my $CurrentDateTime = $Kernel::OM->Create('Kernel::System::DateTime')->Get();
 
         # read count
         my $Count      = 0;
@@ -68,7 +66,9 @@ sub ChangeNumberCreate {
         }
 
         # check if we need to reset the counter
-        if ( !$LastModify || $LastModify ne "$Year-$Month-$Day" ) {
+        if (  !$LastModify
+            || $LastModify ne "$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day}" )
+        {
             $Count = 0;
         }
 
@@ -78,7 +78,7 @@ sub ChangeNumberCreate {
         # increase the the counter faster if we are in loop pretection mode
         $Count += $LoopProtectionCounter;
 
-        my $Content = $Count . ";$Year-$Month-$Day;";
+        my $Content = $Count . ";$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day};";
 
         # write new count
         my $Write = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
@@ -98,7 +98,8 @@ sub ChangeNumberCreate {
         $Count = sprintf "%05d", $Count;
 
         # create new change number
-        my $ChangeNumber = $Year . $Month . $Day . $SystemID . $Count;
+        my $ChangeNumber
+            = $CurrentDateTime->{Year} . $CurrentDateTime->{Month} . $CurrentDateTime->{Day} . $SystemID . $Count;
 
         # calculate a checksum
         my $ChkSum = 0;
