@@ -23,15 +23,11 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ListAgentCheck - grant permission when the agent is in a list
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -51,10 +47,10 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. 'ro' access is granted when the agent is a 'ro' member
-of the 'itsm-change' group. 'rw' access is granted when the current workorder agent
+This method does the check. C<ro> access is granted when the agent is a C<ro> member
+of the 'itsm-change' group. C<rw> access is granted when the current C<workorder> agent
 is contained in the configured list.
 
     my $HasAccess = $CheckObject->Run(
@@ -128,8 +124,6 @@ sub Run {
     # deny rw access otherwise
     return;
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

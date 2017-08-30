@@ -20,17 +20,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ChangeManagerCheck - change manager based permission check
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -48,10 +44,10 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. 'ro' and 'rw' access is granted
-when the agent has the priv in the 'itsm-change-manager' group.
+This method does the check. C<ro> and C<rw> access is granted
+when the agent has the C<priv> in the 'itsm-change-manager' group.
 
     my $HasAccess = $CheckObject->Run(
         UserID      => 123,
@@ -99,8 +95,6 @@ sub Run {
     # deny access otherwise
     return;
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

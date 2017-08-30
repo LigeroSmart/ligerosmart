@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMWorkOrder::Permission::EmptyAgentCheck - grant permission when agent is empty
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -49,10 +45,10 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. 'ro' access is granted when the agent is a 'ro' member
-of the 'itsm-change' group. 'rw' access is granted when the workorder has no agent.
+This method does the check. C<ro> access is granted when the agent is a C<ro> member
+of the 'itsm-change' group. C<rw> access is granted when the C<workorder> has no agent.
 
     my $HasAccess = $CheckObject->Run(
         UserID      => 123,
@@ -116,8 +112,6 @@ sub Run {
     # deny rw access otherwise
     return;
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
