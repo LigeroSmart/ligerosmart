@@ -1354,7 +1354,7 @@
     <ConfigItem Name="DynamicField::EventModulePost###100-UpdateITSMChangeConditions" Required="0" Valid="1">
         <Description Translatable="1">DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::DynamicField</SubGroup>
+        <SubGroup>Core::Event::DynamicField</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::DynamicField::Event::UpdateITSMChangeConditions</Item>
@@ -1366,7 +1366,7 @@
     <ConfigItem Name="ITSMChange::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
@@ -1378,7 +1378,7 @@
     <ConfigItem Name="ITSMChange::EventModule###02-Notification" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that sends notifications.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
@@ -1390,7 +1390,7 @@
     <ConfigItem Name="ITSMChange::EventModule###03-Condition" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that matches conditions and executes actions.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
@@ -1402,7 +1402,7 @@
     <ConfigItem Name="ITSMChange::EventModule###80-ToolBarChangeManagerCacheDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::ToolBarChangeManagerCacheDelete</Item>
@@ -1414,7 +1414,7 @@
     <ConfigItem Name="ITSMChange::EventModule###81-ToolBarMyChangesCacheDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::ToolBarMyChangesCacheDelete</Item>
@@ -1426,7 +1426,7 @@
     <ConfigItem Name="ITSMChange::EventModule###82-ToolBarMyCABCacheDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::ToolBarMyCABCacheDelete</Item>
@@ -1438,7 +1438,7 @@
     <ConfigItem Name="ITSMChange::EventModule###90-ConditionDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that cleans up conditions.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::ConditionDelete</Item>
@@ -1450,7 +1450,7 @@
     <ConfigItem Name="ITSMChange::EventModule###91-HistoryDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that deletes the history of changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryDelete</Item>
@@ -1462,7 +1462,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###01-WorkOrderNumberCalc" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module to recalculate the workorder numbers.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc</Item>
@@ -1474,7 +1474,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###02-WorkOrderActualTimesSet" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module to set the actual start and end times of workorders.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderActualTimesSet</Item>
@@ -1486,7 +1486,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###03-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of workorders.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
@@ -1498,7 +1498,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###04-Notification" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that sends notifications.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
@@ -1510,7 +1510,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###05-Condition" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that matches conditions and executes actions.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
@@ -1522,7 +1522,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###80-ToolBarMyWorkOrdersCacheDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::ToolBarMyWorkOrdersCacheDelete</Item>
@@ -1554,7 +1554,7 @@
     <ConfigItem Name="ITSMChangeCronjob::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChangeCronjob</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
@@ -1566,7 +1566,7 @@
     <ConfigItem Name="ITSMChangeCronjob::EventModule###02-Notification" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that sends notifications.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChangeCronjob</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
@@ -1578,7 +1578,7 @@
     <ConfigItem Name="ITSMChangeCronjob::EventModule###03-Condition" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that matches conditions and executes actions.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChangeCronjob</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
@@ -1590,7 +1590,7 @@
     <ConfigItem Name="ITSMChangeManagementNotification::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
@@ -1602,7 +1602,7 @@
     <ConfigItem Name="ITSMCondition::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of conditions.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMCondition</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
@@ -1614,7 +1614,7 @@
     <ConfigItem Name="ITSMCondition::EventModule###02-Notification" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that sends notifications.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMCondition</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
@@ -4704,7 +4704,7 @@
     <ConfigItem Name="Loader::Agent::CommonJS###100-ITSMChangeManagement" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
         <Group>Framework</Group>
-        <SubGroup>Core::Web</SubGroup>
+        <SubGroup>Frontend::Base::Loader</SubGroup>
         <Setting>
             <Array>
                 <Item>ITSM.Agent.ChangeManagement.Search.js</Item>
@@ -4756,7 +4756,7 @@
     <ConfigItem Name="ITSMChange::EventModule###1000-GenericInterface" Required="0" Valid="1">
         <Description Translatable="1">Performs the configured action for each event (as an Invoker) for each configured Webservice.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::GenericInterface::Event::Handler</Item>
@@ -4768,7 +4768,7 @@
     <ConfigItem Name="ITSMWorkOrder::EventModule###1000-GenericInterface" Required="0" Valid="1">
         <Description Translatable="1">Performs the configured action for each event (as an Invoker) for each configured Webservice.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <SubGroup>Core::Event::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::GenericInterface::Event::Handler</Item>
