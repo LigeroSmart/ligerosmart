@@ -459,7 +459,7 @@
 
                         <label for="SourceFile">[% Translate("Source File") | html %]:</label>
                         <div class="Field">
-                        [% INCLUDE "FormElements/AttachmentList.tt" %]
+                            <input type="file" name="SourceFile" size="40" class="fixed" />
                         </div>
                         <div class="Clear"></div>
 
