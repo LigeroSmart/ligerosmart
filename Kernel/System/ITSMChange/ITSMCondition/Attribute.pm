@@ -23,15 +23,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::System::ITSMChange::ITSMCondition::Attribute - condition attribute lib
 
-=head1 SYNOPSIS
-
-All functions for condition attributes in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item AttributeAdd()
+=head2 AttributeAdd()
 
 Add a new condition attribute.
 
@@ -101,7 +95,7 @@ sub AttributeAdd {
     return $AttributeID;
 }
 
-=item AttributeUpdate()
+=head2 AttributeUpdate()
 
 Update a condition attribute.
 
@@ -170,7 +164,7 @@ sub AttributeUpdate {
     return 1;
 }
 
-=item AttributeGet()
+=head2 AttributeGet()
 
 Get a condition attribute for a given attribute id.
 Returns a hash reference of the attribute data.
@@ -243,7 +237,7 @@ sub AttributeGet {
     return \%AttributeData;
 }
 
-=item AttributeLookup()
+=head2 AttributeLookup()
 
 This method does a lookup for a condition attribute. If an attribute
 id is given, it returns the name of the attribute. If the name of the
@@ -342,7 +336,7 @@ sub AttributeLookup {
     return $Lookup;
 }
 
-=item AttributeList()
+=head2 AttributeList()
 
 Returns a list of all condition attributes as hash reference
 
@@ -398,7 +392,7 @@ sub AttributeList {
     return \%AttributeList;
 }
 
-=item AttributeDelete()
+=head2 AttributeDelete()
 
 Deletes a condition attribute.
 
@@ -453,8 +447,6 @@ sub AttributeDelete {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

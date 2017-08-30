@@ -20,17 +20,11 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMChangeCIPAllocate - category, impact and priority allocation lib
 
-=head1 SYNOPSIS
-
-All category, impact and priority allocation functions.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -50,9 +44,9 @@ sub new {
     return $Self;
 }
 
-=item AllocateList()
+=head2 AllocateList()
 
-return a 2d hash reference of allocations
+return a C<2d> hash reference of allocations
 
     my $ListRef = $CIPAllocateObject->AllocateList(
         UserID => 1,
@@ -103,7 +97,7 @@ sub AllocateList {
     return \%AllocateData;
 }
 
-=item AllocateUpdate()
+=head2 AllocateUpdate()
 
 update the allocation of category, impact and priority
 
@@ -179,7 +173,7 @@ sub AllocateUpdate {
     return 1;
 }
 
-=item PriorityAllocationGet()
+=head2 PriorityAllocationGet()
 
 return the priority id for given category and impact
 
@@ -222,8 +216,6 @@ sub PriorityAllocationGet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

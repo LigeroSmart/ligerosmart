@@ -17,15 +17,9 @@ our $ObjectManagerDisabled = 1;
 
 Kernel::System::ITSMChange::ITSMCondition::Action - condition action lib
 
-=head1 SYNOPSIS
-
-All functions for condition actions in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item ActionAdd()
+=head2 ActionAdd()
 
 Add a new condition action.
 
@@ -173,7 +167,7 @@ sub ActionAdd {
     return $ActionID;
 }
 
-=item ActionUpdate()
+=head2 ActionUpdate()
 
 Update a condition action.
 
@@ -297,7 +291,7 @@ sub ActionUpdate {
     return 1;
 }
 
-=item ActionGet()
+=head2 ActionGet()
 
 Get a condition action for a given action id.
 Returns a hash reference of the action data.
@@ -386,7 +380,7 @@ sub ActionGet {
     return \%ActionData;
 }
 
-=item ActionList()
+=head2 ActionList()
 
 Returns a sorted list of all condition action
 ids for a given ConditionID as array reference.
@@ -445,7 +439,7 @@ sub ActionList {
     return \@ActionList;
 }
 
-=item ActionDelete()
+=head2 ActionDelete()
 
 Deletes a condition action.
 
@@ -530,7 +524,7 @@ sub ActionDelete {
     return 1;
 }
 
-=item ActionDeleteAll()
+=head2 ActionDeleteAll()
 
 Deletes all condition actions for a given condition id.
 
@@ -618,7 +612,7 @@ sub ActionDeleteAll {
     return 1;
 }
 
-=item ActionExecute()
+=head2 ActionExecute()
 
 Returns the success value of the execution of an action.
 
@@ -773,7 +767,7 @@ sub ActionExecute {
     return $Result;
 }
 
-=item _ActionExecuteInit()
+=head2 _ActionExecuteInit()
 
 Returns object, attribute and operator of a given action.
 
@@ -841,7 +835,7 @@ sub _ActionExecuteInit {
     return \%ActionData;
 }
 
-=item _CreateNewActionNumber()
+=head2 _CreateNewActionNumber()
 
 Create a new unused action number for the given condition.
 The highest current action number for the given condition is
@@ -888,8 +882,6 @@ sub _CreateNewActionNumber {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

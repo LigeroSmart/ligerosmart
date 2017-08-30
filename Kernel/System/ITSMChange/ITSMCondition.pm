@@ -26,7 +26,6 @@ our @ObjectDependencies = (
     'Kernel::System::DB',
     'Kernel::System::Log',
     'Kernel::System::Valid',
-    'Kernel::System::Time',
     'Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder',
 );
 
@@ -34,17 +33,15 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMCondition - condition lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions for conditions in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -89,7 +86,7 @@ sub new {
     return $Self;
 }
 
-=item ConditionAdd()
+=head2 ConditionAdd()
 
 Add a new condition.
 
@@ -214,7 +211,7 @@ sub ConditionAdd {
     return $ConditionID;
 }
 
-=item ConditionUpdate()
+=head2 ConditionUpdate()
 
 Update a condition.
 
@@ -324,7 +321,7 @@ sub ConditionUpdate {
     return 1;
 }
 
-=item ConditionLookup()
+=head2 ConditionLookup()
 
 Return the condition id when the condition name is passed.
 Return the condition name when the condition id is passed.
@@ -437,7 +434,7 @@ sub ConditionLookup {
     return;
 }
 
-=item ConditionGet()
+=head2 ConditionGet()
 
 Returns a hash reference of the condition data for a given ConditionID.
 
@@ -536,7 +533,7 @@ sub ConditionGet {
     return \%ConditionData;
 }
 
-=item ConditionList()
+=head2 ConditionList()
 
 return a list of all condition ids of a given change id as array reference.
 The ids are sorted by the name of the condition.
@@ -616,7 +613,7 @@ sub ConditionList {
     return \@ConditionIDs;
 }
 
-=item ConditionDelete()
+=head2 ConditionDelete()
 
 Delete a condition.
 
@@ -705,7 +702,7 @@ sub ConditionDelete {
     return 1;
 }
 
-=item ConditionDeleteAll()
+=head2 ConditionDeleteAll()
 
 Delete all conditions for a given ChangeID.
 All related expressions and actions will be deleted first.
@@ -804,7 +801,7 @@ sub ConditionDeleteAll {
     return 1;
 }
 
-=item ConditionMatchExecuteAll()
+=head2 ConditionMatchExecuteAll()
 
 This functions finds the valid conditions for a given ChangeID. The found conditions
 are handled by executing the associated actions when a condition matches.
@@ -873,14 +870,14 @@ sub ConditionMatchExecuteAll {
     return 1;
 }
 
-=item ConditionMatchExecute()
+=head2 ConditionMatchExecute()
 
 This function matches the given condition. When it matches the associated actions are
 executed.
 
 The optional parameter 'AttributesChanged' defines a list of attributes that were changed
 during e.g. a ChangeUpdate-Event. When 'AttributesChanged' is passed, it is used to shortcut the
-expression evalution. Only the changed attributes must be checked.
+expression evaluation. Only the changed attributes must be checked.
 When the expression conjunction is 'any' and more than a single expression is set up,
 then, for obvious reasons, the shortcut is not used.
 
@@ -1024,7 +1021,7 @@ sub ConditionMatchExecute {
     return 1;
 }
 
-=item ConditionMatchStateLock()
+=head2 ConditionMatchStateLock()
 
     my $Success = $ConditionObject->ConditionMatchStateLock(
         ObjectName => 'ITSMChange',
@@ -1148,7 +1145,7 @@ sub ConditionMatchStateLock {
     return;
 }
 
-=item ConditionCompareValueFieldType()
+=head2 ConditionCompareValueFieldType()
 
 Returns the type of the compare value field as string, based on the given object id and attribute id.
 
@@ -1160,7 +1157,7 @@ Returns the type of the compare value field as string, based on the given object
 
 Returns 'Text' or 'Selection' or 'Date'.
 
-TODO: Add 'Autocomplete' type for ChangeBuilder, ChangeManager, WorkOrderAgent, etc...
+C<TODO>: Add 'Autocomplete' type for ChangeBuilder, ChangeManager, WorkOrderAgent, etc...
 
 =cut
 
@@ -1221,7 +1218,7 @@ sub ConditionCompareValueFieldType {
     return $FieldType;
 }
 
-=item ConditionListByObjectType()
+=head2 ConditionListByObjectType()
 
 Return a list of all conditions ids of a given change id as array reference.
 Only the ids of a condition are returned where object type and identifier are matching.
@@ -1359,7 +1356,7 @@ sub ConditionListByObjectType {
 
 =begin Internal:
 
-=item _ConditionMatch()
+=head2 _ConditionMatch()
 
 This function matches the given condition and executes 'no' actions.
 The optional parameter 'AttributesChanged' defines a list of attributes that were changed
@@ -1467,7 +1464,7 @@ sub _ConditionMatch {
     return 1;
 }
 
-=item _ConditionListByObject()
+=head2 _ConditionListByObject()
 
 return a list of all conditions ids of a given object.
 
@@ -1548,8 +1545,6 @@ sub _ConditionListByObject {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

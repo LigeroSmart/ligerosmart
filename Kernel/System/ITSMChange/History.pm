@@ -23,15 +23,9 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::History - all change and workorder history functions
 
-=head1 SYNOPSIS
-
-All history functions.
-
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -58,7 +52,7 @@ sub new {
     return $Self;
 }
 
-=item HistoryAdd()
+=head2 HistoryAdd()
 
 Adds a single history entry to the history. Returns 1 on success, C<undef> otherwise.
 
@@ -145,7 +139,7 @@ sub HistoryAdd {
     return 1;
 }
 
-=item HistoryAddMultiple()
+=head2 HistoryAddMultiple()
 
 Adds multiple history entries to the history. Returns 1 on success, C<undef> otherwise.
 
@@ -347,7 +341,7 @@ sub HistoryAddMultiple {
     return 1;
 }
 
-=item WorkOrderHistoryGet()
+=head2 WorkOrderHistoryGet()
 
 Returns a list of all history entries that belong to the given WorkOrderID. The
 list contains hash references with these information:
@@ -438,10 +432,10 @@ sub WorkOrderHistoryGet {
     return \@HistoryEntries;
 }
 
-=item ChangeHistoryGet()
+=head2 ChangeHistoryGet()
 
 Returns a list of all history entries that belong to the given ChangeID - including
-history entries for workorders. The list contains hash references with these information:
+history entries for C<workorders>. The list contains hash references with these information:
 
     $Info{HistoryEntryID}
     $Info{ChangeID}
@@ -533,7 +527,7 @@ sub ChangeHistoryGet {
     return \@HistoryEntries;
 }
 
-=item HistoryEntryGet()
+=head2 HistoryEntryGet()
 
 Returns a single history entry. The hash reference has these information:
 
@@ -621,7 +615,7 @@ sub HistoryEntryGet {
     return \%HistoryEntry;
 }
 
-=item WorkOrderHistoryDelete()
+=head2 WorkOrderHistoryDelete()
 
 Deletes all entries in history table that belongs to the given WorkOrderID.
 The method returns 1 on success and C<undef> otherwise.
@@ -657,7 +651,7 @@ sub WorkOrderHistoryDelete {
     return 1;
 }
 
-=item ChangeHistoryDelete()
+=head2 ChangeHistoryDelete()
 
 Deletes all entries in history table that belongs to the given ChangeID.
 The method returns 1 on success and C<undef> otherwise.
@@ -693,7 +687,7 @@ sub ChangeHistoryDelete {
     return 1;
 }
 
-=item HistoryUpdate()
+=head2 HistoryUpdate()
 
 This method updates a history entry. It returns 1 on success, and C<undef> otherwise.
 
@@ -765,10 +759,10 @@ sub HistoryUpdate {
     return 1;
 }
 
-=item HistorySearch()
+=head2 HistorySearch()
 
-Searches for changes/workorders that matches the given search criteria. It returns
-an array reference with change or workorder IDs. If "Result => 'COUNT'" then the
+Searches for changes/C<workorders> that matches the given search criteria. It returns
+an array reference with change or C<workorder> IDs. If "Result => 'COUNT'" then the
 number of found changes is returned.
 
     my $IDs = $HistoryObject->HistorySearch(
@@ -981,7 +975,7 @@ sub HistorySearch {
     }
 }
 
-=item HistoryTypeLookup()
+=head2 HistoryTypeLookup()
 
 This method does a lookup for a history type. If a history type id is given,
 it returns the name of the history type. If a history type is given, the appropriate
@@ -1064,9 +1058,9 @@ sub HistoryTypeLookup {
     return $Value;
 }
 
-=item HistoryTypeList()
+=head2 HistoryTypeList()
 
-returns an array reference with hashreferences. The key of the hashreference is the id
+returns an array reference with hash references. The key of the hash reference is the id
 of an recipient and the name is the value.
 
 =cut
@@ -1110,8 +1104,6 @@ sub HistoryTypeList {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

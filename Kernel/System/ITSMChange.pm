@@ -41,17 +41,15 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange - change lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions for changes in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -98,7 +96,7 @@ sub new {
     return $Self;
 }
 
-=item ChangeAdd()
+=head2 ChangeAdd()
 
 Add a new change. The UserID is the only required parameter.
 Internally first a minimal change is created, then ChangeUpdate() is called.
@@ -293,7 +291,7 @@ sub ChangeAdd {
     return $ChangeID;
 }
 
-=item ChangeUpdate()
+=head2 ChangeUpdate()
 
 Update a change.
 Leading and trailing whitespace is removed from C<ChangeTitle>.
@@ -543,10 +541,10 @@ sub ChangeUpdate {
     return 1;
 }
 
-=item ChangeGet()
+=head2 ChangeGet()
 
 Return a change as a hash reference.
-When the workorder does not exist, a false value is returned.
+When the C<workorder> does not exist, a false value is returned.
 The optional option C<LogNo> turns off logging when the change does not exist.
 
     my $Change = $ChangeObject->ChangeGet(
@@ -792,7 +790,7 @@ sub ChangeGet {
     return \%ChangeData;
 }
 
-=item ChangeCABUpdate()
+=head2 ChangeCABUpdate()
 
 Add or update the CAB of a change.
 One or both of CABAgents and CABCustomers must be passed.
@@ -925,7 +923,7 @@ sub ChangeCABUpdate {
     return 1;
 }
 
-=item ChangeCABGet()
+=head2 ChangeCABGet()
 
 Return the CAB of a change as a hashref, where the values are arrayrefs.
 The returned array references are sorted.
@@ -1038,7 +1036,7 @@ sub ChangeCABGet {
     return \%CAB;
 }
 
-=item ChangeCABDelete()
+=head2 ChangeCABDelete()
 
 Delete the CAB of a change.
 
@@ -1103,7 +1101,7 @@ sub ChangeCABDelete {
     return 1;
 }
 
-=item ChangeLookup()
+=head2 ChangeLookup()
 
 Return the change id when the change number is passed.
 Return the change number when the change id is passed.
@@ -1235,7 +1233,7 @@ sub ChangeLookup {
     return;
 }
 
-=item ChangeList()
+=head2 ChangeList()
 
 Return a change id list of all changes as an array reference.
 
@@ -1294,14 +1292,14 @@ sub ChangeList {
     return \@ChangeIDs;
 }
 
-=item ChangeSearch()
+=head2 ChangeSearch()
 
 Returns either a list, as an arrayref, or a count of found change ids.
 The count of results is returned when the parameter C<Result = 'COUNT'> is passed.
 
 The search criteria are logically AND connected.
-When a list is passed as criterium, the individual members are OR connected.
-When an undef or a reference to an empty array is passed, then the search criterium
+When a list is passed as C<criterium>, the individual members are OR connected.
+When an undef or a reference to an empty array is passed, then the search C<criterium>
 is ignored.
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
@@ -1328,7 +1326,7 @@ is ignored.
         Priorities         => [ '1 very low', '2 low' ],                # (optional)
         PriorityIDs        => [ 137, 175 ],                             # (optional)
 
-        # DynamicFields (both change and workorder dynamic fields are possible)
+        # DynamicFields (both change and C<workorder> dynamic fields are possible)
         #   At least one operator must be specified. Operators will be connected with AND,
         #       values in an operator with OR.
         #   You can also pass more than one argument to an operator: ['value1', 'value2']
@@ -1341,12 +1339,12 @@ is ignored.
             SmallerThanEquals => '2002-02-02 02:02:02',
         }
 
-        # search in text fields of workorder object
+        # search in text fields of C<workorder> object
         WorkOrderTitle            => 'Boot Mailserver',                # (optional)
         WorkOrderInstruction      => 'Press the button.',              # (optional)
         WorkOrderReport           => 'Mailserver has booted.',         # (optional)
 
-        # search in workorder (array params)
+        # search in C<workorder> (array params)
         WorkOrderStates   => [ 'accepted', 'ready' ],                  # (optional)
         WorkOrderStateIDs => [ 1, 2, 3 ],                              # (optional)
         WorkOrderTypes    => [ 'workorder', 'backout', 'approval' ],   # (optional)
@@ -2253,14 +2251,14 @@ sub ChangeSearch {
     }
 }
 
-=item ChangeDelete()
+=head2 ChangeDelete()
 
 Delete a change.
 
 This function first removes all links and attachments to the given change.
-Then it gets a list of all workorders of the change and
-calls C<WorkorderDelete()> for each workorder, which will delete
-all links and all attachments to the workorders.
+Then it gets a list of all C<workorders> of the change and
+calls C<WorkorderDelete()> for each C<workorder>, which will delete
+all links and all attachments to the C<workorders>.
 Then it deletes the CAB.
 After that the change is removed.
 The history of this change will be deleted during the handling of the
@@ -2412,7 +2410,7 @@ sub ChangeDelete {
     return 1;
 }
 
-=item ChangeStateLookup()
+=head2 ChangeStateLookup()
 
 This method does a lookup for a change state. If a change state id is given,
 it returns the name of the change state. If a change state name is given,
@@ -2479,7 +2477,7 @@ sub ChangeStateLookup {
     }
 }
 
-=item ChangePossibleStatesGet()
+=head2 ChangePossibleStatesGet()
 
 This method returns a list of possible change states.
 If ChangeID is omitted, the complete list of change states is returned.
@@ -2602,7 +2600,7 @@ sub ChangePossibleStatesGet {
     return \@ArrayHashRef;
 }
 
-=item ChangePossibleCIPGet()
+=head2 ChangePossibleCIPGet()
 
 This method returns a list of possible categories, impacts or priorities.
 
@@ -2670,11 +2668,11 @@ sub ChangePossibleCIPGet {
     return \@ArrayHashRef;
 }
 
-=item ChangeCIPLookup()
+=head2 ChangeCIPLookup()
 
 This method does a lookup for a change category, impact or priority.
-If a change CIP-ID is given, it returns the name of the CIP.
-If a change CIP name is given, the appropriate ID is returned.
+If a change C<CIP-ID> is given, it returns the name of the C<CIP>.
+If a change C<CIP> name is given, the appropriate ID is returned.
 
     my $Name = $ChangeObject->ChangeCIPLookup(
         ID   => 1234,
@@ -2742,7 +2740,7 @@ sub ChangeCIPLookup {
     }
 }
 
-=item Permission()
+=head2 Permission()
 
 Returns whether the agent C<UserID> has permissions of the type C<Type>
 on the change C<ChangeID>. The parameters are passed on to
@@ -2860,7 +2858,7 @@ sub Permission {
     return;
 }
 
-=item ChangeAttachmentAdd()
+=head2 ChangeAttachmentAdd()
 
 Add an attachment to the given change.
 
@@ -2926,7 +2924,7 @@ sub ChangeAttachmentAdd {
     return 1;
 }
 
-=item ChangeAttachmentDelete()
+=head2 ChangeAttachmentDelete()
 
 Delete the given file from the virtual filesystem.
 
@@ -2985,7 +2983,7 @@ sub ChangeAttachmentDelete {
     return $Success;
 }
 
-=item ChangeAttachmentGet()
+=head2 ChangeAttachmentGet()
 
 This method returns information about one specific attachment.
 
@@ -3061,7 +3059,7 @@ sub ChangeAttachmentGet {
     return $AttachmentInfo;
 }
 
-=item ChangeAttachmentList()
+=head2 ChangeAttachmentList()
 
 Returns an array with all attachments of the given change.
 
@@ -3107,7 +3105,7 @@ sub ChangeAttachmentList {
     return @Attachments;
 }
 
-=item ChangeAttachmentExists()
+=head2 ChangeAttachmentExists()
 
 Checks if a file with a given filename exists.
 
@@ -3152,7 +3150,7 @@ sub DESTROY {
 
 =begin Internal:
 
-=item _CheckChangeStateIDs()
+=head2 _CheckChangeStateIDs()
 
 Check whether all of the given change state ids are valid.
 
@@ -3201,7 +3199,7 @@ sub _CheckChangeStateIDs {
     return 1;
 }
 
-=item _CheckChangeCIPIDs()
+=head2 _CheckChangeCIPIDs()
 
 Check whether all of the given ids of category, impact or priority are valid.
 
@@ -3268,7 +3266,7 @@ sub _CheckChangeCIPIDs {
     return 1;
 }
 
-=item _CheckChangeParams()
+=head2 _CheckChangeParams()
 
 Checks the params to ChangeAdd() and ChangeUpdate().
 There are no required parameters.
@@ -3525,8 +3523,6 @@ sub _CheckChangeParams {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
