@@ -21,21 +21,15 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::ITSMChange::ITSMStateMachine - statemachine lib
-
-=head1 SYNOPSIS
-
-All functions for statemachine in ITSMChangeManagement.
+Kernel::System::ITSMChange::ITSMStateMachine - state machine lib
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -60,7 +54,7 @@ sub new {
     return $Self;
 }
 
-=item StateTransitionAdd()
+=head2 StateTransitionAdd()
 
 Add a new state transition. Returns the transition id on success.
 
@@ -269,7 +263,7 @@ sub StateTransitionAdd {
     return $TransitionID;
 }
 
-=item StateTransitionDelete()
+=head2 StateTransitionDelete()
 
 Delete a state transition. Returns true on success.
 
@@ -311,7 +305,7 @@ sub StateTransitionDelete {
     return 1;
 }
 
-=item StateTransitionDeleteAll()
+=head2 StateTransitionDeleteAll()
 
 Delete all state transitions of a class. Returns true on success.
 
@@ -368,7 +362,7 @@ sub StateTransitionDeleteAll {
 
 }
 
-=item StateTransitionGet()
+=head2 StateTransitionGet()
 
 Get a state transition for a given state id.
 Returns an array reference of the next state ids.
@@ -476,7 +470,7 @@ sub StateTransitionGet {
     return \@NextStateIDs;
 }
 
-=item StateTransitionGetEndStates()
+=head2 StateTransitionGetEndStates()
 
 Get a state transition for a given state id, but only show the possible next end states.
 Returns an array reference of the next end state ids.
@@ -600,7 +594,7 @@ sub StateTransitionGetEndStates {
     return \@NextEndStateIDs;
 }
 
-=item StateTransitionList()
+=head2 StateTransitionList()
 
 Return a state transition list hash-array reference.
 The hash key is the StateID, the hash value is an array reference of NextStateIDs.
@@ -670,7 +664,7 @@ sub StateTransitionList {
     return \%StateTransition;
 }
 
-=item StateTransitionUpdate()
+=head2 StateTransitionUpdate()
 
 Update the next state of an existing new state transition.
 Returns the transition id on success.
@@ -823,7 +817,7 @@ sub StateTransitionUpdate {
     return 1;
 }
 
-=item StateLookup()
+=head2 StateLookup()
 
 This method does a lookup for a state. If a state id is given,
 it returns the name of the state. If a state name is given,
@@ -926,7 +920,7 @@ sub StateLookup {
     }
 }
 
-=item StateList()
+=head2 StateList()
 
 This method returns a list of states for a catalog class.
 
@@ -986,8 +980,6 @@ sub StateList {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

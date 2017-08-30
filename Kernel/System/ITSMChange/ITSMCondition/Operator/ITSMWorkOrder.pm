@@ -20,19 +20,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMWorkOrder - condition itsm workorder operator lib
 
-=head1 SYNOPSIS
-
-All ITSMWorkOrder operator functions for conditions in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -50,9 +44,9 @@ sub new {
     return $Self;
 }
 
-=item Set()
+=head2 Set()
 
-Updates a workorder with the given data.
+Updates a C<workorder> with the given data.
 
     my $Success = $ITSMWorkOrderOperator->Set(
         Selector    => 1234,
@@ -107,9 +101,9 @@ sub Set {
     );
 }
 
-=item SetAll()
+=head2 SetAll()
 
-Updates a set of workorders with the given data.
+Updates a set of C<workorders> with the given data.
 
     my $Success = $ITSMWorkOrderOperator->SetAll(
         Objects     => [ {...}, {...}, ],  # data of ITSMWorkOrders
@@ -167,8 +161,6 @@ sub SetAll {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

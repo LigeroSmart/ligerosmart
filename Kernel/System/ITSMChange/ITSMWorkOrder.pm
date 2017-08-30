@@ -38,17 +38,11 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMWorkOrder - workorder lib
 
-=head1 SYNOPSIS
-
-All functions for workorders in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -88,10 +82,10 @@ sub new {
     return $Self;
 }
 
-=item WorkOrderAdd()
+=head2 WorkOrderAdd()
 
-Add a new workorder.
-Internally first a minimal workorder is created,
+Add a new C<workorder>.
+Internally first a minimal C<workorder> is created,
 then WorkOrderUpdate() is called for setting the remaining arguments.
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
@@ -336,14 +330,14 @@ sub WorkOrderAdd {
     return $WorkOrderID;
 }
 
-=item WorkOrderUpdate()
+=head2 WorkOrderUpdate()
 
-Update a workorder.
+Update a C<workorder>.
 Leading and trailing whitespace is removed from C<WorkOrderTitle>.
 Passing undefined values is generally not allowed. An exception
 are the parameters C<PlannedStartTime>, C<PlannedEndTime>, C<ActualStartTime>, and C<ActualEndTime>.
-There passing C<undef> indicates that the workorder time should be cleared.
-Another exception is the WorkOrderAgentID. Pass undef for removing the workorder agent.
+There passing C<undef> indicates that the C<workorder> time should be cleared.
+Another exception is the WorkOrderAgentID. Pass undef for removing the C<workorder> agent.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
         WorkOrderID        => 4,
@@ -647,11 +641,11 @@ sub WorkOrderUpdate {
     return 1;
 }
 
-=item WorkOrderGet()
+=head2 WorkOrderGet()
 
-Return a WorkOrder as hash reference.
-When the workorder does not exist, a false value is returned.
-The optional option C<LogNo> turns off logging when the workorder does not exist.
+Return a C<WorkOrder> as hash reference.
+When the C<workorder> does not exist, a false value is returned.
+The optional option C<LogNo> turns off logging when the C<workorder> does not exist.
 
     my $WorkOrderRef = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => 123,
@@ -865,10 +859,10 @@ sub WorkOrderGet {
     return \%WorkOrderData;
 }
 
-=item WorkOrderList()
+=head2 WorkOrderList()
 
-Return a list of all workorder ids of the given change as array reference.
-The workorder ids are ordered by workorder number.
+Return a list of all C<workorder> ids of the given change as array reference.
+The C<workorder> ids are ordered by C<workorder> number.
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderList(
         ChangeID => 5,
@@ -935,14 +929,14 @@ sub WorkOrderList {
     return \@WorkOrderIDs;
 }
 
-=item WorkOrderSearch()
+=head2 WorkOrderSearch()
 
-Returns either a list, as an arrayref, or a count of found workorder ids.
+Returns either a list, as an arrayref, or a count of found C<workorder> ids.
 The count of results is returned when the parameter C<Result => 'COUNT'> is passed.
 
 The search criteria are logically AND connected.
-When a list is passed as criterium, the individual members are OR connected.
-When an undef or a reference to an empty array is passed, then the search criterium
+When a list is passed as C<criterium>, the individual members are OR connected.
+When an undef or a reference to an empty array is passed, then the search C<criterium>
 is ignored.
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderSearch(
@@ -1618,13 +1612,13 @@ sub WorkOrderSearch {
     return \@IDs;
 }
 
-=item WorkOrderDelete()
+=head2 WorkOrderDelete()
 
-Delete a workorder.
+Delete a C<workorder>.
 
-This function removes all links and attachments to the workorder
-with the passed workorder id.
-After that the workorder is removed.
+This function removes all links and attachments to the C<workorder>
+with the passed C<workorder> id.
+After that the C<workorder> is removed.
 
     my $Success = $WorkOrderObject->WorkOrderDelete(
         WorkOrderID  => 123,
@@ -1762,16 +1756,16 @@ sub WorkOrderDelete {
     return 1;
 }
 
-=item WorkOrderChangeTimeGet()
+=head2 WorkOrderChangeTimeGet()
 
 Returns a list of PlannedStartTime | PlannedEndTime | ActualStartTime | ActualEndTime
 of a change, which would be the respective time of the earliest starting
-workorder (for start times) or the latest ending workorder (for end times).
+C<workorder> (for start times) or the latest ending C<workorder> (for end times).
 
 For PlannedStartTime | PlannedEndTime | ActualEndTime an empty string is returned
-if any of the workorders of a change has the respective time not defined.
+if any of the C<workorders> of a change has the respective time not defined.
 
-The ActualStartTime is defined when any of the workorders of a change has
+The ActualStartTime is defined when any of the C<workorders> of a change has
 a defined ActualStartTime.
 
 Return
@@ -1911,10 +1905,10 @@ sub WorkOrderChangeTimeGet {
     return \%TimeReturn;
 }
 
-=item WorkOrderStateLookup()
+=head2 WorkOrderStateLookup()
 
-This method does a lookup for a workorder state. If a workorder state id is given,
-it returns the name of the workorder state. If a workorder state name is given,
+This method does a lookup for a C<workorder> state. If a C<workorder> state id is given,
+it returns the name of the C<workorder> state. If a C<workorder> state name is given,
 the appropriate id is returned.
 
     my $WorkOrderState = $WorkOrderObject->WorkOrderStateLookup(
@@ -1980,12 +1974,12 @@ sub WorkOrderStateLookup {
     }
 }
 
-=item WorkOrderPossibleStatesGet()
+=head2 WorkOrderPossibleStatesGet()
 
-This method returns a list of possible workorder states.
-If C<WorkOrderID> is omitted, the complete list of workorder states is returned.
+This method returns a list of possible C<workorder> states.
+If C<WorkOrderID> is omitted, the complete list of C<workorder> states is returned.
 If C<WorkOrderID> is given, the list of possible states for the given
-workorder is returned.
+C<workorder> is returned.
 
     my $WorkOrderStateList = $WorkOrderObject->WorkOrderPossibleStatesGet(
         WorkOrderID => 123,  # (optional)
@@ -2107,10 +2101,10 @@ sub WorkOrderPossibleStatesGet {
     return \@ArrayHashRef;
 }
 
-=item WorkOrderTypeLookup()
+=head2 WorkOrderTypeLookup()
 
-This method does a lookup for a workorder type. If a workorder type id is given,
-it returns the name of the workorder type. If a workorder type name is given,
+This method does a lookup for a C<workorder> type. If a C<workorder> type id is given,
+it returns the name of the C<workorder> type. If a C<workorder> type name is given,
 the appropriate id is returned.
 
     my $WorkOrderType = $WorkOrderObject->WorkOrderTypeLookup(
@@ -2173,9 +2167,9 @@ sub WorkOrderTypeLookup {
     }
 }
 
-=item WorkOrderTypeList()
+=head2 WorkOrderTypeList()
 
-This method returns a list of all workorder types.
+This method returns a list of all C<workorder> types.
 
     my $WorkOrderTypeList = $WorkOrderObject->WorkOrderTypeList(
         UserID      => 1,
@@ -2269,10 +2263,10 @@ sub WorkOrderTypeList {
     return \@ArrayHashRef;
 }
 
-=item Permission()
+=head2 Permission()
 
 Returns whether the agent C<UserID> has permissions of the type C<Type>
-on the workorder C<WorkOrderID>. The parameters are passed on to
+on the C<workorder> C<WorkOrderID>. The parameters are passed on to
 the permission modules that were registered in the permission registry.
 The standard permission registry is B<ITSMWorkOrder::Permission>, but
 that can be overridden with the parameter C<PermissionRegistry>.
@@ -2392,9 +2386,9 @@ sub Permission {
     return;
 }
 
-=item WorkOrderStateIDsCheck()
+=head2 WorkOrderStateIDsCheck()
 
-Check whether all of the given workorder state ids are valid.
+Check whether all of the given C<workorder> state ids are valid.
 The method is public as it is used in L<Kernel::System::ITSMChange::ChangeSearch>.
 
     my $Ok = $WorkOrderObject->WorkOrderStateIDsCheck(
@@ -2442,9 +2436,9 @@ sub WorkOrderStateIDsCheck {
     return 1;
 }
 
-=item WorkOrderAttachmentAdd()
+=head2 WorkOrderAttachmentAdd()
 
-Add an attachment to the given workorder.
+Add an attachment to the given C<workorder>.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
         ChangeID       => 123,
@@ -2523,7 +2517,7 @@ sub WorkOrderAttachmentAdd {
     return 1;
 }
 
-=item WorkOrderAttachmentDelete()
+=head2 WorkOrderAttachmentDelete()
 
 Delete the given file from the virtual filesystem.
 
@@ -2596,7 +2590,7 @@ sub WorkOrderAttachmentDelete {
     return $Success;
 }
 
-=item WorkOrderAttachmentGet()
+=head2 WorkOrderAttachmentGet()
 
 This method returns information about one specific attachment.
 
@@ -2679,9 +2673,9 @@ sub WorkOrderAttachmentGet {
     return $AttachmentInfo;
 }
 
-=item WorkOrderAttachmentList()
+=head2 WorkOrderAttachmentList()
 
-Returns an array with all workorder attachments (not the report attachments) of the given workorder.
+Returns an array with all C<workorder> attachments (not the report attachments) of the given C<workorder>.
 
     my @Attachments = $WorkOrderObject->WorkOrderAttachmentList(
         WorkOrderID => 123,
@@ -2732,9 +2726,9 @@ sub WorkOrderAttachmentList {
     return @WorkOrderAttachments;
 }
 
-=item WorkOrderReportAttachmentList()
+=head2 WorkOrderReportAttachmentList()
 
-Returns an array with all report attachments of the given workorder.
+Returns an array with all report attachments of the given C<workorder>.
 
     my @Attachments = $WorkOrderObject->WorkOrderReportAttachmentList(
         WorkOrderID => 123,
@@ -2786,7 +2780,7 @@ sub WorkOrderReportAttachmentList {
     return @ReportAttachments;
 }
 
-=item WorkOrderAttachmentExists()
+=head2 WorkOrderAttachmentExists()
 
 Checks if a file with a given filename exists.
 
@@ -2825,9 +2819,9 @@ sub WorkOrderAttachmentExists {
     return 1;
 }
 
-=item WorkOrderChangeEffortsGet()
+=head2 WorkOrderChangeEffortsGet()
 
-returns the combined efforts of the workorders for the given change
+returns the combined efforts of the C<workorders> for the given change
 
     my $ChangeEfforts = $WorkOrderObject->WorkOrderChangeEffortsGet(
         ChangeID => 123,
@@ -2928,9 +2922,9 @@ sub DESTROY {
 
 =begin Internal:
 
-=item _CheckWorkOrderTypeIDs()
+=head2 _CheckWorkOrderTypeIDs()
 
-check whether the given workorder type ids are all valid
+check whether the given C<workorder> type ids are all valid
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderTypeIDs(
         WorkOrderTypeIDs => [ 2, 500 ],
@@ -2979,10 +2973,10 @@ sub _CheckWorkOrderTypeIDs {
     return 1;
 }
 
-=item _GetWorkOrderNumber()
+=head2 _GetWorkOrderNumber()
 
-Get a new unused workorder number for the given change.
-The highest current workorder number for the given change is
+Get a new unused C<workorder> number for the given change.
+The highest current C<workorder> number for the given change is
 looked up and incremented by one.
 
     my $WorkOrderNumber = $WorkOrderObject->_GetWorkOrderNumber(
@@ -3025,7 +3019,7 @@ sub _GetWorkOrderNumber {
     return $WorkOrderNumber;
 }
 
-=item _CheckWorkOrderParams()
+=head2 _CheckWorkOrderParams()
 
 Checks the params to WorkOrderAdd() and WorkOrderUpdate().
 There are no required parameters.
@@ -3209,7 +3203,7 @@ sub _CheckWorkOrderParams {
     return 1;
 }
 
-=item _CheckTimestamps()
+=head2 _CheckTimestamps()
 
 Checks the constraints of timestamps: xxxStartTime must be before xxxEndTime
 
@@ -3349,8 +3343,6 @@ sub _CheckTimestamps {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

@@ -20,19 +20,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange - condition itsm change operator lib
 
-=head1 SYNOPSIS
-
-All ITSMChange operator functions for conditions in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -50,7 +44,7 @@ sub new {
     return $Self;
 }
 
-=item Set()
+=head2 Set()
 
 Updates a change with the given data.
 
@@ -103,8 +97,6 @@ sub Set {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
