@@ -33,11 +33,11 @@ my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 my $CIPAllocateObject    = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMChangeCIPAllocate');
 my $HistoryObject        = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
 my $CacheObject          = $Kernel::OM->Get('Kernel::System::Cache');
-my $TimeObject           = $Kernel::OM->Get('Kernel::System::Time');
 my $LogObject            = $Kernel::OM->Get('Kernel::System::Log');
 my $DBObject             = $Kernel::OM->Get('Kernel::System::DB');
 my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
+my $HelperObject         = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # test if change object was created successfully
 $Self->True(
@@ -74,7 +74,7 @@ for my $Counter ( 1 .. 3 ) {
     my $UserID = $UserObject->UserAdd(
         UserFirstname => 'ITSMChange' . $Counter,
         UserLastname  => 'UnitTest',
-        UserLogin     => 'UnitTest-ITSMChange-' . $Counter . int rand 1_000_000,
+        UserLogin     => 'UnitTest-ITSMChange-' . $Counter . $HelperObject->GetRandomNumber(),
         UserEmail     => 'UnitTest-ITSMChange-' . $Counter . '@localhost',
         ValidID       => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
@@ -86,11 +86,11 @@ for my $Counter ( 1 .. 3 ) {
         Source         => 'CustomerUser',
         UserFirstname  => 'ITSMChangeCustomer' . $Counter,
         UserLastname   => 'UnitTestCustomer',
-        UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
-        UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . int rand 1_000_000,
+        UserCustomerID => 'UCT' . $Counter . $HelperObject->GetRandomNumber(),
+        UserLogin      => 'UnitTest-ITSMChange-Customer-' . $Counter . $HelperObject->GetRandomNumber(),
         UserEmail      => 'UnitTest-ITSMChange-Customer-'
             . $Counter
-            . int( rand 1_000_000 )
+            . $HelperObject->GetRandomNumber()
             . '@localhost',
         ValidID => $ValidObject->ValidLookup( Valid => 'valid' ),
         UserID  => 1,
@@ -108,7 +108,7 @@ for ( 1 .. 2 ) {
     for my $LoopProtectionCounter ( 1 .. 100 ) {
 
         # create a random user id
-        my $TempNonExistingUserID = int rand 1_000_000;
+        my $TempNonExistingUserID = $HelperObject->GetRandomNumber();
 
         # check if random user id exists already
         my %UserData = $UserObject->GetUserData(
@@ -150,7 +150,7 @@ my $OriginalDynamicFields = $DynamicFieldObject->DynamicFieldListGet(
     Valid => 0,
 );
 
-my $UniqueNamePrefix = 'UnitTestChange' . int rand 1_000_000;
+my $UniqueNamePrefix = 'UnitTestChange' . $HelperObject->GetRandomNumber();
 
 # create some dynamic fields for changes (and for workorders)
 my @DynamicFields = (
@@ -582,10 +582,10 @@ my $TestCountMisc = $TestCount;
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
 my $UniqueSignature = sprintf 'UnitTest-ITSMChange-%06d-%010d',
-    int( rand 1_000_000 ),
+    $HelperObject->GetRandomNumber(),
     time();
 my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-NoWildcards-%06d-%010d',
-    int( rand 1_000_000 ),
+    $HelperObject->GetRandomNumber(),
     time();
 
 my @ChangeTests = (
@@ -3060,7 +3060,7 @@ $Self->Is(
 # ------------------------------------------------------------ #
 # define general change search tests
 # ------------------------------------------------------------ #
-my $SystemTime = $TimeObject->SystemTime();
+my $SystemTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch();
 
 my @ChangeSearchTests = (
 
@@ -3092,9 +3092,12 @@ my @ChangeSearchTests = (
     {
         Description => 'CreateTimeNewerDate',
         SearchData  => {
-            CreateTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime - ( 60 * 60 ),
-            ),
+            CreateTimeNewerDate => $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $SystemTime - ( 60 * 60 )
+                    }
+                )->ToString(),
         },
         ResultData => {
             TestExistence => 1,
@@ -3105,9 +3108,12 @@ my @ChangeSearchTests = (
     {
         Description => 'CreateTimeOlderDate',
         SearchData  => {
-            CreateTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime + ( 60 * 60 ),
-            ),
+            CreateTimeOlderDate => $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $SystemTime + ( 60 * 60 )
+                    }
+                )->ToString(),
         },
         ResultData => {
             TestExistence => 1,
@@ -3208,9 +3214,12 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeTimeNewerDate',
         SearchData  => {
-            ChangeTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime - ( 60 * 60 ),
-            ),
+            CreateTimeNewerDate => $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $SystemTime - ( 60 * 60 )
+                    }
+                )->ToString(),
         },
         ResultData => {
             TestExistence => 1,
@@ -3221,9 +3230,12 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeTimeOlderDate',
         SearchData  => {
-            ChangeTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime + ( 60 * 60 ),
-            ),
+            CreateTimeOlderDate => $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $SystemTime + ( 60 * 60 )
+                    }
+                )->ToString(),
         },
         ResultData => {
             TestExistence => 1,
@@ -3381,12 +3393,18 @@ my @ChangeSearchTests = (
     {
         Description => 'ChangeTimeNewerDate, ChangeTimeOlderDate',
         SearchData  => {
-            ChangeTimeNewerDate => $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime - ( 60 * 60 ),
-            ),
-            ChangeTimeOlderDate => $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime + ( 60 * 60 ),
-            ),
+            ChangeTimeNewerDate => $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $SystemTime - ( 60 * 60 )
+                    }
+                )->ToString(),
+            ChangeTimeOlderDate => $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $SystemTime + ( 60 * 60 )
+                    }
+                )->ToString(),
         },
         ResultData => {
             TestExistence => 1,
@@ -6636,9 +6654,7 @@ $ConfigObject->Set(
     Value => $CheckEmailAddressesOrg,
 );
 
-=over 4
-
-=item SetTimes()
+=head2 SetTimes()
 
 Set new values for CreateTime and ChangeTime for a given ChangeID.
 
@@ -6647,8 +6663,6 @@ Set new values for CreateTime and ChangeTime for a given ChangeID.
         CreateTime => '2009-10-30 01:00:15',
         ChangeTime => '2009-10-30 01:00:15',
     );
-
-=back
 
 =cut
 
@@ -6712,9 +6726,7 @@ $ConfigObject->Set(
     Value => $SendNotificationsOrg,
 );
 
-=over 4
-
-=item _TestPossibleStates()
+=head2 _TestPossibleStates()
 
 Internal use only!
 Runs a series of tests for ChangePossibleStatesGet() by using a ChangeID as argument
@@ -6726,8 +6738,6 @@ Runs a series of tests for ChangePossibleStatesGet() by using a ChangeID as argu
         TestNumber            => 1,                             # Testnumber
 
     );
-
-=back
 
 =cut
 
@@ -6770,6 +6780,8 @@ sub _TestPossibleStates {
             "Possible States Test $TestNumber: |- states form $State match only once"
         );
     }
+
+    return;
 }
 
 1;
