@@ -74,7 +74,7 @@
                         <label>[% Translate(Data.Label) | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("FAQDynamicFieldLink") %]
-                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank" class="DynamicFieldLink">[% Data.Value %]</a></span>
+                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank" class="DynamicFieldLink">[% Data.Value %]</a></span>
 [% RenderBlockEnd("FAQDynamicFieldLink") %]
 [% RenderBlockStart("FAQDynamicFieldPlain") %]
                             <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -90,7 +90,7 @@
 #                        <label>[% Translate(Data.Label) | html %]:</label>
 #                        <p class="Value">
 #[% RenderBlockStart("FAQDynamicField_Field1_Link") %]
-#                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+#                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 #[% RenderBlockEnd("FAQDynamicField_Field1_Link") %]
 #[% RenderBlockStart("FAQDynamicField_Field1_Plain") %]
 #                            <span title="[% Data.Title | html %]">[% Data.Value %]</span>
@@ -101,7 +101,7 @@
 #                        <label>[% Translate(Data.Label) | html %]:</label>
 #                        <p class="Value">
 #[% RenderBlockStart("FAQDynamicField_Field2_Link") %]
-#                            <span title="[% Data.Title | html %]"><a href="[% Data.Link %]" target="_blank">[% Data.Value %]</a></span>
+#                            <span title="[% Data.Title | html %]"><a href="[% Data.Link | Interpolate %]" target="_blank">[% Data.Value %]</a></span>
 #[% RenderBlockEnd("FAQDynamicField_Field2_Link") %]
 #[% RenderBlockStart("FAQDynamicField_Field2_Plain") %]
 #                            <span title="[% Data.Title | html %]">[% Data.Value %]</span>
