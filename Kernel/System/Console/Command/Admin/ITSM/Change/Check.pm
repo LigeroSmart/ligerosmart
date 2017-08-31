@@ -11,13 +11,13 @@ package Kernel::System::Console::Command::Admin::ITSM::Change::Check;
 use strict;
 use warnings;
 
-use base qw(
+use parent qw(
     Kernel::System::Console::BaseCommand
     Kernel::System::EventHandler);
 
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::PID',
     'Kernel::System::ITSMChange',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
@@ -62,12 +62,10 @@ sub PreRun {
     );
 
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
-    $Self->{SystemTime} = $TimeObject->SystemTime();
-    $Self->{Now}        = $TimeObject->SystemTime2TimeStamp(
-        SystemTime => $Self->{SystemTime},
-    );
+    $Self->{SystemTime} = $DateTimeObject->ToEpoch();
+    $Self->{Now}        = $DateTimeObject->ToString();
 
     return;
 }
@@ -349,9 +347,12 @@ sub SentWithinPeriod {
     return 1 if $Config->{Frequency} eq 'once';
 
     # get epoche seconds of send time
-    my $SentEpoche = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-        String => $Param{LastNotificationSentDate},
-    );
+    my $SentEpoche = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $Param{LastNotificationSentDate},
+            }
+    )->ToEpoch();
 
     # calc diff
     my $EpocheSinceSent = $Self->{SystemTime} - $SentEpoche;
@@ -374,8 +375,6 @@ sub PostRun {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
