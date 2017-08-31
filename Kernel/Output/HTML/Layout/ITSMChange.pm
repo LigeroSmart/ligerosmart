@@ -15,9 +15,7 @@ use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
-=over 4
-
-=item ITSMChangeBuildWorkOrderGraph()
+=head2 ITSMChangeBuildWorkOrderGraph()
 
 returns a output string for WorkOrder graph
 
@@ -67,9 +65,6 @@ sub ITSMChangeBuildWorkOrderGraph {
     # hash for smallest time
     my %Time;
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
     TIMETYPE:
     for my $TimeType (qw(Start End)) {
 
@@ -79,9 +74,9 @@ sub ITSMChangeBuildWorkOrderGraph {
             # check if time is set
             next TIMETYPE if !$Change->{"Planned${TimeType}Time"};
 
-            # translate to timestamp
-            $Time{"${TimeType}Time"} = $TimeObject->TimeStamp2SystemTime(
-                String => $Change->{"Planned${TimeType}Time"},
+            # translate to system-time/epoch
+            $Time{"${TimeType}Time"} = $Self->_TimeStamp2Epoch(
+                TimeStamp => $Change->{"Planned${TimeType}Time"},
             );
 
             # jump to next type
@@ -89,13 +84,13 @@ sub ITSMChangeBuildWorkOrderGraph {
         }
 
         # translate planned time to timestamp for equation
-        $Time{"Planned${TimeType}Time"} = $TimeObject->TimeStamp2SystemTime(
-            String => $Change->{"Planned${TimeType}Time"},
+        $Time{"Planned${TimeType}Time"} = $Self->_TimeStamp2Epoch(
+            TimeStamp => $Change->{"Planned${TimeType}Time"},
         );
 
         # translate actual time to timestamp for equation
-        $Time{"Actual${TimeType}Time"} = $TimeObject->TimeStamp2SystemTime(
-            String => $Change->{"Actual${TimeType}Time"},
+        $Time{"Actual${TimeType}Time"} = $Self->_TimeStamp2Epoch(
+            TimeStamp => $Change->{"Actual${TimeType}Time"},
         );
     }
 
@@ -118,15 +113,20 @@ sub ITSMChangeBuildWorkOrderGraph {
             : $Time{ActualEndTime};
     }
 
+    # Get current system unix time (epoch).
+    my $SystemTime = $Kernel::OM->Create(
+        'Kernel::System::DateTime'
+    )->ToEpoch();
+
     # check for real end of end time for scale and graph items
     # only if ActualStartTime is set
     if (
         $Time{ActualStartTime}
         && !$Time{ActualEndTime}
-        && ( $Time{EndTime} lt $TimeObject->SystemTime() )
+        && ( $Time{EndTime} lt $SystemTime )
         )
     {
-        $Time{EndTime} = $TimeObject->SystemTime();
+        $Time{EndTime} = $SystemTime;
     }
 
     # calculate ticks for change
@@ -346,9 +346,9 @@ sub ITSMChangeBuildWorkOrderGraph {
     );
 }
 
-=item ITSMChangeListShow()
+=head2 ITSMChangeListShow()
 
-Returns a list of changes as sortable list with pagination.
+Returns a list of changes as C<sortable> list with pagination.
 
 This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow()>
 in F<Kernel/Output/HTML/LayoutTicket.pm>.
@@ -486,6 +486,13 @@ sub ITSMChangeListShow {
         $LayoutObject->Block(
             Name => 'OverviewNavBarPageBack',
             Data => \%Param,
+        );
+
+        $LayoutObject->AddJSData(
+            Key   => 'ITSMChangeMgmtChangeSearch',
+            Value => {
+                Profile => $Param{Profile},
+            },
         );
     }
 
@@ -661,7 +668,7 @@ sub ITSMChangeListShow {
 
 =begin Internal:
 
-=item _ITSMChangeGetChangeTicks()
+=head2 _ITSMChangeGetChangeTicks()
 
 a helper method for the workorder graph of a change
 
@@ -689,7 +696,7 @@ sub _ITSMChangeGetChangeTicks {
     return $Ticks;
 }
 
-=item _ITSMChangeGetChangeScale()
+=head2 _ITSMChangeGetChangeScale()
 
 a helper method for the workorder graph of a change
 
@@ -716,8 +723,8 @@ sub _ITSMChangeGetChangeScale {
 
     # translate timestamps in date format
     map {
-        $ScaleName{$_} = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
-            SystemTime => $ScaleName{$_}
+        $ScaleName{$_} = $Self->_Epoch2TimeStamp(
+            Epoch => $ScaleName{$_},
             )
     } keys %ScaleName;
 
@@ -748,9 +755,11 @@ sub _ITSMChangeGetChangeScale {
             },
         );
     }
+
+    return 1;
 }
 
-=item _ITSMChangeGetWorkOrderGraph()
+=head2 _ITSMChangeGetWorkOrderGraph()
 
 a helper method for the workorder graph of a change
 
@@ -818,12 +827,11 @@ sub _ITSMChangeGetWorkOrderGraph {
         $WorkOrder->{ActualEndTime}   = $WorkOrder->{PlannedEndTime};
     }
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
     # set current time if no actual end time is set
     if ( $WorkOrder->{ActualStartTime} && !$WorkOrder->{ActualEndTime} ) {
-        $WorkOrder->{ActualEndTime} = $TimeObject->CurrentTimestamp();
+        $WorkOrder->{ActualEndTime} = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+        )->ToString();
     }
 
     # set nice display of undef actual times
@@ -839,8 +847,8 @@ sub _ITSMChangeGetWorkOrderGraph {
     for my $TimeType (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
 
         # translate time
-        $Time{$TimeType} = $TimeObject->TimeStamp2SystemTime(
-            String => $WorkOrder->{$TimeType},
+        $Time{$TimeType} = $Self->_TimeStamp2Epoch(
+            TimeStamp => $WorkOrder->{$TimeType},
         );
     }
 
@@ -992,9 +1000,11 @@ sub _ITSMChangeGetWorkOrderGraph {
             }
         }
     }
+
+    return 1;
 }
 
-=item _ITSMChangeGetTimeLine()
+=head2 _ITSMChangeGetTimeLine()
 
 a helper method for the workorder graph of a change
 
@@ -1022,7 +1032,7 @@ sub _ITSMChangeGetTimeLine {
     return if $Param{Ticks} !~ m{ \A \d+ \z }xms;
 
     # get current system time
-    my $CurrentTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime();
+    my $CurrentTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch();
 
     # check for system time
     return if !$CurrentTime;
@@ -1052,9 +1062,47 @@ sub _ITSMChangeGetTimeLine {
     return \%TimeLine;
 }
 
-=end Internal:
+=head2 _TimeStamp2Epoch()
 
-=back
+Convert a timestamp to a epoch (unix time).
+
+=cut
+
+sub _TimeStamp2Epoch {
+    my ( $Self, %Param ) = @_;
+
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $Param{TimeStamp},
+        },
+    );
+
+    return $DateTimeObject->ToEpoch() if $DateTimeObject;
+    return;
+}
+
+=head2 _Epoch2TimeStamp()
+
+Convert a epoch (unix time) to a timestamp (yyyy-mm-dd hh:mm:ss).
+
+=cut
+
+sub _Epoch2TimeStamp {
+    my ( $Self, %Param ) = @_;
+
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Epoch => $Param{Epoch},
+        },
+    );
+
+    return $DateTimeObject->ToString() if $DateTimeObject;
+    return;
+}
+
+=end Internal:
 
 =cut
 

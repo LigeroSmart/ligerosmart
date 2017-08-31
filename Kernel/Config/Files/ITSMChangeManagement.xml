@@ -108,6 +108,7 @@
                 </NavBar>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
+                    <JavaScript>ITSM.Agent.ChangeManagement.Overview.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -453,6 +454,9 @@
                     <AccessKey></AccessKey>
                     <Prio>600</Prio>
                 </NavBar>
+                <Loader>
+                    <JavaScript>ITSM.Agent.ChangeManagement.Overview.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
