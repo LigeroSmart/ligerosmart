@@ -24,7 +24,6 @@ my $TestCount = 1;
 
 # create common objects
 my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
-my $TimeObject      = $Kernel::OM->Get('Kernel::System::Time');
 my $ConditionObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMCondition');
 my $ChangeObject    = $Kernel::OM->Get('Kernel::System::ITSMChange');
 my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
@@ -122,7 +121,8 @@ for my $ObjectMethod (@ObjectMethods) {
 
 # keep track of a time before objects were added,
 # for comparisons in expression match tests
-my $SystemTimeBeforeAdding = $TimeObject->SystemTime() - 1;
+my $DateTimeObject         = $Kernel::OM->Create('Kernel::System::DateTime');
+my $SystemTimeBeforeAdding = $DateTimeObject->ToEpoch() - 1;
 
 # create new change
 my @ChangeIDs;
@@ -157,14 +157,20 @@ for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
     my $WorkOrderID    = $WorkOrderObject->WorkOrderAdd(
         ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
         WorkOrderTitle   => $WorkOrderTitle,
-        PlannedStartTime => $TimeObject->CurrentTimestamp(),
-        PlannedEndTime   => $TimeObject->SystemTime2TimeStamp(
-            SystemTime => ( $TimeObject->SystemTime() + 100 ),
-        ),
-        ActualStartTime => $TimeObject->CurrentTimestamp(),
-        ActualEndTime   => $TimeObject->SystemTime2TimeStamp(
-            SystemTime => ( $TimeObject->SystemTime() + 100 ),
-        ),
+        PlannedStartTime => $DateTimeObject->ToString(),
+        PlannedEndTime   => $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                Epoch => $DateTimeObject->ToEpoch() + 100,
+                }
+            )->ToString(),
+        ActualStartTime => $DateTimeObject->ToString(),
+        ActualEndTime   => $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                Epoch => $DateTimeObject->ToEpoch() + 100,
+                }
+            )->ToString(),
         UserID => 1,
     );
 
@@ -1234,9 +1240,12 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $TimeObject->SystemTime2TimeStamp(
-                    SystemTime => ( $TimeObject->SystemTime() + 10 ),
-                ),
+                CompareValue => $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        Epoch => $DateTimeObject->ToEpoch() + 10,
+                        }
+                    )->ToString(),
                 UserID => 1,
             },
         },
@@ -1264,9 +1273,12 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $TimeObject->SystemTime2TimeStamp(
-                    SystemTime => $SystemTimeBeforeAdding,
-                ),
+                CompareValue => $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        Epoch => $SystemTimeBeforeAdding,
+                        }
+                    )->ToString(),
                 UserID => 1,
             },
         },
@@ -1294,9 +1306,12 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $TimeObject->SystemTime2TimeStamp(
-                    SystemTime => $SystemTimeBeforeAdding,
-                ),
+                CompareValue => $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        Epoch => $SystemTimeBeforeAdding,
+                        }
+                    )->ToString(),
                 UserID => 1,
             },
         },
@@ -1324,9 +1339,12 @@ my @ExpressionTests = (
                 # static fields
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
-                CompareValue => $TimeObject->SystemTime2TimeStamp(
-                    SystemTime => ( $TimeObject->SystemTime() + 10 ),
-                ),
+                CompareValue => $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        Epoch => $DateTimeObject->ToEpoch() + 10,
+                        }
+                    )->ToString(),
                 UserID => 1,
             },
         },
