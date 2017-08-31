@@ -4013,6 +4013,7 @@
         <SubGroup>Frontend::Agent::ViewTemplateOverview</SubGroup>
         <Setting>
             <Option SelectedID="TemplateID">
+                <Item Key="TemplateID">TemplateID</Item>
                 <Item Key="Name">Name</Item>
                 <Item Key="TemplateTypeID">TemplateTypeID</Item>
                 <Item Key="ValidID">ValidID</Item>

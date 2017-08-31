@@ -4541,6 +4541,7 @@
         <Navigation>Frontend::Agent::ViewTemplateOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="TemplateID">
+                <Item ValueType="Option" Value="TemplateID">TemplateID</Item>
                 <Item ValueType="Option" Value="Name">Name</Item>
                 <Item ValueType="Option" Value="TemplateTypeID">TemplateTypeID</Item>
                 <Item ValueType="Option" Value="ValidID">ValidID</Item>
