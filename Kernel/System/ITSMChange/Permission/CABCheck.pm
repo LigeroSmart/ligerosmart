@@ -20,17 +20,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Permission::CABCheck - CAB based permission check
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -48,9 +44,9 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. Access is allowed when type is 'ro' and the agent is a member
+This method does the check. Access is allowed when type is C<ro> and the agent is a member
 of the CAB of the change.
 
     my $HasAccess = $CheckObject->Run(
@@ -97,8 +93,6 @@ sub Run {
     # deny access otherwise
     return;
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

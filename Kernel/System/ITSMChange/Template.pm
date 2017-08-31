@@ -27,19 +27,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Template - template lib
 
-=head1 SYNOPSIS
-
-All functions for templates in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -69,7 +63,7 @@ sub new {
     return $Self;
 }
 
-=item TemplateAdd()
+=head2 TemplateAdd()
 
 Add a new template.
 
@@ -198,7 +192,7 @@ sub TemplateAdd {
     return $TemplateID;
 }
 
-=item TemplateUpdate()
+=head2 TemplateUpdate()
 
 Update a template.
 
@@ -299,7 +293,7 @@ sub TemplateUpdate {
     return 1;
 }
 
-=item TemplateGet()
+=head2 TemplateGet()
 
 Returns a hash reference of the template data for a given TemplateID.
 
@@ -384,7 +378,7 @@ sub TemplateGet {
     return \%TemplateData;
 }
 
-=item TemplateList()
+=head2 TemplateList()
 
 return a hashref of all templates
 
@@ -505,14 +499,14 @@ sub TemplateList {
     return \%Templates;
 }
 
-=item TemplateSearch()
+=head2 TemplateSearch()
 
 Returns either a list, as an arrayref, or a count of found template ids.
 The count of results is returned when the parameter C<Result => 'COUNT'> is passed.
 
 The search criteria are logically AND connected.
-When a list is passed as criterium, the individual members are OR connected.
-When an undef or a reference to an empty array is passed, then the search criterium
+When a list is passed as C<criterium>, the individual members are OR connected.
+When an undef or a reference to an empty array is passed, then the search C<criterium>
 is ignored.
 
     my $TemplateIDsRef = $TemplateObject->TemplateSearch(
@@ -868,7 +862,7 @@ sub TemplateSearch {
     return \@IDs;
 }
 
-=item TemplateDelete()
+=head2 TemplateDelete()
 
 Delete a template.
 
@@ -927,7 +921,7 @@ sub TemplateDelete {
     return 1;
 }
 
-=item TemplateTypeLookup()
+=head2 TemplateTypeLookup()
 
 Return the template type id when the template type name is passed.
 Return the template type name when the template type id is passed.
@@ -1001,7 +995,7 @@ sub TemplateTypeLookup {
     return;
 }
 
-=item TemplateSerialize()
+=head2 TemplateSerialize()
 
 This method is in fact a dispatcher for different template types.
 Currently ITSMChangeManagement supports these template types:
@@ -1011,7 +1005,7 @@ ITSMWorkOrder
 CAB
 ITSMCondition
 
-The method returns a datastructure, serialized with Data::Dumper.
+The method returns a data structure, serialized with Data::Dumper.
 
     my $ChangeTemplate = $TemplateObject->TemplateSerialize(
         TemplateType => 'ITSMChange',
@@ -1073,7 +1067,7 @@ sub TemplateSerialize {
     return $SerializedData;
 }
 
-=item TemplateDeSerialize()
+=head2 TemplateDeSerialize()
 
 This method deserializes the template content. It returns the
 ID of the "main" element that was created based on the template.
@@ -1126,7 +1120,7 @@ sub TemplateDeSerialize {
 
 =begin Internal:
 
-=item _CreateTemplateElements()
+=head2 _CreateTemplateElements()
 
 This method dispatches the elements creation. It calls the subroutine
 that belongs to the given type (e.g. ChangeAdd). After that it
@@ -1232,7 +1226,7 @@ sub _CreateTemplateElements {
     return %ParentReturn;
 }
 
-=item _CheckTemplateTypeIDs()
+=head2 _CheckTemplateTypeIDs()
 
 check whether the given template type ids are all valid
 
@@ -1288,8 +1282,6 @@ sub _CheckTemplateTypeIDs {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

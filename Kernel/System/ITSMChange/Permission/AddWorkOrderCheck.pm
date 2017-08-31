@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Permission::AddWorkOrderCheck - WorkOrderAdd and WorkOrderAddFromTemplate permission check
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -49,9 +45,9 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. 'ro' and 'rw' access is granted
+This method does the check. C<ro> and C<rw> access is granted
 when the agent has the correct privileges in the group defined in the
 frontend module registration.
 
@@ -137,8 +133,6 @@ sub Run {
     return;
 
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

@@ -21,17 +21,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Permission::ChangeBuilderCheck - change builder based permission check
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -49,11 +45,11 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. When no ChangeID is passed, than 'ro' and 'rw' access is granted
-when the agent has the priv in the 'itsm-change-builder' group.
-When the ChangeID was passed, than the agent must additionally be the changebuilder of the change.
+This method does the check. When no ChangeID is passed, than C<ro> and C<rw> access is granted
+when the agent has the privilege in the 'itsm-change-builder' group.
+When the ChangeID was passed, than the agent must additionally be the change builder of the change.
 
     my $HasAccess = $CheckObject->Run(
         UserID   => 123,
@@ -114,8 +110,6 @@ sub Run {
     # do not grant access otherwise
     return;
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

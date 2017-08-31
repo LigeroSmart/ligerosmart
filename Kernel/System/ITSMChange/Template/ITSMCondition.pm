@@ -24,19 +24,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Template::ITSMCondition - all template functions for conditions
 
-=head1 SYNOPSIS
-
-All functions for condition templates in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -57,11 +51,11 @@ sub new {
     return $Self;
 }
 
-=item Serialize()
+=head2 Serialize()
 
 Serialize a condition. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The condition actions
-are "wrapped" within a hashreference...
+a serialized string of the data structure. The condition actions
+are "wrapped" within a hash reference...
 
     my $TemplateString = $TemplateObject->Serialize(
         ConditionID => 1,
@@ -73,7 +67,7 @@ returns
 
     '{ConditionAdd => { ... }}'
 
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
+If parameter C<Return> is set to C<HASH>, the Perl data structure
 is returned
 
     {
@@ -159,7 +153,7 @@ sub Serialize {
     return $SerializedData;
 }
 
-=item DeSerialize()
+=head2 DeSerialize()
 
 DeSerialize() is a wrapper for all the _XXXAdd methods.
 
@@ -210,7 +204,7 @@ sub DeSerialize {
 
 =begin Internal:
 
-=item _ConditionAdd()
+=head2 _ConditionAdd()
 
 Creates new conditions for a change based on the given template. It
 returns a hash of information (change id it was created for, id is
@@ -261,7 +255,7 @@ sub _ConditionAdd {
     return %Info;
 }
 
-=item _ExpressionAdd()
+=head2 _ExpressionAdd()
 
 Creates new expressions for a condition based on the given template. It
 returns a hash of information (change id it was created for, id is
@@ -329,7 +323,7 @@ sub _ExpressionAdd {
     return %Info;
 }
 
-=item _ActionAdd()
+=head2 _ActionAdd()
 
 Creates new actions for a condition based on the given template. It
 returns a hash of information (change id it was created for, id is
@@ -400,8 +394,6 @@ sub _ActionAdd {
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

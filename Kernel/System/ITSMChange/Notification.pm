@@ -40,17 +40,15 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Notification - notification functions for change management
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 This module is managing notifications.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create a notification object
 
@@ -89,7 +87,7 @@ sub new {
     return $Self;
 }
 
-=item NotificationSend()
+=head2 NotificationSend()
 
 Send the notification to customers and/or agents.
 
@@ -545,7 +543,7 @@ sub NotificationSend {
     return 1;
 }
 
-=item NotificationRuleGet()
+=head2 NotificationRuleGet()
 
 Get info about a single notification rule
 
@@ -709,7 +707,7 @@ sub NotificationRuleGet {
     return Storable::dclone( \%NotificationRule );
 }
 
-=item NotificationRuleAdd()
+=head2 NotificationRuleAdd()
 
 Add a notification rule. Returns the ID of the rule.
 
@@ -892,7 +890,7 @@ sub NotificationRuleAdd {
     return $RuleID;
 }
 
-=item NotificationRuleUpdate()
+=head2 NotificationRuleUpdate()
 
 updates an existing notification rule
 
@@ -1065,7 +1063,7 @@ sub NotificationRuleUpdate {
     return 1;
 }
 
-=item NotificationRuleDelete()
+=head2 NotificationRuleDelete()
 
 deletes an existing notification rule
 
@@ -1113,7 +1111,7 @@ sub NotificationRuleDelete {
     return 1;
 }
 
-=item NotificationRuleList()
+=head2 NotificationRuleList()
 
 returns an array reference with IDs of all existing notification rules
 
@@ -1160,7 +1158,7 @@ sub NotificationRuleList {
     return \@IDs;
 }
 
-=item NotificationRuleSearch()
+=head2 NotificationRuleSearch()
 
 Returns an array reference with IDs of all matching notification rules.
 The only valid search parameter is the EventID.
@@ -1241,7 +1239,7 @@ sub NotificationRuleSearch {
     return \@IDs;
 }
 
-=item RecipientLookup()
+=head2 RecipientLookup()
 
 Returns the ID when you pass the recipient name and returns the name if you
 pass the recipient ID.
@@ -1326,9 +1324,9 @@ sub RecipientLookup {
     return $Value;
 }
 
-=item RecipientList()
+=head2 RecipientList()
 
-returns an array reference with hashreferences. The key of the hashreference is the id
+returns an array reference with hash references. The key of the hash reference is the id
 of an recipient and the name is the value.
 
     my $List = $NotificationObject->RecipientList();
@@ -1371,7 +1369,7 @@ sub RecipientList {
 
 =begin Internal:
 
-=item _NotificationReplaceMacros()
+=head2 _NotificationReplaceMacros()
 
 This method replaces all the <OTRS_xxxx> macros in notification text.
 
@@ -1794,8 +1792,6 @@ sub _NotificationReplaceMacros {
 1;
 
 =end Internal:
-
-=back
 
 =head2 The following placeholders can be used in Change::xxx notifications
 

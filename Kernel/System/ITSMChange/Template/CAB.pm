@@ -24,17 +24,11 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Template::CAB - all template functions for CAB
 
-=head1 SYNOPSIS
-
-All functions for CAB templates in ITSMChangeManagement.
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -57,11 +51,11 @@ sub new {
     return $Self;
 }
 
-=item Serialize()
+=head2 Serialize()
 
 Serialize the CAB of a change. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The CAB actions
-are "wrapped" within a hashreference...
+a serialized string of the data structure. The CAB actions
+are "wrapped" within a hash reference...
 
     my $TemplateString = $TemplateObject->Serialize(
         ChangeID => 1,
@@ -73,7 +67,7 @@ returns
 
     '{CABAdd => { CABCustomers => [ 'mm@localhost' ], ... }}'
 
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
+If parameter C<Return> is set to C<HASH>, the Perl data structure
 is returned
 
     {
@@ -132,7 +126,7 @@ sub Serialize {
     return $SerializedData;
 }
 
-=item DeSerialize()
+=head2 DeSerialize()
 
 Updates the CAB of a change based on the given CAB template. It
 returns the change id the cab is for.
@@ -185,8 +179,6 @@ sub DeSerialize {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

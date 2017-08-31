@@ -188,7 +188,7 @@ sub Run {
 
 =begin Internal:
 
-=item _HasFieldChanged()
+=head2 _HasFieldChanged()
 
 This method checks whether a field was changed or not. It returns 1 when field
 was changed, 0 otherwise
@@ -243,7 +243,7 @@ sub _HasFieldChanged {
     return 0;
 }
 
-=item _AgentAndCustomerIDsGet()
+=head2 _AgentAndCustomerIDsGet()
 
 Get the agent and customer IDs from the recipient list.
 

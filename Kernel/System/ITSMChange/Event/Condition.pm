@@ -186,7 +186,7 @@ sub Run {
 
 =begin Internal:
 
-=item _HasFieldChanged()
+=head2 _HasFieldChanged()
 
 This method checks whether a field was changed or not. It returns 1 when field
 was changed, 0 otherwise

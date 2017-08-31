@@ -20,17 +20,13 @@ our @ObjectDependencies = (
 
 Kernel::System::ITSMChange::Permission::ChangeAgentCheck - change agent based permission check
 
-=head1 SYNOPSIS
-
 =head1 PUBLIC INTERFACE
-
-=over 4
 
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -48,9 +44,9 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=head2 Run()
 
-This method does the check. 'ro' access is allowed when the agent is a 'ro' member
+This method does the check. C<ro> access is allowed when the agent is a <ro> member
 of the 'itsm-change' group.
 
     my $HasAccess = $CheckObject->Run(
@@ -100,8 +96,6 @@ sub Run {
     # change agents are granted ro access
     return 1;
 }
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

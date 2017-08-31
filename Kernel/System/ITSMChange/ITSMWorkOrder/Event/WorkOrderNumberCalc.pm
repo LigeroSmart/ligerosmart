@@ -71,9 +71,9 @@ sub Run {
 
 =begin Internal:
 
-=item _WorkOrderNumberCalc()
+=head2 _WorkOrderNumberCalc()
 
-This method actually recalculates the WorkOrderNumbers for the workorders of
+This method actually recalculates the WorkOrderNumbers for the C<workorders> of
 the given change.
 It returns 1 on success, C<undef> otherwise.
 
