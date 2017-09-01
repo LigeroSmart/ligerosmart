@@ -1800,50 +1800,7 @@ sub Run {
             OP => "Action=$NextScreen;Subaction=Created;TicketID=$TicketID",
         );
     }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    elsif ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
 
-        # get the selected service id
-        my $ServiceID = $ParamObject->GetParam( Param => 'ServiceID' ) || '';
-
-        # build empty response hash
-        my %Response = (
-            CurInciSignal => '',
-            CurInciState  => '&nbsp',
-        );
-
-        # only if service id is selected
-        if ( $ServiceID && $Config->{ShowIncidentState} ) {
-
-            # set incident signal
-            my %InciSignals = (
-                operational => 'greenled',
-                warning     => 'yellowled',
-                incident    => 'redled',
-            );
-
-            # build the response
-            %Response = (
-                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                CurInciState  => $LayoutObject->{LanguageObject}->Translate($Service{CurInciState}),
-            );
-        }
-
-        # encode response to JSON
-        my $JSON = $LayoutObject->JSONEncode(
-            Data => \%Response,
-        );
-
-        return $LayoutObject->Attachment(
-            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
-            Content     => $JSON,
-            Type        => 'inline',
-            NoCache     => 1,
-        );
-    }
-# ---
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my $Dest           = $ParamObject->GetParam( Param => 'Dest' ) || '';
         my $CustomerUser   = $ParamObject->GetParam( Param => 'SelectedCustomerUser' );
@@ -2773,11 +2730,6 @@ sub _MaskPhoneNew {
             Data => \%Param,
         );
     }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    my @IndividualDynamicFields;
-# ---
 
     # Dynamic fields
     # cycle trough the activated Dynamic Fields for this screen
@@ -2792,15 +2744,6 @@ sub _MaskPhoneNew {
 
         # get the html strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
-# ---
-# ITSMIncidentProblemManagement
-# ---
-        # remember dynamic fields that should be displayed individually
-        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
-            push @IndividualDynamicFields, $DynamicFieldConfig;
-            next DYNAMICFIELD;
-        }
-# ---
 
         $LayoutObject->Block(
             Name => 'DynamicField',
@@ -2821,27 +2764,6 @@ sub _MaskPhoneNew {
             },
         );
     }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    # cycle trough dynamic fields that should be displayed individually
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @IndividualDynamicFields ) {
-
-        # get the html strings form $Param
-        my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
-
-        # example of dynamic fields order customization
-        $LayoutObject->Block(
-            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
-            Data => {
-                Name  => $DynamicFieldConfig->{Name},
-                Label => $DynamicFieldHTML->{Label},
-                Field => $DynamicFieldHTML->{Field},
-            },
-        );
-    }
-# ---
 
     # show time accounting box
     if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {

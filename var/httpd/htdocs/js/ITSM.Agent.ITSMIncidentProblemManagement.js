@@ -86,6 +86,12 @@ ITSM.Agent.ITSMIncidentProblemManagement = (function (TargetNS) {
             });
         });
 
+        // open some links as pop up
+        $('a.AsPopup').on('click', function () {
+            Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
+            return false;
+        });
+
         // show service incident state and signal for the selected service
         //   (this part here is important if the page is reloaded due to e.g. attachment upload
         //   or on first load for AgentTicketActionCommon)
