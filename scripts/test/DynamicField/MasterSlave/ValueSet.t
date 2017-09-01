@@ -103,7 +103,7 @@ my %LinkKeyList = $LinkObject->LinkKeyList(
     Object2   => 'Ticket',
     State     => 'Valid',
     Type      => 'ParentChild',
-    Direction => 'Source',
+    Direction => 'Both',
     UserID    => 1,
 );
 
@@ -146,7 +146,7 @@ $Self->True(
     Object2   => 'Ticket',
     State     => 'Valid',
     Type      => 'ParentChild',
-    Direction => 'Source',
+    Direction => 'Target',
     UserID    => 1,
 );
 $Self->True(
@@ -187,7 +187,7 @@ $Self->True(
     Object2   => 'Ticket',
     State     => 'Valid',
     Type      => 'ParentChild',
-    Direction => 'Source',
+    Direction => 'Target',
     UserID    => 1,
 );
 $Self->True(
@@ -249,7 +249,7 @@ $Self->True(
     Object2   => 'Ticket',
     State     => 'Valid',
     Type      => 'ParentChild',
-    Direction => 'Source',
+    Direction => 'Target',
     UserID    => 1,
 );
 $Self->True(
@@ -290,7 +290,7 @@ $Self->True(
     Object2   => 'Ticket',
     State     => 'Valid',
     Type      => 'ParentChild',
-    Direction => 'Source',
+    Direction => 'Target',
     UserID    => 1,
 );
 $Self->True(
@@ -358,7 +358,7 @@ $Self->True(
     Object2   => 'Ticket',
     State     => 'Valid',
     Type      => 'ParentChild',
-    Direction => 'Source',
+    Direction => 'Target',
     UserID    => 1,
 );
 $Self->True(
