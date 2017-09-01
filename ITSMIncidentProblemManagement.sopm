@@ -52,7 +52,6 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketDecision.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt" />
-        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/TicketOverview/Medium.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/TicketOverview/Preview.pm" />
         <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/ITSMIncidentProblemManagement/ServiceIncidentState.html.tmpl" />
