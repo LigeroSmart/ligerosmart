@@ -199,8 +199,11 @@ sub Run {
                 $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
-            $NewTime = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                String => $PlannedTime,
+            $NewTime = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $PlannedTime,
+                },
             );
 
             if ( !$NewTime ) {
