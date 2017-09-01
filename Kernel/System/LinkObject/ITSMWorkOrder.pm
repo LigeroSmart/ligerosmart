@@ -22,13 +22,11 @@ our @ObjectDependencies = (
 
 Kernel/System/LinkObject/ITSMWorkOrder.pm - LinkObject ITSMWorkOrder module
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -46,9 +44,9 @@ sub new {
     return $Self;
 }
 
-=item LinkListWithData()
+=head2 LinkListWithData()
 
-fill up the link list with data
+Fill up the link list with data.
 
     $Success = $LinkObjectBackend->LinkListWithData(
         LinkList => $HashRef,
@@ -126,9 +124,9 @@ sub LinkListWithData {
     return 1;
 }
 
-=item ObjectPermission()
+=head2 ObjectPermission()
 
-checks read permission for a given object and UserID.
+Checks read permission for a given object and UserID.
 
     $Permission = $LinkObject->ObjectPermission(
         Object  => 'ITSMWorkOrder',
@@ -165,20 +163,20 @@ sub ObjectPermission {
     return $Access;
 }
 
-=item ObjectDescriptionGet()
+=head2 ObjectDescriptionGet()
 
-return a hash of object descriptions
-
-Return
-    %Description = (
-        Normal => "Workorder# 2009102110001674-1",
-        Long   => "Workorder# 2009102110001674-1: The Workorder Title",
-    );
+Return a hash of object descriptions.
 
     %Description = $LinkObject->ObjectDescriptionGet(
         Key     => 123,
         UserID  => 1,
     );
+
+    %Description = (
+        Normal => "Workorder# 2009102110001674-1",
+        Long   => "Workorder# 2009102110001674-1: The Workorder Title",
+    );
+
 
 =cut
 
@@ -235,11 +233,15 @@ sub ObjectDescriptionGet {
     return %Description;
 }
 
-=item ObjectSearch()
+=head2 ObjectSearch()
 
-return a hash list of the search results
+Return a hash list of the search results.
 
-Return
+    $SearchList = $LinkObjectBackend->ObjectSearch(
+        SearchParams => $HashRef,    # (optional)
+        UserID       => 1,
+    );
+
     $SearchList = {
         NOTLINKED => {
             Source => {
@@ -249,11 +251,6 @@ Return
             },
         },
     };
-
-    $SearchList = $LinkObjectBackend->ObjectSearch(
-        SearchParams => $HashRef,    # (optional)
-        UserID       => 1,
-    );
 
 =cut
 
@@ -329,9 +326,9 @@ sub ObjectSearch {
     return \%SearchList;
 }
 
-=item LinkAddPre()
+=head2 LinkAddPre()
 
-link add pre event module
+Link add pre event module.
 
     $True = $LinkObject->LinkAddPre(
         Key          => 123,
@@ -375,9 +372,9 @@ sub LinkAddPre {
     return 1;
 }
 
-=item LinkAddPost()
+=head2 LinkAddPost()
 
-link add pre event module
+Link add pre event module.
 
     $True = $LinkObject->LinkAddPost(
         Key          => 123,
@@ -438,9 +435,9 @@ sub LinkAddPost {
     return 1;
 }
 
-=item LinkDeletePre()
+=head2 LinkDeletePre()
 
-link delete pre event module
+Link delete pre event module.
 
     $True = $LinkObject->LinkDeletePre(
         Key          => 123,
@@ -484,9 +481,9 @@ sub LinkDeletePre {
     return 1;
 }
 
-=item LinkDeletePost()
+=head2 LinkDeletePost()
 
-link delete post event module
+Link delete post event module.
 
     $True = $LinkObject->LinkDeletePost(
         Key          => 123,
@@ -548,8 +545,6 @@ sub LinkDeletePost {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

@@ -14,11 +14,11 @@ use warnings;
 use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
+    'Kernel::System::DateTime',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
     'Kernel::System::ITSMChange',
     'Kernel::System::Log',
-    'Kernel::System::Time',
 );
 
 sub new {
@@ -72,9 +72,7 @@ sub GetObjectAttributes {
     my %PriorityList = map { $_->{Key} => $_->{Value} } @{$Priorities};
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
-    my ($Date) = split /\s+/, $TimeStamp;
-    my $Today = sprintf "%s 23:59:59", $Date;
+    my $Today = $Kernel::OM->Create('Kernel::System::DateTime')->Format( Format => '%Y-%m-%d 23:59:59' );
 
     my @ObjectAttributes = (
         {

@@ -12,9 +12,9 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::System::DateTime',
     'Kernel::System::ITSMChange',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
     'Kernel::System::Type',
 );
 
@@ -44,9 +44,7 @@ sub GetObjectAttributes {
     $Objects{'-1'} = 'Changes';
 
     # get current time to fix bug#4870
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
-    my ($Date) = split /\s+/, $TimeStamp;
-    my $Today = sprintf "%s 23:59:59", $Date;
+    my $Today = $Kernel::OM->Create('Kernel::System::DateTime')->Format( Format => '%Y-%m-%d 23:59:59' );
 
     my @ObjectAttributes = (
         {
