@@ -61,9 +61,6 @@ sub Run {
     my $GroupsRo = $Config->{GroupRo} || [];
     my $GroupsRw = $Config->{Group}   || [];
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
     # check permission
     if ( $Action && ( @{$GroupsRo} || @{$GroupsRw} ) ) {
 
@@ -109,6 +106,8 @@ sub Run {
     }
 
     return $Param{Counter} if !$Access;
+
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # output menu item
     $LayoutObject->Block(
