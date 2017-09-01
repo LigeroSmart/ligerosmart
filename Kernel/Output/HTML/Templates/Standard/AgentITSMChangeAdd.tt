@@ -33,10 +33,6 @@
                             <div id="ChangeTitleServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                         </div>
                         <div class="Clear"></div>
-
-[% RenderBlockStart("RichText") %]
-[% InsertTemplate("RichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
                         <label class="Mandatory" for="RichText1"><span class="Marker">*</span> [% Translate("Description") | html %]:</label>
                         <div class="RichTextField">
                             <textarea id="RichText1" class="RichText Validate_Required [% Data.DescriptionInvalid %]" name="Description" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Description | html %]</textarea>
@@ -73,18 +69,6 @@
                         </div>
                         <div id="PriorityIDServerError" class="TooltipErrorMessage"><p>[% Translate("Input invalid.") | html %]</p></div>
                         <div class="Clear"></div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#CategoryID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#ChangeAddForm'), 'AJAXUpdate', 'CategoryID', ['ImpactID', 'PriorityID']);
-    });
-    $('#ImpactID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#ChangeAddForm'), 'AJAXUpdate', 'ImpactID', ['PriorityID']);
-    });
-//]]></script>
-[% END %]
-
 [% RenderBlockStart("DynamicField") %]
                         <div class="Row Row_DynamicField_[% Data.Name | html %]">
                             [% Data.Label %]
@@ -133,40 +117,11 @@
 [% RenderBlockEnd("RequestedTime") %]
 
 [% RenderBlockStart("AttachmentUpload") %]
-                        <label>[% Translate("Attachment") | html %]:</label>
+                        <label>[% Translate("Attachments") | html %]:</label>
                         <div class="Field">
-                            <ul>
-[% RenderBlockStart("Attachment") %]
-                                <li>
-                                    [% Data.Filename | html %] ([% Data.Filesize | html %])
-                                    <button type="submit" id="AttachmentDelete[% Data.FileID | html %]" name="AttachmentDelete[% Data.FileID | html %]" value="[% Translate("Delete") | html %]">[% Translate("Delete") | html %]</button>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#AttachmentDelete[% Data.FileID | html %]').bind('click', function () {
-        Core.Form.Validate.DisableValidation($('#AttachmentDelete[% Data.FileID | html %]').closest('form'));
-    });
-//]]></script>
-[% END %]
-                                </li>
-[% RenderBlockEnd("Attachment") %]
-                                <li>
-                                    <input name="FileUpload" id="FileUpload" type="file" size="40"/>
-                                    <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
-                                </li>
-                            </ul>
+                            [% INCLUDE "FormElements/AttachmentList.tt" %]
                         </div>
                         <div class="Clear"></div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#FileUpload').bind('change', function (Event) {
-        var $Form = $('#FileUpload').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.find('#AttachmentUpload').val('1').end().submit();
-    });
-//]]></script>
-[% END %]
-
 [% RenderBlockEnd("AttachmentUpload") %]
 
                         <div class="Field SpacingTop">

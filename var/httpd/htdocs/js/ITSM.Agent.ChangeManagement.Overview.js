@@ -14,8 +14,8 @@ ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
 
 
 /**
- * @namespace ITSM.Agent.ConfigItem.Overview
- * @memberof ITSM.Agent.ConfigItem
+ * @namespace ITSM.Agent.ChangeManagement.Overview
+ * @memberof ITSM.Agent.ChangeManagement
  * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the config item overview navbar.

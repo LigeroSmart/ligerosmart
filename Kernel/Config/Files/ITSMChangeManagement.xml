@@ -133,6 +133,9 @@
                     <AccessKey></AccessKey>
                     <Prio>200</Prio>
                 </NavBar>
+                <Loader>
+                    <JavaScript>ITSM.Agent.ChangeManagement.Add.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
