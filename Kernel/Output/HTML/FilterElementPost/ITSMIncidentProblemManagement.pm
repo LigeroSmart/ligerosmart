@@ -57,6 +57,7 @@ sub Run {
         TicketID => $TicketID,
     );
 
+    # handling of AgentTicketZoom related ITSM changes
     if ( $Param{TemplateFile} eq 'AgentTicketZoom' ) {
 
         # Get ticket attributes.
