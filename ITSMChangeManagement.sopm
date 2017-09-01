@@ -262,6 +262,8 @@
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Zoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Add.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Overview.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.UserSearch.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Responsive.css" />
