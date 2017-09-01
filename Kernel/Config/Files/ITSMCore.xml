@@ -412,7 +412,6 @@
         <Setting>
             <Array>
                 <Item>ITSM.Agent.CustomerSearch.js</Item>
-                <Item>ITSM.Agent.IncidentState.js</Item>
             </Array>
         </Setting>
     </ConfigItem>
