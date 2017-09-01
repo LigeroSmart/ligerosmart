@@ -80,7 +80,7 @@ sub Run {
         );
 
         my $TranslatedServiceIncidentStateLabel = $LayoutObject->{LanguageObject}->Translate('Service Incident State');
-        my $TranslatedCurInciState = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
+        my $TranslatedCurInciState              = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
 
         my $ServiceIncidentStateHTML = <<"END";
 
@@ -114,10 +114,11 @@ END
             'Repair Start Time',
             'Recovery Start Time',
             'Due Date',
-        ) {
+            )
+        {
 
             my $TranslatedFieldLabel = $LayoutObject->{LanguageObject}->Translate($FieldName);
-            my $FieldPattern = '<label>' . $TranslatedFieldLabel . ':</label>.+?<div class="Clear"></div>';
+            my $FieldPattern         = '<label>' . $TranslatedFieldLabel . ':</label>.+?<div class="Clear"></div>';
             if ( ${ $Param{Data} } =~ m{($FieldPattern)}ms ) {
 
                 my $Field = $1;
