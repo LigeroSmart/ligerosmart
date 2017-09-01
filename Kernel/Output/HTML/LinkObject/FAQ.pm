@@ -47,29 +47,25 @@ create an object
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed params
     for my $Needed (qw(UserLanguage UserID)) {
         $Self->{$Needed} = $Param{$Needed} || die "Got no $Needed!";
     }
 
-    # TO DO: check if the new instance is still needed with the OM!
+    # TODO: check if the new instance is still needed with the OM!
 
-    # We need our own LayoutObject instance to avoid blockdata collisions
-    #   with the main page.
+    # We need our own LayoutObject instance to avoid block data collisions with the main page.
     $Self->{LayoutObject} = Kernel::Output::HTML::Layout->new( %{$Self} );
 
-    # define needed variables
     $Self->{ObjectData} = {
         Object     => 'FAQ',
         Realname   => 'FAQ',
         ObjectName => 'SourceObjectID',
     };
 
-    # get the dynamic fields for this screen
     $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid      => 0,
         ObjectType => ['FAQ'],
@@ -566,7 +562,7 @@ sub ContentStringCreate {
         return;
     }
 
-    # TO DO: check why no return is needed!
+    # TODO: Check why no return is needed!
     return;
 }
 

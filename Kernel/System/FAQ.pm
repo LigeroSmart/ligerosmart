@@ -1630,9 +1630,6 @@ sub HistoryGet {
 
 =head2 KeywordList()
 
-TO DO: Function not used? Keyword separator is here a other as at other places...
-TO DO: Clarify - Remove function or change the separator?
-
 get a list of keywords as a hash, with their count as the value:
 
     my %Keywords = $FAQObject->KeywordList(
@@ -1652,6 +1649,8 @@ Returns:
 
 =cut
 
+# TODO: Function not used? Keyword separator is here a other as at other places...
+# TODO: Clarify - Remove function or change the separator?
 sub KeywordList {
     my ( $Self, %Param ) = @_;
 
