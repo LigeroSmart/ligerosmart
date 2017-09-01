@@ -614,7 +614,7 @@ sub _RenderAjax {
                         Max         => 100,
                     },
                 );
-                $FieldsProcessed{ $Self->{NameToID}{$CurrentField} } = 1;
+                $FieldsProcessed{ $Self->{NameToID}->{$CurrentField} } = 1;
 
                 next DIALOGFIELD;
             }
