@@ -29,6 +29,7 @@ my $ValidObject          = $Kernel::OM->Get('Kernel::System::Valid');
 my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
 my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+my $HelperObject         = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 # test if workorder object was created successfully
 $Self->True(
@@ -75,7 +76,7 @@ for my $Counter ( 1 .. 3 ) {
     my $UserID = $UserObject->UserAdd(
         UserFirstname => 'ITSMChange::ITSMWorkOrder' . $Counter,
         UserLastname  => 'UnitTest',
-        UserLogin     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . int rand 1_000_000,
+        UserLogin     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . $HelperObject->GetRandomNumber(),
         UserEmail     => 'UnitTest-ITSMChange::ITSMWorkOrder-' . $Counter . '@localhost',
         ValidID       => $ValidObject->ValidLookup( Valid => 'valid' ),
         ChangeUserID  => 1,
@@ -92,7 +93,7 @@ for ( 1 .. 2 ) {
     for my $LoopProtectionCounter ( 1 .. 100 ) {
 
         # create a random user id
-        my $TempNonExistingUserID = int rand 1_000_000;
+        my $TempNonExistingUserID = $HelperObject->GetRandomNumber();
 
         # check if random user id exists already
         my %UserData = $UserObject->GetUserData(
@@ -134,7 +135,7 @@ my $OriginalDynamicFields = $DynamicFieldObject->DynamicFieldListGet(
     Valid => 0,
 );
 
-my $UniqueNamePrefix = 'UnitTestWorkorder' . int rand 1_000_000;
+my $UniqueNamePrefix = 'UnitTestWorkorder' . $HelperObject->GetRandomNumber();
 
 # create some dynamic fields for workorders
 my @DynamicFields = (
@@ -437,7 +438,7 @@ my $TestCountMisc = $TestCount;
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
 my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%06d-%010d',
-    int( rand 1_000_000 ),
+    $HelperObject->GetRandomNumber(),
     time();
 
 my @ChangeTests = (
