@@ -13,9 +13,9 @@ package Kernel::Modules::AgentTicketActionCommon;
 use strict;
 use warnings;
 
-use Kernel::Language qw(Translatable);
 use Kernel::System::EmailParser;
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -26,25 +26,44 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
+    # Try to load draft if requested.
+    if (
+        $Kernel::OM->Get('Kernel::Config')->Get("Ticket::Frontend::$Self->{Action}")->{FormDraft}
+        && $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'LoadFormDraft' )
+        && $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'FormDraftID' )
+        )
+    {
+        $Self->{LoadedFormDraftID} = $Kernel::OM->Get('Kernel::System::Web::Request')->LoadFormDraft(
+            FormDraftID => $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'FormDraftID' ),
+            UserID      => $Self->{UserID},
+        );
+    }
+
     # get article for whom this should be a reply, if available
-    my $ReplyToArticle = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ReplyToArticle' ) || "";
+    my $ReplyToArticle = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ReplyToArticle' ) || '';
+    my $TicketID       = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' )       || '';
 
     # check if ReplyToArticle really belongs to the ticket
     my %ReplyToArticleContent;
     my @ReplyToAdresses;
     if ($ReplyToArticle) {
-        %ReplyToArticleContent = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleGet(
+
+        my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForArticle(
+            TicketID  => $TicketID,
+            ArticleID => $ReplyToArticle,
+        );
+        %ReplyToArticleContent = $ArticleBackendObject->ArticleGet(
+            TicketID      => $TicketID,
             ArticleID     => $ReplyToArticle,
             DynamicFields => 0,
-            UserID        => $Self->{UserID},
         );
 
         $Self->{ReplyToArticle}        = $ReplyToArticle;
         $Self->{ReplyToArticleContent} = \%ReplyToArticleContent;
 
         # get sender of original note (to inform sender about answer)
-        if ( $ReplyToArticleContent{CreatedBy} ) {
-            my @ReplyToSenderID = ( $ReplyToArticleContent{CreatedBy} );
+        if ( $ReplyToArticleContent{CreateBy} ) {
+            my @ReplyToSenderID = ( $ReplyToArticleContent{CreateBy} );
             $Self->{ReplyToSenderUserID} = \@ReplyToSenderID;
         }
 
@@ -54,7 +73,14 @@ sub new {
         }
 
         # if article is not of type note-internal, don't use it as reply
-        if ( $ReplyToArticleContent{ArticleType} !~ /^note-(internal|external)$/i ) {
+        if (
+            $ArticleBackendObject->ChannelNameGet() ne 'Internal'
+            || (
+                $ArticleBackendObject->ChannelNameGet() eq 'Internal'
+                && $ReplyToArticleContent{SenderType} ne 'agent'
+            )
+            )
+        {
             $Self->{ReplyToArticle} = "";
         }
     }
@@ -129,14 +155,88 @@ sub Run {
         }
     }
 
+    # Check for failed draft loading request.
+    if (
+        $ParamObject->GetParam( Param => 'LoadFormDraft' )
+        && !$Self->{LoadedFormDraftID}
+        )
+    {
+        return $LayoutObject->ErrorScreen(
+            Message => Translatable('Loading draft failed!'),
+            Comment => Translatable('Please contact the admin.'),
+        );
+    }
+
     my %Ticket = $TicketObject->TicketGet(
         TicketID      => $Self->{TicketID},
         DynamicFields => 1,
     );
 
+    my $LoadedFormDraft;
+    if ( $Self->{LoadedFormDraftID} ) {
+        $LoadedFormDraft = $Kernel::OM->Get('Kernel::System::FormDraft')->FormDraftGet(
+            FormDraftID => $Self->{LoadedFormDraftID},
+            GetContent  => 0,
+            UserID      => $Self->{UserID},
+        );
+
+        my @Articles = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleList(
+            TicketID => $Self->{TicketID},
+            OnlyLast => 1,
+        );
+
+        if (@Articles) {
+            my $LastArticle = $Articles[0];
+
+            my $LastArticleSystemTime;
+            if ( $LastArticle->{CreateTime} ) {
+                my $LastArticleSystemTimeObject = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        String => $LastArticle->{CreateTime},
+                    },
+                );
+                $LastArticleSystemTime = $LastArticleSystemTimeObject->ToEpoch();
+            }
+
+            my $FormDraftSystemTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $LoadedFormDraft->{ChangeTime},
+                },
+            );
+            my $FormDraftSystemTime = $FormDraftSystemTimeObject->ToEpoch();
+
+            if ( !$LastArticleSystemTime || $FormDraftSystemTime <= $LastArticleSystemTime ) {
+                $Param{FormDraftOutdated} = 1;
+            }
+        }
+    }
+
+    if ( IsHashRefWithData($LoadedFormDraft) ) {
+
+        my $DateTimeObject = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $LoadedFormDraft->{ChangeTime},
+            },
+        );
+        my %RelativeTime = $LayoutObject->FormatRelativeTime( DateTimeObject => $DateTimeObject );
+        $LoadedFormDraft->{ChangeTimeRelative}
+            = $LayoutObject->{LanguageObject}->Translate( $RelativeTime{Message}, $RelativeTime{Value} );
+
+        $LoadedFormDraft->{ChangeByName} = $Kernel::OM->Get('Kernel::System::User')->UserName(
+            UserID => $LoadedFormDraft->{ChangeBy},
+        );
+    }
+
     $LayoutObject->Block(
         Name => 'Properties',
         Data => {
+            FormDraft      => $Config->{FormDraft},
+            FormDraftID    => $Self->{LoadedFormDraftID},
+            FormDraftTitle => $LoadedFormDraft ? $LoadedFormDraft->{Title} : '',
+            FormDraftMeta  => $LoadedFormDraft,
             FormID         => $Self->{FormID},
             ReplyToArticle => $Self->{ReplyToArticle},
             %Ticket,
@@ -222,9 +322,9 @@ sub Run {
     my %GetParam;
     for my $Key (
         qw(
-        NewStateID NewPriorityID TimeUnits ArticleTypeID Title Body Subject NewQueueID
+        NewStateID NewPriorityID TimeUnits IsVisibleForCustomer Title Body Subject NewQueueID
         Year Month Day Hour Minute NewOwnerID NewResponsibleID TypeID ServiceID SLAID
-        Expand ReplyToArticle StandardTemplateID CreateArticle
+        Expand ReplyToArticle StandardTemplateID CreateArticle FormDraftID Title
         )
         )
     {
@@ -272,7 +372,7 @@ sub Run {
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # extract the dynamic field value form the web request
+        # extract the dynamic field value from the web request
         $DynamicFieldValues{ $DynamicFieldConfig->{Name} } = $DynamicFieldBackendObject->EditFieldValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ParamObject        => $ParamObject,
@@ -281,6 +381,7 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
+
         # impact field was found
         if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
 
@@ -292,6 +393,7 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
+
     # get needed stuff
     $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
     $GetParam{PriorityRC}              = $ParamObject->GetParam(Param => 'PriorityRC');
@@ -409,55 +511,144 @@ sub Run {
     # get upload cache object
     my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
 
-    if ( $Self->{Subaction} eq 'Store' ) {
+    if (
+        $Self->{Subaction} eq 'Store'
+        || $Self->{LoadedFormDraftID}
+        )
+    {
 
         # challenge token check for write action
-        $LayoutObject->ChallengeTokenCheck();
+        if ( $Self->{Subaction} eq 'Store' ) {
+            $LayoutObject->ChallengeTokenCheck();
+        }
+
+        $GetParam{IsVisibleForCustomer} //= 0;
 
         # store action
         my %Error;
-
-        # If is an action about attachments
-        my $IsUpload = 0;
-
-        # attachment delete
-        my @AttachmentIDs = map {
-            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
-            $ID ? $ID : ();
-        } $ParamObject->GetParamNames();
-
-        COUNT:
-        for my $Count ( reverse sort @AttachmentIDs ) {
-            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Count" );
-            next COUNT if !$Delete;
-            %Error = ();
-            $Error{AttachmentDelete} = 1;
-            $UploadCacheObject->FormIDRemoveFile(
-                FormID => $Self->{FormID},
-                FileID => $Count,
-            );
-            $IsUpload = 1;
-        }
-
-        # attachment upload
-        if ( $ParamObject->GetParam( Param => 'AttachmentUpload' ) ) {
-            $IsUpload                = 1;
-            %Error                   = ();
-            $Error{AttachmentUpload} = 1;
-            my %UploadStuff = $ParamObject->GetUploadAll(
-                Param => 'FileUpload',
-            );
-            $UploadCacheObject->FormIDAddFile(
-                FormID      => $Self->{FormID},
-                Disposition => 'attachment',
-                %UploadStuff,
-            );
-        }
 
         # get all attachments meta data
         my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
             FormID => $Self->{FormID},
         );
+
+        # Get and validate draft action.
+        my $FormDraftAction = $ParamObject->GetParam( Param => 'FormDraftAction' );
+        if ( $FormDraftAction && !$Config->{FormDraft} ) {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('FormDraft functionality disabled!'),
+                Comment => Translatable('Please contact the admin.'),
+            );
+        }
+
+        my %FormDraftResponse;
+
+        # Check draft name.
+        if (
+            $FormDraftAction
+            && ( $FormDraftAction eq 'Add' || $FormDraftAction eq 'Update' )
+            )
+        {
+            my $Title = $ParamObject->GetParam( Param => 'FormDraftTitle' );
+
+            # A draft name is required.
+            if ( !$Title ) {
+
+                %FormDraftResponse = (
+                    Success      => 0,
+                    ErrorMessage => $Kernel::OM->Get('Kernel::Language')->Translate("Draft name is required!"),
+                );
+            }
+
+            # Chosen draft name must be unique.
+            else {
+                my $FormDraftList = $Kernel::OM->Get('Kernel::System::FormDraft')->FormDraftListGet(
+                    ObjectType => 'Ticket',
+                    ObjectID   => $Self->{TicketID},
+                    Action     => $Self->{Action},
+                    UserID     => $Self->{UserID},
+                );
+                DRAFT:
+                for my $FormDraft ( @{$FormDraftList} ) {
+
+                    # No existing draft with same name.
+                    next DRAFT if $Title ne $FormDraft->{Title};
+
+                    # Same name for update on existing draft.
+                    if (
+                        $GetParam{FormDraftID}
+                        && $FormDraftAction eq 'Update'
+                        && $GetParam{FormDraftID} eq $FormDraft->{FormDraftID}
+                        )
+                    {
+                        next DRAFT;
+                    }
+
+                    # Another draft with the chosen name already exists.
+                    %FormDraftResponse = (
+                        Success      => 0,
+                        ErrorMessage => $Kernel::OM->Get('Kernel::Language')
+                            ->Translate( "FormDraft name %s is already in use!", $Title ),
+                    );
+                    last DRAFT;
+                }
+            }
+        }
+
+        # Perform draft action instead of saving form data in ticket/article.
+        if ( $FormDraftAction && !%FormDraftResponse ) {
+
+            # Reset FormDraftID to prevent updating existing draft.
+            if ( $FormDraftAction eq 'Add' && $GetParam{FormDraftID} ) {
+                $ParamObject->{Query}->param(
+                    -name  => 'FormDraftID',
+                    -value => '',
+                );
+            }
+
+            my $FormDraftActionOk;
+            if (
+                $FormDraftAction eq 'Add'
+                ||
+                ( $FormDraftAction eq 'Update' && $GetParam{FormDraftID} )
+                )
+            {
+                $FormDraftActionOk = $ParamObject->SaveFormDraft(
+                    UserID         => $Self->{UserID},
+                    ObjectType     => 'Ticket',
+                    ObjectID       => $Self->{TicketID},
+                    OverrideParams => {
+                        ReplyToArticle => undef,
+                    },
+                );
+            }
+
+            if ($FormDraftActionOk) {
+                $FormDraftResponse{Success} = 1;
+            }
+            else {
+                %FormDraftResponse = (
+                    Success      => 0,
+                    ErrorMessage => 'Could not perform requested draft action!',
+                );
+            }
+        }
+
+        if (%FormDraftResponse) {
+
+            # build JSON output
+            my $JSON = $LayoutObject->JSONEncode(
+                Data => \%FormDraftResponse,
+            );
+
+            # send JSON response
+            return $LayoutObject->Attachment(
+                ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
+                Content     => $JSON,
+                Type        => 'inline',
+                NoCache     => 1,
+            );
+        }
 
         # get state object
         my $StateObject = $Kernel::OM->Get('Kernel::System::State');
@@ -468,116 +659,138 @@ sub Run {
                 ID => $GetParam{NewStateID},
             );
 
-            if ( !$IsUpload ) {
+            # check state type
+            if ( $StateData{TypeName} =~ /^pending/i ) {
 
-                # check state type
-                if ( $StateData{TypeName} =~ /^pending/i ) {
-
-                    # check needed stuff
-                    for my $Needed (qw(Year Month Day Hour Minute)) {
-                        if ( !defined $GetParam{$Needed} ) {
-                            $Error{'DateInvalid'} = 'ServerError';
-                        }
-                    }
-
-                    # get time object
-                    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-                    # check date
-                    if ( !$TimeObject->Date2SystemTime( %GetParam, Second => 0 ) ) {
+                # check needed stuff
+                for my $Needed (qw(Year Month Day Hour Minute)) {
+                    if ( !defined $GetParam{$Needed} ) {
                         $Error{'DateInvalid'} = 'ServerError';
                     }
-                    if (
-                        $TimeObject->Date2SystemTime( %GetParam, Second => 0 )
-                        < $TimeObject->SystemTime()
-                        )
-                    {
-                        $Error{'DateInvalid'} = 'ServerError';
-                    }
+                }
+
+                # create datetime object
+                my $PendingDateTimeObject = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        %GetParam,
+                        Second => 0,
+                    },
+                );
+
+                # get current system epoch
+                my $CurSystemDateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+
+                # check date
+                if (
+                    !$PendingDateTimeObject
+                    || $PendingDateTimeObject < $CurSystemDateTimeObject
+                    )
+                {
+                    $Error{'DateInvalid'} = 'ServerError';
                 }
             }
         }
 
-        if ( !$IsUpload ) {
-            if ( $Config->{Note} && $Config->{NoteMandatory} ) {
+        if ( $Config->{Note} && $Config->{NoteMandatory} ) {
 
-                # check subject
-                if ( !$GetParam{Subject} ) {
-                    $Error{'SubjectInvalid'} = 'ServerError';
-                }
-
-                # check body
-                if ( !$GetParam{Body} ) {
-                    $Error{'BodyInvalid'} = 'ServerError';
-                }
+            # check subject
+            if ( !$GetParam{Subject} ) {
+                $Error{'SubjectInvalid'} = 'ServerError';
             }
 
-            # check owner
-            if ( $Config->{Owner} && $Config->{OwnerMandatory} ) {
-                if ( !$GetParam{NewOwnerID} ) {
-                    $Error{'NewOwnerInvalid'} = 'ServerError';
-                }
+            # check body
+            if ( !$GetParam{Body} ) {
+                $Error{'BodyInvalid'} = 'ServerError';
             }
+        }
 
-            # check title
-            if ( $Config->{Title} && !$GetParam{Title} ) {
-                $Error{'TitleInvalid'} = 'ServerError';
+        # check owner
+        if ( $Config->{Owner} && $Config->{OwnerMandatory} ) {
+            if ( !$GetParam{NewOwnerID} ) {
+                $Error{'NewOwnerInvalid'} = 'ServerError';
             }
+        }
 
-            # check type
-            if (
-                ( $ConfigObject->Get('Ticket::Type') )
-                &&
-                ( $Config->{TicketType} ) &&
-                ( !$GetParam{TypeID} )
-                )
-            {
-                $Error{'TypeIDInvalid'} = ' ServerError';
+        # check responsible
+        if ( $Config->{Responsible} && $Config->{ResponsibleMandatory} ) {
+            if ( !$GetParam{NewResponsibleID} ) {
+                $Error{'NewResponsibleInvalid'} = 'ServerError';
             }
+        }
 
-            # check service
-            if (
-                $ConfigObject->Get('Ticket::Service')
-                && $Config->{Service}
-                && $GetParam{SLAID}
-                && !$GetParam{ServiceID}
-                )
-            {
-                $Error{'ServiceInvalid'} = ' ServerError';
-            }
+        # check title
+        if ( $Config->{Title} && !$GetParam{Title} ) {
+            $Error{'TitleInvalid'} = 'ServerError';
+        }
 
-            # check mandatory service
-            if (
-                $ConfigObject->Get('Ticket::Service')
-                && $Config->{Service}
-                && $Config->{ServiceMandatory}
-                && !$GetParam{ServiceID}
-                )
-            {
-                $Error{'ServiceInvalid'} = ' ServerError';
-            }
+        # check type
+        if (
+            ( $ConfigObject->Get('Ticket::Type') )
+            &&
+            ( $Config->{TicketType} ) &&
+            ( !$GetParam{TypeID} )
+            )
+        {
+            $Error{'TypeIDInvalid'} = ' ServerError';
+        }
 
-            # check mandatory sla
-            if (
-                $ConfigObject->Get('Ticket::Service')
-                && $Config->{Service}
-                && $Config->{SLAMandatory}
-                && !$GetParam{SLAID}
-                )
-            {
-                $Error{'SLAInvalid'} = ' ServerError';
-            }
+        # check service
+        if (
+            $ConfigObject->Get('Ticket::Service')
+            && $Config->{Service}
+            && $GetParam{SLAID}
+            && !$GetParam{ServiceID}
+            )
+        {
+            $Error{'ServiceInvalid'} = ' ServerError';
+        }
 
-            # check time units, but only if the current screen has a note
-            #   (accounted time can only be stored if and article is generated)
-            if (
-                $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
-                && $Config->{Note}
-                && $GetParam{TimeUnits} eq ''
-                )
-            {
-                $Error{'TimeUnitsInvalid'} = ' ServerError';
+        # check mandatory service
+        if (
+            $ConfigObject->Get('Ticket::Service')
+            && $Config->{Service}
+            && $Config->{ServiceMandatory}
+            && !$GetParam{ServiceID}
+            )
+        {
+            $Error{'ServiceInvalid'} = ' ServerError';
+        }
+
+        # check mandatory sla
+        if (
+            $ConfigObject->Get('Ticket::Service')
+            && $Config->{Service}
+            && $Config->{SLAMandatory}
+            && !$GetParam{SLAID}
+            )
+        {
+            $Error{'SLAInvalid'} = ' ServerError';
+        }
+
+        # check mandatory queue
+        if ( $Config->{Queue} && $Config->{QueueMandatory} ) {
+            if ( !$GetParam{NewQueueID} ) {
+                $Error{'NewQueueInvalid'} = 'ServerError';
             }
+        }
+
+        # check mandatory state
+        if ( $Config->{State} && $Config->{StateMandatory} ) {
+            if ( !$GetParam{NewStateID} ) {
+                $Error{'NewStateInvalid'} = 'ServerError';
+            }
+        }
+
+        # check time units, but only if the current screen has a note
+        #   (accounted time can only be stored if and article is generated)
+        if (
+            $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
+            && $Config->{Note}
+            && $GetParam{TimeUnits} eq ''
+            )
+        {
+            $Error{'TimeUnitsInvalid'} = ' ServerError';
         }
 
         # check expand
@@ -587,7 +800,8 @@ sub Run {
         }
 
         # create html strings for all dynamic fields
-        my %DynamicFieldHTML;
+        my @TicketTypeDynamicFields;
+        my @ArticleTypeDynamicFields;
 
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
@@ -637,8 +851,8 @@ sub Run {
 
             my $ValidationResult;
 
-            # do not validate on attachment upload
-            if ( !$IsUpload ) {
+            # Do not validate only if object type is Article and CreateArticle value is not defined.
+            if ( !( $DynamicFieldConfig->{ObjectType} eq 'Article' && !$GetParam{CreateArticle} ) ) {
 
                 $ValidationResult = $DynamicFieldBackendObject->EditFieldValueValidate(
                     DynamicFieldConfig   => $DynamicFieldConfig,
@@ -651,32 +865,85 @@ sub Run {
                 if ( !IsHashRefWithData($ValidationResult) ) {
                     return $LayoutObject->ErrorScreen(
                         Message =>
-                            $LayoutObject->{LanguageObject}
-                            ->Translate( 'Could not perform validation on field %s!', $DynamicFieldConfig->{Label} ),
+                            $LayoutObject->{LanguageObject}->Translate(
+                            'Could not perform validation on field %s!', $DynamicFieldConfig->{Label}
+                            ),
                         Comment => Translatable('Please contact the administrator.'),
                     );
                 }
 
-                # propagate validation error to the Error variable to be detected by the frontend
-                if ( $ValidationResult->{ServerError} ) {
+                # Propagate validation error to the Error variable to be detected by the frontend.
+                if ( $ValidationResult->{ServerError} )
+                {
                     $Error{ $DynamicFieldConfig->{Name} } = ' ServerError';
                 }
             }
 
-            # get field html
-            $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
-                $DynamicFieldBackendObject->EditFieldRender(
-                DynamicFieldConfig   => $DynamicFieldConfig,
-                PossibleValuesFilter => $PossibleValuesFilter,
-                Mandatory =>
-                    $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-                ServerError  => $ValidationResult->{ServerError}  || '',
-                ErrorMessage => $ValidationResult->{ErrorMessage} || '',
-                LayoutObject => $LayoutObject,
-                ParamObject  => $ParamObject,
-                AJAXUpdate   => 1,
-                UpdatableFields => $Self->_GetFieldsToUpdate(),
+            if ( $DynamicFieldConfig->{ObjectType} eq 'Ticket' ) {
+
+                # Get field html.
+                my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    ServerError          => $ValidationResult->{ServerError} || '',
+                    ErrorMessage         => $ValidationResult->{ErrorMessage} || '',
+                    Mandatory            => $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                    LayoutObject         => $LayoutObject,
+                    ParamObject          => $ParamObject,
+                    AJAXUpdate           => 1,
+                    UpdatableFields      => $Self->_GetFieldsToUpdate(),
                 );
+
+                push @TicketTypeDynamicFields, {
+                    Name  => $DynamicFieldConfig->{Name},
+                    Label => $DynamicFieldHTML->{Label},
+                    Field => $DynamicFieldHTML->{Field},
+                };
+            }
+            elsif ( $DynamicFieldConfig->{ObjectType} eq 'Article' ) {
+                my $Class            = '';
+                my $MandatoryTooltip = 0;
+
+                if ( $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2 ) {
+                    if (
+                        $Config->{NoteMandatory} ||
+                        $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
+                        )
+                    {
+                        $Class = 'Validate_Required';
+                    }
+                    else {
+                        $Class            = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
+                        $MandatoryTooltip = 1;
+                    }
+                }
+
+                # Get field html.
+                my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    ServerError          => $ValidationResult->{ServerError} || '',
+                    ErrorMessage         => $ValidationResult->{ErrorMessage} || '',
+                    Mandatory            => ( $Class eq 'Validate_Required' ) ? 1 : 0,
+                    Class                => $Class,
+                    LayoutObject         => $LayoutObject,
+                    ParamObject          => $ParamObject,
+                    AJAXUpdate           => 1,
+                    UpdatableFields      => $Self->_GetFieldsToUpdate(),
+                );
+
+                push @ArticleTypeDynamicFields, {
+                    Name             => $DynamicFieldConfig->{Name},
+                    Label            => $DynamicFieldHTML->{Label},
+                    Field            => $DynamicFieldHTML->{Field},
+                    MandatoryTooltip => $MandatoryTooltip,
+                };
+            }
+        }
+
+        # Make sure we don't save form if a draft was loaded.
+        if ( $Self->{LoadedFormDraftID} ) {
+            %Error = ( LoadedFormDraft => 1 );
         }
 
         # check errors
@@ -695,8 +962,9 @@ sub Run {
                     : ''
                 ),
                 %Ticket,
-                DynamicFieldHTML => \%DynamicFieldHTML,
-                IsUpload         => $IsUpload,
+                TicketTypeDynamicFields  => \@TicketTypeDynamicFields,
+                ArticleTypeDynamicFields => \@ArticleTypeDynamicFields,
+
                 %GetParam,
                 %Error,
             );
@@ -876,7 +1144,11 @@ sub Run {
             }
 
             # redirect parent window to last screen overview on closed tickets
-            if ( $StateData{TypeName} =~ /^close/i ) {
+            if (
+                $StateData{TypeName} =~ /^close/i
+                && !$ConfigObject->Get('Ticket::Frontend::RedirectAfterCloseDisabled')
+                )
+            {
                 $ReturnURL = $Self->{LastScreenOverview} || 'Action=AgentDashboard';
             }
         }
@@ -897,11 +1169,6 @@ sub Run {
                 }
                 $GetParam{Subject} = $GetParam{Subject}
                     || $LayoutObject->{LanguageObject}->Translate('No subject');
-            }
-
-            # if there is no ArticleTypeID, use the default value
-            if ( !defined $GetParam{ArticleTypeID} ) {
-                $GetParam{ArticleType} = $Config->{ArticleTypeDefault};
             }
 
             # get pre loaded attachment
@@ -956,7 +1223,7 @@ sub Run {
                 );
             }
 
-            my $From = "\"$Self->{UserFirstname} $Self->{UserLastname}\" <$Self->{UserEmail}>";
+            my $From = "\"$Self->{UserFullname}\" <$Self->{UserEmail}>";
             my @NotifyUserIDs;
 
             # get list of users that will be informed without selection in informed/involved list
@@ -981,21 +1248,41 @@ sub Run {
                 push @NotifyUserIDs, @UserListWithoutSelection;
             }
 
-            $ArticleID = $TicketObject->ArticleCreate(
-                TicketID                        => $Self->{TicketID},
-                SenderType                      => 'agent',
-                From                            => $From,
-                MimeType                        => $MimeType,
-                Charset                         => $LayoutObject->{UserCharset},
-                UserID                          => $Self->{UserID},
-                HistoryType                     => $Config->{HistoryType},
-                HistoryComment                  => $Config->{HistoryComment},
-                ForceNotificationToUserID       => \@NotifyUserIDs,
-                ExcludeMuteNotificationToUserID => \@NotifyDone,
-                UnlockOnAway                    => $UnlockOnAway,
-                Attachment                      => \@Attachments,
-                %GetParam,
-            );
+            if ( $Self->{Action} eq 'AgentTicketEmailOutbound' ) {
+                $ArticleID = $Kernel::OM->Get('Kernel::System::Ticket::Article::Backend::Email')->ArticleSend(
+                    TicketID                        => $Self->{TicketID},
+                    SenderType                      => 'agent',
+                    From                            => $From,
+                    MimeType                        => $MimeType,
+                    Charset                         => $LayoutObject->{UserCharset},
+                    UserID                          => $Self->{UserID},
+                    HistoryType                     => $Config->{HistoryType},
+                    HistoryComment                  => $Config->{HistoryComment},
+                    ForceNotificationToUserID       => \@NotifyUserIDs,
+                    ExcludeMuteNotificationToUserID => \@NotifyDone,
+                    UnlockOnAway                    => $UnlockOnAway,
+                    Attachment                      => \@Attachments,
+                    %GetParam,
+                );
+            }
+            else {
+                $ArticleID = $Kernel::OM->Get('Kernel::System::Ticket::Article::Backend::Internal')->ArticleCreate(
+                    TicketID                        => $Self->{TicketID},
+                    SenderType                      => 'agent',
+                    From                            => $From,
+                    MimeType                        => $MimeType,
+                    Charset                         => $LayoutObject->{UserCharset},
+                    UserID                          => $Self->{UserID},
+                    HistoryType                     => $Config->{HistoryType},
+                    HistoryComment                  => $Config->{HistoryComment},
+                    ForceNotificationToUserID       => \@NotifyUserIDs,
+                    ExcludeMuteNotificationToUserID => \@NotifyDone,
+                    UnlockOnAway                    => $UnlockOnAway,
+                    Attachment                      => \@Attachments,
+                    %GetParam,
+                );
+            }
+
             if ( !$ArticleID ) {
                 return $LayoutObject->ErrorScreen();
             }
@@ -1031,6 +1318,23 @@ sub Run {
                 UserID             => $Self->{UserID},
             );
         }
+
+        # If form was called based on a draft,
+        #   delete draft since its content has now been used.
+        if (
+            $GetParam{FormDraftID}
+            && !$Kernel::OM->Get('Kernel::System::FormDraft')->FormDraftDelete(
+                FormDraftID => $GetParam{FormDraftID},
+                UserID      => $Self->{UserID},
+            )
+            )
+        {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('Could not delete draft!'),
+                Comment => Translatable('Please contact the admin.'),
+            );
+        }
+
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -1066,50 +1370,6 @@ sub Run {
             URL => $ReturnURL,
         );
     }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    elsif ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
-
-        # get the selected service id
-        my $ServiceID = $ParamObject->GetParam( Param => 'ServiceID' ) || '';
-
-        # build empty response hash
-        my %Response = (
-            CurInciSignal => '',
-            CurInciState  => '&nbsp',
-        );
-
-        # only if service id is selected and incident state should be shown in this screen
-        if ( $ServiceID && $Config->{ShowIncidentState} ) {
-
-            # set incident signal
-            my %InciSignals = (
-                operational => 'greenled',
-                warning     => 'yellowled',
-                incident    => 'redled',
-            );
-
-            # build the response
-            %Response = (
-                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                CurInciState  => $LayoutObject->{LanguageObject}->Translate($Service{CurInciState}),
-            );
-        }
-
-        # encode response to JSON
-        my $JSON = $LayoutObject->JSONEncode(
-            Data => \%Response,
-        );
-
-        return $LayoutObject->Attachment(
-            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
-            Content     => $JSON,
-            Type        => 'inline',
-            NoCache     => 1,
-        );
-    }
-# ---
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my %Ticket         = $TicketObject->TicketGet( TicketID => $Self->{TicketID} );
         my $CustomerUser   = $Ticket{CustomerUserID};
@@ -1500,8 +1760,8 @@ sub Run {
             );
         }
 
-        # create html strings for all dynamic fields
-        my %DynamicFieldHTML;
+        my @TicketTypeDynamicFields;
+        my @ArticleTypeDynamicFields;
 
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
@@ -1552,27 +1812,69 @@ sub Run {
             # to store dynamic field value from database (or undefined)
             my $Value;
 
-            # only get values for Ticket fields (all screens based on AgentTickeActionCommon
-            # generates a new article, then article fields will be always empty at the beginning)
             if ( $DynamicFieldConfig->{ObjectType} eq 'Ticket' ) {
 
-                # get value stored on the database from Ticket
+                # Only get values for Ticket fields (all screens based on AgentTickeActionCommon
+                # generates a new article, then article fields will be always empty at the beginning).
+                # Value is stored in the database from Ticket.
                 $Value = $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
-            }
 
-            # get field html
-            $DynamicFieldHTML{ $DynamicFieldConfig->{Name} } =
-                $DynamicFieldBackendObject->EditFieldRender(
-                DynamicFieldConfig   => $DynamicFieldConfig,
-                PossibleValuesFilter => $PossibleValuesFilter,
-                Value                => $Value,
-                Mandatory =>
-                    $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
-                LayoutObject    => $LayoutObject,
-                ParamObject     => $ParamObject,
-                AJAXUpdate      => 1,
-                UpdatableFields => $Self->_GetFieldsToUpdate(),
+                # Get field html.
+                my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    Value                => $Value,
+                    Mandatory            => $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2,
+                    LayoutObject         => $LayoutObject,
+                    ParamObject          => $ParamObject,
+                    AJAXUpdate           => 1,
+                    UpdatableFields      => $Self->_GetFieldsToUpdate(),
                 );
+
+                push @TicketTypeDynamicFields, {
+                    Name  => $DynamicFieldConfig->{Name},
+                    Label => $DynamicFieldHTML->{Label},
+                    Field => $DynamicFieldHTML->{Field},
+                };
+            }
+            elsif ( $DynamicFieldConfig->{ObjectType} eq 'Article' ) {
+                my $Class            = '';
+                my $MandatoryTooltip = 0;
+
+                if ( $Config->{DynamicField}->{ $DynamicFieldConfig->{Name} } == 2 ) {
+                    if (
+                        $Config->{NoteMandatory} ||
+                        $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
+                        )
+                    {
+                        $Class = 'Validate_Required';
+                    }
+                    else {
+                        $Class            = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
+                        $MandatoryTooltip = 1;
+                    }
+                }
+
+                # Get field html.
+                my $DynamicFieldHTML = $DynamicFieldBackendObject->EditFieldRender(
+                    DynamicFieldConfig   => $DynamicFieldConfig,
+                    PossibleValuesFilter => $PossibleValuesFilter,
+                    Value                => $Value,
+                    Mandatory            => ( $Class eq 'Validate_Required' ) ? 1 : 0,
+                    Class                => $Class,
+                    LayoutObject         => $LayoutObject,
+                    ParamObject          => $ParamObject,
+                    AJAXUpdate           => 1,
+                    UpdatableFields      => $Self->_GetFieldsToUpdate(),
+                );
+
+                push @ArticleTypeDynamicFields, {
+                    Name             => $DynamicFieldConfig->{Name},
+                    Label            => $DynamicFieldHTML->{Label},
+                    Field            => $DynamicFieldHTML->{Field},
+                    MandatoryTooltip => $MandatoryTooltip,
+                };
+            }
         }
 
         # print form ...
@@ -1587,9 +1889,10 @@ sub Run {
                 ? 'Validate_Required'
                 : ''
             ),
+            TicketTypeDynamicFields  => \@TicketTypeDynamicFields,
+            ArticleTypeDynamicFields => \@ArticleTypeDynamicFields,
             %GetParam,
             %Ticket,
-            DynamicFieldHTML => \%DynamicFieldHTML,
         );
         $Output .= $LayoutObject->Footer(
             Type => 'Small',
@@ -1611,7 +1914,7 @@ sub _Mask {
         $TreeView = 1;
     }
 
-    # get ticket object
+    # get needed objects
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
     my %Ticket = $TicketObject->TicketGet( TicketID => $Self->{TicketID} );
@@ -1622,17 +1925,33 @@ sub _Mask {
     # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
+    # Define the dynamic fields to show based on the object type.
+    my $ObjectType = ['Ticket'];
+
+    # Only screens that add notes can modify Article dynamic fields.
+    if ( $Config->{Note} ) {
+        $ObjectType = [ 'Ticket', 'Article' ];
+    }
+
+    # Get dynamic fields for this screen.
+    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => $ObjectType,
+        FieldFilter => $Config->{DynamicField} || {},
+    );
+
     # Widget Ticket Actions
     if (
         ( $ConfigObject->Get('Ticket::Type') && $Config->{TicketType} )
         ||
         ( $ConfigObject->Get('Ticket::Service')     && $Config->{Service} )     ||
         ( $ConfigObject->Get('Ticket::Responsible') && $Config->{Responsible} ) ||
-        $Config->{Title} ||
-        $Config->{Queue} ||
-        $Config->{Owner} ||
-        $Config->{State} ||
-        $Config->{Priority}
+        $Config->{Title}    ||
+        $Config->{Queue}    ||
+        $Config->{Owner}    ||
+        $Config->{State}    ||
+        $Config->{Priority} ||
+        scalar @{ $Param{TicketTypeDynamicFields} } > 0
         )
     {
         $LayoutObject->Block(
@@ -1651,12 +1970,11 @@ sub _Mask {
         OnlyDynamicFields => 1,
     );
 
-    # create a string with the quoted dynamic field names separated by commas
-    if ( IsArrayRefWithData($DynamicFieldNames) ) {
-        for my $Field ( @{$DynamicFieldNames} ) {
-            $Param{DynamicFieldNamesStrg} .= ", '" . $Field . "'";
-        }
-    }
+    # send data to JS
+    $LayoutObject->AddJSData(
+        Key   => 'DynamicFieldNames',
+        Value => $DynamicFieldNames,
+    );
 
     # types
     if ( $ConfigObject->Get('Ticket::Type') && $Config->{TicketType} ) {
@@ -1666,7 +1984,7 @@ sub _Mask {
             UserID => $Self->{UserID},
         );
         $Param{TypeStrg} = $LayoutObject->BuildSelection(
-            Class => 'Validate_Required Modernize ' . ( $Param{Errors}->{TypeIDInvalid} || ' ' ),
+            Class => 'Validate_Required Modernize ' . ( $Param{Errors}->{TypeIDInvalid} || '' ),
             Data  => \%Type,
             Name  => 'TypeID',
             SelectedID   => $Param{TypeID},
@@ -1694,44 +2012,27 @@ sub _Mask {
             $Param{ServiceID} = '';
         }
 
-        if ( $Config->{ServiceMandatory} ) {
+        $Param{ServiceStrg} = $LayoutObject->BuildSelection(
+            Data       => $Services,
+            Name       => 'ServiceID',
+            SelectedID => $Param{ServiceID},
+            Class      => "Modernize "
+                . ( $Config->{ServiceMandatory} ? 'Validate_Required ' : '' )
+                . ( $Param{ServiceInvalid} || '' ),
+            PossibleNone => 1,
+            TreeView     => $TreeView,
+            Sort         => 'TreeView',
+            Translation  => 0,
+            Max          => 200,
+        );
 
-            $Param{ServiceStrg} = $LayoutObject->BuildSelection(
-                Data         => $Services,
-                Name         => 'ServiceID',
-                SelectedID   => $Param{ServiceID},
-                Class        => 'Validate_Required Modernize ' . ( $Param{ServiceInvalid} || ' ' ),
-                PossibleNone => 1,
-                TreeView     => $TreeView,
-                Sort         => 'TreeView',
-                Translation  => 0,
-                Max          => 200,
-            );
-
-            $LayoutObject->Block(
-                Name => 'ServiceMandatory',
-                Data => {%Param},
-            );
-        }
-        else {
-
-            $Param{ServiceStrg} = $LayoutObject->BuildSelection(
-                Data         => $Services,
-                Name         => 'ServiceID',
-                SelectedID   => $Param{ServiceID},
-                Class        => 'Modernize ' . ( $Param{ServiceInvalid} || ' ' ),
-                PossibleNone => 1,
-                TreeView     => $TreeView,
-                Sort         => 'TreeView',
-                Translation  => 0,
-                Max          => 200,
-            );
-
-            $LayoutObject->Block(
-                Name => 'Service',
-                Data => {%Param},
-            );
-        }
+        $LayoutObject->Block(
+            Name => 'Service',
+            Data => {
+                ServiceMandatory => $Config->{ServiceMandatory} || 0,
+                %Param,
+            },
+        );
 
         my %SLA = $TicketObject->TicketSLAList(
             %Param,
@@ -1739,42 +2040,26 @@ sub _Mask {
             UserID => $Self->{UserID},
         );
 
-        if ( $Config->{SLAMandatory} ) {
+        $Param{SLAStrg} = $LayoutObject->BuildSelection(
+            Data       => \%SLA,
+            Name       => 'SLAID',
+            SelectedID => $Param{SLAID},
+            Class      => "Modernize "
+                . ( $Config->{SLAMandatory} ? 'Validate_Required ' : '' )
+                . ( $Param{ServiceInvalid} || '' ),
+            PossibleNone => 1,
+            Sort         => 'AlphanumericValue',
+            Translation  => 0,
+            Max          => 200,
+        );
 
-            $Param{SLAStrg} = $LayoutObject->BuildSelection(
-                Data         => \%SLA,
-                Name         => 'SLAID',
-                SelectedID   => $Param{SLAID},
-                Class        => 'Validate_Required Modernize ' . ( $Param{SLAInvalid} || ' ' ),
-                PossibleNone => 1,
-                Sort         => 'AlphanumericValue',
-                Translation  => 0,
-                Max          => 200,
-            );
-
-            $LayoutObject->Block(
-                Name => 'SLAMandatory',
-                Data => {%Param},
-            );
-        }
-        else {
-
-            $Param{SLAStrg} = $LayoutObject->BuildSelection(
-                Data         => \%SLA,
-                Name         => 'SLAID',
-                SelectedID   => $Param{SLAID},
-                Class        => 'Modernize',
-                PossibleNone => 1,
-                Sort         => 'AlphanumericValue',
-                Translation  => 0,
-                Max          => 200,
-            );
-
-            $LayoutObject->Block(
-                Name => 'SLA',
-                Data => {%Param},
-            );
-        }
+        $LayoutObject->Block(
+            Name => 'SLA',
+            Data => {
+                SLAMandatory => $Config->{SLAMandatory},
+                %Param,
+            },
+        );
     }
 
     if ( $Config->{Queue} ) {
@@ -1789,10 +2074,12 @@ sub _Mask {
 
         # set move queues
         $Param{QueuesStrg} = $LayoutObject->AgentQueueListOption(
-            Data           => { %MoveQueues, '' => '-' },
-            Multiple       => 0,
-            Size           => 0,
-            Class          => 'NewQueueID Modernize',
+            Data     => { %MoveQueues, '' => '-' },
+            Multiple => 0,
+            Size     => 0,
+            Class    => 'NewQueueID Modernize '
+                . ( $Config->{QueueMandatory} ? 'Validate_Required ' : '' )
+                . ( $Param{NewQueueInvalid} || '' ),
             Name           => 'NewQueueID',
             SelectedID     => $Param{NewQueueID},
             TreeView       => $TreeView,
@@ -1802,7 +2089,10 @@ sub _Mask {
 
         $LayoutObject->Block(
             Name => 'Queue',
-            Data => {%Param},
+            Data => {
+                QueueMandatory => $Config->{QueueMandatory} || 0,
+                %Param
+            },
         );
     }
 
@@ -1910,8 +2200,11 @@ sub _Mask {
         );
 
         $LayoutObject->Block(
-            Name => $Config->{OwnerMandatory} ? 'OwnerMandatory' : 'Owner',
-            Data => \%Param,
+            Name => 'Owner',
+            Data => {
+                OwnerMandatory => $Config->{OwnerMandatory} || 0,
+                %Param,
+            },
         );
     }
 
@@ -1952,17 +2245,23 @@ sub _Mask {
 
         # get responsible
         $Param{ResponsibleStrg} = $LayoutObject->BuildSelection(
-            Data         => \%ShownUsers,
-            SelectedID   => $Param{NewResponsibleID},
-            Name         => 'NewResponsibleID',
-            Class        => 'Modernize',
+            Data       => \%ShownUsers,
+            SelectedID => $Param{NewResponsibleID},
+            Name       => 'NewResponsibleID',
+            Class      => 'Modernize '
+                . ( $Config->{ResponsibleMandatory} ? 'Validate_Required ' : '' )
+                . ( $Param{NewResponsibleInvalid} || '' ),
             PossibleNone => 1,
             Size         => 1,
         );
         $LayoutObject->Block(
             Name => 'Responsible',
-            Data => \%Param,
+            Data => {
+                ResponsibleMandatory => $Config->{ResponsibleMandatory} || 0,
+                %Param,
+            },
         );
+
     }
 
     if ( $Config->{State} ) {
@@ -1984,15 +2283,20 @@ sub _Mask {
 
         # build next states string
         $Param{StateStrg} = $LayoutObject->BuildSelection(
-            Data         => \%StateList,
-            Name         => 'NewStateID',
-            Class        => 'Modernize',
+            Data  => \%StateList,
+            Name  => 'NewStateID',
+            Class => 'Modernize '
+                . ( $Config->{StateMandatory} ? 'Validate_Required ' : '' )
+                . ( $Param{NewStateInvalid} || '' ),
             PossibleNone => $Config->{StateDefault} ? 0 : 1,
             %State,
         );
         $LayoutObject->Block(
             Name => 'State',
-            Data => \%Param,
+            Data => {
+                StateMandatory => $Config->{StateMandatory} || 0,
+                %Param,
+            },
         );
 
         if ( IsArrayRefWithData( $Config->{StateType} ) ) {
@@ -2063,101 +2367,15 @@ sub _Mask {
         );
     }
 
+    # Get Ticket type dynamic fields.
+    for my $TicketTypeDynamicField ( @{ $Param{TicketTypeDynamicFields} } ) {
+        $LayoutObject->Block(
+            Name => 'TicketTypeDynamicField',
+            Data => $TicketTypeDynamicField,
+        );
+    }
+
     # End Widget Ticket Actions
-
-    # define the dynamic fields to show based on the object type
-    my $ObjectType = ['Ticket'];
-
-    # only screens that add notes can modify Article dynamic fields
-    if ( $Config->{Note} ) {
-        $ObjectType = [ 'Ticket', 'Article' ];
-    }
-
-    # get the dynamic fields for this screen
-    my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
-        Valid       => 1,
-        ObjectType  => $ObjectType,
-        FieldFilter => $Config->{DynamicField} || {},
-    );
-
-    # Widget Dynamic Fields
-    if ( IsArrayRefWithData($DynamicField) ) {
-        $LayoutObject->Block(
-            Name => 'WidgetDynamicFields',
-        );
-    }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    my @IndividualDynamicFields;
-# ---
-
-    # Dynamic fields
-    # cycle trough the activated Dynamic Fields for this screen
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{$DynamicField} ) {
-
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        # skip fields that HTML could not be retrieved
-        next DYNAMICFIELD if !IsHashRefWithData(
-            $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} }
-        );
-
-        # get the html strings form $Param
-        my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
-# ---
-# ITSMIncidentProblemManagement
-# ---
-        # remember dynamic fields that should be displayed individually
-        if ( $DynamicFieldConfig->{Name} eq 'ITSMImpact' ) {
-            push @IndividualDynamicFields, $DynamicFieldConfig;
-            next DYNAMICFIELD;
-        }
-# ---
-
-        $LayoutObject->Block(
-            Name => 'DynamicField',
-            Data => {
-                Name  => $DynamicFieldConfig->{Name},
-                Label => $DynamicFieldHTML->{Label},
-                Field => $DynamicFieldHTML->{Field},
-            },
-        );
-
-        # example of dynamic fields order customization
-        $LayoutObject->Block(
-            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
-            Data => {
-                Name  => $DynamicFieldConfig->{Name},
-                Label => $DynamicFieldHTML->{Label},
-                Field => $DynamicFieldHTML->{Field},
-            },
-        );
-    }
-# ---
-# ITSMIncidentProblemManagement
-# ---
-    # cycle trough dynamic fields that should be displayed individually
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @IndividualDynamicFields ) {
-
-        # get the html strings form $Param
-        my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
-
-        # example of dynamic fields order customization
-        $LayoutObject->Block(
-            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
-            Data => {
-                Name  => $DynamicFieldConfig->{Name},
-                Label => $DynamicFieldHTML->{Label},
-                Field => $DynamicFieldHTML->{Field},
-            },
-        );
-    }
-# ---
-
-    # End Widget Dynamic Fields
 
     # Widget Article
     if ( $Config->{Note} ) {
@@ -2167,8 +2385,8 @@ sub _Mask {
         if (
             $Config->{NoteMandatory}
             || $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime')
-            || $Param{IsUpload}
             || $Self->{ReplyToArticle}
+            || $Param{CreateArticle}
             )
         {
             $Param{WidgetStatus} = 'Expanded';
@@ -2185,6 +2403,30 @@ sub _Mask {
         else {
             $Param{SubjectRequired} = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
             $Param{BodyRequired}    = 'Validate_DependingRequiredAND Validate_Depending_CreateArticle';
+        }
+
+        # set customer visibility of this note to the same value as the article for whom this is the reply
+        if ( $Self->{ReplyToArticle} && !defined $Param{IsVisibleForCustomer} ) {
+            $Param{IsVisibleForCustomer} = $Self->{ReplyToArticleContent}->{IsVisibleForCustomer};
+        }
+        elsif ( !defined $Param{IsVisibleForCustomer} ) {
+            $Param{IsVisibleForCustomer} = $Config->{IsVisibleForCustomerDefault};
+        }
+
+        # show attachments
+        ATTACHMENT:
+        for my $Attachment ( @{ $Param{Attachments} } ) {
+            if (
+                $Attachment->{ContentID}
+                && $LayoutObject->{BrowserRichText}
+                && ( $Attachment->{ContentType} =~ /image/i )
+                && ( $Attachment->{Disposition} eq 'inline' )
+                )
+            {
+                next ATTACHMENT;
+            }
+
+            push @{ $Param{AttachmentList} }, $Attachment;
         }
 
         $LayoutObject->Block(
@@ -2404,8 +2646,8 @@ sub _Mask {
             $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
             $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
 
-            $LayoutObject->Block(
-                Name => 'RichText',
+            # set up rich text editor
+            $LayoutObject->SetRichTextParameters(
                 Data => \%Param,
             );
         }
@@ -2428,16 +2670,6 @@ sub _Mask {
             );
             $LayoutObject->Block(
                 Name => 'RichTextLabel',
-            );
-        }
-
-        # show spell check
-        if ( $LayoutObject->{BrowserSpellChecker} ) {
-            $LayoutObject->Block(
-                Name => 'TicketOptions',
-            );
-            $LayoutObject->Block(
-                Name => 'SpellCheck',
             );
         }
 
@@ -2475,60 +2707,6 @@ sub _Mask {
             );
         }
 
-        # show attachments
-        ATTACHMENT:
-        for my $Attachment ( @{ $Param{Attachments} } ) {
-            if (
-                $Attachment->{ContentID}
-                && $LayoutObject->{BrowserRichText}
-                && ( $Attachment->{ContentType} =~ /image/i )
-                && ( $Attachment->{Disposition} eq 'inline' )
-                )
-            {
-                next ATTACHMENT;
-            }
-            $LayoutObject->Block(
-                Name => 'Attachment',
-                Data => $Attachment,
-            );
-        }
-
-        # build ArticleTypeID string
-        my %ArticleType;
-
-        # set article type of this note to the same type as the article for whom this is the reply
-        if ( $Self->{ReplyToArticle} && !$Param{ArticleTypeID} ) {
-            $ArticleType{SelectedID} = $Self->{ReplyToArticleContent}{ArticleTypeID};
-        }
-        elsif ( !$Param{ArticleTypeID} ) {
-            $ArticleType{SelectedValue} = $Config->{ArticleTypeDefault};
-        }
-        else {
-            $ArticleType{SelectedID} = $Param{ArticleTypeID};
-        }
-
-        # get possible notes
-        if ( $Config->{ArticleTypes} ) {
-            my %DefaultNoteTypes = %{ $Config->{ArticleTypes} };
-            my %NoteTypes = $TicketObject->ArticleTypeList( Result => 'HASH' );
-            for my $KeyNoteType ( sort keys %NoteTypes ) {
-                if ( !$DefaultNoteTypes{ $NoteTypes{$KeyNoteType} } ) {
-                    delete $NoteTypes{$KeyNoteType};
-                }
-            }
-
-            $Param{ArticleTypeStrg} = $LayoutObject->BuildSelection(
-                Data  => \%NoteTypes,
-                Name  => 'ArticleTypeID',
-                Class => 'Modernize',
-                %ArticleType,
-            );
-            $LayoutObject->Block(
-                Name => 'ArticleType',
-                Data => \%Param,
-            );
-        }
-
         # show time accounting box
         if ( $ConfigObject->Get('Ticket::Frontend::AccountTime') ) {
             if ( $ConfigObject->Get('Ticket::Frontend::NeedAccountedTime') ) {
@@ -2547,6 +2725,21 @@ sub _Mask {
                 Name => 'TimeUnits',
                 Data => \%Param,
             );
+        }
+
+        # Get Article type dynamic fields.
+        for my $ArticleTypeDynamicField ( @{ $Param{ArticleTypeDynamicFields} } ) {
+            $LayoutObject->Block(
+                Name => 'ArticleTypeDynamicField',
+                Data => $ArticleTypeDynamicField,
+            );
+
+            if ( $ArticleTypeDynamicField->{MandatoryTooltip} ) {
+                $LayoutObject->Block(
+                    Name => 'ArticleTypeDynamicFieldError',
+                    Data => $ArticleTypeDynamicField,
+                );
+            }
         }
     }
 
@@ -2848,8 +3041,8 @@ sub _GetQuotedReplyBody {
                     String => $Param{Body},
                 );
 
-                my $ResponseFormat
-                    = $LayoutObject->{LanguageObject}->FormatTimeString( $Param{Created}, 'DateFormat', 'NoSeconds' );
+                my $ResponseFormat = $LayoutObject->{LanguageObject}
+                    ->FormatTimeString( $Param{CreateTime}, 'DateFormat', 'NoSeconds' );
                 $ResponseFormat .= ' - ' . $Param{From} . ' ';
                 $ResponseFormat
                     .= $LayoutObject->{LanguageObject}->Translate('wrote') . ':';
@@ -2860,9 +3053,9 @@ sub _GetQuotedReplyBody {
             else {
                 $Param{Body} = "<br/>" . $Param{Body};
 
-                if ( $Param{Created} ) {
+                if ( $Param{CreateTime} ) {
                     $Param{Body} = $LayoutObject->{LanguageObject}->Translate('Date') .
-                        ": $Param{Created}<br/>" . $Param{Body};
+                        ": $Param{CreateTime}<br/>" . $Param{Body};
                 }
 
                 for (qw(Subject ReplyTo Reply-To Cc To From)) {
@@ -2895,8 +3088,8 @@ sub _GetQuotedReplyBody {
                 $Param{Body} =~ s/\n/\n$Quote /g;
                 $Param{Body} = "\n$Quote " . $Param{Body};
 
-                my $ResponseFormat
-                    = $LayoutObject->{LanguageObject}->FormatTimeString( $Param{Created}, 'DateFormat', 'NoSeconds' );
+                my $ResponseFormat = $LayoutObject->{LanguageObject}
+                    ->FormatTimeString( $Param{CreateTime}, 'DateFormat', 'NoSeconds' );
                 $ResponseFormat .= ' - ' . $Param{From} . ' ';
                 $ResponseFormat
                     .= $LayoutObject->{LanguageObject}->Translate('wrote') . ":\n";
@@ -2905,9 +3098,9 @@ sub _GetQuotedReplyBody {
             }
             else {
                 $Param{Body} = "\n" . $Param{Body};
-                if ( $Param{Created} ) {
+                if ( $Param{CreateTime} ) {
                     $Param{Body} = $LayoutObject->{LanguageObject}->Translate('Date') .
-                        ": $Param{Created}\n" . $Param{Body};
+                        ": $Param{CreateTime}\n" . $Param{Body};
                 }
 
                 for (qw(Subject ReplyTo Reply-To Cc To From)) {
@@ -2971,8 +3164,9 @@ sub _GetTypes {
     if ( $Param{QueueID} || $Param{TicketID} ) {
         %Type = $Kernel::OM->Get('Kernel::System::Ticket')->TicketTypeList(
             %Param,
-            Action => $Self->{Action},
-            UserID => $Self->{UserID},
+            TicketID => $Self->{TicketID},
+            Action   => $Self->{Action},
+            UserID   => $Self->{UserID},
         );
     }
     return \%Type;

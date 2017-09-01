@@ -162,30 +162,8 @@
                             <div id="ServiceIDError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
                         [% END %]
                         <div id="ServiceIDServerError" class="TooltipErrorMessage"><p>[% Translate("Service invalid.") | html %]</p></div>
-# ---
-# ITSMIncidentProblemManagement
-# ---
-/*global ITSM: true */
-        // show service incident state and signal for the selected service
-        ITSM.Agent.IncidentState.ShowIncidentState({
-            Action: '[% Env("Action") %]',
-            ServiceID: $('#ServiceID').val()
-        });
-});
-# ---
                     </div>
                     <div class="Clear"></div>
-# ---
-# ITSMIncidentProblemManagement
-# ---
-                    <label for="ServiceIncidentStateContainer" style="display:none;">[% Translate("Service Incident State") | html %]:</label>
-                    <div id="ServiceIncidentStateContainer" class="Value" style="display:none;">
-                        <div class="Flag Small">
-                            <span id="ServiceIncidentStateSignal"></span>
-                        </div>
-                        <span id="ServiceIncidentState">&nbsp;</span>
-                    </div>
-# ---
 [% RenderBlockEnd("TicketService") %]
 
 [% RenderBlockStart("TicketSLA") %]
@@ -397,14 +375,9 @@
 # ---
 # ITSMIncidentProblemManagement
 # ---
+<script type="text/javascript">//<![CDATA[
     $('a.AsPopup').bind('click', function (Event) { Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action'); return false;});
-
-/*global ITSM: true */
-        // show service incident state and signal for the selected service (this part here is important if the page is reloaded due to e.g. attachment upload)
-        ITSM.Agent.IncidentState.ShowIncidentState({
-            Action: '[% Env("Action") %]',
-            ServiceID: $('#ServiceID').val()
-        });
+</script>
 # ---
 
 # example template form for customizations

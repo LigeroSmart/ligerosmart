@@ -109,4 +109,394 @@
             </Hash>
         </Value>
     </Setting>
+     <!-- TODO: Only the Loader part is needed here, remove all of the following later,
+        after the loader definition for ITSM.Agent.ITSMIncidentProblemManagement.js has been added to the new XML format-->
+    <Setting Name="Frontend::Module###AgentTicketClose" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket Close.</Item>
+                    <Item Key="Title" Translatable="1">Close</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketClose###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketFreeText" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket FreeText.</Item>
+                    <Item Key="Title" Translatable="1">Free Fields</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketFreeText###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketNote" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket Note.</Item>
+                    <Item Key="Title" Translatable="1">Note</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketNote###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketOwner" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket Owner.</Item>
+                    <Item Key="Title" Translatable="1">Owner</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketOwner###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketPending" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket Pending.</Item>
+                    <Item Key="Title" Translatable="1">Pending</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketPending###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketPriority" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket Priority.</Item>
+                    <Item Key="Title" Translatable="1">Priority</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketPriority###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketResponsible" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Ticket Responsible.</Item>
+                    <Item Key="Title" Translatable="1">Responsible</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketResponsible###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketActionCommon.js</Item>
+                        <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketPhone" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Create new phone ticket.</Item>
+                    <Item Key="Title" Translatable="1">New phone ticket</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketPhone###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.CustomerSearch.js</Item>
+                        <Item>Core.Agent.CustomerSearchAutoComplete.js</Item>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketPhone.js</Item>
+                        <Item>Core.Agent.TicketSplit.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketPhone###1" Required="0" Valid="1">
+        <Description Translatable="1">Main menu for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="GroupRo">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="Description" Translatable="1">Create new phone ticket (inbound).</Item>
+                <Item Key="Name" Translatable="1">New phone ticket</Item>
+                <Item Key="Link">Action=AgentTicketPhone</Item>
+                <Item Key="LinkOption"></Item>
+                <Item Key="NavBar">Ticket</Item>
+                <Item Key="Type"></Item>
+                <Item Key="Block"></Item>
+                <Item Key="AccessKey">n</Item>
+                <Item Key="Prio">200</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Module###AgentTicketEmail" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1">Create new email ticket.</Item>
+                    <Item Key="Title" Translatable="1">New email ticket</Item>
+                    <Item Key="NavBarName">Ticket</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentTicketEmail###002-TicketITSMTicket" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.Agent.CustomerSearch.js</Item>
+                        <Item>Core.Agent.CustomerSearchAutoComplete.js</Item>
+                        <Item>Core.Agent.TicketAction.js</Item>
+                        <Item>Core.Agent.TicketEmail.js</Item>
+                        <Item>Core.Agent.TicketSplit.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketEmail###1" Required="0" Valid="1">
+        <Description Translatable="1">Main menu for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Group">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="GroupRo">
+                    <Array>
+                    </Array>
+                </Item>
+                <Item Key="Description" Translatable="1">Create new email ticket and send this out (outbound).</Item>
+                <Item Key="Name" Translatable="1">New email ticket</Item>
+                <Item Key="Link">Action=AgentTicketEmail</Item>
+                <Item Key="LinkOption"></Item>
+                <Item Key="NavBar">Ticket</Item>
+                <Item Key="Type"></Item>
+                <Item Key="Block"></Item>
+                <Item Key="AccessKey">m</Item>
+                <Item Key="Prio">210</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
 </otrs_config>

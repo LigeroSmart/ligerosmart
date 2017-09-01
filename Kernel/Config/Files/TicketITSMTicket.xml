@@ -129,4 +129,196 @@
             </Hash>
         </Setting>
     </ConfigItem>
+
+
+    <!-- TODO: Only the Loader part is needed here, remove all of the following later,
+        after the loader definition for ITSM.Agent.ITSMIncidentProblemManagement.js has been added to the new XML format-->
+    <ConfigItem Name="Frontend::Module###AgentTicketClose" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket Close.</Description>
+                <Title Translatable="1">Close</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketFreeText" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket FreeText.</Description>
+                <Title Translatable="1">Free Fields</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketNote" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket Note.</Description>
+                <Title Translatable="1">Note</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketOwner" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket Owner.</Description>
+                <Title Translatable="1">Owner</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketPending" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket Pending.</Description>
+                <Title Translatable="1">Pending</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketPriority" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket Priority.</Description>
+                <Title Translatable="1">Priority</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketResponsible" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Ticket Responsible.</Description>
+                <Title Translatable="1">Responsible</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketActionCommon.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketFormDraft.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketPhone" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Create new phone ticket.</Description>
+                <Title Translatable="1">New phone ticket</Title>
+                <NavBarName>Ticket</NavBarName>
+                <NavBar>
+                    <Description Translatable="1">Create new phone ticket (inbound).</Description>
+                    <Name Translatable="1">New phone ticket</Name>
+                    <Link>Action=AgentTicketPhone</Link>
+                    <LinkOption></LinkOption>
+                    <NavBar>Ticket</NavBar>
+                    <Type></Type>
+                    <Block></Block>
+                    <AccessKey>n</AccessKey>
+                    <Prio>200</Prio>
+                </NavBar>
+                <Loader>
+                    <JavaScript>Core.Agent.CustomerSearch.js</JavaScript>
+                    <JavaScript>Core.Agent.CustomerSearchAutoComplete.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketPhone.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketSplit.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentTicketEmail" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Create new email ticket.</Description>
+                <Title Translatable="1">New email ticket</Title>
+                <NavBarName>Ticket</NavBarName>
+                <NavBar>
+                    <Description Translatable="1">Create new email ticket and send this out (outbound).</Description>
+                    <Name Translatable="1">New email ticket</Name>
+                    <Link>Action=AgentTicketEmail</Link>
+                    <LinkOption></LinkOption>
+                    <NavBar>Ticket</NavBar>
+                    <Type></Type>
+                    <Block></Block>
+                    <AccessKey>m</AccessKey>
+                    <Prio>210</Prio>
+                </NavBar>
+                <Loader>
+                    <JavaScript>Core.Agent.CustomerSearch.js</JavaScript>
+                    <JavaScript>Core.Agent.CustomerSearchAutoComplete.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketEmail.js</JavaScript>
+                    <JavaScript>Core.Agent.TicketSplit.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ITSMIncidentProblemManagement.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
