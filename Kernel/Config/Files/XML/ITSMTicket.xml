@@ -651,6 +651,7 @@
                         <Item Key="AgentTicketResponsible">1</Item>
                         <Item Key="AgentTicketAddtlITSMField">1</Item>
                         <Item Key="AgentTicketDecision">1</Item>
+                        <Item Key="AgentTicketZoom">1</Item>
                     </Hash>
                 </Item>
             </Hash>

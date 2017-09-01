@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - d152f0ba9f7b326b4bd3b8624cc2c99944e2a956 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 238c0824519557c693966a9447fcbddc39a993d6 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1334,7 +1334,6 @@ sub Run {
                 Comment => Translatable('Please contact the admin.'),
             );
         }
-
 # ---
 # ITSMIncidentProblemManagement
 # ---

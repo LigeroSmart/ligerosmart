@@ -17,6 +17,7 @@ our @ObjectDependencies = (
     'Kernel::System::Web::Request',
     'Kernel::System::Group',
     'Kernel::System::Ticket',
+    'Kernel::System::Service',
 );
 
 sub new {
@@ -38,11 +39,10 @@ sub Run {
     return if !${ $Param{Data} };
     return if !$Param{TemplateFile};
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-    # get config object
+    # get needed objects
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
     # get allowed template names
     my $ValidTemplates
@@ -50,6 +50,90 @@ sub Run {
 
     # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
+
+    # get ticket id and ticket number
+    my $TicketID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' );
+    my $TicketNumber = $TicketObject->TicketNumberLookup(
+        TicketID => $TicketID,
+    );
+
+    if ( $Param{TemplateFile} eq 'AgentTicketZoom' ) {
+
+        # Get ticket attributes.
+        my %Ticket = $TicketObject->TicketGet(
+            TicketID      => $TicketID,
+            DynamicFields => 1,
+        );
+
+        # set incident signal
+        my %InciSignals = (
+            operational => 'greenled',
+            warning     => 'yellowled',
+            incident    => 'redled',
+        );
+
+        # get service data
+        my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
+            IncidentState => 1,
+            ServiceID     => $Ticket{ServiceID},
+            UserID        => 1,
+        );
+
+        my $TranslatedServiceIncidentStateLabel = $LayoutObject->{LanguageObject}->Translate('Service Incident State');
+        my $TranslatedCurInciState = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
+
+        my $ServiceIncidentStateHTML = <<"END";
+
+    <label>$TranslatedServiceIncidentStateLabel:</label>
+    <div class="Value">
+        <div class="Flag Small">
+            <span class="$InciSignals{ $Service{CurInciStateType} }" title="$TranslatedCurInciState"></span>
+        </div>
+        <span>$TranslatedCurInciState</span>
+    </div>
+END
+
+        # Add link to service and add Service incident state.
+        my $TranslatedServiceLabel = $LayoutObject->{LanguageObject}->Translate('Service');
+        ${ $Param{Data} }
+            =~ s{(<label>$TranslatedServiceLabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMServiceZoom;ServiceID=$Ticket{ServiceID};" target="_blank">$3</a></p>\n$ServiceIncidentStateHTML}ms;
+
+        # Add link to sla.
+        my $TranslatedSLALabel = $LayoutObject->{LanguageObject}->Translate('Service Level Agreement');
+        ${ $Param{Data} }
+            =~ s{(<label>$TranslatedSLALabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMSLAZoom;SLAID=$Ticket{SLAID};" target="_blank">$3</a></p>}ms;
+
+        # Move Criticality Impact Priority and other ITSM Dynamic Fields before the CutsomerID
+        for my $FieldName (
+            'Criticality',
+            'Impact',
+            'Priority',
+            'Review Required',
+            'Decision Result',
+            'Decision Date',
+            'Repair Start Time',
+            'Recovery Start Time',
+            'Due Date',
+        ) {
+
+            my $TranslatedFieldLabel = $LayoutObject->{LanguageObject}->Translate($FieldName);
+            my $FieldPattern = '<label>' . $TranslatedFieldLabel . ':</label>.+?<div class="Clear"></div>';
+            if ( ${ $Param{Data} } =~ m{($FieldPattern)}ms ) {
+
+                my $Field = $1;
+
+                # remove field from the old position
+                ${ $Param{Data} } =~ s{$FieldPattern}{}ms;
+
+                my $TranslatedCustomerIDLabel = $LayoutObject->{LanguageObject}->Translate('Customer ID');
+
+                # add before the Customer ID field
+                ${ $Param{Data} } =~ s{(<label>$TranslatedCustomerIDLabel:</label>)}{$Field\n$1}ms;
+            }
+        }
+
+        return 1;
+    }
 
     # add two hidden fields for ImpactRC and PriorityRC
     ${ $Param{Data} }
@@ -73,17 +157,12 @@ sub Run {
 
         # add "Link Ticket" link
         my $TranslatedString = $LayoutObject->{LanguageObject}->Translate('Link ticket');
-        ${ $Param{Data} } =~ s{(<!-- OutputFilterHook_TicketOptionsEnd -->)}{<a href="$LayoutObject->{Baselink}Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=$FormID;TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ $TranslatedString ]</a>\n$1}ms;
+        ${ $Param{Data} }
+            =~ s{(<!-- OutputFilterHook_TicketOptionsEnd -->)}{<a href="$LayoutObject->{Baselink}Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=$FormID;TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ $TranslatedString ]</a>\n$1}ms;
     }
 
     # For all AgentTicketActionCommon based templates
     else {
-
-        # get ticket id and ticket number
-        my $TicketID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' );
-        my $TicketNumber = $Kernel::OM->Get('Kernel::System::Ticket')->TicketNumberLookup(
-            TicketID => $TicketID,
-        );
 
         # add headline for AgentTicketDecision
         if ( $Param{TemplateFile} eq 'AgentTicketDecision' ) {

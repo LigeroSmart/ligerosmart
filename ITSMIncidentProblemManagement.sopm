@@ -45,7 +45,6 @@
         <File Permission="660" Location="Kernel/Modules/AgentTicketPhone.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentTicketPrint.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentTicketProcess.pm" />
-        <File Permission="660" Location="Kernel/Modules/AgentTicketZoom.pm" />
         <File Permission="660" Location="Kernel/Modules/CustomerTicketPrint.pm" />
         <File Permission="660" Location="Kernel/Modules/CustomerTicketProcess.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm" />
@@ -53,7 +52,6 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketDecision.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewMedium.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt" />
-        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTicketZoom.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerTicketZoom.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/TicketOverview/Medium.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/TicketOverview/Preview.pm" />

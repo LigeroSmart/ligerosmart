@@ -1800,7 +1800,6 @@ sub Run {
             OP => "Action=$NextScreen;Subaction=Created;TicketID=$TicketID",
         );
     }
-
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my $Dest           = $ParamObject->GetParam( Param => 'Dest' ) || '';
         my $CustomerUser   = $ParamObject->GetParam( Param => 'SelectedCustomerUser' );
