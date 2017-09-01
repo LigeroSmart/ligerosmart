@@ -22,17 +22,15 @@ our @ObjectDependencies = (
 
 Kernel::System::DynamicField::ObjectType::ITSMWorkOrder
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 ITSMWorkOrder object handler for DynamicFields
 
 =head1 PUBLIC INTERFACE
 
-=over 4
+=head2 new()
 
-=item new()
-
-usually, you want to create an instance of this
+Usually, you want to create an instance of this
 by using Kernel::System::DynamicField::ObjectType::ITSMWorkOrder->new();
 
 =cut
@@ -47,9 +45,9 @@ sub new {
     return $Self;
 }
 
-=item PostValueSet()
+=head2 PostValueSet()
 
-perform specific functions after the Value set for this object type.
+Perform specific functions after the Value set for this object type.
 
     my $Success = $DynamicFieldITSMWorkOrderHandlerObject->PostValueSet(
         DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
@@ -101,8 +99,6 @@ sub PostValueSet {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
