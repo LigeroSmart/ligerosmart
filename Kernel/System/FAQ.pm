@@ -145,11 +145,11 @@ Returns:
 
     %FAQ = (
 
-        # var for old versions
+        # Compatibility ID names.
         ID                => 32,
-        ItemID            => 32,
-
         FAQID             => 32,
+
+        ItemID            => 32,
         Number            => 100032,
         CategoryID        => '2',
         CategoryName'     => 'CategoryA::CategoryB',
@@ -252,11 +252,11 @@ sub FAQGet {
 
             %Data = (
 
-                # var for old versions
+                # Compatibility ID names.
                 ID    => $Param{ItemID},
                 FAQID => $Param{ItemID},
 
-                # get data attributes
+                # Get data attributes.
                 ItemID        => $Param{ItemID},
                 Name          => $Row[0],
                 LanguageID    => $Row[1],
@@ -1541,17 +1541,17 @@ sub FAQHistoryDelete {
     return 1;
 }
 
-=head2 HistoryGet()
+=head2 FAQJournalGet()
 
-get the system history
+get the system journal
 
-    my $HistoryDataArrayRef = $FAQObject->HistoryGet(
+    my $HistoryDataArrayRef = $FAQObject->FAQJournalGet(
         UserID => 1,
     );
 
 Returns:
 
-    $HistoryDataArrayRef = [
+    $JournalDataArrayRef = [
         {
             ItemID    => '32',
             Number    => '10004',
@@ -1574,7 +1574,7 @@ Returns:
 
 =cut
 
-sub HistoryGet {
+sub FAQJournalGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -2424,7 +2424,21 @@ sub FAQContentTypeSet {
     return 1;
 }
 
-=begin Internal:
+=head1 DEPRECATED FUNCTIONS
+
+=head2 HistoryGet()
+
+Deprecated, use FAQJournalGet() instead.
+
+=cut
+
+sub HistoryGet {
+    my ( $Self, %Param ) = @_;
+
+    return $Self->FAQJournalGet(%Param);
+}
+
+=head1 PRIVATE FUNCTIONS
 
 =head2 _FAQApprovalUpdate()
 
@@ -2727,8 +2741,6 @@ sub _DeleteFromFAQCache {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

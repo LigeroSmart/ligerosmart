@@ -1902,7 +1902,7 @@ sub SetCategoryGroup {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE FUNCTIONS
 
 =head2 _UserCategories()
 
@@ -1979,10 +1979,6 @@ sub _UserCategories {
 
     return \%UserCategories;
 }
-
-=end Internal:
-
-=cut
 
 1;
 

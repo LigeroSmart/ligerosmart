@@ -46,7 +46,7 @@ sub Run {
     }
 
     # get Journal entries
-    my $Journal = $Kernel::OM->Get('Kernel::System::FAQ')->HistoryGet(
+    my $Journal = $Kernel::OM->Get('Kernel::System::FAQ')->FAQJournalGet(
         UserID => $Self->{UserID},
     );
 

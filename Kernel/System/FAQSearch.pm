@@ -31,6 +31,8 @@ Kernel::System::FAQSearch - FAQ search lib
 
 All FAQ search functions.
 
+=head1 PUBLIC INTERFACE
+
 =head2 FAQSearch()
 
 search in FAQ articles
@@ -1035,9 +1037,7 @@ sub FAQSearch {
     return @List;
 }
 
-=begin Internal:
-
-=cut
+=head1 PRIVATE FUNCTIONS
 
 =head2 _InConditionGet()
 
@@ -1103,8 +1103,6 @@ sub _InConditionGet {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

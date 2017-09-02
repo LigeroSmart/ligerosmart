@@ -185,7 +185,7 @@ sub RelatedCustomerArticleList {
     return @RelatedFAQArticleList;
 }
 
-=begin Internal:
+=head1 PRIVATE FUNCTIONS
 
 =head2 _RemoveLinksFromContent()
 
@@ -211,8 +211,6 @@ sub _RemoveLinksFromContent {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 
