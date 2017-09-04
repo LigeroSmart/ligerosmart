@@ -6,23 +6,18 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-## no critic (Modules::RequireExplicitPackage)
 use strict;
 use warnings;
 use utf8;
 
 use vars (qw($Self));
 
-# Get Selenium object.
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        my $Helper          = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-        my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
-        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-        my $FAQObject       = $Kernel::OM->Get('Kernel::System::FAQ');
+        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # Set FAQ dashboard SysConfig param.
         my @FAQDashboard = (
@@ -35,6 +30,7 @@ $Selenium->RunTest(
         );
 
         # Set FAQ dashboard modules on default settings.
+        my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
         for my $DefaultSysConfig (@FAQDashboard) {
 
             my %Setting = $SysConfigObject->SettingGet(
@@ -52,8 +48,9 @@ $Selenium->RunTest(
         }
 
         # Create test FAQ.
-        my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $FAQID    = $FAQObject->FAQAdd(
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+        my $FAQTitle  = 'FAQ ' . $Helper->GetRandomID();
+        my $FAQID     = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 2,
@@ -80,7 +77,8 @@ $Selenium->RunTest(
         );
 
         # Get script alias.
-        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
+        my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+        my $ScriptAlias  = $ConfigObject->Get('ScriptAlias');
 
         for my $Test (@FAQDashboard) {
 
