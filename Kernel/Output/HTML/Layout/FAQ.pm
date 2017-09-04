@@ -205,8 +205,7 @@ sub FAQListShow {
     }
 
     # Send data to JS.
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    $LayoutObject->AddJSData(
+    $Self->AddJSData(
         Key   => 'FAQSearchProfile',
         Value => $Param{Profile},
     );
@@ -518,12 +517,11 @@ sub FAQContentShow {
         }
 
         # Send config to JS.
-        my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-        $LayoutObject->AddJSData(
+        $Self->AddJSData(
             Key   => 'AgentHTMLFieldHeightDefault',
             Value => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightDefault'),
         );
-        $LayoutObject->AddJSData(
+        $Self->AddJSData(
             Key   => 'AgentHTMLFieldHeightMax',
             Value => $ConfigObject->Get('FAQ::Frontend::AgentHTMLFieldHeightMax'),
         );
