@@ -343,7 +343,6 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
 
         # Switch to 1st window.
-        # $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[0] );
 
         # delete created test tickets
