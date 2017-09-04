@@ -1984,7 +1984,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
             <ChangedBy>?</ChangedBy>
             <Created>?</Created>
             <CreatedBy>?</CreatedBy>
-            <FAQID>?</FAQID>
+            <ItemID>?</ItemID>
             <Field1>?</Field1>
             <Field2>?</Field2>
             <Field3>?</Field3>
@@ -2030,7 +2030,6 @@ shell> bin/otrs.Console.pl Admin::WebService::List
           <FAQItem>
             <ID>6</ID>
             <ItemID>6</ItemID>
-            <FAQID>6</FAQID>
             <Number>10006</Number>
             <CategoryID>2</CategoryID>
             <CategoryName>Public</CategoryName>
@@ -2078,7 +2077,6 @@ shell> bin/otrs.Console.pl Admin::WebService::List
           <FAQItem>
             <ID>7</ID>
             <ItemID>7</ItemID>
-            <FAQID>7</FAQID>
             <Number>10006</Number>
             <CategoryID>2</CategoryID>
             <CategoryName>Public</CategoryName>
@@ -2172,7 +2170,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
         <Keyword>*webserver*</Keyword/>
         <LanguageIDs>1</LanguageIDs>
         <CategoryIDs>2</CategoryIDs>
-        <OrderBy>FAQID</OrderBy>
+        <OrderBy>ItemID</OrderBy>
         <OrderByDirection>Up</OrderByDirection>
       </PublicFAQSearch>
                 ]]>

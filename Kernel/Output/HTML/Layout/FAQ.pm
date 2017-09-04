@@ -73,8 +73,8 @@ This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow
 in F<Kernel/Output/HTML/Layout/Ticket.pm>.
 
     my $Output = $LayoutObject->FAQListShow(
-        FAQIDs     => $FAQIDsRef,                         # total list of FAQIDs, that can be listed
-        Total      => scalar @{ $FAQIDsRef },             # total number of list items, in this case
+        ItemIDs    => $ItemIDsRef,                         # total list of ItemIDs, that can be listed
+        Total      => scalar @{ $ItemIDsRef },             # total number of list items, in this case
         View       => $Self->{View},                      # optional, the default value is 'Small'
         Filter     => 'All',
         Filters    => \%NavBarFilter,

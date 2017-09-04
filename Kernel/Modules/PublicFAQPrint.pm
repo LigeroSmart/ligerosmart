@@ -504,7 +504,7 @@ sub _PDFOutputFAQDynamicFields {
 
         my $Value = $DynamicFieldBackendObject->ValueGet(
             DynamicFieldConfig => $DynamicFieldConfig,
-            ObjectID           => $FAQ{FAQID},
+            ObjectID           => $FAQ{ItemID},
         );
 
         next DYNAMICFIELDCONFIG if !$Value;

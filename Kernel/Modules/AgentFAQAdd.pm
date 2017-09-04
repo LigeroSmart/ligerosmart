@@ -363,14 +363,14 @@ sub Run {
         }
 
         # add the new FAQ article
-        my $FAQID = $FAQObject->FAQAdd(
+        my $ItemID = $FAQObject->FAQAdd(
             %GetParam,
             ContentType => $ContentType,
             UserID      => $Self->{UserID},
         );
 
         # show error if FAQ could not be added
-        if ( !$FAQID ) {
+        if ( !$ItemID ) {
             return $LayoutObject->ErrorScreen();
         }
 
@@ -421,7 +421,7 @@ sub Run {
             # add attachment
             my $FileID = $FAQObject->AttachmentAdd(
                 %{$Attachment},
-                ItemID => $FAQID,
+                ItemID => $ItemID,
                 Inline => $Inline,
                 UserID => $Self->{UserID},
             );
@@ -438,7 +438,7 @@ sub Run {
             my $OK = $FAQObject->FAQInlineAttachmentURLUpdate(
                 Attachment => $Attachment,
                 FormID     => $FormID,
-                ItemID     => $FAQID,
+                ItemID     => $ItemID,
                 FileID     => $FileID,
                 UserID     => $Self->{UserID},
             );
@@ -447,7 +447,7 @@ sub Run {
             if ( !$OK ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
-                    Message  => "Could not update the inline image URLs for FAQ Item# '$FAQID'!",
+                    Message  => "Could not update the inline image URLs for FAQ Item# '$ItemID'!",
                 );
             }
         }
@@ -464,7 +464,7 @@ sub Run {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             # set the object ID depending on the field configuration
-            my $ObjectID = $FAQID;
+            my $ObjectID = $ItemID;
 
             # set the value
             my $Success = $DynamicFieldBackendObject->ValueSet(
@@ -476,7 +476,7 @@ sub Run {
         }
 
         # redirect to FAQ zoom
-        return $LayoutObject->Redirect( OP => 'Action=AgentFAQZoom;ItemID=' . $FAQID );
+        return $LayoutObject->Redirect( OP => 'Action=AgentFAQZoom;ItemID=' . $ItemID );
     }
 }
 

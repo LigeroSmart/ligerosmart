@@ -11,7 +11,7 @@ package Kernel::System::Console::Command::Admin::FAQ::Import;
 use strict;
 use warnings;
 
-use base qw(Kernel::System::Console::BaseCommand);
+use parent qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
     'Kernel::Config',
@@ -221,7 +221,7 @@ sub Run {
         }
 
         # add FAQ article
-        my $FAQID = $FAQObject->FAQAdd(
+        my $ItemID = $FAQObject->FAQAdd(
             Title       => $Title,
             CategoryID  => $CategoryID,
             StateID     => $StateID,
@@ -239,7 +239,7 @@ sub Run {
         );
 
         # check success
-        if ($FAQID) {
+        if ($ItemID) {
             $SuccessCount++;
         }
         else {
@@ -271,8 +271,6 @@ sub Run {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

@@ -51,7 +51,7 @@ sub Run {
     my $SearchLimit = $Config->{SearchLimit} || 500;
     my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
-        || 'FAQID';
+        || 'ItemID';
     my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )
         || $Config->{'Order::Default'}
         || 'Down';
@@ -561,13 +561,13 @@ sub Run {
         # It is not possible to create FAQ's without categories
         # so at least one category has to be present
 
-        my @ViewableFAQIDs = ();
+        my @ViewableItemIDs = ();
 
         if (@CategoryIDs) {
 
             # perform FAQ search
             # default search on all valid ids, this can be overwritten by %GetParam
-            @ViewableFAQIDs = $FAQObject->FAQSearch(
+            @ViewableItemIDs = $FAQObject->FAQSearch(
                 OrderBy             => [$SortBy],
                 OrderByDirection    => [$OrderBy],
                 Limit               => $SearchLimit,
@@ -602,11 +602,11 @@ sub Run {
                 FieldFilter => $Config->{SearchCSVDynamicField} || {},
             );
 
-            for my $FAQID (@ViewableFAQIDs) {
+            for my $ItemID (@ViewableItemIDs) {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID        => $FAQID,
+                    ItemID        => $ItemID,
                     ItemFields    => 0,
                     DynamicFields => 1,
                     UserID        => $Self->{UserID},
@@ -798,11 +798,11 @@ sub Run {
             my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
             my @PDFData;
-            for my $FAQID (@ViewableFAQIDs) {
+            for my $ItemID (@ViewableItemIDs) {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID     => $FAQID,
+                    ItemID     => $ItemID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
@@ -1048,8 +1048,8 @@ sub Run {
             }
 
             $Output .= $LayoutObject->FAQListShow(
-                FAQIDs => \@ViewableFAQIDs,
-                Total  => scalar @ViewableFAQIDs,
+                ItemIDs => \@ViewableItemIDs,
+                Total   => scalar @ViewableItemIDs,
 
                 View => $View,
 

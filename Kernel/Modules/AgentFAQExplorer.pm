@@ -53,7 +53,7 @@ sub Run {
     my $View   = $ParamObject->GetParam( Param => 'View' )   || '';
     my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
-        || 'FAQID';
+        || 'ItemID';
     my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )
         || $Config->{'Order::Default'}
         || 'Down';
@@ -258,7 +258,7 @@ sub Run {
     }
 
     # search all FAQ articles within the given category
-    my @ViewableFAQIDs = $FAQObject->FAQSearch(
+    my @ViewableItemIDs = $FAQObject->FAQSearch(
         OrderBy          => [$SortBy],
         OrderByDirection => [$OrderBy],
         Limit            => $SearchLimit,
@@ -318,8 +318,8 @@ sub Run {
 
     # build the HTML for the list of FAQ articles in the given category
     my $FAQItemListHTML = $LayoutObject->FAQListShow(
-        FAQIDs     => \@ViewableFAQIDs,
-        Total      => scalar @ViewableFAQIDs,
+        ItemIDs    => \@ViewableItemIDs,
+        Total      => scalar @ViewableItemIDs,
         View       => $View,
         Env        => $Self,
         LinkPage   => $LinkPage,

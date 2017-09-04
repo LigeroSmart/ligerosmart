@@ -43,7 +43,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $FAQID    = $FAQObject->FAQAdd(
+        my $ItemID   = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -54,15 +54,15 @@ $Selenium->RunTest(
         );
 
         $Self->True(
-            $FAQID,
-            "FAQ is created - ID $FAQID",
+            $ItemID,
+            "FAQ is created - ID $ItemID",
         );
 
         # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom screen of created test FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID;Nav=");
 
         # verify its right screen
         $Self->True(
@@ -71,7 +71,7 @@ $Selenium->RunTest(
         );
 
         # click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$FAQID' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$ItemID' )]")->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
@@ -94,12 +94,12 @@ $Selenium->RunTest(
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $FAQID,
+            ItemID => $ItemID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ item is deleted - $FAQID",
+            "FAQ item is deleted - $ItemID",
         );
 
         # make sure the cache is correct

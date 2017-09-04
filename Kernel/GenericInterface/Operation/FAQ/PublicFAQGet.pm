@@ -74,7 +74,6 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                 {
                     ID                => 32,
                     ItemID            => 32,
-                    FAQID             => 32,
                     Number            => 100032,
                     CategoryID        => '2',
                     CategoryName     => 'CategoryA::CategoryB',
@@ -126,7 +125,6 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                 {
                     ID                => 33,
                     ItemID            => 33,
-                    FAQID             => 33,
                     Number            => 100033,
                     CategoryID        => '3',
                     CategoryName     => 'CategoryD::CategoryE',
@@ -215,7 +213,7 @@ sub Run {
                 . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
             return $Self->ReturnError(
-                ErrorCode    => 'PublicFAQGet.NotValidFAQID',
+                ErrorCode    => 'PublicFAQGet.NotValidItemID',
                 ErrorMessage => "PublicFAQGet: $ErrorMessage",
             );
         }

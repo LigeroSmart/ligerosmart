@@ -239,7 +239,7 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             parent.Core.Config.Get('Baselink'),
             {
                 Action: 'AgentFAQRichText',
-                ItemID: $('input[name=FAQID]').val(),
+                ItemID: $('input[name=ItemID]').val(),
                 FormID: parent.$('input[name=FormID]').val()
             },
             function (Response) {

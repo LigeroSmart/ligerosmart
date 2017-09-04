@@ -90,7 +90,7 @@ a result could be
 
     %BlockData = (
         {
-            ObjectName  => 'FAQID',
+            ObjectName  => 'ItemID',
             ObjectID    => '14785',
 
             Object    => 'FAQ',
@@ -116,7 +116,7 @@ a result could be
                 [
                     {
                         Type    => 'Link',
-                        Key     => $FAQID,
+                        Key     => $ItemID,
                         Content => '123123123',
                         Css     => 'style="text-decoration: line-through"',
                     },
@@ -138,7 +138,7 @@ a result could be
                 [
                     {
                         Type    => 'Link',
-                        Key     => $FAQID,
+                        Key     => $ItemID,
                         Content => '434234',
                     },
                     {
@@ -185,9 +185,9 @@ sub TableCreateComplex {
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
-            for my $FAQID ( sort keys %{$DirectionList} ) {
+            for my $ItemID ( sort keys %{$DirectionList} ) {
 
-                $LinkList{$FAQID}->{Data} = $DirectionList->{$FAQID};
+                $LinkList{$ItemID}->{Data} = $DirectionList->{$ItemID};
             }
         }
     }
@@ -356,18 +356,18 @@ sub TableCreateComplex {
 
     # Create the item list (table content).
     my @ItemList;
-    for my $FAQID ( sort { $a <=> $b } keys %LinkList ) {
+    for my $ItemID ( sort { $a <=> $b } keys %LinkList ) {
 
         # Extract FAQ data.
-        my $FAQ = $LinkList{$FAQID}->{Data};
+        my $FAQ = $LinkList{$ItemID}->{Data};
 
         # FAQ Number must be present (since it contains master link to the FAQ).
         my @ItemColumns = (
             {
                 Type    => 'Link',
-                Key     => $FAQID,
+                Key     => $ItemID,
                 Content => $FAQ->{Number},
-                Link    => $Self->{LayoutObject}->{Baselink} . 'Action=AgentFAQZoom;ItemID=' . $FAQID,
+                Link    => $Self->{LayoutObject}->{Baselink} . 'Action=AgentFAQZoom;ItemID=' . $ItemID,
             },
         );
 
@@ -420,7 +420,7 @@ sub TableCreateComplex {
                     # Get field value.
                     my $Value = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->ValueGet(
                         DynamicFieldConfig => $DynamicFieldConfig,
-                        ObjectID           => $FAQID,
+                        ObjectID           => $ItemID,
                     );
 
                     my $ValueStrg = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->DisplayValueRender(
@@ -519,10 +519,10 @@ sub TableCreateSimple {
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
             my @ItemList;
-            for my $FAQID ( sort { $a <=> $b } keys %{$DirectionList} ) {
+            for my $ItemID ( sort { $a <=> $b } keys %{$DirectionList} ) {
 
                 # extract FAQ data
-                my $FAQ = $DirectionList->{$FAQID};
+                my $FAQ = $DirectionList->{$ItemID};
 
                 # define item data
                 my %Item = (
@@ -531,7 +531,7 @@ sub TableCreateSimple {
                     Title   => "$FAQHook$FAQ->{Number}: $FAQ->{Title}",
                     Link    => $Self->{LayoutObject}->{Baselink}
                         . 'Action=AgentFAQZoom;ItemID='
-                        . $FAQID,
+                        . $ItemID,
                 );
                 push @ItemList, \%Item;
             }

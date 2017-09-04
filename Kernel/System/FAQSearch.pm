@@ -119,9 +119,9 @@ search in FAQ articles
         # FAQ item with changed time before ... (item changed older than this date) (optional)
         ItemChangeTimeOlderDate => '2006-01-19 23:59:59',
 
-        OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
-        # default: [ 'FAQID' ],
-        # (FAQID, Number, Title, Language, Category, Valid, Created,
+        OrderBy => [ 'ItemID', 'Title' ],                              # (optional)
+        # default: [ 'ItemID' ],
+        # (ItemID, Number, Title, Language, Category, Valid, Created,
         # Changed, State, Votes, Result)
 
         # Additional information for OrderBy:
@@ -198,7 +198,7 @@ sub FAQSearch {
     my %OrderByTable = (
 
         # FAQ item attributes
-        FAQID    => 'i.id',
+        ItemID   => 'i.id',
         Number   => 'i.f_number',
         Title    => 'i.f_subject',
         Language => 'i.f_language_id',
@@ -990,7 +990,7 @@ sub FAQSearch {
 
     # if there is a possibility that the ordering is not determined
     # we add an descending ordering by id
-    if ( !grep { $_ eq 'FAQID' } ( @{ $Param{OrderBy} } ) ) {
+    if ( !grep { $_ eq 'ItemID' } ( @{ $Param{OrderBy} } ) ) {
         if ( $#{ $Param{OrderBy} } >= 0 ) {
             $Ext .= ',';
         }
@@ -1014,7 +1014,7 @@ sub FAQSearch {
             $Count++;
         }
 
-        $Ext .= ' ' . $OrderByTable{FAQID} . ' ' . $OrderByDirection;
+        $Ext .= ' ' . $OrderByTable{ItemID} . ' ' . $OrderByDirection;
     }
 
     # add extended SQL

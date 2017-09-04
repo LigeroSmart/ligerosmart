@@ -581,9 +581,9 @@ Your OTRS Notification Master
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</Description>
         <Navigation>Frontend::Customer::FAQ::ViewExplorer</Navigation>
         <Value>
-            <Item ValueType="Select" SelectedID="FAQID">
+            <Item ValueType="Select" SelectedID="ItemID">
                 <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
-                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="ItemID" Translatable="1">Number</Item>
                 <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
                 <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
                 <Item ValueType="Option" Value="State" Translatable="1">State</Item>
@@ -698,9 +698,9 @@ Your OTRS Notification Master
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</Description>
         <Navigation>Frontend::Public::FAQ::ViewExplorer</Navigation>
         <Value>
-            <Item ValueType="Select" SelectedID="FAQID">
+            <Item ValueType="Select" SelectedID="ItemID">
                 <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
-                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="ItemID" Translatable="1">Number</Item>
                 <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
                 <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
                 <Item ValueType="Option" Value="State" Translatable="1">State</Item>
@@ -1188,9 +1188,9 @@ Your OTRS Notification Master
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</Description>
         <Navigation>Frontend::Agent::FAQ::ViewSearch</Navigation>
         <Value>
-            <Item ValueType="Select" SelectedID="FAQID">
+            <Item ValueType="Select" SelectedID="ItemID">
                 <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
-                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="ItemID" Translatable="1">Number</Item>
                 <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
                 <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
                 <Item ValueType="Option" Value="State" Translatable="1">State</Item>
@@ -1232,9 +1232,9 @@ Your OTRS Notification Master
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</Description>
         <Navigation>Frontend::Agent::FAQ::ViewExplorer</Navigation>
         <Value>
-            <Item ValueType="Select" SelectedID="FAQID">
+            <Item ValueType="Select" SelectedID="ItemID">
                 <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
-                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="ItemID" Translatable="1">Number</Item>
                 <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
                 <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
                 <Item ValueType="Option" Value="State" Translatable="1">State</Item>
@@ -1571,9 +1571,9 @@ Your OTRS Notification Master
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</Description>
         <Navigation>Frontend::Customer::FAQ::ViewSearch</Navigation>
         <Value>
-            <Item ValueType="Select" SelectedID="FAQID">
+            <Item ValueType="Select" SelectedID="ItemID">
                 <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
-                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="ItemID" Translatable="1">Number</Item>
                 <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
                 <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
                 <Item ValueType="Option" Value="State" Translatable="1">State</Item>
@@ -1710,9 +1710,9 @@ Your OTRS Notification Master
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</Description>
         <Navigation>Frontend::Public::FAQ::ViewSearch</Navigation>
         <Value>
-            <Item ValueType="Select" SelectedID="FAQID">
+            <Item ValueType="Select" SelectedID="ItemID">
                 <Item ValueType="Option" Value="Title" Translatable="1">Title</Item>
-                <Item ValueType="Option" Value="FAQID" Translatable="1">Number</Item>
+                <Item ValueType="Option" Value="ItemID" Translatable="1">Number</Item>
                 <Item ValueType="Option" Value="Category" Translatable="1">Category</Item>
                 <Item ValueType="Option" Value="Language" Translatable="1">Language</Item>
                 <Item ValueType="Option" Value="State" Translatable="1">State</Item>

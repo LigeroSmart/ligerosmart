@@ -108,7 +108,6 @@ Returns:
     %FAQ = (
         ID                => 32,
         ItemID            => 32,
-        FAQID             => 32,
         Number            => 100032,
         CategoryID        => '2',
         CategoryName'     => 'CategoryA::CategoryB',
@@ -149,7 +148,6 @@ Returns:
         ID                => 32,
         ItemID            => 32,
 
-        FAQID             => 32,
         Number            => 100032,
         CategoryID        => '2',
         CategoryName'     => 'CategoryA::CategoryB',
@@ -187,11 +185,6 @@ Returns:
 
 sub FAQGet {
     my ( $Self, %Param ) = @_;
-
-    # Failures rename from ItemID to FAQID
-    if ( $Param{FAQID} ) {
-        $Param{ItemID} = $Param{FAQID};
-    }
 
     # check needed stuff
     for my $Argument (qw(UserID ItemID)) {
@@ -253,8 +246,7 @@ sub FAQGet {
             %Data = (
 
                 # var for old versions
-                ID    => $Param{ItemID},
-                FAQID => $Param{ItemID},
+                ID => $Param{ItemID},
 
                 # get data attributes
                 ItemID        => $Param{ItemID},
@@ -1797,7 +1789,7 @@ sub FAQKeywordCustomerArticleList {
     my @FAQArticleIDs = $Self->FAQSearch(
         %FAQSearchParameter,
         CategoryIDs      => $CustomerCategoryIDs,
-        OrderBy          => ['FAQID'],
+        OrderBy          => ['ItemID'],
         OrderByDirection => ['Down'],
         Limit            => $SearchLimit,
         UserID           => 1,
@@ -2360,7 +2352,7 @@ sub FAQContentTypeSet {
 
     # Otherwise content type has to be determined by the FAQ item content.
 
-    # Get all FAQIDs (if no faq item was given).
+    # Get all ItemIDs (if no faq item was given).
     if ( !@FAQItemIDs ) {
         return if !$DBObject->Prepare(
             SQL => '
@@ -2658,11 +2650,9 @@ sub _FAQApprovalTicketCreate {
 
         # create article
         my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
-            TicketID   => $TicketID,
-            SenderType => 'agent',
-
-            # Visible for customer only if FAQ state is not internal (agent).
-            IsVisibleForCustomer => ( $Param{StateID} == 2 ) ? 0 : 1,
+            TicketID             => $TicketID,
+            SenderType           => 'agent',
+            IsVisibleForCustomer => 0,
             From                 => $From,
             Subject              => $Subject,
             Body                 => $Body,

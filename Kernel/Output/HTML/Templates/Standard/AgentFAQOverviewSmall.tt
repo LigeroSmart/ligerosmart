@@ -18,7 +18,7 @@
             <tr>
 [% RenderBlockStart("RecordNumberHeader") %]
                 <th class="FAQNumber [% Data.CSS | html %]">
-                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=FAQID;OrderBy=[% Data.OrderBy | uri %]">[% Config("FAQ::FAQHook") %]</a>
+                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkSort %];SortBy=ItemID;OrderBy=[% Data.OrderBy | uri %]">[% Config("FAQ::FAQHook") %]</a>
                 </th>
 [% RenderBlockEnd("RecordNumberHeader") %]
 [% RenderBlockStart("RecordTitleHeader") %]

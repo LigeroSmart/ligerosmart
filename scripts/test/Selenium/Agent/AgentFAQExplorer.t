@@ -37,7 +37,7 @@ $Selenium->RunTest(
         # create test FAQs
         for ( 1 .. 5 ) {
             my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-            my $FAQID    = $FAQObject->FAQAdd(
+            my $ItemID   = $FAQObject->FAQAdd(
                 Title       => $FAQTitle,
                 CategoryID  => 1,
                 StateID     => 1,
@@ -48,12 +48,12 @@ $Selenium->RunTest(
             );
 
             $Self->True(
-                $FAQID,
-                "FAQ is created - ID $FAQID",
+                $ItemID,
+                "FAQ is created - ID $ItemID",
             );
 
             my %FAQ = (
-                FAQID    => $FAQID,
+                ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
             );
 
@@ -63,7 +63,7 @@ $Selenium->RunTest(
         # set one FAQ as invalid see bug bug#11498 (http://bugs.otrs.org/show_bug.cgi?id=11498)ShowInvalidFAQItems
         my $InvalidFAQTitle = "Invalid $FAQs[0]->{FAQTitle}";
         my $Success         = $FAQObject->FAQUpdate(
-            ItemID      => $FAQs[0]->{FAQID},
+            ItemID      => $FAQs[0]->{ItemID},
             Title       => $InvalidFAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -120,8 +120,10 @@ $Selenium->RunTest(
         # click on 'Misc', go on subcategory screen
         $Selenium->find_element( 'Misc', 'link_text' )->VerifiedClick();
 
-        # order FAQ item per FAQID by Down
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down");
+        # order FAQ item per ItemID by Down
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AgentFAQExplorer;CategoryID=1;SortBy=ItemID;OrderBy=Down"
+        );
 
         # verify Invalid FAQ is not visible on explorer screen
         $Self->True(
@@ -149,12 +151,12 @@ $Selenium->RunTest(
             );
 
             $Success = $FAQObject->FAQDelete(
-                ItemID => $FAQ->{FAQID},
+                ItemID => $FAQ->{ItemID},
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - ID $FAQ->{FAQID}",
+                "FAQ is deleted - ID $FAQ->{ItemID}",
             );
         }
 

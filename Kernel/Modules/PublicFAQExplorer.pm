@@ -46,7 +46,7 @@ sub Run {
     my $SearchPageShown = $Config->{SearchPageShown} || 3;
     my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
-        || 'FAQID';
+        || 'ItemID';
     my $OrderBy = $ParamObject->GetParam( Param => 'Order' )
         || $Config->{'Order::Default'}
         || 'Down';
@@ -226,7 +226,7 @@ sub Run {
     );
 
     # search all FAQ articles within the given category
-    my @ViewableFAQIDs = $FAQObject->FAQSearch(
+    my @ViewableItemIDs = $FAQObject->FAQSearch(
         OrderBy          => [$SortBy],
         OrderByDirection => [$OrderBy],
         Limit            => $SearchLimit,
@@ -283,7 +283,7 @@ sub Run {
     }
 
     my $Counter = 0;
-    if (@ViewableFAQIDs) {
+    if (@ViewableItemIDs) {
 
         # create back link for FAQ Zoom screen
         my $ZoomBackLink = "Action=PublicFAQExplorer;CategoryID=$CategoryID;"
@@ -292,7 +292,7 @@ sub Run {
         # encode back link to Base64 for easy HTML transport
         $ZoomBackLink = MIME::Base64::encode_base64($ZoomBackLink);
 
-        for my $FAQID (@ViewableFAQIDs) {
+        for my $ItemID (@ViewableItemIDs) {
 
             $Counter++;
 
@@ -305,7 +305,7 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID     => $FAQID,
+                    ItemID     => $ItemID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );

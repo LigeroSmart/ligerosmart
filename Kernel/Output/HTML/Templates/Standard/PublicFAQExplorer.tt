@@ -155,8 +155,8 @@
                         <table class="Overview">
                             <thead>
                                 <tr>
-                                    <th class="FAQNumber [% Data.FAQIDSort %]">
-                                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];CategoryID=[% Data.CategoryID | uri %];SortBy=FAQID;Order=[% Data.Order | uri %]">
+                                    <th class="FAQNumber [% Data.ItemIDSort %]">
+                                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];CategoryID=[% Data.CategoryID | uri %];SortBy=ItemID;Order=[% Data.Order | uri %]">
                                             [% Config("FAQ::FAQHook") %]
                                         </a>
                                     </th>
@@ -189,7 +189,7 @@
 [% RenderBlockEnd("NoFAQDataFoundMsg") %]
 [% RenderBlockStart("Record") %]
                                 <tr>
-                                    <td class="FAQNumber" title="[% Data.Number | html %]"><a href="[% Env("Baselink") %]Action=PublicFAQZoom;ItemID=[% Data.FAQID | uri %];ZoomBackLink=[% Data.ZoomBackLink | uri %];">[% Data.Number | html %]</a></td>
+                                    <td class="FAQNumber" title="[% Data.Number | html %]"><a href="[% Env("Baselink") %]Action=PublicFAQZoom;ItemID=[% Data.ItemID | uri %];ZoomBackLink=[% Data.ZoomBackLink | uri %];">[% Data.Number | html %]</a></td>
                                     <td class="Title" title="[% Data.Title | html %]">[% Data.CleanTitle | html %]</td>
                                     <td class="Category" title="[% Data.CategoryName | html %]">[% Data.CategoryName | truncate(45) | html %]</td>
 [% RenderBlockStart("RecordLanguage") %]

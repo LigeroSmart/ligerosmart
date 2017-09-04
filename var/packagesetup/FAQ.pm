@@ -355,19 +355,19 @@ sub _ConvertNewlines {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get all FAQ IDs
-    my @FAQIDs;
+    my @ItemIDs;
     $DBObject->Prepare(
         SQL => "SELECT id FROM faq_item",
     );
     while ( my @Row = $DBObject->FetchrowArray() ) {
-        push( @FAQIDs, $Row[0] );
+        push( @ItemIDs, $Row[0] );
     }
 
     # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     ID:
-    for my $ItemID (@FAQIDs) {
+    for my $ItemID (@ItemIDs) {
 
         # get FAQ data
         my %FAQ = $FAQObject->FAQGet(
@@ -566,20 +566,20 @@ sub _LinkDelete {
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get all FAQ article ids
-    my @FAQIDs = ();
+    my @ItemIDs = ();
     $DBObject->Prepare(
         SQL => 'SELECT id FROM faq_item'
     );
     while ( my @Row = $DBObject->FetchrowArray() ) {
-        push @FAQIDs, $Row[0];
+        push @ItemIDs, $Row[0];
     }
-    return if !@FAQIDs;
+    return if !@ItemIDs;
 
     # delete the FAQ article links
-    for my $FAQID (@FAQIDs) {
+    for my $ItemID (@ItemIDs) {
         $Kernel::OM->Get('Kernel::System::LinkObject')->LinkDeleteAll(
             Object => 'FAQ',
-            Key    => $FAQID,
+            Key    => $ItemID,
             UserID => 1,
         );
     }

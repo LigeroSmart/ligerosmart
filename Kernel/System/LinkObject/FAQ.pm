@@ -95,24 +95,24 @@ sub LinkListWithData {
 
         for my $Direction ( sort keys %{ $Param{LinkList}->{$LinkType} } ) {
 
-            FAQID:
-            for my $FAQID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
+            ITEMID:
+            for my $ItemID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get FAQ data
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID     => $FAQID,
+                    ItemID     => $ItemID,
                     ItemFields => 1,
                     UserID     => $Param{UserID},
                 );
 
                 # remove id from hash if no FAQ data was found
                 if ( !%FAQData ) {
-                    delete $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID};
-                    next FAQID;
+                    delete $Param{LinkList}->{$LinkType}->{$Direction}->{$ItemID};
+                    next ITEMID;
                 }
 
                 # add FAQ data
-                $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID} = \%FAQData;
+                $Param{LinkList}->{$LinkType}->{$Direction}->{$ItemID} = \%FAQData;
             }
         }
     }
@@ -312,7 +312,7 @@ sub ObjectSearch {
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # search the FAQs
-    my @FAQIDs = $FAQObject->FAQSearch(
+    my @ItemIDs = $FAQObject->FAQSearch(
         %{ $Param{SearchParams} },
         %Search,
         Order  => 'Created',
@@ -322,20 +322,20 @@ sub ObjectSearch {
     );
 
     my %SearchList;
-    FAQID:
-    for my $FAQID (@FAQIDs) {
+    ITEMID:
+    for my $ItemID (@ItemIDs) {
 
         # get FAQ data
         my %FAQData = $FAQObject->FAQGet(
-            ItemID     => $FAQID,
+            ItemID     => $ItemID,
             ItemFields => 1,
             UserID     => $Param{UserID},
         );
 
-        next FAQID if !%FAQData;
+        next ITEMID if !%FAQData;
 
         # add FAQ data
-        $SearchList{NOTLINKED}->{Source}->{$FAQID} = \%FAQData;
+        $SearchList{NOTLINKED}->{Source}->{$ItemID} = \%FAQData;
     }
 
     return \%SearchList;

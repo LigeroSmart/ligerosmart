@@ -533,9 +533,9 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
         <Setting>
-            <Option SelectedID="FAQID">
+            <Option SelectedID="ItemID">
                 <Item Key="Title" Translatable="1">Title</Item>
-                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="ItemID" Translatable="1">Number</Item>
                 <Item Key="Category" Translatable="1">Category</Item>
                 <Item Key="Language" Translatable="1">Language</Item>
                 <Item Key="State" Translatable="1">State</Item>
@@ -618,9 +618,9 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
         <Setting>
-            <Option SelectedID="FAQID">
+            <Option SelectedID="ItemID">
                 <Item Key="Title" Translatable="1">Title</Item>
-                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="ItemID" Translatable="1">Number</Item>
                 <Item Key="Category" Translatable="1">Category</Item>
                 <Item Key="Language" Translatable="1">Language</Item>
                 <Item Key="State" Translatable="1">State</Item>
@@ -936,9 +936,9 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
         <Setting>
-            <Option SelectedID="FAQID">
+            <Option SelectedID="ItemID">
                 <Item Key="Title" Translatable="1">Title</Item>
-                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="ItemID" Translatable="1">Number</Item>
                 <Item Key="Category" Translatable="1">Category</Item>
                 <Item Key="Language" Translatable="1">Language</Item>
                 <Item Key="State" Translatable="1">State</Item>
@@ -984,9 +984,9 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
         <Setting>
-            <Option SelectedID="FAQID">
+            <Option SelectedID="ItemID">
                 <Item Key="Title" Translatable="1">Title</Item>
-                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="ItemID" Translatable="1">Number</Item>
                 <Item Key="Category" Translatable="1">Category</Item>
                 <Item Key="Language" Translatable="1">Language</Item>
                 <Item Key="State" Translatable="1">State</Item>
@@ -1255,9 +1255,9 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
         <Setting>
-            <Option SelectedID="FAQID">
+            <Option SelectedID="ItemID">
                 <Item Key="Title" Translatable="1">Title</Item>
-                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="ItemID" Translatable="1">Number</Item>
                 <Item Key="Category" Translatable="1">Category</Item>
                 <Item Key="Language" Translatable="1">Language</Item>
                 <Item Key="State" Translatable="1">State</Item>
@@ -1347,9 +1347,9 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
         <Setting>
-            <Option SelectedID="FAQID">
+            <Option SelectedID="ItemID">
                 <Item Key="Title" Translatable="1">Title</Item>
-                <Item Key="FAQID" Translatable="1">Number</Item>
+                <Item Key="ItemID" Translatable="1">Number</Item>
                 <Item Key="Category" Translatable="1">Category</Item>
                 <Item Key="Language" Translatable="1">Language</Item>
                 <Item Key="State" Translatable="1">State</Item>

@@ -55,7 +55,7 @@ perform specific functions after the Value set for this object type.
     my $Success = $DynamicFieldFAQHandlerObject->PostValueSet(
         DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
         ObjectID           => $ObjectID,                # ID of the current object that the field
-                                                        # must be linked to, e. g. FAQID
+                                                        # must be linked to, e. g. ItemID
         Value              => $Value,                   # Value to store, depends on backend type
         UserID             => 123,
     );
@@ -142,7 +142,7 @@ returns:
     %ObjectData = (
         ObjectID => 123,
         Data     => {
-            FAQID             => 32,
+            ItemID             => 32,
             Number            => 100032,
             CategoryID        => '2',
             # ...
