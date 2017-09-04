@@ -46,13 +46,11 @@ Functions for installing the ITSMChangeManagement package.
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -90,9 +88,9 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
-run the code install part
+Run the code install part.
 
     my $Result = $CodeObject->CodeInstall();
 
@@ -137,9 +135,9 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
-run the code reinstall part
+Run the code reinstall part.
 
     my $Result = $CodeObject->CodeReinstall();
 
@@ -181,9 +179,9 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
-run the code upgrade part
+Run the code upgrade part.
 
     my $Result = $CodeObject->CodeUpgrade();
 
@@ -204,7 +202,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_3_3_91()
+=head2 CodeUpgradeFromLowerThan_3_3_91()
 
 This function is only executed if the installed module version is smaller than 3.3.91 (4.0.0 Beta 1).
 
@@ -221,7 +219,7 @@ sub CodeUpgradeFromLowerThan_3_3_91 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_2()
+=head2 CodeUpgradeFromLowerThan_4_0_2()
 
 This function is only executed if the installed module version is smaller than 4.0.2.
 
@@ -238,7 +236,7 @@ sub CodeUpgradeFromLowerThan_4_0_2 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_91()
+=head2 CodeUpgradeFromLowerThan_4_0_91()
 
 This function is only executed if the installed module version is smaller than 4.0.91 (5.0.0 Beta 1).
 
@@ -258,7 +256,7 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_5_0_12()
+=head2 CodeUpgradeFromLowerThan_5_0_12()
 
 This function is only executed if the installed module version is smaller than 5.0.12.
 
@@ -275,9 +273,9 @@ sub CodeUpgradeFromLowerThan_5_0_12 {    ## no critic
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
-run the code uninstall part
+Run the code uninstall part.
 
     my $Result = $CodeObject->CodeUninstall();
 
@@ -315,7 +313,7 @@ sub CodeUninstall {
 
 =begin Internal:
 
-=item _MigrateFreeTextToDynamicFields()
+=head2 _MigrateFreeTextToDynamicFields()
 
 Migrates the change and workorder freetext fields to dynamic fields.
 
@@ -663,8 +661,7 @@ sub _MigrateFreeTextToDynamicFields {
         next CONFIGNAME if !%NewSetting;
 
         # update the sysconfig
-        my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-            Valid => 1,
+        $Self->_SysConfigSettingUpdate(
             Key   => $ConfigName . '###DynamicField',
             Value => \%NewSetting,
         );
@@ -685,15 +682,13 @@ sub _MigrateFreeTextToDynamicFields {
     }
 
     # show all change dynamic fields in the change zoom
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 1,
+    $Self->_SysConfigSettingUpdate(
         Key   => 'ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField',
         Value => \%ChangeDynamicFieldConfig,
     );
 
     # show all workorder dynamic fields in the workorder zoom
-    $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-        Valid => 1,
+    $Self->_SysConfigSettingUpdate(
         Key   => 'ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField',
         Value => \%WorkorderDynamicFieldConfig,
     );
@@ -759,9 +754,9 @@ sub _MigrateFreeTextToDynamicFields {
     return 1;
 }
 
-=item _GroupAdd()
+=head2 _GroupAdd()
 
-add a group
+Add a group.
 
     my $Result = $CodeObject->_GroupAdd(
         Name        => 'the-group-name',
@@ -852,9 +847,9 @@ sub _GroupAdd {
     return 1;
 }
 
-=item _GroupDeactivate()
+=head2 _GroupDeactivate()
 
-deactivate a group
+Deactivate a group.
 
     my $Result = $CodeObject->_GroupDeactivate(
         Name => 'the-group-name',
@@ -903,9 +898,9 @@ sub _GroupDeactivate {
     return 1;
 }
 
-=item _CIPDefaultMatrixSet()
+=head2 _CIPDefaultMatrixSet()
 
-set the default CIP matrix
+Set the default CIP matrix.
 
     my $Result = $CodeObject->_CIPDefaultMatrixSet();
 
@@ -1009,9 +1004,9 @@ sub _CIPDefaultMatrixSet {
     return 1;
 }
 
-=item _StateMachineDefaultSet()
+=head2 _StateMachineDefaultSet()
 
-set the default state machine
+Set the default state machine.
 
     my $Result = $CodeObject->_StateMachineDefaultSet();
 
@@ -1091,9 +1086,9 @@ sub _StateMachineDefaultSet {
     return 1;
 }
 
-=item _LinkDelete()
+=head2 _LinkDelete()
 
-delete all existing links with change and workorder objects
+Delete all existing links with change and workorder objects.
 
     my $Result = $CodeObject->_LinkDelete();
 
@@ -1143,9 +1138,9 @@ sub _LinkDelete {
     return 1;
 }
 
-=item _AttachmentDelete()
+=head2 _AttachmentDelete()
 
-delete all existing attachments for changes and workorders
+Delete all existing attachments for changes and workorders.
 
     my $Result = $CodeObject->_AttachmentDelete();
 
@@ -1225,9 +1220,9 @@ sub _AttachmentDelete {
     return 1;
 }
 
-=item _DynamicFieldsDelete()
+=head2 _DynamicFieldsDelete()
 
-delete all existing dynamic fields for changes and workorders
+Delete all existing dynamic fields for changes and workorders.
 
     my $Result = $CodeObject->_DynamicFieldsDelete();
 
@@ -1285,7 +1280,7 @@ sub _DynamicFieldsDelete {
     return 1;
 }
 
-=item _AddNotifications()
+=head2 _AddNotifications()
 
 Add ChangeManagement specific notifications.
 
@@ -3596,7 +3591,7 @@ sub _AddNotifications {
     return 1;
 }
 
-=item _MigrateNotifications()
+=head2 _MigrateNotifications()
 
 Migrate old system notifications into ChangeManagement event based notifications.
 
@@ -3734,9 +3729,9 @@ sub _MigrateNotifications {
     return 1;
 }
 
-=item _DeleteTemplates()
+=head2 _DeleteTemplates()
 
-deletes all templates
+Deletes all templates.
 
     my $Result = $CodeObject->_DeleteTemplates();
 
@@ -3764,7 +3759,7 @@ sub _DeleteTemplates {
     return 1;
 }
 
-=item _MigrateDTLInSysConfig()
+=head2 _MigrateDTLInSysConfig()
 
 Converts DTL settings in sysconfig to TT.
 
@@ -3774,10 +3769,11 @@ Converts DTL settings in sysconfig to TT.
 
 sub _MigrateDTLInSysConfig {
 
+    my ($Self) = @_;
+
     # create needed objects
-    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-    my $ProviderObject  = Kernel::Output::Template::Provider->new();
+    my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
+    my $ProviderObject = Kernel::Output::Template::Provider->new();
 
     # handle hash settings
     NAME:
@@ -3822,8 +3818,7 @@ sub _MigrateDTLInSysConfig {
             }
 
             # update the config item
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
+            $Self->_SysConfigSettingUpdate(
                 Key   => $Name,
                 Value => $Setting,
             );
@@ -3833,9 +3828,9 @@ sub _MigrateDTLInSysConfig {
     return 1;
 }
 
-=item _MigrateConfigs()
+=head2 _MigrateConfigs()
 
-change configurations to match the new module location.
+Change configurations to match the new module location.
 
     my $Result = $CodeObject->_MigrateConfigs();
 
@@ -3843,9 +3838,10 @@ change configurations to match the new module location.
 
 sub _MigrateConfigs {
 
+    my ($Self) = @_;
+
     # create needed objects
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # migrate NavBar menu modules
     # get setting content for NavBar menu modules
@@ -3863,8 +3859,7 @@ sub _MigrateConfigs {
         $Setting->{$ModuleAdmin}->{NavBarModule}->{'Module'} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
 
         # set new setting,
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Self->_SysConfigSettingUpdate(
             Key   => 'Frontend::Module###' . $ModuleAdmin,
             Value => $Setting->{$ModuleAdmin},
         );
@@ -3892,8 +3887,7 @@ sub _MigrateConfigs {
             $Setting->{$MenuModule}->{'Module'} = $Module;
 
             # set new setting,
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
+            $Self->_SysConfigSettingUpdate(
                 Key   => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
                 Value => $Setting->{$MenuModule},
             );
@@ -3917,8 +3911,7 @@ sub _MigrateConfigs {
         $Setting->{$PreferenceModule}->{'Module'} = $Module;
 
         # set new setting,
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        $Self->_SysConfigSettingUpdate(
             Key   => 'PreferencesGroups###' . $PreferenceModule,
             Value => $Setting->{$PreferenceModule},
         );
@@ -3927,9 +3920,9 @@ sub _MigrateConfigs {
     return 1;
 }
 
-=item _MigrateConfigsFromLowerThan_5_0_12()
+=head2 _MigrateConfigsFromLowerThan_5_0_12()
 
-change configurations to match the new file location.
+Change configurations to match the new file location.
 
     my $Result = $CodeObject->_MigrateConfigsFromLowerThan_5_0_12();
 
@@ -3937,9 +3930,10 @@ change configurations to match the new file location.
 
 sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
 
+    my ($Self) = @_;
+
     # create needed objects
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get setting content for all frontend modules
     my $FrontendConfig = $ConfigObject->Get('Frontend::Module');
@@ -3973,9 +3967,8 @@ sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
         # change the JS loader settings
         $FrontendConfig->{$Module}->{Loader}->{JavaScript} = \@NewJavascriptLoaderSettings;
 
-        # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
+        # set new setting,
+        $Self->_SysConfigSettingUpdate(
             Key   => 'Frontend::Module###' . $Module,
             Value => $FrontendConfig->{$Module},
         );
@@ -4000,9 +3993,8 @@ sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
             # update to new name
             $Setting->{$MenuModule}->{'Target'} = 'ConfirmDialog';
 
-            # set new setting
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
+            # set new setting,
+            $Self->_SysConfigSettingUpdate(
                 Key   => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
                 Value => $Setting->{$MenuModule},
             );
@@ -4012,11 +4004,57 @@ sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
     return 1;
 }
 
+=head2 _SysConfigSettingUpdate()
+
+Helper function to update a setting, locking the setting before and unlocking it after.
+
+    $Self->_SysConfigSettingUpdate(
+        Key   => $Name,
+        Value => $Setting,
+    );
+
+=cut
+
+sub _SysConfigSettingUpdate {
+    my ( $Self, %Param ) = @_;
+
+    print STDERR "Running _SysConfigSettingUpdate\n";
+
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    # setting get
+    my %ModuleSetting = $SysConfigObject->SettingGet(
+        Name    => $Param{Key},
+        Default => 1,
+    );
+
+    # setting lock
+    my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+        UserID    => 1,
+        Force     => 1,
+        DefaultID => $ModuleSetting{DefaultID},
+    );
+
+    # setting update
+    $SysConfigObject->SettingUpdate(
+        Name              => $Param{Key},
+        EffectiveValue    => $Param{Value},
+        ExclusiveLockGUID => $ExclusiveLockGUID,
+        UserID            => 1,
+    );
+
+    # setting unlock
+    $SysConfigObject->SettingUnlock(
+        UserID    => 1,
+        DefaultID => $ModuleSetting{DefaultID},
+    );
+
+    return 1;
+}
+
 1;
 
 =end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
