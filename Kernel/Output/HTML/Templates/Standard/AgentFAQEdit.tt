@@ -132,10 +132,6 @@
                         </div>
                         <div class="Clear"></div>
 
-[% RenderBlockStart("RichText") %]
-[% InsertTemplate("RichTextEditor.tt") %]
-[% RenderBlockEnd("RichText") %]
-
 [% RenderBlockStart("FAQContent") %]
                         <label for="[% Data.Field | html %]">[% Translate(Data.Caption) | html %]:<br/><span class="FAQStateName">([% Translate(Data.StateName) | html %])</span></label>
                         <div class="RichTextField">

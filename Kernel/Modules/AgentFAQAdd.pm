@@ -718,11 +718,9 @@ sub _MaskNew {
         $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
         $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
 
-        $LayoutObject->Block(
-            Name => 'RichText',
-            Data => {
-                %Param,
-            },
+        # Set up rich text editor.
+        $LayoutObject->SetRichTextParameters(
+            Data => \%Param,
         );
     }
 
