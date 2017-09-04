@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FAQMenu::Generic;
+package Kernel::Output::HTML::FAQMenu::Delete;
 
 use strict;
 use warnings;
@@ -48,12 +48,6 @@ sub Run {
 
     # get groups
     my $Action = $Param{Config}->{Action};
-    if ( $Action eq 'AgentLinkObject' ) {
-
-        # The Link-link is a special case, as it is not specific to FAQ.
-        # As a workaround we hardcore that AgentLinkObject is treated like AgentFAQEdit
-        $Action = 'AgentFAQEdit';
-    }
 
     # get configuration settings for the specified action
     my $Config = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{$Action};
@@ -118,6 +112,21 @@ sub Run {
             %{ $Param{FAQItem} },
             %{ $Param{Config} },
         },
+    );
+
+    # Create structure for JS.
+    my %JSData;
+    $JSData{ $Param{MenuID} } = {
+        ElementID                  => $Param{MenuID},
+        ElementSelector            => '#' . $Param{MenuID},
+        DialogContentQueryString   => 'Action=AgentFAQDelete;ItemID=' . $Param{FAQItem}->{ItemID},
+        ConfirmedActionQueryString => 'Action=AgentFAQDelete;Subaction=Delete;ItemID=' . $Param{FAQItem}->{ItemID},
+        DialogTitle                => $LayoutObject->{LanguageObject}->Translate('Delete'),
+    };
+
+    $LayoutObject->AddJSData(
+        Key   => 'FAQData',
+        Value => \%JSData,
     );
 
     $Param{Counter}++;

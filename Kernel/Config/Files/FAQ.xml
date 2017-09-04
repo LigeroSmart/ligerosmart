@@ -1178,16 +1178,12 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenu::Delete</Item>
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description" Translatable="1">Delete this FAQ</Item>
                 <Item Key="Action">AgentFAQDelete</Item>
                 <Item Key="Link">Action=AgentFAQDelete;ItemID=[% Data.ItemID | html %]</Item>
                 <Item Key="Target">ConfirmationDialog</Item>
-                <Item Key="ElementSelector">#[% Data.MenuID | html %]</Item>
-                <Item Key="DialogContentQueryString">Action=AgentFAQDelete;ItemID=[% Data.ItemID | html %]</Item>
-                <Item Key="ConfirmedActionQueryString">Action=AgentFAQDelete;Subaction=Delete;ItemID=[% Data.ItemID | html %]</Item>
-                <Item Key="DialogTitle">[% Translate("Delete") | html %] [% Config("FAQ::FAQHook") %] [% Data.Number | html %]</Item>
             </Hash>
         </Setting>
     </ConfigItem>

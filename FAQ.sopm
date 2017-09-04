@@ -74,6 +74,7 @@
         <File Permission="660" Location="Kernel/Output/HTML/Dashboard/FAQ.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/FAQJournalOverview/Small.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/FAQMenu/Generic.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FAQMenu/Delete.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/FAQOverview/Small.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm" />

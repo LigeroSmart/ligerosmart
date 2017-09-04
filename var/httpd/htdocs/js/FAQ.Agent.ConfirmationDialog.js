@@ -75,7 +75,7 @@ FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
 
                 // define yes and no buttons
                 Buttons = [{
-                    Label: LocalDialogData.TranslatedText.Yes,
+                    Label: Core.Language.Translate('Yes'),
                     Class: "Primary",
 
                     // define the function that is called when the 'Yes' button is pressed
@@ -88,7 +88,7 @@ FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
                         location.href = Core.Config.Get('Baselink') + LocalDialogData.ConfirmedActionQueryString;
                     }
                 }, {
-                    Label: LocalDialogData.TranslatedText.No,
+                    Label: Core.Language.Translate('No'),
                     Type: "Close"
                 }];
             }
@@ -98,7 +98,7 @@ FAQ.Agent.ConfirmationDialog = (function (TargetNS) {
 
                 // define Ok button
                 Buttons = [{
-                    Label: LocalDialogData.TranslatedText.Ok,
+                    Label: Core.Language.Translate('Ok'),
                     Class: "Primary",
                     Type: "Close"
                 }];
