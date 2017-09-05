@@ -257,6 +257,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Output/ToolBar/MyWorkOrder.t" />
         <File Permission="660" Location="scripts/test/Console/Command/Admin/ITSM/Change/Delete.t" />
         <File Permission="660" Location="scripts/test/Console/Command/Admin/ITSM/Change/Check.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Admin.ChangeNotification.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.CABMemberSearch.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.NotificationEvent.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js" />

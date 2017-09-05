@@ -92,6 +92,7 @@
                 </Item>
                 <Item Key="JavaScript">
                     <Array>
+                        <Item>ITSM.Admin.ChangeNotification.js</Item>
                         <Item>ITSM.Agent.ChangeManagement.NotificationEvent.js</Item>
                     </Array>
                 </Item>

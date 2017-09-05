@@ -306,6 +306,7 @@ sub Run {
     );
     $Output .= $LayoutObject->Footer();
 
+    return $Output;
 }
 
 # show the edit mask for a notification rule
@@ -351,6 +352,11 @@ sub _Edit {
         Data => \%Param,
     );
 
+    $LayoutObject->AddJSData(
+        Key   => 'OverviewUpdate',
+        Value => 1
+    );
+
     # add rich text editor
     if ( $Param{RichText} ) {
 
@@ -359,8 +365,7 @@ sub _Edit {
         $Param{RichTextHeight} = $Config->{RichTextHeight} || 0;
         $Param{RichTextWidth}  = $Config->{RichTextWidth}  || 0;
 
-        $LayoutObject->Block(
-            Name => 'RichText',
+        $LayoutObject->SetRichTextParameters(
             Data => \%Param,
         );
     }
@@ -505,6 +510,11 @@ sub _Overview {
     $LayoutObject->Block(
         Name => 'OverviewResult',
         Data => \%Param,
+    );
+
+    $LayoutObject->AddJSData(
+        Key   => 'OverviewResult',
+        Value => 1,
     );
 
     # get notification object
