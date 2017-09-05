@@ -22,7 +22,7 @@ $Selenium->RunTest(
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get change delete menu module default config
-        my %ChangeDeleteMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
+        my %ChangeDeleteMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
             Name    => 'ITSMChange::Frontend::MenuModule###100-ChangeDelete',
             Default => 1,
         );
@@ -112,28 +112,18 @@ $Selenium->RunTest(
         # click on 'Delete'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeDelete;ChangeID=$ChangeID')]")->click();
 
-        sleep 2;
-
-        # wait for confirm button to show up and confirm delete action
+        # wait for server side error
         $Selenium->WaitFor(
-            JavaScript =>
-                "return (\$('.Dialog button.Primary.CallForAction:visible').length && \$('fieldset.TableLike').length);"
+            JavaScript => "return typeof(\$) === 'function' && \$('div.Dialog button#DialogButton1').length"
         );
 
-        # waiting for javascript bindings
-        sleep 1;
+        # click ok to dismiss
+        $Selenium->find_element( 'div.Dialog button#DialogButton1', 'css' )->VerifiedClick();
 
-        $Selenium->find_element( ".Dialog button.Primary.CallForAction", 'css' )->VerifiedClick();
-
-        # get the change number of the deleted change (must not exist)
-        my $ChangeNumber = $ChangeObject->ChangeLookup(
-            ChangeID => $ChangeID,
-        );
-
-        # verify that test created change is deleted
-        $Self->False(
-            $ChangeNumber,
-            "$ChangeTitleRandom successfully deleted",
+        # verify that test created change is not present
+        $Self->True(
+            index( $Selenium->get_page_source(), $ChangeTitleRandom ) == -1,
+            "$ChangeTitleRandom is not found",
         );
 
         # make sure cache is correct
