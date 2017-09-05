@@ -63,6 +63,20 @@ sub Run {
             RichText    => $RichText,
             %{$Data},
         );
+
+        my $Status = $ParamObject->GetParam( Param => 'Status' ) || '';
+
+        if ( $Status eq 'Updated' ) {
+            %Notification = (
+                Info => Translatable('Notification updated!'),
+            );
+        }
+        elsif ( $Status eq 'Added' ) {
+            %Notification = (
+                Info => Translatable('Notification Added!'),
+            );
+        }
+
     }
 
     # ------------------------------------------------------------ #
@@ -114,12 +128,17 @@ sub Run {
 
         # update notification
         if ( $NotificationObject->NotificationRuleUpdate(%GetParam) ) {
-            $Self->_Overview();
 
-            # notification was updated
-            %Notification = (
-                Info => Translatable('Notification updated!'),
-            );
+            my $ContinueAfterSave = $ParamObject->GetParam( Param => 'ContinueAfterSave' );
+
+            if ($ContinueAfterSave) {
+                return $LayoutObject->Redirect(
+                    OP => "Action=$Self->{Action};Subaction=Change;ID=$GetParam{ID};Status=Updated"
+                );
+            }
+
+            return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Status=Updated" );
+
         }
         else {
 
@@ -194,13 +213,18 @@ sub Run {
         }
 
         # add notification
-        if ( $NotificationObject->NotificationRuleAdd(%GetParam) ) {
-            $Self->_Overview();
+        if ( my $NewID = $NotificationObject->NotificationRuleAdd(%GetParam) ) {
 
-            # notification was updated
-            %Notification = (
-                Info => Translatable('Notification added!'),
-            );
+            my $ContinueAfterSave = $ParamObject->GetParam( Param => 'ContinueAfterSave' );
+
+            if ($ContinueAfterSave) {
+                return $LayoutObject->Redirect(
+                    OP => "Action=$Self->{Action};Subaction=Change;ID=$NewID;Status=Added"
+                );
+            }
+
+            return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Status=Added" );
+
         }
         else {
 
@@ -292,6 +316,20 @@ sub Run {
     # ------------------------------------------------------------
     else {
         $Self->_Overview();
+
+        my $Status = $ParamObject->GetParam( Param => 'Status' ) || '';
+
+        if ( $Status eq 'Updated' ) {
+            %Notification = (
+                Info => Translatable('Notification updated!'),
+            );
+        }
+        elsif ( $Status eq 'Added' ) {
+            %Notification = (
+                Info => Translatable('Notification Added!'),
+            );
+        }
+
     }
 
     my $Output = $LayoutObject->Header();
