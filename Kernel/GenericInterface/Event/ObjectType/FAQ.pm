@@ -51,12 +51,12 @@ sub DataGet {
         }
     }
 
-    my $ID = $Param{Data}->{ItemID};
+    my $ID = $Param{Data}->{FAQID};
 
     if ( !$ID ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => "Need ItemID!",
+            Message  => "Need FAQID!",
         );
         return;
     }

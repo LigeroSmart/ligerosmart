@@ -23,7 +23,7 @@ my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-my $ItemID = $FAQObject->FAQAdd(
+my $FAQID = $FAQObject->FAQAdd(
     Title       => 'Some Text',
     CategoryID  => 1,
     StateID     => 1,
@@ -35,12 +35,12 @@ my $ItemID = $FAQObject->FAQAdd(
     UserID      => 1,
 );
 $Self->True(
-    $ItemID,
+    $FAQID,
     'FAQAdd()',
 );
 
 my %FAQData = $FAQObject->FAQGet(
-    ItemID     => $ItemID,
+    ItemID     => $FAQID,
     ItemFields => 1,
     UserID     => 1,
 );
@@ -56,7 +56,7 @@ my @Tests = (
     {
         Name    => 'No Params',
         Config  => {},
-        Request => "Action=someaction;Subaction=somesubaction;ItemID=$ItemID",
+        Request => "Action=someaction;Subaction=somesubaction;ItemID=$FAQID",
         Success => 0,
     },
     {
@@ -64,7 +64,7 @@ my @Tests = (
         Config => {
             DynamicFieldConfig => $DynamicFieldConfig,
         },
-        Request => "Action=someaction;Subaction=somesubaction;ItemID=$ItemID",
+        Request => "Action=someaction;Subaction=somesubaction;ItemID=$FAQID",
         Success => 0,
     },
     {
@@ -72,11 +72,11 @@ my @Tests = (
         Config => {
             UserID => 1,
         },
-        Request => "Action=someaction;Subaction=somesubaction;ItemID=$ItemID",
+        Request => "Action=someaction;Subaction=somesubaction;ItemID=$FAQID",
         Success => 0,
     },
     {
-        Name   => 'Missing ItemID in the request',
+        Name   => 'Missing FAQID in the request',
         Config => {
             DynamicFieldConfig => $DynamicFieldConfig,
             UserID             => 1,
@@ -85,7 +85,7 @@ my @Tests = (
         Success => 0,
     },
     {
-        Name   => 'Wrong ItemID in the request',
+        Name   => 'Wrong FAQID in the request',
         Config => {
             DynamicFieldConfig => $DynamicFieldConfig,
             UserID             => 1,
@@ -103,10 +103,10 @@ my @Tests = (
             DynamicFieldConfig => $DynamicFieldConfig,
             UserID             => 1,
         },
-        Request       => "Action=someaction;Subaction=somesubaction;ItemID=$ItemID",
+        Request       => "Action=someaction;Subaction=somesubaction;ItemID=$FAQID",
         Success       => 1,
         ExectedResult => {
-            ObjectID => $ItemID,
+            ObjectID => $FAQID,
             Data     => \%FAQData,
         },
     },

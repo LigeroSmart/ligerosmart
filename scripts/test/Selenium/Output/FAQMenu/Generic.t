@@ -27,7 +27,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $ItemID   = $FAQObject->FAQAdd(
+        my $FAQID    = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 2,
@@ -37,8 +37,8 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $ItemID,
-            "Test FAQ item is created - ID $ItemID",
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
         );
 
         # create test user and login
@@ -56,21 +56,21 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom of created FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID");
 
         # create menu module test params
         my @MenuModule = (
             {
                 Name   => "Edit",
-                Action => "AgentFAQEdit;ItemID=$ItemID",
+                Action => "AgentFAQEdit;ItemID=$FAQID",
             },
             {
                 Name   => "History",
-                Action => "AgentFAQHistory;ItemID=$ItemID",
+                Action => "AgentFAQHistory;ItemID=$FAQID",
             },
             {
                 Name   => "Print",
-                Action => "AgentFAQPrint;ItemID=$ItemID",
+                Action => "AgentFAQPrint;ItemID=$FAQID",
             },
             {
                 Name   => "Link",
@@ -78,7 +78,7 @@ $Selenium->RunTest(
             },
             {
                 Name   => "Delete",
-                Action => "AgentFAQDelete;ItemID=$ItemID",
+                Action => "AgentFAQDelete;ItemID=$FAQID",
             },
         );
 
@@ -92,12 +92,12 @@ $Selenium->RunTest(
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $ItemID,
+            ItemID => $FAQID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "Test FAQ item is deleted - ID $ItemID",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

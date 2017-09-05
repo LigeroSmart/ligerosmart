@@ -26,11 +26,11 @@ $Selenium->RunTest(
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # create two test FAQ
-        my @ItemIDs;
+        my @FAQIDs;
         my @FAQTitles;
         for my $FAQ ( 1 .. 2 ) {
             my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-            my $ItemID   = $FAQObject->FAQAdd(
+            my $FAQID    = $FAQObject->FAQAdd(
                 Title       => $FAQTitle,
                 CategoryID  => 1,
                 StateID     => 2,
@@ -41,11 +41,11 @@ $Selenium->RunTest(
             );
 
             $Self->True(
-                $ItemID,
-                "Test FAQ item is created - ID $ItemID",
+                $FAQID,
+                "Test FAQ item is created - ID $FAQID",
             );
 
-            push @ItemIDs,   $ItemID;
+            push @FAQIDs,    $FAQID;
             push @FAQTitles, $FAQTitle;
         }
 
@@ -64,7 +64,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom of created FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
 
         # click on 'Link'
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->VerifiedClick();
@@ -122,14 +122,14 @@ $Selenium->RunTest(
 
         # delete test created FAQs
         my $Success;
-        for my $ItemID (@ItemIDs) {
+        for my $FAQID (@FAQIDs) {
             $Success = $FAQObject->FAQDelete(
-                ItemID => $ItemID,
+                ItemID => $FAQID,
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "Test FAQ item is deleted - ID $ItemID",
+                "Test FAQ item is deleted - ID $FAQID",
             );
         }
 

@@ -53,7 +53,7 @@ $Selenium->RunTest(
         for my $Item (qw(subject body)) {
             my $Title   = 'title' . $Helper->GetRandomID();
             my $Keyword = $Item . $Helper->GetRandomID();
-            my $ItemID  = $FAQObject->FAQAdd(
+            my $FAQID   = $FAQObject->FAQAdd(
                 Title       => $Title,
                 CategoryID  => 1,
                 StateID     => 1,
@@ -67,12 +67,12 @@ $Selenium->RunTest(
             );
 
             $Self->True(
-                $ItemID,
-                "FAQ article is created - $ItemID",
+                $FAQID,
+                "FAQ article is created - $FAQID",
             );
 
             my %FAQ;
-            $FAQ{ID}      = $ItemID;
+            $FAQ{ID}      = $FAQID;
             $FAQ{Keyword} = $Keyword;
             $FAQ{Title}   = $Title . " ($Category{Name})";
 

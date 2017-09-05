@@ -63,18 +63,18 @@ $Helper->FixedTimeSet();
 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
 for my $Counter ( 1 .. 2 ) {
-    my $ItemID = $FAQObject->FAQAdd(
+    my $FAQID = $FAQObject->FAQAdd(
         %FAQAddTemplate,
         UserID => $AddedUsers[ $Counter - 1 ],
     );
 
     $Self->IsNot(
         undef,
-        $ItemID,
-        "FAQAdd() ItemID:'$ItemID' for FAQSearch()",
+        $FAQID,
+        "FAQAdd() FAQID:'$FAQID' for FAQSearch()",
     );
 
-    push @AddedFAQs, $ItemID;
+    push @AddedFAQs, $FAQID;
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
@@ -129,7 +129,7 @@ for my $Vote (@VotesToAdd) {
 
     $Self->True(
         $Success,
-        "VoteAdd(): ItemID:'$Vote->{ItemID}' IP:'$Vote->{IP}' Rate:'$Vote->{Rate}' with true",
+        "VoteAdd(): FAQID:'$Vote->{ItemID}' IP:'$Vote->{IP}' Rate:'$Vote->{Rate}' with true",
     );
 }
 
@@ -137,7 +137,7 @@ for my $Vote (@VotesToAdd) {
 my %SearchConfigTemplate = (
     Keyword          => "$RandomID",
     States           => [ 'public', 'internal' ],
-    OrderBy          => ['ItemID'],
+    OrderBy          => ['FAQID'],
     OrderByDirection => ['Up'],
     Limit            => 150,
     UserID           => 1,
@@ -476,10 +476,10 @@ my @Tests = (
 
 # execute the tests
 for my $Test (@Tests) {
-    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@ItemIDs,
+        \@FAQIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -528,10 +528,10 @@ for my $Test (@Tests) {
 
 # execute the tests
 for my $Test (@Tests) {
-    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@ItemIDs,
+        \@FAQIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -563,7 +563,7 @@ my $Success = $FAQObject->FAQUpdate(
 
 $Self->True(
     $Success,
-    "FAQUpdate() ItemID:'$AddedFAQs[0]' for FAQSearch()",
+    "FAQUpdate() FAQID:'$AddedFAQs[0]' for FAQSearch()",
 );
 
 $Helper->FixedTimeAddSeconds(60);
@@ -576,7 +576,7 @@ $Success = $FAQObject->FAQUpdate(
 
 $Self->True(
     $Success,
-    "FAQUpdate() ItemID:'$AddedFAQs[1]' for FAQSearch()",
+    "FAQUpdate() FAQID:'$AddedFAQs[1]' for FAQSearch()",
 );
 
 # add 2 minutes to frozen time
@@ -715,10 +715,10 @@ my $DateMinus6Mins = $DateTime->ToString();
 # execute the tests
 for my $Test (@Tests) {
 
-    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@ItemIDs,
+        \@FAQIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -816,10 +816,10 @@ for my $Test (@Tests) {
 # execute the tests
 for my $Test (@Tests) {
 
-    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@ItemIDs,
+        \@FAQIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -864,10 +864,10 @@ return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
 # execute the tests
 for my $Test (@Tests) {
 
-    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@ItemIDs,
+        \@FAQIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -879,7 +879,7 @@ $Self->True(
     "--Execute Former Tests--",
 );
 {
-    my $ItemID1 = $FAQObject->FAQAdd(
+    my $FAQID1 = $FAQObject->FAQAdd(
         CategoryID  => 1,
         StateID     => 2,
         LanguageID  => 2,
@@ -892,14 +892,14 @@ $Self->True(
         ContentType => 'text/html',
     );
     $Self->True(
-        $ItemID1,
+        $FAQID1,
         "FAQAdd() - 1",
     );
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
 
-    my $ItemID2 = $FAQObject->FAQAdd(
+    my $FAQID2 = $FAQObject->FAQAdd(
         Title       => 'Title',
         CategoryID  => 1,
         StateID     => 1,
@@ -911,7 +911,7 @@ $Self->True(
         ContentType => 'text/html',
     );
     $Self->True(
-        $ItemID2,
+        $FAQID2,
         "FAQAdd() - 2",
     );
 
@@ -926,7 +926,7 @@ $Self->True(
         Keyword5 => "some5$RandomID",
     );
 
-    my $ItemID3 = $FAQObject->FAQAdd(
+    my $FAQID3 = $FAQObject->FAQAdd(
         Title       => 'Test FAQ-3',
         CategoryID  => 1,
         StateID     => 1,
@@ -936,14 +936,14 @@ $Self->True(
         ContentType => 'text/html',
     );
     $Self->True(
-        $ItemID3,
+        $FAQID3,
         "FAQAdd() - 3",
     );
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
 
-    my $ItemID4 = $FAQObject->FAQAdd(
+    my $FAQID4 = $FAQObject->FAQAdd(
         Title      => 'Test FAQ-4',
         CategoryID => 1,
         StateID    => 1,
@@ -955,14 +955,14 @@ $Self->True(
     );
 
     $Self->True(
-        $ItemID4,
+        $FAQID4,
         "FAQAdd() - 4",
     );
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
 
-    my $ItemID5 = $FAQObject->FAQAdd(
+    my $FAQID5 = $FAQObject->FAQAdd(
         Title      => 'Test FAQ-5',
         CategoryID => 1,
         StateID    => 1,
@@ -974,7 +974,7 @@ $Self->True(
     );
 
     $Self->True(
-        $ItemID5,
+        $FAQID5,
         "FAQAdd() - 4",
     );
 
@@ -990,7 +990,7 @@ $Self->True(
                 OrderBy => ['Votes'],
             },
             ExpectedResults => [
-                $ItemID1,
+                $FAQID1,
             ],
         },
         {
@@ -999,9 +999,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1} $Keywords{Keyword2}",
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1010,9 +1010,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword2},$Keywords{Keyword1}",
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1021,9 +1021,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1};$Keywords{Keyword2}",
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1032,9 +1032,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1} $Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1043,9 +1043,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1},$Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1054,9 +1054,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1};$Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1065,9 +1065,9 @@ $Self->True(
                 Keyword => $Keywords{Keyword3},
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1076,9 +1076,9 @@ $Self->True(
                 Keyword => '*' . $Keywords{Keyword3} . '*',
             },
             ExpectedResults => [
-                $ItemID3,
-                $ItemID4,
-                $ItemID5,
+                $FAQID3,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1087,7 +1087,7 @@ $Self->True(
                 Keyword => $Keywords{Keyword5},
             },
             ExpectedResults => [
-                $ItemID3,
+                $FAQID3,
             ],
         },
         {
@@ -1096,8 +1096,8 @@ $Self->True(
                 Keyword => $Keywords{Keyword4},
             },
             ExpectedResults => [
-                $ItemID4,
-                $ItemID5,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1106,7 +1106,7 @@ $Self->True(
                 Keyword => uc $Keywords{Keyword5},
             },
             ExpectedResults => [
-                $ItemID3,
+                $FAQID3,
             ],
         },
         {
@@ -1115,8 +1115,8 @@ $Self->True(
                 Keyword => ucfirst $Keywords{Keyword4},
             },
             ExpectedResults => [
-                $ItemID4,
-                $ItemID5,
+                $FAQID4,
+                $FAQID5,
             ],
         },
         {
@@ -1127,7 +1127,7 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $ItemID2,
+                $FAQID2,
             ],
         },
         {
@@ -1138,7 +1138,7 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $ItemID1,
+                $FAQID1,
             ],
         },
         {
@@ -1149,15 +1149,15 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $ItemID1,
-                $ItemID2,
+                $FAQID1,
+                $FAQID2,
             ],
         },
     );
 
     for my $Test (@Tests) {
 
-        my @ItemIDs = $FAQObject->FAQSearch(
+        my @FAQIDs = $FAQObject->FAQSearch(
             Number           => '*',
             States           => [ 'public', 'internal' ],
             OrderByDirection => ['Up'],
@@ -1167,7 +1167,7 @@ $Self->True(
         );
 
         $Self->IsDeeply(
-            \@ItemIDs,
+            \@FAQIDs,
             $Test->{ExpectedResults},
             "$Test->{Name}, FAQSearch()",
         );

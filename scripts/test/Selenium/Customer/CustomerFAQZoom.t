@@ -32,7 +32,7 @@ $Selenium->RunTest(
         my $FAQProblem  = 'Selenium Problem';
         my $FAQSolution = 'Selenium Solution';
 
-        my $ItemID = $FAQObject->FAQAdd(
+        my $FAQID = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -47,8 +47,8 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $ItemID,
-            "FAQ is created - ID $ItemID",
+            $FAQID,
+            "FAQ is created - ID $FAQID",
         );
 
         # create and login test customer
@@ -64,7 +64,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to CustomerFAQZoom screen of created test FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQZoom;ItemID=$ItemID");
+        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQZoom;ItemID=$FAQID");
 
         # check page
         $Self->True(
@@ -141,12 +141,12 @@ $Selenium->RunTest(
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $ItemID,
+            ItemID => $FAQID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ is deleted - ID $ItemID",
+            "FAQ is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

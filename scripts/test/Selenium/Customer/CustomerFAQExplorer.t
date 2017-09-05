@@ -25,12 +25,12 @@ $Selenium->RunTest(
         # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        my @ItemIDs;
+        my @FAQIDs;
 
         # create test FAQs
         for ( 1 .. 5 ) {
             my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-            my $ItemID   = $FAQObject->FAQAdd(
+            my $FAQID    = $FAQObject->FAQAdd(
                 Title       => $FAQTitle,
                 CategoryID  => 1,
                 StateID     => 1,
@@ -42,16 +42,16 @@ $Selenium->RunTest(
             );
 
             $Self->True(
-                $ItemID,
-                "FAQ is created - $ItemID",
+                $FAQID,
+                "FAQ is created - $FAQID",
             );
 
             my %FAQ = (
-                ItemID   => $ItemID,
+                FAQID    => $FAQID,
                 FAQTitle => $FAQTitle,
             );
 
-            push @ItemIDs, \%FAQ;
+            push @FAQIDs, \%FAQ;
         }
 
         # create and login test customer
@@ -97,13 +97,13 @@ $Selenium->RunTest(
         # click on 'Misc', go on subcategory screen
         $Selenium->find_element( 'Misc', 'link_text' )->VerifiedClick();
 
-        # order FAQ item per ItemID by Down
+        # order FAQ item per FAQID by Down
         $Selenium->VerifiedGet(
-            "${ScriptAlias}customer.pl?Action=CustomerFAQExplorer;CategoryID=1;SortBy=ItemID;OrderBy=Down"
+            "${ScriptAlias}customer.pl?Action=CustomerFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down"
         );
 
         # check and delete test created FAQs
-        for my $FAQ (@ItemIDs) {
+        for my $FAQ (@FAQIDs) {
 
             # check if there is test FAQ on screen
             $Self->True(
@@ -112,12 +112,12 @@ $Selenium->RunTest(
             );
 
             my $Success = $FAQObject->FAQDelete(
-                ItemID => $FAQ->{ItemID},
+                ItemID => $FAQ->{FAQID},
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - ID $FAQ->{ItemID}",
+                "FAQ is deleted - ID $FAQ->{FAQID}",
             );
         }
 

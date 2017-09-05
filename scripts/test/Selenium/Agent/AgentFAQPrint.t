@@ -40,7 +40,7 @@ $Selenium->RunTest(
         my $FAQSolution = 'Selenium Solution';
         my $FAQComment  = 'Selenium Comment';
 
-        my $ItemID = $FAQObject->FAQAdd(
+        my $FAQID = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -56,8 +56,8 @@ $Selenium->RunTest(
         );
 
         $Self->True(
-            $ItemID,
-            "FAQ item is created - ID $ItemID",
+            $FAQID,
+            "FAQ item is created - ID $FAQID",
         );
 
         # create test user and login
@@ -75,7 +75,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQPrint screen of created test FAQ
-        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQPrint;ItemID=$ItemID");
+        $Selenium->get("${ScriptAlias}index.pl?Action=AgentFAQPrint;ItemID=$FAQID");
 
         # wait until print screen is loaded
         ACTIVESLEEP:
@@ -109,12 +109,12 @@ $Selenium->RunTest(
         }
 
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $ItemID,
+            ItemID => $FAQID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ item is deleted - ID $ItemID",
+            "FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

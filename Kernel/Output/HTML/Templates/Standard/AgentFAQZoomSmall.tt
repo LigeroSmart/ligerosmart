@@ -152,7 +152,7 @@ function CheckIFrameHeight(IFrameID) {
         </div>
         <div class="Clear"></div>
     </div>
-    <input id="ItemID" type="hidden" name="ItemID" value="[% Data.ID | html %]">
+    <input id="FAQID" type="hidden" name="FAQID" value="[% Data.ID | html %]">
     <input id="FAQTitle" type="hidden" name="Title" value="[% Data.Title | html %]">
     <input id="FAQBody" type="hidden" name="Body" value="[% Data.FullBody | html %]">
     <input id="FAQPublicLink" type="hidden" name="Link"  value="[% Data.Publiclink %]">

@@ -22,7 +22,7 @@ my $Helper      = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
 my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
-my $ItemID = $FAQObject->FAQAdd(
+my $FAQID = $FAQObject->FAQAdd(
     Title       => 'Some Text',
     CategoryID  => 1,
     StateID     => 1,
@@ -34,13 +34,13 @@ my $ItemID = $FAQObject->FAQAdd(
     UserID      => 1,
 );
 $Self->IsNot(
-    $ItemID,
+    $FAQID,
     undef,
     "FAQAdd() - 1",
 );
 
 my %FAQ = $FAQObject->FAQGet(
-    ItemID     => $ItemID,
+    ItemID     => $FAQID,
     ItemFields => 1,
     UserID     => 1,
 );
@@ -65,7 +65,7 @@ for my $Test ( sort keys %FAQTest ) {
 }
 
 my $FAQUpdate = $FAQObject->FAQUpdate(
-    ItemID      => $ItemID,
+    ItemID      => $FAQID,
     CategoryID  => 1,
     StateID     => 2,
     LanguageID  => 2,
@@ -79,7 +79,7 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
 );
 
 %FAQ = $FAQObject->FAQGet(
-    ItemID     => $ItemID,
+    ItemID     => $FAQID,
     ItemFields => 1,
     UserID     => 1,
 );
@@ -105,7 +105,7 @@ for my $Test ( sort keys %FAQTest ) {
 
 my $Ok = $FAQObject->VoteAdd(
     CreatedBy => 'Some Text',
-    ItemID    => $ItemID,
+    ItemID    => $FAQID,
     IP        => '54.43.30.1',
     Interface => '2',
     Rate      => 100,
@@ -119,7 +119,7 @@ $Self->True(
 
 my $Vote = $FAQObject->VoteGet(
     CreateBy  => 'Some Text',
-    ItemID    => $ItemID,
+    ItemID    => $FAQID,
     IP        => '54.43.30.1',
     Interface => '2',
     UserID    => 1,
@@ -131,7 +131,7 @@ $Self->Is(
     "VoteGet() - IP",
 );
 
-my $ItemID2 = $FAQObject->FAQAdd(
+my $FAQID2 = $FAQObject->FAQAdd(
     Title       => 'Title',
     CategoryID  => 1,
     StateID     => 1,
@@ -144,7 +144,7 @@ my $ItemID2 = $FAQObject->FAQAdd(
 );
 
 $Self->True(
-    $ItemID2,
+    $FAQID2,
     "FAQAdd() - 2",
 );
 
@@ -168,7 +168,7 @@ for my $AttachmentTest (@AttachmentTests) {
         Location => $Home . '/scripts/test/sample/' . $AttachmentTest->{File},
     );
     my $Add = $FAQObject->AttachmentAdd(
-        ItemID      => $ItemID2,
+        ItemID      => $FAQID2,
         Content     => ${$ContentSCALARRef},
         ContentType => 'text/xml',
         Filename    => $AttachmentTest->{File},
@@ -179,11 +179,11 @@ for my $AttachmentTest (@AttachmentTests) {
         "AttachmentAdd() - $AttachmentTest->{File}",
     );
     my @AttachmentIndex = $FAQObject->AttachmentIndex(
-        ItemID => $ItemID2,
+        ItemID => $FAQID2,
         UserID => 1,
     );
     my %File = $FAQObject->AttachmentGet(
-        ItemID => $ItemID2,
+        ItemID => $FAQID2,
         FileID => $AttachmentIndex[0]->{FileID},
         UserID => 1,
     );
@@ -202,7 +202,7 @@ for my $AttachmentTest (@AttachmentTests) {
     );
 
     my $Delete = $FAQObject->AttachmentDelete(
-        ItemID => $ItemID2,
+        ItemID => $FAQID2,
         FileID => $AttachmentIndex[0]->{FileID},
         UserID => 1,
     );
@@ -213,7 +213,7 @@ for my $AttachmentTest (@AttachmentTests) {
 }
 
 my $VoteIDsRef = $FAQObject->VoteSearch(
-    ItemID => $ItemID,
+    ItemID => $FAQID,
     UserID => 1,
 );
 
@@ -230,35 +230,35 @@ for my $VoteID ( @{$VoteIDsRef} ) {
 
 # add FAQ article to log
 my $Success = $FAQObject->FAQLogAdd(
-    ItemID    => $ItemID,
+    ItemID    => $FAQID,
     Interface => 'internal',
     UserID    => 1,
 );
 $Self->True(
     $Success,
-    "FAQLogAdd() - $ItemID",
+    "FAQLogAdd() - $FAQID",
 );
 
 # try to add same FAQ article to log again (must return false)
 $Success = $FAQObject->FAQLogAdd(
-    ItemID    => $ItemID,
+    ItemID    => $FAQID,
     Interface => 'internal',
     UserID    => 1,
 );
 $Self->False(
     $Success,
-    "FAQLogAdd() - $ItemID",
+    "FAQLogAdd() - $FAQID",
 );
 
 # add another FAQ article to log
 $Success = $FAQObject->FAQLogAdd(
-    ItemID    => $ItemID2,
+    ItemID    => $FAQID2,
     Interface => 'internal',
     UserID    => 1,
 );
 $Self->True(
     $Success,
-    "FAQLogAdd() - $ItemID2",
+    "FAQLogAdd() - $FAQID2",
 );
 
 # get FAQ Top-10
@@ -293,21 +293,21 @@ $Self->Is(
 );
 
 my $FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $ItemID,
+    ItemID => $FAQID,
     UserID => 1,
 );
 $Self->True(
     $FAQDelete,
-    "FAQDelete() - ItemID: $ItemID",
+    "FAQDelete() - FAQID: $FAQID",
 );
 
 my $FAQDelete2 = $FAQObject->FAQDelete(
-    ItemID => $ItemID2,
+    ItemID => $FAQID2,
     UserID => 1,
 );
 $Self->True(
     $FAQDelete2,
-    "FAQDelete() - ItemID: $ItemID2",
+    "FAQDelete() - FAQID: $FAQID2",
 );
 
 my $CategoryID = $FAQObject->CategoryAdd(
@@ -409,7 +409,7 @@ my %TestFields = (
     Field6 => 'Comment...',
 );
 
-$ItemID = $FAQObject->FAQAdd(
+$FAQID = $FAQObject->FAQAdd(
     Title      => 'Some Text',
     CategoryID => 1,
     StateID    => 1,
@@ -421,7 +421,7 @@ $ItemID = $FAQObject->FAQAdd(
 );
 
 $Self->True(
-    $ItemID,
+    $FAQID,
     "FAQAdd() for ItemFieldGet with True",
 );
 
@@ -436,7 +436,7 @@ my $CheckFields = sub {
         # check that cache is clean
         my $Cache = $CacheObject->Get(
             Type => 'FAQ',
-            Key  => "ItemFieldGet::ItemID::$ItemID",
+            Key  => "ItemFieldGet::ItemID::$FAQID",
         );
 
         # on before first Get cache should be undef, after firs cache exist, but the Field key must be
@@ -458,7 +458,7 @@ my $CheckFields = sub {
 
         # get the field
         $ResultFields{$Field} = $FAQObject->ItemFieldGet(
-            ItemID => $ItemID,
+            ItemID => $FAQID,
             Field  => $Field,
             UserID => 1,
         );
@@ -466,7 +466,7 @@ my $CheckFields = sub {
         # check cache is set
         $Cache = $CacheObject->Get(
             Type => 'FAQ',
-            Key  => "ItemFieldGet::ItemID::$ItemID",
+            Key  => "ItemFieldGet::ItemID::$FAQID",
         );
 
         $Self->Is(
@@ -501,7 +501,7 @@ my %UpdatedTestFields = (
 );
 
 $FAQUpdate = $FAQObject->FAQUpdate(
-    ItemID     => $ItemID,
+    ItemID     => $FAQID,
     Title      => 'Some Text',
     CategoryID => 1,
     StateID    => 1,
@@ -520,7 +520,7 @@ $Self->True(
 $CheckFields->( CompareFields => \%UpdatedTestFields );
 
 $FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $ItemID,
+    ItemID => $FAQID,
     UserID => 1,
 );
 
@@ -532,7 +532,7 @@ $Self->True(
 # check that cache is clean
 my $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => "ItemFieldGet::ItemID::$ItemID",
+    Key  => "ItemFieldGet::ItemID::$FAQID",
 );
 
 $Self->Is(
@@ -542,7 +542,7 @@ $Self->Is(
 );
 
 # FAQ item cache tests
-$ItemID = $FAQObject->FAQAdd(
+$FAQID = $FAQObject->FAQAdd(
     Title      => 'Some Text',
     CategoryID => 1,
     StateID    => 1,
@@ -556,7 +556,7 @@ $ItemID = $FAQObject->FAQAdd(
 # check that cache is clean
 $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $ItemID . '::ItemFields::0',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
 $Self->Is(
     $Cache,
@@ -565,7 +565,7 @@ $Self->Is(
 );
 $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $ItemID . '::ItemFields::1',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
 $Self->Is(
     $Cache,
@@ -575,14 +575,14 @@ $Self->Is(
 
 # get FAQ no Item Fields
 my %FAQData = $FAQObject->FAQGet(
-    ItemID     => $ItemID,
+    ItemID     => $FAQID,
     ItemFields => 0,
     UserID     => 1
 );
 
 $Self->Is(
     $FAQData{ItemID},
-    $ItemID,
+    $FAQID,
     "Sanity Check for FAQGet(): match ItemID"
 );
 
@@ -598,7 +598,7 @@ for my $FieldCount ( 1 .. 6 ) {
 }
 $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $ItemID . '::ItemFields::0',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
 $Self->Is(
     ref $Cache,
@@ -607,7 +607,7 @@ $Self->Is(
 );
 $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $ItemID . '::ItemFields::1',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
 $Self->Is(
     $Cache,
@@ -617,14 +617,14 @@ $Self->Is(
 
 # get FAQ with Item Fields
 %FAQData = $FAQObject->FAQGet(
-    ItemID     => $ItemID,
+    ItemID     => $FAQID,
     ItemFields => 1,
     UserID     => 1
 );
 
 $Self->Is(
     $FAQData{ItemID},
-    $ItemID,
+    $FAQID,
     "Sanity Check for FAQGet(): match ItemID"
 );
 
@@ -640,7 +640,7 @@ for my $FieldCount ( 1 .. 6 ) {
 }
 $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $ItemID . '::ItemFields::0',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
 );
 $Self->Is(
     ref $Cache,
@@ -649,7 +649,7 @@ $Self->Is(
 );
 $Cache = $CacheObject->Get(
     Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $ItemID . '::ItemFields::1',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
 );
 $Self->Is(
     ref $Cache,

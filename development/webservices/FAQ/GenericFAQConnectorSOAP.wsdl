@@ -77,7 +77,7 @@
           		type="xsd:dateTime" />
           	<xsd:element maxOccurs="1" minOccurs="1" name="CreatedBy"
           		type="xsd:string" />
-          	<xsd:element maxOccurs="1" minOccurs="1" name="ItemID"
+          	<xsd:element maxOccurs="1" minOccurs="1" name="FAQID"
           		type="xsd:positiveInteger" />
           	<xsd:element maxOccurs="1" minOccurs="1" name="Field1"
           		type="xsd:string" />

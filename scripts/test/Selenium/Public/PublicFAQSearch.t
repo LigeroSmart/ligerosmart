@@ -31,7 +31,7 @@ $Selenium->RunTest(
 
             # add test FAQ
             my $FAQTitle = $Title . $Helper->GetRandomID();
-            my $ItemID   = $FAQObject->FAQAdd(
+            my $FAQID    = $FAQObject->FAQAdd(
                 Title       => $FAQTitle,
                 CategoryID  => 1,
                 StateID     => 3,
@@ -43,12 +43,12 @@ $Selenium->RunTest(
             );
 
             $Self->True(
-                $ItemID,
-                "FAQ is created - $ItemID",
+                $FAQID,
+                "FAQ is created - $FAQID",
             );
 
             my %FAQ = (
-                ItemID   => $ItemID,
+                FAQID    => $FAQID,
                 FAQTitle => $FAQTitle,
                 Type     => $Title,
             );
@@ -139,7 +139,7 @@ $Selenium->RunTest(
         # delete test created FAQs
         for my $Delete (@FAQSearch) {
             my $Success = $FAQObject->FAQDelete(
-                ItemID => $Delete->{ItemID},
+                ItemID => $Delete->{FAQID},
                 UserID => 1,
             );
             $Self->True(

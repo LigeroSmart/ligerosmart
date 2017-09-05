@@ -221,7 +221,7 @@ sub Run {
         }
 
         # add FAQ article
-        my $ItemID = $FAQObject->FAQAdd(
+        my $FAQID = $FAQObject->FAQAdd(
             Title       => $Title,
             CategoryID  => $CategoryID,
             StateID     => $StateID,
@@ -239,7 +239,7 @@ sub Run {
         );
 
         # check success
-        if ($ItemID) {
+        if ($FAQID) {
             $SuccessCount++;
         }
         else {

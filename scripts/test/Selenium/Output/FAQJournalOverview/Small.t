@@ -27,7 +27,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $ItemID   = $FAQObject->FAQAdd(
+        my $FAQID    = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 2,
@@ -37,8 +37,8 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $ItemID,
-            "Test FAQ item is created - ID $ItemID",
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
         );
 
         # create test user and login
@@ -74,12 +74,12 @@ $Selenium->RunTest(
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $ItemID,
+            ItemID => $FAQID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "Test FAQ item is deleted - ID $ItemID",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # make sure the cache is correct

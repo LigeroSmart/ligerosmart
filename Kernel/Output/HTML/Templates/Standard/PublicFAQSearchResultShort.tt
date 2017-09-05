@@ -42,8 +42,8 @@
         <table class="Overview">
             <thead>
                 <tr>
-                    <th class="FAQNumber [% Data.ItemIDSort %]">
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Search;[% Data.Profile | html %]SortBy=ItemID;Order=[% Data.Order | uri %];TakeLastSearch=1;Filter=[% Data.Filter | uri %];Limit=[% Data.Limit | uri %];Type=[% Data.Type | uri %]">
+                    <th class="FAQNumber [% Data.FAQIDSort %]">
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Search;[% Data.Profile | html %]SortBy=FAQID;Order=[% Data.Order | uri %];TakeLastSearch=1;Filter=[% Data.Filter | uri %];Limit=[% Data.Limit | uri %];Type=[% Data.Type | uri %]">
                             [% Config("FAQ::FAQHook") %]
                         </a>
                     </th>
@@ -93,7 +93,7 @@
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("Record") %]
                 <tr class="MasterAction" title="[% Data.Number | html %]">
-                    <td class="FAQNumber"><a href="[% Env("Baselink") %]Action=PublicFAQZoom;ItemID=[% Data.ItemID | uri %];ZoomBackLink=[% Data.ZoomBackLink | uri %];" class="MasterActionLink">[% Data.Number | html %]</a></td>
+                    <td class="FAQNumber"><a href="[% Env("Baselink") %]Action=PublicFAQZoom;ItemID=[% Data.FAQID | uri %];ZoomBackLink=[% Data.ZoomBackLink | uri %];" class="MasterActionLink">[% Data.Number | html %]</a></td>
                     <td class="Title" title="[% Data.Title %]">[% Data.CleanTitle | html %]</td>
                     <td class="Category">[% Data.CategoryName | truncate(60) | html %]</td>
 [% RenderBlockStart("RecordLanguage") %]

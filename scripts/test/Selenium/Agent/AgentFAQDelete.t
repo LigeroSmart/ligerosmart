@@ -24,7 +24,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $ItemID   = $Kernel::OM->Get('Kernel::System::FAQ')->FAQAdd(
+        my $FAQID    = $Kernel::OM->Get('Kernel::System::FAQ')->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -35,8 +35,8 @@ $Selenium->RunTest(
         );
 
         $Self->True(
-            $ItemID,
-            "FAQ item is created - ID $ItemID",
+            $FAQID,
+            "FAQ item is created - ID $FAQID",
         );
 
         # create test user and login
@@ -54,7 +54,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom screen of created test FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
 
         # verify its right screen
         $Self->True(
@@ -63,7 +63,7 @@ $Selenium->RunTest(
         );
 
         # click on 'Delete'
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQDelete;ItemID=$ItemID' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQDelete;ItemID=$FAQID' )]")->VerifiedClick();
         $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
 
         # verify delete message
@@ -77,9 +77,9 @@ $Selenium->RunTest(
 
         # verify delete action
         # try to navigate to the AgetnFAQZoom of deleted test FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
         $Self->True(
-            index( $Selenium->get_page_source(), "No such ItemID $ItemID!" ) > -1,
+            index( $Selenium->get_page_source(), "No such ItemID $FAQID!" ) > -1,
             "Delete action - success",
         );
 

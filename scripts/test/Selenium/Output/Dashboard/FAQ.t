@@ -50,7 +50,7 @@ $Selenium->RunTest(
         # Create test FAQ.
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
         my $FAQTitle  = 'FAQ ' . $Helper->GetRandomID();
-        my $ItemID    = $FAQObject->FAQAdd(
+        my $FAQID     = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 2,
@@ -61,8 +61,8 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $ItemID,
-            "Test FAQ item is created - ID $ItemID",
+            $FAQID,
+            "Test FAQ item is created - ID $FAQID",
         );
 
         # Create test user and login.
@@ -108,19 +108,19 @@ $Selenium->RunTest(
 
             # Check link for test created FAQ.
             $Self->True(
-                index( $Selenium->get_page_source(), "${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID" ) > -1,
+                index( $Selenium->get_page_source(), "${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID" ) > -1,
                 "Test FAQ link is found",
             );
         }
 
         # Delete test created FAQ.
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $ItemID,
+            ItemID => $FAQID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "Test FAQ item is deleted - ID $ItemID",
+            "Test FAQ item is deleted - ID $FAQID",
         );
 
         # Make sure the cache is correct.

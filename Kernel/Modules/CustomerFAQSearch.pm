@@ -72,7 +72,7 @@ sub Run {
     my $SearchPageShown = $Config->{SearchPageShown} || 40;
     my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
-        || 'ItemID';
+        || 'FAQID';
     my $OrderBy = $ParamObject->GetParam( Param => 'Order' )
         || $Config->{'Order::Default'}
         || 'Down';
@@ -497,7 +497,7 @@ sub Run {
         );
 
         # perform FAQ search
-        my @ViewableItemIDs = $FAQObject->FAQSearch(
+        my @ViewableFAQIDs = $FAQObject->FAQSearch(
             OrderBy             => [$SortBy],
             OrderByDirection    => [$OrderBy],
             Limit               => $SearchLimit,
@@ -541,11 +541,11 @@ sub Run {
             }
             $CSVDynamicField = \@CSVCustomerDynamicFields;
 
-            for my $ItemID (@ViewableItemIDs) {
+            for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID        => $ItemID,
+                    ItemID        => $FAQID,
                     ItemFields    => 0,
                     DynamicFields => 1,
                     UserID        => $Self->{UserID},
@@ -701,11 +701,11 @@ sub Run {
             my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
             my @PDFData;
-            for my $ItemID (@ViewableItemIDs) {
+            for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID     => $ItemID,
+                    ItemID     => $FAQID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
@@ -893,7 +893,7 @@ sub Run {
         my $Counter = 0;
 
         # if there are results to show
-        if (@ViewableItemIDs) {
+        if (@ViewableFAQIDs) {
 
             my $OverviewConfig = $ConfigObject->Get("FAQ::Frontend::CustomerFAQOverview");
 
@@ -991,7 +991,7 @@ sub Run {
                 }
             }
 
-            for my $ItemID (@ViewableItemIDs) {
+            for my $FAQID (@ViewableFAQIDs) {
 
                 $Counter++;
 
@@ -1004,7 +1004,7 @@ sub Run {
 
                     # get FAQ data details
                     my %FAQData = $FAQObject->FAQGet(
-                        ItemID        => $ItemID,
+                        ItemID        => $FAQID,
                         ItemFields    => 0,
                         DynamicFields => 1,
                         UserID        => $Self->{UserID},

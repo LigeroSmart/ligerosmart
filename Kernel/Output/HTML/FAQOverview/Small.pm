@@ -49,19 +49,19 @@ sub Run {
         }
     }
 
-    # need ItemIDs
-    if ( !$Param{ItemIDs} ) {
+    # need FAQIDs
+    if ( !$Param{FAQIDs} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
-            Message  => 'Need the ItemIDs!',
+            Message  => 'Need the FAQIDs!',
         );
         return;
     }
 
-    # store the ItemIDs
+    # store the FAQIDs
     my @IDs;
-    if ( $Param{ItemIDs} && ref $Param{ItemIDs} eq 'ARRAY' ) {
-        @IDs = @{ $Param{ItemIDs} };
+    if ( $Param{FAQIDs} && ref $Param{FAQIDs} eq 'ARRAY' ) {
+        @IDs = @{ $Param{FAQIDs} };
     }
 
     # get config object
@@ -116,7 +116,7 @@ sub Run {
                         : $Param{SortBy} eq 'CategoryID' ? 'Category'
                         : $Param{SortBy} eq 'LanguageID' ? 'Language'
                         : $Param{SortBy} eq 'StateID'    ? 'State'
-                        : $Param{SortBy} eq 'ItemID'     ? 'Number'
+                        : $Param{SortBy} eq 'FAQID'      ? 'Number'
                         :                                  $Param{SortBy};
                 }
 

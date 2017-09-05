@@ -72,7 +72,7 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
             LanguageIDs => [ 4, 5, 6 ],                                   # (optional)
             CategoryIDs => [ 7, 8, 9 ],                                   # (optional)
 
-            OrderBy => [ 'ItemID', 'Title' ],                              # (optional)
+            OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
 
             # Additional information for OrderBy:
             # The OrderByDirection can be specified for each OrderBy attribute.
@@ -114,7 +114,7 @@ sub Run {
 
     my $SortBy = $Param{Data}->{OrderBy}
         || $Config->{'SortBy::Default'}
-        || 'ItemID';
+        || 'FAQID';
 
     # the CategoryID param could be an ARRAY an SCALAR or an empty value
     if ( !IsArrayRefWithData($SortBy) && $SortBy ne '' ) {
@@ -164,7 +164,7 @@ sub Run {
     );
 
     # perform FAQ search
-    my @ViewableItemIDs = $FAQObject->FAQSearch(
+    my @ViewableFAQIDs = $FAQObject->FAQSearch(
         Number  => $Param{Data}->{Number}  || '',
         Title   => $Param{Data}->{Title}   || '',
         What    => $Param{Data}->{What}    || '',
@@ -178,7 +178,7 @@ sub Run {
         States           => $InterfaceStates,
         Interface        => $Interface,
     );
-    if ( !IsArrayRefWithData( \@ViewableItemIDs ) ) {
+    if ( !IsArrayRefWithData( \@ViewableFAQIDs ) ) {
 
         my $ErrorMessage = 'Could not get FAQ data'
             . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()';
@@ -197,11 +197,11 @@ sub Run {
     };
 
     # set FAQ entry data
-    if ( scalar @ViewableItemIDs > 1 ) {
-        $ReturnData->{Data}->{ID} = \@ViewableItemIDs;
+    if ( scalar @ViewableFAQIDs > 1 ) {
+        $ReturnData->{Data}->{ID} = \@ViewableFAQIDs;
     }
     else {
-        $ReturnData->{Data}->{ID} = $ViewableItemIDs[0];
+        $ReturnData->{Data}->{ID} = $ViewableFAQIDs[0];
     }
 
     # return result
