@@ -200,7 +200,8 @@ sub UserReporting {
     return if !$DateTimeValid;
 
     # get days of month if not provided
-    $Param{Day} ||= $DateTimeObject->LastDayOfMonthGet();
+    my $LastDayOfMonth = $DateTimeObject->LastDayOfMonthGet();
+    $Param{Day} ||= $LastDayOfMonth->{Day};
 
     my %UserCurrentPeriod = $Self->UserCurrentPeriodGet(%Param);
     my $YearStart         = 1970;
