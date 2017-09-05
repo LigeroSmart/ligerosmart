@@ -11,6 +11,9 @@
  - 2017-07-14 Improved close button text, thanks to Balázs Úr.
  - 2017-07-12 Fixed bug#[9304](https://bugs.otrs.org/show_bug.cgi?id=9304) - Rendering of survey results is broken.
  - 2017-07-12 Fixed bug#[11739](https://bugs.otrs.org/show_bug.cgi?id=11739) - If a user can see AgentSurveyZoom of a survey, the user can always change status of the survey.
+ - 2017-06-09 Implemented check conditions based on customer user attributes.
+ - 2017-06-09 Added new answer type 'Net Promoter Score' and allowed only one answer to be valid for checkbox questions.
+ - 2017-06-09 Small improvements for validating emails.
 
 #5.0.4 2017-05-09
  - 2017-05-02 Updated translations, thanks to all translators.

@@ -25,8 +25,20 @@ Survey.Agent.SurveyOverview = (function (TargetNS) {
      *      Init edit survey screen.
      */
     TargetNS.Init = function () {
-        $('#SurveySearch').on('click', function () {
-            Core.Agent.Search.OpenSearchDialog('AgentSurveySearch', Core.Config.Get("JSData.Profile"));
+        $('#SurveySearch').bind('click', function (Event) {
+            Core.UI.Dialog.ShowContentDialog($('#SurveyOverviewSettingsDialogContainer'),
+                Core.Language.Translate("Settings"), '20%', 'Center', true,
+                [
+                    {
+                        Label: Core.Language.Translate("Submit"),
+                        Type: 'Submit',
+                        Class: 'Primary'
+                    }
+                ]
+            );
+
+            Event.preventDefault();
+            Event.stopPropagation();
             return false;
         });
 
@@ -55,6 +67,23 @@ Survey.Agent.SurveyOverview = (function (TargetNS) {
                 window.location = $MasterActionLink.attr('href');
                 return false;
             }
+        });
+
+        // bind the ContextSettingsDialogContainer
+        $('#SurveySearch').on('click', function (Event) {
+            Core.UI.Dialog.ShowContentDialog($('#SurveyOverviewSettingsDialogContainer'),
+                Core.Language.Translate("Settings"), '20%', 'Center', true,
+                [
+                    {
+                        Label: Core.Language.Translate("Submit"),
+                        Type: 'Submit',
+                        Class: 'Primary'
+                    }
+                ]
+            );
+            Event.preventDefault();
+            Event.stopPropagation();
+            return false;
         });
     };
 

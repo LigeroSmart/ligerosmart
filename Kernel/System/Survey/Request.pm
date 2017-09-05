@@ -31,6 +31,13 @@ to get an array list of request elements
 
     my %RequestData = $SurveyObject->RequestGet(
         PublicSurveyKey => 'Aw5de3Xf5qA',
+
+        RequestSendTimeNewerDate    => '2012-01-01 12:00:00',   # (optional)
+        RequestSendTimeOlderDate    => '2012-01-31 12:00:00',   # (optional)
+        RequestVoteTimeNewerDate    => '2012-01-01 12:00:00',   # (optional)
+        RequestVoteTimeOlderDate    => '2012-12-31 12:00:00',   # (optional)
+        RequestCreateTimeNewerDate  => '2012-01-01 12:00:00',   # (optional)
+        RequestCreateTimeOlderDate  => '2012-12-31 12:00:00',   # (optional)
     );
 
 returns:
@@ -64,14 +71,50 @@ sub RequestGet {
     # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-    # get vote list
+    # prepare sql
+    my $SQLSelect = 'SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time, vote_time';
+    my $SQLFrom   = ' FROM survey_request';
+    my $SQLWhere  = " WHERE public_survey_key = '$Param{PublicSurveyKey}'";
+
+    # set time params
+    my %TimeParams = (
+
+        RequestSendTimeNewerDate   => 'send_time >=',
+        RequestSendTimeOlderDate   => 'send_time <=',
+        RequestVoteTimeNewerDate   => 'vote_time >=',
+        RequestVoteTimeOlderDate   => 'vote_time <=',
+        RequestCreateTimeNewerDate => 'create_time >=',
+        RequestCreateTimeOlderDate => 'create_time <=',
+    );
+
+    # check and add time params to WHERE
+    TIMEPARAM:
+    for my $TimeParam ( sort keys %TimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        # check format
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "The parameter $TimeParam has an invalid date format!",
+            );
+
+            return;
+        }
+
+        $Param{$TimeParam} = $DBObject->Quote( $Param{$TimeParam} );
+
+        # add time parameter to WHERE
+        $SQLWhere .= " AND $TimeParams{$TimeParam} '$Param{$TimeParam}'";
+    }
+
+    my $SQL = $SQLSelect .= $SQLFrom;
+    $SQL .= $SQLWhere;
+
+    # get request list
     return if !$DBObject->Prepare(
-        SQL => '
-            SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time,
-                vote_time
-            FROM survey_request
-            WHERE public_survey_key = ?',
-        Bind  => [ \$Param{PublicSurveyKey} ],
+        SQL   => $SQL,
         Limit => 1,
     );
 
@@ -230,6 +273,71 @@ sub RequestSend {
         }
     }
 
+    my %CustomerUser;
+    if ( $Ticket{CustomerUserID} ) {
+        %CustomerUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
+            User => $Ticket{CustomerUserID},
+        );
+
+        return if $ConfigObject->Get('Survey::SendOnlyToRealCustomer') && !$CustomerUser{UserCustomerID};
+    }
+
+    # Check if the send condition by customeruser fields check is enabled.
+    if ( $ConfigObject->Get('Survey::CheckSendConditionCustomerFields') ) {
+
+        if ( IsHashRefWithData( $Survey{CustomerUserConditions} ) ) {
+
+            # Check is active + defined, but there is no customer.
+            return if !$Ticket{CustomerUserID};
+
+            my $Results = '';
+
+            ATTRIBUTE:
+            for my $Attribute ( sort keys %{ $Survey{CustomerUserConditions} } ) {
+                next ATTRIBUTE if !$Attribute;
+
+                my @Conditions = @{ $Survey{CustomerUserConditions}->{$Attribute} };
+                next ATTRIBUTE if !@Conditions;
+
+                my $Result = '';
+
+                CONDITION:
+                for my $Condition (@Conditions) {
+                    next CONDITION if !$Condition;
+
+                    my $RegExpValue = $Condition->{RegExpValue};
+                    my $Negation    = $Condition->{Negation};
+
+                    my $IsMatched = ( $CustomerUser{$Attribute} =~ m{$RegExpValue}i );
+
+                    if ($Negation) {
+                        $IsMatched = !$IsMatched;
+                    }
+
+                    # Combine conditions for this field by OR.
+                    if ($IsMatched) {
+
+                        $Result .= '1 || ';
+                    }
+                    else {
+                        $Result .= '0 || ';
+
+                    }
+                }
+
+                $Result = substr $Result, 0, -4;
+
+                # Combine all conditions by AND.
+                $Results .= "(${Result}) && ";
+            }
+
+            $Results = substr $Results, 0, -4;
+
+            # Block survey email if conditions evaluates to false.
+            return if !eval($Results);    ## no critic
+        }
+    }
+
     for my $Data ( sort keys %Ticket ) {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
@@ -259,11 +367,7 @@ sub RequestSend {
     $Body =~ s/&lt;OTRS_CONFIG_.+?&gt;/-/gi;
 
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
-    my %CustomerUser;
-    if ( $Ticket{CustomerUserID} ) {
-        %CustomerUser = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
-            User => $Ticket{CustomerUserID},
-        );
+    if (%CustomerUser) {
 
         # replace customer stuff with tags
         CUSTOMER:
@@ -553,6 +657,44 @@ sub RequestCount {
     return $RequestCount;
 }
 
+=head2 RequestDelete()
+
+delete request by id
+
+    my $VoteDelete = $SurveyObject->RequestDelete(
+        RequestID => 123,
+    );
+
+=cut
+
+sub RequestDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(RequestID)) {
+        if ( !defined $Param{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+
+            return;
+        }
+    }
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # count votes
+    return if !$DBObject->Do(
+        SQL   => 'DELETE FROM survey_request WHERE id = ?',
+        Bind  => [ \$Param{RequestID} ],
+        Limit => 1,
+    );
+
+    return 1;
+}
+
 =begin Internal:
 
 =head2 _GetRequestRecipient()
@@ -657,6 +799,11 @@ sub _GetRequestRecipient {
 
     # check if it's a valid email address (min is needed)
     return if $To !~ /@/;
+
+    my $ValidEmail = $Kernel::OM->Get('Kernel::System::CheckItem')->CheckEmail(
+        Address => $To,
+    );
+    return if !$ValidEmail;
 
     # convert to lower cases
     $To = lc $To;

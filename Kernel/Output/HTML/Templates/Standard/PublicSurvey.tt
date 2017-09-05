@@ -88,6 +88,16 @@
                     <textarea title="[% Data.Question %]" id="RichText[% Data.QuestionID | html %]" name="PublicSurveyVote4[[% Data.QuestionID | html %]]" class="RichText DontPrint" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Value %]</textarea>
                 </div>
 [% RenderBlockEnd("PublicAnswerTextarea") %]
+
+[% RenderBlockStart("PublicAnswerNPS") %]
+                <div class="Question [% Data.Class | html %]"> [% Data.RequiredText | html %][% Data.Question %] </div>
+                [% Data.ErrorText %]
+[% RenderBlockStart("PublicAnswerNPSb") %]
+                <input type="radio" class="NPS" id="PublicSurveyVote5[% Data.QuestionID | html %][% Data.AnswerID | html %]" name="PublicSurveyVote5[[% Data.QuestionID | html %]]" value="[% Data.AnswerID | html %]" [% Data.AnswerSelected | html %]/>
+                <label class="Answer NPS" for="PublicSurveyVote5[% Data.QuestionID | html %][% Data.AnswerID | html %]">[% Data.Answer | html %]</label>
+[% RenderBlockEnd("PublicAnswerNPSb") %]
+[% RenderBlockEnd("PublicAnswerNPS") %]
+
             </div>
 [% RenderBlockEnd("PublicQuestions") %]
         </fieldset>

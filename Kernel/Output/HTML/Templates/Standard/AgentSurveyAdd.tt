@@ -16,6 +16,7 @@
             <form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" name="Survey" id="Survey" class="Validate PreventMultipleSubmits">
                 <input type="hidden" name="Action" value="[% Env("Action") %]" />
                 <input type="hidden" name="Subaction" value="SurveyNew" />
+                <input type="hidden" name="CustomerUserConditionsFields" id="CustomerUserConditionsFields" value="[% Data.CustomerUserConditionsFields %]" />
 
                 <fieldset class="TableLike">
 
@@ -95,6 +96,39 @@
                         <p>[% Translate("This field is required.") | html %]</p>
                     </div>
 [% RenderBlockEnd("GenericServerError") %]
+
+[% RenderBlockStart("SendCustomerUserConditions") %]
+                    <label for="CustomerUserConditions">[% Translate("Customer conditions") | html %]:</label>
+                    <div class="Field">
+                        [% Data.CustomerUserConditionsFieldsStrg %]
+                        <p class="FieldExplanation">
+                            [% Translate("Please choose a Customer property to add a condition.") | html %]
+                        </p>
+                    </div>
+                    <div class="Clear"></div>
+                    <div class="Field Hidden" id="TemplateLevel1">
+                        <ul class="CustomerUserConditionsList">
+                            <li class="DataItem">
+                                <span class="Icon RemoveButtonCustomerField"><i class="fa fa-minus-square-o"></i></span>
+                                <strong></strong>
+                                <ul>
+                                    <li class="Even Last">
+                                        <label>Negate:</label>
+                                        <input type="hidden" value="0" />
+                                        <input class="CustomerUserConditionsCheckbox" type="checkbox" value="0" />
+                                        <input type="text" class="W50pc" value="" />
+                                        <div class="TooltipErrorMessage">
+                                            <p>[% Translate("The field needs to be a valid regular expression or a literal word.") | html %]</p>
+                                        </div>
+                                        <span class="Icon RemoveButtonCustomerCondition Hidden"><i class="fa fa-minus-square-o"></i></span>
+                                        <span class="Icon AddButtonCustomerCondition"><i class="fa fa-plus-square-o"></i></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="Clear"></div>
+[% RenderBlockEnd("SendCustomerUserConditions") %]
 
                     <div class="Field">
                         <button class="Primary CallForAction" type="submit" value="[% Translate("Create") | html %]"><span><i class="fa fa-check-square-o"></i> [% Translate("Create") | html %]</span></button>

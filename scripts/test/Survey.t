@@ -70,17 +70,28 @@ my $ServiceID = $ServiceObject->ServiceAdd(
     Criticality => '3 normal',
 );
 
+# create a test customeruser
+my $TestCustomerUser1 = $HelperObject->TestCustomerUserCreate();
+my $TestCustomerUser2 = $HelperObject->TestCustomerUserCreate();
+
 # create survey
 my %SurveyData = (
-    Title               => 'A Title',
-    Introduction        => 'The introduction of the survey',
-    Description         => 'The internal description of the survey',
-    NotificationSender  => 'quality@unittest.com',
-    NotificationSubject => 'Help us with your feedback! ÄÖÜ',
-    NotificationBody =>
-        'Dear customer... äöü',
-    TicketTypeIDs => [$TicketTypeID],
-    ServiceIDs    => [$ServiceID],
+    Title                  => 'A Title',
+    Introduction           => 'The introduction of the survey',
+    Description            => 'The internal description of the survey',
+    NotificationSender     => 'quality@unittest.com',
+    NotificationSubject    => 'Help us with your feedback! ÄÖÜ',
+    NotificationBody       => 'Dear customer... äöü',
+    TicketTypeIDs          => [$TicketTypeID],
+    ServiceIDs             => [$ServiceID],
+    CustomerUserConditions => {
+        UserFirstname => [
+            {
+                Negation    => 0,
+                RegExpValue => $TestCustomerUser1,
+            },
+        ],
+    },
 );
 
 # get Survey object
@@ -142,19 +153,9 @@ my %SurveyGet = $SurveyObject->SurveyGet(
 
 for my $Attribute ( sort keys %SurveyData ) {
 
-    # turn off all pretty print
-    local $Data::Dumper::Indent = 0;
-    local $Data::Dumper::Useqq  = 1;
-
-    # dump the attribute from ChangeGet() and the reference attribute
-    ## no critic
-    my $SurveyGetAttribute  = Data::Dumper::Dumper( $SurveyGet{$Attribute} );
-    my $SurveyDataAttribute = Data::Dumper::Dumper( $SurveyData{$Attribute} );
-    ## use critic
-
-    $Self->Is(
-        $SurveyGetAttribute,
-        $SurveyDataAttribute,
+    $Self->IsDeeply(
+        $SurveyGet{$Attribute},
+        $SurveyData{$Attribute},
         "SurveyGet()",
     );
 }
@@ -388,6 +389,10 @@ for my $Test (@Tests) {
         Key   => 'Survey::CheckSendConditionService',
         Value => 0,
     );
+    $ConfigObject->Set(
+        Key   => 'Survey::CheckSendConditionCustomerFields',
+        Value => 0,
+    );
 
     if ( $Test->{Sleep} ) {
         $HelperObject->FixedTimeAddSeconds( $Test->{Sleep} );
@@ -502,9 +507,10 @@ END
 my @SendConditionTests = (
     {
         Name => 'SendCondition#1 without send condition check (ticket type and service)',
-        'Survey::CheckSendConditionTicketType' => 0,
-        'Survey::CheckSendConditionService'    => 0,
-        Ticket                                 => {
+        'Survey::CheckSendConditionTicketType'     => 0,
+        'Survey::CheckSendConditionService'        => 0,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -535,10 +541,11 @@ my @SendConditionTests = (
         Success => 1,
     },
     {
-        Name                                   => 'SendCondition#2 try with check for ticket type',
-        'Survey::CheckSendConditionTicketType' => 1,
-        'Survey::CheckSendConditionService'    => 0,
-        Ticket                                 => {
+        Name                                       => 'SendCondition#2 try with check for ticket type',
+        'Survey::CheckSendConditionTicketType'     => 1,
+        'Survey::CheckSendConditionService'        => 0,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -568,10 +575,11 @@ my @SendConditionTests = (
         Success => 1,
     },
     {
-        Name                                   => 'SendCondition#3 try with check for ticket type (value false)',
-        'Survey::CheckSendConditionTicketType' => 1,
-        'Survey::CheckSendConditionService'    => 0,
-        Ticket                                 => {
+        Name                                       => 'SendCondition#3 try with check for ticket type (value false)',
+        'Survey::CheckSendConditionTicketType'     => 1,
+        'Survey::CheckSendConditionService'        => 0,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -601,10 +609,11 @@ my @SendConditionTests = (
         Success => 0,
     },
     {
-        Name                                   => 'SendCondition#4 try with check for service',
-        'Survey::CheckSendConditionTicketType' => 0,
-        'Survey::CheckSendConditionService'    => 1,
-        Ticket                                 => {
+        Name                                       => 'SendCondition#4 try with check for service',
+        'Survey::CheckSendConditionTicketType'     => 0,
+        'Survey::CheckSendConditionService'        => 1,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -634,10 +643,11 @@ my @SendConditionTests = (
         Success => 1,
     },
     {
-        Name                                   => 'SendCondition#5 try with check for service (value false)',
-        'Survey::CheckSendConditionTicketType' => 0,
-        'Survey::CheckSendConditionService'    => 1,
-        Ticket                                 => {
+        Name                                       => 'SendCondition#5 try with check for service (value false)',
+        'Survey::CheckSendConditionTicketType'     => 0,
+        'Survey::CheckSendConditionService'        => 1,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -667,10 +677,11 @@ my @SendConditionTests = (
         Success => 0,
     },
     {
-        Name                                   => 'SendCondition#6 try with check for ticket type and service',
-        'Survey::CheckSendConditionTicketType' => 1,
-        'Survey::CheckSendConditionService'    => 1,
-        Ticket                                 => {
+        Name                                       => 'SendCondition#6 try with check for ticket type and service',
+        'Survey::CheckSendConditionTicketType'     => 1,
+        'Survey::CheckSendConditionService'        => 1,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -702,9 +713,10 @@ my @SendConditionTests = (
     },
     {
         Name => 'SendCondition#7 try with check for ticket type id (value false) and service',
-        'Survey::CheckSendConditionTicketType' => 1,
-        'Survey::CheckSendConditionService'    => 1,
-        Ticket                                 => {
+        'Survey::CheckSendConditionTicketType'     => 1,
+        'Survey::CheckSendConditionService'        => 1,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -736,9 +748,10 @@ my @SendConditionTests = (
     },
     {
         Name => 'SendCondition#8 try with check for ticket type and service (value false)',
-        'Survey::CheckSendConditionTicketType' => 1,
-        'Survey::CheckSendConditionService'    => 1,
-        Ticket                                 => {
+        'Survey::CheckSendConditionTicketType'     => 1,
+        'Survey::CheckSendConditionService'        => 1,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -771,9 +784,10 @@ my @SendConditionTests = (
     {
         Name =>
             'SendCondition#9 try with check for ticket type (value false) and service (value false)',
-        'Survey::CheckSendConditionTicketType' => 1,
-        'Survey::CheckSendConditionService'    => 1,
-        Ticket                                 => {
+        'Survey::CheckSendConditionTicketType'     => 1,
+        'Survey::CheckSendConditionService'        => 1,
+        'Survey::CheckSendConditionCustomerFields' => 0,
+        Ticket                                     => {
             Title        => 'Some Ticket Title',
             Queue        => 'Raw',
             Lock         => 'unlock',
@@ -803,6 +817,78 @@ my @SendConditionTests = (
         },
         Success => 0,
     },
+    {
+        Name =>
+            'SendCondition#10 try with check for firstname of customeruser - match',
+        'Survey::CheckSendConditionTicketType'     => 0,
+        'Survey::CheckSendConditionService'        => 0,
+        'Survey::CheckSendConditionCustomerFields' => {
+            UserFirstname => 1,
+        },
+        Ticket => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerUser => $TestCustomerUser1,
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => 0,
+            ServiceID    => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+        },
+        Success => 1,
+    },
+    {
+        Name =>
+            'SendCondition#11 try with check for firstname of customeruser - no match',
+        'Survey::CheckSendConditionTicketType'     => 0,
+        'Survey::CheckSendConditionService'        => 0,
+        'Survey::CheckSendConditionCustomerFields' => {
+            UserFirstname => 1,
+        },
+        Ticket => {
+            Title        => 'Some Ticket Title',
+            Queue        => 'Raw',
+            Lock         => 'unlock',
+            Priority     => '3 normal',
+            State        => 'open',
+            CustomerUser => $TestCustomerUser2,
+            OwnerID      => 1,
+            UserID       => 1,
+            TypeID       => 0,
+            ServiceID    => 0,
+        },
+        Article => {
+            ArticleType    => 'email-external',
+            SenderType     => 'customer',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
+            Subject        => 'Some Subject',
+            Body           => 'the message text',
+            MessageID      => '<asdasdasd.123@unittest.com>',
+            ContentType    => 'text/plain; charset=ISO-8859-15',
+            HistoryType    => 'OwnerUpdate',
+            HistoryComment => 'Some free text!',
+            UserID         => 1,
+            NoAgentNotify  => 1,                                     # if you don't want to send agent notifications
+        },
+        Success => 0,
+    },
 );
 
 for my $Test (@SendConditionTests) {
@@ -820,6 +906,11 @@ for my $Test (@SendConditionTests) {
     $ConfigObject->Set(
         Key   => 'Survey::CheckSendConditionService',
         Value => $Test->{'Survey::CheckSendConditionService'},
+    );
+
+    $ConfigObject->Set(
+        Key   => 'Survey::CheckSendConditionCustomerFields',
+        Value => $Test->{'Survey::CheckSendConditionCustomerFields'},
     );
 
     my $TicketID = $TicketObject->TicketCreate(

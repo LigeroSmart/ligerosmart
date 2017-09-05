@@ -33,15 +33,53 @@
 [% RenderBlockEnd("OverviewNavBarFilterItem") %]
                 </ul>
 [% RenderBlockEnd("OverviewNavBarFilter") %]
-[% RenderBlockStart("OverviewNavBarPageBack") %]
+
                 <ul class="Tabs">
                     <li>
-                        <a id="SurveySearch" href="[% Env("Baselink") %]Action=[% Env("Action") %];[% Data.LinkBack %]">[% Translate("Change search options") | html %]</a>
+                        <a id="SurveySearch" href="#">[% Translate("Survey overview options") | html %]</a>
                     </li>
                 </ul>
-[% RenderBlockEnd("OverviewNavBarPageBack") %]
+
+                <div id="SurveyOverviewSettingsDialogContainer" class="Hidden">
+                    <form action="[% Env("CGIHandle") %]" method="post" id="SurveyOverviewSettingsDialog">
+                        <input type="hidden" name="Action" value="AgentSurveyOverview"/>
+                        <input type="hidden" name="Subaction" value="Change"/>
+                        <fieldset class="TableLike">
+
+                            <label for="Fulltext" id="LabelFulltext">[% Translate("Fulltext") | html %]:</label>
+                            <div class="Field">
+                                <input type="text" name="Fulltext" value="[% Data.Fulltext | html %]" class="W50pc" />
+                                <p class="FieldExplanation" style="width: 500px">
+                                    [% Translate("Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.") | html %]
+                                </p>
+                            </div>
+                            <div class="Clear"></div>
+
+                            <label for="States" id="LabelStates" >[% Translate("State") | html %]:</label>
+                            <div class="Field">
+                                [% Data.StateStr %]
+                            </div>
+                            <div class="Clear"></div>
+
+                            <label>[% Translate("Survey Create Time") | html %]:</label>
+                            <div class="Field">
+                                <input title="[% Translate("No time settings") | html %]" type="radio"  id="NoTimeSet" name="TimeSearchType" value="" [% Data.SurveySearch.NoRestrictionChecked | html %] [% Data.item("TimeSearchType::None") %] />
+                                <label for="NoTimeSet">[% Translate("No restriction") | html %]</label>
+                            </div>
+                            <div class="Clear"></div>
+                            <div class="Field">
+                                <input title="[% Translate("Date range") | html %]" type="radio" id="DateRange" name="TimeSearchType" value="TimeSlot" [% Data.SurveySearch.TimeSlotChecked | html %] [% Data.item("TimeSearchType::TimeSlot") %] />
+                                <label for="DateRange">[% Translate("Only surveys created between") | html %]</label>
+                                [% Data.SurveyCreateTimeStart %] [% Translate("and") | html %] [% Data.SurveyCreateTimeStop %]
+                            </div>
+                            <div class="Clear"></div>
+
+                        </fieldset>
+                    </form>
+                </div>
 
 [% RenderBlockStart("ContextSettings") %]
+
                 <ul class="ContextFunctions">
                     <li class="ContextSettings">
                         <a href="#" id="ShowContextSettingsDialog" title="[% Translate("Settings") | html %]"><i class="fa fa-cog"></i><span>[% Translate("Settings") | html %]</span></a>

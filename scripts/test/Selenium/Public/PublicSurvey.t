@@ -23,6 +23,18 @@ $Selenium->RunTest(
         # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
+        # do not really send emails
+        $Helper->ConfigSettingChange(
+            Key   => 'SendmailModule',
+            Value => 'Kernel::System::Email::DoNotSendEmail',
+        );
+
+        # Do not check email adresses in this test.
+        $Helper->ConfigSettingChange(
+            Key   => 'CheckEmailAddresses',
+            Value => 0,
+        );
+
         # set send period to always send survey
         $Helper->ConfigSettingChange(
             Key   => 'Survey::SendPeriod',
@@ -79,6 +91,10 @@ $Selenium->RunTest(
             {
                 Type => 'Textarea',
             },
+            {
+                Type   => 'NPS',
+                Answer => [ "NPSOne", "NPSTwo" ],
+            },
         );
 
         # get DB object
@@ -115,6 +131,7 @@ $Selenium->RunTest(
             if (
                 $Questions->{Type} eq 'Radio'
                 || $Questions->{Type} eq 'Checkbox'
+                || $Questions->{Type} eq 'NPS'
                 )
             {
 
@@ -288,6 +305,10 @@ $Selenium->RunTest(
                 ID     => "$QuestionIDs[3]",
                 Answer => 'Selenium Survey Answer',
                 Check  => 'Selenium Survey Answer',
+            },
+            {
+                ID    => "5$QuestionIDs[4]$AnswerIDs[4]",
+                Check => 'NPSOne',
             },
         );
 

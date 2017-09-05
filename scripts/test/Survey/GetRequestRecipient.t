@@ -144,18 +144,18 @@ my @Tests = (
     {
         Name  => 'UserEmail',
         Param => {
-            UserEmail => 'User <user@example.com>',
+            UserEmail => 'User <user@home.com>',
         },
         Success         => 1,
-        ExpectedResults => 'user@example.com',
+        ExpectedResults => 'user@home.com',
     },
     {
         Name  => 'UserEmail Multiple',
         Param => {
-            UserEmail => 'User <user@example.com>, User2 <user2@example.com>',
+            UserEmail => 'User <user@example.com>, User2 <user2@home.com>',
         },
         Success         => 1,
-        ExpectedResults => 'user2@example.com',
+        ExpectedResults => 'user2@home.com',
     },
     {
         Name  => 'TicketID Last article customer',
@@ -243,7 +243,7 @@ my @Tests = (
         Param => {
             TicketID => $TicketID1,
         },
-        BlackList => ['Email@example.com'],
+        BlackList => ['email@example.com'],
         Success   => 0,
     },
     {
@@ -251,7 +251,7 @@ my @Tests = (
         Param => {
             TicketID => $TicketID2,
         },
-        BlackList => ['Email@example.com'],
+        BlackList => ['email@example.com'],
         Success   => 0,
     },
     {

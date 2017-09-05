@@ -120,6 +120,11 @@
                         <Item>Survey.Agent.Default.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Survey.Agent.CustomerUserConditions.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>
@@ -176,6 +181,11 @@
                 <Item Key="CSS">
                     <Array>
                         <Item>Survey.Agent.Default.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Survey.Agent.CustomerUserConditions.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -341,6 +351,13 @@
         <Navigation>Core::Survey</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^\d+$">300</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Survey::DeletePeriod" Required="0" Valid="1">
+        <Description Translatable="1">Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting.</Description>
+        <Navigation>Core::Survey</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+$">365</Item>
         </Value>
     </Setting>
     <Setting Name="Survey::CheckSendConditionTicketType" Required="0" Valid="1">
@@ -588,6 +605,70 @@ Your OTRS-Team
                     </Array>
                 </Item>
             </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Survey::CheckSendConditionCustomerFields" Required="0" Valid="0">
+        <Description Translatable="1">Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).</Description>
+        <Navigation>Core::Survey</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="UserCustomerID">0</Item>
+                <Item Key="UserTitle">0</Item>
+                <Item Key="UserFirstname">0</Item>
+                <Item Key="UserLastname">0</Item>
+                <Item Key="UserLogin">0</Item>
+                <Item Key="UserEmail">0</Item>
+                <Item Key="UserPhone">0</Item>
+                <Item Key="UserFax">0</Item>
+                <Item Key="UserMobile">0</Item>
+                <Item Key="UserStreet">0</Item>
+                <Item Key="UserZip">0</Item>
+                <Item Key="UserCity">0</Item>
+                <Item Key="UserCountry">0</Item>
+                <Item Key="UserComment">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Daemon::SchedulerCronTaskManager::Task###SurveyRequestsDelete" Required="0" Valid="0">
+        <Description Translatable="1">Trigger delete results (including vote data and requests).</Description>
+        <Navigation>Daemon::SchedulerCronTaskManager::Task</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="TaskName">SurveyRequestsDelete</Item>
+                <Item Key="Schedule">*/20 * * * *</Item> <!-- default: every 20 min -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Survey::RequestsDelete</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                        <Item>--force</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Stats::DynamicObjectRegistration###SurveyList" Required="0" Valid="1">
+        <Description Translatable="1">Determines if the statistics module may generate survey lists.</Description>
+        <Navigation>Core::Stats</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::SurveyList</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="SurveyStats::ShowDelete" Required="0" Valid="0">
+        <Description Translatable="1">Defines the groups (rw) which can delete survey stats.</Description>
+        <Navigation>Frontend::Agent::SurveyStats</Navigation>
+        <Value>
+            <Array>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="Survey::SendOnlyToRealCustomer" Required="1" Valid="1">
+        <Description Translatable="1">Defines if survey requests will be only send to real customers.</Description>
+        <Navigation>Core::Survey</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
 </otrs_config>

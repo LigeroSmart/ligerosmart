@@ -244,6 +244,44 @@ sub VoteCount {
     return $VoteCount;
 }
 
+=head2 VoteDelete()
+
+delete vote by request id
+
+    my $VoteDelete = $SurveyObject->VoteDelete(
+        RequestID => 123,
+    );
+
+=cut
+
+sub VoteDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(RequestID)) {
+        if ( !defined $Param{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+
+            return;
+        }
+    }
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # count votes
+    return if !$DBObject->Do(
+        SQL   => 'DELETE FROM survey_vote WHERE request_id = ?',
+        Bind  => [ \$Param{RequestID} ],
+        Limit => 1,
+    );
+
+    return 1;
+}
+
 1;
 
 =head1 TERMS AND CONDITIONS

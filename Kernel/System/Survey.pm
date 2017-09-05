@@ -25,11 +25,14 @@ use parent qw(
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::System::CustomerUser',
     'Kernel::System::DB',
     'Kernel::System::HTMLUtils',
     'Kernel::System::Log',
     'Kernel::System::User',
     'Kernel::System::YAML',
+    'Kernel::System::Encode',
+    'Kernel::System::JSON',
 );
 
 =head1 NAME
@@ -70,16 +73,28 @@ sub new {
 to add a new survey
 
     my $SurveyID = $SurveyObject->SurveyAdd(
-        UserID              => 1,
-        Title               => 'A Title',
-        Introduction        => 'The introduction of the survey',
-        Description         => 'The internal description of the survey',
-        NotificationSender  => 'quality@example.com',
-        NotificationSubject => 'Help us with your feedback!',
-        NotificationBody    => 'Dear customer...',
-        Queues              => [2, 5, 9],  # (optional) survey is valid for these queues
-        TicketTypeIDs       => [1, 2, 3],  # (optional) survey is valid for these ticket types
-        ServiceIDs          => [1, 2, 3],  # (optional) survey is valid for these services
+        UserID                 => 1,
+        Title                  => 'A Title',
+        Introduction           => 'The introduction of the survey',
+        Description            => 'The internal description of the survey',
+        NotificationSender     => 'quality@example.com',
+        NotificationSubject    => 'Help us with your feedback!',
+        NotificationBody       => 'Dear customer...',
+        Queues                 => [2, 5, 9],  # (optional) survey is valid for these queues
+        TicketTypeIDs          => [1, 2, 3],  # (optional) survey is valid for these ticket types
+        ServiceIDs             => [1, 2, 3],  # (optional) survey is valid for these services
+        CustomerUserConditions => {
+            'UserFirstname' => [
+                {
+                    'Negation' => 0,
+                    'RegExpValue' => '^Mi'
+                },
+                {
+                    'Negation' => 1,
+                    'RegExpValue' => '^Ka'
+                }
+           ],
+        }, # (optional)
     );
 
 =cut
@@ -173,8 +188,44 @@ sub SurveyAdd {
 to get all attributes of a survey
 
     my %Survey = $SurveyObject->SurveyGet(
-        SurveyID => 123
+        SurveyID => 123,
     );
+
+Returns:
+    %Survey = (
+        "ChangeBy" => 1,
+        "ChangeTime" => "2017-08-30 11:26:41",
+        "ChangeUserFirstname" => "John",
+        "ChangeUserFullname" => "John Doe",
+        "ChangeUserLastname" => "Doe",
+        "ChangeUserLogin" => "john",
+        "CreateBy" => 1,
+        "CreateTime" => "2017-08-30 11:26:41",
+        "CreateUserFirstname" => "John",
+        "CreateUserFullname" => "John Doe",
+        "CreateUserLastname" => "Doe",
+        "CreateUserLogin" => "john",
+        "CustomerUserConditions" => {
+            "UserLogin" => [
+            {
+                "Negation" => 0,
+                "RegExpValue" => ""
+            }
+            ]
+        },
+        "CustomerUserConditionsJSON" => "{\"UserLogin\":[{\"RegExpValue\":\"\",\"Negation\":\"0\"}]}",
+        "Description" => "Selenium Descriptioncustomer",
+        "Introduction" => "Selenium Introduction",
+        "NotificationBody" => "Dear Customer,\r\n\r\nThanks for using our service. Help us to improve us and our services.\r\n\r\nPlease give us feedback on how to improve our services:\r\n\r\nhttp://localhost/otrs-alpha/public.pl?Action=PublicSurvey;PublicSurveyKey=<OTRS_PublicSurveyKey>\r\n\r\nThanks for your help!\r\n\r\nYour OTRS-Team",
+        "NotificationSender" => "quality\@example.com",
+        "NotificationSubject" => "Help us with your feedback!",
+        "Queues" => [],
+        "SendConditionsRaw" => "---\nCustomerUserConditions:\n  UserLogin:\n  - Negation: 0\n    RegExpValue: ''\n",
+        "Status" => "New",
+        "SurveyID" => 49,
+        "SurveyNumber" => 10049,
+        "Title" => "Survey title",
+    ):
 
 =cut
 
@@ -210,18 +261,6 @@ sub SurveyGet {
     my %Data;
     while ( my @Row = $DBObject->FetchrowArray() ) {
 
-        # get SendCondition as hash
-        my $SendConditions = $Kernel::OM->Get('Kernel::System::YAML')->Load( Data => $Row[9] ) || {};
-
-        # set data fields for send conditions
-        ITEM:
-        for my $Item (qw(TicketTypeIDs ServiceIDs)) {
-
-            next ITEM if !IsArrayRefWithData( $SendConditions->{$Item} );
-
-            $Data{$Item} = $SendConditions->{$Item};
-        }
-
         $Data{SurveyID}            = $Row[0];
         $Data{SurveyNumber}        = $Row[1];
         $Data{Title}               = $Row[2];
@@ -231,10 +270,30 @@ sub SurveyGet {
         $Data{NotificationSubject} = $Row[6];
         $Data{NotificationBody}    = $Row[7];
         $Data{Status}              = $Row[8];
+        $Data{SendConditionsRaw}   = $Row[9];
         $Data{CreateTime}          = $Row[10];
         $Data{CreateBy}            = $Row[11];
         $Data{ChangeTime}          = $Row[12];
         $Data{ChangeBy}            = $Row[13];
+    }
+
+    # Get SendCondition as hash.
+    my $SendConditions = $Kernel::OM->Get('Kernel::System::YAML')->Load( Data => $Data{SendConditionsRaw} ) || {};
+
+    # Set data fields for send conditions.
+    ITEM:
+    for my $Item (qw(TicketTypeIDs ServiceIDs CustomerUserConditions)) {
+
+        next ITEM
+            if ( !IsArrayRefWithData( $SendConditions->{$Item} ) && !IsHashRefWithData( $SendConditions->{$Item} ) );
+
+        $Data{$Item} = $SendConditions->{$Item};
+    }
+
+    if ( $Data{CustomerUserConditions} ) {
+        $Data{CustomerUserConditionsJSON} = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
+            Data => $Data{CustomerUserConditions},
+        );
     }
 
     if ( !%Data ) {
@@ -304,6 +363,18 @@ to update an existing survey
         Queues              => [2, 5, 9],  # (optional) survey is valid for these queues
         TicketTypeIDs       => [1, 2, 3],  # (optional) survey is valid for these ticket types
         ServiceIDs          => [1, 2, 3],  # (optional) survey is valid for these services
+        CustomerUserConditions => {
+            'UserFirstname' => [
+                {
+                    'Negation' => 1,
+                    'RegExpValue' => '^Mi'
+                },
+                {
+                    'Negation' => 1,
+                    'RegExpValue' => '^Ka'
+                }
+           ],
+        }, # (optional)
     );
 
 =cut
@@ -371,7 +442,13 @@ sub SurveyUpdate {
 
 to get a array list of all survey items
 
-    my @List = $SurveyObject->SurveyList();
+    my %SurveyList = $SurveyObject->SurveyList();
+
+Result:
+    %SurveyList = (
+        47 => "Survey title",
+        ...
+    );
 
 =cut
 
@@ -384,18 +461,18 @@ sub SurveyList {
     # get survey list
     return if !$DBObject->Prepare(
         SQL => '
-            SELECT id
+            SELECT id, title
             FROM survey
-            ORDER BY create_time DESC',
+            ORDER BY id ASC',
     );
 
     # fetch the results
-    my @List;
+    my %Surveys;
     while ( my @Row = $DBObject->FetchrowArray() ) {
-        push @List, $Row[0];
+        $Surveys{ $Row[0] } = $Row[1];
     }
 
-    return @List;
+    return %Surveys;
 }
 
 =head2 SurveySearch()
@@ -710,6 +787,17 @@ sub SurveySearch {
         $Ext .= " LOWER(s.status) LIKE LOWER('" . $Param{Status} . "') $Self->{LikeEscapeString}";
     }
 
+    # search for multiple status
+    if ( IsArrayRefWithData( $Param{States} ) ) {
+
+        my $States = join ', ', map {qq('$_')} @{ $Param{States} };
+
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " s.status IN ($States) ";
+    }
+
     # search for the create by
     if ( $Param{CreateBy} ) {
         if ($Ext) {
@@ -743,7 +831,7 @@ sub SurveySearch {
         next TIMEPARAM if !$Param{$TimeParam};
 
         # check format
-        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+        if ( $Param{$TimeParam} !~ /\d\d\d\d-(\d\d|\d)-(\d\d|\d) (\d\d|\d):(\d\d|\d):(\d\d|\d)/ ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "The parameter $TimeParam has an invalid date format!",
@@ -756,7 +844,7 @@ sub SurveySearch {
 
         # add time parameter to WHERE
         if ($Ext) {
-            $Ext .= ' AND';
+            $Ext .= ' AND ';
         }
         $Ext .= "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
@@ -864,24 +952,33 @@ sub SurveyStatusSet {
         my %QuestionType = (
             Radio    => 'Radio',
             Checkbox => 'Checkbox',
+            NPS      => 'NPS',
         );
 
-        # get all questions (type radio and check-box)
+        # get all questions (type radio, check-box and NPS)
         return if !$DBObject->Prepare(
             SQL => '
-                SELECT id
+                SELECT id, question_type
                 FROM survey_question
                 WHERE survey_id = ?
-                    AND (question_type = ? OR question_type = ?)',
-            Bind => [ \$Param{SurveyID}, \$QuestionType{Radio}, \$QuestionType{Checkbox}, ],
+                    AND (question_type = ? OR question_type = ? OR question_type = ?)',
+            Bind => [ \$Param{SurveyID}, \$QuestionType{Radio}, \$QuestionType{Checkbox}, \$QuestionType{NPS}, ],
         );
 
         # fetch the result
         my @QuestionIDs;
         while ( my @Row = $DBObject->FetchrowArray() ) {
-            push( @QuestionIDs, $Row[0] );
+            my @QuestionID = (
+                {
+                    ID   => $Row[0],
+                    Type => $Row[1],
+                },
+            );
+
+            push( @QuestionIDs, @QuestionID );
         }
-        for my $OneID (@QuestionIDs) {
+
+        for my $QuestionID (@QuestionIDs) {
 
             # get all answer ids of a question
             return if !$DBObject->Prepare(
@@ -889,7 +986,7 @@ sub SurveyStatusSet {
                     SELECT COUNT(id)
                     FROM survey_answer
                     WHERE question_id = ?',
-                Bind  => [ \$OneID ],
+                Bind  => [ \$QuestionID->{ID} ],
                 Limit => 1,
             );
 
@@ -899,7 +996,15 @@ sub SurveyStatusSet {
                 $Counter = $Row[0];
             }
 
-            return 'IncompleteQuestion' if $Counter < 2;
+            if ( $QuestionID->{Type} eq 'Radio' ) {
+                return 'IncompleteQuestion' if $Counter < 2;
+            }
+            elsif ( $QuestionID->{Type} eq 'Checkbox' ) {
+                return 'IncompleteQuestion' if $Counter < 1;
+            }
+            elsif ( $QuestionID->{Type} eq 'NPS' ) {
+                return 'IncompleteQuestion' if $Counter < 2;
+            }
         }
 
         # set new status
@@ -1076,6 +1181,54 @@ sub SurveyQueueSet {
     }
 
     return 1;
+}
+
+=head2 PublicSurveyKeyGet()
+
+get all public survey keys as an array reference
+
+my $PublicSurveyKeysRef = $SurveyObject->PublicSurveyKeyGet(
+    SurveyID => 3,
+    Limit    => 1, # optional
+);
+
+=cut
+
+sub PublicSurveyKeyGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{SurveyID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Need SurveyID!',
+        );
+
+        return;
+    }
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    # prepare SQL
+    my $SQL      = 'SELECT public_survey_key FROM survey_request ';
+    my $SQLWhere = "WHERE survey_id = $Param{SurveyID}";
+
+    $SQL .= $SQLWhere;
+
+    # get queue ids from database
+    $DBObject->Prepare(
+        SQL   => $SQL,
+        Limit => $Param{Limit},
+    );
+
+    # fetch the result
+    my @PublicSurveyKeyList;
+    while ( my @Row = $DBObject->FetchrowArray() ) {
+        push @PublicSurveyKeyList, $Row[0];
+    }
+
+    return \@PublicSurveyKeyList;
 }
 
 =head2 PublicSurveyGet()
@@ -1326,8 +1479,20 @@ sub GetRichTextDocumentComplete {
 build send condition string with the single items
 
     my %SendConditions = $SurveyObject->_BuildSendConditionStrg(
-        TicketTypeIDs => [1, 2, 3], # (optional)
-        ServiceIDs    => [1, 2, 3], # (optional)
+        TicketTypeIDs          => [1, 2, 3], # (optional)
+        ServiceIDs             => [1, 2, 3], # (optional)
+        CustomerUserConditions => {
+            'UserFirstname' => [
+                {
+                    'Negation' => 1,
+                    'RegExpValue' => '^Mi'
+                },
+                {
+                    'Negation' => 1,
+                    'RegExpValue' => '^Ka'
+                }
+           ],
+        }, # (optional)
     );
 
 =cut
@@ -1339,9 +1504,8 @@ sub _BuildSendConditionStrg {
     my %SendConditions;
 
     ITEM:
-    for my $Item (qw(TicketTypeIDs ServiceIDs)) {
-
-        next ITEM if !IsArrayRefWithData( $Param{$Item} );
+    for my $Item (qw(TicketTypeIDs ServiceIDs CustomerUserConditions)) {
+        next ITEM if ( !IsArrayRefWithData( $Param{$Item} ) && !IsHashRefWithData( $Param{$Item} ) );
 
         $SendConditions{$Item} = $Param{$Item};
     }
@@ -1354,6 +1518,108 @@ sub _BuildSendConditionStrg {
     utf8::upgrade($SendConditionStrg);
 
     return $SendConditionStrg;
+}
+
+=head2 _SendConditionCheckCustomerField()
+
+This function collects some field config information from the customer user map.
+In OTRS 6, there is a function in the CustomerUser.pm that should be used instead!!!
+
+    my %FieldConfig = $SurveyObject->_SendConditionCheckCustomerField(
+        FieldName => 'UserEmail',
+        Source    => 'CustomerUser', # optional
+    );
+
+Returns one field config information.
+
+    %FieldConfig = (
+        Label         => 'Email',
+        DatabaseField => 'email',
+        StorageType   => 'var',
+    );
+
+=cut
+
+sub _SendConditionCheckCustomerField {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{FieldName} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need FieldName!"
+        );
+        return;
+    }
+
+    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
+    SOURCE:
+    for my $Count ( '', 1 .. 10 ) {
+        next SOURCE if !$CustomerUserObject->{"CustomerUser$Count"};
+        next SOURCE if $Param{Source} && $Param{Source} ne "CustomerUser$Count";
+
+        # Search the right field and return the label.
+        ENTRY:
+        for my $Entry ( @{ $CustomerUserObject->{"CustomerUser$Count"}->{CustomerUserMap}->{Map} } ) {
+            next ENTRY if $Param{FieldName} ne $Entry->[0];
+
+            my %FieldConfig = (
+                Label         => $Entry->[1],
+                DatabaseField => $Entry->[2],
+                StorageType   => $Entry->[5],
+            );
+
+            return %FieldConfig;
+        }
+    }
+
+    return;
+}
+
+=head2 _SendConditionGetFieldSelections()
+
+Returns the selections for the given field (merged from all sources).
+In OTRS 6, there is a function in the CustomerUser.pm that should be used instead!!!
+
+    my %SelectionsData = $SurveyObject->_SendConditionGetFieldSelections(
+        FieldName => 'UserEmail',
+    );
+
+=cut
+
+sub _SendConditionGetFieldSelections {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{FieldName} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need FieldName!"
+        );
+        return;
+    }
+
+    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
+    my %SelectionsData;
+
+    COUNT:
+    for my $Count ( '', 1 .. 10 ) {
+        next COUNT if !$CustomerUserObject->{"CustomerUser$Count"};
+        next COUNT
+            if !$CustomerUserObject->{"CustomerUser$Count"}->{CustomerUserMap}->{Selections}->{ $Param{FieldName} };
+
+        %SelectionsData = (
+            %SelectionsData,
+            %{ $CustomerUserObject->{"CustomerUser$Count"}->{CustomerUserMap}->{Selections}->{ $Param{FieldName} } }
+        );
+    }
+
+    # Make sure the encoding stamp is set.
+    for my $Key ( sort keys %SelectionsData ) {
+        $SelectionsData{$Key} = $Kernel::OM->Get('Kernel::System::Encode')->EncodeInput( $SelectionsData{$Key} );
+    }
+
+    return %SelectionsData;
 }
 
 1;

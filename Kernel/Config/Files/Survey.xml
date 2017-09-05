@@ -31,6 +31,7 @@
                 </NavBar>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
+                    <JavaScript>Survey.Agent.SurveyOverview.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -56,6 +57,7 @@
                 </NavBar>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
+                    <JavaScript>Survey.Agent.CustomerUserConditions.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -70,6 +72,7 @@
                 <NavBarName>Survey</NavBarName>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
+                    <JavaScript>Survey.Agent.CustomerUserConditions.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -84,6 +87,7 @@
                 <NavBarName>Survey</NavBarName>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
+                    <JavaScript>Survey.Agent.SurveyStats.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -113,6 +117,7 @@
                 <Description Translatable="1">A module to edit survey questions.</Description>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
+                    <JavaScript>Survey.Agent.SurveyEditQuestions.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -138,8 +143,8 @@
         <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0" Translatable="1">No</Item>
-                <Item Key="1" Translatable="1">Yes</Item>
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -151,14 +156,22 @@
             <String Regex="">300</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Survey::DeletePeriod" Required="0" Valid="1">
+        <Description Translatable="1">Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core::Survey</SubGroup>
+        <Setting>
+            <String Regex="">365</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Survey::CheckSendConditionTicketType" Required="0" Valid="1">
         <Description Translatable="1">Enable or disable the send condition check for the ticket type.</Description>
         <Group>Survey</Group>
         <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0" Translatable="1">No</Item>
-                <Item Key="1" Translatable="1">Yes</Item>
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -168,8 +181,8 @@
         <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0" Translatable="1">No</Item>
-                <Item Key="1" Translatable="1">Yes</Item>
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -227,7 +240,7 @@ Your OTRS-Team
     <ConfigItem Name="Ticket::EventModulePost###99-SurveySendRequest" Required="0" Valid="1">
         <Description Translatable="1">Ticket event module to send automatically survey email requests to customers if a ticket is closed.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core::Survey</SubGroup>
+        <SubGroup>Core::Event::Survey</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::SurveySendRequest</Item>
@@ -424,6 +437,78 @@ Your OTRS-Team
                     </Array>
                 </Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::CheckSendConditionCustomerFields" Required="0" Valid="0">
+        <Description Translatable="1">Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core::Survey</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="UserCustomerID">0</Item>
+                <Item Key="UserTitle">0</Item>
+                <Item Key="UserFirstname">0</Item>
+                <Item Key="UserLastname">0</Item>
+                <Item Key="UserLogin">0</Item>
+                <Item Key="UserEmail">0</Item>
+                <Item Key="UserPhone">0</Item>
+                <Item Key="UserFax">0</Item>
+                <Item Key="UserMobile">0</Item>
+                <Item Key="UserStreet">0</Item>
+                <Item Key="UserZip">0</Item>
+                <Item Key="UserCity">0</Item>
+                <Item Key="UserCountry">0</Item>
+                <Item Key="UserComment">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Daemon::SchedulerCronTaskManager::Task###SurveyRequestsDelete" Required="0" Valid="0">
+        <Description Translatable="1">Trigger delete results (including vote data and requests).</Description>
+        <Group>Survey</Group>
+        <SubGroup>Daemon::SchedulerCronTaskManager::Task</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TaskName">SurveyRequestsDelete</Item>
+                <Item Key="Schedule">*/20 * * * *</Item> <!-- default: every 20 min -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::Survey::RequestsDelete</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                        <Item>--force</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Stats::DynamicObjectRegistration###SurveyList" Required="0" Valid="1">
+        <Description Translatable="1">Determines if the statistics module may generate survey lists.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::Stats</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Stats::Dynamic::SurveyList</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="SurveyStats::ShowDelete" Required="0" Valid="0">
+        <Description Translatable="1">Defines the groups (rw) which can delete survey stats.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Frontend::Agent::SurveyStats</SubGroup>
+        <Setting>
+            <Array>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Survey::SendOnlyToRealCustomer" Required="1" Valid="1">
+        <Description Translatable="1">Defines if survey requests will be only send to real customers.</Description>
+        <Group>Survey</Group>
+        <SubGroup>Core::Survey</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0" Translatable="1">No</Item>
+                <Item Key="1" Translatable="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 </otrs_config>

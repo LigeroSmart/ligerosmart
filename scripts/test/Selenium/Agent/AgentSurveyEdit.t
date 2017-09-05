@@ -29,6 +29,15 @@ $Selenium->RunTest(
             Value => 0,
         );
 
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Survey::CheckSendConditionCustomerFields',
+            Value => {
+                UserLogin => 1,
+                UserPhone => 1,
+            },
+        );
+
         # create test survey
         my $SurveyTitle         = 'Survey ' . $Helper->GetRandomID();
         my $Introduction        = 'Survey Introduction';
@@ -37,15 +46,25 @@ $Selenium->RunTest(
         my $NotificationSubject = 'Survey Notification Subject';
         my $NotificationBody    = 'Survey Notification Body';
 
-        my $SurveyID = $Kernel::OM->Get('Kernel::System::Survey')->SurveyAdd(
-            UserID              => 1,
-            Title               => $SurveyTitle,
-            Introduction        => $Introduction,
-            Description         => $Description,
-            NotificationSender  => $NotificationSender,
-            NotificationSubject => $NotificationSubject,
-            NotificationBody    => $NotificationBody,
-            Queues              => [2],
+        my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+
+        my $SurveyID = $SurveyObject->SurveyAdd(
+            UserID                 => 1,
+            Title                  => $SurveyTitle,
+            Introduction           => $Introduction,
+            Description            => $Description,
+            NotificationSender     => $NotificationSender,
+            NotificationSubject    => $NotificationSubject,
+            NotificationBody       => $NotificationBody,
+            Queues                 => [2],
+            CustomerUserConditions => {
+                UserLogin => [
+                    {
+                        Negation    => 0,
+                        RegExpValue => 'John',
+                    },
+                ],
+            },
         );
         $Self->True(
             $SurveyID,
@@ -126,6 +145,12 @@ $Selenium->RunTest(
             $Selenium->find_element( "#$SurveyStored->{ID}", 'css' )->send_keys(' edited');
         }
 
+        # Update customer user condition.
+        $Selenium->execute_script(
+            "\$('#CustomerUserConditions')[0].scrollIntoView(true);",
+        );
+        $Selenium->find_element( "#UserLoginInput1", 'css' )->send_keys(' edited');
+
         # submit updates and switch back window
         $Selenium->find_element("//button[\@value='Update'][\@type='submit']")->click();
 
@@ -151,6 +176,57 @@ $Selenium->RunTest(
                 "#$SurveryEdited->{ID} stored value",
             );
         }
+
+        my %Survey = $SurveyObject->SurveyGet(
+            SurveyID => $SurveyID,
+        );
+
+# Delete keys that we don't want to compare. Note that CustomerUserConditionsJSON has sometimes different order and therefore
+# it's not evaluated.
+        for my $Key (qw(CreateTime CreateBy ChangeTime ChangeBy SurveyNumber CustomerUserConditionsJSON)) {
+
+            my $Value = delete $Survey{$Key};
+            $Self->True(
+                $Value,
+                "Make sure that there was '$Key' defined in Survey hash.",
+            );
+        }
+
+        my %ExpectedValue = (
+            "ChangeUserFirstname"    => $TestUserLogin,
+            "ChangeUserFullname"     => "$TestUserLogin $TestUserLogin",
+            "ChangeUserLastname"     => $TestUserLogin,
+            "ChangeUserLogin"        => $TestUserLogin,
+            "CreateUserFirstname"    => 'Admin',
+            "CreateUserFullname"     => 'Admin OTRS',
+            "CreateUserLastname"     => 'OTRS',
+            "CreateUserLogin"        => 'root@localhost',
+            "CustomerUserConditions" => {
+                "UserLogin" => [
+                    {
+                        "Negation"    => 0,
+                        "RegExpValue" => "John edited",
+                    },
+                ],
+            },
+            "Description"         => "$Description edited",
+            "Introduction"        => "$Introduction edited",
+            "NotificationBody"    => "$NotificationBody edited",
+            "NotificationSender"  => "$NotificationSender edited",
+            "NotificationSubject" => "$NotificationSubject edited",
+            "Queues"              => [2],
+            "SendConditionsRaw" =>
+                "---\nCustomerUserConditions:\n  UserLogin:\n  - Negation: 0\n    RegExpValue: John edited\n",
+            "Status"   => "New",
+            "SurveyID" => $SurveyID,
+            "Title"    => "$SurveyTitle edited",
+        );
+
+        $Self->IsDeeply(
+            \%Survey,
+            \%ExpectedValue,
+            'Check Survey hash deeply.',
+        );
 
         # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');

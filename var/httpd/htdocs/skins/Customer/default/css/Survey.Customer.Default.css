@@ -88,15 +88,24 @@ label.Answer {
     text-align:left;
 }
 
+label.Answer.NPS {
+    width: auto !important;
+}
+
 fieldset input,
 div.Answer {
     float:left;
 }
 
 fieldset input,
+fieldset input.NPS,
 fieldset textarea,
 div.Answer {
     margin: 7px 0 7px 75px;
+}
+
+fieldset input.NPS:not(:first-of-type) {
+    margin: 7px 0 7px 7px;
 }
 
 .RichTextAnswer {

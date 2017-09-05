@@ -78,6 +78,42 @@ $Selenium->RunTest(
             "Link from Overview to Zoom view - success",
         );
 
+        # navigate to AgentSurveyOverview of created test survey
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyOverview");
+
+        $Selenium->find_element( '#SurveySearch', 'css' )->VerifiedClick();
+        my $DialogFound = $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#SurveyOverviewSettingsDialog").length'
+        );
+
+        $Self->True(
+            $DialogFound,
+            'Dialog displayed.'
+        );
+
+        # send SurveyID
+        $Selenium->find_element( '#SurveyOverviewSettingsDialog input[name="Fulltext"]', 'css' )->send_keys($SurveyID);
+
+        # make sure that following fields are displayed
+        $Selenium->find_element( '#SurveyOverviewSettingsDialog #States_Search', 'css' );
+        $Selenium->find_element( '#SurveyOverviewSettingsDialog #NoTimeSet',     'css' );
+        $Selenium->find_element( '#SurveyOverviewSettingsDialog #DateRange',     'css' );
+
+        $Selenium->find_element( '#DialogButton1', 'css' )->VerifiedClick();
+
+        my $LinkSurveyID = $Selenium->find_element( '.MasterActionLink', 'css' )->get_attribute('innerHTML');
+        my $LinkContent = '';
+
+        if ( $LinkSurveyID =~ m{^\s*(\d+)\s*$} ) {
+            $LinkContent = $1;
+        }
+
+        $Self->Is(
+            $LinkContent,
+            $SurveyID + 10000,
+            'Crated survey link found.'
+        );
+
         # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 

@@ -135,6 +135,35 @@ sub SurveyListShow {
         Data        => \%Data,
     );
 
+    # build status selection
+    $Param{StateStr} = $Self->BuildSelection(
+        Name => 'States',
+        Data => {
+            Master  => 'Master',
+            Valid   => 'Valid',
+            Invalid => 'Invalid',
+            New     => 'New',
+        },
+        Class      => 'Modernize',
+        Multiple   => 1,
+        SelectedID => $Param{SurveySearch}->{States},
+    );
+
+    $Param{Fulltext} = $Param{SurveySearch}->{What} || '';
+
+    # build create time slots
+    $Param{SurveyCreateTimeStart} = $Self->BuildDateSelection(
+        Prefix   => 'SurveyCreateTimeStart',
+        Format   => 'DateInputFormat',
+        DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
+        %{ $Param{SurveySearch}{SurveyCreateTimeStart} },
+    );
+    $Param{SurveyCreateTimeStop} = $Self->BuildDateSelection(
+        Prefix => 'SurveyCreateTimeStop',
+        Format => 'DateInputFormat',
+        %{ $Param{SurveySearch}{SurveyCreateTimeStop} }
+    );
+
     # navigation bar at the beginning of a overview
     $Param{View} = $View;
     $Self->Block(

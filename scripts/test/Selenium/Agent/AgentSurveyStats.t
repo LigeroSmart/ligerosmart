@@ -19,7 +19,19 @@ $Selenium->RunTest(
 
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # Set send period to always send Survey.
+        # do not really send emails
+        $Helper->ConfigSettingChange(
+            Key   => 'SendmailModule',
+            Value => 'Kernel::System::Email::DoNotSendEmail',
+        );
+
+        # Do not check email adresses in this test.
+        $Helper->ConfigSettingChange(
+            Key   => 'CheckEmailAddresses',
+            Value => 0,
+        );
+
+        # set send period to always send survey
         $Helper->ConfigSettingChange(
             Key   => 'Survey::SendPeriod',
             Value => 0,

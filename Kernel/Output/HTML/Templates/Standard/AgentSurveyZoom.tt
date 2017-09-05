@@ -141,6 +141,7 @@
                 </div>
             </div>
 [% RenderBlockEnd("SurveyBlock") %]
+[% RenderBlockStart("PermissionStatResults") %]
             <div class="WidgetSimple SpacingTop SpacingBottomMedium">
                 <div class="Header">
                     <div class="WidgetAction Toggle">
@@ -173,9 +174,9 @@
 [% RenderBlockEnd("SurveyEditStatsQuestion") %]
 
 [% RenderBlockEnd("SurveyEditStats") %]
-
                 </div>
             </div>
+[% RenderBlockEnd("PermissionStatResults") %]
         </div>
     </div>
 </div>

@@ -137,6 +137,21 @@ sub Run {
                     }
                     $Answers{ $Question->{QuestionID} } = $PublicSurveyVote4;
                 }
+                elsif ( $Question->{Type} eq 'NPS' ) {
+                    my $PublicSurveyVote5 = $ParamObject->GetParam(
+                        Param => "PublicSurveyVote5[$Question->{QuestionID}]"
+                    );
+
+                    if (
+                        $Question->{AnswerRequired}
+                        && ( !$PublicSurveyVote5 || !length $PublicSurveyVote5 )
+                        )
+                    {
+                        $Errors{ $Question->{QuestionID} }{'Answer required'} = 1;
+                    }
+
+                    $Answers{ $Question->{QuestionID} } = $PublicSurveyVote5;
+                }
             }
 
             # If we didn't have errors, just save the answers
@@ -176,6 +191,13 @@ sub Run {
                         }
                     }
                     elsif ( $Question->{Type} eq 'Textarea' ) {
+                        $SurveyObject->PublicAnswerSet(
+                            PublicSurveyKey => $PublicSurveyKey,
+                            QuestionID      => $Question->{QuestionID},
+                            VoteValue       => $Answers{ $Question->{QuestionID} },
+                        );
+                    }
+                    elsif ( $Question->{Type} eq 'NPS' ) {
                         $SurveyObject->PublicAnswerSet(
                             PublicSurveyKey => $PublicSurveyKey,
                             QuestionID      => $Question->{QuestionID},
@@ -345,7 +367,7 @@ sub Run {
                 },
             );
             my @Answers;
-            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' || $Question->{Type} eq 'NPS' ) {
                 my @AnswerList;
                 @AnswerList = $SurveyObject->VoteGet(
                     RequestID  => $RequestID,
@@ -669,6 +691,39 @@ END
                 if ( $LayoutObject->{BrowserRichText} ) {
                     $LayoutObject->CustomerSetRichTextParameters(
                         Data => {},
+                    );
+                }
+            }
+            elsif ( $Question->{Type} eq 'NPS' ) {
+
+                $LayoutObject->Block(
+                    Name => 'PublicAnswerNPS',
+                    Data => {
+                        %{$Question},
+                        ErrorText => $ErrorText || '',
+                        Class => $Class,
+                        RequiredText => $RequiredText,
+                    },
+                );
+                my @AnswerList = $SurveyObject->AnswerList(
+                    QuestionID => $Question->{QuestionID},
+                );
+                for my $Answer (@AnswerList) {
+
+                    my $Selected = '';
+                    if (
+                        defined $Answers{ $Question->{QuestionID} }
+                        && $Answers{ $Question->{QuestionID} } eq $Answer->{AnswerID}
+                        )
+                    {
+                        $Selected = 'checked="checked"';
+                    }
+                    $LayoutObject->Block(
+                        Name => 'PublicAnswerNPSb',
+                        Data => {
+                            %{$Answer},
+                            AnswerSelected => $Selected,
+                        },
                     );
                 }
             }

@@ -59,13 +59,16 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyStats.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentSurveyZoom.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/PublicSurvey.tt" />
+        <File Permission="660" Location="Kernel/System/Console/Command/Maint/Survey/RequestsDelete.pm" />
         <File Permission="660" Location="Kernel/System/Console/Command/Maint/Survey/RequestsSend.pm" />
+        <File Permission="660" Location="Kernel/System/Stats/Dynamic/SurveyList.pm" />
         <File Permission="660" Location="Kernel/System/Survey.pm" />
         <File Permission="660" Location="Kernel/System/Survey/Answer.pm" />
         <File Permission="660" Location="Kernel/System/Survey/Question.pm" />
         <File Permission="660" Location="Kernel/System/Survey/Request.pm" />
         <File Permission="660" Location="Kernel/System/Survey/Vote.pm" />
         <File Permission="660" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm" />
+        <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsDelete.t" />
         <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t" />
         <File Permission="660" Location="scripts/test/Survey/GetRequestRecipient.t" />
         <File Permission="660" Location="scripts/test/Survey/PublicAnswerSet.t" />
@@ -79,6 +82,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t" />
         <File Permission="660" Location="scripts/test/Selenium/Public/PublicSurvey.t" />
+        <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.CustomerUserConditions.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyEditQuestions.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyOverview.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyStats.js" />

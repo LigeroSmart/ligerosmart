@@ -168,6 +168,12 @@ div.Textarea {
     margin-left: 30px;
     list-style: decimal;
 }
+
+.Field ul.CustomerUserConditionsList li {
+    list-style: none;
+    margin-bottom: 2px;
+}
+
 #SurveyEmptyMessageSmall {
     border-color: #ddd;
     border-image: none;
@@ -182,6 +188,7 @@ div.Textarea {
     color: #CCC;
 }
 
+<<<<<<< HEAD
 .Navigation {
     position: absolute;
     top: 0;
@@ -221,3 +228,16 @@ div.Textarea {
 }
 
 }
+=======
+.RemoveButtonCustomerField,
+.AddButtonCustomerCondition,
+.RemoveButtonCustomerCondition {
+    cursor: pointer;
+}
+
+.RemoveButtonCustomerCondition {
+    margin-right: 2px;
+}
+
+}
+>>>>>>> origin/feature-surveyimprovements-merged-fli-master

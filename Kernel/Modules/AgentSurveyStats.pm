@@ -11,7 +11,7 @@ package Kernel::Modules::AgentSurveyStats;
 use strict;
 use warnings;
 
-use Kernel::Language qw(Translatable);
+use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
 
@@ -40,6 +40,7 @@ sub Run {
     my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
     my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
 
     my $SurveyID  = $ParamObject->GetParam( Param => "SurveyID" )  || '';
     my $RequestID = $ParamObject->GetParam( Param => "RequestID" ) || '';
@@ -69,12 +70,12 @@ sub Run {
         if ( $SurveyExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => Translatable('You have no permission for this survey!'),
+                Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
             );
         }
         $Output = $LayoutObject->Header(
-            Title     => Translatable('Stats Overview'),
+            Title     => 'Stats Overview',
             Type      => 'Small',
             BodyClass => 'Popup',
         );
@@ -83,10 +84,33 @@ sub Run {
             SurveyID => $SurveyID,
         );
 
+        # get config of AgentSurveyStats
+        my $ShowDeleteArray = $Kernel::OM->Get('Kernel::Config')->Get('SurveyStats::ShowDelete');
+        my $ShowDelete      = 0;
+
+        if ( IsArrayRefWithData($ShowDeleteArray) ) {
+
+            # get user groups, where the user has the rw privilege
+            my %Groups = $GroupObject->PermissionUserGet(
+                UserID => $Self->{UserID},
+                Type   => 'rw',
+            );
+
+            # reverse groups
+            %Groups = reverse %Groups;
+
+            if ( grep { $Groups{$_} } @{$ShowDeleteArray} ) {
+                $ShowDelete = 1;
+            }
+        }
+
         # print the main table.
         $LayoutObject->Block(
             Name => 'Stats',
-            Data => {%Survey},
+            Data => {
+                %Survey,
+                ShowDelete => $ShowDelete,
+                }
         );
         my @List = $SurveyObject->VoteList(
             SurveyID => $SurveyID,
@@ -111,6 +135,7 @@ sub Run {
                 TicketID => $Vote->{TicketID},
             );
             $Vote->{TicketNumber} = $Ticket{TicketNumber};
+            $Vote->{ShowDelete}   = $ShowDelete;
             $LayoutObject->Block(
                 Name => 'StatsVote',
                 Data => $Vote,
@@ -142,12 +167,12 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $RequestExists ne 'Yes' ) {
 
             return $LayoutObject->NoPermission(
-                Message    => Translatable('You have no permission for this survey or stats detail!'),
+                Message    => 'You have no permission for this survey or stats detail!',
                 WithHeader => 'yes',
             );
         }
         $Output = $LayoutObject->Header(
-            Title     => Translatable('Stats Detail'),
+            Title     => 'Stats Detail',
             Type      => 'Small',
             BodyClass => 'Popup',
         );
@@ -237,7 +262,7 @@ sub Run {
                 },
             );
             my @Answers;
-            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' || $Question->{Type} eq 'NPS' ) {
                 my @AnswerList;
                 @AnswerList = $SurveyObject->VoteGet(
                     RequestID  => $RequestID,
@@ -293,6 +318,38 @@ sub Run {
         );
 
         return $Output;
+    }
+    elsif ( $Self->{Subaction} eq 'StatsView' ) {
+
+        if ( $ParamObject->GetParam( Param => 'SubmitDelete' ) ) {
+
+            # get survey id
+            my $SurveyID = $ParamObject->GetParam( Param => 'SurveyID' );
+
+            # get the stats delete keys and target object
+            my @RequestDeleteIdentifier = $ParamObject->GetArray(
+                Param => 'RequestDeleteIdentifier',
+            );
+
+            # delete vote data and request from database
+            for my $RequestID (@RequestDeleteIdentifier) {
+
+                # delete vote data
+                my $VoteDelete = $SurveyObject->VoteDelete(
+                    RequestID => $RequestID,
+                );
+
+                # delete request
+                my $RequestDelete = $SurveyObject->RequestDelete(
+                    RequestID => $RequestID,
+                );
+            }
+
+            # redirect to survey stats
+            return $LayoutObject->Redirect(
+                OP => "Action=$Self->{Action};SurveyID=$SurveyID",
+            );
+        }
     }
 }
 

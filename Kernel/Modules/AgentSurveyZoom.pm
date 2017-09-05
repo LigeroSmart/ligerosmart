@@ -11,7 +11,6 @@ package Kernel::Modules::AgentSurveyZoom;
 use strict;
 use warnings;
 
-use Kernel::Language qw(Translatable);
 use Kernel::System::VariableCheck qw(:all);
 
 our $ObjectManagerDisabled = 1;
@@ -165,7 +164,7 @@ sub Run {
         if ( $SurveyExists ne 'Yes' || $Access == 0 ) {
 
             return $LayoutObject->NoPermission(
-                Message    => Translatable('You have no permission for this survey!'),
+                Message    => 'You have no permission for this survey!',
                 WithHeader => 'yes',
             );
         }
@@ -217,19 +216,19 @@ sub Run {
     if ( defined($Message) && $Message eq 'NoQuestion' ) {
         $Output .= $LayoutObject->Notify(
             Priority => 'Error',
-            Info     => Translatable('Can\'t set new status! No questions defined.'),
+            Info     => 'Can\'t set new status! No questions defined.',
         );
     }
     elsif ( defined($Message) && $Message eq 'IncompleteQuestion' ) {
         $Output .= $LayoutObject->Notify(
             Priority => 'Error',
-            Info     => Translatable('Can\'t set new status! Questions incomplete.'),
+            Info     => 'Can\'t set new status! Questions incomplete.',
         );
     }
     elsif ( defined($Message) && $Message eq 'StatusSet' ) {
         $Output .= $LayoutObject->Notify(
             Priority => 'Notice',
-            Info     => Translatable('Status changed.'),
+            Info     => 'Status changed.',
         );
     }
 
@@ -302,7 +301,7 @@ sub Run {
         my $TicketTypeListString = join q{, }, @TicketTypeList;
 
         if ( !$TicketTypeListString ) {
-            $TicketTypeListString = $LayoutObject->{LanguageObject}->Translate('- No ticket type selected -');
+            $TicketTypeListString = '- No ticket type selected -';
         }
 
         $LayoutObject->Block(
@@ -325,7 +324,7 @@ sub Run {
         my $ServiceListString = join q{, }, @ServiceList;
 
         if ( !$ServiceListString ) {
-            $ServiceListString = $LayoutObject->{LanguageObject}->Translate('- No ticket service selected -');
+            $ServiceListString = '- No ticket service selected -';
         }
 
         $LayoutObject->Block(
@@ -389,10 +388,10 @@ sub Run {
 
     # output the possible status menu
     my %NewStatus = (
-        ChangeStatus => Translatable('- Change Status -'),
-        Master       => Translatable('master'),
-        Valid        => Translatable('valid'),
-        Invalid      => Translatable('invalid'),
+        ChangeStatus => '- Change Status -',
+        Master       => 'Master',
+        Valid        => 'Valid',
+        Invalid      => 'Invalid',
 
     );
 
@@ -409,7 +408,6 @@ sub Run {
         Data       => \%NewStatus,
         SelectedID => 'ChangeStatus',
         Title      => $LayoutObject->{LanguageObject}->Translate('New Status'),
-        Class      => 'Modernize',
     );
 
     $LayoutObject->Block(
@@ -453,6 +451,39 @@ sub Run {
         }
     }
 
+    # check survey zoom configrations
+    my $SurveyResultsGraphPermission = $ConfigObject->Get('Frontend::Module')->{AgentSurveyStats}->{Group};
+
+    if ( IsArrayRefWithData($SurveyResultsGraphPermission) ) {
+
+        # get group from given user id
+        my @GroupNames = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
+            UserID => $Self->{UserID},
+            Type   => 'rw',
+            Result => 'Name',
+            Cached => 1,
+        );
+
+        GROUPS:
+        for my $GroupNames (@GroupNames) {
+
+            next GROUPS if !grep { $_ eq $GroupNames } @{$SurveyResultsGraphPermission};
+
+            $LayoutObject->Block(
+                Name => 'PermissionStatResults',
+            );
+
+            last GROUPS;
+        }
+    }
+    else {
+
+        # get access if no SurveyResultsGraphPermission is set
+        $LayoutObject->Block(
+            Name => 'PermissionStatResults',
+        );
+    }
+
     # display stats if status Master, Valid or Invalid
     if ( $Survey{Status} eq 'New' ) {
         $LayoutObject->Block(
@@ -489,6 +520,7 @@ sub Run {
                 $Question->{Type} eq 'YesNo'
                 || $Question->{Type} eq 'Radio'
                 || $Question->{Type} eq 'Checkbox'
+                || $Question->{Type} eq 'NPS'
                 )
             {
                 my @AnswerList;

@@ -181,6 +181,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).</para>
     </section>
     <section>
+        <title>Survey::CheckSendConditionCustomerFields.</title>
+        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Defines the columns for the dropdown list for building send conditions (0 =&gt; inactive, 1 =&gt; active).</para>
+    </section>
+    <section>
         <title>Survey::CheckSendConditionService.</title>
         <para>Group: Survey, Subgroup: Core::Survey.</para>
         <para>Enable or disable the send condition check for the service.</para>
@@ -203,7 +208,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Survey::Frontend::HTMLRichTextHeightMax.</title>
         <para>Group: Survey, Subgroup: Frontend::Agent::SurveyZoom.</para>
-        <para>Defines the default height for Richtext views for SurveyZoom elements.</para>
+        <para>Defines the maximum height for Richtext views for SurveyZoom elements.</para>
     </section>
     <section>
         <title>Survey::Frontend::MenuModule###000-Back.</title>
@@ -258,7 +263,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Survey::SendInHoursAfterClose.</title>
         <para>Group: Survey, Subgroup: Core::Survey.</para>
-        <para>Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).</para>
+        <para>Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting.</para>
     </section>
     <section>
         <title>Survey::SendNoSurveyRegExp.</title>
@@ -279,6 +284,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <title>Ticket::EventModulePost###99-SurveySendRequest.</title>
         <para>Group: Survey, Subgroup: Core::Survey.</para>
         <para>Ticket event module to send automatically survey email requests to customers if a ticket is closed.</para>
+    </section>
+    <section>
+        <title>SurveyStats::ShowDelete.</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyStats.</para>
+        <para>Defines the groups which can delete survey stats.</para>
     </section>
 </chapter>
 
@@ -302,6 +312,13 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             If none are selected, it will be valid for every queue, ticket type annd service.
             As default the send condition check for ticket types or services are disabled. So the fields aren't displayed in the mask (new and edit mask for a survey).
         </para>
+        <para>
+            It is also possible to define conditions based on customer user attributes,
+            e.g. all customer users with a specified comment would not get any survey emails.
+            The attributes are selectable in the masks "AgentSurveyAdd" and "AgentSurveyEdit".
+            Each attribute could have at least one condition.
+            A condition contains a checkbox value for negation and a value field (input type text or multiple select).
+        </para>
     </section>
     <section>
         <title>Add Questions</title>
@@ -313,7 +330,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             A new window will pop up. In there the user can add questions.
         </para>
         <para>
-            Four types of questions are selectable. These are:
+            Five types of questions are selectable. These are:
         </para>
         <para>
             "YesNo" questions a user can answer by selecting "Yes" or "No" of a drop down select.
@@ -329,19 +346,23 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             "Textarea" questions a user can write answers by typing regular text.
         </para>
         <para>
+            "Net Promoter Score" questions a user can answer by selecting exactly one and just one of the
+            possible scores.
+        </para>
+        <para>
             For each answer type the OTRS user can choose
             if he wants a customer to be required to answer this question or if a customer can
             ignore the question.
         </para>
         <para>
-            As soon as questions of type "Radio (List)" or "Checkbox (List)" got added, the question
+            As soon as questions of type "Radio (List)", "Checkbox (List)" or "Net Promoter Score" got added, the question
             will be shown in the "Survey Questions"-List. By clicking on the question the user can
             add answers, change the answer order by clicking the "UP" or "DOWN" icon, or delete the
             answer by clicking the "DELETE" icon.
         </para>
         <para>
-            Questions of type "Radio (List)" or "Checkbox (List)" needs to have at least two answers
-            to be valid.
+            Questions of type "Radio (List)" and "Net Promoter Score" needs to have at least two answers to be valid.
+            Furthermore, questions of type "Checkbox (List)" needs to have at least one answer to be valid.
         </para>
     </section>
     <section>
@@ -492,13 +513,13 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             Add a new send condition:
 
             - The send condition are stored in a yaml structure.
-            - In the Survey.pm the function "_BuildSendConditionStrg" generate the yaml structur.
+            - In the Survey.pm the function "_BuildSendConditionStrg" generate the yaml structure.
             The function is used in the two functions "SurveyAdd" and "SurveyUpdate". So these two functions
             need a new optional parameter for the new send condition (similar the ticket type or service).
             - The function "SurveyGet" in the Survey.pm return the new send condition as a own parameter.
             - Now the check for the new send condition must be added in the function "RequestSend" from the
             Request.pm (similar the ticket type or service).
-            - Optional you can add a Config-Item for the send condition.
+            - Optional you can add a Setting for the send condition.
             - The last step is to add the new send condition in the new and edit mask for the survey. Also it can be
             added in the detail survey view.
     -->

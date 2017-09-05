@@ -30,6 +30,11 @@ Survey.Agent.SurveyStats = (function (TargetNS) {
             parent.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
             parent.Core.UI.Popup.Close();
         });
+
+        $('#SelectAllRequests').on('click', function () {
+            var Status = $(this).prop('checked');
+            $(':checkbox').prop('checked', Status);
+        });
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');

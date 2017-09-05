@@ -98,6 +98,12 @@ $Selenium->RunTest(
                 Name => 'TextareaQuestion',
                 Type => 'Textarea',
             },
+            {
+                Name    => 'NPSQuestion',
+                Type    => 'NPS',
+                Answer1 => 'Selenium one',
+                Answer2 => 'Selenium two'
+            },
         );
 
         # create test questions
@@ -111,10 +117,11 @@ $Selenium->RunTest(
             );
             $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-            # add answers for radio and check-box questions
+            # add answers for radio, check-box and NPS questions
             if (
                 $Questions->{Name} eq 'RadioQuestion'
                 || $Questions->{Name} eq 'CheckboxQuestion'
+                || $Questions->{Name} eq 'NPSQuestion'
                 )
             {
 

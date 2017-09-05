@@ -330,6 +330,34 @@
                         </tr>
 [% RenderBlockEnd("QuestionEditRadio") %]
 
+[% RenderBlockStart("QuestionEditNPS") %]
+                        <tr>
+                            <td>
+                                <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerEdit;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]"> [% Data.Answer | truncate(90) | html %] </a>
+                            </td>
+                            <td class="Center">
+                                <a class="AsBlock ArrowUp[% Data.ClassUp | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerUp;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                    <i class="fa fa-chevron-up"></i>
+                                    <span class="InvisibleText">[% Translate("Up") | html %]</span>
+                                </a>
+                            </td>
+                            <td class="Center">
+                                <a class="AsBlock ArrowDown[% Data.ClassDown | html %]" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=AnswerDown;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                    <i class="fa fa-chevron-down"></i>
+                                    <span class="InvisibleText">[% Translate("Down") | html %]</span>
+                                </a>
+                            </td>
+[% RenderBlockStart("QuestionEditNPSDelete") %]
+                            <td class="Center">
+                                <a class="AsBlock AnswerDelete" href="#" data-query-string="Action=[% Env("Action") %];Subaction=AnswerDelete;SurveyID=[% Data.SurveyID | uri %];QuestionID=[% Data.QuestionID | uri %];AnswerID=[% Data.AnswerID | uri %]">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="InvisibleText">[% Translate("Delete") | html %]</span>
+                                </a>
+                            </td>
+[% RenderBlockEnd("QuestionEditNPSDelete") %]
+                        </tr>
+[% RenderBlockEnd("QuestionEditNPS") %]
+
 [% RenderBlockStart("QuestionEditCheckbox") %]
                         <tr>
                             <td>

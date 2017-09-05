@@ -281,7 +281,7 @@ sub Run {
         }
 
         my %ServerError;
-        if ($Answer) {
+        if ( $Answer || $Answer eq '0' ) {
             $SurveyObject->AnswerAdd(
                 SurveyID   => $GetParam{SurveyID},
                 QuestionID => $GetParam{QuestionID},
@@ -424,7 +424,7 @@ sub Run {
         }
 
         my %ServerError;
-        if ($Answer) {
+        if ( $Answer || $Answer eq '0' ) {
             $SurveyObject->AnswerUpdate(
                 AnswerID   => $GetParam{AnswerID},
                 QuestionID => $GetParam{QuestionID},
@@ -539,6 +539,10 @@ sub _MaskQuestionOverview {
                 Key   => 'Textarea',
                 Value => Translatable('Textarea'),
             },
+            {
+                Key   => 'NPS',
+                Value => Translatable('Net Promoter Score'),
+            },
         ];
 
         my $SelectionType = $LayoutObject->BuildSelection(
@@ -622,7 +626,20 @@ sub _MaskQuestionOverview {
                 }
 
                 my $Status = Translatable('Complete');
-                if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+
+                if ( $Question->{Type} eq 'Radio' ) {
+                    if ( $AnswerCount < 2 ) {
+                        $Class  = 'Warning';
+                        $Status = Translatable('Incomplete');
+                    }
+                }
+                elsif ( $Question->{Type} eq 'Checkbox' ) {
+                    if ( $AnswerCount < 1 ) {
+                        $Class  = 'Warning';
+                        $Status = Translatable('Incomplete');
+                    }
+                }
+                elsif ( $Question->{Type} eq 'NPS' ) {
                     if ( $AnswerCount < 2 ) {
                         $Class  = 'Warning';
                         $Status = Translatable('Incomplete');
@@ -783,7 +800,7 @@ sub _MaskQuestionEdit {
             Data => {},
         );
     }
-    elsif ( $Question{Type} eq 'Radio' || $Question{Type} eq 'Checkbox' ) {
+    elsif ( $Question{Type} eq 'Radio' || $Question{Type} eq 'Checkbox' || $Question{Type} eq 'NPS' ) {
 
         my $Type = $Question{Type};
         my @List = $SurveyObject->AnswerList(

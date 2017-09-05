@@ -69,6 +69,63 @@ sub Run {
             @{ $FormElements{$Item} } = $ParamObject->GetArray( Param => $Item );
         }
 
+        my $CustomerUserConditionsFieldStrg = $ParamObject->GetParam(
+            Param => 'CustomerUserConditionsFields',
+        );
+        my %CustomerUserConditions;
+
+        if ($CustomerUserConditionsFieldStrg) {
+
+            FIELD:
+            for my $Field ( split( /,/, $CustomerUserConditionsFieldStrg ) ) {
+                next FIELD if !$Field;
+
+                my %SelectionsData;
+                %SelectionsData = $Kernel::OM->Get('Kernel::System::Survey')->_SendConditionGetFieldSelections(
+                    FieldName => $Field,
+                );
+
+                my @Checkboxes = $ParamObject->GetArray(
+                    Param => "${Field}Checkbox",
+                );
+                my @Conditions = $ParamObject->GetArray(
+                    Param => $Field,
+                );
+                my @ConditionArray;
+
+                for my $Count ( 0 .. ( scalar @Conditions - 1 ) ) {
+
+                    my $Negation;
+                    if (%SelectionsData) {
+                        $Negation = $Checkboxes[0] + 0;
+                    }
+                    else {
+                        $Negation = $Checkboxes[$Count] + 0;
+                    }
+
+                    my $RegExpValue      = $Conditions[$Count];
+                    my %ConditionEntries = (
+                        Negation    => $Negation,
+                        RegExpValue => $RegExpValue,
+                    );
+
+                    if ( !eval { my $Regex = qr/$RegExpValue/; 1; } ) {
+
+                        $ServerError{CustomerUserConditionErrors}->{$Field}->{$Count} = 'ServerError';
+                    }
+
+                    push @ConditionArray, \%ConditionEntries;
+                }
+
+                $CustomerUserConditions{$Field} = \@ConditionArray;
+            }
+
+            if (%CustomerUserConditions) {
+
+                $FormElements{CustomerUserConditions} = \%CustomerUserConditions;
+            }
+        }
+
         if ( $Kernel::OM->Get('Kernel::Config')->Get('Frontend::RichText') ) {
             $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
             $FormElements{NotificationBody} = "\$html/text\$ $FormElements{NotificationBody}";
@@ -93,10 +150,65 @@ sub Run {
             ServerError  => \%ServerError,
         );
     }
+
+    # ------------------------------------------------------------ #
+    # Survey AJAX request
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'AJAXRequest' ) {
+
+        my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+        my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+        my $JSONObject   = $Kernel::OM->Get('Kernel::System::JSON');
+
+        my $FieldName = $ParamObject->GetParam(
+            Param => 'FieldName',
+        );
+        my @SelectedValues = $ParamObject->GetArray(
+            Param => 'SelectedValues[]',
+        );
+
+        my %SelectionsData;
+        %SelectionsData = $Kernel::OM->Get('Kernel::System::Survey')->_SendConditionGetFieldSelections(
+            FieldName => $FieldName,
+        );
+
+        my $JSONString = $JSONObject->Encode(
+            Data => '',
+        );
+
+        if (%SelectionsData) {
+            my $CustomerUserConditionsStrg = $LayoutObject->BuildSelection(
+                Data          => \%SelectionsData,
+                Name          => "${FieldName}[]",
+                Multiple      => 1,
+                Size          => 6,
+                Class         => 'Modernize W50pc',
+                SelectedValue => \@SelectedValues,
+            );
+
+            my %JSONData = (
+                Success     => \1,
+                SelectField => $CustomerUserConditionsStrg,
+            );
+
+            $JSONString = $JSONObject->Encode(
+                Data => \%JSONData,
+            );
+        }
+
+        return $LayoutObject->Attachment(
+            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
+            Content     => $JSONString,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
 }
 
 sub _SurveyAddMask {
     my ( $Self, %Param ) = @_;
+
+    my %JSData;
 
     my %ServerError;
     if ( $Param{ServerError} ) {
@@ -197,6 +309,47 @@ sub _SurveyAddMask {
         }
     }
 
+    # Check send condition by CustomerUser fields.
+    if ( $ConfigObject->Get('Survey::CheckSendConditionCustomerFields') ) {
+
+        my %CustomerFieldsConfig = %{ $ConfigObject->Get('Survey::CheckSendConditionCustomerFields') };
+        my @CustomerFields;
+
+        my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+
+        CUSTOMERFIELD:
+        for my $CustomerField ( sort keys %CustomerFieldsConfig ) {
+            next CUSTOMERFIELD if !$CustomerFieldsConfig{$CustomerField};
+            next CUSTOMERFIELD if !$SurveyObject->_SendConditionCheckCustomerField( FieldName => $CustomerField );
+
+            push @CustomerFields, $CustomerField;
+        }
+
+        if (@CustomerFields) {
+
+            my $CustomerUserConditionsFieldsStrg = $LayoutObject->BuildSelection(
+                Data         => \@CustomerFields,
+                Name         => 'CustomerUserConditions',
+                Multiple     => 0,
+                PossibleNone => 1,
+                Sort         => 'AlphanumericValue',
+                Translation  => 0,
+                SelectedID   => 1,
+                Class        => '',
+            );
+
+            $JSData{CustomerUserConditions} = $FormElements{CustomerUserConditions} || $Param{CustomerUserConditions};
+            $JSData{CustomerUserConditionErrors} = $ServerError{CustomerUserConditionErrors} || '';
+
+            $LayoutObject->Block(
+                Name => 'SendCustomerUserConditions',
+                Data => {
+                    CustomerUserConditionsFieldsStrg => $CustomerUserConditionsFieldsStrg,
+                },
+            );
+        }
+    }
+
     # rich text elements
     my %SurveyElements;
 
@@ -282,6 +435,11 @@ sub _SurveyAddMask {
             },
         );
     }
+
+    $LayoutObject->AddJSData(
+        Key   => 'JSData',
+        Value => \%JSData,
+    );
 
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentSurveyAdd',

@@ -28,6 +28,14 @@ $Selenium->RunTest(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Survey::CheckSendConditionCustomerFields',
+            Value => {
+                UserLogin => 1,
+                UserPhone => 1,
+            },
+        );
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -62,6 +70,16 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Introduction", 'css' )->send_keys('Selenium Introduction');
         $Selenium->execute_script("\$('#Queue_Search').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Description", 'css' )->send_keys('Selenium Description');
+
+        # scroll
+        $Selenium->execute_script(
+            "\$('#CustomerUserConditions')[0].scrollIntoView(true);",
+        );
+
+        $Selenium->execute_script("return \$('#CustomerUserConditions').val('UserLogin').trigger('change');");
+        $Selenium->find_element( "#Description", 'css' )->send_keys('customer');
+
+        # UserLogin
         $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedSubmit();
 
         # check for test created survey values
@@ -82,6 +100,57 @@ $Selenium->RunTest(
         while ( my @Row = $DBObject->FetchrowArray() ) {
             $SurveyID = $Row[0];
         }
+
+        my %Survey = $Kernel::OM->Get('Kernel::System::Survey')->SurveyGet(
+            SurveyID => $SurveyID,
+        );
+
+# Delete keys that we don't want to compare. Note that CustomerUserConditionsJSON has sometimes different order and therefore
+# it's not evaluated. Also, NotificationBody contains OTRS link, which is different for each system and it's not so relevant for the test.
+        for my $Key (
+            qw(CreateTime CreateBy ChangeTime ChangeBy SurveyNumber CustomerUserConditionsJSON NotificationBody))
+        {
+
+            my $Value = delete $Survey{$Key};
+            $Self->True(
+                $Value,
+                "Make sure that there was '$Key' defined in Survey hash.",
+            );
+        }
+
+        my %ExpectedValue = (
+            "ChangeUserFirstname"    => $TestUserLogin,
+            "ChangeUserFullname"     => "$TestUserLogin $TestUserLogin",
+            "ChangeUserLastname"     => $TestUserLogin,
+            "ChangeUserLogin"        => $TestUserLogin,
+            "CreateUserFirstname"    => $TestUserLogin,
+            "CreateUserFullname"     => "$TestUserLogin $TestUserLogin",
+            "CreateUserLastname"     => $TestUserLogin,
+            "CreateUserLogin"        => $TestUserLogin,
+            "CustomerUserConditions" => {
+                "UserLogin" => [
+                    {
+                        "Negation"    => 0,
+                        "RegExpValue" => "",
+                    },
+                ],
+            },
+            "Description"         => "Selenium Descriptioncustomer",
+            "Introduction"        => "Selenium Introduction",
+            "NotificationSender"  => "quality\@example.com",
+            "NotificationSubject" => "Help us with your feedback!",
+            "Queues"              => [],
+            "SendConditionsRaw" => "---\nCustomerUserConditions:\n  UserLogin:\n  - Negation: 0\n    RegExpValue: ''\n",
+            "Status"            => "New",
+            "SurveyID"          => $SurveyID,
+            "Title"             => $SurveyTitle,
+        );
+
+        $Self->IsDeeply(
+            \%Survey,
+            \%ExpectedValue,
+            'Check Survey hash deeply.',
+        );
 
         # clean-up test created survey data
         my $Success = $DBObject->Do(

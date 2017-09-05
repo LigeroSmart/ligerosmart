@@ -10,6 +10,7 @@
     <input type="hidden" name="Action" value="[% Env("Action") %]" />
     <input type="hidden" name="Subaction" value="SurveySave" />
     <input type="hidden" name="SurveyID" value="[% Data.SurveyID | html %]" />
+    <input type="hidden" name="CustomerUserConditionsFields" id="CustomerUserConditionsFields" value="[% Data.CustomerUserConditionsFields %]" />
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -85,6 +86,39 @@
                 </div>
                 <div class="Clear"></div>
 [% RenderBlockEnd("InternalDescription") %]
+
+[% RenderBlockStart("SendCustomerUserConditions") %]
+                    <label for="CustomerUserConditions">[% Translate("Customer conditions") | html %]:</label>
+                    <div class="Field">
+                        [% Data.CustomerUserConditionsFieldsStrg %]
+                        <p class="FieldExplanation">
+                            [% Translate("Please choose a Customer property to add a condition.") | html %]
+                        </p>
+                    </div>
+                    <div class="Clear"></div>
+                    <div class="Field Hidden" id="TemplateLevel1">
+                        <ul class="CustomerUserConditionsList">
+                            <li class="DataItem">
+                                <span class="Icon RemoveButtonCustomerField"><i class="fa fa-minus-square-o"></i></span>
+                                <strong></strong>
+                                <ul>
+                                    <li class="Even Last">
+                                        <label>Negate:</label>
+                                        <input type="hidden" value="0" />
+                                        <input class="CustomerUserConditionsCheckbox" type="checkbox" value="0" />
+                                        <input type="text" class="W50pc" value="" />
+                                        <div class="TooltipErrorMessage">
+                                            <p>[% Translate("The field needs to be a valid regular expression or a literal word.") | html %]</p>
+                                        </div>
+                                        <span class="Icon RemoveButtonCustomerCondition Hidden"><i class="fa fa-minus-square-o"></i></span>
+                                        <span class="Icon AddButtonCustomerCondition"><i class="fa fa-plus-square-o"></i></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="Clear"></div>
+[% RenderBlockEnd("SendCustomerUserConditions") %]
 
 [% RenderBlockStart("GenericError") %]
                 <div id="[% Data.ItemName | html %]" class="TooltipErrorMessage">
