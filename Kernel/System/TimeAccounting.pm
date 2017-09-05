@@ -182,10 +182,10 @@ sub UserReporting {
     my $DateTimeObject = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
-            Year     => $Param{Year},
-            Month    => $Param{Month},
-            Day      => 1,
-        }
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => 1,
+            }
     );
 
     my $DateTimeValid = $DateTimeObject->Validate(
@@ -231,7 +231,7 @@ sub UserReporting {
             TimeZone => 'UTC',
         );
 
-        if (!$DateTimeValid) {
+        if ( !$DateTimeValid ) {
 
             $LogObject->Log(
                 Priority => 'notice',
@@ -272,11 +272,11 @@ sub UserReporting {
 
                 my $DayEndPoint;
 
-                if ($Year == $YearEnd && $Month == $MonthEnd) {
+                if ( $Year == $YearEnd && $Month == $MonthEnd ) {
                     $DayEndPoint = $DayEnd;
                 }
                 else {
-                    $DayEndPoint = $Self->DaysInMonth($Param{Year}, $Param{Month});
+                    $DayEndPoint = $Self->DaysInMonth( $Param{Year}, $Param{Month} );
                 }
 
                 DAY:
@@ -1321,11 +1321,11 @@ sub WorkingUnitsCompletnessCheck {
             my $DayStartPoint = $Year == $YearStart && $Month == $MonthStart ? $DayStart : 1;
 
             my $DayEndPoint;
-            if ($Year == $YearEnd && $Month == $MonthEnd) {
+            if ( $Year == $YearEnd && $Month == $MonthEnd ) {
                 $DayEndPoint = $DayEnd;
             }
             else {
-                $DayEndPoint = $Self->DaysInMonth($Year, $Month);
+                $DayEndPoint = $Self->DaysInMonth( $Year, $Month );
             }
 
             my $MonthString = sprintf( "%02d", $Month );
@@ -1354,7 +1354,7 @@ sub WorkingUnitsCompletnessCheck {
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         String => $Date . ' 00:00:00',
-                    }
+                        }
                 );
                 my $DayStartTime = $DateTimeObjectStart->ToEpoch();
 
@@ -1362,7 +1362,7 @@ sub WorkingUnitsCompletnessCheck {
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         String => $Date . ' 23:59:59',
-                    }
+                        }
                 );
                 my $DayStopTime = $DateTimeObjectStop->ToEpoch();
 
@@ -1698,7 +1698,7 @@ sub ProjectActionReporting {
     }
 
     # hours per month
-    my $DaysInMonth = $Self->DaysInMonth($Param{Year}, $Param{Month});
+    my $DaysInMonth = $Self->DaysInMonth( $Param{Year}, $Param{Month} );
     my $DateString = $Param{Year} . "-" . sprintf( "%02d", $Param{Month} );
     my $SQLDate = "$DateString-$DaysInMonth 23:59:59";
 
@@ -2280,9 +2280,8 @@ sub DayOfWeekToName {
         'Sunday'
     );
 
-    return $DayNames[$Param{Number}];
+    return $DayNames[ $Param{Number} ];
 }
-
 
 =head2 Date2SystemTime()
 

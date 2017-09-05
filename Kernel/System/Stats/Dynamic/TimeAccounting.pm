@@ -761,7 +761,6 @@ sub _GetStatData {
         # calculate number of days within the given range
         my $Days = int( ( $StopDate - $StartDate ) / 86400 ) + 1;
 
-
         DAY:
         for my $Day ( 0 .. $Days ) {
 
@@ -858,7 +857,7 @@ sub _GetPreviousMonthDates {
     }
 
     # get time accounting object
-    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+    my $TimeAccountingObject  = $Kernel::OM->Get('Kernel::System::TimeAccounting');
     my $DateTimeObjectCurrent = $Kernel::OM->Create('Kernel::System::DateTime');
 
     # Get current date values.

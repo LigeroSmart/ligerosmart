@@ -14,7 +14,7 @@ use warnings;
 use Kernel::Language qw(Translatable);
 
 our @ObjectDependencies = (
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::TimeAccounting',
     'Kernel::Output::HTML::Layout',
 );
@@ -35,20 +35,16 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime()
-    );
+    my $DateTimeObject   = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $DateTimeSettings = $DateTimeObject->Get();
 
     # get time accounting object
     my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     my %User = $TimeAccountingObject->UserCurrentPeriodGet(
-        Year  => $Year,
-        Month => $Month,
-        Day   => $Day,
+        Year  => $DateTimeSettings->{Year},
+        Month => $DateTimeSettings->{Month},
+        Day   => $DateTimeSettings->{Day},
     );
     if ( $User{ $Self->{UserID} } ) {
         my %IncompleteWorkingDays = $TimeAccountingObject->WorkingUnitsCompletnessCheck(

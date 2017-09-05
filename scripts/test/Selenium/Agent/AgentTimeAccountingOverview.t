@@ -59,19 +59,19 @@ $Selenium->RunTest(
             Period => '1',
         );
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+        my $DateTimeObject   = $Kernel::OM->Create('Kernel::System::DateTime');
+        my $DateTimeSettings = $DateTimeObject->Get();
 
-        # get current system test time
-        my ( $SecCurrent, $MinCurrent, $HourCurrent, $DayCurrent, $MonthCurrent, $YearCurrent )
-            = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime(),
-            );
+        my $YearCurrent  = $DateTimeSettings->{Year};
+        my $MonthCurrent = $DateTimeSettings->{Month};
+        my $DayCurrent   = $DateTimeSettings->{Day};
 
-        # get test end time + 1 day of current time
-        my ( $SecEnd, $MinEnd, $HourEnd, $DayEnd, $MonthEnd, $YearEnd ) = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime() + 60 * 60 * 24,
-        );
+        $DateTimeObject->Add( Days => 1 );
+        my $DateTimeSettingsEnd = $DateTimeObject->Get();
+
+        my $YearEnd  = $DateTimeSettingsEnd->{Year};
+        my $MonthEnd = $DateTimeSettingsEnd->{Month};
+        my $DayEnd   = $DateTimeSettingsEnd->{Day};
 
         # update user time account setting
         $TimeAccountingObject->UserSettingsUpdate(

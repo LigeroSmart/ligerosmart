@@ -65,14 +65,12 @@ $Selenium->RunTest(
             Period => '1',
         );
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+        my $DateTimeObject   = $Kernel::OM->Create('Kernel::System::DateTime');
+        my $DateTimeSettings = $DateTimeObject->Get();
 
-        # get current system test time
-        my ( $SecCurrent, $MinCurrent, $HourCurrent, $DayCurrent, $MonthCurrent, $YearCurrent )
-            = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime(),
-            );
+        my $YearCurrent  = $DateTimeSettings->{Year};
+        my $MonthCurrent = $DateTimeSettings->{Month};
+        my $DayCurrent   = $DateTimeSettings->{Day};
 
         # update user time account setting
         $TimeAccountingObject->UserSettingsUpdate(

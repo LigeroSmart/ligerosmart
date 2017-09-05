@@ -771,7 +771,7 @@ sub _CheckValidityUserPeriods {
     my %Errors = ();
     my %GetParam;
 
-    my $TimeAccountingObject  = $Kernel::OM->Get('Kernel::System::TimeAccounting');
+    my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     for ( my $Period = 1; $Period <= $Param{Period}; $Period++ ) {
 

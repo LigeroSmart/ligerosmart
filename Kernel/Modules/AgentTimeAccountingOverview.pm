@@ -116,12 +116,11 @@ sub Run {
     my $DateTimeObjectGiven = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
-            Year     => $Param{Year},
-            Month    => $Param{Month},
-            Day      => 1,
-        }
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => 1,
+            }
     );
-
 
     my $DateTimeObjectNext = $DateTimeObjectGiven->Clone();
     my $DateTimeObjectPrev = $DateTimeObjectGiven->Clone();
@@ -129,28 +128,28 @@ sub Run {
 
     # calculate the next month
     $DateTimeObjectNext->Add(
-        Years         => 0,
-        Months        => 1,
-        Days          => 0,
+        Years  => 0,
+        Months => 1,
+        Days   => 0,
     );
 
     my $DateParamsNext = $DateTimeObjectNext->Get();
 
-    $Param{YearNext}  =  $DateParamsNext->{Year};
-    $Param{MonthNext} =  $DateParamsNext->{Month};
-    $Param{DayNext}   =  $DateParamsNext->{Day};
+    $Param{YearNext}  = $DateParamsNext->{Year};
+    $Param{MonthNext} = $DateParamsNext->{Month};
+    $Param{DayNext}   = $DateParamsNext->{Day};
 
     # calculate the next month
     $DateTimeObjectPrev->Subtract(
-        Years         => 0,
-        Months        => 1,
-        Days          => 0,
+        Years  => 0,
+        Months => 1,
+        Days   => 0,
     );
 
     my $DateParamsBack = $DateTimeObjectPrev->Get();
-    $Param{YearBack}  =  $DateParamsBack->{Year};
-    $Param{MonthBack} =  $DateParamsBack->{Month};
-    $Param{DayBack}   =  $DateParamsBack->{Day};
+    $Param{YearBack}  = $DateParamsBack->{Year};
+    $Param{MonthBack} = $DateParamsBack->{Month};
+    $Param{DayBack}   = $DateParamsBack->{Day};
 
     # Overview per day
     my $LastDayOfMonth = $DateTimeObjectGiven->LastDayOfMonthGet();
@@ -177,7 +176,7 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Date . ' 00:00:00',
-            }
+                }
         );
         my $DayStartTime = $DateTimeObjectStart->ToEpoch();
 
@@ -185,7 +184,7 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Date . ' 23:59:59',
-            }
+                }
         );
         my $DayStopTime = $DateTimeObjectStop->ToEpoch();
 

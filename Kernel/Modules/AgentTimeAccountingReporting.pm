@@ -349,7 +349,8 @@ sub Run {
 
     ( $Param{YearBack}, $Param{MonthBack}, $Param{DayBack} )
         = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, 1, 0, -1, 0 );
-    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} ) = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
+    ( $Param{YearNext}, $Param{MonthNext}, $Param{DayNext} )
+        = $TimeAccountingObject->AddDeltaYMD( $Param{Year}, $Param{Month}, 1, 0, 1, 0 );
 
     my %UserReport = $TimeAccountingObject->UserReporting(
         Year   => $Param{Year},

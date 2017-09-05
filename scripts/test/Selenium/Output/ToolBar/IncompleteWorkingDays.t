@@ -59,24 +59,31 @@ $Selenium->RunTest(
             Period => '1',
         );
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+        my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
-        # get test start time - 40 days of current time
-        my ( $SecStart, $MinStart, $HourStart, $DayStart, $MonthStart, $YearStart ) = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime() - 60 * 60 * 24 * 40,
+        $DateTimeObject->Subtract( Days => 40 );
+        my $DateTimeSettingsStart = $DateTimeObject->Get();
+        my $YearStart             = $DateTimeSettingsStart->{Year};
+        my $MonthStart            = $DateTimeSettingsStart->{Month};
+        my $DayStart              = $DateTimeSettingsStart->{Day};
+
+        $DateTimeObject->Add(
+            Days    => 40,
+            Seconds => 1
         );
+        my $DateTimeSettings = $DateTimeObject->Get();
 
-        # get work test time + 1 second then start time
-        my ( $SecCurrent, $MinCurrent, $HourCurrent, $DayCurrent, $MonthCurrent, $YearCurrent )
-            = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime() - 60 * 60 * 24 * 40 + 1,
-            );
+        my $YearCurrent  = $DateTimeSettings->{Year};
+        my $MonthCurrent = $DateTimeSettings->{Month};
+        my $DayCurrent   = $DateTimeSettings->{Day};
 
-        # get test end time + 1 day of current time
-        my ( $SecEnd, $MinEnd, $HourEnd, $DayEnd, $MonthEnd, $YearEnd ) = $TimeObject->SystemTime2Date(
-            SystemTime => $TimeObject->SystemTime() + 60 * 60 * 24,
-        );
+        $DateTimeObject->Subtract( Seconds => 1 );
+        $DateTimeObject->Add( Days => 1 );
+        my $DateTimeSettingsEnd = $DateTimeObject->Get();
+
+        my $YearEnd  = $DateTimeSettingsEnd->{Year};
+        my $MonthEnd = $DateTimeSettingsEnd->{Month};
+        my $DayEnd   = $DateTimeSettingsEnd->{Day};
 
         # update user time account setting
         $TimeAccountingObject->UserSettingsUpdate(

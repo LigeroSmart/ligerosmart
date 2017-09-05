@@ -92,22 +92,27 @@ sub Run {
     my $DateTimeObjectGiven = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
-            Year     => $Param{Year},
-            Month    => $Param{Month},
-            Day      => $Param{Day},
-        }
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => $Param{Day},
+            }
     );
 
     my $DateTimeObjectAllowed = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
-            Year     => $Param{YearAllowed},
-            Month    => $Param{MonthAllowed},
-            Day      => $Param{DayAllowed},
-        }
+            Year  => $Param{YearAllowed},
+            Month => $Param{MonthAllowed},
+            Day   => $Param{DayAllowed},
+            }
     );
 
-    if ( $DateTimeObjectGiven->Compare( DateTimeObject => $DateTimeObjectAllowed ) > 0 && $Param{UserID} == $Self->{UserID} ) {
+    if (
+        $DateTimeObjectGiven->Compare( DateTimeObject => $DateTimeObjectAllowed )
+        > 0
+        && $Param{UserID} == $Self->{UserID}
+        )
+    {
         return $LayoutObject->Redirect(
             OP =>
                 "Action=AgentTimeAccountingEdit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}",

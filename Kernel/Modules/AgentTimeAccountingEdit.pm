@@ -258,7 +258,7 @@ sub Run {
 
     # check if the given date is a valid date
     # if not valid, set the date to today
-    my $DateTimeValid  = $DateTimeObjectCurrent->Validate(
+    my $DateTimeValid = $DateTimeObjectCurrent->Validate(
         Year     => $Param{Year},
         Month    => $Param{Month},
         Day      => $Param{Day},
@@ -268,7 +268,7 @@ sub Run {
         TimeZone => 'UTC',
     );
 
-    if (!$DateTimeValid) {
+    if ( !$DateTimeValid ) {
         $Param{Year}        = $Year;
         $Param{Month}       = $Month;
         $Param{Day}         = $Day;
@@ -280,7 +280,6 @@ sub Run {
         Month => $Param{Month},
         Day   => $Param{Day},
     );
-
 
     # for initial use, the first agent with rw-right will be redirected
     # to 'Setting', so he can do the initial settings
@@ -302,23 +301,23 @@ sub Run {
     my $DateTimeObjectGiven = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
-            Year     => $Param{Year},
-            Month    => $Param{Month},
-            Day      => $Param{Day},
-        }
+            Year  => $Param{Year},
+            Month => $Param{Month},
+            Day   => $Param{Day},
+            }
     );
 
     my $DateTimeObjectAllowed = $Kernel::OM->Create(
         'Kernel::System::DateTime',
         ObjectParams => {
-            Year     => $Param{YearAllowed},
-            Month    => $Param{MonthAllowed},
-            Day      => $Param{DayAllowed},
-        }
+            Year  => $Param{YearAllowed},
+            Month => $Param{MonthAllowed},
+            Day   => $Param{DayAllowed},
+            }
     );
 
     if ( $DateTimeObjectGiven->Compare( DateTimeObject => $DateTimeObjectAllowed ) < 0 ) {
-        if ( !$IncompleteWorkingDays{Incomplete}{ $Param{Year} }{ $Param{Month} }{ $Param{Day} }) {
+        if ( !$IncompleteWorkingDays{Incomplete}{ $Param{Year} }{ $Param{Month} }{ $Param{Day} } ) {
             return $LayoutObject->Redirect(
                 OP =>
                     "Action=AgentTimeAccountingView;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}",
@@ -729,7 +728,7 @@ sub Run {
         $Frontend{PeriodNote} = '';
     }
 
-    if ($DateTimeObjectCurrent->Compare( DateTimeObject => $DateTimeObjectGiven )) {
+    if ( $DateTimeObjectCurrent->Compare( DateTimeObject => $DateTimeObjectGiven ) ) {
         $LayoutObject->Block(
             Name => 'UnitBlock',
             Data => { %Param, %Frontend },
@@ -1040,7 +1039,7 @@ sub Run {
         }
     }
 
-    if ($DateTimeObjectCurrent->Compare( DateTimeObject => $DateTimeObjectGiven )) {
+    if ( $DateTimeObjectCurrent->Compare( DateTimeObject => $DateTimeObjectGiven ) ) {
         $Param{Total} = sprintf( "%.2f", ( $Param{Total} || 0 ) );
         $LayoutObject->Block(
             Name => 'Total',
@@ -1087,7 +1086,11 @@ sub Run {
     );
 
     if ( $DateTimeObjectGiven->Compare( DateTimeObject => $DateTimeObjectAllowed ) < 0 ) {
-        if ( $IncompleteWorkingDays{Incomplete}{ $Param{Year} }{ $Param{Month} }{ $Param{Day} } && !$Param{SuccessfulInsert} ) {
+        if (
+            $IncompleteWorkingDays{Incomplete}{ $Param{Year} }{ $Param{Month} }{ $Param{Day} }
+            && !$Param{SuccessfulInsert}
+            )
+        {
             $LayoutObject->Block(
                 Name => 'Readonly',
                 Data => {
@@ -1137,7 +1140,7 @@ sub Run {
                         Year  => $Year,
                         Month => $Month,
                         Day   => $Day,
-                    }
+                        }
                 );
 
                 $LayoutObject->Block(
@@ -1145,10 +1148,12 @@ sub Run {
                     Data => {
                         Date    => $IncompleteWorkingDaysList{$WorkingDays},
                         DateHR  => $DateTimeObjectWorkingDay->ToString(),
-                        Weekday => $TimeAccountingObject->DayOfWeekToName( Number => $TimeAccountingObject->DayOfWeek( $Year, $Month, $Day ) ),
-                        Year    => $Year,
-                        Month   => $Month,
-                        Day     => $Day,
+                        Weekday => $TimeAccountingObject->DayOfWeekToName(
+                            Number => $TimeAccountingObject->DayOfWeek( $Year, $Month, $Day )
+                        ),
+                        Year  => $Year,
+                        Month => $Month,
+                        Day   => $Day,
                     },
                 );
             }
@@ -1196,7 +1201,8 @@ sub Run {
         Calendar => $UserData{Calendar},
     );
 
-    $Param{Weekday} = $Kernel::OM->Get('Kernel::System::TimeAccounting')->DayOfWeek( $Param{Year}, $Param{Month}, $Param{Day} );
+    $Param{Weekday}
+        = $Kernel::OM->Get('Kernel::System::TimeAccounting')->DayOfWeek( $Param{Year}, $Param{Month}, $Param{Day} );
 
     # get working days of the user's calendar
     my $CalendarName = 'TimeWorkingHours';

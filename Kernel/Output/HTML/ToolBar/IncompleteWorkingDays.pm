@@ -14,7 +14,7 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Group',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::TimeAccounting',
     'Kernel::Output::HTML::Layout',
 );
@@ -63,20 +63,16 @@ sub Run {
     # deny access if the agent doesn't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
-    );
+    my $DateTimeObject   = $Kernel::OM->Create('Kernel::System::DateTime');
+    my $DateTimeSettings = $DateTimeObject->Get();
 
     # get time accounting object
     my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     my %UserCurrentPeriod = $TimeAccountingObject->UserCurrentPeriodGet(
-        Year  => $Year,
-        Month => $Month,
-        Day   => $Day,
+        Year  => $DateTimeSettings->{Year},
+        Month => $DateTimeSettings->{Month},
+        Day   => $DateTimeSettings->{Day},
     );
 
     # deny access, if user has no valid period

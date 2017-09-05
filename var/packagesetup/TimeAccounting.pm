@@ -12,12 +12,11 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::Cache',
     'Kernel::System::Group',
     'Kernel::System::SysConfig',
     'Kernel::System::Valid',
-    'Kernel::System::SysConfig',
-    'Kernel::Config',
 );
 
 =head1 NAME
@@ -51,33 +50,44 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # rebuild ZZZ* files
-    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
+    $Kernel::OM->ObjectsDiscard();
 
-    # define the ZZZ files
-    my @ZZZFiles = (
-        'ZZZAAuto.pm',
-        'ZZZAuto.pm',
-    );
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
-    # reload the ZZZ files (mod_perl workaround)
-    for my $ZZZFile (@ZZZFiles) {
+    # Convert XML files to entries in the database.
+    if (
+        !$SysConfigObject->ConfigurationXML2DB(
+            CleanUp => 1,
+            Force   => 1,
+            UserID  => 1,
+        )
+        )
+    {
+        return;
+    }
 
-        PREFIX:
-        for my $Prefix (@INC) {
-            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
-            next PREFIX if !-f $File;
-            do $File;
-            last PREFIX;
+    if (
+        !$SysConfigObject->ConfigurationDeploy(
+            Comments => $Param{Comments} || "Configuration Rebuild",
+            AllSettings  => 1,
+            Force        => 1,
+            NoValidation => 1,
+            UserID       => 1,
+        )
+        )
+    {
+        return;
+    }
+
+    # Force a reload of ZZZAuto.pm to get the fresh configuration values.
+    for my $Module ( sort keys %INC ) {
+        if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
+            delete $INC{$Module};
         }
     }
 
-    # always discard the config object before package code is executed,
-    # to make sure that the config object will be created newly, so that it
-    # will use the recently written new config from the package
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::Config'],
-    );
+    # Create common objects with fresh default config.
+    $Kernel::OM->ObjectsDiscard();
 
     return $Self;
 }
