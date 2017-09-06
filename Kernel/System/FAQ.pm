@@ -2671,11 +2671,9 @@ sub _FAQApprovalTicketCreate {
 
         # create article
         my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
-            TicketID   => $TicketID,
-            SenderType => 'agent',
-
-            # Visible for customer only if FAQ state is not internal (agent).
-            IsVisibleForCustomer => ( $Param{StateID} == 2 ) ? 0 : 1,
+            TicketID             => $TicketID,
+            SenderType           => 'agent',
+            IsVisibleForCustomer => 0,
             From                 => $From,
             Subject              => $Subject,
             Body                 => $Body,
