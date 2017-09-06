@@ -2,6 +2,7 @@
  - 2017-06-30 Replaced UserFistname, UserLastname in favor of a more flexible UserFullname, thanks to Dian Tong Software.
 
 #5.0.10 2017-??-??
+ - 2017-09-06 Fixed bug#[12569](https://bugs.otrs.org/show_bug.cgi?id=12569) - Missing explanation users (with visual impairments) in the 'Preferences' page.
  - 2017-08-31 Fixed bug#[12433](https://bugs.otrs.org/show_bug.cgi?id=12433)(PR#67) - Dynamic Fields for FAQ don't work as Link.
  - 2017-08-04 Updated translations, thanks to all translators.
  - 2017-08-04 Fixed bug#[12964](https://bugs.otrs.org/show_bug.cgi?id=12964)(PR#73) - FAQ types are not translated, Thanks to Balázs Úr.
