@@ -25,7 +25,7 @@ $Selenium->RunTest(
         # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        my @FAQIDs;
+        my @ItemIDs;
 
         # create test FAQs
         for ( 1 .. 5 ) {
@@ -47,11 +47,11 @@ $Selenium->RunTest(
             );
 
             my %FAQ = (
-                FAQID    => $ItemID,
+                ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
             );
 
-            push @FAQIDs, \%FAQ;
+            push @ItemIDs, \%FAQ;
         }
 
         # create and login test customer
@@ -103,7 +103,7 @@ $Selenium->RunTest(
         );
 
         # check and delete test created FAQs
-        for my $FAQ (@FAQIDs) {
+        for my $FAQ (@ItemIDs) {
 
             # check if there is test FAQ on screen
             $Self->True(
@@ -112,12 +112,12 @@ $Selenium->RunTest(
             );
 
             my $Success = $FAQObject->FAQDelete(
-                ItemID => $FAQ->{FAQID},
+                ItemID => $FAQ->{ItemID},
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - ID $FAQ->{FAQID}",
+                "FAQ is deleted - ID $FAQ->{ItemID}",
             );
         }
 

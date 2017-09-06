@@ -26,7 +26,7 @@ $Selenium->RunTest(
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # create test FAQs
-        my @FAQIDs;
+        my @ItemIDs;
         for ( 1 .. 5 ) {
             my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
             my $ItemID   = $FAQObject->FAQAdd(
@@ -46,11 +46,11 @@ $Selenium->RunTest(
             );
 
             my %FAQ = (
-                FAQID    => $ItemID,
+                ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
             );
 
-            push @FAQIDs, \%FAQ;
+            push @ItemIDs, \%FAQ;
         }
 
         # get script alias
@@ -93,7 +93,7 @@ $Selenium->RunTest(
         );
 
         # check and delete test created FAQs
-        for my $FAQ (@FAQIDs) {
+        for my $FAQ (@ItemIDs) {
 
             # check if there is test FAQ on screen
             $Self->True(
@@ -102,7 +102,7 @@ $Selenium->RunTest(
             );
 
             my $Success = $FAQObject->FAQDelete(
-                ItemID => $FAQ->{FAQID},
+                ItemID => $FAQ->{ItemID},
                 UserID => 1,
             );
             $Self->True(

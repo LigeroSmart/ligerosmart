@@ -53,7 +53,7 @@ $Selenium->RunTest(
             );
 
             my %FAQ = (
-                FAQID    => $ItemID,
+                ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
             );
 
@@ -63,7 +63,7 @@ $Selenium->RunTest(
         # set one FAQ as invalid see bug bug#11498 (http://bugs.otrs.org/show_bug.cgi?id=11498)ShowInvalidFAQItems
         my $InvalidFAQTitle = "Invalid $FAQs[0]->{FAQTitle}";
         my $Success         = $FAQObject->FAQUpdate(
-            ItemID      => $FAQs[0]->{FAQID},
+            ItemID      => $FAQs[0]->{ItemID},
             Title       => $InvalidFAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -149,12 +149,12 @@ $Selenium->RunTest(
             );
 
             $Success = $FAQObject->FAQDelete(
-                ItemID => $FAQ->{FAQID},
+                ItemID => $FAQ->{ItemID},
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - ID $FAQ->{FAQID}",
+                "FAQ is deleted - ID $FAQ->{ItemID}",
             );
         }
 

@@ -53,7 +53,7 @@ $Selenium->RunTest(
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # Create test FAQ items.
-        my @FAQIDs;
+        my @ItemIDs;
         my @FAQNumbers;
         for my $FAQ ( 1 .. 2 ) {
             my $ItemID = $FAQObject->FAQAdd(
@@ -73,7 +73,7 @@ $Selenium->RunTest(
                 ContentType => 'text/plain',
                 UserID      => $TestUserID,
             );
-            push @FAQIDs, $ItemID;
+            push @ItemIDs, $ItemID;
 
             my %FAQ = $FAQObject->FAQGet(
                 ItemID => $ItemID,
@@ -93,7 +93,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # Navigate to zoom view of created test FAQ item.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
         # Click on 'Link'.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->VerifiedClick();
@@ -109,7 +109,7 @@ $Selenium->RunTest(
         $Selenium->find_element(".//*[\@id='SEARCH::Number']")->VerifiedSubmit();
 
         # Link created test FAQ items.
-        $Selenium->find_element("//input[\@value='$FAQIDs[1]'][\@type='checkbox']")->VerifiedClick();
+        $Selenium->find_element("//input[\@value='$ItemIDs[1]'][\@type='checkbox']")->VerifiedClick();
         $Selenium->execute_script(
             "\$('#TypeIdentifier').val('ParentChild::Target').trigger('redraw.InputField').trigger('change');"
         );
@@ -133,7 +133,7 @@ $Selenium->RunTest(
         );
 
         # Click on child FAQ.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQZoom;ItemID=$FAQIDs[1]' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQZoom;ItemID=$ItemIDs[1]' )]")->VerifiedClick();
 
         # Verify that child test FAQ is linked with parent test FAQ.
         $Self->True(
@@ -160,7 +160,7 @@ $Selenium->RunTest(
         my $ShortTitle = substr( $LongFAQTitle, 0, 47 ) . "...";
 
         my %FAQ = $FAQObject->FAQGet(
-            ItemID     => $FAQIDs[1],
+            ItemID     => $ItemIDs[1],
             ItemFields => 1,
             UserID     => 1,
         );
@@ -171,11 +171,11 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Updated FAQ title - $FAQIDs[1]"
+            "Updated FAQ title - $ItemIDs[1]"
         );
 
         # Navigate to AgentFAQZoom screen.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQIDs[0]");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
         # Check for updated FAQ title in linked FAQ items complex view table.
         $Self->True(
@@ -346,7 +346,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # delete created test tickets
-        for my $ItemID (@FAQIDs) {
+        for my $ItemID (@ItemIDs) {
             $Success = $FAQObject->FAQDelete(
                 ItemID => $ItemID,
                 UserID => 1,

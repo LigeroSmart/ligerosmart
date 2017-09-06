@@ -48,7 +48,7 @@ $Selenium->RunTest(
             );
 
             my %FAQ = (
-                FAQID    => $ItemID,
+                ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
                 Type     => $Title,
             );
@@ -139,7 +139,7 @@ $Selenium->RunTest(
         # delete test created FAQs
         for my $Delete (@FAQSearch) {
             my $Success = $FAQObject->FAQDelete(
-                ItemID => $Delete->{FAQID},
+                ItemID => $Delete->{ItemID},
                 UserID => 1,
             );
             $Self->True(
