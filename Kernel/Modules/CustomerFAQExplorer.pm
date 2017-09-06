@@ -200,7 +200,7 @@ sub Run {
     );
 
     # search all FAQ articles within the given category
-    my @ViewableFAQIDs = $FAQObject->FAQSearch(
+    my @ViewableItemIDs = $FAQObject->FAQSearch(
         OrderBy          => [$SortBy],
         OrderByDirection => [$OrderBy],
         Limit            => $SearchLimit,
@@ -256,9 +256,9 @@ sub Run {
     }
 
     my $Counter = 0;
-    if (@ViewableFAQIDs) {
+    if (@ViewableItemIDs) {
 
-        for my $FAQID (@ViewableFAQIDs) {
+        for my $ItemID (@ViewableItemIDs) {
 
             $Counter++;
 
@@ -271,7 +271,7 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID     => $FAQID,
+                    ItemID     => $ItemID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );

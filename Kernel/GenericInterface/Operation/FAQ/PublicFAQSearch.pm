@@ -164,7 +164,7 @@ sub Run {
     );
 
     # perform FAQ search
-    my @ViewableFAQIDs = $FAQObject->FAQSearch(
+    my @ViewableItemIDs = $FAQObject->FAQSearch(
         Number  => $Param{Data}->{Number}  || '',
         Title   => $Param{Data}->{Title}   || '',
         What    => $Param{Data}->{What}    || '',
@@ -178,7 +178,7 @@ sub Run {
         States           => $InterfaceStates,
         Interface        => $Interface,
     );
-    if ( !IsArrayRefWithData( \@ViewableFAQIDs ) ) {
+    if ( !IsArrayRefWithData( \@ViewableItemIDs ) ) {
 
         my $ErrorMessage = 'Could not get FAQ data'
             . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()';
@@ -197,11 +197,11 @@ sub Run {
     };
 
     # set FAQ entry data
-    if ( scalar @ViewableFAQIDs > 1 ) {
-        $ReturnData->{Data}->{ID} = \@ViewableFAQIDs;
+    if ( scalar @ViewableItemIDs > 1 ) {
+        $ReturnData->{Data}->{ID} = \@ViewableItemIDs;
     }
     else {
-        $ReturnData->{Data}->{ID} = $ViewableFAQIDs[0];
+        $ReturnData->{Data}->{ID} = $ViewableItemIDs[0];
     }
 
     # return result

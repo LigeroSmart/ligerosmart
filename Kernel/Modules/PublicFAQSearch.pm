@@ -466,7 +466,7 @@ sub Run {
         );
 
         # perform FAQ search
-        my @ViewableFAQIDs = $FAQObject->FAQSearch(
+        my @ViewableItemIDs = $FAQObject->FAQSearch(
             OrderBy             => [$SortBy],
             OrderByDirection    => [$OrderBy],
             Limit               => $SearchLimit,
@@ -511,11 +511,11 @@ sub Run {
             }
             $CSVDynamicField = \@CSVCustomerDynamicFields;
 
-            for my $FAQID (@ViewableFAQIDs) {
+            for my $ItemID (@ViewableItemIDs) {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID        => $FAQID,
+                    ItemID        => $ItemID,
                     ItemFields    => 0,
                     DynamicFields => 1,
                     UserID        => $Self->{UserID},
@@ -668,11 +668,11 @@ sub Run {
             my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
             my @PDFData;
-            for my $FAQID (@ViewableFAQIDs) {
+            for my $ItemID (@ViewableItemIDs) {
 
                 # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
-                    ItemID     => $FAQID,
+                    ItemID     => $ItemID,
                     ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
@@ -871,7 +871,7 @@ sub Run {
         my $Counter = 0;
 
         # if there are results to show
-        if (@ViewableFAQIDs) {
+        if (@ViewableItemIDs) {
 
             # create back link for FAQ Zoom screen
             my $ZoomBackLink = "Action=PublicFAQSearch;Subaction=Search;"
@@ -978,7 +978,7 @@ sub Run {
                 }
             }
 
-            for my $FAQID (@ViewableFAQIDs) {
+            for my $ItemID (@ViewableItemIDs) {
 
                 $Counter++;
 
@@ -991,7 +991,7 @@ sub Run {
 
                     # get FAQ data details
                     my %FAQData = $FAQObject->FAQGet(
-                        ItemID        => $FAQID,
+                        ItemID        => $ItemID,
                         ItemFields    => 0,
                         DynamicFields => 1,
                         UserID        => $Self->{UserID},
