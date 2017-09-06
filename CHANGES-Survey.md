@@ -3,6 +3,7 @@
  - 2017-08-25 Added tag reference in the Add/Edit survey screens.
 
 #5.0.5 2017-??-??
+ - 2017-09-06 Fixed bug#[12569](https://bugs.otrs.org/show_bug.cgi?id=12569) - Missing explanation users (with visual impairments) in the 'Preferences' page.
  - 2017-07-26 Fixed bug#[9575](https://bugs.otrs.org/show_bug.cgi?id=9575) - NOT NULL restrictions violation occurs in the vote on Oracle Database.
  - 2017-07-20 Fixed bug#[10991](https://bugs.otrs.org/show_bug.cgi?id=10991) - Survey percentage won't add 100%.
  - 2017-07-17 Added Bulgarian and Ukrainian translations, thanks to all translators.

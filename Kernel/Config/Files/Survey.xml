@@ -342,6 +342,7 @@ Your OTRS-Team
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
                 <Item Key="Column">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Survey Overview "Small" Limit</Item>
+                <Item Key="Desc" Translatable="1">This is a description for SurveyOverviewSmallPageShown on Survey.</Item>
                 <Item Key="Key" Translatable="1">Survey limit per page for Survey Overview "Small".</Item>
                 <Item Key="Data">
                     <Hash>
