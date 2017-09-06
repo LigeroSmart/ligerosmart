@@ -27,6 +27,7 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
      * @name ExpressionActionDropdown
      * @memberof ITSM.Agent.ChangeManagement.Condition
      * @function
+     * @param {Object} Event object of mouse click.
      * @description
      *      This function initializes behaviours of the condition action/expression dropdowns.
      */
@@ -42,13 +43,17 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
             'AttributeID',
         ];
 
-        if (ValidDropdowns.indexOf(Dropdown) === -1) {
-            return;
-        }
-
         var RefreshDropdowns = [
             ID + '-OperatorID'
         ];
+
+        var NotSerialize,
+            FormSerialized,
+            URLString;
+
+        if (ValidDropdowns.indexOf(Dropdown) === -1) {
+            return;
+        }
 
         if (Dropdown === 'ObjectID') {
             RefreshDropdowns.unshift(ID + '-AttributeID');
@@ -66,9 +71,6 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
         );
 
         if (Dropdown === 'AttributeID') {
-            var NotSerialize,
-                FormSerialized,
-                URLString;
 
             NotSerialize = Array;
             NotSerialize.Subaction = 'Subaction';
@@ -96,6 +98,7 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
      * @name SetSubmitAction
      * @memberof ITSM.Agent.ChangeManagement.Condition
      * @function
+     * @param {Object} Event object of mouse click.
      * @description
      *      This function sets the action of the clicked button before the form is submitted.
      */
@@ -117,6 +120,8 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
      * @name DeleteActionExpression
      * @memberof ITSM.Agent.ChangeManagement.Condition
      * @function
+     * @param {Object} Event object of mouse click.
+     * @returns {False} returns false to prevent the default click handler.
      * @description
      *      This function sets the action/expression that was clicked to be deleted and submits the form.
      */
