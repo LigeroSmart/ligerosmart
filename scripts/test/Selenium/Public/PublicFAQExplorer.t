@@ -29,7 +29,7 @@ $Selenium->RunTest(
         my @FAQIDs;
         for ( 1 .. 5 ) {
             my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-            my $FAQID    = $FAQObject->FAQAdd(
+            my $ItemID   = $FAQObject->FAQAdd(
                 Title       => $FAQTitle,
                 CategoryID  => 1,
                 StateID     => 3,
@@ -41,12 +41,12 @@ $Selenium->RunTest(
             );
 
             $Self->True(
-                $FAQID,
-                "FAQ is created - $FAQID",
+                $ItemID,
+                "FAQ is created - $ItemID",
             );
 
             my %FAQ = (
-                FAQID    => $FAQID,
+                FAQID    => $ItemID,
                 FAQTitle => $FAQTitle,
             );
 

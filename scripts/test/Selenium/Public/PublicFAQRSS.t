@@ -27,7 +27,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $FAQID    = $FAQObject->FAQAdd(
+        my $ItemID   = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 3,
@@ -38,8 +38,8 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $FAQID,
-            "FAQ is created - $FAQID",
+            $ItemID,
+            "FAQ is created - $ItemID",
         );
 
         # get script alias
@@ -59,7 +59,7 @@ $Selenium->RunTest(
             "$FAQTitle - found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Action=PublicFAQZoom;ItemID=$FAQID" ) > -1,
+            index( $Selenium->get_page_source(), "Action=PublicFAQZoom;ItemID=$ItemID" ) > -1,
             "FAQ link - found",
         );
 
@@ -76,18 +76,18 @@ $Selenium->RunTest(
             "$FAQTitle - found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Action=PublicFAQZoom;ItemID=$FAQID" ) > -1,
+            index( $Selenium->get_page_source(), "Action=PublicFAQZoom;ItemID=$ItemID" ) > -1,
             "FAQ link - found",
         );
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $FAQID,
+            ItemID => $ItemID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ is deleted - $FAQID",
+            "FAQ is deleted - $ItemID",
         );
 
         # make sure the cache is correct

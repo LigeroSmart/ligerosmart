@@ -56,7 +56,7 @@ $Selenium->RunTest(
 
                 # add test FAQ
                 my $FAQTitle = $Title . $Helper->GetRandomID();
-                my $FAQID    = $FAQObject->FAQAdd(
+                my $ItemID   = $FAQObject->FAQAdd(
                     Title       => $FAQTitle,
                     CategoryID  => $CategoryID,
                     StateID     => 1,
@@ -67,12 +67,12 @@ $Selenium->RunTest(
                 );
 
                 $Self->True(
-                    $FAQID,
-                    "FAQ item is created - ID $FAQID",
+                    $ItemID,
+                    "FAQ item is created - ID $ItemID",
                 );
 
                 my %FAQ = (
-                    FAQID    => $FAQID,
+                    FAQID    => $ItemID,
                     FAQTitle => $FAQTitle,
                     Type     => $Title,
                 );

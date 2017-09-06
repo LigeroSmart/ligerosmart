@@ -39,7 +39,7 @@ $Selenium->RunTest(
         my $FAQProblem  = 'Selenium Problem';
         my $FAQSolution = 'Selenium Solution';
 
-        my $FAQID = $FAQObject->FAQAdd(
+        my $ItemID = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 3,
@@ -53,15 +53,15 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $FAQID,
-            "FAQ is created - $FAQID",
+            $ItemID,
+            "FAQ is created - $ItemID",
         );
 
         # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to PublicFAQPrint screen of created test FAQ
-        $Selenium->get("${ScriptAlias}public.pl?Action=PublicFAQPrint;ItemID=$FAQID");
+        $Selenium->get("${ScriptAlias}public.pl?Action=PublicFAQPrint;ItemID=$ItemID");
 
         # wait until print screen is loaded
         ACTIVESLEEP:
@@ -95,12 +95,12 @@ $Selenium->RunTest(
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $FAQID,
+            ItemID => $ItemID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ is deleted - $FAQID",
+            "FAQ is deleted - $ItemID",
         );
 
         # make sure the cache is correct

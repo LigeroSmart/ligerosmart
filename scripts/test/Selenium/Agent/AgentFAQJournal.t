@@ -27,7 +27,7 @@ $Selenium->RunTest(
 
         # create test FAQ
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
-        my $FAQID    = $FAQObject->FAQAdd(
+        my $ItemID   = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
             StateID     => 1,
@@ -37,8 +37,8 @@ $Selenium->RunTest(
             ContentType => 'text/html',
         );
         $Self->True(
-            $FAQID,
-            "FAQ item is created - ID $FAQID",
+            $ItemID,
+            "FAQ item is created - ID $ItemID",
         );
 
         # create test user and login
@@ -75,19 +75,19 @@ $Selenium->RunTest(
         # verify we are in AgentFAQZoom screen
         my $URLAction = $Selenium->get_current_url();
         $Self->Is(
-            index( $URLAction, "Action=AgentFAQZoom;ItemID=$FAQID" ) > -1,
+            index( $URLAction, "Action=AgentFAQZoom;ItemID=$ItemID" ) > -1,
             1,
             "Link from Journal to Zoom view - success",
         );
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $FAQID,
+            ItemID => $ItemID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ item is deleted - ID $FAQID",
+            "FAQ item is deleted - ID $ItemID",
         );
 
         # make sure the cache is correct
