@@ -298,7 +298,7 @@ my $FAQDelete = $FAQObject->FAQDelete(
 );
 $Self->True(
     $FAQDelete,
-    "FAQDelete() - FAQID: $ItemID",
+    "FAQDelete() - ItemID: $ItemID",
 );
 
 my $FAQDelete2 = $FAQObject->FAQDelete(
@@ -307,7 +307,7 @@ my $FAQDelete2 = $FAQObject->FAQDelete(
 );
 $Self->True(
     $FAQDelete2,
-    "FAQDelete() - FAQID: $ItemID2",
+    "FAQDelete() - ItemID: $ItemID2",
 );
 
 my $CategoryID = $FAQObject->CategoryAdd(

@@ -108,7 +108,7 @@ $Self->True(
     "CategoryAdd() - Child Category",
 );
 
-my $FAQIDOne = $FAQObject->FAQAdd(
+my $ItemIDOne = $FAQObject->FAQAdd(
     Title       => 'Title FAQ ' . $RandomID . 'One' . $WebserviceName,
     CategoryID  => $CategoryIDOne,
     StateID     => $PublicStateID,
@@ -122,11 +122,11 @@ my $FAQIDOne = $FAQObject->FAQAdd(
 );
 
 $Self->True(
-    $FAQIDOne,
+    $ItemIDOne,
     "FAQAdd() - FAQ One",
 );
 
-my $FAQIDTwo = $FAQObject->FAQAdd(
+my $ItemIDTwo = $FAQObject->FAQAdd(
     Title       => 'Title FAQ ' . $RandomID . ' Two' . $WebserviceName,
     CategoryID  => $CategoryIDThree,
     StateID     => $PublicStateID,
@@ -140,11 +140,11 @@ my $FAQIDTwo = $FAQObject->FAQAdd(
 );
 
 $Self->True(
-    $FAQIDTwo,
+    $ItemIDTwo,
     "FAQAdd() - FAQ Two",
 );
 
-my $FAQIDThree = $FAQObject->FAQAdd(
+my $ItemIDThree = $FAQObject->FAQAdd(
     Title       => 'Title 使用下列语言 Three' . $WebserviceName,
     CategoryID  => $CategoryIDFour,
     StateID     => $PublicStateID,
@@ -158,7 +158,7 @@ my $FAQIDThree = $FAQObject->FAQAdd(
 );
 
 $Self->True(
-    $FAQIDThree,
+    $ItemIDThree,
     "FAQAdd() - FAQ Three",
 );
 
@@ -177,7 +177,7 @@ for my $File (qw(bin txt)) {
     );
 
     my $Attachment = $FAQObject->AttachmentAdd(
-        ItemID      => $FAQIDThree,
+        ItemID      => $ItemIDThree,
         Content     => ${$ContentRef},
         ContentType => 'test/' . $File,
         Filename    => 'test.' . $File,
@@ -190,7 +190,7 @@ for my $File (qw(bin txt)) {
     );
 }
 
-my $FAQIDFour = $FAQObject->FAQAdd(
+my $ItemIDFour = $FAQObject->FAQAdd(
     Title       => 'Title FAQ ' . $RandomID . ' Языковые Four' . $WebserviceName,
     CategoryID  => $CategoryIDFour,
     StateID     => $PublicStateID,
@@ -204,7 +204,7 @@ my $FAQIDFour = $FAQObject->FAQAdd(
 );
 
 $Self->True(
-    $FAQIDFour,
+    $ItemIDFour,
     "FAQAdd() - FAQ Four",
 );
 
@@ -224,7 +224,7 @@ for my $Key ( sort keys %Languages ) {
 
 # get FAQ
 my %FAQOne = $FAQObject->FAQGet(
-    ItemID     => $FAQIDOne,
+    ItemID     => $ItemIDOne,
     ItemFields => 1,
     UserID     => $UserID,
 );
@@ -235,7 +235,7 @@ foreach my $Key ( keys %FAQOne ) {
 }
 
 my %FAQTwo = $FAQObject->FAQGet(
-    ItemID     => $FAQIDTwo,
+    ItemID     => $ItemIDTwo,
     ItemFields => 1,
     UserID     => $UserID,
 );
@@ -246,7 +246,7 @@ foreach my $Key ( keys %FAQTwo ) {
 }
 
 my %FAQThree = $FAQObject->FAQGet(
-    ItemID     => $FAQIDThree,
+    ItemID     => $ItemIDThree,
     ItemFields => 1,
     UserID     => $UserID,
 );
@@ -257,15 +257,15 @@ foreach my $Key ( keys %FAQThree ) {
 }
 
 my @Index = $FAQObject->AttachmentIndex(
-    ItemID     => $FAQIDThree,
-    ShowInline => 1,             #   ( 0|1, default 1)
+    ItemID     => $ItemIDThree,
+    ShowInline => 1,              #   ( 0|1, default 1)
     UserID     => $UserID,
 );
 
 my @AttachmentsThree;
 for my $Attachment (@Index) {
     my %File = $FAQObject->AttachmentGet(
-        ItemID => $FAQIDThree,
+        ItemID => $ItemIDThree,
         FileID => $Attachment->{FileID},
         UserID => $UserID,
     );
@@ -279,7 +279,7 @@ for my $Attachment (@Index) {
 }
 
 my %FAQFour = $FAQObject->FAQGet(
-    ItemID     => $FAQIDFour,
+    ItemID     => $ItemIDFour,
     ItemFields => 1,
     UserID     => $UserID,
 );
@@ -470,9 +470,9 @@ my @Tests = (
             Success => 1,
             Data    => {
                 ID => [
-                    $FAQIDFour,
-                    $FAQIDTwo,
-                    $FAQIDOne,
+                    $ItemIDFour,
+                    $ItemIDTwo,
+                    $ItemIDOne,
                 ],
             },
         },
@@ -488,7 +488,7 @@ my @Tests = (
         ExpectedReturnRemoteData => {
             Success => 1,
             Data    => {
-                ID => $FAQIDThree,
+                ID => $ItemIDThree,
             },
         },
         Operation => 'PublicFAQSearch',
@@ -497,7 +497,7 @@ my @Tests = (
         Name           => 'Test 5',
         SuccessRequest => '1',
         RequestData    => {
-            ItemID => $FAQIDFour,
+            ItemID => $ItemIDFour,
         },
         ExpectedReturnRemoteData => {
             Success => 1,
@@ -512,19 +512,19 @@ my @Tests = (
             Data    => {
                 FAQItem => [
                     {
-                        %FAQFour,
+                        %FAQFour
                     }
                 ],
             },
         },
         Operation => 'PublicFAQGet',
-        ItemID    => $FAQIDFour,
+        ItemID    => $ItemIDFour,
     },
     {
         Name           => 'Test 6',
         SuccessRequest => '1',
         RequestData    => {
-            ID => $FAQIDFour,
+            ID => $ItemIDFour,
         },
         ExpectedReturnRemoteData => {
             Data => {
@@ -547,7 +547,7 @@ my @Tests = (
 
         },
         Operation => 'PublicFAQGet',
-        ItemID    => $FAQIDFour,
+        ItemID    => $ItemIDFour,
     },
     {
         Name           => 'Test 7',
@@ -584,7 +584,7 @@ my @Tests = (
         Name           => 'Test 8',
         SuccessRequest => '1',
         RequestData    => {
-            ItemID => $FAQIDThree,
+            ItemID => $ItemIDThree,
         },
         ExpectedReturnRemoteData => {
             Success => 1,
@@ -600,14 +600,14 @@ my @Tests = (
             Data    => {
                 FAQItem => [
                     {
-                        %FAQThree,
                         Attachment => \@AttachmentsThree,
+                        %FAQThree
                     },
                 ],
             },
         },
         Operation => 'PublicFAQGet',
-        ItemID    => $FAQIDThree,
+        ItemID    => $ItemIDThree,
     },
     {
         Name           => 'Test 9',
@@ -669,17 +669,17 @@ my @Tests = (
         Name           => 'Test 11',
         SuccessRequest => '1',
         RequestData    => {
-            ItemID => "$FAQIDOne,$FAQIDTwo,$FAQIDThree",
+            ItemID => "$ItemIDOne,$ItemIDTwo,$ItemIDThree",
         },
         ExpectedReturnRemoteData => {
             Success => 1,
             Data    => {
                 FAQItem => [
                     {
-                        %FAQOne,
+                        %FAQOne
                     },
                     {
-                        %FAQTwo,
+                        %FAQTwo
                     },
                     {
                         %FAQThree,
@@ -689,7 +689,7 @@ my @Tests = (
             },
         },
         Operation => 'PublicFAQGet',
-        ItemID    => "$FAQIDOne,$FAQIDTwo,$FAQIDThree",
+        ItemID    => "$ItemIDOne,$ItemIDTwo,$ItemIDThree",
     },
 
 );
@@ -846,39 +846,39 @@ $Self->True(
 
 # clean up FAQ stuff
 my $FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQIDOne,
+    ItemID => $ItemIDOne,
     UserID => $UserID,
 );
 $Self->True(
     $FAQDelete,
-    "FAQDelete() - FAQID: $FAQIDOne",
+    "FAQDelete() - ItemID: $ItemIDOne",
 );
 
 $FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQIDTwo,
+    ItemID => $ItemIDTwo,
     UserID => $UserID,
 );
 $Self->True(
     $FAQDelete,
-    "FAQDelete() - FAQID: $FAQIDTwo",
+    "FAQDelete() - ItemID: $ItemIDTwo",
 );
 
 $FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQIDThree,
+    ItemID => $ItemIDThree,
     UserID => $UserID,
 );
 $Self->True(
     $FAQDelete,
-    "FAQDelete() - FAQID: $FAQIDThree",
+    "FAQDelete() - ItemID: $ItemIDThree",
 );
 
 $FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQIDFour,
+    ItemID => $ItemIDFour,
     UserID => $UserID,
 );
 $Self->True(
     $FAQDelete,
-    "FAQDelete() - FAQID: $FAQIDFour",
+    "FAQDelete() - ItemID: $ItemIDFour",
 );
 
 my $CategoryDelete = $FAQObject->CategoryDelete(

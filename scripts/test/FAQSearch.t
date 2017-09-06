@@ -71,7 +71,7 @@ for my $Counter ( 1 .. 2 ) {
     $Self->IsNot(
         undef,
         $ItemID,
-        "FAQAdd() FAQID:'$ItemID' for FAQSearch()",
+        "FAQAdd() ItemID:'$ItemID' for FAQSearch()",
     );
 
     push @AddedFAQs, $ItemID;
@@ -129,7 +129,7 @@ for my $Vote (@VotesToAdd) {
 
     $Self->True(
         $Success,
-        "VoteAdd(): FAQID:'$Vote->{ItemID}' IP:'$Vote->{IP}' Rate:'$Vote->{Rate}' with true",
+        "VoteAdd(): ItemID:'$Vote->{ItemID}' IP:'$Vote->{IP}' Rate:'$Vote->{Rate}' with true",
     );
 }
 
@@ -476,10 +476,10 @@ my @Tests = (
 
 # execute the tests
 for my $Test (@Tests) {
-    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@FAQIDs,
+        \@ItemIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -528,10 +528,10 @@ for my $Test (@Tests) {
 
 # execute the tests
 for my $Test (@Tests) {
-    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@FAQIDs,
+        \@ItemIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -563,7 +563,7 @@ my $Success = $FAQObject->FAQUpdate(
 
 $Self->True(
     $Success,
-    "FAQUpdate() FAQID:'$AddedFAQs[0]' for FAQSearch()",
+    "FAQUpdate() ItemID:'$AddedFAQs[0]' for FAQSearch()",
 );
 
 $Helper->FixedTimeAddSeconds(60);
@@ -576,7 +576,7 @@ $Success = $FAQObject->FAQUpdate(
 
 $Self->True(
     $Success,
-    "FAQUpdate() FAQID:'$AddedFAQs[1]' for FAQSearch()",
+    "FAQUpdate() ItemID:'$AddedFAQs[1]' for FAQSearch()",
 );
 
 # add 2 minutes to frozen time
@@ -715,10 +715,10 @@ my $DateMinus6Mins = $DateTime->ToString();
 # execute the tests
 for my $Test (@Tests) {
 
-    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@FAQIDs,
+        \@ItemIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -816,10 +816,10 @@ for my $Test (@Tests) {
 # execute the tests
 for my $Test (@Tests) {
 
-    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@FAQIDs,
+        \@ItemIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -864,10 +864,10 @@ return if !$Kernel::OM->Get('Kernel::System::DB')->Do(
 # execute the tests
 for my $Test (@Tests) {
 
-    my @FAQIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
+    my @ItemIDs = $FAQObject->FAQSearch( %{ $Test->{Config} } );
 
     $Self->IsDeeply(
-        \@FAQIDs,
+        \@ItemIDs,
         $Test->{ExpectedResults},
         "$Test->{Name} FAQSearch()",
     );
@@ -1157,7 +1157,7 @@ $Self->True(
 
     for my $Test (@Tests) {
 
-        my @FAQIDs = $FAQObject->FAQSearch(
+        my @ItemIDs = $FAQObject->FAQSearch(
             Number           => '*',
             States           => [ 'public', 'internal' ],
             OrderByDirection => ['Up'],
@@ -1167,7 +1167,7 @@ $Self->True(
         );
 
         $Self->IsDeeply(
-            \@FAQIDs,
+            \@ItemIDs,
             $Test->{ExpectedResults},
             "$Test->{Name}, FAQSearch()",
         );
