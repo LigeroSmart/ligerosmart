@@ -11,6 +11,8 @@ package Kernel::Modules::AdminITSMStateMachine;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -33,7 +35,7 @@ sub Run {
 
     # store commonly needed parameters in %GetParam
     my %GetParam;
-    for my $ParamName (qw(StateID NextStateID Class)) {
+    for my $ParamName (qw(StateID NextStateID Class Status)) {
         $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
@@ -127,6 +129,19 @@ sub Run {
             NextStateID    => $GetParam{NextStateID},
             NewNextStateID => $GetParam{NewNextStateID},
         );
+        if ($ActionIsOk) {
+
+            my $ContinueAfterSave = $ParamObject->GetParam( Param => 'ContinueAfterSave' );
+
+            if ($ContinueAfterSave) {
+                return $LayoutObject->Redirect(
+                    OP =>
+                        "Action=$Self->{Action};Subaction=StateTransitionUpdate;Class=$GetParam{Class};StateID=$GetParam{StateID};NextStateID=$GetParam{NewNextStateID};Status=Updated"
+                );
+            }
+
+            return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Status=Updated" );
+        }
     }
     elsif ( $Self->{Subaction} eq 'StateTransitionAddAction' ) {
 
@@ -161,6 +176,21 @@ sub Run {
             StateID     => $GetParam{StateID},
             NextStateID => $GetParam{NextStateID},
         );
+
+        if ($ActionIsOk) {
+            my $ContinueAfterSave = $ParamObject->GetParam( Param => 'ContinueAfterSave' );
+
+            if ($ContinueAfterSave) {
+                return $LayoutObject->Redirect(
+                    OP =>
+                        "Action=$Self->{Action};Subaction=StateTransitionUpdate;Class=$GetParam{Class};StateID=$GetParam{StateID};NextStateID=$GetParam{NextStateID};Status=Added"
+                );
+            }
+
+            return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Status=Added" );
+
+        }
+
     }
     elsif ( $Self->{Subaction} eq 'StateTransitionDeleteAction' ) {
 
@@ -237,9 +267,25 @@ sub _StateTransitionUpdatePageGet {
         Data => \%Param,
     );
 
+    my $Status = $Param{'Status'} || '';
+    my %Notification;
+    if ( $Status eq 'Updated' ) {
+        %Notification = (
+            Info => Translatable('State Transition Updated!'),
+        );
+    }
+    elsif ( $Status eq 'Added' ) {
+        %Notification = (
+            Info => Translatable('State Transition Added!'),
+        );
+    }
+
     # generate HTML
     my $Output = $LayoutObject->Header();
     $Output .= $LayoutObject->NavigationBar();
+    if (%Notification) {
+        $Output .= $LayoutObject->Notify(%Notification) || '';
+    }
     $Output .= $Param{Note} || '';
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',
@@ -487,9 +533,25 @@ sub _OverviewClassesPageGet {
         );
     }
 
+    my $Status = $Param{'Status'} || '';
+    my %Notification;
+    if ( $Status eq 'Updated' ) {
+        %Notification = (
+            Info => Translatable('State Transition Updated!'),
+        );
+    }
+    elsif ( $Status eq 'Added' ) {
+        %Notification = (
+            Info => Translatable('State Transition Added!'),
+        );
+    }
+
     # generate HTML
     my $Output = $LayoutObject->Header();
     $Output .= $LayoutObject->NavigationBar();
+    if (%Notification) {
+        $Output .= $LayoutObject->Notify(%Notification) || '';
+    }
     $Output .= $Param{Note} || '';
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AdminITSMStateMachine',

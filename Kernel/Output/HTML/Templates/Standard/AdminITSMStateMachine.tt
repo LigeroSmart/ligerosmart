@@ -8,7 +8,32 @@
 
 [% RenderBlockStart("Overview") %]
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
-    <h1>[% Translate("Admin State Machine") | html %]</h1>
+    <h1 class="InvisibleText">[% Translate("Admin State Machine") | html %]</h1>
+[%-
+    BreadcrumbPath = [
+        {
+            Name => Translate('Admin State Machine'),
+            Link => Env("Action"),
+        },
+    ];
+
+    IF Data.Action == 'StateTransitionAdd';
+        BreadcrumbPath.push({
+            Name => 'Add State Transition',
+        });
+    ELSIF Data.Action == 'StateTransitionUpdate';
+        BreadcrumbPath.push({
+            Name => 'Edit State Transition',
+        });
+    ELSIF Data.Class;
+        BreadcrumbPath.push({
+            Name => 'State Transitions for ' _ Data.Class,
+        });
+    END;
+
+%]
+
+[% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath %]
 
     <div class="SidebarColumn">
         <div class="WidgetSimple">
@@ -116,6 +141,7 @@
                     <input type="hidden" name="Action"    value="[% Env("Action") %]"/>
                     <input type="hidden" name="Subaction" value="[% Data.Action | html %]Action"/>
                     <input type="hidden" name="Class"     value="[% Data.Class | html %]"/>
+                    <input type="hidden" name="ContinueAfterSave" id="ContinueAfterSave" value=""/>
                     <fieldset class="TableLike">
 
                         <label for="StateID">[% Translate("State") | html %]:</label>
@@ -134,10 +160,12 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" id="Submit" value="[% Translate("Add") | html %]">[% Translate("Add") | html %]</button>
+                        <div class="Field SpacingTop SaveButtons">
+                            <button class="Primary CallForAction" id="SubmitAndContinue" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
                             [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                            <button class="Primary CallForAction" id="Submit" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save and finish") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]"><span>[% Translate("Cancel") | html %]</span></a>
                         </div>
                         <div class="Clear"></div>
 
@@ -156,6 +184,7 @@
                     <input type="hidden" name="Class"       value="[% Data.Class | html %]"/>
                     <input type="hidden" name="StateID"     value="[% Data.StateID | html %]"/>
                     <input type="hidden" name="NextStateID" value="[% Data.NextStateID | html %]"/>
+                    <input type="hidden" name="ContinueAfterSave" id="ContinueAfterSave" value=""/>
                     <fieldset class="TableLike">
 
                         <label>[% Translate("State") | html %]:</label>
@@ -169,11 +198,12 @@
                             [% Data.NextStateSelectionString %]
                         </div>
                         <div class="Clear"></div>
-
-                        <div class="Field SpacingTop">
-                            <button class="Primary CallForAction" type="submit" id="SubmitUpdate" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
+                        <div class="Field SpacingTop SaveButtons">
+                            <button class="Primary CallForAction" id="SubmitAndContinue" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
                             [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Class=[% Data.Class | uri %]">[% Translate("Cancel") | html %]</a>
+                            <button class="Primary CallForAction" id="Submit" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save and finish") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]"><span>[% Translate("Cancel") | html %]</span></a>
                         </div>
                         <div class="Clear"></div>
 
