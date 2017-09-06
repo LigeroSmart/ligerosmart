@@ -72,6 +72,7 @@ sub new {
         return;
     }
 
+    # Rebuild ZZZAAuto.pm with current values.
     if (
         !$SysConfigObject->ConfigurationDeploy(
             Comments => $Param{Comments} || "Configuration Rebuild",
@@ -85,7 +86,7 @@ sub new {
         return;
     }
 
-    # Force a reload of ZZZAuto.pm to get the fresh configuration values.
+    # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
     for my $Module ( sort keys %INC ) {
         if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
             delete $INC{$Module};
@@ -252,6 +253,43 @@ sub CodeUpgradeSpecial {
 
     # start normal code upgrade
     $Self->CodeUpgrade();
+
+    return 1;
+}
+
+=head2 CodeUpgradeFromLowerThan_4_0_1()
+
+This function is only executed if the installed module version is smaller than 4.0.1.
+
+    my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_1();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_1 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # Migrate the DTL Content in the SysConfig.
+    $Self->_MigrateDTLInSysConfig();
+
+    return 1;
+}
+
+=head2 CodeUpgradeFromLowerThan_4_0_91()
+
+This function is only executed if the installed module version is smaller than 4.0.91.
+
+    my $Result = $CodeObject->CodeUpgradeFromLowerThan_4_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # Change configurations to match the new module location.
+    $Self->_MigrateConfigs();
+
+    # Set content type.
+    $Self->_SetContentType();
 
     return 1;
 }
@@ -754,6 +792,171 @@ sub _DynamicFieldsDelete {
     }
 
     return 1;
+}
+
+sub _MigrateDTLInSysConfig {
+
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ProviderObject  = Kernel::Output::Template::Provider->new();
+
+    # Get setting's content.
+    my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
+    return if !$Setting;
+
+    MENUMODULE:
+    for my $MenuModule ( sort keys %{$Setting} ) {
+
+        SETTINGITEM:
+        for my $SettingItem ( sort keys %{ $Setting->{$MenuModule} } ) {
+
+            my $SettingContent = $Setting->{$MenuModule}->{$SettingItem};
+
+            # Do nothing no value for migrating.
+            next SETTINGITEM if !$SettingContent;
+
+            my $TTContent;
+            eval {
+                $TTContent = $ProviderObject->MigrateDTLtoTT( Content => $SettingContent );
+            };
+            if ($@) {
+                $Kernel::OM->Get('Kernel::System::Log')->Log(
+                    Priority => 'error',
+                    Message  => "$MenuModule->$SettingItem : $@!",
+                );
+            }
+            else {
+                $Setting->{$MenuModule}->{$SettingItem} = $TTContent;
+            }
+        }
+
+        my $Success = $SysConfigObject->SettingUpdate(
+            Name           => 'FAQ::Frontend::MenuModule',
+            IsValid        => 1,
+            EffectiveValue => $Setting,
+            UserID         => 1,
+        );
+    }
+    return 1;
+}
+
+sub _MigrateConfigs {
+
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+
+    # Migrate FAQ menu modules.
+    # Get setting content for FAQ menu modules.
+    my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
+
+    MENUMODULE:
+    for my $MenuModule ( sort keys %{$Setting} ) {
+
+        # Update module location.
+        my $Module = $Setting->{$MenuModule}->{'Module'};
+        if ( $Module !~ m{Kernel::Output::HTML::FAQMenu(\w+)} ) {
+            next MENUMODULE;
+        }
+
+        $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::FAQMenu::Generic";
+
+        # Set new setting.
+        my $Success = $SysConfigObject->SettingUpdate(
+            Name           => 'FAQ::Frontend::MenuModule###' . $MenuModule,
+            IsValid        => 1,
+            EffectiveValue => $Setting->{$MenuModule},
+            UserID         => 1,
+        );
+    }
+
+    # Migrate FAQ config items.
+    my @Configs = (
+        {
+            Name       => 'Frontend::HeaderMetaModule',
+            ConfigItem => '3-FAQSearch',
+            Module     => 'Kernel::Output::HTML::HeaderMeta::AgentFAQSearch',
+        },
+        {
+            Name       => 'CustomerFrontend::HeaderMetaModule',
+            ConfigItem => '3-FAQSearch',
+            Module     => 'Kernel::Output::HTML::HeaderMeta::CustomerFAQSearch',
+        },
+        {
+            Name       => 'PublicFrontend::HeaderMetaModule',
+            ConfigItem => '3-FAQSearch',
+            Module     => 'Kernel::Output::HTML::HeaderMeta::PublicFAQSearch',
+        },
+        {
+            Name       => 'Frontend::Output::FilterElementPost',
+            ConfigItem => 'FAQ',
+            Module     => 'Kernel::Output::HTML::FilterElementPost::FAQ',
+        },
+        {
+            Name       => 'FAQ::Frontend::Overview',
+            ConfigItem => 'Small',
+            Module     => 'Kernel::Output::HTML::FAQOverview::Small',
+        },
+        {
+            Name       => 'FAQ::Frontend::JournalOverview',
+            ConfigItem => 'Small',
+            Module     => 'Kernel::Output::HTML::FAQJournalOverview::Small',
+        },
+        {
+            Name       => 'PreferencesGroups',
+            ConfigItem => 'FAQOverviewSmallPageShown',
+            Module     => 'Kernel::Output::HTML::Preferences::Generic',
+        },
+        {
+            Name       => 'PreferencesGroups',
+            ConfigItem => 'FAQJournalOverviewSmallPageShown',
+            Module     => 'Kernel::Output::HTML::Preferences::Generic',
+        },
+        {
+            Name       => 'DashboardBackend',
+            ConfigItem => '0398-FAQ-LastChange',
+            Module     => 'Kernel::Output::HTML::Dashboard::FAQ',
+        },
+        {
+            Name       => 'DashboardBackend',
+            ConfigItem => '0399-FAQ-LastCreate',
+            Module     => 'Kernel::Output::HTML::Dashboard::FAQ',
+        },
+        {
+            Name       => 'Frontend::ToolBarModule',
+            ConfigItem => '90-FAQ::AgentFAQAdd',
+            Module     => 'Kernel::Output::HTML::ToolBar::Link',
+        },
+    );
+
+    CONFIGITEM:
+    for my $Config (@Configs) {
+
+        # Get setting content for header meta FAQ search.
+        my $Setting = $ConfigObject->Get( $Config->{Name} );
+        next CONFIGITEM if !$Setting;
+
+        my $ConfigItem = $Config->{ConfigItem};
+        next CONFIGITEM if !$Setting->{$ConfigItem}->{'Module'};
+
+        # Set module.
+        $Setting->{$ConfigItem}->{'Module'} = $Config->{Module};
+
+        # Set new setting.
+        my $Success = $SysConfigObject->SettingUpdate(
+            Name           => $Config->{Name} . '###' . $ConfigItem,
+            IsValid        => 1,
+            EffectiveValue => $Setting->{$ConfigItem},
+            UserID         => 1,
+        );
+
+    }
+
+    return 1;
+}
+
+sub _SetContentType {
+
+    return $Kernel::OM->Get('Kernel::System::FAQ')->FAQContentTypeSet();
 }
 
 1;
