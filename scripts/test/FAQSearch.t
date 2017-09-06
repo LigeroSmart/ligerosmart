@@ -63,18 +63,18 @@ $Helper->FixedTimeSet();
 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
 for my $Counter ( 1 .. 2 ) {
-    my $FAQID = $FAQObject->FAQAdd(
+    my $ItemID = $FAQObject->FAQAdd(
         %FAQAddTemplate,
         UserID => $AddedUsers[ $Counter - 1 ],
     );
 
     $Self->IsNot(
         undef,
-        $FAQID,
-        "FAQAdd() FAQID:'$FAQID' for FAQSearch()",
+        $ItemID,
+        "FAQAdd() FAQID:'$ItemID' for FAQSearch()",
     );
 
-    push @AddedFAQs, $FAQID;
+    push @AddedFAQs, $ItemID;
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
@@ -879,7 +879,7 @@ $Self->True(
     "--Execute Former Tests--",
 );
 {
-    my $FAQID1 = $FAQObject->FAQAdd(
+    my $ItemID1 = $FAQObject->FAQAdd(
         CategoryID  => 1,
         StateID     => 2,
         LanguageID  => 2,
@@ -892,14 +892,14 @@ $Self->True(
         ContentType => 'text/html',
     );
     $Self->True(
-        $FAQID1,
+        $ItemID1,
         "FAQAdd() - 1",
     );
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
 
-    my $FAQID2 = $FAQObject->FAQAdd(
+    my $ItemID2 = $FAQObject->FAQAdd(
         Title       => 'Title',
         CategoryID  => 1,
         StateID     => 1,
@@ -911,7 +911,7 @@ $Self->True(
         ContentType => 'text/html',
     );
     $Self->True(
-        $FAQID2,
+        $ItemID2,
         "FAQAdd() - 2",
     );
 
@@ -926,7 +926,7 @@ $Self->True(
         Keyword5 => "some5$RandomID",
     );
 
-    my $FAQID3 = $FAQObject->FAQAdd(
+    my $ItemID3 = $FAQObject->FAQAdd(
         Title       => 'Test FAQ-3',
         CategoryID  => 1,
         StateID     => 1,
@@ -936,14 +936,14 @@ $Self->True(
         ContentType => 'text/html',
     );
     $Self->True(
-        $FAQID3,
+        $ItemID3,
         "FAQAdd() - 3",
     );
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
 
-    my $FAQID4 = $FAQObject->FAQAdd(
+    my $ItemID4 = $FAQObject->FAQAdd(
         Title      => 'Test FAQ-4',
         CategoryID => 1,
         StateID    => 1,
@@ -955,14 +955,14 @@ $Self->True(
     );
 
     $Self->True(
-        $FAQID4,
+        $ItemID4,
         "FAQAdd() - 4",
     );
 
     # add 1 minute to frozen time
     $Helper->FixedTimeAddSeconds(60);
 
-    my $FAQID5 = $FAQObject->FAQAdd(
+    my $ItemID5 = $FAQObject->FAQAdd(
         Title      => 'Test FAQ-5',
         CategoryID => 1,
         StateID    => 1,
@@ -974,7 +974,7 @@ $Self->True(
     );
 
     $Self->True(
-        $FAQID5,
+        $ItemID5,
         "FAQAdd() - 4",
     );
 
@@ -990,7 +990,7 @@ $Self->True(
                 OrderBy => ['Votes'],
             },
             ExpectedResults => [
-                $FAQID1,
+                $ItemID1,
             ],
         },
         {
@@ -999,9 +999,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1} $Keywords{Keyword2}",
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1010,9 +1010,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword2},$Keywords{Keyword1}",
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1021,9 +1021,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1};$Keywords{Keyword2}",
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1032,9 +1032,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1} $Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1043,9 +1043,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1},$Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1054,9 +1054,9 @@ $Self->True(
                 Keyword => "$Keywords{Keyword1};$Keywords{Keyword3}",
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1065,9 +1065,9 @@ $Self->True(
                 Keyword => $Keywords{Keyword3},
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1076,9 +1076,9 @@ $Self->True(
                 Keyword => '*' . $Keywords{Keyword3} . '*',
             },
             ExpectedResults => [
-                $FAQID3,
-                $FAQID4,
-                $FAQID5,
+                $ItemID3,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1087,7 +1087,7 @@ $Self->True(
                 Keyword => $Keywords{Keyword5},
             },
             ExpectedResults => [
-                $FAQID3,
+                $ItemID3,
             ],
         },
         {
@@ -1096,8 +1096,8 @@ $Self->True(
                 Keyword => $Keywords{Keyword4},
             },
             ExpectedResults => [
-                $FAQID4,
-                $FAQID5,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1106,7 +1106,7 @@ $Self->True(
                 Keyword => uc $Keywords{Keyword5},
             },
             ExpectedResults => [
-                $FAQID3,
+                $ItemID3,
             ],
         },
         {
@@ -1115,8 +1115,8 @@ $Self->True(
                 Keyword => ucfirst $Keywords{Keyword4},
             },
             ExpectedResults => [
-                $FAQID4,
-                $FAQID5,
+                $ItemID4,
+                $ItemID5,
             ],
         },
         {
@@ -1127,7 +1127,7 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $FAQID2,
+                $ItemID2,
             ],
         },
         {
@@ -1138,7 +1138,7 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $FAQID1,
+                $ItemID1,
             ],
         },
         {
@@ -1149,8 +1149,8 @@ $Self->True(
                 OrderBy => ['Created'],
             },
             ExpectedResults => [
-                $FAQID1,
-                $FAQID2,
+                $ItemID1,
+                $ItemID2,
             ],
         },
     );

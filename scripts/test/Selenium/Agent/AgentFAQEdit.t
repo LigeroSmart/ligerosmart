@@ -64,14 +64,14 @@ $Selenium->RunTest(
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # create test FAQ
-        my $FAQID = $FAQObject->FAQAdd(
+        my $ItemID = $FAQObject->FAQAdd(
             %{ $Test{Stored} },
             UserID => 1,
         );
 
         $Self->True(
-            $FAQID,
-            "FAQ is created - ID $FAQID",
+            $ItemID,
+            "FAQ is created - ID $ItemID",
         );
 
         # create test user and login
@@ -89,7 +89,7 @@ $Selenium->RunTest(
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # navigate to AgentFAQZoom of created test FAQ
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$FAQID;Nav=");
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID;Nav=");
 
         # verify its right screen
         $Self->True(
@@ -98,7 +98,7 @@ $Selenium->RunTest(
         );
 
         # click on 'Edit' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (first time).";
         my $Handles = $Selenium->get_window_handles();
@@ -141,7 +141,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQBody").length' );
 
         # click on 'Edit' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$FAQID' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (second time).";
         $Handles = $Selenium->get_window_handles();
@@ -166,12 +166,12 @@ $Selenium->RunTest(
 
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
-            ItemID => $FAQID,
+            ItemID => $ItemID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "FAQ item is deleted - ID $FAQID",
+            "FAQ item is deleted - ID $ItemID",
         );
 
         # make sure the cache is correct

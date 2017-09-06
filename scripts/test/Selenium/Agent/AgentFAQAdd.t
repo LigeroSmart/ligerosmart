@@ -99,19 +99,19 @@ $Selenium->RunTest(
             SQL  => "SELECT id FROM faq_item WHERE f_subject = ?",
             Bind => [ \$FAQTitle ]
         );
-        my $FAQID;
+        my $ItemID;
         while ( my @Row = $DBObject->FetchrowArray() ) {
-            $FAQID = $Row[0];
+            $ItemID = $Row[0];
         }
 
         # delete test created FAQ
         my $Success = $Kernel::OM->Get('Kernel::System::FAQ')->FAQDelete(
-            ItemID => $FAQID,
+            ItemID => $ItemID,
             UserID => 1,
         );
         $Self->True(
             $Success,
-            "$FAQID is deleted - ID $FAQID",
+            "$ItemID is deleted - ID $ItemID",
         );
 
         # make sure the cache is correct

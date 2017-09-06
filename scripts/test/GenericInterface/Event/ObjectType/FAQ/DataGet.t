@@ -23,7 +23,7 @@ my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-my $FAQID = $FAQObject->FAQAdd(
+my $ItemID = $FAQObject->FAQAdd(
     Title       => 'Some Text',
     CategoryID  => 1,
     StateID     => 1,
@@ -35,12 +35,12 @@ my $FAQID = $FAQObject->FAQAdd(
     UserID      => 1,
 );
 $Self->True(
-    $FAQID,
+    $ItemID,
     'FAQAdd()',
 );
 
 my %ExpectedDataRaw = $FAQObject->FAQGet(
-    ItemID     => $FAQID,
+    ItemID     => $ItemID,
     ItemFields => 1,
     UserID     => 1,
 );
@@ -55,7 +55,7 @@ my @Tests = (
         Name   => 'Success',
         Config => {
             Data => {
-                FAQID => $FAQID,
+                FAQID => $ItemID,
             },
         },
         Success => 1,
