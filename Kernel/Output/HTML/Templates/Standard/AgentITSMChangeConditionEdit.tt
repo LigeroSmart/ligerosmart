@@ -98,46 +98,14 @@
                             <tr>
 [% RenderBlockStart("ExpressionOverviewRowElementObject") %]
                                 <td>[% Data.ObjectOptionString %]</td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.ObjectOptionName | html %]').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '[% Data.IDName %]-[% Data.ExpressionID %]-ObjectID', ['[% Data.IDName %]-[% Data.ExpressionID %]-Selector', '[% Data.IDName %]-[% Data.ExpressionID %]-AttributeID', '[% Data.IDName %]-[% Data.ExpressionID %]-OperatorID']);
-        $(this).parent().next('td').find('select').focus();
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ExpressionOverviewRowElementObject") %]
 
 [% RenderBlockStart("ExpressionOverviewRowElementSelector") %]
                                 <td>[% Data.SelectorOptionString %]</td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.ObjectOptionName | html %]').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '[% Data.IDName %]-[% Data.ExpressionID %]-Selector', ['[% Data.IDName %]-[% Data.ExpressionID %]-AttributeID', '[% Data.IDName %]-[% Data.ExpressionID %]-OperatorID']);
-        $(this).parent().next('td').find('select').focus();
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ExpressionOverviewRowElementSelector") %]
 
 [% RenderBlockStart("ExpressionOverviewRowElementAttribute") %]
                                 <td>[% Data.AttributeOptionString %]</td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.ObjectOptionName | html %]').bind('change', function (Event) {
-        var NotSerialize,
-            FormSerialized,
-            URLString;
-        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '[% Data.IDName %]-[% Data.ExpressionID %]-AttributeID', ['[% Data.IDName %]-[% Data.ExpressionID %]-OperatorID']);
-        NotSerialize = Array;
-        NotSerialize.Subaction = 'Subaction';
-        FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
-        URLString = '[% Env("Baselink") %]' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ExpressionID-[% Data.ExpressionID | html %]-CompareValue-Div;ElementChanged=[% Data.IDName %]-[% Data.ExpressionID | html %]-AttributeID';
-        Core.AJAX.ContentUpdate($('#ExpressionID-[% Data.ExpressionID | html %]-CompareValue-Div'), URLString, function () {});
-        $(this).parent().next('td').find('select').focus();
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ExpressionOverviewRowElementAttribute") %]
 [% RenderBlockStart("ExpressionOverviewRowElementOperator") %]
                                 <td>[% Data.OperatorOptionString %]</td>
@@ -200,44 +168,12 @@
                             <tr>
 [% RenderBlockStart("ActionOverviewRowElementObject") %]
                                 <td>[% Data.ObjectOptionString %]</td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.ObjectOptionName | html %]').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '[% Data.IDName %]-[% Data.ActionID %]-ObjectID', ['[% Data.IDName %]-[% Data.ActionID %]-Selector', '[% Data.IDName %]-[% Data.ActionID %]-AttributeID', '[% Data.IDName %]-[% Data.ActionID %]-OperatorID']);
-        $(this).parent().next('td').find('select').focus();
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ActionOverviewRowElementObject") %]
 [% RenderBlockStart("ActionOverviewRowElementSelector") %]
                                 <td>[% Data.SelectorOptionString %]</td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.ObjectOptionName | html %]').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '[% Data.IDName %]-[% Data.ActionID %]-Selector', ['[% Data.IDName %]-[% Data.ActionID %]-AttributeID', '[% Data.IDName %]-[% Data.ActionID %]-OperatorID']);
-        $(this).parent().next('td').find('select').focus();
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ActionOverviewRowElementSelector") %]
 [% RenderBlockStart("ActionOverviewRowElementAttribute") %]
                                 <td>[% Data.AttributeOptionString %]</td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.ObjectOptionName | html %]').bind('change', function (Event) {
-        var NotSerialize,
-            FormSerialized,
-            URLString;
-        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '[% Data.IDName %]-[% Data.ActionID %]-AttributeID', ['[% Data.IDName %]-[% Data.ActionID %]-OperatorID']);
-        NotSerialize = Array;
-        NotSerialize.Subaction = 'Subaction';
-        FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
-        URLString = '[% Env("Baselink") %]' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ActionID-[% Data.ActionID | html %]-ActionValue-Div;ElementChanged=ActionID-[% Data.ActionID | html %]-AttributeID';
-        Core.AJAX.ContentUpdate($('#ActionID-[% Data.ActionID | html %]-ActionValue-Div'), URLString, function () {});
-        $(this).parent().next('td').find('select').focus();
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ActionOverviewRowElementAttribute") %]
 [% RenderBlockStart("ActionOverviewRowElementOperator") %]
                                 <td>[% Data.OperatorOptionString %]</td>
@@ -287,42 +223,3 @@
         </div>
     </div>
 </form>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-
-    $('.CancelClosePopup').bind('click', function () {
-        window.close();
-    });
-
-    $('#AddActionButton').on('click', function () {
-        $('input[name=AddExpression]').val('0');
-        $('input[name=AddAction]').val('1');
-        $('input[name=Save]').val('0');
-    });
-
-    $('#AddExpressionButton').on('click', function () {
-        $('input[name=AddAction]').val('0');
-        $('input[name=AddExpression]').val('1');
-        $('input[name=Save]').val('0');
-    });
-
-    $('#SaveButton').on('click', function () {
-        $('input[name=AddExpression]').val('0');
-        $('input[name=AddAction]').val('0');
-        $('input[name=Save]').val('1');
-    });
-
-    $('.DeleteExpression').unbind('click.DeleteExpression').bind('click.DeleteExpression', function(Event) {
-        $('#DeleteExpressionID').val($(this).attr('id').replace(/DeleteExpressionID-/, ''));
-        $(this).closest('form').submit();
-        return false;
-    });
-
-    $('.DeleteAction').unbind('click.DeleteAction').bind('click.DeleteAction', function(Event) {
-        $('#DeleteActionID').val($(this).attr('id').replace(/DeleteActionID-/, ''));
-        $(this).closest('form').submit();
-        return false;
-    });
-
-//]]></script>
-[% END %]

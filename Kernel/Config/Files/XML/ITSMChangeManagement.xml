@@ -468,6 +468,11 @@
                         <Item>ITSM.Table.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.Agent.ChangeManagement.Condition.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>

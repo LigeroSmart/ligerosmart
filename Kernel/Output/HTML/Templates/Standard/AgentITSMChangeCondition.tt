@@ -74,13 +74,3 @@
     </div>
     <div class="Clear"></div>
 </form>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-
-    $('.CancelClosePopup').bind('click', function () {
-        window.close();
-    });
-
-//]]></script>
-[% END %]

@@ -202,6 +202,7 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
                     <CSS>ITSM.Table.css</CSS>
+                    <JavaScript>ITSM.Agent.ChangeManagement.Condition.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
