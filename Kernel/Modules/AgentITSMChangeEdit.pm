@@ -153,9 +153,6 @@ sub Run {
         $Self->{FormID} = $UploadCacheObject->FormIDCreate();
     }
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
     # update change
     if ( $Self->{Subaction} eq 'Save' ) {
 
@@ -208,12 +205,15 @@ sub Run {
                     $GetParam{RequestedTimeMinute};
 
                 # sanity check of the assembled timestamp
-                my $SystemTime = $TimeObject->TimeStamp2SystemTime(
-                    String => $GetParam{RequestedTime},
+                my $SystemTimeDTObject = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        String => $GetParam{RequestedTime},
+                    },
                 );
 
                 # do not save when time is invalid
-                if ( !$SystemTime ) {
+                if ( !$SystemTimeDTObject ) {
                     $ValidationError{RequestedTimeInvalid} = 'ServerError';
                 }
             }
@@ -249,45 +249,6 @@ sub Run {
             if ( $ValidationResult->{ServerError} ) {
                 $ValidationError{ $DynamicFieldConfig->{Name} } = ' ServerError';
             }
-        }
-
-        # check if an attachment must be deleted
-        ATTACHMENT:
-        for my $Number ( 1 .. 32 ) {
-
-            # check if the delete button was pressed for this attachment
-            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
-
-            # check next attachment if it was not pressed
-            next ATTACHMENT if !$Delete;
-
-            # remember that we need to show the page again
-            $ValidationError{Attachment} = 1;
-
-            # remove the attachment from the upload cache
-            $UploadCacheObject->FormIDRemoveFile(
-                FormID => $Self->{FormID},
-                FileID => $Number,
-            );
-        }
-
-        # check if there was an attachment upload
-        if ( $GetParam{AttachmentUpload} ) {
-
-            # remember that we need to show the page again
-            $ValidationError{Attachment} = 1;
-
-            # get the uploaded attachment
-            my %UploadStuff = $ParamObject->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
-            );
-
-            # add attachment to the upload cache
-            $UploadCacheObject->FormIDAddFile(
-                FormID => $Self->{FormID},
-                %UploadStuff,
-            );
         }
 
         # update only when there are no input validation errors
@@ -539,20 +500,30 @@ sub Run {
         if ( $Self->{Config}->{RequestedTime} && $Change->{RequestedTime} ) {
 
             # get requested time from the change
-            my $SystemTime = $TimeObject->TimeStamp2SystemTime(
-                String => $Change->{RequestedTime},
+            my $SystemTimeDTObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $Change->{RequestedTime},
+                },
             );
-
-            my ( $Second, $Minute, $Hour, $Day, $Month, $Year )
-                = $TimeObject->SystemTime2Date( SystemTime => $SystemTime );
 
             # set the parameter hash for BuildDateSelection()
             $GetParam{RequestedTimeUsed}   = 1;
-            $GetParam{RequestedTimeMinute} = $Minute;
-            $GetParam{RequestedTimeHour}   = $Hour;
-            $GetParam{RequestedTimeDay}    = $Day;
-            $GetParam{RequestedTimeMonth}  = $Month;
-            $GetParam{RequestedTimeYear}   = $Year;
+            $GetParam{RequestedTimeMinute} = $SystemTimeDTObject->Format(
+                Format => '%M',
+            );
+            $GetParam{RequestedTimeHour} = $SystemTimeDTObject->Format(
+                Format => '%H',
+            );
+            $GetParam{RequestedTimeDay} = $SystemTimeDTObject->Format(
+                Format => '%d',
+            );
+            $GetParam{RequestedTimeMonth} = $SystemTimeDTObject->Format(
+                Format => '%m',
+            );
+            $GetParam{RequestedTimeYear} = $SystemTimeDTObject->Format(
+                Format => '%Y',
+            );
         }
 
         # get all attachments meta data
@@ -735,39 +706,25 @@ sub Run {
         );
     }
 
-    # show the attachment upload button
-    $LayoutObject->Block(
-        Name => 'AttachmentUpload',
-        Data => {%Param},
-    );
-
     # get all attachments meta data
     my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID},
     );
 
-    # show attachments
-    ATTACHMENT:
-    for my $Attachment (@Attachments) {
-
-        # do not show inline images as attachments
-        # (they have a content id)
-        if ( $Attachment->{ContentID} && $LayoutObject->{BrowserRichText} ) {
-            next ATTACHMENT;
-        }
-
-        $LayoutObject->Block(
-            Name => 'Attachment',
-            Data => $Attachment,
-        );
-    }
+    # show the attachment upload button
+    $LayoutObject->Block(
+        Name => 'AttachmentUpload',
+        Data => {
+            %Param,
+            AttachmentList => \@Attachments,
+        },
+    );
 
     # add rich text editor javascript
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
     if ( $LayoutObject->{BrowserRichText} ) {
-        $LayoutObject->Block(
-            Name => 'RichText',
+        $LayoutObject->SetRichTextParameters(
             Data => {%Param},
         );
     }

@@ -18,7 +18,7 @@
             </div>
 
             <div class="Content">
-                <form action="[% Env("CGIHandle") %]" method="post" name="compose" id="ChangeAddForm" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+                <form action="[% Env("CGIHandle") %]" method="post" name="compose" id="ChangeForm" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action"    value="[% Env("Action") %]"/>
                     <input type="hidden" name="Subaction" value="Save"/>
                     <input type="hidden" name="TicketID"  value="[% Data.TicketID | html %]"/>

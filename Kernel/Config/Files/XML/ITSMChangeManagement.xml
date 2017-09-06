@@ -310,7 +310,7 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>ITSM.Agent.ChangeManagement.Add.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.AddEdit.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -496,6 +496,19 @@
                     <Item Key="NavBarName">ITSM Change</Item>
                 </Hash>
             </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentITSMChangeEdit###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>ITSM.Agent.ChangeManagement.AddEdit.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeDelete" Required="0" Valid="0">

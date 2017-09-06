@@ -135,7 +135,7 @@
                     <Prio>200</Prio>
                 </NavBar>
                 <Loader>
-                    <JavaScript>ITSM.Agent.ChangeManagement.Add.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ChangeManagement.AddEdit.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -217,6 +217,9 @@
                 <Description Translatable="1">Edit a change.</Description>
                 <Title Translatable="1">Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
+                <Loader>
+                    <JavaScript>ITSM.Agent.ChangeManagement.AddEdit.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
