@@ -401,6 +401,7 @@ sub Run {
     );
 
     # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
+    @JSData = ();
     for my $ItemID (qw(ChangeManager ChangeBuilder)) {
         $LayoutObject->Block(
             Name => 'UserSearchInit',
@@ -409,7 +410,16 @@ sub Run {
             },
         );
 
+        push @JSData, {
+            ItemID => $ItemID
+        };
+
     }
+
+    $LayoutObject->AddJSData(
+        Key   => 'UserSearchInits',
+        Value => \@JSData,
+    );
 
     # show validation errors in CABTemplate block
     my %ValidationErrorNames;

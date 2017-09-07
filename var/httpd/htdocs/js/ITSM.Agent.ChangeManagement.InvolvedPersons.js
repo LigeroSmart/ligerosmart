@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2017 OTRS AG, http://otrs.com/\n";
+// Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -12,13 +12,12 @@ var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
 
-
 /**
  * @namespace ITSM.Agent.ChangeManagement.InvolvedPersons
  * @memberof ITSM.Agent.ChangeManagement
  * @author OTRS AG
  * @description
- *      This namespace contains the special module functions for the config item overview navbar.
+ *      This namespace contains the special module functions for the Involved Persons module.
  */
 ITSM.Agent.ChangeManagement.InvolvedPersons = (function (TargetNS) {
 
@@ -84,20 +83,29 @@ ITSM.Agent.ChangeManagement.InvolvedPersons = (function (TargetNS) {
      *      This function initializes some behaviours for the involved-persons screen.
      */
     TargetNS.Init = function () {
-        $('#ChangeManager').bind('focus', function() {
+
+        var UserSearchInits = Core.Config.Get('UserSearchInits');
+        if (UserSearchInits && Array.isArray(UserSearchInits) && ITSM.Agent.UserSearch) {
+            UserSearchInits.forEach(function(Item) {
+                ITSM.Agent.UserSearch.Init($("#" + Core.App.EscapeSelector(Item.ItemID)));
+            });
+        }
+
+        $('#ChangeManager').off('focus.InvolvedPersonsChangeManager').on('focus.InvolvedPersonsChangeManager', function() {
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
         });
 
-        $('#ChangeBuilder').bind('focus', function() {
+        $('#ChangeBuilder').off('focus.InvolvedPersonsChangeBuilder').on('focus.InvolvedPersonsChangeBuilder', function() {
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
         });
 
         // Bind elements with class '.CallForAction' to set the proper form action
         // before the form submits.
-        $('.CallForAction').on('click.FormAction.InvolvedPersions', SetFormAction);
+        $('.CallForAction').off('click.FormAction.InvolvedPersons').on('click.FormAction.InvolvedPersons', SetFormAction);
 
         // Bind elements with class '.DeleteCABMember' to delete the cab member.
-        $('.DeleteCABMember').on('click.CAB.InvolvedPersons', DeleteCABMember);
+        $('.DeleteCABMember').off('click.CAB.InvolvedPersons').on('click.CAB.InvolvedPersons', DeleteCABMember);
+
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');

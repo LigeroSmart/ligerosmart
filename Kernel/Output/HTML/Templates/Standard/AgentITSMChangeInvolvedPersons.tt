@@ -6,9 +6,6 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-[% InsertTemplate("AgentITSMUserSearch.tt") %]
-[% InsertTemplate("AgentITSMCABMemberSearch.tt") %]
-
 <form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate">
     <input type="hidden" name="Action" value="[% Env("Action") %]" />
     <input type="hidden" name="Subaction" value="Save" />
@@ -84,7 +81,7 @@
 
                         <label for="NewCABMember"> [% Translate("Add to CAB") | html %]: </label>
                         <div class="Field">
-                            <input id="NewCABMember" name="NewCABMember" type="text"   value="[% Data.NewCABMember | html %]" class="W75pc [% Data.NewCABMemberError %]" />
+                            <input id="NewCABMember" name="NewCABMember" type="text"   value="[% Data.NewCABMember | html %]" class="W75pc CABMemberSearch [% Data.NewCABMemberError %]" />
                             <input id="NewCABMemberSelected" name="NewCABMemberSelected" type="hidden" value="[% Data.NewCABMemberID | html %]" />
                             <input id="NewCABMemberType" name="NewCABMemberType" type="hidden" value="[% Data.CABMemberType | html %]" />
 
