@@ -240,14 +240,6 @@ sub Run {
         UserID  => 1,
     );
 
-    # search init
-    $LayoutObject->Block(
-        Name => 'CABMemberSearchInit',
-        Data => {
-            ItemID => 'NewCABMember',
-        },
-    );
-
     # output header and navigation
     my $Output = $LayoutObject->Header(
         Title => Translatable('Edit CAB Template'),

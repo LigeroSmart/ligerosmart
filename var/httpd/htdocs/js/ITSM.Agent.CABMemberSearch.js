@@ -28,9 +28,11 @@ ITSM.Agent.CABMemberSearch = (function (TargetNS) {
      * @description
             This function initializes the special module functions.
      */
-    TargetNS.Init = function ($Element) {
+    TargetNS.Init = function () {
 
-        if (isJQueryObject($Element)) {
+        $('.CABMemberSearch').each(function(idx, Element){
+
+            var $Element = $(Element);
 
             Core.UI.Autocomplete.Init(
                 $Element,
@@ -68,14 +70,18 @@ ITSM.Agent.CABMemberSearch = (function (TargetNS) {
                 },
                 'CustomerSearch'
             );
-        }
-        // On unload remove old selected data. If the page is reloaded (with F5) this data stays in the field and invokes an ajax request otherwise
-        $(window).on('beforeunload.CABMemberSearch', function () {
-            // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
-            $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val('');
-            return;
+
+            // On unload remove old selected data. If the page is reloaded (with F5) this data stays in the field and invokes an ajax request otherwise
+            $(window).on('beforeunload.CABMemberSearch', function () {
+                // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
+                $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val('');
+                return;
+            });
+
         });
     };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(ITSM.Agent.CABMemberSearch || {}));

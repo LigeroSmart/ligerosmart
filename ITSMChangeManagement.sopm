@@ -102,7 +102,6 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeCIPAllocate.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMChangeNotification.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AdminITSMStateMachine.tt" />
-        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMCABMemberSearch.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeAdd.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeAddFromTemplate.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMChangeCABTemplate.tt" />

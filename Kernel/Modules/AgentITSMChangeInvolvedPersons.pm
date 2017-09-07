@@ -436,14 +436,6 @@ sub Run {
         $LayoutObject->Block( Name => 'NewTemplateButton' );
     }
 
-    # search init
-    $LayoutObject->Block(
-        Name => 'CABMemberSearchInit',
-        Data => {
-            ItemID => 'NewCABMember',
-        },
-    );
-
     # output header and navigation
     my $Output = $LayoutObject->Header(
         Title => Translatable('Involved Persons'),
