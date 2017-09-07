@@ -169,8 +169,7 @@ sub Run {
                     Priority => 'Error',
                     Info     => "FAQ Approval is enabled but queue '$ApprovalQueue' does not exists",
                     Link     => $LayoutObject->{Baselink}
-                        . 'Action=AdminSysConfig;Subaction=Edit;'
-                        . 'SysConfigSubGroup=Core%3A%3AApproval;SysConfigGroup=FAQ',
+                        . 'Action=AdminSystemConfiguration;Subaction=ViewCustomGroup;Names=FAQ::ApprovalQueue'
                 );
             }
         }
