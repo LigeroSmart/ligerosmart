@@ -11,7 +11,7 @@ package Kernel::System::Console::Command::Maint::FAQ::ContentTypeSet;
 use strict;
 use warnings;
 
-use base qw(Kernel::System::Console::BaseCommand);
+use parent qw(Kernel::System::Console::BaseCommand);
 
 our @ObjectDependencies = (
     'Kernel::System::FAQ',
@@ -71,17 +71,7 @@ sub Run {
     return $Self->ExitCodeOk();
 }
 
-# sub PostRun {
-#     my ( $Self, %Param ) = @_;
-#
-#     # This will be called after Run() (even in case of exceptions). Perform any cleanups here.
-#
-#     return;
-# }
-
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
