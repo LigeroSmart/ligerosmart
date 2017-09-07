@@ -11,6 +11,7 @@ package Kernel::Modules::AgentITSMChangeInvolvedPersons;
 use strict;
 use warnings;
 
+use List::Util qw();
 use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
@@ -390,7 +391,7 @@ sub Run {
             },
         );
         push @JSData, {
-            Element => 'CABCustomers' . $CustomerUserData{CustomerID}
+            Element => 'CABCustomers' . $CustomerUserData{UserID}
         };
     }
 
@@ -487,40 +488,36 @@ sub _IsMemberDeletion {
     # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # check possible agent ids
-    AGENTID:
-    for my $AgentID ( @{ $Param{Change}->{CABAgents} } ) {
-        if ( $ParamObject->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
+    # Check for the member to delete
+    my $DeleteCABMember = $ParamObject->GetParam(
+        Param => 'DeleteCABMember',
+    );
 
-            # save info
-            %DeleteInfo = (
-                Type => 'CABAgents',
-                ID   => $AgentID,
-            );
+    # Stop here if no cab member was given to delete.
+    return if !$DeleteCABMember;
 
-            last AGENTID;
-        }
+    my ( $MemberType, $MemberID, ) = ( $DeleteCABMember =~ m/^(\w+)#(.+)$/i );
+
+    # No member, don't do anything else.
+    return if !$MemberID;
+
+    # Get the members list.
+    my $ValidMembers = $Param{Change}->{$MemberType} || [];
+
+    # No members for the type, just return.
+    return if !@{$ValidMembers};
+
+    # Check if the given member id is valid.
+    my $Found = List::Util::first { $_ eq $MemberID } @{$ValidMembers};
+    if ($Found) {
+        return (
+            Type => $MemberType,
+            ID   => $MemberID,
+        );
     }
 
-    if ( !%DeleteInfo ) {
-
-        # check possible customer ids
-        CUSTOMERID:
-        for my $CustomerID ( @{ $Param{Change}->{CABCustomers} } ) {
-            if ( $ParamObject->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
-
-                # save info
-                %DeleteInfo = (
-                    Type => 'CABCustomers',
-                    ID   => $CustomerID,
-                );
-
-                last CUSTOMERID;
-            }
-        }
-    }
-
-    return %DeleteInfo;
+    # Member not found.
+    return;
 }
 
 sub _CheckChangeManagerAndChangeBuilder {

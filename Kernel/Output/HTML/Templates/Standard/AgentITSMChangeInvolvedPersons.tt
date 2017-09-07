@@ -9,55 +9,6 @@
 [% InsertTemplate("AgentITSMUserSearch.tt") %]
 [% InsertTemplate("AgentITSMCABMemberSearch.tt") %]
 
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-
-    $('#ChangeManager').bind('focus', function( Event ) {
-        Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
-    });
-
-    $('#ChangeBuilder').bind('focus', function( Event ) {
-        Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
-    });
-
-    $('#SubmitButton').bind('click', function (Event) {
-        $('input[name=Submit]').val('1');
-        $('input[name=AddCABTemplate]').val('0');
-        $('input[name=NewTemplate]').val('0');
-        $('input[name=AddCABMember]').val('0');
-    });
-
-    $('#AddCABTemplateButton').bind('click', function (Event) {
-        var $Form = $('#AddCABTemplateButton').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $('input[name=Submit]').val('0');
-        $('input[name=AddCABTemplate]').val('1');
-        $('input[name=NewTemplate]').val('0');
-        $('input[name=AddCABMember]').val('0');
-    });
-
-    $('#NewTemplateButton').bind('click', function (Event) {
-        var $Form = $('#NewTemplateButton').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $('input[name=Submit]').val('0');
-        $('input[name=AddCABTemplate]').val('0');
-        $('input[name=NewTemplate]').val('1');
-        $('input[name=AddCABMember]').val('0');
-    });
-
-    $('#AddCABMemberButton').bind('click', function (Event) {
-        var $Form = $('#AddCABMemberButton').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $('input[name=Submit]').val('0');
-        $('input[name=AddCABTemplate]').val('0');
-        $('input[name=NewTemplate]').val('0');
-        $('input[name=AddCABMember]').val('1');
-    });
-
-//]]></script>
-[% END %]
-
-
 <form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate">
     <input type="hidden" name="Action" value="[% Env("Action") %]" />
     <input type="hidden" name="Subaction" value="Save" />
@@ -66,6 +17,7 @@
     <input type="hidden" name="AddCABTemplate" value="" />
     <input type="hidden" name="NewTemplate" value="" />
     <input type="hidden" name="AddCABMember" value="" />
+    <input type="hidden" name="DeleteCABMember" value="" />
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -179,23 +131,13 @@
                                     [% Data.UserLogin | truncate(25) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
                                 </td>
                                 <td class="Center Last">
-                                    <a href="#" id="[% Data.InternalUserType %][% Data.UserID | html %]" title="[% Translate("Delete") | html %]" class="TrashCan">
+                                    <a href="#" id="[% Data.InternalUserType %]#[% Data.UserID | html %]" title="[% Translate("Delete") | html %]" class="TrashCan DeleteCABMember">
                                         <i class="fa fa-trash-o">
                                             <span class="InvisibleText">[% Translate("Delete") | html %]</span>
                                         </i>
                                     </a>
                                 </td>
                             </tr>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#[% Data.InternalUserType %]' + Core.App.EscapeSelector( '[% Data.UserID | html %]' ) ).bind('click', function(){
-        Core.Form.Validate.DisableValidation($(this).closest('form'));
-        $(this).closest('form').append("<input name=\"Delete[% Data.InternalUserType %][% Data.UserID | html %]\" type=\"hidden\" value=\"1\"/>").end().submit();
-    });
-//]]></script>
-[% END %]
-
 [% RenderBlockEnd("CABMemberRow") %]
                         </tbody>
                     </table>

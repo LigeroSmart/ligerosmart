@@ -272,6 +272,9 @@
                 <Description Translatable="1">Change Involved Persons.</Description>
                 <Title Translatable="1">Involved Persons</Title>
                 <NavBarName>ITSM Change</NavBarName>
+                <Loader>
+                    <JavaScript>ITSM.Agent.ChangeManagement.InvolvedPersons.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
