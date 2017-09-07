@@ -64,13 +64,16 @@
                         </tbody>
                     </table>
                     <div class="SpacingTop">
-                        <button type="submit" class="CallForAction Primary"><span>[% Translate("Submit") | html %]</span></button>
+                        <button class="Primary CallForAction" id="SubmitAndContinue" type="submit" value="[% Translate("Save") | html %]">
+                            <span>[% Translate("Save") | html %]</span>
+                        </button>
+                        [% Translate("or") | html %]
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">
+                            <span>[% Translate("Cancel") | html %]</span>
+                        </a>
                     </div>
                 </form>
             </div>
-
-
         </div>
     </div>
-
 </div>
