@@ -11,6 +11,9 @@ package Kernel::Output::HTML::FAQMenu::Delete;
 use strict;
 use warnings;
 
+# Prevent used only once warning
+use Kernel::System::ObjectManager;
+
 our @ObjectDependencies = (
     'Kernel::Output::HTML::Layout',
 );
@@ -32,7 +35,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # Run Kernel::Output::HTML::FAQMenu::Generic.
-    my $GenericObject = ('Kernel::Output::HTML::FAQMenu::Generic')->new( %{$Self} );
+    my $GenericObject = Kernel::Output::HTML::FAQMenu::Generic->new( UserID => $Self->{UserID} );
     $GenericObject->Run(
         %Param,
     );
