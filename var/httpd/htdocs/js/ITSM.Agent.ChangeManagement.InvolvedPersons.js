@@ -87,7 +87,7 @@ ITSM.Agent.ChangeManagement.InvolvedPersons = (function (TargetNS) {
         var UserSearchInits = Core.Config.Get('UserSearchInits');
         if (UserSearchInits && Array.isArray(UserSearchInits) && ITSM.Agent.UserSearch) {
             UserSearchInits.forEach(function(Item) {
-                ITSM.Agent.UserSearch.Init($("#" + Core.App.EscapeSelector(Item.ItemID)));
+                ITSM.Agent.UserSearch.Init($("#" + Core.App.EscapeSelector(Item)));
             });
         }
 
