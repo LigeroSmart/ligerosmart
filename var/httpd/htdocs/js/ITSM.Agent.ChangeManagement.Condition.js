@@ -102,16 +102,24 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
      * @description
      *      This function sets the action of the clicked button before the form is submitted.
      */
-    function SetSubmitAction(Event) {
-        var Actions = [
-            'AddExpression',
-            'AddAction',
-            'Save'
-        ];
+    function SetSubmitAction() {
+        var $This   = $(this);
+        var Actions = {
+            'AddExpression': '0',
+            'AddAction'    : '0',
+            'Save'         : '0'
+        };
 
-        $.each(Actions, function(Idx, Act) {
-            var Value = Act === Event.data.Action ? '1' : '0';
-            $('input[name=' + Act + ']').val(Value);
+        var SetAction = $This.attr('id');
+        SetAction = SetAction.replace(/Button$/i, '');
+        if (!Actions.hasOwnProperty(SetAction)) {
+            return;
+        }
+
+        Actions[SetAction] = '1';
+
+        $.each(Actions, function(Action, Value) {
+            $('input[name=' + Action + ']').val(Value);
         });
     }
 
@@ -163,23 +171,7 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
         );
 
 
-        $('#AddActionButton').on(
-            'click.ConditionAddAction',
-            { 'Action': 'AddAction' },
-            SetSubmitAction
-        );
-
-        $('#AddExpressionButton').on(
-            'click.ConditionAddExpression',
-            { 'Action': 'AddExpression' },
-            SetSubmitAction
-        );
-
-        $('#SaveButton').on(
-            'click.ConditionSave',
-            { 'Action': 'Save' },
-            SetSubmitAction
-        );
+        $('.CallForAction').on('click.SubmitAction', SetSubmitAction);
 
         $('.DeleteExpression').on(
             'click.ConditionDeleteExpression',
