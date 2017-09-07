@@ -160,7 +160,7 @@ $Selenium->RunTest(
         );
 
         # test delete CAB button
-        $Selenium->find_element( "#CABAgents$TestUserCABID", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#CABAgents-$TestUserCABID", 'css' )->VerifiedClick();
         $Self->False(
             $Selenium->execute_script(
                 "return \$('table.DataTable tr td:contains($TestUserCAB)').length"

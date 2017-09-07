@@ -506,7 +506,7 @@ sub _IsMemberDeletion {
     # Stop here if no cab member was given to delete.
     return if !$DeleteCABMember;
 
-    my ( $MemberType, $MemberID, ) = ( $DeleteCABMember =~ m/^(\w+)#(.+)$/i );
+    my ( $MemberType, $MemberID, ) = ( $DeleteCABMember =~ m/^(\w+)-(.+)$/i );
 
     # No member, don't do anything else.
     return if !$MemberID;
