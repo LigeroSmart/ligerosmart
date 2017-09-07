@@ -337,6 +337,7 @@ sub Run {
         $LayoutObject->Block( Name => 'CABMemberTable' );
     }
 
+    my @JSData;
     USERID:
     for my $UserID ( @{ $Change->{CABAgents} } ) {
 
@@ -357,6 +358,10 @@ sub Run {
                 %UserData,
             },
         );
+
+        push @JSData, {
+            Element => 'CABAgents' . $UserID
+        };
     }
 
     # get customer user object
@@ -384,7 +389,15 @@ sub Run {
                 %CustomerUserData,
             },
         );
+        push @JSData, {
+            Element => 'CABCustomers' . $CustomerUserData{CustomerID}
+        };
     }
+
+    $LayoutObject->AddJSData(
+        Key   => 'CABMemberRows',
+        Value => \@JSData,
+    );
 
     # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
     for my $ItemID (qw(ChangeManager ChangeBuilder)) {
