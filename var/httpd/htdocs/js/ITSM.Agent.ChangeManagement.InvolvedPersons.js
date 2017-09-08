@@ -84,12 +84,8 @@ ITSM.Agent.ChangeManagement.InvolvedPersons = (function (TargetNS) {
      */
     TargetNS.Init = function () {
 
-        var UserSearchInits = Core.Config.Get('UserSearchInits');
-        if (UserSearchInits && Array.isArray(UserSearchInits) && ITSM.Agent.UserSearch) {
-            UserSearchInits.forEach(function(Item) {
-                ITSM.Agent.UserSearch.Init($("#" + Core.App.EscapeSelector(Item)));
-            });
-        }
+        $("#ChangeManager").length && ITSM.Agent.UserSearch.Init($("#ChangeManager"));
+        $("#ChangeBuilder").length && ITSM.Agent.UserSearch.Init($("#ChangeBuilder"));
 
         $('#ChangeManager').off('focus.InvolvedPersonsChangeManager').on('focus.InvolvedPersonsChangeManager', function() {
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
