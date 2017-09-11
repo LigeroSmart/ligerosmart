@@ -129,7 +129,7 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCABUser']")->click();
-        $Selenium->execute_script("\$('#AddCABMember').click();");
+        $Selenium->execute_script("\$('#BtnAddCABMember').click();");
 
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents$TestUserCABID').length" );
 
@@ -139,7 +139,7 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestCustomerCAB') ");
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
         $Selenium->find_element("//*[text()='$AutoCompleteStringCABCustomer']")->click();
-        $Selenium->execute_script("\$('#AddCABMember').click();");
+        $Selenium->execute_script("\$('#BtnAddCABMember').click();");
 
         $Selenium->WaitFor(
             JavaScript => "return typeof(\$) === 'function' && \$('#CABCustomers$TestCustomerCAB').length"

@@ -563,6 +563,9 @@
                 <GroupRo>itsm-change-manager</GroupRo>
                 <Description Translatable="1">ITSM Template Edit CAB.</Description>
                 <Title Translatable="1">ITSM Change</Title>
+                <Loader>
+                    <JavaScript>ITSM.Agent.CABTemplateEdit.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>

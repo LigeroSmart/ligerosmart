@@ -88,7 +88,7 @@ sub Run {
         );
     }
 
-    # on first page load we fill the template content string parameter from the templete
+    # on first page load we fill the template content string parameter from the template
     if ( !$Self->{Subaction} ) {
         $GetParam{TemplateContent} = $Template->{Content};
     }
@@ -275,36 +275,22 @@ sub _IsMemberDeletion {
     # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # check possible agent ids
-    AGENTID:
-    for my $AgentID ( @{ $Param{CABReference}->{CABAdd}->{CABAgents} } ) {
-        if ( $ParamObject->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
+    if ( my $ID = $ParamObject->GetParam( Param => 'DeleteCABMember' ) ) {
+        if ( $ID =~ m{^CABCustomers(.+)} ) {
+
+            # save info
+            %DeleteInfo = (
+                Type => 'CABCustomers',
+                ID   => $1,
+            );
+        }
+        elsif ( $ID =~ m{^CABAgents(.+)} ) {
 
             # save info
             %DeleteInfo = (
                 Type => 'CABAgents',
-                ID   => $AgentID,
+                ID   => $1,
             );
-
-            last AGENTID;
-        }
-    }
-
-    if ( !%DeleteInfo ) {
-
-        # check possible customer ids
-        CUSTOMERID:
-        for my $CustomerID ( @{ $Param{CABReference}->{CABAdd}->{CABCustomers} } ) {
-            if ( $ParamObject->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
-
-                # save info
-                %DeleteInfo = (
-                    Type => 'CABCustomers',
-                    ID   => $CustomerID,
-                );
-
-                last CUSTOMERID;
-            }
         }
     }
 
