@@ -198,9 +198,7 @@ sub Run {
                 $GetParam{ $TimeType . 'Minute' };
 
             # sanity check the assembled timestamp
-            $SystemTime{$TimeType} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                String => $GetParam{$TimeType},
-            );
+            $SystemTime{$TimeType} = $Self->_TimeStamp2Epoch( TimeStamp => $GetParam{$TimeType} );
 
             # do not save if time is invalid
             if ( !$SystemTime{$TimeType} ) {
@@ -255,45 +253,6 @@ sub Run {
             if ( $ValidationResult->{ServerError} ) {
                 $ValidationError{ $DynamicFieldConfig->{Name} } = ' ServerError';
             }
-        }
-
-        # check if an attachment must be deleted
-        ATTACHMENT:
-        for my $Number ( 1 .. 32 ) {
-
-            # check if the delete button was pressed for this attachment
-            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
-
-            # check next attachment if it was not pressed
-            next ATTACHMENT if !$Delete;
-
-            # remember that we need to show the page again
-            $ValidationError{Attachment} = 1;
-
-            # remove the attachment from the upload cache
-            $UploadCacheObject->FormIDRemoveFile(
-                FormID => $Self->{FormID},
-                FileID => $Number,
-            );
-        }
-
-        # check if there was an attachment upload
-        if ( $GetParam{AttachmentUpload} ) {
-
-            # remember that we need to show the page again
-            $ValidationError{Attachment} = 1;
-
-            # get the uploaded attachment
-            my %UploadStuff = $ParamObject->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
-            );
-
-            # add attachment to the upload cache
-            $UploadCacheObject->FormIDAddFile(
-                FormID => $Self->{FormID},
-                %UploadStuff,
-            );
         }
 
         # add only when there are no input validation errors
@@ -539,35 +498,20 @@ sub Run {
         );
     }
 
+    $Param{AttachmentList} = \@Attachments;
+
     # show the attachment upload button
     $LayoutObject->Block(
         Name => 'AttachmentUpload',
         Data => {%Param},
     );
 
-    # show attachments
-    ATTACHMENT:
-    for my $Attachment (@Attachments) {
-
-        # do not show inline images as attachments
-        # (they have a content id)
-        if ( $Attachment->{ContentID} && $LayoutObject->{BrowserRichText} ) {
-            next ATTACHMENT;
-        }
-
-        $LayoutObject->Block(
-            Name => 'Attachment',
-            Data => $Attachment,
-        );
-    }
-
     # add rich text editor javascript
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
     if ( $LayoutObject->{BrowserRichText} ) {
-        $LayoutObject->Block(
-            Name => 'RichText',
-            Data => {%Param},
+        $LayoutObject->SetRichTextParameters(
+            Data => \%Param,
         );
     }
 
@@ -587,6 +531,21 @@ sub Run {
     $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
+}
+
+sub _TimeStamp2Epoch {
+    my ( $Self, %Param ) = @_;
+
+    my $TimeStamp      = $Param{TimeStamp};
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $TimeStamp,
+        },
+    );
+
+    return $DateTimeObject->ToEpoch() if $DateTimeObject;
+    return;
 }
 
 1;
