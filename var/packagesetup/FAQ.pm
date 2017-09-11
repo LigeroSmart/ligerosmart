@@ -56,36 +56,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    $Kernel::OM->ObjectsDiscard();
-
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-    # Convert XML files to entries in the database.
-    if (
-        !$SysConfigObject->ConfigurationXML2DB(
-            CleanUp => 1,
-            Force   => 1,
-            UserID  => 1,
-        )
-        )
-    {
-        return;
-    }
-
-    # Rebuild ZZZAAuto.pm with current values.
-    if (
-        !$SysConfigObject->ConfigurationDeploy(
-            Comments => $Param{Comments} || "Configuration Rebuild",
-            AllSettings  => 1,
-            Force        => 1,
-            NoValidation => 1,
-            UserID       => 1,
-        )
-        )
-    {
-        return;
-    }
-
     # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
     for my $Module ( sort keys %INC ) {
         if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
@@ -95,12 +65,6 @@ sub new {
 
     # Create common objects with fresh default config.
     $Kernel::OM->ObjectsDiscard();
-
-    # The stats object needs a UserID parameter for the constructor.
-    # We need to discard any existing stats object before.
-    $Kernel::OM->ObjectsDiscard(
-        Objects => ['Kernel::System::Stats'],
-    );
 
     # Define UserID parameter for the constructor of the stats object.
     $Kernel::OM->ObjectParamAdd(
