@@ -1112,13 +1112,14 @@
                 <Item Key="JavaScript">
                     <Array>
                         <Item>thirdparty/jquery-tablesorter-2.0.5/jquery.tablesorter.js</Item>
-                        <Item>ITSM.Agent.ChangeManagement.WorkorderGraph.js</Item>
-                        <Item>ITSM.Agent.ChangeManagement.Zoom.js</Item>
                         <Item>Core.UI.AllocationList.js</Item>
                         <Item>Core.UI.Table.Sort.js</Item>
                         <Item>Core.Agent.TableFilters.js</Item>
                         <Item>Core.Agent.LinkObject.js</Item>
                         <Item>ITSM.Agent.ConfirmDialog.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.WorkorderGraph.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.Zoom.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.ConfirmDialog.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -1567,8 +1568,9 @@
                         <Item>Core.UI.Table.Sort.js</Item>
                         <Item>Core.Agent.TableFilters.js</Item>
                         <Item>Core.Agent.LinkObject.js</Item>
-                        <Item>ITSM.Agent.ChangeManagement.Zoom.js</Item>
                         <Item>ITSM.Agent.ConfirmDialog.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.Zoom.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.ConfirmDialog.js</Item>
                     </Array>
                 </Item>
             </Hash>

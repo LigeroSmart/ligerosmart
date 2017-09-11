@@ -817,6 +817,16 @@ sub Run {
         );
     }
 
+    for my $HeightSetting (qw(Default Max)) {
+        my $FullSetting = 'ITSMChange::Frontend::AgentHTMLFieldHeight' . $HeightSetting;
+        my $Value = int( $ConfigObject->Get($FullSetting) || 0 );
+
+        $LayoutObject->AddJSData(
+            Key   => $FullSetting,
+            Value => $Value,
+        );
+    }
+
     # start template output
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeZoom',

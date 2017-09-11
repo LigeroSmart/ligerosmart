@@ -278,10 +278,11 @@ sub Run {
                 # run module
                 $Counter = $Object->Run(
                     %Param,
-                    WorkOrder => $WorkOrder,
-                    Counter   => $Counter,
-                    Config    => $Menus{$Menu},
-                    MenuID    => $Menu,
+                    WorkOrder    => $WorkOrder,
+                    Counter      => $Counter,
+                    Config       => $Menus{$Menu},
+                    MenuID       => $Menu,
+                    ChangeNumber => $Change->{ChangeNumber},
                 );
             }
             else {
@@ -656,6 +657,16 @@ sub Run {
                 %{$WorkOrder},
                 %{$AttachmentData},
             },
+        );
+    }
+
+    for my $HeightSetting (qw(Default Max)) {
+        my $FullSetting = 'ITSMChange::Frontend::AgentHTMLFieldHeight' . $HeightSetting;
+        my $Value = int( $ConfigObject->Get($FullSetting) || 0 );
+
+        $LayoutObject->AddJSData(
+            Key   => $FullSetting,
+            Value => $Value,
         );
     }
 

@@ -13,6 +13,7 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::Language',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::ITSMChange',
     'Kernel::System::Log',
@@ -102,15 +103,31 @@ sub Run {
 
     # check if a dialog has to be shown
     if ( $Param{Config}->{DialogTitle} ) {
+        my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
+        my $LanguageObject = $Kernel::OM->Get('Kernel::Language');
 
-        # output confirmation dialog
-        $LayoutObject->Block(
-            Name => 'ShowConfirmDialog',
-            Data => {
-                %Param,
-                %{ $Param{Change} },
-                %{ $Param{Config} },
-            },
+        my %JSData = (
+            %Param,
+            %{ $Param{Change} },
+            %{ $Param{Config} },
+        );
+
+        delete $JSData{Config};
+        delete $JSData{Change};
+
+        $JSData{ElementSelector} =~ s/\[%\s*Data\.MenuID\s*\|\s*html\s*%\]/$JSData{MenuID}/i;
+        $JSData{DialogContentQueryString} =~ s/\[%\s*Data\.ChangeID\s*\|\s*html\s*%\]/$JSData{ChangeID}/i;
+        $JSData{ConfirmedActionQueryString} =~ s/\[%\s*Data\.ChangeID\s*\|\s*html\s*%\]/$JSData{ChangeID}/i;
+
+        $JSData{DialogTitle} =~ s/\[%\s*Translate\("(.*)"\)\s*\|\s*html\s*%\]/$LanguageObject->Translate($1)/ei;
+        $JSData{DialogTitle} =~ s/\[%\s*Config\("(.*)"\)\s*%\]/$ConfigObject->Get($1)/ei;
+        $JSData{DialogTitle} =~ s/\[%\s*Data.ChangeNumber\s*\|\s*html\s*%\]/$JSData{ChangeNumber}/ei;
+
+        $JSData{MenuID} = 'Menu' . $JSData{MenuID};
+
+        $LayoutObject->AddJSData(
+            Key   => 'ITSMShowConfirmDialog.' . $Param{MenuID},
+            Value => \%JSData,
         );
     }
 

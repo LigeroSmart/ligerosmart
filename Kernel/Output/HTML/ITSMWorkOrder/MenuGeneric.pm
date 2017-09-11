@@ -13,6 +13,7 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::Language',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     'Kernel::System::Log',
@@ -90,15 +91,37 @@ sub Run {
         $LayoutObject->Block( Name => 'MenuItemSplit' );
     }
 
-    # output menu item
-    $LayoutObject->Block(
-        Name => 'MenuItem',
-        Data => {
+    # check if a dialog has to be shown
+    if ( $Param{Config}->{DialogTitle} ) {
+        my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
+        my $LanguageObject = $Kernel::OM->Get('Kernel::Language');
+
+        my %JSData = (
             %Param,
             %{ $Param{WorkOrder} },
             %{ $Param{Config} },
-        },
-    );
+        );
+
+        delete $JSData{Config};
+        delete $JSData{WorkOrder};
+
+        $JSData{ElementSelector} =~ s/\[%\s*Data\.MenuID\s*\|\s*html\s*%\]/$JSData{MenuID}/i;
+        $JSData{DialogContentQueryString} =~ s/\[%\s*Data\.WorkOrderID\s*\|\s*html\s*%\]/$JSData{WorkOrderID}/i;
+        $JSData{ConfirmedActionQueryString} =~ s/\[%\s*Data\.WorkOrderID\s*\|\s*html\s*%\]/$JSData{WorkOrderID}/i;
+
+        $JSData{DialogTitle} =~ s/\[%\s*Translate\("(.*)"\)\s*\|\s*html\s*%\]/$LanguageObject->Translate($1)/ei;
+        $JSData{DialogTitle} =~ s/\[%\s*Config\("(.*)"\)\s*%\]/$ConfigObject->Get($1)/ei;
+        $JSData{DialogTitle} =~ s/\[%\s*Data.ChangeNumber\s*\|\s*html\s*%\]/$JSData{ChangeNumber}/ei;
+        $JSData{DialogTitle} =~ s/\[%\s*Data.WorkOrderNumber\s*\|\s*html\s*%\]/$JSData{WorkOrderNumber}/ei;
+
+        $JSData{MenuID} = 'Menu' . $JSData{MenuID};
+
+        $LayoutObject->AddJSData(
+            Key   => 'ITSMShowConfirmDialog.' . $Param{MenuID},
+            Value => \%JSData,
+        );
+    }
+
     $Param{Counter}++;
 
     return $Param{Counter};

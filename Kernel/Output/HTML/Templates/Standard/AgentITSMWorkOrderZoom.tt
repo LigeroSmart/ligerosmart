@@ -224,27 +224,6 @@
                     <li>
                         <a href="[% Env("Baselink") %][% Data.Link | Interpolate %]" id="Menu[% Data.MenuID | html %]" class="[% Data.MenuClass | html %]" title="[% Translate(Data.Description) | html %]">[% Translate(Data.Name) | html %]</a>
                     </li>
-
-[% RenderBlockStart("ShowConfirmDialog") %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global ITSM: true */
-    ITSM.Agent.ConfirmDialog.BindConfirmDialog({
-        ElementID:                  'Menu[% Data.MenuID %]',
-        ElementSelector:            '[% Data.ElementSelector | Interpolate %]',
-        DialogContentQueryString:   '[% Data.DialogContentQueryString | Interpolate %]',
-        ConfirmedActionQueryString: '[% Data.ConfirmedActionQueryString | Interpolate %]',
-        DialogTitle:                '[% Data.DialogTitle | Interpolate %]',
-        TranslatedText:             {
-            Yes: [% Translate("Yes") | JSON %],
-            No:  [% Translate("No") | JSON %],
-            Ok:  [% Translate("Ok") | JSON %]
-        }
-    });
-//]]></script>
-[% END %]
-[% RenderBlockEnd("ShowConfirmDialog") %]
-
 [% RenderBlockEnd("MenuItem") %]
 [% RenderBlockEnd("Menu") %]
                 </ul>
@@ -299,18 +278,6 @@
                             <iframe sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox" [% Data.MSSecurityRestricted %] class="Field" id="IframeITSM[% Data.Field | html %]" onload="if (typeof ITSM === 'object' && typeof ITSM.Agent === 'object' && typeof ITSM.Agent.ChangeManagement === 'object' && typeof ITSM.Agent.ChangeManagement.Zoom === 'object') { ITSM.Agent.ChangeManagement.Zoom.IframeAutoHeight($('#IframeITSM[% Data.Field | html %]')); };" src="#" data-src="[% Env("Baselink") %]Action=AgentITSMWorkOrderZoom;Subaction=HTMLView;WorkOrderID=[% Data.WorkOrderID | html %];Field=[% Data.Field | html %];[% Env("SessionName") | html %]=[% Env("SessionID") | html %]"></iframe>
                         </div>
                         <div class="Clear"></div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-
-    Core.Config.Set('ITSMChange::Frontend::AgentHTMLFieldHeightDefault', parseInt("[% Config("ITSMChange::Frontend::AgentHTMLFieldHeightDefault") %]" || 0, 10));
-    Core.Config.Set('ITSMChange::Frontend::AgentHTMLFieldHeightMax', parseInt("[% Config("ITSMChange::Frontend::AgentHTMLFieldHeightMax") %]" || 0, 10));
-
-    // copy data-src attribute to src attribute for all iframes to correctly display its contents after JS is fully loaded
-    $('iframe').each(function(){
-        $(this).attr("src", $(this).attr("data-src") );
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("ITSMContent") %]
 
 
@@ -353,36 +320,3 @@
         </div>
     </div>
 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('ul.Actions a.AsPopup').bind('click', function (Event) {
-        Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
-        return false;
-    });
-
-    $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-
-        // if we have a referrer we use it, so the previous page will be loaded from the server
-        // and if the referer is not the current page (AgentITSMWorkOrderZoom)
-        if (document.referrer && !document.referrer.match(/AgentITSMWorkOrderZoom/) ) {
-            window.location.href = document.referrer;
-            return false;
-        }
-        // otherwise we use the browser history to go back one page (could be from the browser cache)
-        else if (history.length > 0) {
-            history.back();
-            return false;
-        }
-        // if the page was loaded from clicking a link in an email there is no referer
-        // and then we want to follow the original link target (which is the change zoom )
-        else {
-            return true;
-        }
-    });
-
-    // Initialize allocation list for link object table.
-    Core.Agent.TableFilters.SetAllocationList();
-
-//]]></script>
-[% END %]
