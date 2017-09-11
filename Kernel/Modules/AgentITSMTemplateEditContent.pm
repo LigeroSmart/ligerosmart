@@ -86,7 +86,7 @@ sub Run {
     if ( $Self->{Subaction} eq 'TemplateEditContent' ) {
 
         # get current system time in epoch seconds
-        my $SystemTime = $Kernel::OM->Get('Kernel::System::Time')->SystemTime();
+        my $SystemTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch();
 
         # get user object
         my $UserObject = $Kernel::OM->Get('Kernel::System::User');
