@@ -35,7 +35,6 @@ ITSM.Agent.CABTemplateEdit = (function (TargetNS) {
 
         Core.Form.Validate.DisableValidation($Form);
 
-        var $InputDelete = $('input[name=DeleteCABMember]', $Form);
         $('input[name=DeleteCABMember]', $Form).val($This.attr('id'));
 
         $Form.submit();
