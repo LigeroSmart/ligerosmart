@@ -22,18 +22,14 @@ $Selenium->RunTest(
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get change reset menu module default config
-        my %ChangeResetMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
+        my %ChangeResetMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
             Name    => 'ITSMChange::Frontend::MenuModule###110-ChangeReset',
             Default => 1,
         );
 
-        # set change reset menu module to valid
-        my %ChangeResetMenuUpdate = map { $_->{Key} => $_->{Content} }
-            grep { defined $_->{Key} } @{ $ChangeResetMenu{Setting}->[1]->{Hash}->[1]->{Item} };
-
         $Helper->ConfigSettingChange(
             Key   => 'ITSMChange::Frontend::MenuModule###110-ChangeReset',
-            Value => \%ChangeResetMenuUpdate,
+            Value => $ChangeResetMenu{EffectiveValue},
             Valid => 1,
         );
 
