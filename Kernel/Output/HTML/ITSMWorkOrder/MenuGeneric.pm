@@ -91,6 +91,16 @@ sub Run {
         $LayoutObject->Block( Name => 'MenuItemSplit' );
     }
 
+    # output menu item
+    $LayoutObject->Block(
+        Name => 'MenuItem',
+        Data => {
+            %Param,
+            %{ $Param{WorkOrder} },
+            %{ $Param{Config} },
+        },
+    );
+
     # check if a dialog has to be shown
     if ( $Param{Config}->{DialogTitle} ) {
         my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
