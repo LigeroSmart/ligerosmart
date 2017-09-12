@@ -173,9 +173,6 @@ sub Run {
         $Self->{FormID} = $UploadCacheObject->FormIDCreate();
     }
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
@@ -220,8 +217,8 @@ sub Run {
                 $GetParam{ $TimeType . 'Minute' };
 
             # sanity check the assembled timestamp
-            $SystemTime{$TimeType} = $TimeObject->TimeStamp2SystemTime(
-                String => $GetParam{$TimeType},
+            $SystemTime{$TimeType} = $Self->_TimeStamp2Epoch(
+                TimeStamp => $GetParam{$TimeType},
             );
 
             # do not save if time is invalid
@@ -284,49 +281,49 @@ sub Run {
         }
 
         # check if an attachment must be deleted
-        my @AttachmentIDs = map {
-            my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
-            $ID ? $ID : ();
-        } $ParamObject->GetParamNames();
+        #my @AttachmentIDs = map {
+        #    my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
+        #    $ID ? $ID : ();
+        #} $ParamObject->GetParamNames();
 
         # check if an attachment must be deleted
-        ATTACHMENT:
-        for my $Number ( reverse sort @AttachmentIDs ) {
+        #ATTACHMENT:
+        #for my $Number ( reverse sort @AttachmentIDs ) {
 
-            # check if the delete button was pressed for this attachment
-            my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
+        #    # check if the delete button was pressed for this attachment
+        #    my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
 
-            # check next attachment if it was not pressed
-            next ATTACHMENT if !$Delete;
+        #    # check next attachment if it was not pressed
+        #    next ATTACHMENT if !$Delete;
 
-            # remember that we need to show the page again
-            $ValidationError{Attachment} = 1;
+        #    # remember that we need to show the page again
+        #    $ValidationError{Attachment} = 1;
 
-            # remove the attachment from the upload cache
-            $UploadCacheObject->FormIDRemoveFile(
-                FormID => $Self->{FormID},
-                FileID => $Number,
-            );
-        }
+        #    # remove the attachment from the upload cache
+        #    $UploadCacheObject->FormIDRemoveFile(
+        #        FormID => $Self->{FormID},
+        #        FileID => $Number,
+        #    );
+        #}
 
         # check if there was an attachment upload
-        if ( $GetParam{AttachmentUpload} ) {
+        #if ( $GetParam{AttachmentUpload} ) {
 
-            # remember that we need to show the page again
-            $ValidationError{Attachment} = 1;
+        #    # remember that we need to show the page again
+        #    $ValidationError{Attachment} = 1;
 
-            # get the uploaded attachment
-            my %UploadStuff = $ParamObject->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
-            );
+        #    # get the uploaded attachment
+        #    my %UploadStuff = $ParamObject->GetUploadAll(
+        #        Param  => 'FileUpload',
+        #        Source => 'string',
+        #    );
 
-            # add attachment to the upload cache
-            $UploadCacheObject->FormIDAddFile(
-                FormID => $Self->{FormID},
-                %UploadStuff,
-            );
-        }
+        #    # add attachment to the upload cache
+        #    $UploadCacheObject->FormIDAddFile(
+        #        FormID => $Self->{FormID},
+        #        %UploadStuff,
+        #    );
+        #}
 
         # if all passed data is valid
         if ( !%ValidationError ) {
@@ -493,14 +490,14 @@ sub Run {
 
                     # convert the OLD planned end time of this workorder
                     # into system time (epoch seconds)
-                    my $OldPlannedEndTimeSystemTime = $TimeObject->TimeStamp2SystemTime(
-                        String => $WorkOrder->{PlannedEndTime},
+                    my $OldPlannedEndTimeSystemTime = $Self->_TimeStamp2Epoch(
+                        TimeStamp => $WorkOrder->{PlannedEndTime},
                     );
 
                     # convert the NEW planned end time of this workorder
                     # into system time (epoch seconds)
-                    my $NewPlannedEndTimeSystemTime = $TimeObject->TimeStamp2SystemTime(
-                        String => $GetParam{PlannedEndTime},
+                    my $NewPlannedEndTimeSystemTime = $Self->_TimeStamp2Epoch(
+                        TimeStamp => $GetParam{PlannedEndTime},
                     );
 
                     # calculate the difference time
@@ -522,13 +519,13 @@ sub Run {
 
                             # convert the old planned times of the workorder
                             # into system time (epoch seconds)
-                            $TimeData{$TimeType} = $TimeObject->TimeStamp2SystemTime(
-                                String => $WorkOrder->{$TimeType},
+                            $TimeData{$TimeType} = $Self->_TimeStamp2Epoch(
+                                TimeStamp => $WorkOrder->{$TimeType},
                             );
 
                             # add the difference and convert time to timestamp
-                            $TimeData{$TimeType} = $TimeObject->SystemTime2TimeStamp(
-                                SystemTime => $TimeData{$TimeType} + $DiffTime,
+                            $TimeData{$TimeType} = $Self->_Epoch2TimeStamp(
+                                Epoch => $TimeData{$TimeType} + $DiffTime,
                             );
                         }
 
@@ -581,20 +578,29 @@ sub Run {
 
             if ( $WorkOrder->{$TimeType} ) {
 
-                # get planned start time from workorder
-                my $SystemTime = $TimeObject->TimeStamp2SystemTime(
-                    String => $WorkOrder->{$TimeType},
-                );
-                my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
-                    SystemTime => $SystemTime,
+                my $DateTimeObject = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        String => $WorkOrder->{$TimeType},
+                    },
                 );
 
                 # set the parameter hash for BuildDateSelection()
-                $GetParam{ $TimeType . 'Minute' } = $Minute;
-                $GetParam{ $TimeType . 'Hour' }   = $Hour;
-                $GetParam{ $TimeType . 'Day' }    = $Day;
-                $GetParam{ $TimeType . 'Month' }  = $Month;
-                $GetParam{ $TimeType . 'Year' }   = $Year;
+                $GetParam{ $TimeType . 'Minute' } = $DateTimeObject->Format(
+                    Format => '%M',
+                );
+                $GetParam{ $TimeType . 'Hour' } = $DateTimeObject->Format(
+                    Format => '%H',
+                );
+                $GetParam{ $TimeType . 'Day' } = $DateTimeObject->Format(
+                    Format => '%d',
+                );
+                $GetParam{ $TimeType . 'Month' } = $DateTimeObject->Format(
+                    Format => '%m',
+                );
+                $GetParam{ $TimeType . 'Year' } = $DateTimeObject->Format(
+                    Format => '%Y',
+                );
             }
         }
 
@@ -757,40 +763,25 @@ sub Run {
         );
     }
 
+    # get all attachments meta data
+    $Param{AttachmentList} = [
+        $UploadCacheObject->FormIDGetAllFilesMeta(
+            FormID => $Self->{FormID},
+            )
+    ];
+
     # show the attachment upload button
     $LayoutObject->Block(
         Name => 'AttachmentUpload',
         Data => {%Param},
     );
 
-    # get all attachments meta data
-    my @Attachments = $UploadCacheObject->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
-    );
-
-    # show attachments
-    ATTACHMENT:
-    for my $Attachment (@Attachments) {
-
-        # do not show inline images as attachments
-        # (they have a content id)
-        if ( $Attachment->{ContentID} && $LayoutObject->{BrowserRichText} ) {
-            next ATTACHMENT;
-        }
-
-        $LayoutObject->Block(
-            Name => 'Attachment',
-            Data => $Attachment,
-        );
-    }
-
     # add rich text editor javascript
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
     if ( $LayoutObject->{BrowserRichText} ) {
-        $LayoutObject->Block(
-            Name => 'RichText',
-            Data => {%Param},
+        $LayoutObject->SetRichTextParameters(
+            Data => \%Param,
         );
     }
 
@@ -811,6 +802,36 @@ sub Run {
     $Output .= $LayoutObject->Footer( Type => 'Small' );
 
     return $Output;
+}
+
+sub _TimeStamp2Epoch {
+    my ( $Self, %Param, ) = @_;
+
+    my $TimeStamp      = $Param{TimeStamp};
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $TimeStamp,
+        },
+    );
+
+    return $DateTimeObject->ToEpoch() if $DateTimeObject;
+    return;
+}
+
+sub _Epoch2TimeStamp {
+    my ( $Self, %Param, ) = @_;
+
+    my $Epoch          = $Param{Epoch};
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Epoch => $Epoch,
+        },
+    );
+
+    return $DateTimeObject->ToString() if $DateTimeObject;
+    return;
 }
 
 1;
