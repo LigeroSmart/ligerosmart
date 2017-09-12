@@ -125,7 +125,6 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateEditContent.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateOverviewNavBar.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMTemplateOverviewSmall.tt" />
-        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMUserSearch.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAdd.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAddFromTemplate.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentITSMWorkOrderAgent.tt" />
