@@ -181,7 +181,7 @@ sub Run {
     }
 
     # output content
-    my $Output .= $LayoutObject->Output(
+    my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentITSMWorkOrderDelete',
         Data         => {
             %Param,
