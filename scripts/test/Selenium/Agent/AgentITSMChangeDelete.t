@@ -27,13 +27,9 @@ $Selenium->RunTest(
             Default => 1,
         );
 
-        # set change delete menu module to valid
-        my %ChangeDeleteMenuUpdate = map { $_->{Key} => $_->{Content} }
-            grep { defined $_->{Key} } @{ $ChangeDeleteMenu{Setting}->[1]->{Hash}->[1]->{Item} };
-
         $Helper->ConfigSettingChange(
             Key   => 'ITSMChange::Frontend::MenuModule###100-ChangeDelete',
-            Value => \%ChangeDeleteMenuUpdate,
+            Value => $ChangeDeleteMenu{EffectiveValue},
             Valid => 1,
         );
 
