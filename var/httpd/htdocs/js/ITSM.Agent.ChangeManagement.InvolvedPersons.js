@@ -84,17 +84,6 @@ ITSM.Agent.ChangeManagement.InvolvedPersons = (function (TargetNS) {
      */
     TargetNS.Init = function () {
 
-        $("#ChangeManager").length && ITSM.Agent.UserSearch.Init($("#ChangeManager"));
-        $("#ChangeBuilder").length && ITSM.Agent.UserSearch.Init($("#ChangeBuilder"));
-
-        $('#ChangeManager').off('focus.InvolvedPersonsChangeManager').on('focus.InvolvedPersonsChangeManager', function() {
-            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
-        });
-
-        $('#ChangeBuilder').off('focus.InvolvedPersonsChangeBuilder').on('focus.InvolvedPersonsChangeBuilder', function() {
-            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
-        });
-
         // Bind elements with class '.CallForAction' to set the proper form action
         // before the form submits.
         $('.CallForAction').off('click.FormAction.InvolvedPersons').on('click.FormAction.InvolvedPersons', SetFormAction);
