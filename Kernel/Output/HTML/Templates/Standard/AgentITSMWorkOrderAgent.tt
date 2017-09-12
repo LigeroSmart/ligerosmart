@@ -6,22 +6,6 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-[% InsertTemplate("AgentITSMUserSearch.tt") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-    <script type="text/javascript">//<![CDATA[
-
-        $('#User').bind('focus', function( Event ) {
-            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change');
-        });
-
-        $('#User').bind('click', function( Event ) {
-            $('#User').val('');
-        });
-
-    //]]></script>
-[% END %]
-
 <form action="[% Env("CGIHandle") %]" method="post" name="compose" class="Validate PreventMultipleSubmits">
     <input type="hidden" name="Action"    value="[% Env("Action") %]" />
     <input type="hidden" name="Subaction" value="Save" />
@@ -42,8 +26,8 @@
 
                 <label for="User"> [% Translate("Workorder Agent") | html %]: </label>
                 <div class="Field">
-                    <input id="User" type="text" name="User" value="[% Data.User | html %]" class="W75pc [% Data.UserServerError %]"/>
-                    <input id="UserSelected" type="hidden" name="UserSelected" value="[% Data.UserID | html %]" />
+                    <input id="User" type="text" name="User" value="[% Data.User | html %]" class="W75pc [% Data.UserServerError %] UserSearch" data-autocompletegroups="itsm-change"/>
+                    <input id="UserSelected" type="hidden" name="UserSelected" value="[% Data.UserID | html %]" class="UserSearchSelected"/>
                 </div>
 
                 <div id="UserServerError" class="TooltipErrorMessage">

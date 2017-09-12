@@ -6,36 +6,33 @@
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 // --
 
-
-
-// TODO:
-//Remove this line and fix JSDoc
-// nofilter(TidyAll::Plugin::OTRS::JavaScript::ESLint)
-
-
-
 "use strict";
 
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 
+
 /**
- * @namespace
- * @exports TargetNS as ITSM.Agent.UserSearch
+ * @namespace ITSM.Agent.UserSearch
+ * @memberof ITSM.Agent.UserSearch
+ * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the user search.
  */
 ITSM.Agent.UserSearch = (function (TargetNS) {
 
     /**
+     * @name Init
+     * @namespace ITSM.Agent.UserAgent
      * @function
-     * @param {jQueryObject} $Element The jQuery object of the input field with autocomplete
-     * @return nothing
+     * @description
      *      This function initializes the special module functions
      */
-    TargetNS.Init = function ($Element) {
+    TargetNS.Init = function () {
+        var $UserSearches = $('input.UserSearch');
 
-        if (isJQueryObject($Element)) {
+        $UserSearches.each(function() {
+            var $Element = $(this);
 
             Core.UI.Autocomplete.Init(
                 $Element,
@@ -43,7 +40,7 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
                     var URL = Core.Config.Get('Baselink'), Data = {
                         Action: 'AgentITSMUserSearch',
                         Term: Request.term + '*',
-                        Groups : Core.Config.Get('UserAutocomplete.Groups') || '',
+                        Groups : $Element.data('autocompletegroups'),
                         MaxResults: Core.UI.Autocomplete.GetConfig('MaxResultsDisplayed')
                     };
 
@@ -71,15 +68,21 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
                 },
                 'CustomerSearch'
             );
-        }
+        });
 
-        // On unload remove old selected data. If the page is reloaded (with F5) this data stays in the field and invokes an ajax request otherwise
+        $UserSearches.on('click.UserSearch', function() {
+            $(this).val('');
+        });
+
+        // On unload remove old selected data. If the page is reloaded (with F5)
+        // this data stays in the field and invokes an ajax request otherwise
         $(window).on('beforeunload.UserSearch', function () {
-            // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
-            $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val('');
+            $('input.UserSearchSelected').val('');
             return;
         });
     };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(ITSM.Agent.UserSearch || {}));
