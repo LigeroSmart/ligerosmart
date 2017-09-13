@@ -13,7 +13,7 @@
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>[% Translate("Move Time Slot") | html %] [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber %]</h1>
+            <h1>[% Translate("Move Time Slot") | html %] ... [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber %]</h1>
             <p>
                 <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             </p>
@@ -23,14 +23,6 @@
                 <label for="MoveTimeType">[% Translate("Time type") | html %]:</label>
                 <div class="Field">
                     [% Data.MoveTimeTypeSelectionString %]
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('#MoveTimeType').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#MoveTimeSlotForm'), 'AJAXUpdate', 'MoveTimeType', ['MoveTimeMinute', 'MoveTimeHour', 'MoveTimeDay', 'MoveTimeMonth', 'MoveTimeYear']);
-        $('#AJAXLoaderMoveTimeDay, #AJAXLoaderMoveTimeMonth, #AJAXLoaderMoveTimeYear, #AJAXLoaderMoveTimeHour').removeClass('AJAXLoader');
-    });
-//]]></script>
-[% END %]
                 </div>
                 <div class="Clear"></div>
 

@@ -494,6 +494,9 @@
                 <Description Translatable="1">Move Time Slot.</Description>
                 <Title Translatable="1">Time Slot</Title>
                 <NavBarName>ITSM Change</NavBarName>
+                <Loader>
+                    <JavaScript>ITSM.Agent.ChangeManagement.TimeSlot.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>

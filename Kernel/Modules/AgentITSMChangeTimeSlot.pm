@@ -115,7 +115,6 @@ sub Run {
     my %ValidationErrors;
 
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
     # move time slot of change
     if ( $Self->{Subaction} eq 'MoveTimeSlot' ) {
@@ -161,9 +160,14 @@ sub Run {
                 $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
-            $PlannedSystemTime = $TimeObject->TimeStamp2SystemTime(
-                String => $PlannedTime,
+            my $DateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $PlannedTime,
+                    }
             );
+
+            $PlannedSystemTime = $DateTimeObject->ToEpoch();
 
             if ( !$PlannedSystemTime ) {
                 $ValidationErrors{MoveTimeInvalid} = 'ServerError';
@@ -189,9 +193,15 @@ sub Run {
                 );
             }
 
-            my $CurrentPlannedSystemTime = $TimeObject->TimeStamp2SystemTime(
-                String => $CurrentPlannedTime,
+            my $DateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String   => $CurrentPlannedTime,
+                    TimeZone => $ConfigObject->Get('TimeZoneUser'),
+                    }
             );
+            my $CurrentPlannedSystemTime = $DateTimeObject->ToEpoch();
+
             my $DiffSeconds = $PlannedSystemTime - $CurrentPlannedSystemTime;
 
             my $MoveError = $Self->_MoveWorkOrders(
@@ -213,25 +223,22 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
         # get planned start time or planned end time from the change
-        my $SystemTime = $TimeObject->TimeStamp2SystemTime(
-            String => $Change->{ $GetParam{MoveTimeType} },
+        my $DateTimeObject = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Change->{ $GetParam{MoveTimeType} },
+                }
         );
-
-        # time zone translation
-        if ( $ConfigObject->Get('TimeZoneUser') && $Self->{UserTimeZone} ) {
-            $SystemTime = $SystemTime + ( $Self->{UserTimeZone} * 3600 );
-        }
+        my $SystemTime = $DateTimeObject->ToEpoch();
 
         # set the parameter hash for the answers
         # the seconds are ignored
-        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
-            SystemTime => $SystemTime,
-        );
+        my $DateTimeSettings = $DateTimeObject->Get();
 
         # get config for the number of years which should be selectable
         my $TimePeriod = $ConfigObject->Get('ITSMWorkOrder::TimePeriod');
-        my $StartYear  = $Year - $TimePeriod->{YearPeriodPast};
-        my $EndYear    = $Year + $TimePeriod->{YearPeriodFuture};
+        my $StartYear  = $DateTimeSettings->{Year} - $TimePeriod->{YearPeriodPast};
+        my $EndYear    = $DateTimeSettings->{Year} + $TimePeriod->{YearPeriodFuture};
 
         # assemble the data that will be returned
         my $JSON = $LayoutObject->BuildSelectionJSON(
@@ -239,22 +246,22 @@ sub Run {
                 {
                     Name       => 'MoveTimeMinute',
                     Data       => [ map { sprintf '%02d', $_ } ( 0 .. 59 ) ],
-                    SelectedID => $Minute,
+                    SelectedID => $DateTimeSettings->{Minute},
                 },
                 {
                     Name       => 'MoveTimeHour',
                     Data       => [ map { sprintf '%02d', $_ } ( 0 .. 23 ) ],
-                    SelectedID => $Hour,
+                    SelectedID => $DateTimeSettings->{Hour},
                 },
                 {
                     Name       => 'MoveTimeDay',
                     Data       => { map { $_ => sprintf '%02d', $_ } ( 1 .. 31 ) },
-                    SelectedID => int $Day,
+                    SelectedID => int $DateTimeSettings->{Day},
                 },
                 {
                     Name       => 'MoveTimeMonth',
                     Data       => { map { $_ => sprintf '%02d', $_ } ( 1 .. 12 ) },
-                    SelectedID => int $Month,
+                    SelectedID => int $DateTimeSettings->{Month},
                 },
                 {
                     Name       => 'MoveTimeYear',
@@ -275,20 +282,22 @@ sub Run {
 
         # no subaction,
         # get planned start time or planned end time from the change
-        my $SystemTime = $TimeObject->TimeStamp2SystemTime(
-            String => $Change->{ $GetParam{MoveTimeType} },
+        my $DateTimeObject = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                String => $Change->{ $GetParam{MoveTimeType} }
+                }
         );
+        my $SystemTime = $DateTimeObject->ToEpoch();
 
         # set the parameter hash for BuildDateSelection()
         # the seconds are ignored
-        my ( $Second, $Minute, $Hour, $Day, $Month, $Year ) = $TimeObject->SystemTime2Date(
-            SystemTime => $SystemTime,
-        );
-        $GetParam{MoveTimeMinute} = $Minute;
-        $GetParam{MoveTimeHour}   = $Hour;
-        $GetParam{MoveTimeDay}    = $Day;
-        $GetParam{MoveTimeMonth}  = $Month;
-        $GetParam{MoveTimeYear}   = $Year;
+        my $DateTimeSettings = $DateTimeObject->Get();
+        $GetParam{MoveTimeMinute} = $DateTimeSettings->{Minute};
+        $GetParam{MoveTimeHour}   = $DateTimeSettings->{Hour};
+        $GetParam{MoveTimeDay}    = $DateTimeSettings->{Day};
+        $GetParam{MoveTimeMonth}  = $DateTimeSettings->{Month};
+        $GetParam{MoveTimeYear}   = $DateTimeSettings->{Year};
     }
 
     # build drop-down with time types
@@ -374,19 +383,19 @@ sub _MoveWorkOrders {
 
             next TYPE if !$WorkOrder->{$Type};
 
-            # get time object
-            my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-            my $SystemTime = $TimeObject->TimeStamp2SystemTime(
-                String => $WorkOrder->{$Type},
+            # get datetime object
+            my $DateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    String => $WorkOrder->{$Type},
+                    }
             );
-            next TYPE if !$SystemTime;
+            next TYPE if !$DateTimeObject;
 
             # add the number of seconds that the time slot should be moved
-            $SystemTime += $Param{DiffSeconds};
-            $UpdateParams{$Type} = $TimeObject->SystemTime2TimeStamp(
-                SystemTime => $SystemTime,
-            );
+            $DateTimeObject->Add( Seconds => $Param{DiffSeconds} );
+            $UpdateParams{$Type} = $DateTimeObject->ToString();
+
         }
 
         next WORKORDERID if !%UpdateParams;
