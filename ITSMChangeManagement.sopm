@@ -268,6 +268,7 @@
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.ConfirmDialog.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.InvolvedPersons.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.TimeSlot.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.TemplateOverview.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.UserSearch.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Responsive.css" />

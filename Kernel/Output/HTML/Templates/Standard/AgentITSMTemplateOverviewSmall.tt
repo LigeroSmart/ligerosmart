@@ -102,23 +102,6 @@
                         <span class="InvisibleText">[% Translate("Edit Content") | html %]</span>
                     </a>
                 </td>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global ITSM: true */
-    ITSM.Agent.ConfirmDialog.BindConfirmDialog({
-        ElementID:                  'EditContentTemplateID[% Data.TemplateID | html %]',
-        ElementSelector:            '#EditContentTemplateID[% Data.TemplateID | html %]',
-        DialogContentQueryString:   'Action=AgentITSMTemplateEditContent;Subaction=TemplateEditContentShowDialog;TemplateID=[% Data.TemplateID | uri %]',
-        ConfirmedActionQueryString: 'Action=AgentITSMTemplateEditContent;Subaction=TemplateEditContent;TemplateID=[% Data.TemplateID | uri %]',
-        DialogTitle:                [% Translate("Edit Template Content") | JSON %],
-        TranslatedText:             {
-            Yes: [% Translate("Yes") | JSON %],
-            No:  [% Translate("No") | JSON %]
-        }
-    });
-//]]></script>
-[% END %]
 [% RenderBlockEnd("RecordEditContent") %]
 
 [% RenderBlockStart("RecordEditContentCAB") %]
@@ -138,24 +121,6 @@
                         </i>
                     </a>
                 </td>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global ITSM: true */
-    ITSM.Agent.ConfirmDialog.BindConfirmDialog({
-        ElementID:                  'DeleteTemplateID[% Data.TemplateID | html %]',
-        ElementSelector:            '#DeleteTemplateID[% Data.TemplateID | html %]',
-        DialogContentQueryString:   'Action=AgentITSMTemplateDelete;TemplateID=[% Data.TemplateID | uri %]',
-        ConfirmedActionQueryString: 'Action=AgentITSMTemplateDelete;Subaction=TemplateDelete;TemplateID=[% Data.TemplateID | uri %]',
-        DialogTitle:                [% Translate("Delete Template") | JSON %],
-        TranslatedText:             {
-            Yes: [% Translate("Yes") | JSON %],
-            No:  [% Translate("No") | JSON %]
-        }
-    });
-//]]></script>
-[% END %]
-
 [% RenderBlockEnd("RecordDelete") %]
 [% RenderBlockStart("RecordCreateBy") %]
                 <td>
@@ -190,12 +155,3 @@
         </tbody>
     </table>
 </div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    $('tbody tr td a.AsPopup').bind('click', function (Event) {
-        Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
-        return false;
-    });
-//]]></script>
-[% END %]

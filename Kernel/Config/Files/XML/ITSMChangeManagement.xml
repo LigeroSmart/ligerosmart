@@ -1279,6 +1279,7 @@
                 <Item Key="JavaScript">
                     <Array>
                         <Item>ITSM.Agent.ConfirmDialog.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.TemplateOverview.js</Item>
                     </Array>
                 </Item>
             </Hash>

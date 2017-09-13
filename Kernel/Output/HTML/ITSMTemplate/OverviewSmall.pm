@@ -13,6 +13,7 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::Language',
     'Kernel::System::Group',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::ITSMChange::Template',
@@ -129,18 +130,16 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # build column header blocks
-    if (@ShowColumns) {
-        for my $Column (@ShowColumns) {
+    for my $Column (@ShowColumns) {
 
-            $LayoutObject->Block(
-                Name => 'Record' . $Column . 'Header',
-                Data => {
-                    %Param,
-                    %Order,
-                    %CSS,
-                },
-            );
-        }
+        $LayoutObject->Block(
+            Name => 'Record' . $Column . 'Header',
+            Data => {
+                %Param,
+                %Order,
+                %CSS,
+            },
+        );
     }
 
     my $Output  = '';
@@ -152,75 +151,106 @@ sub Run {
         ID:
         for my $ID (@IDs) {
             $Counter++;
-            if (
-                $Counter >= $Param{StartHit}
-                && $Counter < ( $Param{PageShown} + $Param{StartHit} )
-                )
-            {
 
-                # display the template data
-                my $Template = $Kernel::OM->Get('Kernel::System::ITSMChange::Template')->TemplateGet(
-                    TemplateID => $ID,
-                    UserID     => $Self->{UserID},
+            next ID if $Counter < $Param{StartHit};
+            last ID if $Counter >= ( $Param{PageShown} + $Param{StartHit} );
+
+            # display the template data
+            my $Template = $Kernel::OM->Get('Kernel::System::ITSMChange::Template')->TemplateGet(
+                TemplateID => $ID,
+                UserID     => $Self->{UserID},
+            );
+            my %Data = %{$Template};
+
+            # human readable validity
+            $Data{Valid} = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup( ValidID => $Data{ValidID} );
+
+            # get user data for needed user types
+            USERTYPE:
+            for my $UserType (qw(CreateBy ChangeBy)) {
+
+                # check if UserType attribute exists in the template
+                next USERTYPE if !$Data{$UserType};
+
+                # get user data
+                my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
+                    UserID => $Data{$UserType},
+                    Cached => 1,
                 );
-                my %Data = %{$Template};
 
-                # human readable validity
-                $Data{Valid} = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup( ValidID => $Data{ValidID} );
+                # set user data
+                $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                $Data{ $UserType . 'LeftParenthesis' }  = '(';
+                $Data{ $UserType . 'RightParenthesis' } = ')';
+            }
 
-                # get user data for needed user types
-                USERTYPE:
-                for my $UserType (qw(CreateBy ChangeBy)) {
+            # build record block
+            $LayoutObject->Block(
+                Name => 'Record',
+                Data => {
+                    %Param,
+                    %Data,
+                },
+            );
 
-                    # check if UserType attribute exists in the template
-                    next USERTYPE if !$Data{$UserType};
-
-                    # get user data
-                    my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
-                        UserID => $Data{$UserType},
-                        Cached => 1,
+            # build column record blocks
+            COLUMN:
+            for my $Column (@ShowColumns) {
+                if ( $Column eq 'EditContent' && $Data{Type} eq 'CAB' ) {
+                    $LayoutObject->Block(
+                        Name => 'RecordEditContentCAB',
+                        Data => {
+                            %Param,
+                            %Data,
+                        },
                     );
 
-                    # set user data
-                    $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
-                    $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
-                    $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
-                    $Data{ $UserType . 'LeftParenthesis' }  = '(';
-                    $Data{ $UserType . 'RightParenthesis' } = ')';
+                    next COLUMN;
                 }
 
-                # build record block
+                if ( $Column eq 'EditContent' || $Column eq 'Delete' ) {
+                    my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
+                    my $LanguageObject = $Kernel::OM->Get('Kernel::Language');
+
+                    my %JSData = ();
+
+                    $JSData{ElementID}       = $Column . 'TemplateID' . $Data{TemplateID};
+                    $JSData{ElementSelector} = '#' . $JSData{ElementID};
+
+                    $JSData{DialogContentQueryString} = sprintf(
+                        'Action=AgentITSMTemplate%s;%sTemplateID=%s',
+                        $Column,
+                        ( $Column eq 'EditContent' ? 'Subaction=TemplateEditContentShowDialog;' : '' ),
+                        $Data{TemplateID},
+                    );
+
+                    $JSData{ConfirmedActionQueryString} = sprintf(
+                        'Action=AgentITSMTemplate%s;Subaction=Template%s;TemplateID=%s',
+                        $Column,
+                        $Column,
+                        $Data{TemplateID},
+                    );
+
+                    $JSData{DialogTitle} = $Column eq 'Delete'
+                        ? 'Delete Template'
+                        : 'Edit Template Content'
+                        ;
+
+                    $LayoutObject->AddJSData(
+                        Key   => 'ITSMChangeTemplateOverviewConfirmDialog.' . $JSData{ElementID},
+                        Value => \%JSData,
+                    );
+                }
+
                 $LayoutObject->Block(
-                    Name => 'Record',
+                    Name => 'Record' . $Column,
                     Data => {
                         %Param,
                         %Data,
                     },
                 );
-
-                # build column record blocks
-                if (@ShowColumns) {
-                    for my $Column (@ShowColumns) {
-                        if ( $Column eq 'EditContent' && $Data{Type} eq 'CAB' ) {
-                            $LayoutObject->Block(
-                                Name => 'RecordEditContentCAB',
-                                Data => {
-                                    %Param,
-                                    %Data,
-                                },
-                            );
-                        }
-                        else {
-                            $LayoutObject->Block(
-                                Name => 'Record' . $Column,
-                                Data => {
-                                    %Param,
-                                    %Data,
-                                },
-                            );
-                        }
-                    }
-                }
             }
         }
     }
