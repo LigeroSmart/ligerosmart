@@ -6,12 +6,6 @@
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 // --
 
-
-// TODO:
-//Remove this line and fix JSDoc
-// nofilter(TidyAll::Plugin::OTRS::JavaScript::ESLint)
-
-
 "use strict";
 
 var ITSM = ITSM || {};
@@ -29,12 +23,11 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
     /**
      * @name AdditionalAttributeSelectionRebuild
-     * @memberof ITSM.Agent.ChangeManagement.Search
-     * @author OTRS AG
+     * @namespace ITSM.Agent.ChangeManagement.Search
      * @function
      * @returns {Boolean} Returns true.
      * @description
-            This function rebuilds the selection dropdown after choosing or deleting an additional selection.
+     *      This function rebuilds the selection dropdown after choosing or deleting an additional selection.
      */
     TargetNS.AdditionalAttributeSelectionRebuild = function () {
 
@@ -58,12 +51,12 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
     /**
      * @name SearchAttributeAdd
-     * @memberof ITSM.Agent.ChangeManagement.Search
-     * @author OTRS AG
+     * @namespace ITSM.Agent.ChangeManagement.Search
      * @function
-     * @param {String} of attribute to add.
+     * @param {String} Attribute to add.
+     * @returns {Bool} returns False to cancel default link behaviour
      * @description
-            This function adds one attributes for the search.
+     *      This function adds one attributes for the search.
      */
     TargetNS.SearchAttributeAdd = function (Attribute) {
         var $Label = $('#SearchAttributesHidden label#Label' + Attribute);
@@ -128,13 +121,14 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     };
 
     /**
+     * @name SearchAttributeRemove
+     * @namespace ITSM.Agent.ChangeManagement.Search
      * @function
      * @param {jQueryObject} $Element The jQuery object of the form  or any element
      *      within this form check.
-     * @return nothing
+     * @description
      *      This function remove attributes from an element.
      */
-
     TargetNS.SearchAttributeRemove = function ($Element) {
         $Element.prev().prev().remove();
         $Element.prev().remove();
@@ -142,11 +136,13 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     };
 
     /**
-     * @function
      * @private
+     * @name SearchProfileDelete
+     * @namespace ITSM.Agent.ChangeManagement.Search
+     * @function
      * @param {String} Profile The profile name that will be delete.
-     * @return nothing
-     * @description Delete a profile via an ajax requests.
+     * @description
+     *      Delete a profile via an ajax request.
      */
     function SearchProfileDelete(Profile) {
         var Data = {
@@ -162,12 +158,15 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     }
 
     /**
-     * @function
      * @private
-     * @return 0 if no values were found, 1 if values where there
-     * @description Checks if any values were entered in the search.
-     *              If nothing at all exists, it alerts with translated:
-     *              "Please enter at least one search value or * to find anything"
+     * @name CheckForSearchedValues
+     * @namespace ITSM.Agent.ChangeManagement.Search
+     * @function
+     * @returns {Int} 0 if no values were found, 1 if values where there
+     * @description
+     *      Checks if any values were entered in the search.
+     *      If nothing at all exists, it alerts with translated:
+     *      "Please enter at least one search value or * to find anything"
      */
     function CheckForSearchedValues() {
         // loop through the SearchForm labels
@@ -202,23 +201,40 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
     }
 
     /**
-     * @function
      * @private
-     * @return nothing
-     * @description Shows waiting dialog until search screen is ready.
+     * @name ShowWaitingDialog
+     * @namespace ITSM.Agent.ChangeManagement.Search
+     * @function
+     * @description
+     *      Shows waiting dialog until search screen is ready.
      */
-    function ShowWaitingDialog(){
-        Core.UI.Dialog.ShowContentDialog('<div class="Spacing Center"><span class="AJAXLoader" title="' + Core.Config.Get('LoadingMsg') + '"></span></div>', Core.Config.Get('LoadingMsg'), '10px', 'Center', true);
+    function ShowWaitingDialog() {
+        var Content = Core.Template.Render(
+            'Agent/ITSMCore/LoadingDialog',
+            {
+                SpanTitle: Core.Config.Get('LoadingMsg')
+            }
+        );
+
+        Core.UI.Dialog.ShowContentDialog(
+            Content,
+            Core.Config.Get('LoadingMsg'),
+            '10px',
+            'Center',
+            true
+        );
     }
 
     /**
+     * @name OpenSearchDialog
+     * @namespace ITSM.Agent.ChangeManagement.Search
      * @function
      * @param {String} Action which is used in framework right now.
-     * @param {String} Used profile name.
-     * @return nothing
+     * @param {String} Profile name.
+     * @param {String} EmptySearch empty search.
+     * @description
      *      This function open the search dialog after clicking on "search" button in nav bar.
      */
-
     TargetNS.OpenSearchDialog = function (Action, Profile, EmptySearch) {
 
         var Referrer = Core.Config.Get('Action'),
@@ -242,6 +258,8 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
             Core.Config.Get('CGIHandle'),
             Data,
             function (HTML) {
+                var Attributes;
+
                 // if the waiting dialog was cancelled, do not show the search
                 //  dialog as well
                 if (!$('.Dialog:visible').length) {
@@ -249,6 +267,13 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 }
 
                 Core.UI.Dialog.ShowContentDialog(HTML, Core.Config.Get('SearchMsg'), '10px', 'Center', true, undefined, true);
+
+                // add the search attribute fields
+                Attributes = Core.Config.Get('ITSMChangeManagementSearch.Attribute') || {};
+                $.each(Attributes, function(Attribute) {
+                    ITSM.Agent.ChangeManagement.Search.SearchAttributeAdd(Core.App.EscapeSelector(Attribute));
+                    ITSM.Agent.ChangeManagement.Search.AdditionalAttributeSelectionRebuild();
+                });
 
                 // hide add template block
                 $('#SearchProfileAddBlock').hide();
@@ -394,7 +419,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // direct link to profile
-                $('#SearchProfileAsLink').bind('click', function (Event) {
+                $('#SearchProfileAsLink').bind('click', function () {
                     var Profile = $('#SearchProfile').val(),
                         Action = $('#SearchAction').val();
 
@@ -443,6 +468,22 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
             }, 'html'
         );
     };
+
+    /**
+     * @name Init
+     * @namespace ITSM.Agent.ChangeManagement.Search
+     * @function
+     * @description
+     *      This function initializes some behaviours for the search dialog.
+     */
+    TargetNS.Init = function () {
+        var OpenDialog = Core.Config.Get('ITSMChangeManagementSearch.Open');
+        if (OpenDialog) {
+            TargetNS.OpenSearchDialog('AgentITSMChangeSearch');
+        }
+    };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(ITSM.Agent.ChangeManagement.Search || {}));

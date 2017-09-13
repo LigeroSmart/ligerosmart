@@ -277,9 +277,6 @@ sub Run {
             Value     => $URL,
         );
 
-        # get time object
-        my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
         # get and check the time search parameters
         TIMETYPE:
         for my $TimeType (
@@ -349,45 +346,32 @@ sub Run {
                     && $TimeSelectionParam{PointFormat}
                     )
                 {
-                    my $DiffSeconds = 0;
-                    if ( $TimeSelectionParam{PointFormat} eq 'minute' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'hour' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'day' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'week' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 7;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'month' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 30;
-                    }
-                    elsif ( $TimeSelectionParam{PointFormat} eq 'year' ) {
-                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
+                    my $CurSysDTObject = $Kernel::OM->Create('Kernel::System::DateTime');
+                    my $SearchDTObject = $CurSysDTObject->Clone();
+
+                    my $TimeUnit  = ucfirst $TimeSelectionParam{PointFormat} . 's';
+                    my $TimeValue = $TimeSelectionParam{Point};
+
+                    if ( $TimeUnit eq 'Weeks' ) {
+                        $TimeUnit  = 'Days';
+                        $TimeValue = $TimeValue * 7;
                     }
 
-                    my $CurrentSystemTime = $TimeObject->SystemTime();
-                    my $CurrentTimeStamp  = $TimeObject->SystemTime2TimeStamp(
-                        SystemTime => $CurrentSystemTime
-                    );
                     if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
-
-                        # search in the future
-                        my $SearchTimeStamp = $TimeObject->SystemTime2TimeStamp(
-                            SystemTime => $CurrentSystemTime + $DiffSeconds,
+                        $SearchDTObject->Add(
+                            $TimeUnit => $TimeValue,
                         );
-                        $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
-                        $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
+
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = $CurSysDTObject->ToString();
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchDTObject->ToString();
                     }
                     else {
-                        my $SearchTimeStamp = $TimeObject->SystemTime2TimeStamp(
-                            SystemTime => $CurrentSystemTime - $DiffSeconds,
+                        $SearchDTObject->Subtract(
+                            $TimeUnit => $TimeValue,
                         );
-                        $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
-                        $GetParam{ $TimeType . 'TimeOlderDate' } = $CurrentTimeStamp;
+
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchDTObject->ToString();
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = $CurSysDTObject->ToString();
                     }
                 }
             }
@@ -699,16 +683,14 @@ sub Run {
             );
 
             # return csv to download
-            my $CSVFile = 'change_search';
-            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-                SystemTime => $TimeObject->SystemTime(),
-            );
-            $M = sprintf( "%02d", $M );
-            $D = sprintf( "%02d", $D );
-            $h = sprintf( "%02d", $h );
-            $m = sprintf( "%02d", $m );
+            my $CurSysDTObject = $Kernel::OM->Create('Kernel::System::DateTime');
             return $LayoutObject->Attachment(
-                Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
+                Filename => sprintf(
+                    'change_search_%s.csv',
+                    $CurSysDTObject->Format(
+                        Format => '%F_%H-%M',
+                    ),
+                ),
                 ContentType => "text/csv; charset=" . $LayoutObject->{UserCharset},
                 Content     => $CSV,
             );
@@ -918,22 +900,22 @@ sub Run {
                 }
             }
 
-            # return the pdf document
-            my $Filename = 'change_search';
-            my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-                SystemTime => $TimeObject->SystemTime(),
-            );
-            $M = sprintf( "%02d", $M );
-            $D = sprintf( "%02d", $D );
-            $h = sprintf( "%02d", $h );
-            $m = sprintf( "%02d", $m );
             my $PDFString = $PDFObject->DocumentOutput();
+
+            # return the pdf document
+            my $CurSysDTObject = $Kernel::OM->Create('Kernel::System::DateTime');
             return $LayoutObject->Attachment(
-                Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+                Filename => sprintf(
+                    'change_search_%s.pdf',
+                    $CurSysDTObject->Format(
+                        Format => '%F_%H-%M',
+                    ),
+                ),
                 ContentType => "application/pdf",
                 Content     => $PDFString,
                 Type        => 'inline',
             );
+
         }
         else {
 
@@ -1026,7 +1008,7 @@ sub Run {
     }
     elsif ( $Self->{Subaction} eq 'AJAX' ) {
 
-        my $Output .= $Self->_MaskForm(
+        my $Output = $Self->_MaskForm(
             %GetParam,
         );
 
@@ -1043,15 +1025,16 @@ sub Run {
 
     }
 
+    $LayoutObject->AddJSData(
+        Key   => 'ITSMChangeManagementSearch.Open',
+        Value => 1,
+    );
+
     # There was no 'SubAction', or there were validation errors, or an user or customer was searched
     # generate search mask
     my $Output = $LayoutObject->Header();
     $Output .= $LayoutObject->NavigationBar();
 
-    $LayoutObject->Block(
-        Name => 'Search',
-        Data => \%Param,
-    );
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeSearch',
         Data         => \%Param,
@@ -1719,22 +1702,17 @@ sub _MaskForm {
         }
         $AlreadyShown{$Key} = 1;
 
-        $LayoutObject->Block(
-            Name => 'SearchAJAXShow',
-            Data => {
-                Attribute => $Key,
-            },
+        $LayoutObject->AddJSData(
+            Key   => 'ITSMChangeManagementSearch.Attribute.' . $Key,
+            Value => 1,
         );
     }
 
     # if no attribute is shown, show change number
     if ( !$Profile ) {
-
-        $LayoutObject->Block(
-            Name => 'SearchAJAXShow',
-            Data => {
-                Attribute => 'ChangeNumber',
-            },
+        $LayoutObject->AddJSData(
+            Key   => 'ITSMChangeManagementSearch.Attribute.ChangeNumber',
+            Value => 1,
         );
     }
 
@@ -1742,6 +1720,7 @@ sub _MaskForm {
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentITSMChangeSearch',
         Data         => \%Param,
+        AJAX         => 1,
     );
 
     return $Output;

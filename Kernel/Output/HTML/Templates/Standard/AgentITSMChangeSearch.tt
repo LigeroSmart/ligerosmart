@@ -214,22 +214,4 @@
     <button id="SearchFormSubmit" class="Primary CallForAction" value="Run search"><span><i class="fa fa-search"></i> [% Translate("Run search") | html %]</span></button>
 </div>
 
-<script type="text/javascript">//<![CDATA[
-    window.setTimeout(function (){
-[% RenderBlockStart("SearchAJAXShow") %]
-        ITSM.Agent.ChangeManagement.Search.SearchAttributeAdd("[% Data.Attribute | html %]");
-[% RenderBlockEnd("SearchAJAXShow") %]
-        ITSM.Agent.ChangeManagement.Search.AdditionalAttributeSelectionRebuild();
-    }, 0);
-//]]></script>
-
 [% RenderBlockEnd("SearchAJAX") %]
-[% RenderBlockStart("Search") %]
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    ITSM.Agent.ChangeManagement.Search.OpenSearchDialog( '[% Env("Action") %]' );
-//]]></script>
-[% END %]
-
-[% RenderBlockEnd("Search") %]
