@@ -30,7 +30,7 @@ Kernel::Output::HTML::LinkObject::ITSMWorkOrder - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions of link object (workorder)
+All layout functions of link object (C<workorder>)
 
 =over 4
 
@@ -580,7 +580,7 @@ sub ContentStringCreate {
 
 =item SelectableObjectList()
 
-return an array hash with selectable objects
+return an array hash with C<selectable> objects
 
 Return
 
