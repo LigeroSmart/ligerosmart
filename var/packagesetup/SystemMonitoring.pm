@@ -52,25 +52,10 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # rebuild ZZZ* files
-    $Kernel::OM->Get('Kernel::System::SysConfig')->WriteDefault();
-
-    # define the ZZZ files
-    my @ZZZFiles = (
-        'ZZZAAuto.pm',
-        'ZZZAuto.pm',
-    );
-
-    # reload the ZZZ files (mod_perl workaround)
-    for my $ZZZFile (@ZZZFiles) {
-
-        PREFIX:
-        for my $Prefix (@INC) {
-            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
-            next PREFIX if !-f $File;
-
-            do $File;
-            last PREFIX;
+    # Force a reload of ZZZAuto.pm and ZZZAAuto.pm to get the fresh configuration values.
+    for my $Module ( sort keys %INC ) {
+        if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
+            delete $INC{$Module};
         }
     }
 
@@ -148,10 +133,16 @@ sub CodeUpgradePre {
     # update/rename config option
     if ( $Config && $Config->{'0001-SystemMonitoring'} ) {
 
-        $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-            Key   => 'PostMaster::PreFilterModule###00-SystemMonitoring',
-            Value => $Config->{'0001-SystemMonitoring'},
-            Valid => 1,
+        my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingsSet(
+            UserID   => 1,
+            Comments => 'Deployment from CodeUpgradePre in var/packagesetup/SystemMonitoring.pm',
+            Settings => [
+                {
+                    Name           => 'PostMaster::PreFilterModule###00-SystemMonitoring',
+                    EffectiveValue => $Config->{'0001-SystemMonitoring'},
+                    IsValid        => 1,
+                },
+            ],
         );
     }
 
@@ -326,6 +317,25 @@ sub _GetDynamicFieldsDefinition {
     # get dynamic field object
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
 
+    # start a new incoming communication
+    my $CommunicationLogObject = $Kernel::OM->Create(
+        'Kernel::System::CommunicationLog',
+        ObjectParams => {
+            Transport   => 'Email',
+            Direction   => 'Incoming',
+            AccountType => 'STDIN',
+        },
+    );
+
+    $CommunicationLogObject->ObjectLogStart( ObjectLogType => 'Connection' );
+
+    $CommunicationLogObject->ObjectLog(
+        ObjectLogType => 'Connection',
+        Priority      => 'Debug',
+        Key           => 'var::packagesetup::SystemMonitoring',
+        Value         => 'Read email in packagesetup.',
+    );
+
     # run all PreFilterModules (modify email params)
     for my $Key ('PostMaster::PreFilterModule')
     {
@@ -344,7 +354,12 @@ sub _GetDynamicFieldsDefinition {
 
                 my @NewFields;
 
-                my $FilterObject = $Kernel::OM->Get("$Jobs{$Job}->{Module}");
+                my $FilterObject = $Kernel::OM->Create(
+                    $Jobs{$Job}->{Module},
+                    ObjectParams => {
+                        CommunicationLogObject => $CommunicationLogObject,
+                    },
+                );
 
                 if ( !$FilterObject ) {
                     $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -371,6 +386,15 @@ sub _GetDynamicFieldsDefinition {
             }
         }
     }
+
+    $CommunicationLogObject->ObjectLogStop(
+        ObjectLogType => 'Connection',
+        Status        => 'Successful',
+    );
+
+    $CommunicationLogObject->CommunicationStop(
+        Status => 'Successful',
+    );
 
     return @AllNewFields;
 }
