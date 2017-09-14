@@ -32,14 +32,6 @@
                     [% Data.YearOption %]
                 </form>
                 <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop" accesskey="g"><span><i class="fa fa-arrow-circle-o-right"></i>[% Translate("Go to date") | html %]</span></a>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('#NavigationSelect').bind('click', function(){
-    $('#DateSelectionForm').submit();
-});
-//]]></script>
-[% END %]
-
             </div>
         </div>
     </div>
@@ -176,24 +168,3 @@ $('#NavigationSelect').bind('click', function(){
     </div>
 </div>
 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('.MasterAction').bind('click', function (Event) {
-    var $MasterActionLink = $(this).parents().find('.MasterActionLink' + $(this).attr('data-project-id'));
-    // only act if the link was not clicked directly
-    if (Event.target !== $MasterActionLink.get(0)) {
-        window.location = $MasterActionLink.attr('href');
-        return false;
-    }
-});
-$('.MasterActionUser').bind('click', function (Event) {
-    var $MasterActionLink = $(this).find('.MasterActionLink');
-    // only act if the link was not clicked directly
-    if (Event.target !== $MasterActionLink.get(0)) {
-        window.location = $MasterActionLink.attr('href');
-        return false;
-    }
-});
-
-//]]></script>
-[% END %]
