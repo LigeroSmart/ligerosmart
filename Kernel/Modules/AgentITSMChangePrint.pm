@@ -403,29 +403,29 @@ sub Run {
 
     # generate PDF output
     # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+    #my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
     # generate a filename
-    my ( $s, $m, $h, $D, $M, $Y ) = $TimeObject->SystemTime2Date(
-        SystemTime => $TimeObject->SystemTime(),
-    );
-    my $Filename = $PrintChange
-        ?
-        sprintf(
-        'change_%s_%02d-%02d-%02d_%02d-%02d.pdf',
-        $Change->{ChangeNumber}, $Y, $M, $D, $h, $m
-        )
-        :
-        sprintf(
-        'workorder_%s-%s_%02d-%02d-%02d_%02d-%02d.pdf',
-        $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber}, $Y, $M, $D, $h, $m
+    my $CurSysDTObject = $Kernel::OM->Create('Kernel::System::DateTime');
+    my @Filename;
+
+    if ($PrintChange) {
+        push @Filename, 'change', $Change->{ChangeNumber};
+    }
+    else {
+        push @Filename, 'workorder', $Change->{ChangeNumber} . '-' . $WorkOrder->{WorkOrderNumber};
+    }
+
+    push @Filename,
+        $CurSysDTObject->Format(
+        Format => '%F_%H-%M',
         );
 
     # return the PDF document
     my $PDFString = $Kernel::OM->Get('Kernel::System::PDF')->DocumentOutput();
 
     return $LayoutObject->Attachment(
-        Filename    => $Filename,
+        Filename    => join( '_', @Filename ) . '.pdf',
         ContentType => 'application/pdf',
         Content     => $PDFString,
         Type        => 'inline',
@@ -600,7 +600,7 @@ sub _PrepareAndAddInfoRow {
         }
     }
     elsif ( $RowSpec->{ValueIsDynamicField} ) {
-        $Value = $RowSpec->{Value},
+        $Value = $RowSpec->{Value};
     }
     else {
 
@@ -610,7 +610,7 @@ sub _PrepareAndAddInfoRow {
 
     # translate the value
     if ( $Value && $RowSpec->{ValueIsTranslatable} ) {
-        $Value = $LayoutObject->{LanguageObject}->Translate($Value),
+        $Value = $LayoutObject->{LanguageObject}->Translate($Value);
     }
 
     # add separator between key and value
