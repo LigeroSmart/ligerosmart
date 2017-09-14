@@ -121,6 +121,19 @@
             </Item>
         </Value>
     </Setting>
+    <Setting Name="Loader::Module::AgentTimeAccountingOverview###001-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>TimeAccounting.Agent.Overview.js</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="Loader::Module::AgentTimeAccountingOverview###002-TimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Loader module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
