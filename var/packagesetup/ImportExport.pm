@@ -185,22 +185,22 @@ sub _MigrateConfigs {
     $Setting->{'AdminImportExport'}->{Module} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
 
     my %ImportExportSettings = $SysConfigObject->SettingGet(
-        Name => 'Frontend::NavigationModule###AdminImportExport',
+        Name    => 'Frontend::NavigationModule###AdminImportExport',
         Default => 1
     );
 
     my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-        UserID => 1,
-        Force => 1,
+        UserID    => 1,
+        Force     => 1,
         DefaultID => $ImportExportSettings{DefaultID},
     );
 
     # set new setting,
     $SysConfigObject->SettingUpdate(
-        Name => 'Frontend::NavigationModule###AdminImportExport',
-        EffectiveValue => $Setting->{'AdminImportExport'},
+        Name              => 'Frontend::NavigationModule###AdminImportExport',
+        EffectiveValue    => $Setting->{'AdminImportExport'},
         ExclusiveLockGUID => $ExclusiveLockGUID,
-        UserID => 1,
+        UserID            => 1,
     );
 
     $SysConfigObject->SettingUnlock(
