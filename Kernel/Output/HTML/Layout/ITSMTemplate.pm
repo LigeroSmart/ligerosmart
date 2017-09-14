@@ -16,11 +16,9 @@ use POSIX qw(ceil);
 
 our $ObjectManagerDisabled = 1;
 
-=over 4
+=head2 ITSMTemplateListShow()
 
-=item ITSMTemplateListShow()
-
-Returns a list of templates as sortable list with pagination.
+Returns a list of templates as C<sortable> list with pagination.
 
 This function is similar to L<Kernel::Output::HTML::Layout::ITSMChange::ITMChangeListShow()>
 in F<Kernel/Output/HTML/LayoutITSMChange.pm>.
@@ -283,13 +281,5 @@ sub ITSMTemplateListShow {
     # return content if available
     return $OutputRaw;
 }
-
-=begin Internal:
-
-=end Internal:
-
-=back
-
-=cut
 
 1;
