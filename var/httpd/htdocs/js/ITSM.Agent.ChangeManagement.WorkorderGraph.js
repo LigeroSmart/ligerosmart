@@ -6,30 +6,26 @@
 // did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 // --
 
-
-// TODO:
-//Remove this line and fix JSDoc
-// nofilter(TidyAll::Plugin::OTRS::JavaScript::ESLint)
-
-
 "use strict";
 
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
 ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
-// ITSM.Agent.ChangeManagement.WorkorderGraph = ITSM.Agent.ChangeManagement.WorkorderGraph || {};
 
 /**
- * @namespace
- * @exports TargetNS as ITSM.Agent.ChangeManagement.WorkorderGraph
+ * @namespace ITSM.Agent.ChangeManagement.WorkorderGraph
+ * @memberof ITSM.Agent.ChangeManagement
+ * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the workorder graph.
  */
 ITSM.Agent.ChangeManagement.WorkorderGraph = (function (TargetNS) {
 
     /**
+     * @name Init
+     * @namespace ITSM.Agent.ChangeManagement.WorkorderGraph
      * @function
-     * @return nothing
+     * @description
      *      This function initializes the workorder graph
      */
     TargetNS.Init = function () {
@@ -63,7 +59,7 @@ ITSM.Agent.ChangeManagement.WorkorderGraph = (function (TargetNS) {
                 .css('top', DetailPosition.Top)
                 .show();
         })
-        .unbind('mouseleave').bind('mouseleave', function (Event) {
+        .unbind('mouseleave').bind('mouseleave', function () {
             $(this).next('.WorkorderDetails').hide();
         })
         .unbind('mousemove').bind('mousemove', function (Event) {
