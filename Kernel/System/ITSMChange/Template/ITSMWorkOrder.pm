@@ -472,7 +472,7 @@ sub _MoveTime {
         ObjectParams => {
             Epoch => $CurrentSystemTime + $Param{Difference},
             }
-    )->ToEpoch();
+    )->ToString();
 
     return $NewTime;
 }
