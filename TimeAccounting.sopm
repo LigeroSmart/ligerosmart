@@ -56,6 +56,9 @@
         <File Permission="660" Location="var/httpd/htdocs/js/TimeAccounting.Agent.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Overview.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Reporting.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/TimeAccounting.Agent.View.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.html" />
         <File Permission="660" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css" />

@@ -339,6 +339,11 @@
                         <Item>TimeAccounting.Table.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>TimeAccounting.Agent.View.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>

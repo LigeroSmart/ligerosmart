@@ -44,14 +44,6 @@
                     [% Data.DateSelection %]
                 </form>
                 <a href="#" id="NavigationSelect" class="CallForAction Fullsize Center SpacingTop"><span><i class="fa fa-arrow-circle-o-right"></i>[% Translate("Go to date") | html %]</span></a>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-$('#NavigationSelect').bind('click', function(){
-    $('#DateSelectionForm').submit();
-});
-//]]></script>
-[% END %]
-
             </div>
         </div>
     </div>
