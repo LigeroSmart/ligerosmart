@@ -132,10 +132,9 @@ $Selenium->RunTest(
 
         # delete link relation
         $Selenium->find_element("//a[\@href='#ManageLinks']")->click();
-
-        #$Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
         $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
         $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
+
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;Subaction=Close' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
