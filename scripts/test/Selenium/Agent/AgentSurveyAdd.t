@@ -108,7 +108,8 @@ $Selenium->RunTest(
 # Delete keys that we don't want to compare. Note that CustomerUserConditionsJSON has sometimes different order and therefore
 # it's not evaluated. Also, NotificationBody contains OTRS link, which is different for each system and it's not so relevant for the test.
         for my $Key (
-            qw(CreateTime CreateBy ChangeTime ChangeBy SurveyNumber CustomerUserConditionsJSON NotificationBody))
+            qw(CreateTime CreateBy ChangeTime ChangeBy SurveyNumber CustomerUserConditionsJSON NotificationBody)
+            )
         {
 
             my $Value = delete $Survey{$Key};
