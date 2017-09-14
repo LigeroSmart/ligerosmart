@@ -403,7 +403,6 @@ sub Run {
 
     # generate PDF output
     # get time object
-    #my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 
     # generate a filename
     my $CurSysDTObject = $Kernel::OM->Create('Kernel::System::DateTime');
