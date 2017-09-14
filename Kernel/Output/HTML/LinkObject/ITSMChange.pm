@@ -28,15 +28,11 @@ our @ObjectDependencies = (
 
 Kernel::Output::HTML::LinkObject::ITSMChange - layout backend module
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All layout functions of link object (change)
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -76,7 +72,7 @@ sub new {
     return $Self;
 }
 
-=item TableCreateComplex()
+=head2 TableCreateComplex()
 
 return an array with the block data
 
@@ -423,7 +419,7 @@ sub TableCreateComplex {
 
 }
 
-=item TableCreateSimple()
+=head2 TableCreateSimple()
 
 return a hash with the link output data
 
@@ -520,7 +516,7 @@ sub TableCreateSimple {
     return %LinkOutputData;
 }
 
-=item ContentStringCreate()
+=head2 ContentStringCreate()
 
 return a output string
 
@@ -560,9 +556,9 @@ sub ContentStringCreate {
     return $String;
 }
 
-=item SelectableObjectList()
+=head2 SelectableObjectList()
 
-return an array hash with selectable objects
+return an array hash with C<selectable> objects
 
 Return
 
@@ -602,7 +598,7 @@ sub SelectableObjectList {
     return @ObjectSelectList;
 }
 
-=item SearchOptionList()
+=head2 SearchOptionList()
 
 return an array hash with search options
 
@@ -690,8 +686,6 @@ sub SearchOptionList {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

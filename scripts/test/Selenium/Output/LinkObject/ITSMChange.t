@@ -91,7 +91,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSelect").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length' );
 
         # select test created ticket to link with test created change
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
@@ -126,16 +126,16 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSelect").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length' );
 
         sleep(2);
 
         # delete link relation
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
+        $Selenium->find_element("//a[\@href='#ManageLinks']")->click();
+
+        #$Selenium->find_element("//a[contains(\@href, \'Subaction=LinkDelete' )]")->VerifiedClick();
         $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
-
-        $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
-
+        $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;Subaction=Close' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
