@@ -22,34 +22,26 @@ $Selenium->RunTest(
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # get work order empty agent default config
-        my %WorkOrderEmptyAgent = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
+        my %WorkOrderEmptyAgent = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
             Name    => 'ITSMWorkOrder::TakePermission###10-EmptyAgent',
             Default => 1,
         );
 
-        # set work order empty agent to valid
-        my %WorkOrderEmptyAgentUpdate = map { $_->{Key} => $_->{Content} }
-            grep { defined $_->{Key} } @{ $WorkOrderEmptyAgent{Setting}->[1]->{Hash}->[1]->{Item} };
-
         $Helper->ConfigSettingChange(
             Key   => 'ITSMWorkOrder::TakePermission###10-EmptyAgent',
-            Value => \%WorkOrderEmptyAgentUpdate,
+            Value => $WorkOrderEmptyAgent{EffectiveValue},
             Valid => 1,
         );
 
         # get work order list agent default sysconfig
-        my %WorkOrderListAgent = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemGet(
+        my %WorkOrderListAgent = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
             Name    => 'ITSMWorkOrder::TakePermission###20-ListAgent',
             Default => 1,
         );
 
-        # set work order list agent to valid
-        my %WorkOrderListAgentUpdate = map { $_->{Key} => $_->{Content} }
-            grep { defined $_->{Key} } @{ $WorkOrderListAgent{Setting}->[1]->{Hash}->[1]->{Item} };
-
         $Helper->ConfigSettingChange(
             Key   => 'ITSMWorkOrder::TakePermission###20-ListAgent',
-            Value => \%WorkOrderListAgentUpdate,
+            Value => $WorkOrderListAgent{EffectiveValue},
             Valid => 1,
         );
 
