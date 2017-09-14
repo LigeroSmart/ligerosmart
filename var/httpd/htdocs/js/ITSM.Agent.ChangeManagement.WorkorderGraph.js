@@ -52,23 +52,25 @@ ITSM.Agent.ChangeManagement.WorkorderGraph = (function (TargetNS) {
         }
 
         $('div.Workorder a')
-        .unbind('mouseenter').bind('mouseenter', function (Event) {
+        .off('mouseenter.ITSMChangeManagement.WOGraph').on('mouseenter.ITSMChangeManagement.WOGraph', function (Event) {
             var DetailPosition = GetDetailPosition(this, Event);
             $(this).next('.WorkorderDetails')
                 .css('left', DetailPosition.Left)
                 .css('top', DetailPosition.Top)
                 .show();
         })
-        .unbind('mouseleave').bind('mouseleave', function () {
+        .off('mouseleave.ITSMChangeManagement.WOGraph').on('mouseleave.ITSMChangeManagement.WOGraph', function () {
             $(this).next('.WorkorderDetails').hide();
         })
-        .unbind('mousemove').bind('mousemove', function (Event) {
+        .off('mousemove.ITSMChangeManagement.WOGraph').on('mousemove.ITSMChangeManagement.WOGraph', function (Event) {
             var DetailPosition = GetDetailPosition(this, Event);
             $(this).next('.WorkorderDetails')
                 .css('left', DetailPosition.Left)
                 .css('top', DetailPosition.Top);
         });
     };
+
+    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
 }(ITSM.Agent.ChangeManagement.WorkorderGraph || {}));

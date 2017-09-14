@@ -190,10 +190,4 @@
     </div>
 [% RenderBlockEnd("Scale") %]
 </div>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-/*global ITSM: true */
-    ITSM.Agent.ChangeManagement.WorkorderGraph.Init();
-//]]></script>
-[% END %]
 [% RenderBlockEnd("WorkOrderGraph") %]
