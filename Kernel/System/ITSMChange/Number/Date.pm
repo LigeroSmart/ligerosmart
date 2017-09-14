@@ -57,8 +57,10 @@ sub ChangeNumberCreate {
         }
 
         # check if we need to reset the counter
-        if (  !$LastModify
-            || $LastModify ne "$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day}" )
+        if (
+            !$LastModify
+            || $LastModify ne "$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day}"
+            )
         {
             $Count = 0;
         }
