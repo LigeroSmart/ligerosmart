@@ -48,6 +48,16 @@ ITSM.Agent.ChangeManagement.Overview = (function (TargetNS) {
             return false;
         });
 
+        // On row click go the change zoom.
+        $('.MasterAction').bind('click', function (Event) {
+            var $MasterActionLink = $(this).find('.MasterActionLink');
+            // only act if the link was not clicked directly
+            if (Event.target !== $MasterActionLink.get(0)) {
+                window.location = $MasterActionLink.attr('href');
+                return false;
+            }
+        });
+
         // In search results bind the button 'Change search options' to open the search dialog.
         if (ITSMChangeMgmtChangeSearch) {
             $('#ChangeSearch').on('click.ChangeSearch', function () {
