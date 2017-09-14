@@ -204,6 +204,8 @@
                 <Item Key="JavaScript">
                     <Array>
                         <Item>TimeAccounting.Agent.js</Item>
+                        <Item>TimeAccounting.Agent.ConfirmationDialog.js</Item>
+                        <Item>TimeAccounting.Agent.EditTimeRecords.js</Item>
                     </Array>
                 </Item>
             </Hash>
