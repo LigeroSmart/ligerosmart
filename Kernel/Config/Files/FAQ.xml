@@ -36,7 +36,7 @@
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String>FAQ</String>
         </Setting>
@@ -44,7 +44,7 @@
     <ConfigItem Name="FAQ::Default::RootCategoryComment" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String>default comment</String>
         </Setting>
@@ -52,7 +52,7 @@
     <ConfigItem Name="FAQ::Item::Voting::Rates" Required="1" Valid="1">
         <Description Translatable="1">Rates for voting. Key must be in percent.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item::Voting</SubGroup>
+        <SubGroup>Core::FAQ::Item::Voting</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="100">5</Item>
@@ -66,7 +66,7 @@
     <ConfigItem Name="FAQ::Item::Voting::Show" Required="1" Valid="1">
         <Description Translatable="1">Show voting in defined interfaces.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item::Voting</SubGroup>
+        <SubGroup>Core::FAQ::Item::Voting</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="internal" Translatable="1">internal (agent)</Item>
@@ -77,7 +77,7 @@
     <ConfigItem Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">
         <Description Translatable="1">Show FAQ path yes/no.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -88,7 +88,7 @@
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultDecimalPlaces" Required="1" Valid="1">
         <Description Translatable="1">Decimal places of the voting result.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <String>2</String>
         </Setting>
@@ -96,7 +96,7 @@
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
         <Description Translatable="1">CSS color for the voting result.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="30">red</Item>
@@ -108,7 +108,7 @@
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
         <Description Translatable="1">Interfaces where the quick search should be shown.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="public" Translatable="1">public (public)</Item>
@@ -118,7 +118,7 @@
     <ConfigItem Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
         <Description Translatable="1">Show last change items in defined interfaces.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="internal" Translatable="1">internal (agent)</Item>
@@ -130,7 +130,7 @@
     <ConfigItem Name="FAQ::Explorer::LastChange::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -141,7 +141,7 @@
     <ConfigItem Name="FAQ::Explorer::LastChange::Limit" Required="1" Valid="1">
         <Description Translatable="1">Number of shown items in last changes.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <String>3</String>
         </Setting>
@@ -149,7 +149,7 @@
     <ConfigItem Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
         <Description Translatable="1">Show last created items in defined interfaces.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="internal" Translatable="1">internal (agent)</Item>
@@ -161,7 +161,7 @@
     <ConfigItem Name="FAQ::Explorer::LastCreate::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -172,7 +172,7 @@
     <ConfigItem Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
         <Description Translatable="1">Number of shown items in last created.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <String>3</String>
         </Setting>
@@ -180,7 +180,7 @@
     <ConfigItem Name="FAQ::Explorer::Top10::Show" Required="1" Valid="1">
         <Description Translatable="1">Show top 10 items in defined interfaces.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="internal" Translatable="1">internal (agent)</Item>
@@ -192,7 +192,7 @@
     <ConfigItem Name="FAQ::Explorer::Top10::Limit" Required="1" Valid="1">
         <Description Translatable="1">Number of shown items in the top 10 feature.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <String>10</String>
         </Setting>
@@ -200,7 +200,7 @@
     <ConfigItem Name="FAQ::Explorer::Top10::ShowSubCategoryItems" Required="1" Valid="1">
         <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Explorer</SubGroup>
+        <SubGroup>Core::FAQ::Explorer</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -211,7 +211,7 @@
     <ConfigItem Name="FAQ::FAQHook" Required="1" Valid="1">
         <Description Translatable="1">The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String>FAQ#</String>
         </Setting>
@@ -219,7 +219,7 @@
     <ConfigItem Name="FAQ::TitleSize" Required="1" Valid="1">
         <Description Translatable="1">Default maximum size of the titles in a FAQ article to be shown.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -227,7 +227,7 @@
     <ConfigItem Name="FAQ::Default::State" Required="1" Valid="1">
         <Description Translatable="1">Default state for FAQ entry.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String>internal (agent)</String>
         </Setting>
@@ -235,7 +235,7 @@
     <ConfigItem Name="FAQ::ApprovalRequired" Required="1" Valid="1">
         <Description Translatable="1">New FAQ articles need approval before they get published.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -246,7 +246,7 @@
     <ConfigItem Name="FAQ::ApprovalGroup" Required="1" Valid="1">
         <Description Translatable="1">Group for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <String>faq_approval</String>
         </Setting>
@@ -254,7 +254,7 @@
     <ConfigItem Name="FAQ::ApprovalQueue" Required="1" Valid="1">
         <Description Translatable="1">Queue for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <String>FAQ_Approval</String>
         </Setting>
@@ -263,7 +263,7 @@
     <ConfigItem Name="FAQ::ApprovalTicketSubject" Required="1" Valid="1">
         <Description Translatable="1">Ticket subject for approval of FAQ article.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <String>FAQ approval required for FAQ# &lt;OTRS_FAQ_NUMBER&gt;</String>
         </Setting>
@@ -271,7 +271,7 @@
     <ConfigItem Name="FAQ::ApprovalTicketBody" Required="1" Valid="1">
         <Description Translatable="1">Ticket body for approval of FAQ article.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <TextArea>Hi,
 
@@ -293,7 +293,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::ApprovalTicketPriority" Required="1" Valid="1">
         <Description Translatable="1">Default priority of tickets for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <String>3 normal</String>
         </Setting>
@@ -301,7 +301,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::ApprovalTicketDefaultState" Required="1" Valid="1">
         <Description Translatable="1">Default state of tickets for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <String>new</String>
         </Setting>
@@ -309,7 +309,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::ApprovalTicketType" Required="1" Valid="1">
         <Description Translatable="1">Default type of tickets for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Approval</SubGroup>
+        <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
             <String>Unclassified</String>
         </Setting>
@@ -317,7 +317,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
@@ -329,7 +329,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::Field2" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
@@ -341,7 +341,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::Field3" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Show">public</Item>
@@ -353,7 +353,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::Field4" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Show"></Item>
@@ -365,7 +365,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::Field5" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Show"></Item>
@@ -377,7 +377,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::Field6" Required="1" Valid="1">
         <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Show">internal</Item>
@@ -515,7 +515,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -523,7 +523,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SearchPageShown" Required="1" Valid="1">
         <Description Translatable="1">Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">40</String>
         </Setting>
@@ -531,7 +531,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
                 <Item Key="Title" Translatable="1">Title</Item>
@@ -545,7 +545,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down" Translatable="1">Down</Item>
@@ -556,7 +556,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -600,7 +600,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -608,7 +608,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SearchPageShown" Required="1" Valid="1">
         <Description Translatable="1">Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">40</String>
         </Setting>
@@ -616,7 +616,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
                 <Item Key="Title" Translatable="1">Title</Item>
@@ -630,7 +630,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down" Translatable="1">Down</Item>
@@ -641,7 +641,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -662,7 +662,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Item::HTML" Required="1" Valid="1">
         <Description Translatable="1">Show FAQ Article with HTML.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
+        <SubGroup>Core::FAQ::Item</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -695,7 +695,7 @@ Your OTRS Notification Master
     <ConfigItem Name="PublicFrontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
         <Description Translatable="1">Module to generate HTML OpenSearch profile for short FAQ search in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::ModuleMetaHead</SubGroup>
+        <SubGroup>Frontend::Public</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::HeaderMeta::PublicFAQSearch</Item>
@@ -919,7 +919,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the FAQ search. This option has no effect on the position of the column.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Title">1</Item>
@@ -934,7 +934,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
                 <Item Key="Title" Translatable="1">Title</Item>
@@ -948,7 +948,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down" Translatable="1">Down</Item>
@@ -959,7 +959,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -967,7 +967,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQExplorer</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Title">1</Item>
@@ -982,7 +982,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
                 <Item Key="Title" Translatable="1">Title</Item>
@@ -996,7 +996,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down" Translatable="1">Down</Item>
@@ -1007,7 +1007,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -1015,7 +1015,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -1023,7 +1023,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems" Required="1" Valid="1">
         <Description Translatable="1">Show invalid items in the FAQ Explorer result of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewExplorer</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQExplorer</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0">No</Item>
@@ -1100,7 +1100,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to go back in the FAQ zoom view of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
@@ -1115,7 +1115,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::MenuModule###010-Edit" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
@@ -1130,7 +1130,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::MenuModule###020-History" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
@@ -1145,7 +1145,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::MenuModule###030-Print" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
@@ -1161,7 +1161,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::MenuModule###040-Link" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenu::Generic</Item>
@@ -1176,7 +1176,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::MenuModule###050-Delete" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom::MenuModule</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenu::Delete</Item>
@@ -1234,7 +1234,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -1242,7 +1242,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###SearchPageShown" Required="1" Valid="1">
         <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">40</String>
         </Setting>
@@ -1250,7 +1250,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
                 <Item Key="Title" Translatable="1">Title</Item>
@@ -1264,7 +1264,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down" Translatable="1">Down</Item>
@@ -1326,7 +1326,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -1334,7 +1334,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SearchPageShown" Required="1" Valid="1">
         <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewFAQSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">40</String>
         </Setting>
@@ -1342,7 +1342,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="FAQID">
                 <Item Key="Title" Translatable="1">Title</Item>
@@ -1356,7 +1356,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down" Translatable="1">Down</Item>
@@ -1436,7 +1436,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewJournal</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQJournal</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Title">1</Item>
@@ -1450,7 +1450,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###JournalLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewJournal</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQJournal</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
@@ -1458,7 +1458,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewJournal</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQJournal</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -1533,7 +1533,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###InsertMethod" Required="1" Valid="1">
         <Description Translatable="1">Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="Full">
                 <Item Key="Full" Translatable="1">Full FAQ</Item>
@@ -1544,7 +1544,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###IncludeInternal" Required="1" Valid="1">
         <Description Translatable="1">Include internal fields on a FAQ based Ticket.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1555,7 +1555,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###ShowFieldNames" Required="1" Valid="1">
         <Description Translatable="1">Include the name of each field in a FAQ based Ticket.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1566,7 +1566,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextButton" Required="1" Valid="1">
         <Description Translatable="1">Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1577,7 +1577,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertLinkButton" Required="1" Valid="1">
         <Description Translatable="1">Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1588,7 +1588,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextAndLinkButton" Required="1" Valid="1">
         <Description Translatable="1">Show "Insert FAQ Text &amp; Link" / "Insert Full FAQ &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1599,7 +1599,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::TicketCompose###UpdateArticleSubject" Required="1" Valid="1">
         <Description Translatable="1">Define if the FAQ title should be concatenated to article subject.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::TicketCompose</SubGroup>
+        <SubGroup>Core::FAQ::TicketCompose</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1610,7 +1610,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::MultiLanguage" Required="1" Valid="1">
         <Description Translatable="1">Enable multiple languages on FAQ module.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1621,7 +1621,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Default::Language" Required="0" Valid="0">
         <Description Translatable="1">Default language for FAQ articles on single language mode.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String>en</String>
         </Setting>
@@ -1661,7 +1661,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Voting" Required="1" Valid="1">
         <Description Translatable="1">Enable voting mechanism on FAQ module.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -1672,7 +1672,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::CacheTTL" Required="1" Valid="1">
         <Description Translatable="1">Cache Time To Leave for FAQ items.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String Regex="">172800</String> <!-- default 172,800 (60 * 60 * 24 * 2) -->
         </Setting>
@@ -1761,7 +1761,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentHTMLFieldHeightDefault" Required="1" Valid="1">
         <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,4}$">100</String>
         </Setting>
@@ -1769,7 +1769,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentHTMLFieldHeightMax" Required="1" Valid="1">
         <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,5}$">2500</String>
         </Setting>
@@ -1777,7 +1777,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerHTMLFieldHeightDefault" Required="1" Valid="1">
         <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQZoom</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,4}$">100</String>
         </Setting>
@@ -1785,7 +1785,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerHTMLFieldHeightMax" Required="1" Valid="1">
         <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQZoom</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,5}$">2500</String>
         </Setting>
@@ -1793,7 +1793,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQAdd###RichTextWidth" Required="0" Valid="1">
         <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewAdd</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQAdd</SubGroup>
         <Setting>
             <String Regex="^\d+%?$">620</String>
         </Setting>
@@ -1801,7 +1801,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQAdd###RichTextHeight" Required="0" Valid="1">
         <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewAdd</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQAdd</SubGroup>
         <Setting>
             <String Regex="^\d+%?$">320</String>
         </Setting>
@@ -1809,7 +1809,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQEdit###RichTextWidth" Required="0" Valid="1">
         <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQEdit</SubGroup>
         <Setting>
             <String Regex="^\d+%?$">620</String>
         </Setting>
@@ -1817,7 +1817,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQEdit###RichTextHeight" Required="0" Valid="1">
         <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQEdit</SubGroup>
         <Setting>
             <String Regex="^\d+%?$">320</String>
         </Setting>
@@ -1863,7 +1863,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQAdd###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewAdd</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQAdd</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1872,7 +1872,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQEdit###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQEdit</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1881,7 +1881,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQZoom###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQZoom</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1890,7 +1890,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQZoom###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQZoom</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1899,7 +1899,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQZoom###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewZoom</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQZoom</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1908,7 +1908,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQPrint###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewPrint</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQPrint</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1917,7 +1917,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQPrint###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewPrint</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQPrint</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1926,7 +1926,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQPrint###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewPrint</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQPrint</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1935,7 +1935,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1944,7 +1944,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1953,7 +1953,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1971,7 +1971,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1980,7 +1980,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -1998,7 +1998,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SearchCSVDynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic Fields used to export the search result in CSV format.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -2007,7 +2007,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Fulltext" Required="0" Valid="1">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2015,7 +2015,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Number" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2023,7 +2023,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Title" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2031,7 +2031,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###Keyword" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2039,7 +2039,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###LanguageIDs" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2047,7 +2047,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###CategoryIDs" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2055,7 +2055,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ValidIDs" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2063,7 +2063,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###StateIDs" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2071,7 +2071,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###VoteSearchType" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2079,7 +2079,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###RateSearchType" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2087,7 +2087,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2095,7 +2095,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###CreatedUserIDs" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2103,7 +2103,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###LastChangedUserIDs" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2111,7 +2111,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimePoint" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2119,7 +2119,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimeSlot" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2127,7 +2127,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimePoint" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2135,7 +2135,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimeSlot" Required="0" Valid="0">
         <Description Translatable="1">Defines the default shown FAQ search attribute for FAQ search screen.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String></String>
         </Setting>
@@ -2143,7 +2143,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Agent::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -2151,7 +2151,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -2159,7 +2159,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###TitleSize" Required="0" Valid="0">
         <Description Translatable="1">Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Public::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Public::View::FAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">50</String>
         </Setting>
@@ -2213,7 +2213,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Customer::RelatedArticles::Enabled" Required="1" Valid="1">
         <Description Translatable="1">Enable the related article feature for the customer frontend.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -2250,7 +2250,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::KeywordArticeList::SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Limit for the search to build the keyword FAQ article list.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::FAQ</SubGroup>
         <Setting>
             <String Regex="">5000</String>
         </Setting>
@@ -2258,7 +2258,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled" Required="0" Valid="0">
         <Description Translatable="1">List of queue names for which the related article feature is enabled.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewRelatedArticles</SubGroup>
+        <SubGroup>Frontend::Customer::View::TicketMessage</SubGroup>
         <Setting>
             <Array>
                 <Item>Raw</Item>
@@ -2268,7 +2268,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages" Required="0" Valid="1">
         <Description Translatable="1">The default languages for the related FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewRelatedArticles</SubGroup>
+        <SubGroup>Frontend::Customer::View::TicketMessage</SubGroup>
         <Setting>
             <Array>
                 <Item>en</Item>
@@ -2278,7 +2278,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit" Required="1" Valid="1">
         <Description Translatable="1">Output limit for the related FAQ articles.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewRelatedArticles</SubGroup>
+        <SubGroup>Frontend::Customer::View::TicketMessage</SubGroup>
         <Setting>
             <String Regex="">10</String>
         </Setting>
@@ -2286,7 +2286,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible" Required="0" Valid="1">
         <Description Translatable="1">Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output).</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewRelatedArticles</SubGroup>
+        <SubGroup>Frontend::Customer::View::TicketMessage</SubGroup>
         <Setting>
             <String Regex="">4</String>
         </Setting>
