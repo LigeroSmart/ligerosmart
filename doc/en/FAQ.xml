@@ -368,933 +368,1088 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
         <section>
             <title>CustomerFrontend::HeaderMetaModule###3-FAQSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleMetaHead.</para>
+            <para>Navigation: Frontend::Customer.</para>
             <para>Module to generate HTML OpenSearch profile for short FAQ search in the customer interface.</para>
         </section>
         <section>
             <title>CustomerFrontend::Module###CustomerFAQExplorer.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Customer::ModuleRegistration.</para>
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
             <title>CustomerFrontend::Module###CustomerFAQPrint.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Customer::ModuleRegistration.</para>
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
             <title>CustomerFrontend::Module###CustomerFAQRelatedArticles.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Customer::ModuleRegistration.</para>
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
             <title>CustomerFrontend::Module###CustomerFAQSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Customer::ModuleRegistration.</para>
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
             <title>CustomerFrontend::Module###CustomerFAQZoom.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Customer::ModuleRegistration.</para>
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
+            <title>CustomerFrontend::Navigation###CustomerFAQExplorer###1.</title>
+            <para>Navigation: Frontend::Customer::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>CustomerFrontend::Navigation###CustomerFAQExplorer###2.</title>
+            <para>Navigation: Frontend::Customer::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>CustomerFrontend::Navigation###CustomerFAQSearch###1.</title>
+            <para>Navigation: Frontend::Customer::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
             <title>DashboardBackend###0398-FAQ-LastChange.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::Dashboard.</para>
+            <para>Navigation: Frontend::Agent::View::Dashboard.</para>
             <para>Defines the parameters for the dashboard backend. &quot;Limit&quot; defines the number of entries displayed by default. &quot;Group&quot; is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; indicates if the plugin is enabled by default or if the user needs to enable it manually.</para>
         </section>
         <section>
             <title>DashboardBackend###0399-FAQ-LastCreate.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::Dashboard.</para>
+            <para>Navigation: Frontend::Agent::View::Dashboard.</para>
             <para>Defines the parameters for the dashboard backend. &quot;Limit&quot; defines the number of entries displayed by default. &quot;Group&quot; is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). &quot;Default&quot; indicates if the plugin is enabled by default or if the user needs to enable it manually.</para>
         </section>
         <section>
             <title>DynamicFields::ObjectType###FAQ.</title>
-            <para>Group: FAQ, Subgroup: DynamicFields::ObjectType::Registration.</para>
+            <para>Navigation: Core::DynamicFields::ObjectTypeRegistration.</para>
             <para>DynamicField object registration.</para>
         </section>
         <section>
             <title>FAQ::Agent::StateTypes.</title>
-            <para>Group: FAQ, Subgroup: Interface.</para>
+            <para>Navigation: Frontend::Agent.</para>
             <para>List of state types which can be used in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::ApprovalGroup.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Group for the approval of FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::ApprovalQueue.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Queue for the approval of FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::ApprovalRequired.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>New FAQ articles need approval before they get published.</para>
         </section>
         <section>
             <title>FAQ::ApprovalTicketBody.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Ticket body for approval of FAQ article.</para>
         </section>
         <section>
             <title>FAQ::ApprovalTicketDefaultState.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Default state of tickets for the approval of FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::ApprovalTicketPriority.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Default priority of tickets for the approval of FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::ApprovalTicketSubject.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Ticket subject for approval of FAQ article.</para>
         </section>
         <section>
             <title>FAQ::ApprovalTicketType.</title>
-            <para>Group: FAQ, Subgroup: Core::Approval.</para>
+            <para>Navigation: Core::FAQ::Approval.</para>
             <para>Default type of tickets for the approval of FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::CacheTTL.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Cache Time To Leave for FAQ items.</para>
         </section>
         <section>
             <title>FAQ::Customer::RelatedArticles::Enabled.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Enable the related article feature for the customer frontend.</para>
         </section>
         <section>
             <title>FAQ::Customer::StateTypes.</title>
-            <para>Group: FAQ, Subgroup: Interface.</para>
+            <para>Navigation: Frontend::Customer.</para>
             <para>List of state types which can be used in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Default::Language.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Default language for FAQ articles on single language mode.</para>
         </section>
         <section>
             <title>FAQ::Default::RootCategoryComment.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Default category name.</para>
         </section>
         <section>
             <title>FAQ::Default::RootCategoryName.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Default category name.</para>
         </section>
         <section>
             <title>FAQ::Default::State.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Default state for FAQ entry.</para>
         </section>
         <section>
             <title>FAQ::Explorer::ItemList::VotingResultColors.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>CSS color for the voting result.</para>
         </section>
         <section>
             <title>FAQ::Explorer::ItemList::VotingResultDecimalPlaces.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Decimal places of the voting result.</para>
         </section>
         <section>
             <title>FAQ::Explorer::LastChange::Limit.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Number of shown items in last changes.</para>
         </section>
         <section>
             <title>FAQ::Explorer::LastChange::Show.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show last change items in defined interfaces.</para>
         </section>
         <section>
             <title>FAQ::Explorer::LastChange::ShowSubCategoryItems.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show items of subcategories.</para>
         </section>
         <section>
             <title>FAQ::Explorer::LastCreate::Limit.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Number of shown items in last created.</para>
         </section>
         <section>
             <title>FAQ::Explorer::LastCreate::Show.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show last created items in defined interfaces.</para>
         </section>
         <section>
             <title>FAQ::Explorer::LastCreate::ShowSubCategoryItems.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show items of subcategories.</para>
         </section>
         <section>
-            <title>FAQ::Explorer::Path::Separator.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
-            <para>FAQ path separator.</para>
-        </section>
-        <section>
             <title>FAQ::Explorer::Path::Show.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show FAQ path yes/no.</para>
         </section>
         <section>
             <title>FAQ::Explorer::QuickSearch::Show.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Interfaces where the quick search should be shown.</para>
         </section>
         <section>
             <title>FAQ::Explorer::Top10::Limit.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Number of shown items in the top 10 feature.</para>
         </section>
         <section>
             <title>FAQ::Explorer::Top10::Show.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show top 10 items in defined interfaces.</para>
         </section>
         <section>
             <title>FAQ::Explorer::Top10::ShowSubCategoryItems.</title>
-            <para>Group: FAQ, Subgroup: Core::Explorer.</para>
+            <para>Navigation: Core::FAQ::Explorer.</para>
             <para>Show items of subcategories.</para>
         </section>
         <section>
             <title>FAQ::FAQHook.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQAdd###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewAdd.</para>
-            <para>Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</para>
+            <para>Navigation: Frontend::Agent::View::FAQAdd.</para>
+            <para>Dynamic fields shown in the FAQ add screen of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQAdd###RichTextHeight.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewAdd.</para>
+            <para>Navigation: Frontend::Agent::View::FAQAdd.</para>
             <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQAdd###RichTextWidth.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewAdd.</para>
+            <para>Navigation: Frontend::Agent::View::FAQAdd.</para>
             <para>Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQEdit###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewEdit.</para>
-            <para>Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</para>
+            <para>Navigation: Frontend::Agent::View::FAQEdit.</para>
+            <para>Dynamic fields shown in the FAQ edit screen of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQEdit###RichTextHeight.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewEdit.</para>
+            <para>Navigation: Frontend::Agent::View::FAQEdit.</para>
             <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQEdit###RichTextWidth.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewEdit.</para>
+            <para>Navigation: Frontend::Agent::View::FAQEdit.</para>
             <para>Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Agent::View::FAQExplorer.</para>
             <para>Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Agent::View::FAQExplorer.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###ShowColumns.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Agent::View::FAQExplorer.</para>
             <para>Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.</para>
         </section>
         <section>
+            <title>FAQ::Frontend::AgentFAQExplorer###ShowInvalidFAQItems.</title>
+            <para>Navigation: Frontend::Agent::View::FAQExplorer.</para>
+            <para>Show invalid items in the FAQ Explorer result of the agent interface.</para>
+        </section>
+        <section>
             <title>FAQ::Frontend::AgentFAQExplorer###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Agent::View::FAQExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQExplorer###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Agent::View::FAQExplorer.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQJournal###JournalLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
+            <para>Navigation: Frontend::Agent::View::FAQJournal.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQJournal###ShowColumns.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
+            <para>Navigation: Frontend::Agent::View::FAQJournal.</para>
             <para>Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQJournal###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewJournal.</para>
+            <para>Navigation: Frontend::Agent::View::FAQJournal.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQPrint###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewPrint.</para>
-            <para>Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
-            <para>The default languages for the related FAQ articles.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
-            <para>List of queue names for which the related article feature is enabled.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
-            <para>Output limit for the related FAQ articles.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewRelatedArticles.</para>
-            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output).</para>
+            <para>Navigation: Frontend::Agent::View::FAQPrint.</para>
+            <para>Dynamic fields shown in the FAQ print screen of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###CategoryIDs.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###CreatedUserIDs.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###Fulltext.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimePoint.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ItemChangeTimeSlot.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimePoint.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ItemCreateTimeSlot.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###Keyword.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###LanguageIDs.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###LastChangedUserIDs.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###Number.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###RateSearchType.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###StateIDs.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###Title.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ValidIDs.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###VoteSearchType.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
-            <para>Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
+            <para>Dynamic fields shown in the FAQ search screen of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###SearchCSVDynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Dynamic Fields used to export the search result in CSV format.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###ShowColumns.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the shown columns in the FAQ search. This option has no effect on the position of the column.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQZoom###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewZoom.</para>
-            <para>Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom.</para>
+            <para>Dynamic fields shown in the FAQ zoom screen of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentHTMLFieldHeightDefault.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewZoom.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom.</para>
             <para>Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentHTMLFieldHeightMax.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::ViewZoom.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom.</para>
             <para>Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Customer::View::FAQExplorer.</para>
             <para>Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Customer::View::FAQExplorer.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Customer::View::FAQExplorer.</para>
             <para>Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Customer::View::FAQExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQExplorer###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Customer::View::FAQExplorer.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQOverview###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQOverview.</para>
-            <para>Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</para>
+            <para>Navigation: Frontend::Customer::FAQOverview.</para>
+            <para>Dynamic fields shown in the FAQ overview screen of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQPrint###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewPrint.</para>
-            <para>Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+            <para>Navigation: Frontend::Customer::View::FAQPrint.</para>
+            <para>Dynamic fields shown in the FAQ print screen of the customer interface.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages.</title>
+            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>The default languages for the related FAQ articles.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled.</title>
+            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>List of queue names for which the related article feature is enabled.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit.</title>
+            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>Output limit for the related FAQ articles.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible.</title>
+            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output).</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
-            <para>Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
+            <para>Dynamic fields shown in the FAQ search screen of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
             <para>Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SearchCSVDynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
             <para>Dynamic Fields used to export the search result in CSV format.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
             <para>Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
             <para>Number of FAQ articles to be displayed on each page of a search result in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Customer::View::FAQSearch.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQZoom###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewZoom.</para>
-            <para>Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+            <para>Navigation: Frontend::Customer::View::FAQZoom.</para>
+            <para>Dynamic fields shown in the FAQ zoom screen of the customer interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerHTMLFieldHeightDefault.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewZoom.</para>
+            <para>Navigation: Frontend::Customer::View::FAQZoom.</para>
             <para>Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerHTMLFieldHeightMax.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer::FAQ::ViewZoom.</para>
+            <para>Navigation: Frontend::Customer::View::FAQZoom.</para>
             <para>Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</para>
         </section>
         <section>
             <title>FAQ::Frontend::JournalOverview###Small.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQJournalOverview.</para>
+            <para>Navigation: Frontend::Agent::FAQJournalOverview.</para>
             <para>Defines an overview module to show the small view of a FAQ journal.</para>
         </section>
         <section>
             <title>FAQ::Frontend::MenuModule###000-Back.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::MenuModule.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom::MenuModule.</para>
             <para>Shows a link in the menu to go back in the FAQ zoom view of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::MenuModule###010-Edit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::MenuModule.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom::MenuModule.</para>
             <para>Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::MenuModule###020-History.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::MenuModule.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom::MenuModule.</para>
             <para>Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::MenuModule###030-Print.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::MenuModule.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom::MenuModule.</para>
             <para>Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::MenuModule###040-Link.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::MenuModule.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom::MenuModule.</para>
             <para>Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::MenuModule###050-Delete.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQ::MenuModule.</para>
+            <para>Navigation: Frontend::Agent::View::FAQZoom::MenuModule.</para>
             <para>Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::Overview###Small.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQOverview.</para>
+            <para>Navigation: Frontend::Agent::FAQOverview.</para>
             <para>Defines an overview module to show the small view of a FAQ list.</para>
         </section>
         <section>
             <title>FAQ::Frontend::OverviewSmall###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::FAQOverview.</para>
-            <para>Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+            <para>Navigation: Frontend::Agent::FAQOverview.</para>
+            <para>Dynamic fields shown in the FAQ small format overview screen of the agent interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Public::View::FAQExplorer.</para>
             <para>Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Public::View::FAQExplorer.</para>
             <para>Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Public::View::FAQExplorer.</para>
             <para>Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Public::View::FAQExplorer.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQExplorer###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewExplorer.</para>
+            <para>Navigation: Frontend::Public::View::FAQExplorer.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQOverview###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQOverview.</para>
-            <para>Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</para>
+            <para>Navigation: Frontend::Public::FAQOverview.</para>
+            <para>Dynamic fields shown in the FAQ overview screen of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQPrint###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewPrint.</para>
-            <para>Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+            <para>Navigation: Frontend::Public::View::FAQPrint.</para>
+            <para>Dynamic fields shown in the FAQ print screen of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
-            <para>Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
+            <para>Dynamic fields shown in the FAQ search screen of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###Order::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
             <para>Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SearchCSVDynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
             <para>Dynamic Fields used to export the search result in CSV format.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SearchLimit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
             <para>Maximum number of FAQ articles to be displayed in the result of a search in the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SearchPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewFAQSearch.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
             <para>Number of FAQ articles to be displayed on each page of a search result in the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###SortBy::Default.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
             <para>Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQSearch###TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewSearch.</para>
+            <para>Navigation: Frontend::Public::View::FAQSearch.</para>
             <para>Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface.</para>
         </section>
         <section>
             <title>FAQ::Frontend::PublicFAQZoom###DynamicField.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::FAQ::ViewZoom.</para>
-            <para>Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.</para>
+            <para>Navigation: Frontend::Public::View::FAQZoom.</para>
+            <para>Dynamic fields shown in the FAQ zoom screen of the public interface.</para>
         </section>
         <section>
             <title>FAQ::Item::Field1.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Definition of FAQ item free text field.</para>
         </section>
         <section>
             <title>FAQ::Item::Field2.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Definition of FAQ item free text field.</para>
         </section>
         <section>
             <title>FAQ::Item::Field3.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Definition of FAQ item free text field.</para>
         </section>
         <section>
             <title>FAQ::Item::Field4.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Definition of FAQ item free text field.</para>
         </section>
         <section>
             <title>FAQ::Item::Field5.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Definition of FAQ item free text field.</para>
         </section>
         <section>
             <title>FAQ::Item::Field6.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Definition of FAQ item free text field.</para>
         </section>
         <section>
             <title>FAQ::Item::HTML.</title>
-            <para>Group: FAQ, Subgroup: Core::Item.</para>
+            <para>Navigation: Core::FAQ::Item.</para>
             <para>Show FAQ Article with HTML.</para>
         </section>
         <section>
             <title>FAQ::Item::Voting::Rates.</title>
-            <para>Group: FAQ, Subgroup: Core::Item::Voting.</para>
+            <para>Navigation: Core::FAQ::Item::Voting.</para>
             <para>Rates for voting. Key must be in percent.</para>
         </section>
         <section>
             <title>FAQ::Item::Voting::Show.</title>
-            <para>Group: FAQ, Subgroup: Core::Item::Voting.</para>
+            <para>Navigation: Core::FAQ::Item::Voting.</para>
             <para>Show voting in defined interfaces.</para>
         </section>
         <section>
+            <title>FAQ::KeywordArticeList::SearchLimit.</title>
+            <para>Navigation: Core::FAQ.</para>
+            <para>Limit for the search to build the keyword FAQ article list.</para>
+        </section>
+        <section>
             <title>FAQ::MultiLanguage.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Enable multiple languages on FAQ module.</para>
         </section>
         <section>
             <title>FAQ::Public::StateTypes.</title>
-            <para>Group: FAQ, Subgroup: Interface.</para>
+            <para>Navigation: Frontend::Public.</para>
             <para>List of state types which can be used in the public interface.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###IncludeInternal.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Include internal fields on a FAQ based Ticket.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###InsertMethod.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Defines the information to be inserted in a FAQ based Ticket. &quot;Full FAQ&quot; includes text, attachments and inline images.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###ShowFieldNames.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Include the name of each field in a FAQ based Ticket.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###ShowInsertLinkButton.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Show &quot;Insert FAQ Link&quot; Button in AgentFAQZoomSmall for public FAQ Articles.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###ShowInsertTextAndLinkButton.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Show &quot;Insert FAQ Text &amp; Link&quot; / &quot;Insert Full FAQ &amp; Link&quot; Button in AgentFAQZoomSmall for public FAQ Articles.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###ShowInsertTextButton.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Show &quot;Insert FAQ Text&quot; / &quot;Insert Full FAQ&quot; Button in AgentFAQZoomSmall.</para>
         </section>
         <section>
             <title>FAQ::TicketCompose###UpdateArticleSubject.</title>
-            <para>Group: FAQ, Subgroup: Core::TicketCompose.</para>
+            <para>Navigation: Core::FAQ::TicketCompose.</para>
             <para>Define if the FAQ title should be concatenated to article subject.</para>
         </section>
         <section>
             <title>FAQ::TitleSize.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Default maximum size of the titles in a FAQ article to be shown.</para>
         </section>
         <section>
             <title>FAQ::Voting.</title>
-            <para>Group: FAQ, Subgroup: Core.</para>
+            <para>Navigation: Core::FAQ.</para>
             <para>Enable voting mechanism on FAQ module.</para>
         </section>
         <section>
             <title>Frontend::HeaderMetaModule###3-FAQSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleMetaHead.</para>
+            <para>Navigation: Frontend::Agent.</para>
             <para>Module to generate html OpenSearch profile for short FAQ search.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQAdd.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQCategory.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQDelete.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQEdit.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQExplorer.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQHistory.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQJournal.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQLanguage.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQPrint.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQRichText.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQSearchSmall.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
             <title>Frontend::Module###AgentFAQZoom.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
+            <title>Frontend::Navigation###AgentFAQAdd###1.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Navigation###AgentFAQCategory###1.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Navigation###AgentFAQExplorer###1.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Navigation###AgentFAQExplorer###2.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Navigation###AgentFAQJournal###1.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Navigation###AgentFAQLanguage###1.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Navigation###AgentFAQSearch###1.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
             <title>Frontend::Output::FilterElementPost###FAQ.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent.</para>
+            <para>Navigation: Frontend::Base::OutputFilter.</para>
             <para>Defines where the 'Insert FAQ' link will be displayed.</para>
         </section>
         <section>
             <title>Frontend::Output::FilterElementPost###OutputFilterPostFAQRelatedArticles.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Customer.</para>
+            <para>Navigation: Frontend::Base::OutputFilter.</para>
             <para>Output filter to add Java-script to CustomerTicketMessage screen.</para>
         </section>
         <section>
             <title>Frontend::Output::OutputFilterTextAutoLink###FAQ.</title>
-            <para>Group: FAQ, Subgroup: Core::Web.</para>
+            <para>Navigation: Frontend::Base::OutputFilter.</para>
             <para>A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</para>
         </section>
         <section>
             <title>Frontend::Search###FAQ.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::SearchRouter.</para>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu::Search.</para>
             <para>FAQ search backend router of the agent interface.</para>
         </section>
         <section>
             <title>Frontend::ToolBarModule###90-FAQ::AgentFAQAdd.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::ToolBarModule.</para>
+            <para>Navigation: Frontend::Agent::ToolBar.</para>
             <para>Toolbar Item for a shortcut.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::LanguageList.</title>
-            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Navigation: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::PublicCategoryList.</title>
-            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Navigation: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::PublicFAQGet.</title>
-            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Navigation: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
             <title>GenericInterface::Operation::Module###FAQ::PublicFAQSearch.</title>
-            <para>Group: FAQ, Subgroup: GenericInterface::Operation::ModuleRegistration.</para>
+            <para>Navigation: GenericInterface::Operation::ModuleRegistration.</para>
             <para>GenericInterface module registration for the operation layer.</para>
         </section>
         <section>
+            <title>LinkObject::ComplexTable###FAQ.</title>
+            <para>Navigation: Frontend::Agent::LinkObject.</para>
+            <para>Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = &quot;complex&quot;). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.</para>
+        </section>
+        <section>
+            <title>LinkObject::ComplexTable::SettingsVisibility###FAQ.</title>
+            <para>Navigation: Frontend::Agent::LinkObject.</para>
+            <para>Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = &quot;complex&quot;). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.</para>
+        </section>
+        <section>
             <title>LinkObject::PossibleLink###8301.</title>
-            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
+            <para>Navigation: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8302.</title>
-            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
+            <para>Navigation: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8303.</title>
-            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
+            <para>Navigation: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</para>
         </section>
         <section>
             <title>LinkObject::PossibleLink###8304.</title>
-            <para>Group: FAQ, Subgroup: Core::LinkObject.</para>
+            <para>Navigation: Core::LinkObject.</para>
             <para>This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</para>
         </section>
         <section>
             <title>Loader::Agent::CommonCSS###200-FAQ.</title>
-            <para>Group: FAQ, Subgroup: Core::Web.</para>
+            <para>Navigation: Frontend::Base::Loader.</para>
             <para>List of CSS files to always be loaded for the agent interface.</para>
         </section>
         <section>
             <title>Loader::Agent::CommonJS###200-FAQ.</title>
-            <para>Group: FAQ, Subgroup: Core::Web.</para>
+            <para>Navigation: Frontend::Base::Loader.</para>
             <para>List of JS files to always be loaded for the agent interface.</para>
         </section>
         <section>
+            <title>Loader::Customer::CommonCSS###200-FAQ.</title>
+            <para>Navigation: Frontend::Base::Loader.</para>
+            <para>List of CSS files to always be loaded for the customer interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQAdd###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQCategory###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQEdit###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQExplorer###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQJournal###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQLanguage###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQSearch###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::AgentFAQZoom###002-FAQ.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::CustomerFAQExplorer###002-FAQ.</title>
+            <para>Navigation: Frontend::Customer::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::CustomerFAQSearch###002-FAQ.</title>
+            <para>Navigation: Frontend::Customer::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::CustomerFAQZoom###002-FAQ.</title>
+            <para>Navigation: Frontend::Customer::ModuleRegistration::Loader.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::PublicFAQExplorer###002-FAQ.</title>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::PublicFAQRSS###002-FAQ.</title>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::PublicFAQSearch###002-FAQ.</title>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
+            <title>Loader::Module::PublicFAQZoom###002-FAQ.</title>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+            <para>Loader module registration for the agent interface.</para>
+        </section>
+        <section>
             <title>PreferencesGroups###FAQJournalOverviewSmallPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::Preferences.</para>
+            <para>Navigation: Frontend::Agent::View::Preferences.</para>
             <para>Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.</para>
         </section>
         <section>
             <title>PreferencesGroups###FAQOverviewSmallPageShown.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Agent::Preferences.</para>
+            <para>Navigation: Frontend::Agent::View::Preferences.</para>
             <para>Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.</para>
         </section>
         <section>
             <title>PublicFrontend::CommonParam###Action.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public.</para>
+            <para>Navigation: Frontend::Public.</para>
             <para>Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</para>
         </section>
         <section>
             <title>PublicFrontend::HeaderMetaModule###3-FAQSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleMetaHead.</para>
+            <para>Navigation: Frontend::Public.</para>
             <para>Module to generate HTML OpenSearch profile for short FAQ search in the public interface.</para>
         </section>
         <section>
             <title>PublicFrontend::Module###PublicFAQ.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
             <para>Frontend module registration for the public interface.</para>
         </section>
         <section>
             <title>PublicFrontend::Module###PublicFAQExplorer.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
             <para>Frontend module registration for the public interface.</para>
         </section>
         <section>
             <title>PublicFrontend::Module###PublicFAQPrint.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
             <para>Frontend module registration for the public interface.</para>
         </section>
         <section>
             <title>PublicFrontend::Module###PublicFAQRSS.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
             <para>Frontend module registration for the public interface.</para>
         </section>
         <section>
             <title>PublicFrontend::Module###PublicFAQSearch.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
             <para>Frontend module registration for the public interface.</para>
         </section>
         <section>
             <title>PublicFrontend::Module###PublicFAQZoom.</title>
-            <para>Group: FAQ, Subgroup: Frontend::Public::ModuleRegistration.</para>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
             <para>Frontend module registration for the public interface.</para>
+        </section>
+        <section>
+            <title>PublicFrontend::Navigation###PublicFAQExplorer###1.</title>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+            <para>Main menu for the agent interface.</para>
+        </section>
+        <section>
+            <title>PublicFrontend::Navigation###PublicFAQSearch###1.</title>
+            <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+            <para>Main menu for the agent interface.</para>
         </section>
     </section>
     <section>
