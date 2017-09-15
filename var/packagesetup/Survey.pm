@@ -319,10 +319,16 @@ sub _MigrateDTLInSysConfig {
             $Setting->{$MenuModule}->{Link} = $TTContent;
         }
 
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Survey::Frontend::MenuModule',
-            Value => $Setting,
+        my $Success = $SysConfigObject->SettingsSet(
+            UserID   => 1,
+            Comments => 'Deploy survey menu module.',
+            Settings => [
+                {
+                    Name           => 'Survey::Frontend::MenuModule',
+                    EffectiveValue => $Setting,
+                    IsValid        => 1,
+                },
+            ],
         );
     }
     return 1;
@@ -346,6 +352,8 @@ sub _MigrateConfigs {
     # get setting content for survey sysconfig
     my $Setting = $ConfigObject->Get('Survey::Frontend::MenuModule');
 
+    my @SettingsDeploy;
+
     CONFIGITEM:
     for my $MenuModule ( sort keys %{$Setting} ) {
 
@@ -360,11 +368,11 @@ sub _MigrateConfigs {
         $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::SurveyMenu::$1";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Survey::Frontend::MenuModule###' . $MenuModule,
-            Value => $Setting->{$MenuModule},
-        );
+        push @SettingsDeploy, {
+            Name           => 'Survey::Frontend::MenuModule###' . $MenuModule,
+            EffectiveValue => $Setting->{$MenuModule},
+            IsValid        => 1,
+        };
     }
 
     # migrate survey overview small SysConfig
@@ -377,11 +385,11 @@ sub _MigrateConfigs {
         $Setting->{'Small'}->{Module} = "Kernel::Output::HTML::SurveyOverview::Small";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Survey::Frontend::Overview###Small',
-            Value => $Setting->{'Small'},
-        );
+        push @SettingsDeploy, {
+            Name           => 'Survey::Frontend::Overview###Small',
+            EffectiveValue => $Setting->{'Small'},
+            IsValid        => 1,
+        };
     }
 
     # migrate survey preference SysConfig
@@ -394,12 +402,20 @@ sub _MigrateConfigs {
         $Setting->{'SurveyOverviewSmallPageShown'}->{Module} = "Kernel::Output::HTML::Preferences::Generic";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'PreferencesGroups###SurveyOverviewSmallPageShown',
-            Value => $Setting->{'SurveyOverviewSmallPageShown'},
-        );
+        push @SettingsDeploy, {
+            Name           => 'PreferencesGroups###SurveyOverviewSmallPageShown',
+            EffectiveValue => $Setting->{'SurveyOverviewSmallPageShown'},
+            IsValid        => 1,
+        };
     }
+
+    my $Success = $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'Deploy survey settings.',
+        Settings => [
+            \@SettingsDeploy,
+        ],
+    );
 
     return 1;
 }
