@@ -224,7 +224,7 @@ $Selenium->RunTest(
                 $Delete->{Message},
             );
         }
-        }
+    }
 );
 
 1;
