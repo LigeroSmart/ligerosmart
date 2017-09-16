@@ -19,6 +19,12 @@ $Kernel::OM->ObjectParamAdd(
     },
 );
 my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+$ConfigObject->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
 
 # Get Ticket object.
 my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -272,8 +278,6 @@ my @Tests = (
     },
 );
 
-# Create needed objects.
-my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
 
 TEST:
