@@ -209,11 +209,15 @@ END
 
         my $ImpactField = $1;
 
-        # remove Impact from the old position
-        ${ $Param{Data} } =~ s{$ImpactFieldPattern}{}ms;
+        # Only if priority is visible on the screen
+        if ( ${ $Param{Data} } =~ m{<label for="$PriorityFieldName">.+?</label>}ms ) {
 
-        # add before the priority field
-        ${ $Param{Data} } =~ s{(<label for="$PriorityFieldName">.+?</label>)}{$ImpactField\n$1}ms;
+            # remove Impact from the old position
+            ${ $Param{Data} } =~ s{$ImpactFieldPattern}{}ms;
+
+            # add before the priority field
+            ${ $Param{Data} } =~ s{(<label for="$PriorityFieldName">.+?</label>)}{$ImpactField\n$1}ms;
+        }
     }
 
     return 1;
