@@ -46,21 +46,19 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
                         $.each(Result, function () {
                             ValueData.push({
                                 label: this.Label + " (" + this.Value + ")",
-                                value: this.Value
+                                value: this.Value,
+                                show : this.Label
                             });
                         });
                         Response(ValueData);
                     }));
                 },
                 function (Event, UI) {
-
-                    var CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
-
-                    $Element.val(UI.item.value);
+                    $Element.val(UI.item.show);
 
                     // set hidden field SelectedCustomerUser
                     // escape possible colons (:) in element id because jQuery can not handle it in id attribute selectors
-                    $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val(CustomerKey);
+                    $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val(UI.item.value);
 
                     return false;
                 },
