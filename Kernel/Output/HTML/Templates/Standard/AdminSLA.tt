@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - dcfe3c0438b98da1edb1f47a458293f90179978e - Kernel/Output/HTML/Templates/Standard/AdminSLA.tt
+# $origin: otrs - 5f4af98b11f2e8dabed68fc1e205c7ae65aeb783 - Kernel/Output/HTML/Templates/Standard/AdminSLA.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -100,7 +100,7 @@
 [% RenderBlockStart("OverviewListRow") %]
                         <tr [% IF Data.ValidID && Data.ValidID != 1 %]class="Invalid"[% END %]>
                             <td><a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=SLAEdit;SLAID=[% Data.SLAID | uri %]">[% Data.Name | html %]</a></td>
-                            <td>[% Translate(Data.Service) | html %]</td>
+                            <td>[% Data.Service | html %]</td>
                             <td title="[% Data.Comment | html %]">[% Data.Comment | truncate(26) | html %]</td>
                             <td>[% Translate(Data.Valid) | html %]</td>
                             <td>[% Data.ChangeTime | Localize("TimeShort") %]</td>

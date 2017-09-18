@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 2507dc88a3350adc362580b4fd57b368b7265c7f - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: otrs - 30fe74f7113e791bef702f72abfd9db7e45608da - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -490,15 +490,15 @@ $Self->True(
 # add ID
 $DynamicFieldDateConfig{ID} = $FieldDateID;
 
-# create webservice object
+# create web service object
 my $WebserviceObject = $Kernel::OM->Get('Kernel::System::GenericInterface::Webservice');
 $Self->Is(
     'Kernel::System::GenericInterface::Webservice',
     ref $WebserviceObject,
-    'Create webservice object'
+    'Create web service object'
 );
 
-# set webservice name
+# set web service name
 my $WebserviceName = '-Test-' . $RandomID;
 
 my $WebserviceID = $WebserviceObject->WebserviceAdd(
@@ -518,13 +518,13 @@ my $WebserviceID = $WebserviceObject->WebserviceAdd(
 );
 $Self->True(
     $WebserviceID,
-    "Added Webservice",
+    "Added web service",
 );
 
 # get remote host with some precautions for certain unit test systems
 my $Host = $Helper->GetTestHTTPHostname();
 
-# prepare webservice config
+# prepare web service config
 my $RemoteSystem =
     $ConfigObject->Get('HttpType')
     . '://'
@@ -568,6 +568,7 @@ my $WebserviceConfig = {
                 NameSpace => 'http://otrs.org/SoapTestInterface/',
                 Encoding  => 'UTF-8',
                 Endpoint  => $RemoteSystem,
+                Timeout   => 120,
             },
         },
         Invoker => {
@@ -581,7 +582,7 @@ my $WebserviceConfig = {
     },
 };
 
-# update webservice with real config
+# update web service with real config
 my $WebserviceUpdate = $WebserviceObject->WebserviceUpdate(
     ID      => $WebserviceID,
     Name    => $WebserviceName,
@@ -591,7 +592,7 @@ my $WebserviceUpdate = $WebserviceObject->WebserviceUpdate(
 );
 $Self->True(
     $WebserviceUpdate,
-    "Updated Webservice $WebserviceID - $WebserviceName"
+    "Updated web service $WebserviceID - $WebserviceName"
 );
 
 # Get SessionID
@@ -621,7 +622,7 @@ my $CustomerPassword  = $CustomerUserLogin;
 my $CustomerUserLogin2 = $Helper->TestCustomerUserCreate();
 my $CustomerPassword2  = $CustomerUserLogin2;
 
-# start requester with our webservice
+# start requester with our web service
 my $RequesterSessionResult = $RequesterSessionObject->Run(
     WebserviceID => $WebserviceID,
     Invoker      => 'SessionCreate',
@@ -4219,7 +4220,7 @@ for my $Test (@Tests) {
         %Auth = %{ $Test->{Auth} };
     }
 
-    # start requester with our webservice
+    # start requester with our web service
     my $LocalResult = $LocalObject->Run(
         WebserviceID => $WebserviceID,
         Invoker      => $Test->{Operation},
@@ -4244,7 +4245,7 @@ for my $Test (@Tests) {
         "$Test->{Name} - Create requester object"
     );
 
-    # start requester with our webservice
+    # start requester with our web service
     my $RequesterResult = $RequesterObject->Run(
         WebserviceID => $WebserviceID,
         Invoker      => $Test->{Operation},
@@ -4608,14 +4609,14 @@ for my $Test (@Tests) {
     }
 }
 
-# delete webservice
+# delete web service
 my $WebserviceDelete = $WebserviceObject->WebserviceDelete(
     ID     => $WebserviceID,
     UserID => 1,
 );
 $Self->True(
     $WebserviceDelete,
-    "Deleted Webservice $WebserviceID",
+    "Deleted web service $WebserviceID",
 );
 
 # get DB object

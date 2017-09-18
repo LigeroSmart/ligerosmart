@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - f917b8b5569446abee5a366c18b829a91c773917 - scripts/test/Selenium/Output/ToolBar/TicketService.t
+# $origin: otrs - 14357e6b768741f13e0989b2320bd108a45f4b60 - scripts/test/Selenium/Output/ToolBar/TicketService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -211,6 +211,15 @@ $Selenium->RunTest(
             TicketID => $TicketID,
             UserID   => $TestUserID,
         );
+
+        # Ticket deletion could fail if apache still writes to ticket history. Try again in this case.
+        if ( !$Success ) {
+            sleep 3;
+            $Success = $TicketObject->TicketDelete(
+                TicketID => $TicketID,
+                UserID   => $TestUserID,
+            );
+        }
         $Self->True(
             $Success,
             "Ticket ID $TicketID is deleted"

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 32e2ee9e20388db9ae10a1c7414b274272b7c936 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# $origin: otrs - e3917b233791eac2e3ded5b817bb1666b2e04197 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -96,13 +96,13 @@ $Selenium->RunTest(
         # test search filter for CustomerUser
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->send_keys($CustomerUserName);
-        $Selenium->find_element( "#CustomerUserSearch", 'css' )->VerifiedSubmit();
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
         $Self->True(
             index( $Selenium->get_page_source(), $CustomerUserName ) > -1,
             "CustomerUser $CustomerUserName found on page",
         );
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
-        $Selenium->find_element( "#CustomerUserSearch", 'css' )->VerifiedSubmit();
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
 
         # filter for service. It is auto complete, submit is not necessary
         $Selenium->find_element( "#FilterServices", 'css' )->send_keys($ServiceName);
