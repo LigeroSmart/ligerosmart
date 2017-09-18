@@ -163,11 +163,10 @@ END
     # For all AgentTicketActionCommon based templates
     else {
 
-        # get TicketID and Ticket Number
-        my $TicketID;
+        # get Ticket Number
         my $TicketNumber;
         if ( ${ $Param{Data} } =~ m{<input type="hidden" name="TicketID" value="([^<>]+)"/>}ms ) {
-            $TicketID = $1;
+            my $TicketID = $1;
             $TicketNumber = $TicketObject->TicketNumberLookup(
                 TicketID => $TicketID,
             );
