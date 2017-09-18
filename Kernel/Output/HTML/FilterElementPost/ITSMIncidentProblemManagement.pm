@@ -51,14 +51,11 @@ sub Run {
     # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
 
-    # get ticket id and ticket number
-    my $TicketID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' );
-    my $TicketNumber = $TicketObject->TicketNumberLookup(
-        TicketID => $TicketID,
-    );
-
     # handling of AgentTicketZoom related ITSM changes
     if ( $Param{TemplateFile} eq 'AgentTicketZoom' ) {
+
+        # get ticket id
+        my $TicketID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'TicketID' );
 
         # Get ticket attributes.
         my %Ticket = $TicketObject->TicketGet(
@@ -104,7 +101,7 @@ END
         ${ $Param{Data} }
             =~ s{(<label>$TranslatedSLALabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMSLAZoom;SLAID=$Ticket{SLAID};" target="_blank">$3</a></p>}ms;
 
-        # Move Criticality Impact Priority and other ITSM Dynamic Fields before the CutsomerID
+        # Move Criticality Impact Priority and other ITSM Dynamic Fields before the CustomerID field
         for my $FieldName (
             'Criticality',
             'Impact',
@@ -165,6 +162,16 @@ END
 
     # For all AgentTicketActionCommon based templates
     else {
+
+        # get TicketID and Ticket Number
+        my $TicketID;
+        my $TicketNumber;
+        if ( ${ $Param{Data} } =~ m{<input type="hidden" name="TicketID" value="([^<>]+)"/>}ms ) {
+            $TicketID = $1;
+            $TicketNumber = $TicketObject->TicketNumberLookup(
+                TicketID => $TicketID,
+            );
+        }
 
         # add headline for AgentTicketDecision
         if ( $Param{TemplateFile} eq 'AgentTicketDecision' ) {
