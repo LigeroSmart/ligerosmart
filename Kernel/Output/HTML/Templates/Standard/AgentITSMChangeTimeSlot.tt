@@ -13,7 +13,7 @@
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>[% Translate("Move Time Slot") | html %] ... [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber %]</h1>
+            <h1>[% Translate("Move Time Slot") | html %] [% Config("ITSMChange::Hook") %] [% Data.ChangeNumber %]</h1>
             <p>
                 <a class="CancelClosePopup" href="#">[% Translate("Cancel & close") | html %]</a>
             </p>
