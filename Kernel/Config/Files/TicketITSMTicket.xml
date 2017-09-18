@@ -321,4 +321,26 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPrint</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ITSMCriticality">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::CustomerTicketPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Customer::Ticket::ViewPrint</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ITSMCriticality">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

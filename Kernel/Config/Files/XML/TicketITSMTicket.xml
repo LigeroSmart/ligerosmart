@@ -498,5 +498,24 @@
             </Hash>
         </Value>
     </Setting>
-
+    <Setting Name="Ticket::Frontend::AgentTicketPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket print screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketPrint</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ITSMCriticality">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::CustomerTicketPrint###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket print screen of the customer interface.</Description>
+        <Navigation>Frontend::Customer::View::TicketPrint</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ITSMCriticality">1</Item>
+                <Item Key="ITSMImpact">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
 </otrs_config>
