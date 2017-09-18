@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 93b82fdfbf76b97afa7534e0e495f93e6c0bd54b - scripts/test/Selenium/Agent/AgentTicketEmail.t
+# $origin: otrs - faefc9d2525600531ecaaeb46c23361765f75f04 - scripts/test/Selenium/Agent/AgentTicketEmail.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -183,7 +183,7 @@ $Selenium->RunTest(
         # Check client side validation.
         my $Element = $Selenium->find_element( "#Subject", 'css' );
         $Element->send_keys("");
-        $Element->VerifiedSubmit();
+        $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
 
         $Self->Is(
             $Selenium->execute_script(
@@ -361,7 +361,7 @@ $Selenium->RunTest(
         );
 # ---
         # Submit form.
-        $Selenium->find_element( "#Subject", 'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
 
         # Get created test ticket data.
         my %TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
@@ -441,7 +441,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketEmail");
         $Selenium->find_element( "#User",        'css' )->send_keys($TestUserLogin);
         $Selenium->find_element( "#Password",    'css' )->send_keys($TestUserLogin);
-        $Selenium->find_element( "#LoginButton", 'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#LoginButton", 'css' )->VerifiedClick();
 
         # Select the first queue.
         $Selenium->execute_script(
@@ -478,6 +478,15 @@ $Selenium->RunTest(
             TicketID => $TicketID,
             UserID   => 1,
         );
+
+        # Ticket deletion could fail if apache still writes to ticket history. Try again in this case.
+        if ( !$Success ) {
+            sleep 3;
+            $Success = $Kernel::OM->Get('Kernel::System::Ticket')->TicketDelete(
+                TicketID => $TicketID,
+                UserID   => 1,
+            );
+        }
         $Self->True(
             $Success,
             "Ticket with ticket ID $TicketID is deleted",

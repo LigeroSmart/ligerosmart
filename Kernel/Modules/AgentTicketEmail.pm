@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 2507dc88a3350adc362580b4fd57b368b7265c7f - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - e94706e9d37c2d6af908b3dfa6f682cd7b428174 - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2079,6 +2079,12 @@ sub Run {
                 @TicketAttachments = $UploadCacheObject->FormIDGetAllFilesMeta(
                     FormID => $Self->{FormID},
                 );
+
+                for my $Attachment (@TicketAttachments) {
+                    $Attachment->{Filesize} = $LayoutObject->HumanReadableDataSize(
+                        Size => $Attachment->{Filesize},
+                    );
+                }
             }
 
             @TemplateAJAX = (
@@ -2660,6 +2666,15 @@ sub _MaskEmailNew {
     if ( $Param{FromList} ) {
         for my $FromKey ( sort keys %{ $Param{FromList} } ) {
             $NewTo{"$FromKey||$Param{FromList}->{$FromKey}"} = $Param{FromList}->{$FromKey};
+        }
+    }
+    if ( !$Param{FromSelected} ) {
+        my $UserDefaultQueue = $ConfigObject->Get('Ticket::Frontend::UserDefaultQueue') || '';
+        if ($UserDefaultQueue) {
+            my $QueueID = $Kernel::OM->Get('Kernel::System::Queue')->QueueLookup( Queue => $UserDefaultQueue );
+            if ($QueueID) {
+                $Param{FromSelected} = "$QueueID||$UserDefaultQueue";
+            }
         }
     }
 
