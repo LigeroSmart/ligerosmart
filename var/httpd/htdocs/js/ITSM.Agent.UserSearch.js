@@ -25,11 +25,13 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
      * @name Init
      * @namespace ITSM.Agent.UserAgent
      * @function
+     * @param {jQueryObject} $UserSearches elements to add autocomplete behaviour (optional)
+     *      if not given, will search for all inputs with the class '.UserSearch'
      * @description
      *      This function initializes the special module functions
      */
-    TargetNS.Init = function () {
-        var $UserSearches = $('input.UserSearch');
+    TargetNS.Init = function ($UserSearches) {
+        $UserSearches = $UserSearches || $('input.UserSearch');
 
         $UserSearches.each(function() {
             var $Element = $(this);
@@ -49,20 +51,18 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
                         $.each(Result, function () {
                             Data.push({
                                 label: this.UserValue + " (" + this.UserKey + ")",
-                                value: this.UserValue
+                                value: this.UserKey,
+                                show : this.UserValue
                             });
                         });
                         Response(Data);
                     }));
                 },
                 function (Event, UI) {
-
-                    var UserKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
-
-                    $Element.val(UI.item.value);
+                    $Element.val(UI.item.show);
 
                     // set hidden field SelectedUser
-                    $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val(UserKey);
+                    $('#' + Core.App.EscapeSelector($Element.attr('id')) + 'Selected').val(UI.item.value);
 
                     return false;
                 },
@@ -70,9 +70,9 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
             );
         });
 
-        $UserSearches.on('click.UserSearch', function() {
-            $(this).val('');
-        });
+        //$UserSearches.on('click.UserSearch', function() {
+        //    $(this).val('');
+        //});
 
         // On unload remove old selected data. If the page is reloaded (with F5)
         // this data stays in the field and invokes an ajax request otherwise

@@ -79,14 +79,14 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
             // set autocomple to customer type fields
             $('#SearchInsert').find('.ITSMCustomerSearch').each(function(){
-                var InputID = $(this).attr('id') + 'CustomerAutocomplete';
+                var InputID = $(this).attr('name') + 'CustomerAutocomplete';
                 $(this).removeClass('ITSMCustomerSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
                 ITSM.Agent.CustomerSearch.Init($('#' + Core.App.EscapeSelector(InputID)));
 
                 // prevent dialog closure when select a customer from the list
-                $('ul.ui-autocomplete').bind('click', function(Event){
+                $('ul.ui-autocomplete').off('click.ITSMCustomerSearch').on('click.ITSMCustomerSearch', function(Event){
                     Event.stopPropagation();
                     return false;
                 });
@@ -94,14 +94,14 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
 
             // set autocomple to user type fields
             $('#SearchInsert').find('.ITSMUserSearch').each(function(){
-                var InputID = $(this).attr('id') + 'UserAutocomplete';
+                var InputID = $(this).attr('name') + 'UserAutocomplete';
                 $(this).removeClass('ITSMUserSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
                 ITSM.Agent.UserSearch.Init($('#' + Core.App.EscapeSelector(InputID)));
 
                 // prevent dialog closure when select a customer from the list
-                $('ul.ui-autocomplete').bind('click', function(Event){
+                $('ul.ui-autocomplete').off('click.ITSMUserSearch').on('click.ITSMUserSearch', function(Event){
                     Event.stopPropagation();
                     return false;
                 });
