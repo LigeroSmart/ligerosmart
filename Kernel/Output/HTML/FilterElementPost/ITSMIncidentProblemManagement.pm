@@ -63,43 +63,46 @@ sub Run {
             DynamicFields => 1,
         );
 
-        # set incident signal
-        my %InciSignals = (
-            operational => 'greenled',
-            warning     => 'yellowled',
-            incident    => 'redled',
-        );
+        if ( $Ticket{ServiceID} ) {
 
-        # get service data
-        my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-            IncidentState => 1,
-            ServiceID     => $Ticket{ServiceID},
-            UserID        => 1,
-        );
+            # set incident signal
+            my %InciSignals = (
+                operational => 'greenled',
+                warning     => 'yellowled',
+                incident    => 'redled',
+            );
 
-        my $TranslatedServiceIncidentStateLabel = $LayoutObject->{LanguageObject}->Translate('Service Incident State');
-        my $TranslatedCurInciState              = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
+            # get service data
+            my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
+                IncidentState => 1,
+                ServiceID     => $Ticket{ServiceID},
+                UserID        => 1,
+            );
 
-        my $ServiceIncidentStateHTML = <<"END";
+            my $TranslatedServiceIncidentStateLabel = $LayoutObject->{LanguageObject}->Translate('Service Incident State');
+            my $TranslatedCurInciState              = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
 
-    <label>$TranslatedServiceIncidentStateLabel:</label>
-    <div class="Value">
-        <div class="Flag Small">
-            <span class="$InciSignals{ $Service{CurInciStateType} }" title="$TranslatedCurInciState"></span>
-        </div>
-        <span>$TranslatedCurInciState</span>
-    </div>
+            my $ServiceIncidentStateHTML = <<"END";
+
+            <label>$TranslatedServiceIncidentStateLabel:</label>
+            <div class="Value">
+                <div class="Flag Small">
+                    <span class="$InciSignals{ $Service{CurInciStateType} }" title="$TranslatedCurInciState"></span>
+                </div>
+                <span>$TranslatedCurInciState</span>
+            </div>
 END
 
-        # Add link to service and add Service incident state.
-        my $TranslatedServiceLabel = $LayoutObject->{LanguageObject}->Translate('Service');
-        ${ $Param{Data} }
-            =~ s{(<label>$TranslatedServiceLabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMServiceZoom;ServiceID=$Ticket{ServiceID};" target="_blank">$3</a></p>\n$ServiceIncidentStateHTML}ms;
+            # Add link to service and add Service incident state.
+            my $TranslatedServiceLabel = $LayoutObject->{LanguageObject}->Translate('Service');
+            ${ $Param{Data} }
+                =~ s{(<label>$TranslatedServiceLabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMServiceZoom;ServiceID=$Ticket{ServiceID};" target="_blank">$3</a></p>\n$ServiceIncidentStateHTML}ms;
 
-        # Add link to sla.
-        my $TranslatedSLALabel = $LayoutObject->{LanguageObject}->Translate('Service Level Agreement');
-        ${ $Param{Data} }
-            =~ s{(<label>$TranslatedSLALabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMSLAZoom;SLAID=$Ticket{SLAID};" target="_blank">$3</a></p>}ms;
+            # Add link to sla.
+            my $TranslatedSLALabel = $LayoutObject->{LanguageObject}->Translate('Service Level Agreement');
+            ${ $Param{Data} }
+                =~ s{(<label>$TranslatedSLALabel:</label>)[^<>]*(<p class="Value" title="[^<>]+">)([^<>]+)</p>}{$1$2<a href="$LayoutObject->{Baselink}Action=AgentITSMSLAZoom;SLAID=$Ticket{SLAID};" target="_blank">$3</a></p>}ms;
+        }
 
         # Move Criticality Impact Priority and other ITSM Dynamic Fields before the CustomerID field
         for my $FieldName (
