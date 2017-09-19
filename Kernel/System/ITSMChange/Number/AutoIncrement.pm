@@ -6,118 +6,129 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# Generates change numbers like ID##### (e. g. 1000123)
+#
+# Generates auto increment change numbers like ss.... (e. g. 1010138, 1010139, ...)
+# --
 
 package Kernel::System::ITSMChange::Number::AutoIncrement;
 
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+use parent qw(Kernel::System::ITSMChange::Number::Base);
 
-sub ChangeNumberCreate {
-    my ( $Self, %Param ) = @_;
+our @ObjectDependencies = (
+    'Kernel::Config',
+    'Kernel::System::DB',
+    'Kernel::System::ITSMChange',
+);
 
-    # get needed config options
-    my $CounterLog = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CounterLog');
-    my $SystemID   = $Kernel::OM->Get('Kernel::Config')->Get('SystemID');
-    my $MinSize = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize')
-        || 5;
+sub IsDateBased {
+    return 0;
+}
 
-    # define number of maximum loops if created change number exists
-    my $MaxRetryNumber        = 16000;
-    my $LoopProtectionCounter = 0;
+sub ChangeNumberBuild {
+    my ( $Self, $Offset ) = @_;
 
-    # try to create a unique change number for up to $MaxRetryNumber times
-    while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
+    $Offset ||= 0;
 
-        # read count
-        my $Count      = 0;
-        my $LastModify = '';
-
-        # try to read existing counter from file
-        if ( -f $CounterLog ) {
-
-            my $ContentSCALARRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
-                Location => $CounterLog,
-            );
-
-            if ( $ContentSCALARRef && ${$ContentSCALARRef} ) {
-
-                ( $Count, $LastModify ) = split( /;/, ${$ContentSCALARRef} );
-
-                # just debug
-                if ( $Self->{Debug} > 0 ) {
-                    $Kernel::OM->Get('Kernel::System::Log')->Log(
-                        Priority => 'debug',
-                        Message  => "Read counter from $CounterLog: $Count",
-                    );
-                }
-            }
-        }
-
-        # count auto increment
-        $Count++;
-
-        my $Content = $Count;
-
-        # write new count
-        my $Write = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
-            Location => $CounterLog,
-            Content  => \$Content,
-        );
-
-        # log debug message
-        if ( $Write && $Self->{Debug} ) {
-
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'debug',
-                Message  => "Write counter: $Count",
-            );
-        }
-
-        # pad change number with leading '0' to length $MinSize (config option)
-        $Count = sprintf "%.*u", $MinSize, $Count;
-
-        # create new change number
-        my $ChangeNumber = $SystemID . $Count;
-
-        # lookup if change number exists already
-        my $ChangeID = $Self->ChangeLookup(
-            ChangeNumber => $ChangeNumber,
-        );
-
-        # now we have a new unused change number and return it
-        return $ChangeNumber if !$ChangeID;
-
-        # start loop protection mode
-        $LoopProtectionCounter++;
-
-        # create new change number again
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'notice',
-            Message  => "ChangeNumber ($ChangeNumber) exists! Creating a new one.",
-        );
+    my $BaseCounter = 1;
+    if ( $Self->ChangeNumberCounterIsEmpty() ) {
+        $BaseCounter = $Self->InitialCounterOffsetCalculate();
     }
 
-    # loop was running too long
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'error',
-        Message  => "LoopProtectionCounter is now $LoopProtectionCounter!"
-            . " Stopped ChangeNumberCreate()!",
+    my $Counter = $Self->ChangeNumberCounterAdd(
+        Offset => $BaseCounter + $Offset,
     );
 
-    return;
+    return if !$Counter;
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $SystemID = $ConfigObject->Get('SystemID');
+    my $MinSize  = $ConfigObject->Get('ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize')
+        || $ConfigObject->Get('ITSMChange::NumberGenerator::MinCounterSize')
+        || 5;
+
+    # Pad ticket number with leading '0' to length $MinSize (config option).
+    $Counter = sprintf "%.*u", $MinSize, $Counter;
+
+    my $ChangeNumber = $SystemID . $Counter;
+
+    return $ChangeNumber;
+}
+
+#
+# Calculate initial counter value on (migrated) systems that already have changes,
+#   but no counter entries yet.
+#
+sub InitialCounterOffsetCalculate {
+    my ( $Self, %Param ) = @_;
+
+    my $LastChangeNumber = $Self->_GetLastChangeNumber();
+    return 1 if !$LastChangeNumber;
+
+    # If the change number was created by a date based generator, change counter needs to start from 1
+    return 1 if $Self->_LooksLikeDateBasedChangeNumber($LastChangeNumber);
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $SystemID     = $ConfigObject->Get('SystemID');
+
+    # Remove SystemID and leading zeros
+    $LastChangeNumber =~ s{\A $SystemID 0* }{}msx;
+
+    return 1 if !$LastChangeNumber;
+
+    return $LastChangeNumber + 1;
+}
+
+sub _GetLastChangeNumber {
+    my ( $Self, %Param ) = @_;
+
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
+        SQL => 'SELECT MAX(id) FROM change_item',
+    );
+
+    my $ChangeID;
+    while ( my @Data = $DBObject->FetchrowArray() ) {
+        $ChangeID = $Data[0];
+    }
+
+    return if $ChangeID && $ChangeID == 1;
+
+    my %Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
+        ChangeID      => $ChangeID,
+        DynamicFields => 0,
+        UserID        => 1,
+        LogNo         => 1,
+    );
+
+    return if !%Change;
+    return if !$Change{ChangeNumber};
+
+    return $Change{ChangeNumber};
+}
+
+sub _LooksLikeDateBasedChangeNumber {
+    my ( $Self, $ChangeNumber ) = @_;
+
+    return if !$ChangeNumber;
+
+    my $PossibleDate = substr $ChangeNumber, 0, 8;
+    return if length $PossibleDate != 8;
+
+    # Format possible date as a date string
+    $PossibleDate =~ s{\A (\d{4}) (\d{2}) (\d{2}) \z}{$1-$2-$3 00:00:00}gsmx;
+
+    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
+
+    my $Result = $DateTimeObject->Set( String => $PossibleDate );
+
+    return if !$Result;
+
+    return 1;
 }
 
 1;
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

@@ -6,129 +6,60 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# Generates change numbers like yyyymmddss##### (e. g. 2002062300001)
+#
+# Generates change numbers like yyyymmddss.... (e. g. 200206231010138)
+# --
 
 package Kernel::System::ITSMChange::Number::Date;
 
 use strict;
 use warnings;
 
-our $ObjectManagerDisabled = 1;
+use parent qw(Kernel::System::ITSMChange::Number::Base);
 
-sub ChangeNumberCreate {
-    my ( $Self, %Param ) = @_;
+our @ObjectDependencies = (
+    'Kernel::Config',
+);
 
-    # get needed config options
-    my $CounterLog = $Kernel::OM->Get('Kernel::Config')->Get('ITSMChange::CounterLog');
+sub IsDateBased {
+    return 1;
+}
 
-    # define number of maximum loops if created change number exists
-    my $MaxRetryNumber        = 16000;
-    my $LoopProtectionCounter = 0;
+sub ChangeNumberBuild {
+    my ( $Self, $Offset ) = @_;
 
-    # try to create a unique change number for up to $MaxRetryNumber times
-    while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
+    $Offset ||= 0;
 
-        # get current time
-        my $CurrentDateTime = $Kernel::OM->Create('Kernel::System::DateTime')->Get();
+    my $Counter = $Self->ChangeNumberCounterAdd(
+        Offset => 1 + $Offset,
+    );
 
-        # read count
-        my $Count      = 0;
-        my $LastModify = '';
+    return if !$Counter;
 
-        # try to read existing counter from file
-        if ( -f $CounterLog ) {
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-            my $ContentSCALARRef = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
-                Location => $CounterLog,
-            );
+    my $SystemID = $ConfigObject->Get('SystemID');
 
-            if ( $ContentSCALARRef && ${$ContentSCALARRef} ) {
+    if ( $ConfigObject->Get('ITSMChange::NumberGenerator::Date::UseFormattedCounter') ) {
+        my $MinSize = $ConfigObject->Get('ITSMChange::NumberGenerator::MinCounterSize')
+            || 5;
 
-                ( $Count, $LastModify ) = split( /;/, ${$ContentSCALARRef} );
-
-                # just debug
-                if ( $Self->{Debug} > 0 ) {
-                    $Kernel::OM->Get('Kernel::System::Log')->Log(
-                        Priority => 'debug',
-                        Message  => "Read counter from $CounterLog: $Count",
-                    );
-                }
-            }
-        }
-
-        # check if we need to reset the counter
-        if (
-            !$LastModify
-            || $LastModify ne "$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day}"
-            )
-        {
-            $Count = 0;
-        }
-
-        # count auto increment
-        $Count++;
-
-        # increase the the counter faster if we are in loop pretection mode
-        $Count += $LoopProtectionCounter;
-
-        my $Content = $Count . ";$CurrentDateTime->{Year}-$CurrentDateTime->{Month}-$CurrentDateTime->{Day};";
-
-        # write new count
-        my $Write = $Kernel::OM->Get('Kernel::System::Main')->FileWrite(
-            Location => $CounterLog,
-            Content  => \$Content,
-        );
-
-        # log debug message
-        if ( $Write && $Self->{Debug} ) {
-
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'debug',
-                Message  => "Write counter: $Count",
-            );
-        }
-
-        # pad change number with leading '0' to length 5
-        $Count = sprintf "%05d", $Count;
-
-        # create new change number
-        my $ChangeNumber = $CurrentDateTime->{Year} . $CurrentDateTime->{Month} . $CurrentDateTime->{Day} . $Count;
-
-        # lookup if change number exists already
-        my $ChangeID = $Self->ChangeLookup(
-            ChangeNumber => $ChangeNumber,
-        );
-
-        # now we have a new unused change number and return it
-        return $ChangeNumber if !$ChangeID;
-
-        # start loop protection mode
-        $LoopProtectionCounter++;
-
-        # create new change number again
-        $Kernel::OM->Get('Kernel::System::Log')->Log(
-            Priority => 'notice',
-            Message  => "ChangeNumber ($ChangeNumber) exists! Creating a new one.",
-        );
+        # Pad change number with leading '0' to length $MinSize (config option).
+        $Counter = sprintf "%.*u", $MinSize, $Counter;
     }
 
-    # loop was running too long
-    $Kernel::OM->Get('Kernel::System::Log')->Log(
-        Priority => 'error',
-        Message  => "LoopProtectionCounter is now $LoopProtectionCounter!"
-            . " Stopped ChangeNumberCreate()!",
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime'
     );
-    return;
+    my $DateTimeSettings = $DateTimeObject->Get();
+
+    # Create new change number.
+    my $ChangeNumber = $DateTimeSettings->{Year}
+        . sprintf( "%.2u", $DateTimeSettings->{Month} )
+        . sprintf( "%.2u", $DateTimeSettings->{Day} )
+        . $SystemID . $Counter;
+
+    return $ChangeNumber;
 }
 
 1;
-
-=head1 TERMS AND CONDITIONS
-
-This software is part of the OTRS project (L<http://otrs.org/>).
-
-This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut

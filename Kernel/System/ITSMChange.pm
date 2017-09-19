@@ -172,7 +172,7 @@ sub ChangeAdd {
     );
 
     # create a new change number
-    my $ChangeNumber = $Self->ChangeNumberCreate();
+    my $ChangeNumber = $Self->ChangeCreateNumber();
 
     # get initial change state id
     my $ChangeStateID = delete $Param{ChangeStateID};

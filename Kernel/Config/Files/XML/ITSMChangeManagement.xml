@@ -2506,13 +2506,6 @@
             </Array>
         </Value>
     </Setting>
-    <Setting Name="ITSMChange::CounterLog" Required="1" Valid="1">
-        <Description Translatable="1">Logfile for the ITSM change counter. This file is used for creating the change numbers.</Description>
-        <Navigation>Core::ITSMChange</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex="">&lt;OTRS_CONFIG_Home&gt;/var/log/ITSMChangeCounter.log</Item>
-        </Value>
-    </Setting>
     <Setting Name="ITSMChange::Hook" Required="1" Valid="1">
         <Description Translatable="1">The identifier for a change, e.g. Change#, MyChange#. The default is Change#.</Description>
         <Navigation>Core::ITSMChange</Navigation>
@@ -5127,11 +5120,25 @@
             <Item ValueType="PerlModule" ValueFilter="Kernel/System/ITSMChange/Number/*.pm">Kernel::System::ITSMChange::Number::DateChecksum</Item>
         </Value>
     </Setting>
+    <Setting Name="ITSMChange::NumberGenerator::MinCounterSize" Required="1" Valid="1">
+        <Description Translatable="1">Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.</Description>
+        <Navigation>Core::ITSMChange</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^[0-9]$">5</Item>
+        </Value>
+    </Setting>
     <Setting Name="ITSMChange::NumberGenerator::AutoIncrement::MinCounterSize" Required="1" Valid="1">
         <Description Translatable="1">Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.</Description>
         <Navigation>Core::ITSMChange</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^[0-9]$">5</Item>
+        </Value>
+    </Setting>
+        <Setting Name="ITSMChange::NumberGenerator::Date::UseFormattedCounter" Required="1" Valid="1">
+        <Description Translatable="1">Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).</Description>
+        <Navigation>Core::ITSMChange</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="PreferencesGroups###UserCreateWorkOrderNextMask" Required="0" Valid="1">

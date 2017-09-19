@@ -4018,8 +4018,6 @@ Helper function to update a setting, locking the setting before and unlocking it
 sub _SysConfigSettingUpdate {
     my ( $Self, %Param ) = @_;
 
-    print STDERR "Running _SysConfigSettingUpdate\n";
-
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # setting get

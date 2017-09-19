@@ -175,6 +175,7 @@
         <File Permission="660" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/EmptyAgentCheck.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm" />
+        <File Permission="660" Location="Kernel/System/ITSMChange/Number/Base.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/Number/AutoIncrement.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/Number/Date.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/Number/DateChecksum.pm" />
@@ -786,6 +787,18 @@
             <ForeignKey ForeignTable="change_notification_grps">
                 <Reference Local="group_id" Foreign="id" />
             </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_number_counter">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="counter" Required="true" Type="BIGINT" />
+            <Column Name="counter_uid" Required="true" Size="32" Type="VARCHAR" />
+            <Column Name="create_time" Type="DATE" />
+            <Unique Name="change_number_counter_uid">
+                <UniqueColumn Name="counter_uid" />
+            </Unique>
+            <Index Name="change_number_counter_create_time">
+                <IndexColumn Name="create_time" />
+            </Index>
         </TableCreate>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
@@ -1716,6 +1729,18 @@
                 <UniqueColumn Name="notification_type" />
             </Unique>
         </TableCreate>
+        <TableCreate Name="change_number_counter" Version="6.0.1">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
+            <Column Name="counter" Required="true" Type="BIGINT" />
+            <Column Name="counter_uid" Required="true" Size="32" Type="VARCHAR" />
+            <Column Name="create_time" Type="DATE" />
+            <Unique Name="change_number_counter_uid">
+                <UniqueColumn Name="counter_uid" />
+            </Unique>
+            <Index Name="change_number_counter_create_time">
+                <IndexColumn Name="create_time" />
+            </Index>
+        </TableCreate>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_notification_rec" />
@@ -1737,6 +1762,7 @@
         <TableDrop Name="change_template_type" />
         <TableDrop Name="change_cip_allocate" />
         <TableDrop Name="change_state_machine" />
+        <TableDrop Name="change_number_counter" />
     </DatabaseUninstall>
     <CodeInstall Type="post"><![CDATA[
 
