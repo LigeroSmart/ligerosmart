@@ -15,6 +15,7 @@ use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::System::DateTime',
     'Kernel::System::DB',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
@@ -24,9 +25,9 @@ our @ObjectDependencies = (
     'Kernel::System::Service',
     'Kernel::System::State',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
     'Kernel::System::Type',
     'Kernel::System::User',
+    'Kernel::System::Stats',
 );
 
 sub new {
@@ -51,6 +52,16 @@ sub GetObjectName {
     my ( $Self, %Param ) = @_;
 
     return 'ITSMTicketSolutionTimeAverage';
+}
+
+sub GetObjectBehaviours {
+    my ( $Self, %Param ) = @_;
+
+    my %Behaviours = (
+        ProvidesDashboardWidget => 1,
+    );
+
+    return %Behaviours;
 }
 
 sub GetObjectAttributes {
@@ -78,9 +89,7 @@ sub GetObjectAttributes {
     );
 
     # get current time to fix bug#3830
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
-    my ($Date) = split /\s+/, $TimeStamp;
-    my $Today = sprintf "%s 23:59:59", $Date;
+    my $Today = $Kernel::OM->Create('Kernel::System::DateTime')->Format( Format => '%Y-%m-%d 23:59:59' );
 
     my @ObjectAttributes = (
         {
@@ -470,9 +479,12 @@ sub GetStatElement {
                 next ENTRY if $Entry->{Viewable};
 
                 # set stop time
-                $Timespans{$Counter}->{StopTime} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                    String => $Entry->{CreateTime},
-                );
+                $Timespans{$Counter}->{StopTime} = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        String => $Entry->{CreateTime},
+                    },
+                )->ToEpoch();
 
                 $Counter++;
             }
@@ -481,9 +493,12 @@ sub GetStatElement {
                 next ENTRY if !$Entry->{Viewable};
 
                 # set start time
-                $Timespans{$Counter}->{StartTime} = $Kernel::OM->Get('Kernel::System::Time')->TimeStamp2SystemTime(
-                    String => $Entry->{CreateTime},
-                );
+                $Timespans{$Counter}->{StartTime} = $Kernel::OM->Create(
+                    'Kernel::System::DateTime',
+                    ObjectParams => {
+                        String => $Entry->{CreateTime},
+                    },
+                )->ToEpoch();
             }
         }
 
@@ -499,13 +514,27 @@ sub GetStatElement {
 
             $Timespan->{StopTime} ||= $Timespan->{StartTime} + ( 3 * 60 );
 
-            # calculate working time
-            my $WorkingTimePart = $Kernel::OM->Get('Kernel::System::Time')->WorkingTime(
-                %{$Timespan},
-                Calendar => $Calendar,
+            my $WorkingTimeStartDateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $Timespan->{StartTime},
+                },
             );
 
-            $Time += $WorkingTimePart;
+            my $WorkingTimeStopDateTimeObject = $Kernel::OM->Create(
+                'Kernel::System::DateTime',
+                ObjectParams => {
+                    Epoch => $Timespan->{StopTime},
+                },
+            );
+
+            my $Delta = $WorkingTimeStartDateTimeObject->Delta(
+                DateTimeObject => $WorkingTimeStopDateTimeObject,
+                ForWorkingTime => 1,
+                Calendar       => $Calendar,
+            );
+
+            $Time += $Delta->{AbsoluteSeconds};
         }
     }
 
@@ -513,8 +542,8 @@ sub GetStatElement {
     my $AverageTime = $Time / $TicketCount;
 
     # translate seconds in a readable format
-    my $Value = $Self->_SecondeToString(
-        Seconds => int $AverageTime,
+    my $Value = $Kernel::OM->Get('Kernel::System::Stats')->_HumanReadableAgeGet(
+        Age => int $AverageTime,
     );
 
     return $Value;
@@ -631,38 +660,6 @@ sub _TicketHistoryDataGet {
     }
 
     return \@TicketHistoryList;
-}
-
-sub _SecondeToString {
-    my ( $Self, %Param ) = @_;
-
-    return '' if !defined $Param{Seconds};
-
-    # calculate the seconds
-    my $Seconds = $Param{Seconds} % 60;
-    $Param{Seconds} = ( $Param{Seconds} - $Seconds ) / 60;
-
-    # calculate the minutes
-    my $Minutes = $Param{Seconds} % 60;
-
-    # calculate the hours
-    my $Hours = ( $Param{Seconds} - $Minutes ) / 60;
-
-    # set default value
-    $Hours   ||= 0;
-    $Minutes ||= 0;
-    $Seconds ||= 0;
-
-    if ( $Seconds >= 30 ) {
-        $Minutes++;
-    }
-
-    $Minutes = sprintf "%02d", $Minutes;
-
-    my $HoursString   = 'Hours';
-    my $MinutesString = 'Minutes';
-
-    return "$Hours $HoursString $Minutes $MinutesString";
 }
 
 sub ExportWrapper {

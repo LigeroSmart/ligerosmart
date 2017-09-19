@@ -15,6 +15,7 @@ use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::Config',
+    'Kernel::System::DateTime',
     'Kernel::System::DB',
     'Kernel::System::DynamicField',
     'Kernel::System::DynamicField::Backend',
@@ -24,7 +25,7 @@ our @ObjectDependencies = (
     'Kernel::System::Service',
     'Kernel::System::State',
     'Kernel::System::Ticket',
-    'Kernel::System::Time',
+    'Kernel::System::Ticket::Article',
     'Kernel::System::Type',
     'Kernel::System::User',
 );
@@ -53,6 +54,16 @@ sub GetObjectName {
     return 'ITSMTicketFirstLevelSolutionRate';
 }
 
+sub GetObjectBehaviours {
+    my ( $Self, %Param ) = @_;
+
+    my %Behaviours = (
+        ProvidesDashboardWidget => 1,
+    );
+
+    return %Behaviours;
+}
+
 sub GetObjectAttributes {
     my ( $Self, %Param ) = @_;
 
@@ -78,9 +89,7 @@ sub GetObjectAttributes {
     );
 
     # get current time to fix bug#3830
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->CurrentTimestamp();
-    my ($Date) = split /\s+/, $TimeStamp;
-    my $Today = sprintf "%s 23:59:59", $Date;
+    my $Today = $Kernel::OM->Create('Kernel::System::DateTime')->Format( Format => '%Y-%m-%d 23:59:59' );
 
     my @ObjectAttributes = (
         {
@@ -435,124 +444,48 @@ sub GetStatElement {
 
     return 0 if !@TicketSearchIDs;
 
+    my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+
     my $FirstLevelSolutionTickets = 0;
     TICKETID:
     for my $TicketID (@TicketSearchIDs) {
 
-        # get article data list
-        my $ArticleDataList = $Self->_ArticleDataGet(
-            TicketID => $TicketID,
+        my @Articles = $ArticleObject->ArticleList(
+            TicketID             => $TicketID,
+            IsVisibleForCustomer => 1,
         );
 
-        return 'ERROR' if !$ArticleDataList;
+        next TICKETID if !@Articles;
+        next TICKETID if scalar @Articles > 2;
 
-        next TICKETID if !@{$ArticleDataList};
-        next TICKETID if @{$ArticleDataList} > 2;
+        # get sender type of first article
+        my $SenderTypeFirstArticle = $ArticleObject->ArticleSenderTypeLookup(
+            SenderTypeID => $Articles[0]->{SenderTypeID},
+        );
 
-        # first article is a phone article
-        if ( $ArticleDataList->[0]->{ArticleTypeID} eq $Self->{PhoneTypeID} ) {
+        next TICKETID if $SenderTypeFirstArticle eq 'system';
 
-            if ( !$ArticleDataList->[1] ) {
-                $FirstLevelSolutionTickets++;
-            }
-
+        # if the ticket could be solved within the first contact
+        if ( !$Articles[1] ) {
+            $FirstLevelSolutionTickets++;
             next TICKETID;
         }
 
-        # first article is an external email article
-        if ( $ArticleDataList->[0]->{ArticleTypeID} eq $Self->{EmailExternalTypeID} ) {
+        # noe we handle the case where the first article is from the customer
+        next TICKETID if $SenderTypeFirstArticle ne 'customer';
 
-            # first article comes from an agent (Email-Ticket)
-            if (
-                $ArticleDataList->[0]->{ArticleSenderTypeID}
-                &&
-                $ArticleDataList->[0]->{ArticleSenderTypeID} eq $Self->{AgentSenderTypeID}
-                && !$ArticleDataList->[1]
-                )
-            {
-                $FirstLevelSolutionTickets++;
-                next TICKETID;
-            }
+        # get sender type of second article
+        my $SenderTypeSecondArticle = $ArticleObject->ArticleSenderTypeLookup(
+            SenderTypeID => $Articles[1]->{SenderTypeID},
+        );
 
-            # first article comes from customer and the second one from an agent
-            if (
-                $ArticleDataList->[0]->{ArticleSenderTypeID}
-                &&
-                $ArticleDataList->[0]->{ArticleSenderTypeID} eq $Self->{CustomerSenderTypeID}
-                && $ArticleDataList->[1]
-                && $ArticleDataList->[1]->{ArticleSenderTypeID} eq $Self->{AgentSenderTypeID}
-                )
-            {
-                $FirstLevelSolutionTickets++;
-                next TICKETID;
-            }
-        }
+        # the scond article is from the agent
+        next TICKETID if $SenderTypeSecondArticle ne 'agent';
+
+        $FirstLevelSolutionTickets++;
     }
 
     return $FirstLevelSolutionTickets;
-}
-
-sub _ArticleDataGet {
-    my ( $Self, %Param ) = @_;
-
-    return if !$Param{TicketID};
-
-    # get id of article type 'phone'
-    if ( !$Self->{PhoneTypeID} ) {
-        $Self->{PhoneTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleTypeLookup(
-            ArticleType => 'phone',
-        );
-    }
-
-    # get id of article type 'email-external'
-    if ( !$Self->{EmailExternalTypeID} ) {
-        $Self->{EmailExternalTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleTypeLookup(
-            ArticleType => 'email-external',
-        );
-    }
-
-    # get id of article sender type 'agent'
-    if ( !$Self->{AgentSenderTypeID} ) {
-        $Self->{AgentSenderTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
-            SenderType => 'agent',
-        );
-    }
-
-    # get id of article sender type 'customer'
-    if ( !$Self->{CustomerSenderTypeID} ) {
-        $Self->{CustomerSenderTypeID} = $Kernel::OM->Get('Kernel::System::Ticket')->ArticleSenderTypeLookup(
-            SenderType => 'customer',
-        );
-    }
-
-    # ask database
-    $Self->{DBSlaveObject}->Prepare(
-        SQL => 'SELECT article_type_id, article_sender_type_id FROM article '
-            . 'WHERE ticket_id = ? AND article_type_id IN ( ?, ? ) AND '
-            . 'article_sender_type_id IN ( ?, ? ) '
-            . 'ORDER BY create_time',
-        Bind => [
-            \$Param{TicketID},
-            \$Self->{PhoneTypeID},
-            \$Self->{EmailExternalTypeID},
-            \$Self->{AgentSenderTypeID},
-            \$Self->{CustomerSenderTypeID},
-        ],
-        Limit => 3,
-    );
-
-    # fetch the result
-    my @ArticleDataList;
-    while ( my @Row = $Self->{DBSlaveObject}->FetchrowArray() ) {
-
-        my %ArticleData;
-        $ArticleData{ArticleTypeID}       = $Row[0];
-        $ArticleData{ArticleSenderTypeID} = $Row[1];
-
-        push @ArticleDataList, \%ArticleData;
-    }
-
-    return \@ArticleDataList;
 }
 
 sub ExportWrapper {
