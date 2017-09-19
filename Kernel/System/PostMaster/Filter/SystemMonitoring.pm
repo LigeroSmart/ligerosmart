@@ -684,11 +684,6 @@ sub _SetIncidentState {
     # we only found one config item
     my $ConfigItemID = shift @{$ConfigItemIDs};
 
-    # get config item
-    my $ConfigItem = $Self->{ConfigItemObject}->ConfigItemGet(
-        ConfigItemID => $ConfigItemID,
-    );
-
     # get latest version data of config item
     my $Version = $Self->{ConfigItemObject}->VersionGet(
         ConfigItemID => $ConfigItemID,
