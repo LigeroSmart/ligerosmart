@@ -336,10 +336,13 @@ sub _SetScreenDynamicFieldConfig {
         },
     );
 
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
     for my $Screen ( sort keys %ScreenDynamicFieldConfig ) {
 
         # get existing config for each screen
-        my $Config = $Kernel::OM->Get('Kernel::Config')->Get("Ticket::Frontend::$Screen");
+        my $Config = $ConfigObject->Get("Ticket::Frontend::$Screen");
 
         # get existing dynamic field config
         my %ExistingSetting = %{ $Config->{DynamicField} || {} };
@@ -361,11 +364,35 @@ sub _SetScreenDynamicFieldConfig {
             }
         }
 
-        # update the sysconfig
-        my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Ticket::Frontend::' . $Screen . '###DynamicField',
-            Value => \%NewSetting,
+        my $SettingName = 'Ticket::Frontend::' . $Screen . '###DynamicField';
+
+        # get default setting
+        my %DefaultSetting = $SysConfigObject->SettingGet(
+            Name    => $SettingName,
+            Default => 1,
+        );
+
+        # Lock setting.
+        my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+            Name      => $SettingName,
+            UserID    => 1,
+            Force     => 1,
+            DefaultID => $DefaultSetting{DefaultID},
+        );
+
+        # Update the configuration item.
+        $SysConfigObject->SettingUpdate(
+            Name              => $SettingName,
+            UserID            => 1,
+            IsValid           => 1,
+            EffectiveValue    => \%NewSetting,
+            ExclusiveLockGUID => $ExclusiveLockGUID,
+        );
+
+        # Unlock system config setting.
+        $SysConfigObject->SettingUnlock(
+            UserID    => 1,
+            DefaultID => $DefaultSetting{DefaultID},
         );
     }
 
@@ -839,11 +866,33 @@ sub _MigrateDTLInSysConfig {
                 }
             }
 
-            # update the config item
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
-                Key   => $Name,
-                Value => $Setting,
+            # Get default setting
+            my %DefaultSetting = $SysConfigObject->SettingGet(
+                Name    => $Name,
+                Default => 1,
+            );
+
+            # Lock setting.
+            my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+                Name      => $Name,
+                UserID    => 1,
+                Force     => 1,
+                DefaultID => $DefaultSetting{DefaultID},
+            );
+
+            # Update the configuration item.
+            $SysConfigObject->SettingUpdate(
+                Name              => $Name,
+                UserID            => 1,
+                IsValid           => 1,
+                EffectiveValue    => $Setting,
+                ExclusiveLockGUID => $ExclusiveLockGUID,
+            );
+
+            # Unlock system config setting.
+            $SysConfigObject->SettingUnlock(
+                UserID    => 1,
+                DefaultID => $DefaultSetting{DefaultID},
             );
         }
     }
@@ -884,11 +933,33 @@ sub _MigrateDTLInSysConfig {
                 $Setting->{$SettingItem} = $TTContent;
             }
 
-            # update the config item
-            my $Success = $SysConfigObject->ConfigItemUpdate(
-                Valid => 1,
-                Key   => $Name,
-                Value => $Setting,
+            # Get default setting
+            my %DefaultSetting = $SysConfigObject->SettingGet(
+                Name    => $Name,
+                Default => 1,
+            );
+
+            # Lock setting.
+            my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
+                Name      => $Name,
+                UserID    => 1,
+                Force     => 1,
+                DefaultID => $DefaultSetting{DefaultID},
+            );
+
+            # Update the configuration item.
+            $SysConfigObject->SettingUpdate(
+                Name              => $Name,
+                UserID            => 1,
+                IsValid           => 1,
+                EffectiveValue    => $Setting,
+                ExclusiveLockGUID => $ExclusiveLockGUID,
+            );
+
+            # Unlock system config setting.
+            $SysConfigObject->SettingUnlock(
+                UserID    => 1,
+                DefaultID => $DefaultSetting{DefaultID},
             );
         }
     }
