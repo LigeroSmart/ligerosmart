@@ -16,7 +16,6 @@
         <File Permission="660" Location="Kernel/Config/Files/FAQ.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/FAQ.xml" />
         <File Permission="660" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm" />
-        <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/FAQ.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/LanguageList.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm" />
