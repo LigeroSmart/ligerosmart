@@ -79,8 +79,9 @@ sub Run {
                 UserID        => 1,
             );
 
-            my $TranslatedServiceIncidentStateLabel = $LayoutObject->{LanguageObject}->Translate('Service Incident State');
-            my $TranslatedCurInciState              = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
+            my $TranslatedServiceIncidentStateLabel
+                = $LayoutObject->{LanguageObject}->Translate('Service Incident State');
+            my $TranslatedCurInciState = $LayoutObject->{LanguageObject}->Translate( $Service{CurInciState} );
 
             my $ServiceIncidentStateHTML = <<"END";
 
