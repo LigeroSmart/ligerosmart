@@ -22,7 +22,7 @@ my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
 $ConfigObject->Set(
-    Key   => 'CheckMXRecord',
+    Key   => 'CheckEmailAddresses',
     Value => 0,
 );
 
