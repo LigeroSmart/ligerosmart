@@ -26,6 +26,12 @@ $Helper->ConfigSettingChange(
     Value => 0,
 );
 
+# set send period to always send survey
+$Helper->ConfigSettingChange(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
+
 my $QueueRand = 'SomeQueue' . $Helper->GetRandomID();
 my $QueueID   = $Kernel::OM->Get('Kernel::System::Queue')->QueueAdd(
     Name            => $QueueRand,

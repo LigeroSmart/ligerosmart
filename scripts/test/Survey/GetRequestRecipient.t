@@ -21,6 +21,7 @@ $Kernel::OM->ObjectParamAdd(
 my $HelperObject = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+# Do not check emails.
 $ConfigObject->Set(
     Key   => 'CheckEmailAddresses',
     Value => 0,
