@@ -38,8 +38,6 @@ sub ChangeNumberBuild {
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    my $SystemID = $ConfigObject->Get('SystemID');
-
     if ( $ConfigObject->Get('ITSMChange::NumberGenerator::Date::UseFormattedCounter') ) {
         my $MinSize = $ConfigObject->Get('ITSMChange::NumberGenerator::MinCounterSize')
             || 5;
@@ -57,7 +55,7 @@ sub ChangeNumberBuild {
     my $ChangeNumber = $DateTimeSettings->{Year}
         . sprintf( "%.2u", $DateTimeSettings->{Month} )
         . sprintf( "%.2u", $DateTimeSettings->{Day} )
-        . $SystemID . $Counter;
+        . $Counter;
 
     return $ChangeNumber;
 }

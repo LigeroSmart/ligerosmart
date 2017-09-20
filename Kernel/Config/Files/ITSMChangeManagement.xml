@@ -4602,7 +4602,7 @@
             <String Regex="^[0-9]$">5</String>
         </Setting>
     </ConfigItem>
-        <ConfigItem Name="ITSMChange::NumberGenerator::Date::UseFormattedCounter" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::NumberGenerator::Date::UseFormattedCounter" Required="1" Valid="1">
         <Description Translatable="1">Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange</SubGroup>
