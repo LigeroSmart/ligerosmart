@@ -385,7 +385,7 @@ sub GetObjectAttributes {
             = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->StatsFieldParameterBuild(
             DynamicFieldConfig   => $DynamicFieldConfig,
             PossibleValuesFilter => $PossibleValuesFilter,
-            );
+        );
 
         if ( IsHashRefWithData($DynamicFieldStatsParameter) ) {
             if ( IsHashRefWithData( $DynamicFieldStatsParameter->{Values} ) ) {
@@ -556,8 +556,9 @@ sub _TicketDataGet {
 
     # ask database
     $Self->{DBSlaveObject}->Prepare(
-        SQL => 'SELECT queue_id, sla_id, create_time_unix '
-            . 'FROM ticket WHERE id = ?',
+        SQL => 'SELECT queue_id, sla_id, create_time
+            FROM ticket
+            WHERE id = ?',
         Bind  => [ \$Param{TicketID} ],
         Limit => 1,
     );
@@ -634,10 +635,16 @@ sub _TicketHistoryDataGet {
 
     # ask database
     $Self->{DBSlaveObject}->Prepare(
-        SQL => 'SELECT state_id, create_time FROM ticket_history '
-            . 'WHERE ticket_id = ? AND history_type_id IN ( ?, ? ) '
-            . 'ORDER BY create_time',
-        Bind => [ \$Param{TicketID}, \$Self->{StateUpdateID}, \$Self->{NewTicketID} ],
+        SQL => 'SELECT state_id, create_time
+            FROM ticket_history
+            WHERE ticket_id = ?
+            AND history_type_id IN ( ?, ? )
+            ORDER BY create_time',
+        Bind => [
+            \$Param{TicketID},
+            \$Self->{StateUpdateID},
+            \$Self->{NewTicketID},
+        ],
     );
 
     # fetch the result
