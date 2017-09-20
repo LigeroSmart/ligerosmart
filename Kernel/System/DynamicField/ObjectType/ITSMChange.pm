@@ -16,6 +16,8 @@ use Kernel::System::VariableCheck qw(:all);
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
+    'Kernel::System::ITSMChange',
+    'Kernel::System::Web::Request',
 );
 
 =head1 NAME
@@ -96,6 +98,80 @@ sub PostValueSet {
     # nothing to do
 
     return 1;
+}
+
+=head2 ObjectDataGet()
+
+retrieves the data of the current object.
+
+    my %ObjectData = $DynamicFieldITSMChangeHandlerObject->ObjectDataGet(
+        DynamicFieldConfig => $DynamicFieldConfig,      # complete config of the DynamicField
+        UserID             => 123,
+    );
+
+returns:
+
+    %ObjectData = (
+        ObjectID => 123,
+        Data     => {
+            ChangeNumber => '20101027000001',
+            Title        => 'some title',
+            ChangeID     => 123,
+            # ...
+        }
+    );
+
+=cut
+
+sub ObjectDataGet {
+    my ( $Self, %Param ) = @_;
+
+    # Check needed stuff.
+    for my $Needed (qw(DynamicFieldConfig UserID)) {
+        if ( !$Param{$Needed} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    # Check DynamicFieldConfig (general).
+    if ( !IsHashRefWithData( $Param{DynamicFieldConfig} ) ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "The field configuration is invalid",
+        );
+        return;
+    }
+
+    # Check DynamicFieldConfig (internally).
+    for my $Needed (qw(ID FieldType ObjectType)) {
+        if ( !$Param{DynamicFieldConfig}->{$Needed} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Needed in DynamicFieldConfig!",
+            );
+            return;
+        }
+    }
+
+    my $ChangeID = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam(
+        Param => 'ChangeID',
+    );
+
+    return if !$ChangeID;
+
+    my %ChangeData = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => $Param{UserID},
+    );
+
+    return (
+        ObjectID => $ChangeID,
+        Data     => \%ChangeData,
+    );
 }
 
 1;
