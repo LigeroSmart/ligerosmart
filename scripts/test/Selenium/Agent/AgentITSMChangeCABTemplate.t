@@ -139,8 +139,8 @@ $Selenium->RunTest(
         # delete previous CAB user first
         $Selenium->find_element( "#ChangeManager", 'css' )->send_keys($TestUserLogin);
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteManagerUser']")->click();
-        $Selenium->find_element( "#CABAgents$TestCABUserID", 'css' )->click();
+        $Selenium->find_element("//a[contains(., '$AutoCompleteManagerUser')]")->click();
+        $Selenium->find_element( "#CABAgents-$TestCABUserID", 'css' )->click();
 
         # verify CAB user deletion
         $Self->True(
