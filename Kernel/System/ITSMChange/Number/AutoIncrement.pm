@@ -99,10 +99,9 @@ sub _GetLastChangeNumber {
     return if $ChangeID && $ChangeID == 1;
 
     my %Change = $Kernel::OM->Get('Kernel::System::ITSMChange')->ChangeGet(
-        ChangeID      => $ChangeID,
-        DynamicFields => 0,
-        UserID        => 1,
-        LogNo         => 1,
+        ChangeID => $ChangeID,
+        UserID   => 1,
+        LogNo    => 1,
     );
 
     return if !%Change;
