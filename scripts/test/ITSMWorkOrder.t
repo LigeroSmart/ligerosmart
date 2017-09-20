@@ -437,7 +437,7 @@ my $TestCountMisc = $TestCount;
 # An unique indentifier, so that data from different test runs
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
-my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%06d-%010d',
+my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%.6s-%010d',
     $HelperObject->GetRandomNumber(),
     time();
 
