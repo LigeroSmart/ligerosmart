@@ -581,6 +581,7 @@ sub _CreateITSMDynamicFields {
 
         # otherwise if the field exists and the type match, update it to the ITSM definition
         else {
+
             my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
                 %{$DynamicField},
                 ID         => $DynamicFieldLookup{ $DynamicField->{Name} }->{ID},
@@ -633,6 +634,7 @@ sub _RenameDynamicFields {
     # get the definition for the dynamic fields for ITSMIncidentProblemManagement
     my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
 
+    my $DynamicFieldCounter;
     my $SuccessCounter;
 
     # rename the dynamic fields for ITSMIncidentProblemManagement
@@ -643,6 +645,10 @@ sub _RenameDynamicFields {
         my $DynamicFieldOld = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
             Name => $DynamicFieldNew->{OldName},
         );
+
+        next DYNAMICFIELD if !%{$DynamicFieldOld};
+
+        $DynamicFieldCounter++;
 
         # update the dynamic field
         my $Success = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldUpdate(
@@ -664,7 +670,7 @@ sub _RenameDynamicFields {
     }
 
     # error handling if not all dynamic fields could be updated successfully
-    if ( scalar @DynamicFields != $SuccessCounter ) {
+    if ( $DynamicFieldCounter != $SuccessCounter ) {
 
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -868,13 +874,13 @@ sub _MigrateDTLInSysConfig {
 
             # Get default setting
             my %DefaultSetting = $SysConfigObject->SettingGet(
-                Name    => $Name,
+                Name    => $Name . '###' . $MenuModule,
                 Default => 1,
             );
 
             # Lock setting.
             my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-                Name      => $Name,
+                Name      => $Name . '###' . $MenuModule,
                 UserID    => 1,
                 Force     => 1,
                 DefaultID => $DefaultSetting{DefaultID},
@@ -882,10 +888,10 @@ sub _MigrateDTLInSysConfig {
 
             # Update the configuration item.
             $SysConfigObject->SettingUpdate(
-                Name              => $Name,
+                Name              => $Name . '###' . $MenuModule,
                 UserID            => 1,
                 IsValid           => 1,
-                EffectiveValue    => $Setting,
+                EffectiveValue    => $Setting->{$MenuModule},
                 ExclusiveLockGUID => $ExclusiveLockGUID,
             );
 
@@ -935,13 +941,13 @@ sub _MigrateDTLInSysConfig {
 
             # Get default setting
             my %DefaultSetting = $SysConfigObject->SettingGet(
-                Name    => $Name,
+                Name    => $Name . '###' . $SettingItem,
                 Default => 1,
             );
 
             # Lock setting.
             my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-                Name      => $Name,
+                Name      => $Name . '###' . $SettingItem,
                 UserID    => 1,
                 Force     => 1,
                 DefaultID => $DefaultSetting{DefaultID},
@@ -949,10 +955,10 @@ sub _MigrateDTLInSysConfig {
 
             # Update the configuration item.
             $SysConfigObject->SettingUpdate(
-                Name              => $Name,
+                Name              => $Name . '###' . $SettingItem,
                 UserID            => 1,
                 IsValid           => 1,
-                EffectiveValue    => $Setting,
+                EffectiveValue    => $Setting->{$SettingItem},
                 ExclusiveLockGUID => $ExclusiveLockGUID,
             );
 
