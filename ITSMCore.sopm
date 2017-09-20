@@ -70,6 +70,7 @@
         <File Permission="660" Location="Kernel/System/SLA.pm" />
         <File Permission="660" Location="scripts/test/Console/Command/Admin/Service/Add.t" />
         <File Permission="660" Location="scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t" />
+        <File Permission="660" Location="scripts/test/GenericInterface/Operation/Ticket/TicketCreateIncludeTicketData.t" />
         <File Permission="660" Location="scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t" />
         <File Permission="660" Location="scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t" />
         <File Permission="660" Location="scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t" />
