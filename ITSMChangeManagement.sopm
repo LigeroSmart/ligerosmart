@@ -17,6 +17,8 @@
         <File Permission="660" Location="doc/itsm-change-management-database.png" />
         <File Permission="660" Location="Kernel/Config/Files/ITSMChangeManagement.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMChangeManagement.xml" />
+        <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMChange.pm" />
+        <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMWorkOrder.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/en_CA_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/en_GB_ITSMChangeManagement.pm" />
