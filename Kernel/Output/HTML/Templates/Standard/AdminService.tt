@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - dcfe3c0438b98da1edb1f47a458293f90179978e - Kernel/Output/HTML/Templates/Standard/AdminService.tt
+# $origin: otrs - 92579f9e7fdd4fe12a502394a3ad72e022291c46 - Kernel/Output/HTML/Templates/Standard/AdminService.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -129,7 +129,7 @@
 
                     <fieldset class="TableLike">
 
-                        <label for="Name">[% Translate("Service") | html %]: </label>
+                        <label class="Mandatory" for="Name"><span class="Marker">*</span> [% Translate("Service") | html %]:</label>
                         <div class="Field">
                             <input type="text" name="Name" id="Name" value="[% Data.NameShort | html %]" class="W50pc Validate_Required [% Data.NameInvalid | html %]" maxlength="200"/>
                             <div id="NameError" class="TooltipErrorMessage" ><p>[% Translate("This field is required.") | html %]</p></div>
@@ -162,7 +162,7 @@
                         <div class="Clear"></div>
 # ---
 
-                        <label for="ValidID">[% Translate("Validity") | html %]: </label>
+                        <label class="Mandatory" for="ValidID"><span class="Marker">*</span> [% Translate("Validity") | html %]:</label>
                         <div class="Field">
                             [% Data.ValidOptionStrg %]
                         </div>

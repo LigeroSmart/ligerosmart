@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - e3917b233791eac2e3ded5b817bb1666b2e04197 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# $origin: otrs - b2cea0ed73c4b2d9fae22585e858c45bf8265af2 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -119,8 +119,8 @@ $Selenium->RunTest(
         my $Count = 1;
         my $IsLinkedBreadcrumbText;
         for my $BreadcrumbText (
-            'Manage Customer-Services Relations',
-            'Allocate Services to Customer \''
+            'Manage Customer User-Services Relations',
+            'Allocate Services to Customer User \''
             . $CustomerUserName . ' '
             . $CustomerUserName . ' ('
             . $CustomerUserName . ')\''
