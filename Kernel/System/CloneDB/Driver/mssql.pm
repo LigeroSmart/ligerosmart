@@ -13,7 +13,7 @@ use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
 
-use base qw(Kernel::System::CloneDB::Driver::Base);
+use parent qw(Kernel::System::CloneDB::Driver::Base);
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
@@ -25,7 +25,7 @@ Kernel::System::CloneDB::Driver::mssql
 
 =head1 SYNOPSIS
 
-CloneDBs mssql Driver delegate
+CloneDBs C<mssql> Driver delegate
 
 =head1 PUBLIC INTERFACE
 

@@ -13,7 +13,7 @@ use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
 
-use base qw(Kernel::System::CloneDB::Driver::Base);
+use parent qw(Kernel::System::CloneDB::Driver::Base);
 
 our @ObjectDependencies = (
     'Kernel::System::Log',

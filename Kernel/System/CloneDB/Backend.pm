@@ -20,7 +20,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Package',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
     'Kernel::System::XML',
 );
 
@@ -459,12 +459,8 @@ sub PopulateTargetStructuresPost {
 sub PrintWithTime {    ## no critic
     my $Self = shift;
 
-    # get time object
-    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
-
-    my $TimeStamp = $TimeObject->SystemTime2TimeStamp(
-        SystemTime => $TimeObject->SystemTime(),
-    );
+    # Get current timestamp.
+    my $TimeStamp = $Kernel::OM->Create('Kernel::System::DateTime')->ToString();
 
     print "[$TimeStamp] ", @_;
 

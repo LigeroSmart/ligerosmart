@@ -22,7 +22,7 @@ our @ObjectDependencies = (
     'Kernel::System::DB',
     'Kernel::System::Encode',
     'Kernel::System::Log',
-    'Kernel::System::Time',
+    'Kernel::System::DateTime',
 );
 
 =head1 NAME
@@ -417,9 +417,8 @@ sub DataTransfer {
 sub PrintWithTime {    ## no critic
     my $Self = shift;
 
-    my $TimeStamp = $Kernel::OM->Get('Kernel::System::Time')->SystemTime2TimeStamp(
-        SystemTime => $Kernel::OM->Get('Kernel::System::Time')->SystemTime(),
-    );
+    # Get current timestamp.
+    my $TimeStamp = $Kernel::OM->Create('Kernel::System::DateTime')->ToString();
 
     print "[$TimeStamp] ", @_;
 
