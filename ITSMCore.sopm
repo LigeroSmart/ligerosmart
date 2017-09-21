@@ -98,6 +98,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Output/Preferences/Agent/CustomService.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/TicketZoom/TicketInformation.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/ToolBar/TicketService.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Output/PDFTicket.t" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmDialog.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.Service.js" />

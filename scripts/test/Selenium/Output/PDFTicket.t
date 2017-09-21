@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4e4f13a7e40b064e951f21a7b607c844754bce84 - scripts/test/Selenium/Output/PDFTicket.t
+# $origin: otrs - 306880b7c19c1f9117b08873a2f5090f4776e5be - scripts/test/Selenium/Output/PDFTicket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -76,58 +76,59 @@ $Selenium->RunTest(
 # ---
 # ITSMCore
 # ---
-        my $ServiceTypes = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-            Class => 'ITSM::Service::Type',
-            Valid => 1,
-        );
-        $ServiceTypes = {reverse %{$ServiceTypes}};
+
+# get the list of service types from general catalog
+my $ServiceTypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::Service::Type',
+);
+
+# build a lookup hash
+my %ServiceTypeName2ID = reverse %{ $ServiceTypeList };
+
+# get the list of sla types from general catalog
+my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+    Class => 'ITSM::SLA::Type',
+);
+
+# build a lookup hash
+my %SLATypeName2ID = reverse %{ $SLATypeList };
 # ---
 
         # Create Service.
         my $ServiceName = 'Servi' . $RandomID;
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
-            ValidID => 1,
-            Comment => 'Selenium Service',
-            UserID  => 1,
 # ---
 # ITSMCore
 # ---
-            TypeID      => $ServiceTypes->{Other},
-            Criticality => '1 very low',
-
+            TypeID      => $ServiceTypeName2ID{Training},
+            Criticality => '3 normal',
 # ---
+            ValidID => 1,
+            Comment => 'Selenium Service',
+            UserID  => 1,
         );
         $Self->True(
             $ServiceID,
             "Created ServiceID $ServiceID"
         );
-# ---
-# ITSMCore
-# ---
-        my $SLATypes = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
-            Class => 'ITSM::SLA::Type',
-            Valid => 1,
-        );
-        $SLATypes = {reverse %{$SLATypes}};
-# ---
 
         # Create SLA.
         my $SLAName = 'SL' . $RandomID;
         my $SLAID   = $Kernel::OM->Get('Kernel::System::SLA')->SLAAdd(
             ServiceIDs        => [$ServiceID],
             Name              => $SLAName,
+# ---
+# ITSMCore
+# ---
+            TypeID => $SLATypeName2ID{Other},
+# ---
             FirstResponseTime => 50,
             UpdateTime        => 100,
             SolutionTime      => 200,
             ValidID           => 1,
             Comment           => 'Selenium SLA',
             UserID            => 1,
-# ---
-# ITSMCore
-# ---
-            TypeID            => $SLATypes->{Other},
-# ---
         );
         $Self->True(
             $QueueID,
