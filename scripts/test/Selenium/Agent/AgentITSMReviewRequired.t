@@ -138,9 +138,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#Attribute').val('$ReviewRequiredID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( ".AddButton", 'css' )->click();
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( ".AddButton", 'css' )->click();
 
         # search tickets by review required and ticket title
         $Selenium->find_element("//input[\@name='Title']")->send_keys($TicketTitle);
