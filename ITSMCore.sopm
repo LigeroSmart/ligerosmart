@@ -75,6 +75,7 @@
         <File Permission="660" Location="scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t" />
         <File Permission="660" Location="scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t" />
         <File Permission="660" Location="scripts/test/ProcessManagement/Process.t" />
+        <File Permission="660" Location="scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t" />
         <File Permission="660" Location="scripts/test/Ticket/TicketACL.t" />
         <File Permission="660" Location="scripts/test/CustomerUserService.t" />
         <File Permission="660" Location="scripts/test/ITSMCIPAllocate.t" />
