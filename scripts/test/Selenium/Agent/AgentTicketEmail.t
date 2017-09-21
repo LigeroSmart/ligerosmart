@@ -421,7 +421,7 @@ $Selenium->RunTest(
         # check for ITSM updated fields
         for my $UpdateText (qw(Impact Criticality)) {
             $Self->True(
-                index( $Selenium->get_page_source(), "Updated: FieldName=ITSM$UpdateText" ) > -1,
+                index( $Selenium->get_page_source(), "Changed dynamic field ITSM$UpdateText" ) > -1,
                 "DynamicFieldUpdate $UpdateText - found",
             );
         }
