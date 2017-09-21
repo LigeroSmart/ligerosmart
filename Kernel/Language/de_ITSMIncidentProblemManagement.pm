@@ -36,7 +36,7 @@ sub Data {
     $Self->{Translation}->{'Rejected'} = '';
     $Self->{Translation}->{'Repair Start Time'} = 'Reparatur Startzeit';
     $Self->{Translation}->{'Recovery Start Time'} = 'Wiederherstellung Startzeit';
-    $Self->{Translation}->{'Decision Date'} = 'Entscheidung';
+    $Self->{Translation}->{'Decision Date'} = 'Entscheidungsdatum';
     $Self->{Translation}->{'Due Date'} = 'Fälligkeitsdatum';
 
     # Database XML Definition: ITSMIncidentProblemManagement.sopm
