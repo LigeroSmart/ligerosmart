@@ -72,7 +72,8 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#RepairStartTimeUsed").length' );
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#DynamicField_ITSMRepairStartTimeUsed").length' );
 
         # check screen
         for my $ID (
@@ -110,7 +111,7 @@ $Selenium->RunTest(
         # check for TicketDynamicFieldUpdates
         for my $UpdateText (qw(RepairStartTime RecoveryStartTime DueDate)) {
             $Self->True(
-                index( $Selenium->get_page_source(), "Updated: FieldName=ITSM$UpdateText" ) > -1,
+                index( $Selenium->get_page_source(), "Changed dynamic field ITSM$UpdateText" ) > -1,
                 "DynamicFieldUpdate $UpdateText - found",
             );
         }
