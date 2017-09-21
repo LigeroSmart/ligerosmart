@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - faefc9d2525600531ecaaeb46c23361765f75f04 - scripts/test/Selenium/Output/TicketZoom/TicketInformation.t
+# $origin: otrs - 342d1f157aaba3a325cc3d684888dc1943ef925c - scripts/test/Selenium/Output/TicketZoom/TicketInformation.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
