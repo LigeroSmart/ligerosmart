@@ -146,9 +146,9 @@ $Selenium->RunTest(
 
         # check for printed values of test ticket
         $Self->True(
-            index( $Selenium->get_page_source(), "Priority:" ) > -1
+            index( $Selenium->get_page_source(), "Priority" ) > -1
                 && index( $Selenium->get_page_source(), "4 high" ) > -1,
-            "Priority: 4 high - found on print screen",
+            "Priority 4 high - found on print screen",
         );
         $Self->True(
             index( $Selenium->get_page_source(), "Impact:" ) > -1
