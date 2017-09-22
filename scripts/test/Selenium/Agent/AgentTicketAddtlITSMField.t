@@ -73,7 +73,8 @@ $Selenium->RunTest(
 
         # wait until page has loaded, if necessary
         $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $("#DynamicField_ITSMRepairStartTimeUsed").length' );
+            JavaScript => 'return typeof($) === "function" && $("#DynamicField_ITSMRepairStartTimeUsed").length'
+        );
 
         # check screen
         for my $ID (
