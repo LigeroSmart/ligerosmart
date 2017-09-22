@@ -4626,8 +4626,8 @@
                 <Item Key="Key" Translatable="1">Screen</Item>
                 <Item Key="Data">
                     <Hash>
-                        <Item Key="AgentITSMWorkOrderZoom">WorkorderZoom</Item>
-                        <Item Key="AgentITSMChangeZoom">ChangeZoom</Item>
+                        <Item Key="AgentITSMWorkOrderZoom" Translatable="1">Workorder Zoom</Item>
+                        <Item Key="AgentITSMChangeZoom" Translatable="1">Change Zoom</Item>
                     </Hash>
                 </Item>
                 <Item Key="DataSelected">AgentITSMWorkOrderZoom</Item>
