@@ -30,6 +30,8 @@ sub Run {
     # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
+    my $JSON;
+
     # Show the service incident state and signal.
     if ( $Self->{Subaction} eq 'GetServiceIncidentState' ) {
 
@@ -67,17 +69,17 @@ sub Run {
         }
 
         # encode response to JSON
-        my $JSON = $LayoutObject->JSONEncode(
+        $JSON = $LayoutObject->JSONEncode(
             Data => \%Response,
         );
-
-        return $LayoutObject->Attachment(
-            ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
-            Content     => $JSON,
-            Type        => 'inline',
-            NoCache     => 1,
-        );
     }
+
+    return $LayoutObject->Attachment(
+        ContentType => 'application/json; charset=' . $LayoutObject->{Charset},
+        Content     => $JSON,
+        Type        => 'inline',
+        NoCache     => 1,
+    );
 }
 
 1;
