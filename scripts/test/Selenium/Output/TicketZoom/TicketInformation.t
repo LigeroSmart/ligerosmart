@@ -503,6 +503,14 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 SQL     => "DELETE FROM sla WHERE id = $SLAID",
                 Message => "SLAID $SLAID is deleted",
             },
+# ---
+# ITSMCore
+# ---
+            {
+                SQL     => "DELETE FROM service_preferences WHERE service_id = $ServiceID",
+                Message => "Service preferences for $ServiceID is deleted",
+            },
+# ---
             {
                 SQL     => "DELETE FROM service WHERE id = $ServiceID",
                 Message => "ServiceID $ServiceID is deleted",
