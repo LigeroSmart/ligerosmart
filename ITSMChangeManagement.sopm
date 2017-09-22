@@ -1731,7 +1731,7 @@
                 <UniqueColumn Name="notification_type" />
             </Unique>
         </TableCreate>
-        <TableCreate Name="change_number_counter" Version="6.0.1">
+        <TableCreate Name="change_number_counter" Version="5.0.91">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
             <Column Name="counter" Required="true" Type="BIGINT" />
             <Column Name="counter_uid" Required="true" Size="32" Type="VARCHAR" />
