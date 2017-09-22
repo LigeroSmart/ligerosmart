@@ -5134,7 +5134,7 @@
             <Item ValueType="String" ValueRegex="^[0-9]$">5</Item>
         </Value>
     </Setting>
-        <Setting Name="ITSMChange::NumberGenerator::Date::UseFormattedCounter" Required="1" Valid="1">
+    <Setting Name="ITSMChange::NumberGenerator::Date::UseFormattedCounter" Required="1" Valid="1">
         <Description Translatable="1">Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).</Description>
         <Navigation>Core::ITSMChange</Navigation>
         <Value>
