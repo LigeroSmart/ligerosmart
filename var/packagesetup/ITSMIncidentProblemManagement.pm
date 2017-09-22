@@ -30,17 +30,15 @@ our @ObjectDependencies = (
 
 ITSMIncidentProblemManagement.pm - code to execute during package installation
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
 =cut
 
-=item new()
+=head2 new()
 
 create an object
 
@@ -80,7 +78,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -132,7 +130,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeReinstall()
+=head2 CodeReinstall()
 
 run the code reinstall part
 
@@ -152,7 +150,7 @@ sub CodeReinstall {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_3_2_91()
+=head2 CodeUpgradeFromLowerThan_3_2_91()
 
 This function is only executed if the installed module version is smaller than 3.2.91 (3.3.0 Beta 1).
 
@@ -172,7 +170,7 @@ sub CodeUpgradeFromLowerThan_3_2_91 {    ## no critic
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_2()
+=head2 CodeUpgradeFromLowerThan_4_0_2()
 
 This function is only executed if the installed module version is smaller than 4.0.2.
 
@@ -189,7 +187,7 @@ sub CodeUpgradeFromLowerThan_4_0_2 {    ## no critic
     return 1;
 }
 
-=item CodeUpgrade()
+=head2 CodeUpgrade()
 
 run the code upgrade part
 
@@ -212,7 +210,7 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -261,9 +259,9 @@ sub CodeUninstall {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
-=item _SetScreenDynamicFieldConfig()
+=head2 _SetScreenDynamicFieldConfig()
 
 This function sets the screen dynamic screen config
 
@@ -399,7 +397,7 @@ sub _SetScreenDynamicFieldConfig {
     return 1;
 }
 
-=item _SetStateValid()
+=head2 _SetStateValid()
 
 sets states to valid|invalid
 
@@ -448,7 +446,7 @@ sub _SetStateValid {
     return 1;
 }
 
-=item _SetTypeValid()
+=head2 _SetTypeValid()
 
 sets types to valid|invalid
 
@@ -508,7 +506,7 @@ sub _SetTypeValid {
     return 1;
 }
 
-=item _CreateITSMDynamicFields()
+=head2 _CreateITSMDynamicFields()
 
 creates all dynamic fields that are necessary for ITSM
 
@@ -620,7 +618,7 @@ sub _CreateITSMDynamicFields {
     return 1;
 }
 
-=item _RenameDynamicFields()
+=head2 _RenameDynamicFields()
 
 This function renames the dynamic fields for ITSMIncidentProblemManagement.
 
@@ -682,7 +680,7 @@ sub _RenameDynamicFields {
     return 1;
 }
 
-=item _GetITSMDynamicFieldsDefinition()
+=head2 _GetITSMDynamicFieldsDefinition()
 
 returns the definition for ITSM related dynamic fields
 
@@ -793,7 +791,7 @@ sub _GetITSMDynamicFieldsDefinition {
     return @DynamicFields;
 }
 
-=item _MakeDynamicFieldsInternal()
+=head2 _MakeDynamicFieldsInternal()
 
 Converts the dynamic fields to internal fields, which means that they can not be deleted in the admin interface.
 
@@ -822,9 +820,9 @@ sub _MakeDynamicFieldsInternal {
     return 1;
 }
 
-=item _MigrateDTLInSysConfig()
+=head2 _MigrateDTLInSysConfig()
 
-Converts DTL settings in sysconfig to TT.
+Converts C<DTL> settings in sysconfig to C<TT>.
 
     my $Result = $CodeObject->_MigrateDTLInSysConfig();
 
@@ -974,10 +972,6 @@ sub _MigrateDTLInSysConfig {
 }
 
 1;
-
-=end Internal:
-
-=back
 
 =head1 TERMS AND CONDITIONS
 
