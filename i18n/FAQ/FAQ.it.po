@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-08-04 19:00+0000\n"
-"PO-Revision-Date: 2017-08-05 00:04+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 08:19+0000\n"
+"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,16 +42,16 @@ msgid "FAQ Category Management"
 msgstr "Gestioni Categorie FAQ"
 
 #. Template: AgentFAQCategory
+msgid "Add FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Edit FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
 msgid "Add category"
 msgstr "Aggiungi categoria"
-
-#. Template: AgentFAQCategory
-msgid "Delete Category"
-msgstr "Elimina categoria"
-
-#. Template: AgentFAQCategory
-msgid "Ok"
-msgstr "Ok"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
@@ -135,6 +135,14 @@ msgstr "Nessuna sottocategoria trovata."
 msgid "History of"
 msgstr "Storico di"
 
+#. Template: AgentFAQHistory
+msgid "History Content"
+msgstr "Contenuto dello storico"
+
+#. Template: AgentFAQHistory
+msgid "Createtime"
+msgstr "Istante di creazione"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "Nessun dato trovato nel Riepilogo FAQ."
@@ -144,16 +152,20 @@ msgid "FAQ Language Management"
 msgstr "Gestione Linguaggio FAQ"
 
 #. Template: AgentFAQLanguage
+msgid "Add FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Edit FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
 msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
 msgstr "Aggiungi lingua"
-
-#. Template: AgentFAQLanguage
-msgid "Delete Language %s"
-msgstr "Elimina Lingua %s"
 
 #. Template: AgentFAQLanguage
 msgid "Add Language"
@@ -386,6 +398,10 @@ msgid "Only FAQ articles with rate..."
 msgstr "Solo articoli di FAQ con percentuale..."
 
 #. Template: CustomerFAQSearch
+msgid "Time restrictions"
+msgstr "Restrizioni di tempo"
+
+#. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
 msgstr "Solo articoli di FAQ creati"
 
@@ -457,6 +473,14 @@ msgstr ""
 msgid "Was not able to delete the category %s!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Delete Category"
+msgstr "Elimina categoria"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Ok"
+msgstr "Ok"
+
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr ""
@@ -520,6 +544,10 @@ msgstr "Linguaggio FAQ aggiunto!"
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Delete Language %s"
+msgstr "Elimina Lingua %s"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -724,6 +752,10 @@ msgstr "Tempo di durata nella Cache delle voci di FAQ"
 #. SysConfig
 msgid "Category Management"
 msgstr "Gestione Categorie"
+
+#. SysConfig
+msgid "Category Management."
+msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ Print."
@@ -934,90 +966,69 @@ msgid "Delete this FAQ"
 msgstr "Elimina questa FAQ"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
-"settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+"Dynamic fields shown in the FAQ overview screen of the customer interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ overview screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+"Dynamic fields shown in the FAQ overview screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ overview screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ print screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
+"Dynamic fields shown in the FAQ search screen of the customer interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
+msgid "Dynamic fields shown in the FAQ search screen of the public interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled."
+"interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
 msgstr ""
 
 #. SysConfig
@@ -1062,6 +1073,10 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ Edit."
+msgstr ""
+
+#. SysConfig
+msgid "FAQ History."
 msgstr ""
 
 #. SysConfig
@@ -1131,6 +1146,10 @@ msgstr "Registro"
 #. SysConfig
 msgid "Language Management"
 msgstr "Gestione della lingua"
+
+#. SysConfig
+msgid "Language Management."
+msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1257,12 +1276,16 @@ msgid "Module to generate html OpenSearch profile for short FAQ search."
 msgstr ""
 
 #. SysConfig
-msgid "New FAQ Article"
-msgstr "Nuovo articolo FAQ"
+msgid "New FAQ Article."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "I nuovi articoli FAQ richiedono approvazione prima di essere pubblicati."
+
+#. SysConfig
+msgid "Number"
+msgstr "Numero"
 
 #. SysConfig
 msgid ""
@@ -1299,6 +1322,10 @@ msgstr "Numero di elementi mostrati nei creati di recente."
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "Numero di elementi mostrati nella funzionalità principali 10."
+
+#. SysConfig
+msgid "Other Settings"
+msgstr "Altre impostazioni"
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
@@ -1355,6 +1382,24 @@ msgstr ""
 #. SysConfig
 msgid "Search FAQ"
 msgstr "Cerca FAQ"
+
+#. SysConfig
+msgid "Search FAQ Small."
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Select how many items should be shown in Journal Overview \"Small\" by "
+"default."
+msgstr ""
+
+#. SysConfig
+msgid "Select how many items should be shown in Overview \"Small\" by default."
+msgstr ""
 
 #. SysConfig
 msgid ""

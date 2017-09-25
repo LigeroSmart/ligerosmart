@@ -1,13 +1,14 @@
 # 
 # Translators:
+# Dusan Vuckovic, 2017
 # Jaroslav Balaz <balazj315@gmail.com>, 2015
 # Милорад Јовановић <j.milorad@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-08-04 19:00+0000\n"
-"PO-Revision-Date: 2017-08-05 00:04+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 08:19+0000\n"
+"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,16 +37,16 @@ msgid "FAQ Category Management"
 msgstr "Управљање ЧПП категоријама"
 
 #. Template: AgentFAQCategory
+msgid "Add FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Edit FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
 msgid "Add category"
 msgstr "Додај категорију"
-
-#. Template: AgentFAQCategory
-msgid "Delete Category"
-msgstr "Обриши категорију"
-
-#. Template: AgentFAQCategory
-msgid "Ok"
-msgstr "У реду"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
@@ -129,6 +130,14 @@ msgstr "Подкатегорије нису пронађене."
 msgid "History of"
 msgstr "Историја од"
 
+#. Template: AgentFAQHistory
+msgid "History Content"
+msgstr "Садржај историје"
+
+#. Template: AgentFAQHistory
+msgid "Createtime"
+msgstr "Време креирања"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "Нису пронађени подаци ЧПП дневника."
@@ -138,16 +147,20 @@ msgid "FAQ Language Management"
 msgstr "Управљање ЧПП језицима"
 
 #. Template: AgentFAQLanguage
+msgid "Add FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Edit FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
 msgstr "Употребите ову функцију ако желите да користите више језика."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
 msgstr "Додај језик"
-
-#. Template: AgentFAQLanguage
-msgid "Delete Language %s"
-msgstr "Обриши језик %s"
 
 #. Template: AgentFAQLanguage
 msgid "Add Language"
@@ -353,11 +366,11 @@ msgstr "Ово може да буде од помоћи"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "Корисни ресурси за унети предмет и текст нису пронађени."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "За листу корисних ресурса, молимо унесите предмет или текст."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -378,6 +391,10 @@ msgstr "Ограничења оцењивања"
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
 msgstr "Само ЧПП чланци са оценом..."
+
+#. Template: CustomerFAQSearch
+msgid "Time restrictions"
+msgstr "Временска ограничења"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
@@ -413,7 +430,7 @@ msgstr "Потребна вам је „rw” дозвола!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr ""
+msgstr "Категорије у којој корисник има приступ без ограничења нису пронађене!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
@@ -451,6 +468,14 @@ msgstr "Није дат ИД Категорије!"
 msgid "Was not able to delete the category %s!"
 msgstr "Није било могуће обрисати категорију %s!"
 
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Delete Category"
+msgstr "Обриши категорију"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Ok"
+msgstr "У реду"
+
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "Није дат ИД Ставке!"
@@ -481,11 +506,11 @@ msgstr "ЧПП дневник"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Need config option FAQ::Frontend::Overview"
-msgstr ""
+msgstr "Потребна конфигурациона опција FAQ::Frontend::Overview"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
-msgstr ""
+msgstr "Конфигурациона опција FAQ::Frontend::Overview мора да буде HASH референца!"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
@@ -514,6 +539,10 @@ msgstr "Додат ЧПП језик!"
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
 msgstr "Није било могуће обрисати језик %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Delete Language %s"
+msgstr "Обриши језик %s"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -633,11 +662,11 @@ msgstr "Није дат Тип!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Type must be either LastCreate or LastChange or Top10!"
-msgstr ""
+msgstr "Type мора бити LastCreate, LastChange или Top10!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Can't create RSS file!"
-msgstr ""
+msgstr "RSS датотека не моће бити снимљена!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
@@ -720,6 +749,10 @@ msgid "Category Management"
 msgstr "Управљање категоријама"
 
 #. SysConfig
+msgid "Category Management."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Print."
 msgstr "Штампање клијентских ЧПП."
 
@@ -737,7 +770,7 @@ msgstr "Клијентска ЧПП."
 
 #. SysConfig
 msgid "CustomerFAQRelatedArticles."
-msgstr ""
+msgstr "CustomerFAQRelatedArticles."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -928,91 +961,70 @@ msgid "Delete this FAQ"
 msgstr "Обриши ово ЧПП"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
-"settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Динамичка поља приказана на екрану додавања ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Динамичка поља приказана на екрану измене ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
+"Dynamic fields shown in the FAQ overview screen of the customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ overview screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Динамичка поља приказана на екрану прегледа ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
+"Dynamic fields shown in the FAQ overview screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ overview screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Динамичка поља приказана на екрану прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно."
+"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ print screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану за штампу ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
+"Dynamic fields shown in the FAQ search screen of the customer interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану за штампу ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану за штампу ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr "Динамичка поља приказана на екрану претраге ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr "Динамичка поља приказана на екрану претраге ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr "Динамичка поља приказана на екрану претраге ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује."
+msgid "Dynamic fields shown in the FAQ search screen of the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану прегледа ЧПП малог формата у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
+"interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану детаљног прегледа ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
+msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану детаљног прегледа ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
+msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Динамичка поља приказана на екрану детаљног прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено."
+msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
+msgstr ""
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1057,6 +1069,10 @@ msgstr "Обриши ЧПП."
 #. SysConfig
 msgid "FAQ Edit."
 msgstr "Уреди ЧПП."
+
+#. SysConfig
+msgid "FAQ History."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1125,6 +1141,10 @@ msgstr "Дневник"
 #. SysConfig
 msgid "Language Management"
 msgstr "Управљање језицима"
+
+#. SysConfig
+msgid "Language Management."
+msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1251,12 +1271,16 @@ msgid "Module to generate html OpenSearch profile for short FAQ search."
 msgstr "Модул за генерисање „html OpenSearch” профила за кратку ЧПП претрагу."
 
 #. SysConfig
-msgid "New FAQ Article"
-msgstr "Нови ЧПП чланак"
+msgid "New FAQ Article."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "Нови ЧПП чланци требају бити одобрени пре објављивања."
+
+#. SysConfig
+msgid "Number"
+msgstr "Број"
 
 #. SysConfig
 msgid ""
@@ -1295,8 +1319,12 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "Број приказаних ставки у \"првих 10\" ."
 
 #. SysConfig
+msgid "Other Settings"
+msgstr "Друга подешавања"
+
+#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
-msgstr ""
+msgstr "Излазни филтер за убацивање JavaScript у CustomerTicketMessage екран."
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
@@ -1349,6 +1377,24 @@ msgstr "С"
 #. SysConfig
 msgid "Search FAQ"
 msgstr "Претражи ЧПП"
+
+#. SysConfig
+msgid "Search FAQ Small."
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Select how many items should be shown in Journal Overview \"Small\" by "
+"default."
+msgstr ""
+
+#. SysConfig
+msgid "Select how many items should be shown in Overview \"Small\" by default."
+msgstr ""
 
 #. SysConfig
 msgid ""

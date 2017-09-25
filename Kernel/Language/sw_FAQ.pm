@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Sehemu ya menejimenti ya maswali';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = 'Ongeza sehemu';
-    $Self->{Translation}->{'Delete Category'} = 'Futa sehemu';
-    $Self->{Translation}->{'Ok'} = 'Sawa';
     $Self->{Translation}->{'Add Category'} = 'Ongeza sehemu';
     $Self->{Translation}->{'Edit Category'} = 'Hariri sehemu';
     $Self->{Translation}->{'Subcategory of'} = 'Kijisehemu cha';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'Historia ya';
+    $Self->{Translation}->{'History Content'} = 'Maudhui ya historia';
+    $Self->{Translation}->{'Createtime'} = 'Muda wa kutengeneza';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Data za jarida la maswali hazijapatikana.';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Menejimenti ya lugha ya maswali';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '';
     $Self->{Translation}->{'Add language'} = 'Ongeza lugha';
-    $Self->{Translation}->{'Delete Language %s'} = 'Futa Lugha';
     $Self->{Translation}->{'Add Language'} = 'Ongeza Lugha';
     $Self->{Translation}->{'Edit Language'} = 'Hariri Lugha';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Je unataka kufuta hii lugha?';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Makala ya maswali yenye kura ';
     $Self->{Translation}->{'Rate restrictions'} = 'Vizuizi vya thamani';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Makala ya maswali yaliyothaminishwa';
+    $Self->{Translation}->{'Time restrictions'} = 'Vizuizi vya muda';
     $Self->{Translation}->{'Only FAQ articles created'} = 'Makala ya maswali yaliyotengenezwa tu';
     $Self->{Translation}->{'Only FAQ articles created between'} = 'Makala ya maswali yalitengenezwa kati ya';
     $Self->{Translation}->{'Search-Profile as Template?'} = 'Tafuta maelezo mafupi kama kielezo';
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = 'Sehemu ya maswali iliyoongezwa!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'Delete Category'} = 'Futa sehemu';
+    $Self->{Translation}->{'Ok'} = 'Sawa';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '';
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Lugha ya maswali imebadilishwa!';
     $Self->{Translation}->{'FAQ language added!'} = 'Lugha ya maswali  imeongezwa!';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Delete Language %s'} = 'Futa Lugha';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Mabadiliko ya mwisho';
@@ -282,6 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Rangi ya CSS kwa matokeo ya kura';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Muda wa maswali yaliyyoulizwa mara myingi kufutika kutoka kwenye kumbukumbu';
     $Self->{Translation}->{'Category Management'} = 'Usimamizi wa kategori';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
@@ -348,34 +356,35 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Ufafanuzi wa uga ya matini huru ya kipengele cha maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Futa haya maswali yaliyoulizwa mara kwa mara';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya kuongeza maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and takiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya kuhariri ya maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala.Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and takiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya mapitio ya maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and takiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya mapitio ya maswali yanayoulizwa mara kwa mara ya kiolesura cha umma. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and takiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya kuchapisha ya maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya mapitio ya maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya mapitio ya maswali yanayoulizwa mara kwa mara ya kiolesura cha umma. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya kutafuta  maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and ilivyoonyeshwa na chaguo-msingi.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya kutafuta  maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and ilivyoonyeshwa na chaguo-msingi.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya kutafuta  maswali yanayoulizwa mara kwa mara ya kiolesura cha umma. Mipango inayowezekana: 0= Lemazwa, 1 = wezesha, 2 = wezesha and ilivyoonyeshwa na chaguo-msingi.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ya maumbizo madogo ya mapitio ya maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala. 0= Lemazwa, 1 = wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ilikuzwa ya maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala. 0= Lemazwa, 1 = wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ilikuzwa ya maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja. 0= Lemazwa, 1 = wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye uwezo imeonyeshwa katika skrini ilikuzwa ya maswali yanayoulizwa mara kwa mara ya kiolesura cha umma. 0= Lemazwa, 1 = wezesha.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Hariri makala hii';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Wezesha Lugha nyingi nyingi katika maswali haya.';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = '';
     $Self->{Translation}->{'FAQ Delete.'} = '';
     $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = ' Kikomo "kidogo" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Kikomo "kidogo" cha mapitio ya maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'FAQ Print.'} = '';
@@ -405,6 +415,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Kiolesura ambacho utafutaji wa haraka unatakiwa kuonyeshwa.';
     $Self->{Translation}->{'Journal'} = 'Jarida';
     $Self->{Translation}->{'Language Management'} = 'Menejimenti ya lugha';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Unganishga kitu kingine na kipengele hiki cha  maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -449,8 +460,9 @@ sub Data {
         'Moduli ya kuzalisha maelezo mafupi ya utafutaji wa wazi wa HTML kwa utafutaji mfupi wa maswali yanayoulizwa mara kwa mara katika kiolesura cha umma. ';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = 'Makala mpya ya maswali';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Makala mpya ya maswali yanahitaji idhinisho kabla hayatolewa.';
+    $Self->{Translation}->{'Number'} = 'Namba';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Namba ya makala ya maswali yanayoulizwa mara kwa mara yatakayoonyeshwa katika kitafuta maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,6 +474,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Namba ya vitu vilivoonyweshwa katika mabadiliko ya mwisho.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Namba ya vitu vilivotengenezwa mwishoni.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Namba ya vitu vilivoonyweshwa katika vipengele 10 bora.';
+    $Self->{Translation}->{'Other Settings'} = 'Mipangilio mingine';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Thaminisho la kura. Funguo lazima iwe kwenye asilimia.';
     $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Tafuta maswali';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Seti urefu wa chaguo-msingi (katika pikseli) ya ndani ya mstari wa ugo wa HTML katika ukuzaji wa maswali yanayoulizwa mara kwa mara ya wakala.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'nje (mteja)';
     $Self->{Translation}->{'internal (agent)'} = 'ndani (wakala)';
     $Self->{Translation}->{'public (public)'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

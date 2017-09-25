@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-08-04 19:00+0000\n"
-"PO-Revision-Date: 2017-08-05 00:04+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 08:19+0000\n"
+"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,16 +37,16 @@ msgid "FAQ Category Management"
 msgstr "FAQ カテゴリ管理"
 
 #. Template: AgentFAQCategory
+msgid "Add FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
+msgid "Edit FAQ Category"
+msgstr ""
+
+#. Template: AgentFAQCategory
 msgid "Add category"
 msgstr "カテゴリを追加"
-
-#. Template: AgentFAQCategory
-msgid "Delete Category"
-msgstr "カテゴリを削除"
-
-#. Template: AgentFAQCategory
-msgid "Ok"
-msgstr "はい"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
@@ -130,6 +130,14 @@ msgstr "子カテゴリはありません。"
 msgid "History of"
 msgstr "履歴: "
 
+#. Template: AgentFAQHistory
+msgid "History Content"
+msgstr "履歴内容"
+
+#. Template: AgentFAQHistory
+msgid "Createtime"
+msgstr "作成日時"
+
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
 msgstr "ジャーナルの情報がありません。"
@@ -139,16 +147,20 @@ msgid "FAQ Language Management"
 msgstr "FAQ 言語管理"
 
 #. Template: AgentFAQLanguage
+msgid "Add FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
+msgid "Edit FAQ Language"
+msgstr ""
+
+#. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
 msgstr "多言語で作業をしたい場合、この項目を設定してください。"
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
 msgstr "言語を追加"
-
-#. Template: AgentFAQLanguage
-msgid "Delete Language %s"
-msgstr "言語を削除 %s"
 
 #. Template: AgentFAQLanguage
 msgid "Add Language"
@@ -381,6 +393,10 @@ msgid "Only FAQ articles with rate..."
 msgstr "レートされているFAQのみ..."
 
 #. Template: CustomerFAQSearch
+msgid "Time restrictions"
+msgstr "時間制限"
+
+#. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
 msgstr "作成されたFAQ項目のみ"
 
@@ -452,6 +468,14 @@ msgstr "カテゴリID が指定されていません！"
 msgid "Was not able to delete the category %s!"
 msgstr ""
 
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Delete Category"
+msgstr "カテゴリを削除"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "Ok"
+msgstr "はい"
+
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "アイテムID が指定されていません！"
@@ -515,6 +539,10 @@ msgstr "言語が追加されました。"
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Delete Language %s"
+msgstr "言語を削除 %s"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -719,6 +747,10 @@ msgstr "FAQ項目から離脱するまでのキャッシュ時間"
 #. SysConfig
 msgid "Category Management"
 msgstr "カテゴリー管理"
+
+#. SysConfig
+msgid "Category Management."
+msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ Print."
@@ -929,91 +961,70 @@ msgid "Delete this FAQ"
 msgstr "この記事を削除"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ add screen of the agent interface. Possible "
-"settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ edit screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスのFAQ編集画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+"Dynamic fields shown in the FAQ overview screen of the customer interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ overview screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスのFAQオーバービュー画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+"Dynamic fields shown in the FAQ overview screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ overview screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "公開インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ print screen of the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the FAQ print screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+"Dynamic fields shown in the FAQ search screen of the customer interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "顧客インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "公開インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr "担当者インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr "顧客インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ search screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by "
-"default."
-msgstr "公開インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象"
+msgid "Dynamic fields shown in the FAQ search screen of the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+"interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのFAQ ズームスクリーンで表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the customer interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "顧客インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ zoom screen of the public interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "公開インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
+msgstr ""
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1058,6 +1069,10 @@ msgstr "FAQ の削除"
 #. SysConfig
 msgid "FAQ Edit."
 msgstr "FAQ の編集"
+
+#. SysConfig
+msgid "FAQ History."
+msgstr ""
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1126,6 +1141,10 @@ msgstr "ジャーナル"
 #. SysConfig
 msgid "Language Management"
 msgstr "言語管理"
+
+#. SysConfig
+msgid "Language Management."
+msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1252,12 +1271,16 @@ msgid "Module to generate html OpenSearch profile for short FAQ search."
 msgstr ""
 
 #. SysConfig
-msgid "New FAQ Article"
-msgstr "新規 FAQ 項目"
+msgid "New FAQ Article."
+msgstr ""
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "新規 FAQ 項目を公開するには事前に承認されることが必要です"
+
+#. SysConfig
+msgid "Number"
+msgstr "番号"
 
 #. SysConfig
 msgid ""
@@ -1294,6 +1317,10 @@ msgstr "「最新の新規作成」に何件まで表示するか"
 #. SysConfig
 msgid "Number of shown items in the top 10 feature."
 msgstr "「トップ10記事」に何件まで表示するか"
+
+#. SysConfig
+msgid "Other Settings"
+msgstr "その他の設定"
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
@@ -1350,6 +1377,24 @@ msgstr ""
 #. SysConfig
 msgid "Search FAQ"
 msgstr "FAQを検索"
+
+#. SysConfig
+msgid "Search FAQ Small."
+msgstr ""
+
+#. SysConfig
+msgid "Search FAQ."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Select how many items should be shown in Journal Overview \"Small\" by "
+"default."
+msgstr ""
+
+#. SysConfig
+msgid "Select how many items should be shown in Overview \"Small\" by default."
+msgstr ""
 
 #. SysConfig
 msgid ""

@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = '常見問題目錄分類管理';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = '添加目錄分類';
-    $Self->{Translation}->{'Delete Category'} = '刪除目錄分類';
-    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = '添加目錄分類';
     $Self->{Translation}->{'Edit Category'} = '編輯目錄分類';
     $Self->{Translation}->{'Subcategory of'} = '';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = '歷史';
+    $Self->{Translation}->{'History Content'} = '歷史内容';
+    $Self->{Translation}->{'Createtime'} = '創建時間';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = '沒有找到常見問題日誌數據。';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = '常見問題語言管理';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '';
     $Self->{Translation}->{'Add language'} = '添加語言';
-    $Self->{Translation}->{'Delete Language %s'} = '刪除語言 %s';
     $Self->{Translation}->{'Add Language'} = '添加語言';
     $Self->{Translation}->{'Edit Language'} = '編輯語言';
     $Self->{Translation}->{'Do you really want to delete this language?'} = '您確定要刪除此語言？';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '只是有被投選的常見問題文章';
     $Self->{Translation}->{'Rate restrictions'} = '評分限制條件';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '只是有評分的常見問題文章';
+    $Self->{Translation}->{'Time restrictions'} = '時間查詢條件';
     $Self->{Translation}->{'Only FAQ articles created'} = '只是已創建的常見問題文章';
     $Self->{Translation}->{'Only FAQ articles created between'} = '只是常見問題文章創建於';
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = '常見問題目錄分類已添加!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'Delete Category'} = '刪除目錄分類';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '';
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = '常見問題語言已更新!';
     $Self->{Translation}->{'FAQ language added!'} = '常見問題語言已添加!';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Delete Language %s'} = '刪除語言 %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = '最後更新';
@@ -282,6 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = '選票結果使用的CSS 顏色';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '離開常見問題項目的緩存時間';
     $Self->{Translation}->{'Category Management'} = '目錄分類管理';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
@@ -348,33 +356,34 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '設定 \'插入常見問題\' 顯示位置';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '';
     $Self->{Translation}->{'Delete this FAQ'} = '刪除此常見問題';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Edit this FAQ'} = '編輯此常見問題';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '啓用常見問題模組多種語言';
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = '';
     $Self->{Translation}->{'FAQ Delete.'} = '';
     $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '常見問題日誌概況 "小" 模式限制';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '常見問題概況 "小"模式限制';
     $Self->{Translation}->{'FAQ Print.'} = '';
@@ -405,6 +415,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '顯示快速搜尋的介面';
     $Self->{Translation}->{'Journal'} = '日誌';
     $Self->{Translation}->{'Language Management'} = '語言管理';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '連結其他物件到此常見問題物件';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -449,8 +460,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = '新常見問題文章';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新常見問題文章發佈前需要經過審批';
+    $Self->{Translation}->{'Number'} = '編號';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,6 +474,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '最近更新顯示項目數量';
     $Self->{Translation}->{'Number of shown items in last created.'} = '最近創建顯示項目數量';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '首10篇功能顯示項目數量';
+    $Self->{Translation}->{'Other Settings'} = '其它設置';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '投票評分。數值必須為百分率。';
     $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = '搜尋常見問題';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '設定在AgentFAQZoom中內嵌HTML欄位默許高度 (像素)';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = '外部 (客戶)';
     $Self->{Translation}->{'internal (agent)'} = '內部 (服務員)';
     $Self->{Translation}->{'public (public)'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

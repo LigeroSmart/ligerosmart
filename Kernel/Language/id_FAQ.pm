@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Manajemen Kategori FAQ';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = 'Tambah kategori';
-    $Self->{Translation}->{'Delete Category'} = 'Hapus Kategori';
-    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Tambah Kategori';
     $Self->{Translation}->{'Edit Category'} = 'Edit Kategori';
     $Self->{Translation}->{'Subcategory of'} = 'Sub-kategori dari';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'Riwayat dari';
+    $Self->{Translation}->{'History Content'} = 'Isi sejarah';
+    $Self->{Translation}->{'Createtime'} = 'BuatWaktu';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Data Jurnal FAQ tidak ditemukan.';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Manajemen Bahasa FAQ';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '';
     $Self->{Translation}->{'Add language'} = 'Tambah bahasa';
-    $Self->{Translation}->{'Delete Language %s'} = 'Hapus Bahasa %s';
     $Self->{Translation}->{'Add Language'} = 'Tambah Bahasa';
     $Self->{Translation}->{'Edit Language'} = 'Edit Bahasa';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Anda yakin akan menghapus bahasa ini?';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Hanya artikel FAQ yang telah dipilih...';
     $Self->{Translation}->{'Rate restrictions'} = 'Batasan Peringkat';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Hanya Artikel yang memiliki peringkat...';
+    $Self->{Translation}->{'Time restrictions'} = 'Pembatasan waktu';
     $Self->{Translation}->{'Only FAQ articles created'} = 'Hanya artikel FAQ yang dibuat';
     $Self->{Translation}->{'Only FAQ articles created between'} = 'Hanya artikel FAQ yang dibuat pada ';
     $Self->{Translation}->{'Search-Profile as Template?'} = 'Pencarian-Profil sebagai Template?';
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = 'Kategori FAQ ditambahkan!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'Delete Category'} = 'Hapus Kategori';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '';
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Bahasa FAQ diperbarui!';
     $Self->{Translation}->{'FAQ language added!'} = 'Bahasa FAQ ditambahkan!';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Delete Language %s'} = 'Hapus Bahasa %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Perbaruan terakhir';
@@ -282,6 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Warna CSS untuk hasil pemilihan.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Waktu Cache Untuk Keluar dalam item FAQ';
     $Self->{Translation}->{'Category Management'} = 'Manajemen Kategori';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
@@ -348,34 +356,35 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Tentukan dimana tautan \'Masukkan FAQ\' akan ditampilkan.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definisi dari item teks field bebas FAQ';
     $Self->{Translation}->{'Delete this FAQ'} = 'Hapus FAQ ini';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Bidang dinamis yang ditampilkan di dalam menambah layar FAQ pada antarmuka agen. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan diperlukan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Bidang dinamis yang ditampilkan di dalam mengubah layar FAQ pada antarmuka agen. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan diperlukan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar gambaran umum FAQ pada antarmuka pelanggan. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan diperlukan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar gambaran umum FAQ pada antarmuka umum. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan diperlukan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar cetak FAQ pada antarmuka agen. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar cetak FAQ pada antarmuka pelanggan. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar cetak FAQ pada antarmuka umum. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar pencarian FAQ pada antarmuka agen. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan di tampilkan secara default.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar pencarian FAQ pada antarmuka pelanggan. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan di tampilkan secara default.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar pencarian FAQ pada antarmuka umum. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan, 2 = di aktifkan dan di tampilkan secara default.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam format kecil layar gambaran FAQ pada antarmuka agen. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar zoom FAQ pada antarmuka agen. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar zoom FAQ pada antarmuka pelanggan. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Bidang dinamis yang ditampilkan di dalam layar zoom FAQ pada antarmuka umum. Pengaturan yang memungkinkan: 0 = di nonaktifkan, 1 = di aktifkan.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'ubah FAQ ini.';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Aktifkan multibahasa pada modul FAQ.';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = '';
     $Self->{Translation}->{'FAQ Delete.'} = '';
     $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Jurnal gambaran batas "kecil"  FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Gambaran batas "Kecil"';
     $Self->{Translation}->{'FAQ Print.'} = '';
@@ -405,6 +415,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Antarmuka dimana pencarian cepat harus di tampilkan';
     $Self->{Translation}->{'Journal'} = 'Jurnal';
     $Self->{Translation}->{'Language Management'} = 'Manajemen Bahasa';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Tautkan objek lainnya ke item FAQ ini';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -449,8 +460,9 @@ sub Data {
         'Modul untuk menghasilkan profil HTML PencarianTerbuka untuk Pencarian pendek FAQ di antarmuka umum.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = 'Artikel FAQ Baru';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Artikel FAQ baru membutuhkan ersetujuan sebelum dipublikasikan.';
+    $Self->{Translation}->{'Number'} = 'Nomor';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Jumlah artikel FAQ yang akan ditampilkan pada Eksplorer FAQ di antarmuka pelanggan.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,6 +474,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Jumlah item yang ditampilkan dalam perubahan terakhir.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Jumlah item yang di tampilkan dalam pembuatan terakhir.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Jumlah item yang ditampilkan dalam 10 fitur teratas.';
+    $Self->{Translation}->{'Other Settings'} = 'Pengaturan Lain';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Peringkatkan untuk memilih.  Kunci harus dalam persentase.';
     $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Cari FAQ';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Tentukan tinggi default (dalam piksel)  pada bidang sebaris HTML pada AgentFAQZoom.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'eksternal (pelanggan)';
     $Self->{Translation}->{'internal (agent)'} = 'internal (agen)';
     $Self->{Translation}->{'public (public)'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

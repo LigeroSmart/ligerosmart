@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Gestión de categorías de FAQ';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = 'Añadir categoría';
-    $Self->{Translation}->{'Delete Category'} = 'Borrar categoría';
-    $Self->{Translation}->{'Ok'} = 'Aceptar';
     $Self->{Translation}->{'Add Category'} = 'Añadir categoría';
     $Self->{Translation}->{'Edit Category'} = 'Editar categoría';
     $Self->{Translation}->{'Subcategory of'} = 'Subcategoría de';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'Historial de';
+    $Self->{Translation}->{'History Content'} = 'Contenido del historial';
+    $Self->{Translation}->{'Createtime'} = 'Fecha de Creación';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'No se encontraron datos en el Diario de las FAQ.';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Gestión de Idiomas de FAQ';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         'Utiliza esta función si deseas trabajar con varios idiomas.';
     $Self->{Translation}->{'Add language'} = 'Añadir Idioma';
-    $Self->{Translation}->{'Delete Language %s'} = 'Borrar Idioma %s';
     $Self->{Translation}->{'Add Language'} = 'Añadir Idioma';
     $Self->{Translation}->{'Edit Language'} = 'Editar Idioma';
     $Self->{Translation}->{'Do you really want to delete this language?'} = '¿Realmente desea eliminar este idioma?';
@@ -135,8 +138,8 @@ sub Data {
 
     # Template: CustomerFAQRelatedArticles
     $Self->{Translation}->{'This might be helpful'} = 'Esto podría ser útil';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'No se encontraron recursos útiles para el asunto y texto.';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Escriba un asunto o texto para obtener una lista de recursos útiles.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Búsqueda de texto completo en artículos FAQ (ej: "John*n" o "Will*")';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Sólo los artículos FAQ con votos...';
     $Self->{Translation}->{'Rate restrictions'} = 'Restricciones de puntuación';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Sólo los artículos FAQ con calificación...';
+    $Self->{Translation}->{'Time restrictions'} = 'Restricciones de tiempo';
     $Self->{Translation}->{'Only FAQ articles created'} = 'Sólo Artículos FAQ creados';
     $Self->{Translation}->{'Only FAQ articles created between'} = 'Sólo Artículos FAQ creados entre';
     $Self->{Translation}->{'Search-Profile as Template?'} = '¿Perfil de Búsqueda como Plantilla?';
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = '¡Categoría de las FAQ añadida!';
     $Self->{Translation}->{'No CategoryID is given!'} = 'No se ha dado CategoryID!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '¡No se pudo eliminar la categoría %s!';
+    $Self->{Translation}->{'Delete Category'} = 'Borrar categoría';
+    $Self->{Translation}->{'Ok'} = 'Aceptar';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'No se ha dado ItemID!';
@@ -187,10 +193,10 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Diario de las FAQ';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'Se requiere la opción de configuración FAQ::Frontend::Overview';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
-        '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+        '¡La opción de configuración FAQ::Frontend::Overview necesita ser una referencia a un HASH!';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '¡No se encontró la opción de configuración para la vista "1%s"!';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
     $Self->{Translation}->{'No LanguageID is given!'} = 'No se ha dado un LanguageID!';
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = '¡Idioma de las FAQ actualizado!';
     $Self->{Translation}->{'FAQ language added!'} = '¡Idioma de las FAQ añadido!';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = '¡No se pudo eliminar el idioma %s!';
+    $Self->{Translation}->{'Delete Language %s'} = 'Borrar Idioma %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Ultima actualización';
@@ -261,14 +268,14 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - Publico (Texto completo FAQ)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'Need rate!'} = '';
+    $Self->{Translation}->{'Need rate!'} = '¡Requiere valoración!';
     $Self->{Translation}->{'This article is empty!'} = '¡Este artículo esta vacío!';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Últimos artículos de las FAQ creados';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Últimos artículos de las FAQ modificados';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 de los artículos de las FAQ';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
-    $Self->{Translation}->{'Content Type'} = '';
+    $Self->{Translation}->{'Content Type'} = 'Tipo de Contenido';
 
     # Database XML Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'interno';
@@ -282,6 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Color CSS para el resultado de la votación.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Tiempo de vida de la caché para los elementos FAQ.';
     $Self->{Translation}->{'Category Management'} = 'Gestión de las Categorías';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Imprimir FAQ del cliente.';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Vista detallada de las FAQ del cliente.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Buscar FAQ del cliente.';
@@ -348,34 +356,35 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Define donde será mostrado el link \'Insertar FAQ\'.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definición del campo «texto libre» para los artículos FAQ.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Borrar este artículo de las FAQ';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Campos dinámicos mostrados en pantalla de Agregar FAQ en la interfaz de Agente. Configuración posible: 0=Deshabilitado, 1=Habilitado, 2=Habilitado y requerido.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Campos dinámicos mostrados en pantalla de Editar FAQ en la interfaz de Agente. Configuración posible: 0=Deshabilitado, 1=Habilitado, 2=Habilitado y requerido.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Campos dinámicos mostrados en pantalla de Resumen FAQ en la interfaz de Cliente. Configuración posible: 0=Deshabilitado, 1=Habilitado, 2=Habilitado y requerido.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Campos dinámicos mostrados en pantalla de Resumen FAQ en la interfaz pública. Configuración posible: 0=Deshabilitado, 1=Habilitado, 2=Habilitado y requerido.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Impresión FAQ en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Impresión FAQ en la interfaz de Cliente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Impresión FAQ en la interfaz pública. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Campos dinámicos mostrados en pantalla de Busqueda de FAQ en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado, 2=Habilitado y mostrado por omisión.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Campos dinámicos mostrados en pantalla de Busqueda de FAQ en la interfaz de Cliente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado, 2=Habilitado y mostrado por omisión.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Campos dinámicos mostrados en pantalla de Busqueda de FAQ en la interfaz pública. Configuración posible: 0 = Deshabilitado, 1 = Habilitado, 2=Habilitado y mostrado por omisión.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Resumen formato chico de FAQ en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Zoom FAQ en la interfaz de Agente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Zoom FAQ en la interfaz de Cliente. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinámicos mostrados en pantalla de Zoom FAQ en la interfaz pública. Configuración posible: 0 = Deshabilitado, 1 = Habilitado.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Editar este artículo FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Habilitar múltiples idiomas en el módulo FAQ';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = 'Área de FAQ.';
     $Self->{Translation}->{'FAQ Delete.'} = 'Borrar FAQ.';
     $Self->{Translation}->{'FAQ Edit.'} = 'Editar FAQ.';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de el Diario de las FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de FAQ';
     $Self->{Translation}->{'FAQ Print.'} = 'Imprimir FAQ.';
@@ -405,10 +415,11 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Interfaces donde deberá ser mostrada la búsqueda rápida.';
     $Self->{Translation}->{'Journal'} = 'Diario';
     $Self->{Translation}->{'Language Management'} = 'Gestión de Idiomas';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Enlazar otro objecto a este artículo FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
-        '';
+        'Lista de nombres de filas para las cuales la funcionalidad de artículos relacionados está habilitada.';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Lista de tipos de estado que pueden ser usados en la interface de agentes.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -449,8 +460,9 @@ sub Data {
         'Tamaño máximo de los títulos en un artículo FAQ a ser mostrado en el journal de FAQ en la interface pública.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = 'Nuevo artículo en las FAQ';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Los nuevos artículos FAQ requieren aprobación antes de publicarse.';
+    $Self->{Translation}->{'Number'} = 'Número';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Número de artículos FAQ a mostrar en el explorador de FAQ de la interfaz del cliente.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,8 +474,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Número de elementos a mostrar en últimos cambios.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Número de elementos a mostrar en últimos creados.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Número de elementos a mostrar en el Top 10.';
+    $Self->{Translation}->{'Other Settings'} = 'Otros ajustes';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
-        '';
+        'Filtro de salida para agregar Java-Script a la pantalla CustomerTicketMessage.';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Parámetros de las páginas (en las que se muestran los elementos FAQ) de la vista general pequeña del Diario de las FAQ.';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Ponderación para la votación. La clave debe expresarse en porcentaje.';
     $Self->{Translation}->{'S'} = 'S';
     $Self->{Translation}->{'Search FAQ'} = 'Búsqueda de FAQ';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Establecer la altura predeterminada (en píxeles) de los campos HTML «inline» de AgentFAQZoom';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -518,7 +537,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Solución ';
     $Self->{Translation}->{'Symptom'} = 'Síntoma';
     $Self->{Translation}->{'Text Only'} = 'Solo texto';
-    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = 'Idiomas por defecto para los artículos FAQ relacionados.';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'El identificador para una FAQ, por ejemplo FAQ#, KB#, MiFAQ#. El valor predeterminado es FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'externo (cliente)';
     $Self->{Translation}->{'internal (agent)'} = 'interno (agente)';
     $Self->{Translation}->{'public (public)'} = 'público (público)';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

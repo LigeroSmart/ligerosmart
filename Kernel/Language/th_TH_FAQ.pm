@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'การจัดการหมวดหมู่ FAQ';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = 'เพิ่มหมวดหมู่';
-    $Self->{Translation}->{'Delete Category'} = 'ลบหมวดหมู่';
-    $Self->{Translation}->{'Ok'} = 'โอเค';
     $Self->{Translation}->{'Add Category'} = 'เพิ่มหมวดหมู่';
     $Self->{Translation}->{'Edit Category'} = 'แก้ไขหมวดหมู่';
     $Self->{Translation}->{'Subcategory of'} = 'หมวดหมู่ย่อยของ';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'ประวัติของ';
+    $Self->{Translation}->{'History Content'} = 'เนื้อหาประวัติ';
+    $Self->{Translation}->{'Createtime'} = 'เวลาที่สร้าง';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'ไม่พบวารสาร FAQ ';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'การจัดการภาษา FAQ';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '';
     $Self->{Translation}->{'Add language'} = 'เพิ่มภาษา';
-    $Self->{Translation}->{'Delete Language %s'} = 'ลบภาษา %';
     $Self->{Translation}->{'Add Language'} = 'เพิ่มภาษา';
     $Self->{Translation}->{'Edit Language'} = 'แก้ไขภาษา';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'คุณต้องการลบภาษานี้หรือไม่?';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = 'เฉพาะบทความFAQ โดยการโหวด...';
     $Self->{Translation}->{'Rate restrictions'} = 'ข้อจำกัดการประเมิน';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'เฉพาะบทความFAQ โดยการประเมิน...';
+    $Self->{Translation}->{'Time restrictions'} = 'การจำกัดเวลา';
     $Self->{Translation}->{'Only FAQ articles created'} = 'เฉพาะบทความ FAQที่สร้างแล้ว';
     $Self->{Translation}->{'Only FAQ articles created between'} = 'เฉพาะบทความ FAQที่สร้างในระหว่าง';
     $Self->{Translation}->{'Search-Profile as Template?'} = 'Search-Profile เป็นแม่แบบ?';
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = 'เพิ่มหมวดหมู่ FAQ แล้ว!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'Delete Category'} = 'ลบหมวดหมู่';
+    $Self->{Translation}->{'Ok'} = 'โอเค';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '';
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'อัปเดตภาษา FAQ แล้ว!';
     $Self->{Translation}->{'FAQ language added!'} = 'เพิ่มภาษา FAQ แล้ว!';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Delete Language %s'} = 'ลบภาษา %';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'อัปเดตล่าสุด';
@@ -282,6 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = 'สี CSS สำหรับผลการโหวต';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'เวลาแคชที่จะปล่อยให้สำหรับรายการFAQ';
     $Self->{Translation}->{'Category Management'} = 'การจัดการหมวดหมู่';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
@@ -348,34 +356,35 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'กำหนดสถานที่ที่ลิงค์ \'แทรกFAQ \' จะปรากฏ';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'คำนิยามของช่องข้อความของรายการ FAQ';
     $Self->{Translation}->{'Delete this FAQ'} = 'ลบ FAQ นี้!';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการเพิ่มFAQ ในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและจำเป็นต้องใช้';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการแก้ไขFAQ ในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและจำเป็นต้องใช้';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าุมุมมองภาพรวมของ FAQ ในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและจำเป็นต้องใช้';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าุมุมมองภาพรวมของ FAQ ในอินเตอร์เฟซสาธารณะ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและจำเป็นต้องใช้';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการพิมพ์ FAQ ในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการพิมพ์ FAQ ในอินเตอร์เฟซของลูกค้า การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการพิมพ์ FAQ ในอินเตอร์เฟซสาธารณะการตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการค้นหาFAQ ในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและแสดงค่าเริ่มต้น';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการค้นหาFAQ ในอินเตอร์เฟซของลูกค้า การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและแสดงค่าเริ่มต้น';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการค้นหาFAQ ในอินเตอร์เฟซสาธารณะ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน 2 = เปิดใช้งานและแสดงค่าเริ่มต้น';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้ามุมมองภาพรวมของ FAQ ขนาดเล็กในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการซูมFAQ ในอินเตอร์เฟซของเอเย่นต์ การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการซูมFAQ ในอินเตอร์เฟซของลูกค้า การตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'ไดนามิคฟิลด์แสดงในหน้าการซูม FAQ ในอินเตอร์เฟซสาธารณะการตั้งค่าที่เป็นไปได้คือ 0 = ปิดการใช้งาน 1 = เปิดการใช้งาน';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'แก้ไข FAQ นี้';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'เปิดใช้งานหลากหลายภาษา ในโมดูล FAQ.';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = '';
     $Self->{Translation}->{'FAQ Delete.'} = '';
     $Self->{Translation}->{'FAQ Edit.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'ภาพรวมของวารสารFAQ"ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'ภาพรวมของFAQ"ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ Print.'} = '';
@@ -405,6 +415,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'อินเตอร์เฟซที่การค้นหาแบบรวดเร็วควรจะแสดง';
     $Self->{Translation}->{'Journal'} = 'วารสาร';
     $Self->{Translation}->{'Language Management'} = 'การจัดการภาษา';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'ลิงค์ออบเจกต์อื่นไปยัง FAQ นี้';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -449,8 +460,9 @@ sub Data {
         'โมดูลในการสร้างโปรไฟล์ OpenSearch html สำหรับการค้นหา FAQ แบบกระชับ ในอินเตอร์เฟซที่สาธารณะ';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = 'หัวข้อ FAQ ใหม่';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'บทความFAQ ใหม่ต้องที่ได้รับการอนุมัติก่อนได้รับการตีพิมพ์';
+    $Self->{Translation}->{'Number'} = 'หมายเลข';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'จำนวนบทความ FAQ ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของลูกค้า';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,6 +474,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'จำนวน items ที่แสดงในช่วงที่เปลี่ยนแปลงครั้งล่าสุด';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'จำนวน items ที่แสดงในช่วงที่สร้างขึ้นครั้งล่าสุด';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'จำนวนรายการที่แสดงฟีเจอร์ใน 10 อันดับแรก';
+    $Self->{Translation}->{'Other Settings'} = 'การตั้งค่าอื่นๆ';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'เรตสำหรับการโหวตต้องกำหนดเป็นร้อยละ';
     $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'ค้นหา FAQ';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'เซตค่าความสูงเริ่มต้น(พิกเซล) ของฟิลด์HTML แบบอินไลน์ใน AgentFAQZoom.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'ภายนอก (ลูกค้า)';
     $Self->{Translation}->{'internal (agent)'} = 'ภายใน (เอเย่นต์)';
     $Self->{Translation}->{'public (public)'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

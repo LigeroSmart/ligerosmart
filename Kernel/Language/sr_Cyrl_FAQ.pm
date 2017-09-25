@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Управљање ЧПП категоријама';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = 'Додај категорију';
-    $Self->{Translation}->{'Delete Category'} = 'Обриши категорију';
-    $Self->{Translation}->{'Ok'} = 'У реду';
     $Self->{Translation}->{'Add Category'} = 'Додај категорију';
     $Self->{Translation}->{'Edit Category'} = 'Уреди категорију';
     $Self->{Translation}->{'Subcategory of'} = 'Подкатегорија од';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'Историја од';
+    $Self->{Translation}->{'History Content'} = 'Садржај историје';
+    $Self->{Translation}->{'Createtime'} = 'Време креирања';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Нису пронађени подаци ЧПП дневника.';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Управљање ЧПП језицима';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         'Употребите ову функцију ако желите да користите више језика.';
     $Self->{Translation}->{'Add language'} = 'Додај језик';
-    $Self->{Translation}->{'Delete Language %s'} = 'Обриши језик %s';
     $Self->{Translation}->{'Add Language'} = 'Додај Језик';
     $Self->{Translation}->{'Edit Language'} = 'Уреди Језик';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Да ли заиста желите да избришете овај језик?';
@@ -135,8 +138,8 @@ sub Data {
 
     # Template: CustomerFAQRelatedArticles
     $Self->{Translation}->{'This might be helpful'} = 'Ово може да буде од помоћи';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'Корисни ресурси за унети предмет и текст нису пронађени.';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'За листу корисних ресурса, молимо унесите предмет или текст.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Потпуна текстуална претрага у ЧПП чланцима (нпр. "John*n" или "Will*")';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Само ЧПП чланци са гласовима...';
     $Self->{Translation}->{'Rate restrictions'} = 'Ограничења оцењивања';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Само ЧПП чланци са оценом...';
+    $Self->{Translation}->{'Time restrictions'} = 'Временска ограничења';
     $Self->{Translation}->{'Only FAQ articles created'} = 'Само ЧПП чланци креирани';
     $Self->{Translation}->{'Only FAQ articles created between'} = 'Само ЧПП чланци креирани између';
     $Self->{Translation}->{'Search-Profile as Template?'} = 'Профил претраге као шаблон?';
@@ -160,7 +164,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
     $Self->{Translation}->{'You need rw permission!'} = 'Потребна вам је „rw” дозвола!';
-    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Категорије у којој корисник има приступ без ограничења нису пронађене!';
     $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'Није пронађен подразумевани језик и не може се креирати нов.';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = 'ЧПП категорија додата!';
     $Self->{Translation}->{'No CategoryID is given!'} = 'Није дат ИД Категорије!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Није било могуће обрисати категорију %s!';
+    $Self->{Translation}->{'Delete Category'} = 'Обриши категорију';
+    $Self->{Translation}->{'Ok'} = 'У реду';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'Није дат ИД Ставке!';
@@ -187,9 +193,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'ЧПП дневник';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'Потребна конфигурациона опција FAQ::Frontend::Overview';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
-        '';
+        'Конфигурациона опција FAQ::Frontend::Overview мора да буде HASH референца!';
     $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Није пронађена конфигурациона ставка за преглед "%s"!';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Ажуриран ЧПП језик!';
     $Self->{Translation}->{'FAQ language added!'} = 'Додат ЧПП језик!';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Није било могуће обрисати језик %s!';
+    $Self->{Translation}->{'Delete Language %s'} = 'Обриши језик %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Последње ажурирање';
@@ -246,8 +253,8 @@ sub Data {
 
     # Perl Module: Kernel/Modules/PublicFAQRSS.pm
     $Self->{Translation}->{'No Type is given!'} = 'Није дат Тип!';
-    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
-    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = 'Type мора бити LastCreate, LastChange или Top10!';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = 'RSS датотека не моће бити снимљена!';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '%s (ЧПП комплетан текст)';
@@ -282,11 +289,12 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = '„CSS” боја за резултат гласања.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Време ослобађања кеша за ЧПП ставке.';
     $Self->{Translation}->{'Category Management'} = 'Управљање категоријама';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Штампање клијентских ЧПП.';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Детаљи клијентских ЧПП.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Претрага клијентских ЧПП.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Клијентска ЧПП.';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
+    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = 'CustomerFAQRelatedArticles.';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Број децимала у резултату гласања.';
     $Self->{Translation}->{'Default category name.'} = 'Назив подразумеване категорије.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Подразумевани језик ЧПП чланака у једнојезичком начину рада.';
@@ -348,34 +356,35 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Дефинише где ће „убаци ЧПП” веза бити приказана.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Дефиниција поља слободног текста за ЧПП ставку.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Обриши ово ЧПП';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамичка поља приказана на екрану додавања ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамичка поља приказана на екрану измене ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамичка поља приказана на екрану прегледа ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамичка поља приказана на екрану прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и неопходно.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану за штампу ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану за штампу ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану за штампу ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Динамичка поља приказана на екрану претраге ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Динамичка поља приказана на екрану претраге ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        'Динамичка поља приказана на екрану претраге ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено, 2 = Омогућено и подразумевано се приказује.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану прегледа ЧПП малог формата у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану детаљног прегледа ЧПП у интерфејсу оператера. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану детаљног прегледа ЧПП у интерфејсу корисника. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамичка поља приказана на екрану детаљног прегледа ЧПП у јавном интерфејсу. Могућа подешавања: 0 = Онемогућено, 1 = Омогућено.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'Уреди ово ЧПП';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Активирање више језика на ЧПП модулу.';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = 'ЧПП простор.';
     $Self->{Translation}->{'FAQ Delete.'} = 'Обриши ЧПП.';
     $Self->{Translation}->{'FAQ Edit.'} = 'Уреди ЧПП.';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Ограничење прегледа ЧПП дневника - "мало"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Ограничење прегледа ЧПП - "мало"';
     $Self->{Translation}->{'FAQ Print.'} = 'Штампај ЧПП.';
@@ -405,6 +415,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Интерфејс на ком треба приказати брзу претрагу.';
     $Self->{Translation}->{'Journal'} = 'Дневник';
     $Self->{Translation}->{'Language Management'} = 'Управљање језицима';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Ограничење претраге за генерисање листе кључних речи ЧПП чланака.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Повежи други објекат са овом ставком ЧПП';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -449,8 +460,9 @@ sub Data {
         'Модул за генерисање „HTML OpenSearch” профила за кратку ЧПП претрагу у јавном профилу.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         'Модул за генерисање „html OpenSearch” профила за кратку ЧПП претрагу.';
-    $Self->{Translation}->{'New FAQ Article'} = 'Нови ЧПП чланак';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Нови ЧПП чланци требају бити одобрени пре објављивања.';
+    $Self->{Translation}->{'Number'} = 'Број';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Број ЧПП чланака који ће бити приказани у ЧПП Истраживачу у интерфејсу клијента.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,8 +474,9 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Број приказаних ставки у последњим изменама.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Број приказаних ставки у последње креираним.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Број приказаних ставки у "првих 10" .';
+    $Self->{Translation}->{'Other Settings'} = 'Друга подешавања';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
-        '';
+        'Излазни филтер за убацивање JavaScript у CustomerTicketMessage екран.';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = 'Ограничење излаза за повезане ЧПП чланаке.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Параметри страница (на којима су ЧПП ставке приказане) на малом приказу прегледа ЧПП дневника.';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Оцене за гласање. Кључ мора бити у процентима.';
     $Self->{Translation}->{'S'} = 'С';
     $Self->{Translation}->{'Search FAQ'} = 'Претражи ЧПП';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Подеси подразумевану висину (у пикселима) инлине HTML поља у AgentFAQZoom.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'екстерно (клијент)';
     $Self->{Translation}->{'internal (agent)'} = 'интерно (оператер)';
     $Self->{Translation}->{'public (public)'} = 'јавно (јавно)';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

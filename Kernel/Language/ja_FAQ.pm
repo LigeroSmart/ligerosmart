@@ -23,9 +23,9 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ カテゴリ管理';
+    $Self->{Translation}->{'Add FAQ Category'} = '';
+    $Self->{Translation}->{'Edit FAQ Category'} = '';
     $Self->{Translation}->{'Add category'} = 'カテゴリを追加';
-    $Self->{Translation}->{'Delete Category'} = 'カテゴリを削除';
-    $Self->{Translation}->{'Ok'} = 'はい';
     $Self->{Translation}->{'Add Category'} = 'カテゴリを追加';
     $Self->{Translation}->{'Edit Category'} = 'カテゴリを編集';
     $Self->{Translation}->{'Subcategory of'} = '親カテゴリ';
@@ -55,16 +55,19 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = '履歴: ';
+    $Self->{Translation}->{'History Content'} = '履歴内容';
+    $Self->{Translation}->{'Createtime'} = '作成日時';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'ジャーナルの情報がありません。';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ 言語管理';
+    $Self->{Translation}->{'Add FAQ Language'} = '';
+    $Self->{Translation}->{'Edit FAQ Language'} = '';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '多言語で作業をしたい場合、この項目を設定してください。';
     $Self->{Translation}->{'Add language'} = '言語を追加';
-    $Self->{Translation}->{'Delete Language %s'} = '言語を削除 %s';
     $Self->{Translation}->{'Add Language'} = '言語を追加';
     $Self->{Translation}->{'Edit Language'} = '言語を編集';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'この言語を削除してよろしいですか？';
@@ -144,6 +147,7 @@ sub Data {
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '投票されているFAQのみ...';
     $Self->{Translation}->{'Rate restrictions'} = 'レート規制';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = 'レートされているFAQのみ...';
+    $Self->{Translation}->{'Time restrictions'} = '時間制限';
     $Self->{Translation}->{'Only FAQ articles created'} = '作成されたFAQ項目のみ';
     $Self->{Translation}->{'Only FAQ articles created between'} = '期間内に作成されたFAQ項目のみ';
     $Self->{Translation}->{'Search-Profile as Template?'} = 'Search-Profile-検索プロフィール　をテンプレートにしますか?';
@@ -172,6 +176,8 @@ sub Data {
     $Self->{Translation}->{'FAQ category added!'} = '新しいカテゴリが追加されました。';
     $Self->{Translation}->{'No CategoryID is given!'} = 'カテゴリID が指定されていません！';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'Delete Category'} = 'カテゴリを削除';
+    $Self->{Translation}->{'Ok'} = 'はい';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'アイテムID が指定されていません！';
@@ -199,6 +205,7 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = '言語が更新されました。';
     $Self->{Translation}->{'FAQ language added!'} = '言語が追加されました。';
     $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Delete Language %s'} = '言語を削除 %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = '最終更新日';
@@ -282,6 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = '評価の結果表示ようのカラー（スタイルシート）';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ項目から離脱するまでのキャッシュ時間';
     $Self->{Translation}->{'Category Management'} = 'カテゴリー管理';
+    $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '顧客用FAQの表示';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '顧客用FAQの詳細表示';
     $Self->{Translation}->{'Customer FAQ search.'} = '顧客用FAQの検索';
@@ -348,34 +356,35 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'FAQリンクがどこに表示されるか定義する';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'FAQのフリーテキストフィールドの定義。';
     $Self->{Translation}->{'Delete this FAQ'} = 'この記事を削除';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQ編集画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '担当者インターフェイスのFAQオーバービュー画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '公開インターフェイスのFAQ追加画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '顧客インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '公開インターフェイスのFAQ印刷画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '担当者インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '顧客インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and shown by default.'} =
-        '公開インターフェイスのFAQ検索画面で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつデフォルト表示対象';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ オーバービュー「Sフォーマット」で表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '担当者インターフェイスのFAQ ズームスクリーンで表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '顧客インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
-    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '公開インターフェイスのFAQズーム画面に表示されるダイナミック・フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
+        '';
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -388,6 +397,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = '';
     $Self->{Translation}->{'FAQ Delete.'} = 'FAQ の削除';
     $Self->{Translation}->{'FAQ Edit.'} = 'FAQ の編集';
+    $Self->{Translation}->{'FAQ History.'} = '';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQジャーナル一覧(S)の表示数';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ一覧(S)の表示数';
     $Self->{Translation}->{'FAQ Print.'} = 'FAQ の表示';
@@ -405,6 +415,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'クイック検索が表示される画面';
     $Self->{Translation}->{'Journal'} = 'ジャーナル';
     $Self->{Translation}->{'Language Management'} = '言語管理';
+    $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'このFAQ記事に他オブジェクトを関連付ける';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -449,8 +460,9 @@ sub Data {
         '公開インタフェースにおいて、ショート・チケット検索のためのhtml OpenSearchプロフィールを生成するモジュールです';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article'} = '新規 FAQ 項目';
+    $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新規 FAQ 項目を公開するには事前に承認されることが必要です';
+    $Self->{Translation}->{'Number'} = '番号';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '顧客用インターフェイスで表示される FAQ 項目の数';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -462,6 +474,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '「最近の変更」に何件まで表示するか';
     $Self->{Translation}->{'Number of shown items in last created.'} = '「最新の新規作成」に何件まで表示するか';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '「トップ10記事」に何件まで表示するか';
+    $Self->{Translation}->{'Other Settings'} = 'その他の設定';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -478,6 +491,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '評価率。キーは、パーセントで指定する必要があります。';
     $Self->{Translation}->{'S'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'FAQを検索';
+    $Self->{Translation}->{'Search FAQ Small.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
+        '';
+    $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
+        '';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'AgentFAQZoomで表示されるインラインHTMLのデフォルト高さ(ピクセル表記)を設定';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =
@@ -535,6 +554,15 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = '外部 (顧客)';
     $Self->{Translation}->{'internal (agent)'} = '内部 (担当者)';
     $Self->{Translation}->{'public (public)'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 
