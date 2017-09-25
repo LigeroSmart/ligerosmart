@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Manajamen Impor/Ekspor';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Buat sebuah template untuk mengimpor dan ekspor obyek informasi.';
+    $Self->{Translation}->{'Number'} = 'Nomor';
     $Self->{Translation}->{'Start Import'} = 'Mulai Impor';
     $Self->{Translation}->{'Start Export'} = 'Mulai Ekspor';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Batas ekspor per pencarian';
     $Self->{Translation}->{'Import information'} = 'Informasi impor ';
     $Self->{Translation}->{'Source File'} = 'Berkas Sumber';
-    $Self->{Translation}->{'Import summary for'} = 'Impor ringkasan untuk';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Data';
     $Self->{Translation}->{'Success'} = 'Berhasil';
-    $Self->{Translation}->{'Failed'} = 'Gagal';
     $Self->{Translation}->{'Duplicate names'} = 'Nama duplikat';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Nomor baris terakhir berkas impor yang diproses';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Kolom';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Format modul pendaftaran backend untuk modul impor/ekspor.';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasi obyek impor dan ekspor.';
     $Self->{Translation}->{'Import/Export'} = 'Impor/Ekspor';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

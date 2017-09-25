@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestion de l\'Import/Export';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Créer un modèle pour importer et exporter les informations d\'objet';
+    $Self->{Translation}->{'Number'} = 'Nombre';
     $Self->{Translation}->{'Start Import'} = 'Démarrer Import';
     $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Etape 1 sur 5 - Editer l\'information commune';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Restreindre l\'export par recherche';
     $Self->{Translation}->{'Import information'} = 'Informations d\'import';
     $Self->{Translation}->{'Source File'} = 'Fichier Source';
-    $Self->{Translation}->{'Import summary for'} = 'Résumé de l\'import pour';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Enregistrements';
     $Self->{Translation}->{'Success'} = 'Réussi';
-    $Self->{Translation}->{'Failed'} = 'Echoué';
     $Self->{Translation}->{'Duplicate names'} = 'Noms en double';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Numéro de la dernière ligne traitée dans le fichier d\'import';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Colonne';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Enregistrement en arrière plan du module d\'import/export';
     $Self->{Translation}->{'Import and export object information.'} = 'Importer et exporter des informations d\'objet';
     $Self->{Translation}->{'Import/Export'} = 'Importer/Exporter';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

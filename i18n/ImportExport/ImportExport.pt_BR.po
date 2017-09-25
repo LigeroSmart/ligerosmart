@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-05-23 16:45+0000\n"
-"Last-Translator: Gilberto José Souza Coutinho <gilberto.jsc@gmail.com>\n"
+"POT-Creation-Date: 2017-09-25 08:49+0000\n"
+"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +23,10 @@ msgstr "Gerenciamento de Importação/Exportação"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Criar um modelo para importar e exportar informações de objeto."
+
+#. Template: AdminImportExport
+msgid "Number"
+msgstr "Número"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -89,8 +93,8 @@ msgid "Source File"
 msgstr "Arquivo de Origem"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "Resumo de importação para"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -99,10 +103,6 @@ msgstr "Registros"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "Sucesso"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "Falhou"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -211,6 +211,10 @@ msgstr "Incluir Cabeçalhos de Colunas"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Coluna"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

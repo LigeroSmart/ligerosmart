@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:49+0000\n"
+"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,6 +21,10 @@ msgstr "Pengurusan Import/Eksport"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Cipta templat untuk import dan eksport informasi objek."
+
+#. Template: AdminImportExport
+msgid "Number"
+msgstr "Nombor"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -87,8 +91,8 @@ msgid "Source File"
 msgstr "Sumber fail"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "Import ringkasan untuk"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -97,10 +101,6 @@ msgstr "Rekod-rekod"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "Berjaya"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "Gagal"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -209,6 +209,10 @@ msgstr "Termasuk Kolum Kepala"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Kolum"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

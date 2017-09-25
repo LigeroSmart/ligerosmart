@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export マネージャ';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'オブジェクトのインポート・エクスポート用のテンプレートを作成する';
+    $Self->{Translation}->{'Number'} = '番号';
     $Self->{Translation}->{'Start Import'} = 'インポート開始';
     $Self->{Translation}->{'Start Export'} = 'エクスポート開始';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Step 1 of 5 - 基本情報の設定';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = '検索あたりの出力を制限';
     $Self->{Translation}->{'Import information'} = '情報の読み込み';
     $Self->{Translation}->{'Source File'} = 'ソースファイル';
-    $Self->{Translation}->{'Import summary for'} = '概要を読み込む';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'レコード';
     $Self->{Translation}->{'Success'} = '成功';
-    $Self->{Translation}->{'Failed'} = '失敗';
     $Self->{Translation}->{'Duplicate names'} = '名前が重複しています';
     $Self->{Translation}->{'Last processed line number of import file'} = '読み込み済みファイルの最終実行行数';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = '桁';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'import/exportモジュールのバックエンドモジュールを登録';
     $Self->{Translation}->{'Import and export object information.'} = 'オブジェクト情報のインポート・エクスポート';
     $Self->{Translation}->{'Import/Export'} = 'インポート/エクスポート';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'การจัดการ นำเข้า/ส่งออก';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'สร้างแม่แบบเพื่อนำเข้าและส่งออกข้อมูลออบเจกต์';
+    $Self->{Translation}->{'Number'} = 'หมายเลข';
     $Self->{Translation}->{'Start Import'} = 'เริ่มนำเข้า';
     $Self->{Translation}->{'Start Export'} = 'เริ่มส่งออก';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'การจำกัดการส่งออกตามการค้นหา';
     $Self->{Translation}->{'Import information'} = 'ข้อมูลนำเข้า';
     $Self->{Translation}->{'Source File'} = 'แหล่งไฟล์';
-    $Self->{Translation}->{'Import summary for'} = 'นำเข้าบทสรุปสำหรับ';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'การบันทึก';
     $Self->{Translation}->{'Success'} = 'ความสำเร็จ';
-    $Self->{Translation}->{'Failed'} = 'ล้มเหลว';
     $Self->{Translation}->{'Duplicate names'} = 'ชื่อซ้ำ';
     $Self->{Translation}->{'Last processed line number of import file'} = 'หมายเลขของการประมวลครั้งสุดท้ายของการนำไฟล์เข้า';
     $Self->{Translation}->{'Ok'} = 'โอเค';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'คอลัมน์';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'รูปแบบการลงทะเบียนโมดูล backend สำหรับโมดูลการนำเข้า / ส่งออก';
     $Self->{Translation}->{'Import and export object information.'} = 'การนำเข้าหรือส่งออกข้อมูลออบเจกต์';
     $Self->{Translation}->{'Import/Export'} = 'การนำเข้า/ส่งออก';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Usimamizi wa kuleta/Hamisha';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tengeneza kiolezo kuleta na kuhamisha taarifa za kipengee';
+    $Self->{Translation}->{'Number'} = 'Namba';
     $Self->{Translation}->{'Start Import'} = 'Anza kuleta';
     $Self->{Translation}->{'Start Export'} = 'Anza kuhamisha';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Zuia uhamishaji kwa kila utafutaji';
     $Self->{Translation}->{'Import information'} = 'Leta taarifa';
     $Self->{Translation}->{'Source File'} = 'Faili la chanzo';
-    $Self->{Translation}->{'Import summary for'} = 'Leta muhtasari kwa ajili ya';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Kumbukumbu';
     $Self->{Translation}->{'Success'} = 'Mafanikio';
-    $Self->{Translation}->{'Failed'} = 'Shindwa';
     $Self->{Translation}->{'Duplicate names'} = 'Jina limejirudia:';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Namba ya mstari unaokatika mchakato wa mwisho wa faili lililoletwa';
     $Self->{Translation}->{'Ok'} = 'Sawa';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Safuwima';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Umbiza usajili wa moduli wa mazingira ya nyuma kwa ajili ya moduli ya kuleta/kuhamisha';
     $Self->{Translation}->{'Import and export object information.'} = 'Leta na hamisha taarifa za kipengee';
     $Self->{Translation}->{'Import/Export'} = 'Leta/Hamisha';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

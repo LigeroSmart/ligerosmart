@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Управление Импортом/Экспортом';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Создайте шаблон для импорта и экспорта информации объектов';
+    $Self->{Translation}->{'Number'} = 'Число';
     $Self->{Translation}->{'Start Import'} = 'Начать импорт';
     $Self->{Translation}->{'Start Export'} = 'Начать экспорт';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Шаг 1 из 5 - Редактировать общую информацию';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
     $Self->{Translation}->{'Import information'} = 'Информация об импорте';
     $Self->{Translation}->{'Source File'} = 'Исходный файл';
-    $Self->{Translation}->{'Import summary for'} = 'Отчет об импорте';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Записей';
     $Self->{Translation}->{'Success'} = 'Успешно';
-    $Self->{Translation}->{'Failed'} = 'Не удалось выполнить';
     $Self->{Translation}->{'Duplicate names'} = 'Дублирующие имена';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Номер последней обработанной строки импортируемого файла';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Столбец ';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Format backend module registration для модуля import/export.';
     $Self->{Translation}->{'Import and export object information.'} = 'Импорт и экспорт информации об объектах';
     $Self->{Translation}->{'Import/Export'} = 'Импорт/Экспорт';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

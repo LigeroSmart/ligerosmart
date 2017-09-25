@@ -38,7 +38,7 @@
         <File Permission="660" Location="Kernel/Language/pt_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_ImportExport.pm" />
-        <File Permission="660" Location="Kernel/Language/sr_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sv_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_ImportExport.pm" />

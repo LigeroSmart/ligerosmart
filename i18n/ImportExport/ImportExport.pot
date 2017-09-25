@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2017-07-11 15:22+0000\n"
+"POT-Creation-Date: 2017-09-25 08:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Number"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -83,7 +87,7 @@ msgid "Source File"
 msgstr ""
 
 #. Template: AdminImportExport
-msgid "Import summary for"
+msgid "Import summary for %s"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -92,10 +96,6 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Success"
-msgstr ""
-
-#. Template: AdminImportExport
-msgid "Failed"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -204,6 +204,10 @@ msgstr ""
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
 msgstr ""
 
 #. SysConfig

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:49+0000\n"
+"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/otrs/OTRS/language/vi_VN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,6 +21,10 @@ msgstr "Quản lý Nhập/Xuất"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Tạo một mẫu để nhập và xuất thông tin đối tượng."
+
+#. Template: AdminImportExport
+msgid "Number"
+msgstr "Số"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -87,8 +91,8 @@ msgid "Source File"
 msgstr "Tệp nguồn"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "Tóm lược nhập vào cho"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -97,10 +101,6 @@ msgstr "Bản ghi"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "Thành công"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "Lỗi"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -209,6 +209,10 @@ msgstr "Gồm tiêu đề cột"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Cột"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

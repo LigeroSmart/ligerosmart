@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Quản lý Nhập/Xuất';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tạo một mẫu để nhập và xuất thông tin đối tượng.';
+    $Self->{Translation}->{'Number'} = 'Số';
     $Self->{Translation}->{'Start Import'} = 'Bắt đầu nhập vào';
     $Self->{Translation}->{'Start Export'} = 'Bắt đầu xuất ra';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Giới hạn dữ liệu xuất mỗi lần tìm kiếm';
     $Self->{Translation}->{'Import information'} = 'Thông tin nhập vào';
     $Self->{Translation}->{'Source File'} = 'Tệp nguồn';
-    $Self->{Translation}->{'Import summary for'} = 'Tóm lược nhập vào cho';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Bản ghi';
     $Self->{Translation}->{'Success'} = 'Thành công';
-    $Self->{Translation}->{'Failed'} = 'Lỗi';
     $Self->{Translation}->{'Duplicate names'} = 'Trùng tên';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Dòng cuối cùng được xử lý trong tệp nhập vào';
     $Self->{Translation}->{'Ok'} = 'Đồng ý';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Cột';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Đăng ký mô-đun định dạng nền cho mô-đun nhập/xuất';
     $Self->{Translation}->{'Import and export object information.'} = 'Thông tin nhập và xuất đối tượng.';
     $Self->{Translation}->{'Import/Export'} = 'Nhập/Xuất';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

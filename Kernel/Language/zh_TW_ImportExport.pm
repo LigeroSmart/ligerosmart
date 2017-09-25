@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = '導入/導出管理';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '創建模板導入和導出對象信息。';
+    $Self->{Translation}->{'Number'} = '編號';
     $Self->{Translation}->{'Start Import'} = '開始導入';
     $Self->{Translation}->{'Start Export'} = '開始導出';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = '限制導出每個搜尋';
     $Self->{Translation}->{'Import information'} = '導入信息';
     $Self->{Translation}->{'Source File'} = '源文件';
-    $Self->{Translation}->{'Import summary for'} = '導入總結';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = '紀錄';
     $Self->{Translation}->{'Success'} = '成功';
-    $Self->{Translation}->{'Failed'} = '失敗';
     $Self->{Translation}->{'Duplicate names'} = '重複的名稱';
     $Self->{Translation}->{'Last processed line number of import file'} = '導入文件最後處理的行數';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = '列';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '';
     $Self->{Translation}->{'Import and export object information.'} = '導入和導出對象信息';
     $Self->{Translation}->{'Import/Export'} = '導入/導出';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

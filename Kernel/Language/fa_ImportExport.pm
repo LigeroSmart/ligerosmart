@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'مدیریت ورود/صدور';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'ساخت قالبی برای ورود و صدور اطلاعات آبجکت';
+    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Start Import'} = 'شروع عملیات ورود';
     $Self->{Translation}->{'Start Export'} = 'شروع عملیات صدور';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
     $Self->{Translation}->{'Import information'} = 'ورود اطلاعات';
     $Self->{Translation}->{'Source File'} = 'فایل منبع';
-    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = '';
     $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
     $Self->{Translation}->{'Duplicate names'} = '';
     $Self->{Translation}->{'Last processed line number of import file'} = '';
     $Self->{Translation}->{'Ok'} = 'تایید';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'ستون';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'قالب‌بندی ثبت ماژول برای ماژول ورود/صدور';
     $Self->{Translation}->{'Import and export object information.'} = 'ورود و صدور اطلاعات آبجکت';
     $Self->{Translation}->{'Import/Export'} = 'ورود/صدور';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

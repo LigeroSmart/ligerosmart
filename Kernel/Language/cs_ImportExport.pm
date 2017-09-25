@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export Správa';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Start Import'} = 'Zahájit Import';
     $Self->{Translation}->{'Start Export'} = 'Zahájit Export';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
     $Self->{Translation}->{'Import information'} = 'Informace o Importu';
     $Self->{Translation}->{'Source File'} = 'Zdrojový Soubor';
-    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Záznamů';
     $Self->{Translation}->{'Success'} = 'Úspěšně';
-    $Self->{Translation}->{'Failed'} = 'Neúspěšně';
     $Self->{Translation}->{'Duplicate names'} = 'Duplicitní jména';
     $Self->{Translation}->{'Last processed line number of import file'} = '';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Sloupec';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '';
     $Self->{Translation}->{'Import and export object information.'} = '';
     $Self->{Translation}->{'Import/Export'} = 'Import/Export';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

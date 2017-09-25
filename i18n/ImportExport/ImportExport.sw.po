@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:49+0000\n"
+"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,6 +22,10 @@ msgstr "Usimamizi wa kuleta/Hamisha"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Tengeneza kiolezo kuleta na kuhamisha taarifa za kipengee"
+
+#. Template: AdminImportExport
+msgid "Number"
+msgstr "Namba"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -88,8 +92,8 @@ msgid "Source File"
 msgstr "Faili la chanzo"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "Leta muhtasari kwa ajili ya"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -98,10 +102,6 @@ msgstr "Kumbukumbu"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "Mafanikio"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "Shindwa"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -210,6 +210,10 @@ msgstr "Ambatisha vichwa vya habari vya safuwima"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Safuwima"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

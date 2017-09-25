@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Importálás/exportálás kezelés';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Sablon létrehozása objektuminformációk importálásához és exportálásához.';
+    $Self->{Translation}->{'Number'} = 'Szám';
     $Self->{Translation}->{'Start Import'} = 'Importálás indítása';
     $Self->{Translation}->{'Start Export'} = 'Exportálás indítása';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '1. lépés az 5-ből - közös információk szerkesztése';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Exportálás korlátozása keresésenként';
     $Self->{Translation}->{'Import information'} = 'Importálási információk';
     $Self->{Translation}->{'Source File'} = 'Forrásfájl';
-    $Self->{Translation}->{'Import summary for'} = 'Importálási összegzés ehhez';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Rekordok';
     $Self->{Translation}->{'Success'} = 'Sikeres';
-    $Self->{Translation}->{'Failed'} = 'Sikertelen';
     $Self->{Translation}->{'Duplicate names'} = 'Nevek kettőzése';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Az importfájl utolsó feldolgozott sorszáma';
     $Self->{Translation}->{'Ok'} = 'OK';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Oszlop';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Formátum háttérprogram modul regisztráció az importálás/exportálás modulhoz.';
     $Self->{Translation}->{'Import and export object information.'} = 'Objektuminformációk importálása és exportálása.';
     $Self->{Translation}->{'Import/Export'} = 'Importálás/exportálás';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

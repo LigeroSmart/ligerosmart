@@ -1,15 +1,16 @@
 # 
 # Translators:
-# Anatoli F. Peña Castillo <anatoli1993@yahoo.com>, 2016
+# Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
 # David B <link.bigpoint@outlook.com>, 2017
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Iñaki Martínez, 2017
 # juanman <juanma@gnutn.org.ar>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:49+0000\n"
+"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,6 +25,10 @@ msgstr "Gestión de Importación/Exportación"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Crear una plantilla para importar y exportar informacion del objeto."
+
+#. Template: AdminImportExport
+msgid "Number"
+msgstr "Número"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -90,8 +95,8 @@ msgid "Source File"
 msgstr "Archivo origen"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "Importar resumen para"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -100,10 +105,6 @@ msgstr "Registros"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "Éxito"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "Fracasado"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -147,7 +148,7 @@ msgstr "Ocurrió un error!. Imposible exportar! Vea Syslog para detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr ""
+msgstr "Lista de plantillas"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
@@ -199,7 +200,7 @@ msgstr "Punto (.)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Comma (,)"
-msgstr ""
+msgstr "Coma (,)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Charset"
@@ -212,6 +213,10 @@ msgstr "Incluir Cabecera de la Columna"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Columna"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

@@ -18,6 +18,7 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Administrasjon av Import/Eksport';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Opprett en mal for å eksportere og importere informasjon';
+    $Self->{Translation}->{'Number'} = 'Nummer';
     $Self->{Translation}->{'Start Import'} = 'Start import';
     $Self->{Translation}->{'Start Export'} = 'Start eksport';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -34,10 +35,9 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Begrens eksport per søk';
     $Self->{Translation}->{'Import information'} = 'Import-informasjon';
     $Self->{Translation}->{'Source File'} = 'Kildefil';
-    $Self->{Translation}->{'Import summary for'} = 'Oppsummeringer for import';
+    $Self->{Translation}->{'Import summary for %s'} = '';
     $Self->{Translation}->{'Records'} = 'Rader';
     $Self->{Translation}->{'Success'} = 'Vellykket';
-    $Self->{Translation}->{'Failed'} = 'Feilet';
     $Self->{Translation}->{'Duplicate names'} = 'Duplikate navn';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Siste prosesserte linjenummer av importfil';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -71,10 +71,15 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Kolonne';
 
     # SysConfig
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Baksidemodul-registrering for formatet til import/eksport-modulen';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasjon for import- og eksport-objekt';
     $Self->{Translation}->{'Import/Export'} = 'Import/Eksport';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

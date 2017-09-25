@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:49+0000\n"
+"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,6 +21,10 @@ msgstr "導入/導出管理"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "創建模板導入和導出對象信息。"
+
+#. Template: AdminImportExport
+msgid "Number"
+msgstr "編號"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -87,8 +91,8 @@ msgid "Source File"
 msgstr "源文件"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "導入總結"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -97,10 +101,6 @@ msgstr "紀錄"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "成功"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "失敗"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"
@@ -209,6 +209,10 @@ msgstr "包括列標題"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "列"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
