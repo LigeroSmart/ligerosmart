@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2016-12-10 12:54+0000\n"
-"PO-Revision-Date: 2016-10-11 11:35+0000\n"
-"Last-Translator: Joao Ferro <fmthard@gmail.com>\n"
+"POT-Creation-Date: 2017-09-25 08:33+0000\n"
+"PO-Revision-Date: 2017-09-25 08:33+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,13 +35,25 @@ msgstr "Adicionar Classe ao Catálogo"
 msgid "Catalog Class"
 msgstr "Classe do Catálogo"
 
-#. SysConfig
-msgid "Admin."
-msgstr "Administração."
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr ""
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Criar e gerir o Catálogo Geral."
+
+#. SysConfig
+msgid "Define the group with permissions."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid ""

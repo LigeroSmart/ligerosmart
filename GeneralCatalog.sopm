@@ -21,9 +21,13 @@
         <File Permission="660" Location="Kernel/Language/da_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/de_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/es_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/fa_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/fr_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/hu_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/id_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/it_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/ja_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/ms_GeneralCatalog.pm" />
@@ -33,8 +37,14 @@
         <File Permission="660" Location="Kernel/Language/pt_BR_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/pt_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/ru_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/sv_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/sw_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_GeneralCatalog.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Modules/AdminGeneralCatalog.pm" />

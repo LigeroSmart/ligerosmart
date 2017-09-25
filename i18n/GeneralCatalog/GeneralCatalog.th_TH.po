@@ -1,39 +1,38 @@
 # 
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
-# Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-09-25 08:33+0000\n"
 "PO-Revision-Date: 2017-09-25 08:33+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
+"Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ms\n"
+"Language: th_TH\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
-msgstr "Fungsi"
+msgstr "ฟังก์ชั่นการทำงาน"
 
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
-msgstr "Katalog Pengurusan General"
+msgstr "การจัดการแค็ตตาล็อกทั่วไป"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
-msgstr "Tambahan Item Katalog"
+msgstr "เพิ่มรายการแค็ตตาล็อก"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Class"
-msgstr "Tambah Kelas Katalog"
+msgstr "เพิ่มห้องแค็ตตาล็อก"
 
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
-msgstr "Kelas Katalog"
+msgstr "ห้องแค็ตตาล็อก"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
@@ -41,11 +40,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "Cipta dan urus Katalog General."
+msgstr "สร้างและจัดการแค็ตตาล็อกทั่วไป"
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr "Takrifkan kumpulan tersebut dengan keizinan."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
@@ -59,19 +58,19 @@ msgstr ""
 msgid ""
 "Frontend module registration for the AdminGeneralCatalog configuration in "
 "the admin area."
-msgstr "Modul pendaftaran muka hadapan bagi konfigurasi KatalogUmumTadbir dalam ruangan pentadbir. "
+msgstr "การลงทะเบียนโมดูล Frontend สำหรับการกำหนดค่าของ AdminGeneralCatalog ในพื้นที่ของแอดมิน"
 
 #. SysConfig
 msgid "General Catalog"
-msgstr "Katalog General"
+msgstr "แค็ตตาล็อกทั่วไป"
 
 #. SysConfig
 msgid ""
 "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Parameter untuk contoh komen 2 pada ciri-ciri katalog."
+msgstr "พารามิเตอร์สำหรับตัวอย่างความคิดเห็นที่2 ของแค็ตตาล็อกแอตทริบิวต์ทั่วไป"
 
 #. SysConfig
 msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
-msgstr "Parameter untuk contoh kumpulan yang dibenarkan pada ciri-ciri katalog."
+msgstr "พารามิเตอร์สำหรับตัวอย่างกลุ่มที่ได้รับอนุญาตของแอตทริบิวต์แค็ตตาล็อกทั่วไป"

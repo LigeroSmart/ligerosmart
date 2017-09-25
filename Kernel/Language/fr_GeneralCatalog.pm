@@ -26,8 +26,10 @@ sub Data {
     $Self->{Translation}->{'Edit Catalog Item'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = 'Administrateur.';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Créer et gérer le Catalogue Général.';
+    $Self->{Translation}->{'Define the group with permissions.'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Interface d\'enregistrement de module pour la configuration du Catalogue Général Admin dans la section administrateur';
     $Self->{Translation}->{'General Catalog'} = 'Catalogue Général';
@@ -35,6 +37,10 @@ sub Data {
         'Paramètres pour l\'exemple du commentaire 2 des attributs du Catalogue Général';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Paramètres pour l\'exemple des permissions de groupe des attributs du Catalogue Général';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

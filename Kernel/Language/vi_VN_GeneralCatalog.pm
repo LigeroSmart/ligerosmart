@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::sv_GeneralCatalog;
+package Kernel::Language::vi_VN_GeneralCatalog;
 
 use strict;
 use warnings;
@@ -16,27 +16,27 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAGeneralCatalog
-    $Self->{Translation}->{'Functionality'} = 'Funktionalitet';
+    $Self->{Translation}->{'Functionality'} = 'Chức năng';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = 'Hantera grundkatalog';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Lägg till katalogpost';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Lägg till klass i katalog';
-    $Self->{Translation}->{'Catalog Class'} = 'Katalogklass';
+    $Self->{Translation}->{'General Catalog Management'} = 'Quản lý danh mục chung';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Thêm danh mục';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Thêm lớp danh mục';
+    $Self->{Translation}->{'Catalog Class'} = 'Lớp danh mục';
     $Self->{Translation}->{'Edit Catalog Item'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Skapa och hantera grundkatalogen';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Tạo và quản lý danh mục chung';
     $Self->{Translation}->{'Define the group with permissions.'} = '';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
     $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        'Registrering av frontendmodul för AdminGeneralCatalog-inställningar i adminarean.';
-    $Self->{Translation}->{'General Catalog'} = 'Grundkatalog';
+        'Đăng ký mô-đun để cấu hình AdminGeneralCatalog trong giao diện quản trị';
+    $Self->{Translation}->{'General Catalog'} = 'Danh mục chung';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
-        'Parametrar för exempelkommentar 2 i attributen för grundkatalogen.';
+        'Tham số cho chú thích thứ 2 của thuộc tính danh mục chung.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
-        'Parametrar för exempel på behörighetsegrupper i grundkatalogens attribut.';
+        'Tham số cho nhóm cấp phép của thuộc tính danh mục chung.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

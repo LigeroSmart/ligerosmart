@@ -1,53 +1,51 @@
 # 
 # Translators:
-# Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
-# David B <link.bigpoint@outlook.com>, 2017
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
-# Iñaki Martínez, 2017
+# Thuy Nguyen Duc <thuynguyenduc@gmail.com>, 2015
+# Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-09-25 08:33+0000\n"
 "PO-Revision-Date: 2017-09-25 08:33+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/otrs/OTRS/language/vi_VN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
-msgstr "Funcionalidad"
+msgstr "Chức năng"
 
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
-msgstr "Gestión del Catálogo General"
+msgstr "Quản lý danh mục chung"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
-msgstr "Añadir Elemento al Catálogo"
+msgstr "Thêm danh mục"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Class"
-msgstr "Añadir Clase al Catálogo"
+msgstr "Thêm lớp danh mục"
 
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
-msgstr "Clase de Catálogo"
+msgstr "Lớp danh mục"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
-msgstr "Editar Elemento del Catálogo"
+msgstr ""
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "Crea y gestiona el Catálogo General"
+msgstr "Tạo và quản lý danh mục chung"
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr "Definir el grupo con permisos."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
@@ -61,19 +59,19 @@ msgstr ""
 msgid ""
 "Frontend module registration for the AdminGeneralCatalog configuration in "
 "the admin area."
-msgstr "El Frontend del registro del módulo para la configuración del AdminGeneralCatalog en el área admin"
+msgstr "Đăng ký mô-đun để cấu hình AdminGeneralCatalog trong giao diện quản trị"
 
 #. SysConfig
 msgid "General Catalog"
-msgstr "Catálogo General"
+msgstr "Danh mục chung"
 
 #. SysConfig
 msgid ""
 "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Parámetros para el ejemplo comentario 2 de los atributos del catálogo general."
+msgstr "Tham số cho chú thích thứ 2 của thuộc tính danh mục chung."
 
 #. SysConfig
 msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
-msgstr "Parámetros para los permisos de ejemplo de los atributos del catálogo general."
+msgstr "Tham số cho nhóm cấp phép của thuộc tính danh mục chung."

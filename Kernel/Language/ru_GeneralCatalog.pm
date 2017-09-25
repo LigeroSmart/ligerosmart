@@ -23,11 +23,13 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Добавление элемента каталога';
     $Self->{Translation}->{'Add Catalog Class'} = 'Добавление класса каталога';
     $Self->{Translation}->{'Catalog Class'} = 'Класс каталога';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Правка элемента каталога';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = 'Администратор.';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Создание и управление Общим каталогом';
+    $Self->{Translation}->{'Define the group with permissions.'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Module registration для конфигурации AdminGeneralCatalog в панели администратора.';
     $Self->{Translation}->{'General Catalog'} = 'Общий каталог';
@@ -35,6 +37,10 @@ sub Data {
         'Добавление дополнительного комментария к атрибутам Общего каталога';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Параметры для примерных групповых прав для атрибутов Общего каталога';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

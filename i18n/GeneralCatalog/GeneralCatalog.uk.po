@@ -1,53 +1,51 @@
 # 
 # Translators:
-# Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
-# David B <link.bigpoint@outlook.com>, 2017
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
-# Iñaki Martínez, 2017
+# Alexander Korsikov <korsikov@rbcgrp.com>, 2015
+# Vira Motorko <ato4ka@i.ua>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-09-25 08:33+0000\n"
 "PO-Revision-Date: 2017-09-25 08:33+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Language-Team: Ukrainian (http://www.transifex.com/otrs/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
-msgstr "Funcionalidad"
+msgstr "Функціональність"
 
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
-msgstr "Gestión del Catálogo General"
+msgstr "Керування загальним каталогом"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
-msgstr "Añadir Elemento al Catálogo"
+msgstr "Додати елемент каталогу"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Class"
-msgstr "Añadir Clase al Catálogo"
+msgstr "Додати клас каталогу"
 
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
-msgstr "Clase de Catálogo"
+msgstr "Клас каталогу"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
-msgstr "Editar Elemento del Catálogo"
+msgstr ""
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "Crea y gestiona el Catálogo General"
+msgstr "Створити і керувати загальним каталогом"
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr "Definir el grupo con permisos."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
@@ -61,19 +59,19 @@ msgstr ""
 msgid ""
 "Frontend module registration for the AdminGeneralCatalog configuration in "
 "the admin area."
-msgstr "El Frontend del registro del módulo para la configuración del AdminGeneralCatalog en el área admin"
+msgstr "Frontend модуль реєстрації в зоні адміністрування для конфігурації AdminGeneralCatalog"
 
 #. SysConfig
 msgid "General Catalog"
-msgstr "Catálogo General"
+msgstr "Загальни каталог"
 
 #. SysConfig
 msgid ""
 "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Parámetros para el ejemplo comentario 2 de los atributos del catálogo general."
+msgstr "Параметри для прикладу коментар 2 атрибутів загального каталогу."
 
 #. SysConfig
 msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
-msgstr "Parámetros para los permisos de ejemplo de los atributos del catálogo general."
+msgstr "Параметри для прикладу дозволу груп загальних атрибутів каталогу."

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:05+0000\n"
-"PO-Revision-Date: 2017-05-10 17:35+0000\n"
-"Last-Translator: Plamen Petkov <plamen_3592@abv.bg>\n"
+"POT-Creation-Date: 2017-09-25 08:33+0000\n"
+"PO-Revision-Date: 2017-09-25 08:33+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Bulgarian (http://www.transifex.com/otrs/OTRS/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,13 +34,25 @@ msgstr "Добави клас в каталога"
 msgid "Catalog Class"
 msgstr "Класове в каталога"
 
-#. SysConfig
-msgid "Admin."
-msgstr "Админ"
+#. Template: AdminGeneralCatalog
+msgid "Edit Catalog Item"
+msgstr ""
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Създаване и поддръжка на Основния каталог"
+
+#. SysConfig
+msgid "Define the group with permissions."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid ""

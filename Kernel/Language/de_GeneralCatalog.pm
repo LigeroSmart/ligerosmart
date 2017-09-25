@@ -19,22 +19,28 @@ sub Data {
     $Self->{Translation}->{'Functionality'} = 'Funktionalität';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = 'General-Katalog-Verwaltung';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Katalog-Eintrag hinzufügen';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Katalog-Klasse hinzufügen';
-    $Self->{Translation}->{'Catalog Class'} = 'Katalog-Klasse';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'General Catalog Management'} = 'Allgemeine Katalogverwaltung';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Katalogartikel hinzufügen';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Katalogklasse hinzufügen';
+    $Self->{Translation}->{'Catalog Class'} = 'Katalogklasse';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Katalogartikel bearbeiten';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = 'Admin.';
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'General-Katalog erstellen und verwalten.';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Allgemeinen Katalog erstellen und verwalten.';
+    $Self->{Translation}->{'Define the group with permissions.'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.';
-    $Self->{Translation}->{'General Catalog'} = 'General-Katalog';
+    $Self->{Translation}->{'General Catalog'} = 'Allgemeiner Katalog';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
         'Parameter für den Beispiel-Kommentar 2 der General-Katalog-Attribute.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parameter für die zugriffsberechtigte Gruppe der General-Katalog-Attribute.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

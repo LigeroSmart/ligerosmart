@@ -23,11 +23,13 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Añadir Elemento al Catálogo';
     $Self->{Translation}->{'Add Catalog Class'} = 'Añadir Clase al Catálogo';
     $Self->{Translation}->{'Catalog Class'} = 'Clase de Catálogo';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Editar Elemento del Catálogo';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = 'Admin.';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crea y gestiona el Catálogo General';
+    $Self->{Translation}->{'Define the group with permissions.'} = 'Definir el grupo con permisos.';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'El Frontend del registro del módulo para la configuración del AdminGeneralCatalog en el área admin';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo General';
@@ -35,6 +37,10 @@ sub Data {
         'Parámetros para el ejemplo comentario 2 de los atributos del catálogo general.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parámetros para los permisos de ejemplo de los atributos del catálogo general.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

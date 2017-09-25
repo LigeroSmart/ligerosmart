@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2017-08-21 11:46+0000\n"
+"POT-Creation-Date: 2017-09-25 08:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,19 @@ msgid "Edit Catalog Item"
 msgstr ""
 
 #. SysConfig
-msgid "Admin."
+msgid "Create and manage the General Catalog."
 msgstr ""
 
 #. SysConfig
-msgid "Create and manage the General Catalog."
+msgid "Define the group with permissions."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the URL JS Color Picker path."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
 msgstr ""
 
 #. SysConfig

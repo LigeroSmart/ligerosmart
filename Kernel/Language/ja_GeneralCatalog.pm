@@ -26,8 +26,10 @@ sub Data {
     $Self->{Translation}->{'Edit Catalog Item'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = '管理';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '一般カタログの作成と管理';
+    $Self->{Translation}->{'Define the group with permissions.'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         '管理エリアでのAdminGeneralCatalogのフロントエンドモジュールの登録';
     $Self->{Translation}->{'General Catalog'} = '一般カタログ';
@@ -35,6 +37,10 @@ sub Data {
         '一般カタログ属性のコメント例 2　の設定値';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         '一般カタログ属性のパーミッショングループ　の設定値';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

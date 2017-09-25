@@ -26,8 +26,10 @@ sub Data {
     $Self->{Translation}->{'Edit Catalog Item'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Admin.'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Tengeneza na simamia Katalogi ya ujumla.';
+    $Self->{Translation}->{'Define the group with permissions.'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Usajili wa moduli ya mazingira ya mbele kwa usanidi wa katalogi ya ujumla ya msimamizi katika eneo la usimamizi.';
     $Self->{Translation}->{'General Catalog'} = 'Katalogi ya ujumla';
@@ -35,6 +37,10 @@ sub Data {
         'Vigezo kwa mfano Maoni 2 ya sifa za katalogi za ujumla.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Vigezo kwa mfano ruhusa za vikundi kwa sifa za katalogi za ujumla.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 
