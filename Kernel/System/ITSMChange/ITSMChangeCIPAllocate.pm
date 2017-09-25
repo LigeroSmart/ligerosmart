@@ -26,7 +26,7 @@ Kernel::System::ITSMChange::ITSMChangeCIPAllocate - category, impact and priorit
 
 =head2 new()
 
-create an object
+Create an object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -46,13 +46,13 @@ sub new {
 
 =head2 AllocateList()
 
-return a C<2d> hash reference of allocations
+Return a C<2d> hash reference of allocations.
 
     my $ListRef = $CIPAllocateObject->AllocateList(
         UserID => 1,
     );
 
-C<$ListRef> is something like
+C<$ListRef> is something like:
 
     $ListRet = {
         '6' => {
@@ -99,7 +99,7 @@ sub AllocateList {
 
 =head2 AllocateUpdate()
 
-update the allocation of category, impact and priority
+Update the allocation of category, impact and priority.
 
     my $True = $CIPAllocateObject->AllocateUpdate(
         AllocateData => $DataRef,  # 2D hash reference
@@ -175,7 +175,7 @@ sub AllocateUpdate {
 
 =head2 PriorityAllocationGet()
 
-return the priority id for given category and impact
+Return the priority id for given category and impact.
 
     my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
         CategoryID => 321,

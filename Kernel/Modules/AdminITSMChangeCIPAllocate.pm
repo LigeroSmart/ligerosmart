@@ -105,34 +105,34 @@ sub Run {
         $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)
-        my $Counter1 = 1;
+        my $CounterImpact = 1;
         for my $Impact (
             sort { $ObjectOption{ImpactList}->{$a} cmp $ObjectOption{ImpactList}->{$b} }
             keys %{ $ObjectOption{ImpactList} }
             )
         {
-            $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'Impact';
-            $AllocateMatrix->[$Counter1]->[0]->{ImpactKey}    = $Impact;
-            $AllocateMatrix->[$Counter1]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$Impact};
-            $Counter1++;
+            $AllocateMatrix->[$CounterImpact]->[0]->{ObjectType}   = 'Impact';
+            $AllocateMatrix->[$CounterImpact]->[0]->{ImpactKey}    = $Impact;
+            $AllocateMatrix->[$CounterImpact]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$Impact};
+            $CounterImpact++;
         }
 
         # generate table description (Category)
-        my $Counter2 = 1;
+        my $CounterCategory = 1;
         for my $Category (
             sort { $ObjectOption{CategoryList}->{$a} cmp $ObjectOption{CategoryList}->{$b} }
             keys %{ $ObjectOption{CategoryList} }
             )
         {
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}   = 'Category';
-            $AllocateMatrix->[0]->[$Counter2]->{CategoryKey}  = $Category;
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectOption} = $ObjectOption{CategoryList}{$Category};
-            $Counter2++;
+            $AllocateMatrix->[0]->[$CounterCategory]->{ObjectType}   = 'Category';
+            $AllocateMatrix->[0]->[$CounterCategory]->{CategoryKey}  = $Category;
+            $AllocateMatrix->[0]->[$CounterCategory]->{ObjectOption} = $ObjectOption{CategoryList}{$Category};
+            $CounterCategory++;
         }
 
         # generate content
-        for my $Row ( 1 .. ( $Counter1 - 1 ) ) {
-            for my $Column ( 1 .. ( $Counter2 - 1 ) ) {
+        for my $Row ( 1 .. ( $CounterImpact - 1 ) ) {
+            for my $Column ( 1 .. ( $CounterCategory - 1 ) ) {
 
                 # extract keys
                 my $ImpactKey   = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
