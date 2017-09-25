@@ -2666,7 +2666,7 @@ sub WorkOrderAttachmentGet {
         Content        => ${ $AttachmentData{Content} },
         ContentType    => $AttachmentData{Preferences}->{ContentType},
         Type           => 'attachment',
-        Filesize       => $AttachmentData{Preferences}->{Filesize},
+        Filesize       => $AttachmentData{Preferences}->{FilesizeRaw},
         AttachmentType => $AttachmentType,
     };
 

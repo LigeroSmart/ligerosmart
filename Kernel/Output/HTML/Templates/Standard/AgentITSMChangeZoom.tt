@@ -327,7 +327,7 @@
                                 <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=DownloadAttachment;Filename=[% Data.Filename | uri %];ChangeID=[% Data.ChangeID | uri %]">
                                     [% Data.Filename | html %]
                                 </a>
-                                , [% Data.Filesize | html %]
+                                ([% Data.Filesize | Localize('Filesize') | html %])
                             </span>
                             <br/>
 [% RenderBlockEnd("AttachmentRow") %]
