@@ -31,6 +31,12 @@ $ConfigObject->Set(
     Value => 'Kernel::System::Email::DoNotSendEmail',
 );
 
+# disable email check
+$ConfigObject->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
+
 $ConfigObject->Set(
     Key   => 'Survey::SendInHoursAfterClose',
     Value => 0,
