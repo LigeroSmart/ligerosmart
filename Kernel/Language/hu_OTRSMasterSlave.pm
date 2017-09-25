@@ -15,9 +15,11 @@ use utf8;
 sub Data {
     my $Self = shift;
 
+    # Template: AdminDynamicFieldMasterSlave
+    $Self->{Translation}->{'Field'} = 'Mező';
+
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '%s%s%s mester/alárendelt állapotának kezelése';
-    $Self->{Translation}->{'Set Master/Slave Value'} = 'Mester/alárendelt érték beállítása';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Új mesterjegy';
@@ -53,8 +55,7 @@ sub Data {
         'Azt az előzmény típust határozza meg a jegy mester-alárendelt képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni az ügyintézői felületen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
-    $Self->{Translation}->{'Disabled'} = 'Letiltva';
-    $Self->{Translation}->{'Enabled'} = 'Engedélyezve';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Engedélyezi a funkció speciális mester-alárendelt részét.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Engedélyezi azt a funkciót, hogy az alárendelt jegyek a mesterjegyet kövessék egy új mesterhez a speciális mester-alárendelt módban.';
@@ -106,9 +107,15 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Alárendelt jegyek';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        'Megadja a különböző jegyzettípusokat, amelyek a rendszeren használva lesznek.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ez a modul bekapcsolja a mester/alárendelt mezőt az új e-mail és telefonos jegy képernyőkön.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Jegy mester-alárendelt.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

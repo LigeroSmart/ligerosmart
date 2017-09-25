@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-02-27 21:53+0000\n"
-"PO-Revision-Date: 2017-02-28 03:54+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 11:23+0000\n"
+"PO-Revision-Date: 2017-09-25 11:24+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,13 +15,13 @@ msgstr ""
 "Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#. Template: AdminDynamicFieldMasterSlave
+msgid "Field"
+msgstr "Campo"
+
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
-
-#. Template: AgentTicketMasterSlave
-msgid "Set Master/Slave Value"
-msgstr "Establecer valor Maestro/Esclavo"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -118,11 +118,7 @@ msgid ""
 msgstr "Define el siguiente estado después de añadir una nota, en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Disabled"
-msgstr ""
-
-#. SysConfig
-msgid "Enabled"
+msgid "Dutch"
 msgstr ""
 
 #. SysConfig
@@ -294,6 +290,10 @@ msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
 msgstr "Especifique los diferentes tipos de artículos en los cuales se reemplazará el nombre real de ticket Maestro con el nombre del ticket Esclavo."
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
+msgstr "Especifica los diferentes tipos de nota que se usarán en el sistema."
 
 #. SysConfig
 msgid ""

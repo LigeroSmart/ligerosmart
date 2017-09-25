@@ -15,9 +15,11 @@ use utf8;
 sub Data {
     my $Self = shift;
 
+    # Template: AdminDynamicFieldMasterSlave
+    $Self->{Translation}->{'Field'} = '字段';
+
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '管理%s%s%s的 主/从 状态';
-    $Self->{Translation}->{'Set Master/Slave Value'} = '设置 主/从 值';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = '新建主工单';
@@ -53,8 +55,7 @@ sub Data {
         '定义工单主从设置窗口操作的历史类型，以用于服务人员界面的工单历史。';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '定义服务人员界面在工单主从设置窗口添加备注后的下一个工单状态。';
-    $Self->{Translation}->{'Disabled'} = '已禁用';
-    $Self->{Translation}->{'Enabled'} = '已启用';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '启用主从功能的高级模式。';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         '启用高级主从模式下从工单随主工单到一个新的主工单的功能。';
@@ -106,9 +107,15 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = '从工单';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '指定使用从工单的客户真实姓名替换主工单的真空姓名的信件类型。';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        '指定将在系统中使用的不同备注类型。';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         '这个模块用来激活新建邮件/电话工单窗口的主从字段。';
     $Self->{Translation}->{'Ticket MasterSlave.'} = '主从工单。';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2017-05-02 21:53+0000\n"
+"POT-Creation-Date: 2017-09-25 11:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,12 +10,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Template: AgentTicketMasterSlave
-msgid "Manage Master/Slave status for %s%s%s"
+#. Template: AdminDynamicFieldMasterSlave
+msgid "Field"
 msgstr ""
 
 #. Template: AgentTicketMasterSlave
-msgid "Set Master/Slave Value"
+msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
@@ -95,11 +95,7 @@ msgid "Defines the next state of a ticket after adding a note, in the ticket Mas
 msgstr ""
 
 #. SysConfig
-msgid "Disabled"
-msgstr ""
-
-#. SysConfig
-msgid "Enabled"
+msgid "Dutch"
 msgstr ""
 
 #. SysConfig
@@ -216,6 +212,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket."
+msgstr ""
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
 msgstr ""
 
 #. SysConfig

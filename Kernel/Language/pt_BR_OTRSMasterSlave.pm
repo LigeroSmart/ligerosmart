@@ -15,9 +15,11 @@ use utf8;
 sub Data {
     my $Self = shift;
 
+    # Template: AdminDynamicFieldMasterSlave
+    $Self->{Translation}->{'Field'} = 'Campo';
+
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = 'Gerenciar estado de Mestre/Escravo para %s%s%s';
-    $Self->{Translation}->{'Set Master/Slave Value'} = 'Configurar Valor Mestre/Escravo';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Novo Chamado Mestre';
@@ -53,8 +55,7 @@ sub Data {
         'Define o tipo de histórico para a ação da tela MasterSlave do ticket, que é utilizado para o histórico do ticket na interface de agente.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define o próximo estado de um ticket após uma nota ter sido adicionada, na tela MasterSlave de um ticket detalhado na interface de agente.';
-    $Self->{Translation}->{'Disabled'} = 'Desabilitado';
-    $Self->{Translation}->{'Enabled'} = 'Habilitado';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Habilita as funcionalidades avançadas do MasterSlave.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Habilita a funcionalidade de chamados escravos seguirem chamados mestre para um novo mestre no modo avançado do MasterSlave.';
@@ -106,9 +107,15 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Chamados Escravos';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Especifica os diferentes tipos de artigo onde o nome real do ticket Master será substituído com o nome do ticket escravo.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        '';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Este módulo ativa o campo Mestre/Escravo nas telas de novo chamado fone/e-mail.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Chamado MestreEscravo';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

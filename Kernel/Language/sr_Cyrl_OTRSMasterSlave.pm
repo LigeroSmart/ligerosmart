@@ -15,15 +15,17 @@ use utf8;
 sub Data {
     my $Self = shift;
 
+    # Template: AdminDynamicFieldMasterSlave
+    $Self->{Translation}->{'Field'} = 'Поље';
+
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = 'Управљање статусом Главни/Зависни за %s%s%s';
-    $Self->{Translation}->{'Set Master/Slave Value'} = 'Подеси вредност Главни/Зависни ';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = 'Нови главни тикет';
     $Self->{Translation}->{'Unset Master Ticket'} = 'Опозови подешавање главног тикета';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'Опозови подешавање зависног тикета';
-    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = 'Зависни од %s%s%s: %s';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = 'Опозови подешавање главних тикета';
@@ -53,8 +55,7 @@ sub Data {
         'Одређује тип историјата за главни/зависни екранску акцију, што ће се користити за историјат у интерфејсу оператера.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Одређује наредни статус тикета после додаваља белешке, на главни/зависни екрану детаљног приказа тикета у интерфејсу оператера.';
-    $Self->{Translation}->{'Disabled'} = 'Онемогућен';
-    $Self->{Translation}->{'Enabled'} = 'Омогућен';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Активира напредни део функције Главни/Зависни.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Активирање својства да зависни тикет прати главни на нови главни у напредном Главни/Зависни моду.';
@@ -106,9 +107,15 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Зависни тикети';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Наводи разне типове чланака где ће стварно име са главног тикета бити замењено са једним на зависном тикету.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        'Одређује различите типове напомена који ће се користити у систему.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Овај модул активира поље Главни/Зависни на екрану нових имејл и телефонских тикета.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Тикет Главни/Зависни.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 
