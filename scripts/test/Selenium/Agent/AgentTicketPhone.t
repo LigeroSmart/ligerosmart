@@ -229,11 +229,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_ITSMImpact').val('1 very low').trigger('redraw.InputField').trigger('change');");
 
-        # wait for ajax loading icon to show up
-        $Selenium->WaitFor( JavaScript => "return \$('#AJAXLoaderPriorityID:visible').length;" );
-
-        # wait for ajax loading icon to hide
-        $Selenium->WaitFor( JavaScript => "return !\$('#AJAXLoaderPriorityID:visible').length;" );
+        sleep 2;
 
         $Self->Is(
             $Selenium->find_element( '#PriorityID', 'css' )->get_value(),
