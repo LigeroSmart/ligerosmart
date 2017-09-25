@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2016-06-20 11:41+0000\n"
+"POT-Creation-Date: 2017-09-25 10:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,19 +11,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
+msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
+msgstr ""
+
+#. SysConfig
+msgid "Log file for replacement of malformed UTF-8 data values."
+msgstr ""
+
+#. SysConfig
 msgid "Settings for connecting with the target database."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"List of tables should be skipped, perhaps internal DB tables. Please use "
-"lowercase."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"This setting specifies which table columns contain blob data as these need "
-"special treatment."
 msgstr ""
 
 #. SysConfig
@@ -31,6 +31,6 @@ msgid "Specifies which columns should be checked for valid UTF-8 source data."
 msgstr ""
 
 #. SysConfig
-msgid "Log file for replacement of malformed UTF-8 data values."
+msgid "This setting specifies which table columns contain blob data as these need special treatment."
 msgstr ""
 

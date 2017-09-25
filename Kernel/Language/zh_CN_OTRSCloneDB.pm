@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::hu_OTRSCloneDB;
+package Kernel::Language::zh_CN_OTRSCloneDB;
 
 use strict;
 use warnings;
@@ -18,13 +18,13 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
-        'Azon táblák listája, amelyeket ki kell hagyni. Valószínűleg belső adatbázistáblák. Használjon kisbetűs neveket.';
-    $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'Naplófájl a helytelenül formázott UTF-8 adatértékek helyettesítéséhez.';
-    $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Beállítások a céladatbázissal történő csatlakozáshoz.';
+        '应该跳过的数据库表（可能是数据库内部表）清单，请使用小写字母。';
+    $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = '记录畸形的UTF-8数据值替换情况的日志文件。';
+    $Self->{Translation}->{'Settings for connecting with the target database.'} = '连接到目标数据库的设置。';
     $Self->{Translation}->{'Specifies which columns should be checked for valid UTF-8 source data.'} =
-        'Meghatározza, hogy mely oszlopokat kell ellenőrizni érvényes UTF-8 forrásadatokhoz.';
+        '指定哪些列需要检查源数据是否为有效的UTF-8格式。';
     $Self->{Translation}->{'This setting specifies which table columns contain blob data as these need special treatment.'} =
-        'Ez a beállítás határozza meg, hogy mely táblaoszlopok tartalmaznak blob adatokat, mivel ezek különleges bánásmódot igénylenek.';
+        '这个设置项指定包含BLOB数据的表列名，这些列需要特殊处理。';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

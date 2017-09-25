@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::hu_OTRSCloneDB;
+package Kernel::Language::it_OTRSCloneDB;
 
 use strict;
 use warnings;
@@ -18,13 +18,13 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
-        'Azon táblák listája, amelyeket ki kell hagyni. Valószínűleg belső adatbázistáblák. Használjon kisbetűs neveket.';
-    $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'Naplófájl a helytelenül formázott UTF-8 adatértékek helyettesítéséhez.';
-    $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Beállítások a céladatbázissal történő csatlakozáshoz.';
+        'Lista delle tabelle da escludere, presumibilmente le tabelle interne del Database. Usare solo caratteri minuscoli.';
+    $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'File di log riguardante la sostituzione di valori UTF-8 non correttamente formati.';
+    $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Impostazioni di connessione per il database di destinazione.';
     $Self->{Translation}->{'Specifies which columns should be checked for valid UTF-8 source data.'} =
-        'Meghatározza, hogy mely oszlopokat kell ellenőrizni érvényes UTF-8 forrásadatokhoz.';
+        'Specifica quali colonne dovrebbero essere controllate per i dati in formato UTF-8 validi.';
     $Self->{Translation}->{'This setting specifies which table columns contain blob data as these need special treatment.'} =
-        'Ez a beállítás határozza meg, hogy mely táblaoszlopok tartalmaznak blob adatokat, mivel ezek különleges bánásmódot igénylenek.';
+        'Queste impostazioni indicano quali colonne della tabella utilizzano i dati in formato BLOB, poichè le suddette necessitano di una gestione speciale.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

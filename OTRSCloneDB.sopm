@@ -16,7 +16,17 @@
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/OTRSCloneDB.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCloneDB.xml" />
+        <File Permission="660" Location="Kernel/Language/bg_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/es_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/hu_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/it_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/System/CloneDB/Backend.pm" />
         <File Permission="660" Location="Kernel/System/CloneDB/Driver/Base.pm" />
         <File Permission="660" Location="Kernel/System/CloneDB/Driver/mysql.pm" />
