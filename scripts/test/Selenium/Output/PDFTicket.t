@@ -1099,7 +1099,12 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
             {
                 SQL     => "DELETE FROM users WHERE id = ?",
                 Bind    => $UserIDs[1],
-                Message => "UserID $UserIDs[1] is deleted",
+# ---
+# ITSMCore
+# ---
+#                Message => "UserID $UserIDs[1] is deleted",
+                Message => 'UserID $UserIDs[1] ' . $UserIDs[1] . 'is deleted',
+# ---
             },
             {
                 SQL     => "DELETE FROM user_preferences WHERE user_id = ?",
@@ -1109,7 +1114,12 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
             {
                 SQL     => "DELETE FROM users WHERE id = ?",
                 Bind    => $UserIDs[0],
-                Message => "UserID $UserIDs[0] is deleted",
+# ---
+# ITSMCore
+# ---
+#                Message => "UserID $UserIDs[0] is deleted",
+                Message => 'UserID $UserIDs[0] ' .  $UserIDs[0] . 'is deleted',
+# ---
             },
             {
                 SQL     => "DELETE FROM ticket_type WHERE id = ?",
