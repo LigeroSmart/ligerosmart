@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Takrifkan lajur-lajur yang mana ditunjukkan dalam widget perkhidmatan bersambung (ObjekSambungan::ModPemandangan:: "kompleks"). Nota: Hanya sifat-sifat perkhidmatan yang dibenarkan untuk LajurLalai. Tetapan Mustahil: 0 = Tidak Dibolehkan, 1 = Ada, 2 = Dibolehkan dengan lalai.';
     $Self->{Translation}->{'Depends on'} = 'Bergantung kepada';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Frontend pendaftaran modul untuk konfigurasi AdminITSMCIPAllocate di kawasan admin.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -178,6 +179,10 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Tetapan ini mentakrifkan jenis pautan \'RelevantTo\'. Jika nama sumber dan nama sasaran mengandungi nilai yang sama, pautan yang terhasil adalah bukan satu arah. Jika nilai berbeza, pautan yang terhasil adalah pautan berarah.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Lebar kawasan teks ITSM.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

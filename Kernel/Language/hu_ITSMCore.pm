@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt szolgáltatások felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak szolgáltatás attribútumok engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
     $Self->{Translation}->{'Depends on'} = 'Ettől függ';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Előtétprogram modul regisztráció az adminisztrációs területen lévő AdminITSMCIPAllocate beállításhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -178,6 +179,10 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Ez a beállítás határozza meg a „RelevantTo” hivatkozástípust. Ha a forrásnév a célnév ugyanazt az értéket tartalmazza, akkor az eredményül kapott hivatkozás nem lesz irányított. Ha az értékek eltérnek, akkor az eredményül kapott hivatkozás irányított hivatkozás lesz.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Az ITSM szövegdobozok szélessége.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Defina quais colunas são mostradas no widget de serviços vinculados (LinkObject::ViewMode="complex"). Observação: somente atributos de serviço são permitidos para DefaultColumns. Definições possíveis: 0 = Desativado, 1 = Disponível, 2 = Activado por padrão.';
     $Self->{Translation}->{'Depends on'} = 'Depende de';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registro de módulo de interface para a configuração AdminITSMCIPAllocate na área administrativa.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -178,6 +179,10 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Esta configuração define o tipo de link \'Relevante a\'. Se o nome da fonte e o nome do alvo contêm o mesmo valor, a associação resultante é não-direcional. Se os valores são diferentes, a associação resultante é um link direcional.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Número de caracteres por linha em áreas de texto ITSM.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

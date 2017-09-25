@@ -27,9 +27,12 @@
         <File Permission="660" Location="Kernel/Language/da_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/es_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/fr_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/id_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/it_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/ja_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/ms_ITSMCore.pm" />
@@ -39,7 +42,10 @@
         <File Permission="660" Location="Kernel/Language/pt_BR_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/pt_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Modules/AdminITSMCIPAllocate.pm" />

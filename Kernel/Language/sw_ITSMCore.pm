@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
     $Self->{Translation}->{'Depends on'} = 'Inategemeana na ';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Usajili wa moduli za mazingira ya mbele kwa usanidi wa AdminITSMCIPAllocate katika eneo la kiongozi.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -178,6 +179,10 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Mipangilio hii inafafanua aina ya kiungo \'Husiana na\'. Kama jina la chanzo na jina lengwa yana thamani moja, kiungo kilichotokea ni hakina uelekeo. Kama thamani ni tofauti, kiungo kilichotokea kina uelekeo.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Upana wa eneo la matini la ITSM ';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

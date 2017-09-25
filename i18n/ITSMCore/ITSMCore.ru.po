@@ -1,14 +1,15 @@
 # 
 # Translators:
 # Anatoly A <aaksinenko@gmail.com>, 2017
+# Rasim Kalimullin <neutrino.vm@gmail.com>, 2017
 # Shader <shader@dautkom.lv>, 2016
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-10 14:53+0000\n"
-"PO-Revision-Date: 2017-07-10 12:53+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 09:28+0000\n"
+"PO-Revision-Date: 2017-09-25 09:28+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,7 +79,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "Calendar Default"
-msgstr ""
+msgstr "Календарь по умолчанию"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
@@ -135,10 +136,6 @@ msgstr "Демонстрация"
 #. Database XML Definition: ITSMCore.sopm
 msgid "Project"
 msgstr "Планирование"
-
-#. Database XML Definition: ITSMCore.sopm
-msgid "Training"
-msgstr "Обучение"
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Underpinning Contract"
@@ -204,6 +201,10 @@ msgstr "Определить, какие столбцы отображаются
 #. SysConfig
 msgid "Depends on"
 msgstr "Зависит от"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid ""

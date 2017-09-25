@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-10 14:53+0000\n"
-"PO-Revision-Date: 2017-07-10 12:53+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 09:28+0000\n"
+"PO-Revision-Date: 2017-09-25 09:28+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -135,10 +135,6 @@ msgid "Project"
 msgstr "Mradi"
 
 #. Database XML Definition: ITSMCore.sopm
-msgid "Training"
-msgstr "Mafunzo"
-
-#. Database XML Definition: ITSMCore.sopm
 msgid "Underpinning Contract"
 msgstr "Mkataba wa kuimarisha"
 
@@ -202,6 +198,10 @@ msgstr ""
 #. SysConfig
 msgid "Depends on"
 msgstr "Inategemeana na "
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid ""

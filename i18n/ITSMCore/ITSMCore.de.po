@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-10 14:53+0000\n"
-"PO-Revision-Date: 2017-07-10 12:53+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 09:28+0000\n"
+"PO-Revision-Date: 2017-09-25 09:28+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -138,10 +138,6 @@ msgid "Project"
 msgstr "Projekt"
 
 #. Database XML Definition: ITSMCore.sopm
-msgid "Training"
-msgstr "Training"
-
-#. Database XML Definition: ITSMCore.sopm
 msgid "Underpinning Contract"
 msgstr "Underpinning Contract"
 
@@ -205,6 +201,10 @@ msgstr "Definiert welche Spalten im Widget \"Verknüpfte Services\" angezeigt we
 #. SysConfig
 msgid "Depends on"
 msgstr "Hängt ab von"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid ""

@@ -44,7 +44,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
     $Self->{Translation}->{'No SLAID is given!'} = '';
     $Self->{Translation}->{'SLAID %s not found in database!'} = '';
-    $Self->{Translation}->{'Calendar Default'} = '';
+    $Self->{Translation}->{'Calendar Default'} = 'Календарь по умолчанию';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = '';
@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Определить, какие столбцы отображаются в связанном виджете служб (LinkObject::ViewMode = "complex"). Примечание: Только сервисные атрибуты разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию.';
     $Self->{Translation}->{'Depends on'} = 'Зависит от';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Frontend module registration для параметров AdminITSMCIPAllocate в панели администратора.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -178,6 +179,10 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} =
         'Определяет тип связи \'RelevantTo\'. Если исходное имя и имя цели имеют одинаковое значение, результирующая связь - ненаправленная, иначе это направленная связь';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Ширина ITSM поля типа textarea';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 
