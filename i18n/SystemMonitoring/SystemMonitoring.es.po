@@ -1,16 +1,16 @@
 # Translators:
-# Martin Gruner <martin.gruner@otrs.com>, 2016
+# David B <link.bigpoint@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
 "POT-Creation-Date: 2017-09-25 09:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>, 2016\n"
-"Language-Team: Hungarian (https://www.transifex.com/otrs/teams/23435/hu/)\n"
+"Last-Translator: David B <link.bigpoint@outlook.com>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/otrs/teams/23435/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. SysConfig
@@ -18,22 +18,20 @@ msgid ""
 "Basic mail interface to System Monitoring Suites. Use this block if the "
 "filter should run AFTER PostMasterFilter."
 msgstr ""
-"Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor "
-"használja ezt a blokkot, ha a szűrőt a levelezési szűrő UTÁN kell "
-"lefuttatni."
+"Interfaz de correo básico para el System Monitoring Suites. Utilice este "
+"bloque si el filtro debe funcionar DESPUÉS del PostMasterFilter."
 
 #. SysConfig
 msgid ""
 "Basic mail interface to System Monitoring Suites. Use this block if the "
 "filter should run BEFORE PostMasterFilter."
 msgstr ""
-"Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor "
-"használja ezt a blokkot, ha a szűrőt a levelezési szűrő ELŐTT kell "
-"lefuttatni."
+"Interfaz de correo básico para el System Monitoring Suites. Utilice este "
+"bloque si el filtro debe funcionar ANTES del PostMasterFilter."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr "Nagios nyugtázási típus meghatározása."
+msgstr "Define el tipo de reconocimiento de Nagios."
 
 #. SysConfig
 msgid "Dutch"
@@ -48,53 +46,54 @@ msgid ""
 "Link an already opened incident ticket with the affected CI. This is only "
 "possible when a subsequent system monitoring email arrives."
 msgstr ""
-"Egy már megnyitott incidensjegy összekapcsolása az érintett CI-vel. Ez csak "
-"akkor lehetséges, amikor egy következő rendszerfigyelő e-mail érkezik."
+"Enlace un ticket de incidente ya abierto con el CI afectado. Esto sólo es "
+"posible cuando llega un correo electrónico de seguimiento del sistema "
+"posterior."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
-msgstr "A dinamikus mező neve a gépnél."
+msgstr "Nombre del campo dinámico para el host."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Service."
-msgstr "A dinamikus mező neve a szolgáltatásnál."
+msgstr "Nombre del campo dinámico para el servicio."
 
 #. SysConfig
 msgid "Named pipe acknowledge command."
-msgstr "Elnevezett cső nyugtázási parancs."
+msgstr "Named pipe reconoce el comando."
 
 #. SysConfig
 msgid "Named pipe acknowledge format for host."
-msgstr "Elnevezett cső nyugtázási formátum a gépnél."
+msgstr "Named pipe reconoce el formato para el host."
 
 #. SysConfig
 msgid "Named pipe acknowledge format for service."
-msgstr "Elnevezett cső nyugtázási formátum a szolgáltatásnál."
+msgstr "Named pipe reconoce el formato para el servicio."
 
 #. SysConfig
 msgid ""
 "Set the incident state of a CI automatically when a system monitoring email "
 "arrives."
 msgstr ""
-"Egy CI incidensállapotának automatikus beállítása, amikor egy "
-"rendszerfigyelő e-mail érkezik."
+"Establezca el estado de incidencia de un CI automáticamente cuando llegue un"
+" correo electrónico de supervisión del sistema."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
-msgstr "A HTTP nyugtázási URL."
+msgstr "El HTTP reconoce la URL."
 
 #. SysConfig
 msgid "The HTTP acknowledge password."
-msgstr "A HTTP nyugtázási jelszó."
+msgstr "El HTTP reconoce la contraseña."
 
 #. SysConfig
 msgid "The HTTP acknowledge user."
-msgstr "A HTTP nyugtázási felhasználó."
+msgstr "El HTTP reconoce al usuario."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
-msgstr "Jegyesemény modul egy nyugta küldéséhez a Nagios számára."
+msgstr "Modulo de Ticket de eventos para enviar un reconocimiento a Nagios."
 
 #. SysConfig
 msgid "pipe"
-msgstr "cső"
+msgstr "pipe"

@@ -15,7 +15,14 @@
         <File Permission="660" Location="Kernel/Config/Files/SystemMonitoring.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/SystemMonitoring.xml" />
         <File Permission="660" Location="Kernel/Config/NagiosCheck.pm.example" />
+        <File Permission="660" Location="Kernel/Language/es_SystemMonitoring.pm" />
         <File Permission="660" Location="Kernel/Language/hu_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/pl_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_BR_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/ru_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_SystemMonitoring.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_CN_SystemMonitoring.pm" />
         <File Permission="660" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheck.pm" />
         <File Permission="660" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.pm" />
         <File Permission="660" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm" />

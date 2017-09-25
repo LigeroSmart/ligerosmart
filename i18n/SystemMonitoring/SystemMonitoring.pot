@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2016-11-04 20:01+0000\n"
+"Project-Id-Version: SystemMonitoring\n"
+"POT-Creation-Date: 2017-09-25 09:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,15 @@ msgid "Basic mail interface to System Monitoring Suites. Use this block if the f
 msgstr ""
 
 #. SysConfig
-msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
+msgid "Define Nagios acknowledge type."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
+msgid "HTTP"
 msgstr ""
 
 #. SysConfig
@@ -35,18 +43,6 @@ msgid "Name of the Dynamic Field for Service."
 msgstr ""
 
 #. SysConfig
-msgid "Define Nagios acknowledge type."
-msgstr ""
-
-#. SysConfig
-msgid "pipe"
-msgstr ""
-
-#. SysConfig
-msgid "HTTP"
-msgstr ""
-
-#. SysConfig
 msgid "Named pipe acknowledge command."
 msgstr ""
 
@@ -59,7 +55,7 @@ msgid "Named pipe acknowledge format for service."
 msgstr ""
 
 #. SysConfig
-msgid "Ticket event module to send an acknowledge to Nagios."
+msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
 msgstr ""
 
 #. SysConfig
@@ -67,10 +63,18 @@ msgid "The HTTP acknowledge URL."
 msgstr ""
 
 #. SysConfig
+msgid "The HTTP acknowledge password."
+msgstr ""
+
+#. SysConfig
 msgid "The HTTP acknowledge user."
 msgstr ""
 
 #. SysConfig
-msgid "The HTTP acknowledge password."
+msgid "Ticket event module to send an acknowledge to Nagios."
+msgstr ""
+
+#. SysConfig
+msgid "pipe"
 msgstr ""
 
