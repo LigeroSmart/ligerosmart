@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 07:31+0000\n"
-"PO-Revision-Date: 2017-07-17 12:35+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:40+0000\n"
+"PO-Revision-Date: 2017-09-25 10:40+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,8 +37,28 @@ msgid "Notification Body"
 msgstr "Corpo da Notificação"
 
 #. Template: AgentSurveyAdd
+msgid "Ticket Types"
+msgstr "Tipos de Chamado"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "Descrição Interna"
+
+#. Template: AgentSurveyAdd
+msgid "Customer conditions"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Please choose a Customer property to add a condition."
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Public survey key"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Example survey"
+msgstr ""
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -47,6 +67,10 @@ msgstr "Editar Informações Gerais"
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
 msgstr "Editar Perguntas"
+
+#. Template: AgentSurveyEditQuestions
+msgid "You are here"
+msgstr "Você esta aqui"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -81,12 +105,6 @@ msgid "When you finish to edit the survey questions just close this screen."
 msgstr "Quando você terminar de editar as questões da pesquisa, apenas feche a tela."
 
 #. Template: AgentSurveyEditQuestions
-msgid ""
-"Do you really want to delete this question? ALL associated data will be "
-"LOST!"
-msgstr "Você realmente deseja excluir essa questão? TODOS os dados associados serão PERDIDOS!"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Close this window"
 msgstr ""
 
@@ -115,10 +133,6 @@ msgid "No answers saved for this question."
 msgstr "Não há respostas salvas para esta questão"
 
 #. Template: AgentSurveyEditQuestions
-msgid "Do you really want to delete this answer?"
-msgstr "Você realmente quer excluir essa resposta ?"
-
-#. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "Esta pergunta não possui várias respostas, uma área de texto será mostrada"
 
@@ -133,6 +147,29 @@ msgstr "voltar para editar pergunta"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
 msgstr "Resposta:"
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey overview options"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey Create Time"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "No restriction"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Only surveys created between"
+msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -159,6 +196,10 @@ msgid "Requests Table"
 msgstr "Tabela de Requisições"
 
 #. Template: AgentSurveyStats
+msgid "Select all requests"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "Send Time"
 msgstr "Hora de Envio"
 
@@ -167,8 +208,16 @@ msgid "Vote Time"
 msgstr "Hora do Voto"
 
 #. Template: AgentSurveyStats
+msgid "Select this request"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "See Details"
 msgstr "Ver detalhes"
+
+#. Template: AgentSurveyStats
+msgid "Delete stats"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -177,6 +226,14 @@ msgstr "Detalhes de Estatísticas da Pesquisa"
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
 msgstr "voltar ao resumo de estatísticas"
+
+#. Template: AgentSurveyStats
+msgid "Previous vote"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "Next vote"
+msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -193,6 +250,10 @@ msgstr "Solicitações recebidas"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Detalhes da Pesquisa"
+
+#. Template: AgentSurveyZoom
+msgid "Number"
+msgstr "Número"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -267,6 +328,10 @@ msgid "Checkbox (List)"
 msgstr "Checkbox (Lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Net Promoter Score"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
 msgstr "Tipo de questão"
 
@@ -286,49 +351,9 @@ msgstr "Edição de Pergunta"
 msgid "Answer Edit"
 msgstr "Edição de Resposta"
 
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Overview"
-msgstr "Resumo de Estatísticas"
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "You have no permission for this survey or stats detail!"
-msgstr "Você não tem permissão para esta pesquisa ou detalhes de estatísticas!"
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Detail"
-msgstr "Detalhe da estatística"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! No questions defined."
-msgstr "Não é possível configurar o novo estado. Nenhuma questão definida."
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! Questions incomplete."
-msgstr "Não é possível definir novo status! Perguntas incompletas."
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Status changed."
-msgstr "Estado alterado."
-
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "Nenhuma fila selecionada"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket type selected -"
-msgstr "- Nenhum tipo de chamado selecionado -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket service selected -"
-msgstr "- Nenhum serviço de chamado selecionado -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- Change Status -"
-msgstr "- Alterar Estado -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "master"
-msgstr "mestre"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
@@ -392,6 +417,20 @@ msgstr "Dados do voto da pesquisa"
 msgid "You have already answered the survey."
 msgstr "Você já respondeu a pesquisa."
 
+#. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+msgid "Survey List"
+msgstr ""
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid ""
+"Do you really want to delete this question? ALL associated data will be "
+"LOST!"
+msgstr "Você realmente deseja excluir essa questão? TODOS os dados associados serão PERDIDOS!"
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid "Do you really want to delete this answer?"
+msgstr "Você realmente quer excluir essa resposta ?"
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "Um Módulo de Pesquisa."
@@ -435,6 +474,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Defines if survey requests will be only send to real customers."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
@@ -449,8 +492,18 @@ msgid ""
 msgstr "Define a quantidade de horas que um chamado deve estar fechado para envio de uma pesquisa (0 significa enviar imediatamente após fechamento). Nota: um envio tardio de pesquisa é feito pelo OTRS Daemon, sob ativação da configuração  'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' ."
 
 #. SysConfig
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 =>"
+" inactive, 1 => active)."
+msgstr ""
+
+#. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
 msgstr "Define a altura padrão para Richtext nos elementos da SurveyZoom"
+
+#. SysConfig
+msgid "Defines the groups (rw) which can delete survey stats."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -461,6 +514,14 @@ msgid ""
 "Defines the shown columns in the survey overview. This option has no effect "
 "on the position of the columns."
 msgstr "Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem efeito sobre a posição das colunas."
+
+#. SysConfig
+msgid "Determines if the statistics module may generate survey lists."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -520,6 +581,13 @@ msgstr "Parâmetros para as páginas (nas quais as pesquisas são mostradas) da 
 #. SysConfig
 msgid "Public Survey."
 msgstr "Pesquisa Pública"
+
+#. SysConfig
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -584,10 +652,18 @@ msgid ""
 msgstr "O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#."
 
 #. SysConfig
+msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
 msgstr "Módulo de evento de chamado para enviar requisições de pesquisa via e-mail automaticamente para clientes se um chamado for fechado."
+
+#. SysConfig
+msgid "Trigger delete results (including vote data and requests)."
+msgstr ""
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

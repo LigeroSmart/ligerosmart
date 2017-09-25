@@ -20,13 +20,19 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Introduksjon';
     $Self->{Translation}->{'Survey Introduction'} = '';
     $Self->{Translation}->{'Notification Body'} = 'Melding i varsel-e-post';
+    $Self->{Translation}->{'Ticket Types'} = '';
     $Self->{Translation}->{'Internal Description'} = 'Intern beskrivelse';
+    $Self->{Translation}->{'Customer conditions'} = '';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
+    $Self->{Translation}->{'Public survey key'} = '';
+    $Self->{Translation}->{'Example survey'} = '';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Rediger generell informasjon';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Rediger spørsmål';
+    $Self->{Translation}->{'You are here'} = '';
     $Self->{Translation}->{'Survey Questions'} = 'Spørsmål til spørreundersøkelsen';
     $Self->{Translation}->{'Add Question'} = 'Legg til spørsmål';
     $Self->{Translation}->{'Type the question'} = 'Skriv inn spørsmålet';
@@ -36,8 +42,6 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = '';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         '';
-    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        '';
     $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Rediger spørsmål';
     $Self->{Translation}->{'go back to questions'} = 'tilbake til spørsmålene';
@@ -45,7 +49,6 @@ sub Data {
     $Self->{Translation}->{'Possible Answers For'} = 'Mulige svaralternativer for';
     $Self->{Translation}->{'Add Answer'} = 'Legg til svaralternativer';
     $Self->{Translation}->{'No answers saved for this question.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Dette spørsmålet har ikke mulighet for svaralternativer. Her vil det kun bli vist en tekstboks.';
     $Self->{Translation}->{'Edit Answer'} = 'Rediger svar';
@@ -53,6 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = '';
 
     # Template: AgentSurveyOverviewNavBar
+    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
+        '';
+    $Self->{Translation}->{'Survey Create Time'} = '';
+    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = '';
 
     # Template: AgentSurveyOverviewSmall
@@ -63,17 +72,23 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = '';
     $Self->{Translation}->{'Requests Table'} = 'Tabellforespørsel';
+    $Self->{Translation}->{'Select all requests'} = '';
     $Self->{Translation}->{'Send Time'} = 'Tid sendt';
     $Self->{Translation}->{'Vote Time'} = 'Tid svart';
+    $Self->{Translation}->{'Select this request'} = '';
     $Self->{Translation}->{'See Details'} = '';
+    $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detaljstatistikk for spørreundersøkelse';
     $Self->{Translation}->{'go back to stats overview'} = 'gå tilbake til statistikkoversikten';
+    $Self->{Translation}->{'Previous vote'} = '';
+    $Self->{Translation}->{'Next vote'} = '';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informasjon om spørreundersøkelsen';
     $Self->{Translation}->{'Sent requests'} = 'Sendte forespørsler';
     $Self->{Translation}->{'Received surveys'} = 'Mottatte spørreundersøkelser';
     $Self->{Translation}->{'Survey Details'} = 'Detaljer om spørreundersøkelsen';
+    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafisk fremstilling av svarene i spørreundersøkelsen';
     $Self->{Translation}->{'No stat results.'} = 'Ingen resultater';
@@ -100,26 +115,15 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = '';
     $Self->{Translation}->{'Radio (List)'} = '';
     $Self->{Translation}->{'Checkbox (List)'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = '';
     $Self->{Translation}->{'Question Type'} = '';
     $Self->{Translation}->{'Complete'} = '';
     $Self->{Translation}->{'Incomplete'} = '';
     $Self->{Translation}->{'Question Edit'} = '';
     $Self->{Translation}->{'Answer Edit'} = '';
 
-    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = 'Statistikkoversikt';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = '';
-
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'Status changed.'} = '';
     $Self->{Translation}->{'- No queue selected -'} = '';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
-    $Self->{Translation}->{'- Change Status -'} = '';
-    $Self->{Translation}->{'master'} = '';
     $Self->{Translation}->{'New Status'} = '';
     $Self->{Translation}->{'Survey Description'} = '';
     $Self->{Translation}->{'answered'} = '';
@@ -140,6 +144,14 @@ sub Data {
     $Self->{Translation}->{'Survey Vote Data'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = '';
 
+    # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+    $Self->{Translation}->{'Survey List'} = '';
+
+    # JS File: Survey.Agent.SurveyEditQuestions
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        '';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = '';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'En modul for spørreundersøkelser';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'En modul for å redigere spørreundersøkelser';
@@ -157,16 +169,24 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '';
+    $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         '';
+    $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '';
+    $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
+        '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -188,6 +208,8 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
     $Self->{Translation}->{'Public Survey.'} = '';
+    $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -206,10 +228,21 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Standard identifikator for en undersøklse, f.eks. Spørreundersøkelse#, MinSpørreundersøkelse#. Standard er Survey#.';
+    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
+        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '';
     $Self->{Translation}->{'Zoom into statistics details.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this answer?',
+    'Do you really want to delete this question? ALL associated data will be LOST!',
+    'Settings',
+    'Submit',
+    );
 
 }
 

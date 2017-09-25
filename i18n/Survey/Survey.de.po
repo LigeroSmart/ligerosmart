@@ -1,16 +1,16 @@
 # 
 # Translators:
 # Dominik <dominik@reichardt-online.it>, 2016
-# Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
+# Ettore Atalan <atalanttore@googlemail.com>, 2014-2017
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
 # Rudy R <rudy.rohde@googlemail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 07:31+0000\n"
-"PO-Revision-Date: 2017-07-17 12:35+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:40+0000\n"
+"PO-Revision-Date: 2017-09-25 10:40+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,8 +35,28 @@ msgid "Notification Body"
 msgstr "Benachrichtigung Text"
 
 #. Template: AgentSurveyAdd
+msgid "Ticket Types"
+msgstr "Ticket-Typen"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "Interne Beschreibung"
+
+#. Template: AgentSurveyAdd
+msgid "Customer conditions"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Please choose a Customer property to add a condition."
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Public survey key"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Example survey"
+msgstr ""
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -45,6 +65,10 @@ msgstr "Allgemeine Angaben bearbeiten"
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
 msgstr "Fragen bearbeiten"
+
+#. Template: AgentSurveyEditQuestions
+msgid "You are here"
+msgstr "Sie sind hier"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -79,14 +103,8 @@ msgid "When you finish to edit the survey questions just close this screen."
 msgstr "Nach dem Bearbeiten der Umfrage dieses Fenster einfach schliessen"
 
 #. Template: AgentSurveyEditQuestions
-msgid ""
-"Do you really want to delete this question? ALL associated data will be "
-"LOST!"
-msgstr "Wollen Sie diese Frage wirklich löschen? Alle darin enthaltenen Daten werden GELÖSCHT!"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Dieses Fenster schließen"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -113,10 +131,6 @@ msgid "No answers saved for this question."
 msgstr "Für diese Frage sind keine Antworten gespeichert."
 
 #. Template: AgentSurveyEditQuestions
-msgid "Do you really want to delete this answer?"
-msgstr "Wollen Sie diese Frage wirklich löschen?"
-
-#. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "Diese Frage hat nicht mehrere Antworten, ein Texteingabefeld wird hinzugefügt."
 
@@ -131,6 +145,29 @@ msgstr "Zurück zum Bearbeiten der Frage"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
 msgstr "Antwort:"
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey overview options"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey Create Time"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "No restriction"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Only surveys created between"
+msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -157,6 +194,10 @@ msgid "Requests Table"
 msgstr "Anfragentabelle"
 
 #. Template: AgentSurveyStats
+msgid "Select all requests"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "Send Time"
 msgstr "Sendezeit"
 
@@ -165,8 +206,16 @@ msgid "Vote Time"
 msgstr "Abstimmungszeit"
 
 #. Template: AgentSurveyStats
+msgid "Select this request"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "See Details"
 msgstr "Siehe Details"
+
+#. Template: AgentSurveyStats
+msgid "Delete stats"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -175,6 +224,14 @@ msgstr "Umfragestatistikdetails"
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
 msgstr "Zurück zur Übersicht"
+
+#. Template: AgentSurveyStats
+msgid "Previous vote"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "Next vote"
+msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -191,6 +248,10 @@ msgstr "Erhaltene Umfragen"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Umfragedetails"
+
+#. Template: AgentSurveyZoom
+msgid "Number"
+msgstr "Nummer"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -230,7 +291,7 @@ msgstr "Neue Umfrage hinzufügen"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
-msgstr ""
+msgstr "Sie haben keine Berechtigung für diese Umfrage!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "No SurveyID is given!"
@@ -265,6 +326,10 @@ msgid "Checkbox (List)"
 msgstr "Kontrollkästchen (Liste)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Net Promoter Score"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
 msgstr "Fragetyp"
 
@@ -284,49 +349,9 @@ msgstr "Frage bearbeiten"
 msgid "Answer Edit"
 msgstr "Antwort bearbeiten"
 
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Overview"
-msgstr "Statistikübersicht"
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "You have no permission for this survey or stats detail!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Detail"
-msgstr "Statistikdetail"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! No questions defined."
-msgstr "Status konnte nicht gesetzt werden! Keine Fragen definiert."
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! Questions incomplete."
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Status changed."
-msgstr "Status geändert."
-
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "- Keine Queue ausgewählt -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket type selected -"
-msgstr "- Kein Tickettyp ausgewählt -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket service selected -"
-msgstr "- Kein Ticketdienst ausgewählt -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- Change Status -"
-msgstr "- Status ändern -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "master"
-msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
@@ -380,7 +405,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote"
-msgstr ""
+msgstr "Umfragestimme"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
@@ -389,6 +414,20 @@ msgstr ""
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "You have already answered the survey."
 msgstr "Sie haben die Umfrage schon beantwortet."
+
+#. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+msgid "Survey List"
+msgstr ""
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid ""
+"Do you really want to delete this question? ALL associated data will be "
+"LOST!"
+msgstr "Wollen Sie diese Frage wirklich löschen? Alle darin enthaltenen Daten werden GELÖSCHT!"
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid "Do you really want to delete this answer?"
+msgstr "Wollen Sie diese Frage wirklich löschen?"
 
 #. SysConfig
 msgid "A Survey Module."
@@ -433,6 +472,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Defines if survey requests will be only send to real customers."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
@@ -447,8 +490,18 @@ msgid ""
 msgstr "Definiert die Anzahl an Stunden für die ein Ticket geschlossen sein muss um den Versand einer Umfrage auszulösen ( 0 bedeutet, sofort nach Schließen eines Tickets senden ). Hinweis: Das absenden der verzögerten Umfrage wird durch den OTRS Daemon erledigt, vorherige Aktivierung durch die 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' Einstellung."
 
 #. SysConfig
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 =>"
+" inactive, 1 => active)."
+msgstr ""
+
+#. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
 msgstr "Definiert die Standardhöhe eines WYSIWYG-Bereichs für die Umfragedetailansicht."
+
+#. SysConfig
+msgid "Defines the groups (rw) which can delete survey stats."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -461,12 +514,20 @@ msgid ""
 msgstr "Definiert die angezeigten Spalten der Umfrage Übersicht. Diese Option hat keine Auswirkung auf die Position der Spalten."
 
 #. SysConfig
+msgid "Determines if the statistics module may generate survey lists."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
 msgid "Edit survey general information."
 msgstr ""
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "Fragen bearbeiten"
 
 #. SysConfig
 msgid ""
@@ -518,6 +579,13 @@ msgstr "Parameter für die Seiten der Umfrageübersicht."
 #. SysConfig
 msgid "Public Survey."
 msgstr "Öffentliche Umfrage."
+
+#. SysConfig
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -582,10 +650,18 @@ msgid ""
 msgstr "Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#."
 
 #. SysConfig
+msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
 msgstr "Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, wenn ein Ticket geschlossen wird."
+
+#. SysConfig
+msgid "Trigger delete results (including vote data and requests)."
+msgstr ""
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

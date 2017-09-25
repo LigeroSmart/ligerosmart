@@ -20,13 +20,19 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Въведение';
     $Self->{Translation}->{'Survey Introduction'} = 'Въведение в изследването';
     $Self->{Translation}->{'Notification Body'} = 'Уведомяване';
+    $Self->{Translation}->{'Ticket Types'} = 'Типове на билета';
     $Self->{Translation}->{'Internal Description'} = 'Вътрешно описание';
+    $Self->{Translation}->{'Customer conditions'} = '';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
+    $Self->{Translation}->{'Public survey key'} = '';
+    $Self->{Translation}->{'Example survey'} = '';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Редактиране на основната информация';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Редактиране на въпроси';
+    $Self->{Translation}->{'You are here'} = 'Вие сте тук';
     $Self->{Translation}->{'Survey Questions'} = 'Въпроси за проучването';
     $Self->{Translation}->{'Add Question'} = 'Добавяне на въпрос';
     $Self->{Translation}->{'Type the question'} = 'Въведете въпроса';
@@ -36,8 +42,6 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = 'Необходим е отговор';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'Когато приключите с редактирането на въпросите от изследването, просто затворете този екран.';
-    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        'Наистина ли искате да изтриете този въпрос? Всички свързани данни ще бъдат загубени!';
     $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Редактиране на въпроса';
     $Self->{Translation}->{'go back to questions'} = 'Върнете се към въпросите';
@@ -45,7 +49,6 @@ sub Data {
     $Self->{Translation}->{'Possible Answers For'} = 'Възможни отговори за';
     $Self->{Translation}->{'Add Answer'} = 'Добавяне на Отговор';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Няма отговори за този въпрос.';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Наистина ли искате да изтриете този отговор?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Няма няколко отговора, и ще се покаже текста.';
     $Self->{Translation}->{'Edit Answer'} = 'Редактиране на отговор';
@@ -53,6 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Отговор';
 
     # Template: AgentSurveyOverviewNavBar
+    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
+        '';
+    $Self->{Translation}->{'Survey Create Time'} = '';
+    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Макс. показани проучвания на страницата';
 
     # Template: AgentSurveyOverviewSmall
@@ -63,17 +72,23 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Преглед на Статистиката от';
     $Self->{Translation}->{'Requests Table'} = 'Таблица с исканията';
+    $Self->{Translation}->{'Select all requests'} = '';
     $Self->{Translation}->{'Send Time'} = 'Време за изпращане';
     $Self->{Translation}->{'Vote Time'} = 'Време за гласуване';
+    $Self->{Translation}->{'Select this request'} = '';
     $Self->{Translation}->{'See Details'} = 'Детайли';
+    $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Данни за състоянието на изследването';
     $Self->{Translation}->{'go back to stats overview'} = 'Върнете се към общия преглед на статистическите данни';
+    $Self->{Translation}->{'Previous vote'} = '';
+    $Self->{Translation}->{'Next vote'} = '';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Информация за проучванията';
     $Self->{Translation}->{'Sent requests'} = 'Изпратени искания';
     $Self->{Translation}->{'Received surveys'} = 'Получени проучвания';
     $Self->{Translation}->{'Survey Details'} = 'Данни за изследването';
+    $Self->{Translation}->{'Number'} = 'Номер';
     $Self->{Translation}->{'Ticket Services'} = 'Билетни услуги';
     $Self->{Translation}->{'Survey Results Graph'} = 'Графика на резултатите от изследването';
     $Self->{Translation}->{'No stat results.'} = 'Няма статически резултати';
@@ -100,26 +115,15 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'ДА/НЕ';
     $Self->{Translation}->{'Radio (List)'} = 'Радио (списък)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Квадратче за отметка (списък)';
+    $Self->{Translation}->{'Net Promoter Score'} = '';
     $Self->{Translation}->{'Question Type'} = 'Въпрос тип';
     $Self->{Translation}->{'Complete'} = 'Пълен';
     $Self->{Translation}->{'Incomplete'} = 'Непълен';
     $Self->{Translation}->{'Question Edit'} = 'Редактиране на въпрос';
     $Self->{Translation}->{'Answer Edit'} = 'Редактиране';
 
-    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = 'Общ преглед на статистическите данни';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Нямате разрешение за това проучване или статистически подробности!';
-    $Self->{Translation}->{'Stats Detail'} = 'Подробности';
-
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Не може да се зададе ново състояние! Няма дефинирани въпроси.';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Не може да се зададе ново състояние! Въпроси непълни.';
-    $Self->{Translation}->{'Status changed.'} = 'Състоянието е промено.';
     $Self->{Translation}->{'- No queue selected -'} = '- Не е избрана опашка -';
-    $Self->{Translation}->{'- No ticket type selected -'} = '- Няма избран тип билет -';
-    $Self->{Translation}->{'- No ticket service selected -'} = '- Няма избрана услуга за билети -';
-    $Self->{Translation}->{'- Change Status -'} = '- Промяна на състоянието -';
-    $Self->{Translation}->{'master'} = 'Мастер';
     $Self->{Translation}->{'New Status'} = 'Нов статус';
     $Self->{Translation}->{'Survey Description'} = 'Описание';
     $Self->{Translation}->{'answered'} = 'Отговорено';
@@ -140,6 +144,14 @@ sub Data {
     $Self->{Translation}->{'Survey Vote Data'} = 'Данни за гласуване в проучванията';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Вие вече сте отговорили.';
 
+    # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+    $Self->{Translation}->{'Survey List'} = '';
+
+    # JS File: Survey.Agent.SurveyEditQuestions
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        'Наистина ли искате да изтриете този въпрос? Всички свързани данни ще бъдат загубени!';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Наистина ли искате да изтриете този отговор?';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Модул за проучване.';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Модул за редактиране на въпроси от проучването.';
@@ -157,16 +169,24 @@ sub Data {
         'Модул за преглед, за да покаже изглед на списъка с проучванията.';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '';
+    $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Максималния брой проучвания, които се изпращат на клиенти на всеки 30 дни. (0 - означава не максимум, всички заявки за проучване ще бъдат изпратени).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Сумата в часове, за която билетът трябва да бъде затворен, за да се задейства изпращането на проучване, (0 - означава изпращане веднага след затваряне). Забележка : изпращането със закъснение на изследването се извършва от OTRS Daemon, преди активирането на настройката "Daemon :: SchedulerCronTaskManager :: Task ### SurveyRequestsSend".';
+    $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Височината по подразбиране за изгледа с текст за елементите на Zoom Survey.';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'Максималната височина за изгледа с текст за елементите на Zoom Survey.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Колоните за показване в общия преглед на изследването. Тази опция няма влияние върху позицията на колоните.';
+    $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
+        '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = 'Редактиране на общата информация за проучването.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Редактирайте въпросите на изследването.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -188,6 +208,8 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметри на страниците (в които са показани проучванията) на общия преглед на изследването.';
     $Self->{Translation}->{'Public Survey.'} = 'Публично проучване.';
+    $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Показване на връзка в менюто, за да редактира проучване в неговия мащабен изглед на интерфейса на агента.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -206,10 +228,21 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Проучванията няма да бъдат изпратени до конфигурираните имейл адреси.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Идентификаторът за проучване, напр. Проучване #, MySurvey #. По подразбиране е "Проучване #".';
+    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
+        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модул за събитие на билети за автоматично изпращане на заявки за електронна поща до клиентите, ако билетът е затворен.';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Trigger изпраща закъснели заявки за проучване.';
     $Self->{Translation}->{'Zoom into statistics details.'} = 'Увеличете статистическите данни.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this answer?',
+    'Do you really want to delete this question? ALL associated data will be LOST!',
+    'Settings',
+    'Submit',
+    );
 
 }
 

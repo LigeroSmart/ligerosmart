@@ -35,6 +35,7 @@
         <File Permission="660" Location="Kernel/Language/pt_PT_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/ru_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/sw_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/uk_Survey.pm" />

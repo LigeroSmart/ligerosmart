@@ -20,13 +20,19 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'บทนำ';
     $Self->{Translation}->{'Survey Introduction'} = 'คำนำแบบสอบถาม';
     $Self->{Translation}->{'Notification Body'} = 'การแจ้งเตือนส่วนเนื้อเรื่อง';
+    $Self->{Translation}->{'Ticket Types'} = 'ประเภทของตั๋ว';
     $Self->{Translation}->{'Internal Description'} = 'รายละเอียดภายใน';
+    $Self->{Translation}->{'Customer conditions'} = '';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
+    $Self->{Translation}->{'Public survey key'} = '';
+    $Self->{Translation}->{'Example survey'} = '';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'แก้ไขข้อมูลทั่วไป';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'แก้ไขคำถาม';
+    $Self->{Translation}->{'You are here'} = 'คุณอยู่ที่นี่';
     $Self->{Translation}->{'Survey Questions'} = 'คำถามแบบสอบถาม';
     $Self->{Translation}->{'Add Question'} = 'เพิ่มคำถาม';
     $Self->{Translation}->{'Type the question'} = 'ประเภทคำถาม';
@@ -36,8 +42,6 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = 'ต้องการคำตอบ';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'เมื่อคุณการแก้ไขคำถามในแบบสอบถามเสร็จสิ้นแล้วเพียงแค่ปิดหน้าจอนี้';
-    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        'คุณแน่ใจหรือไม่ที่จะลบคำถามนี้? ข้อมูลที่เกี่ยวข้องทั้งหมดจะหายไป!';
     $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'แก้ไขคำถาม';
     $Self->{Translation}->{'go back to questions'} = 'กลับไปที่คำถาม';
@@ -45,7 +49,6 @@ sub Data {
     $Self->{Translation}->{'Possible Answers For'} = 'คำตอบที่เป็นไปได้';
     $Self->{Translation}->{'Add Answer'} = 'เพิ่มคำตอบ';
     $Self->{Translation}->{'No answers saved for this question.'} = 'ไม่มีคำตอบบันทึกในคำถามนี้';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'คุณต้องการลบการตอบนี้หรือไม่?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'มีบางคำถามที่ยังไม่ตอบ textarea จะปรากฏ ';
     $Self->{Translation}->{'Edit Answer'} = 'แก้ไขคำตอบ';
@@ -53,6 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'คำตอบ:';
 
     # Template: AgentSurveyOverviewNavBar
+    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
+        '';
+    $Self->{Translation}->{'Survey Create Time'} = '';
+    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'จำนวนสูงสุดที่จะแสดงแบบสอบถามในแต่ละหน้า';
 
     # Template: AgentSurveyOverviewSmall
@@ -63,17 +72,23 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'สถิติภาพรวมของ';
     $Self->{Translation}->{'Requests Table'} = 'การร้องขอตาราง';
+    $Self->{Translation}->{'Select all requests'} = '';
     $Self->{Translation}->{'Send Time'} = 'เวลาส่ง';
     $Self->{Translation}->{'Vote Time'} = 'เวลาโหวต';
+    $Self->{Translation}->{'Select this request'} = '';
     $Self->{Translation}->{'See Details'} = 'ดูเนื้อหา';
+    $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'เนื้อหาของสถิติแบบสอบถาม';
     $Self->{Translation}->{'go back to stats overview'} = 'กลับไปที่สถิติภาพรวม';
+    $Self->{Translation}->{'Previous vote'} = '';
+    $Self->{Translation}->{'Next vote'} = '';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'ข้อมูลแบบสอบถาม';
     $Self->{Translation}->{'Sent requests'} = 'ส่งคำร้อง';
     $Self->{Translation}->{'Received surveys'} = 'ได้รับแบบสอบถามแล้ว';
     $Self->{Translation}->{'Survey Details'} = 'เนื้อหาของแบบสอบถาม';
+    $Self->{Translation}->{'Number'} = 'หมายเลข';
     $Self->{Translation}->{'Ticket Services'} = 'การบริการของตั๋ว';
     $Self->{Translation}->{'Survey Results Graph'} = 'กราฟคำตอบของแบบสอบถาม';
     $Self->{Translation}->{'No stat results.'} = 'ไม่มีคำตอบของสถิติ';
@@ -100,26 +115,15 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'ใช่/ไม่ใช่';
     $Self->{Translation}->{'Radio (List)'} = 'เรดิโอ(รายชื่อ)';
     $Self->{Translation}->{'Checkbox (List)'} = 'กล่องตรวจสอบ (รายชื่อ)';
+    $Self->{Translation}->{'Net Promoter Score'} = '';
     $Self->{Translation}->{'Question Type'} = 'ประเภทของคำถาม';
     $Self->{Translation}->{'Complete'} = 'เสร็จ';
     $Self->{Translation}->{'Incomplete'} = 'ไม่เสร็จ';
     $Self->{Translation}->{'Question Edit'} = 'แก้ไขคำถาม';
     $Self->{Translation}->{'Answer Edit'} = 'แก้ไขคำตอบ';
 
-    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = 'สถิติภาพรวม';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = 'เนื้อหาสถิติ';
-
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'Status changed.'} = 'สถานภาพเปลี่ยนแล้ว';
     $Self->{Translation}->{'- No queue selected -'} = '- ไม่มีคิวที่ถูกเลือก -';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
-    $Self->{Translation}->{'- Change Status -'} = '- เปลี่ยนสถานะ -';
-    $Self->{Translation}->{'master'} = '';
     $Self->{Translation}->{'New Status'} = 'สถานะใหม่';
     $Self->{Translation}->{'Survey Description'} = 'คำอธิบายแบบสอบถาม';
     $Self->{Translation}->{'answered'} = 'ตอบแล้ว';
@@ -140,6 +144,14 @@ sub Data {
     $Self->{Translation}->{'Survey Vote Data'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'คุณได้ตอบแบบสอบถามนี้แล้ว';
 
+    # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+    $Self->{Translation}->{'Survey List'} = '';
+
+    # JS File: Survey.Agent.SurveyEditQuestions
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        'คุณแน่ใจหรือไม่ที่จะลบคำถามนี้? ข้อมูลที่เกี่ยวข้องทั้งหมดจะหายไป!';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'คุณต้องการลบการตอบนี้หรือไม่?';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'โมดูลแบบสอบถาม';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'โมดูลสำหรับแก้ไขคำถามแบบสอบถาม';
@@ -157,16 +169,24 @@ sub Data {
         'กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายชื่อแบบสอบถาม';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '';
+    $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'กำหนดจำนวนสูงสุดของการสำรวจที่ได้รับการส่งให้กับลูกค้าภายใน 30 วัน (0 หมายถึงไม่มีการกำหนดจำนวนสูงสุด ซึ่งแบบสำรวจที่เรียกขอทั้งหมดจะถูกส่ง)';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         '';
+    $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'กำหนดความสูงเริ่มต้นสำหรับมุมมอง Richtext สำหรับองค์ประกอบของ SurveyZoom';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'กำหนดคอลัมน์ที่จะแสดงในภาพรวมของแบบสอบถามตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์';
+    $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
+        '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -188,6 +208,8 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'พารามิเตอร์สำหรับเพจ (ซึ่งจะแสดงแบบสอบถาม) ของภาพรวมแบบสอบถามขนาดเล็ก';
     $Self->{Translation}->{'Public Survey.'} = 'แบบสอบถามสาธารณะ';
+    $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'แสดงลิงค์ในเมนูเพื่อแก้ไขแบบสอบถามในมุมมองการซูมในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -206,10 +228,21 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'จะไม่มีการส่งแบบสอบถามที่อีเมลที่ถูกกำหนดค่า';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'ตัวบ่งชี้สำหรับแบบสอบถาม, ตัวอย่างเช่น แบบสอบถาม# แบบสอบถามของฉัน#. ค่าเริ่มต้นคือแบบสอบถาม#.';
+    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
+        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'โมดูลตั๋วกิจกรรมที่จะส่งอีเมลแบบสอบถามของการร้องขออัตโนมัติให้ลูกค้าในกรณีที่ตั๋วถูกปิด';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'การกระตุ้นการส่งการร้องขอแบบสอบที่ล่าช้า';
     $Self->{Translation}->{'Zoom into statistics details.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this answer?',
+    'Do you really want to delete this question? ALL associated data will be LOST!',
+    'Settings',
+    'Submit',
+    );
 
 }
 

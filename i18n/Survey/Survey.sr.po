@@ -1,13 +1,14 @@
 # 
 # Translators:
+# Dusan Vuckovic, 2017
 # Dusan Vuckovic, 2015
 # Милорад Јовановић <j.milorad@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 07:31+0000\n"
-"PO-Revision-Date: 2017-07-17 12:35+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:40+0000\n"
+"PO-Revision-Date: 2017-09-25 10:40+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,8 +33,28 @@ msgid "Notification Body"
 msgstr "Сарджај обавештења"
 
 #. Template: AgentSurveyAdd
+msgid "Ticket Types"
+msgstr "Типови тикета"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "Интерни опис"
+
+#. Template: AgentSurveyAdd
+msgid "Customer conditions"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Please choose a Customer property to add a condition."
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Public survey key"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Example survey"
+msgstr ""
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -42,6 +63,10 @@ msgstr "Уреди опште информације"
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
 msgstr "Уреди питања"
+
+#. Template: AgentSurveyEditQuestions
+msgid "You are here"
+msgstr "Ви сте овде"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -76,14 +101,8 @@ msgid "When you finish to edit the survey questions just close this screen."
 msgstr "Када завршите са уређивањем анкетних питања само затворите овај прозор."
 
 #. Template: AgentSurveyEditQuestions
-msgid ""
-"Do you really want to delete this question? ALL associated data will be "
-"LOST!"
-msgstr "Да ли заиста желите да обришете ово питање? СВИ повезани подаци ће бити ИЗГУБЉЕНИ!"
-
-#. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Затвори овај прозор"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -110,10 +129,6 @@ msgid "No answers saved for this question."
 msgstr "За ово питање нису сачувани одговори."
 
 #. Template: AgentSurveyEditQuestions
-msgid "Do you really want to delete this answer?"
-msgstr "Да ли заиста желите да избришете овај одговор?"
-
-#. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr "Ово нема више одговора, простор за текст ће бити приказан."
 
@@ -128,6 +143,29 @@ msgstr "назад на уређивање питања"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
 msgstr "Одговор:"
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey overview options"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey Create Time"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "No restriction"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Only surveys created between"
+msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -154,6 +192,10 @@ msgid "Requests Table"
 msgstr "Табела захтева"
 
 #. Template: AgentSurveyStats
+msgid "Select all requests"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "Send Time"
 msgstr "Време слања"
 
@@ -162,8 +204,16 @@ msgid "Vote Time"
 msgstr "Време гласања"
 
 #. Template: AgentSurveyStats
+msgid "Select this request"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "See Details"
 msgstr "Види детаље"
+
+#. Template: AgentSurveyStats
+msgid "Delete stats"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -172,6 +222,14 @@ msgstr "Детаљи статистике анкете"
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
 msgstr "иди назад на преглед статистике"
+
+#. Template: AgentSurveyStats
+msgid "Previous vote"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "Next vote"
+msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -188,6 +246,10 @@ msgstr "Примљене анкете"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Детаљи анкете"
+
+#. Template: AgentSurveyZoom
+msgid "Number"
+msgstr "Број"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -262,6 +324,10 @@ msgid "Checkbox (List)"
 msgstr "Поље за потврду (Листа)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Net Promoter Score"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
 msgstr "Тип питања"
 
@@ -281,49 +347,9 @@ msgstr "Уреди питање"
 msgid "Answer Edit"
 msgstr "Уреди одговор"
 
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Overview"
-msgstr "Преглед статистике"
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "You have no permission for this survey or stats detail!"
-msgstr "Немате дозволу за ову анкету или детаље статистике!"
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Detail"
-msgstr "Детаљ статистике"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! No questions defined."
-msgstr "Не може се поставити нови статус! Нема дефинисаних питања."
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! Questions incomplete."
-msgstr "Не може се поставити нови статус! Питања су непотпуна."
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Status changed."
-msgstr "Статус промењен."
-
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "- Није изабран ред -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket type selected -"
-msgstr "- Није изабран тип тикета -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket service selected -"
-msgstr "- Није изабран сервис тикета -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- Change Status -"
-msgstr "- Промени статус -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "master"
-msgstr "главни"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
@@ -387,6 +413,20 @@ msgstr "Подаци о гласању у анкети"
 msgid "You have already answered the survey."
 msgstr "Већ сте одговорили на анкету."
 
+#. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+msgid "Survey List"
+msgstr ""
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid ""
+"Do you really want to delete this question? ALL associated data will be "
+"LOST!"
+msgstr "Да ли заиста желите да обришете ово питање? СВИ повезани подаци ће бити ИЗГУБЉЕНИ!"
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid "Do you really want to delete this answer?"
+msgstr "Да ли заиста желите да избришете овај одговор?"
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "Анкетни модул."
@@ -427,6 +467,10 @@ msgstr "Дефинише модул прегледа за мали приказ 
 msgid ""
 "Defines groups which have a permission to change survey status. Array is "
 "empty by default and agents from all groups can change survey status."
+msgstr "Одређује групе које имају дозволу да мењају статус анкете. Табела је подразумевано празна и оператери из свих група могу да мењају статус анкете."
+
+#. SysConfig
+msgid "Defines if survey requests will be only send to real customers."
 msgstr ""
 
 #. SysConfig
@@ -444,8 +488,18 @@ msgid ""
 msgstr "Дефинише број сати од затварања тикета за покретање слања анкете. (0 значи да се шаље одмах по затварању). Напомена: одлагање слања анкете обавља „OTRS ” сервис пре активирања „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” поставке."
 
 #. SysConfig
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 =>"
+" inactive, 1 => active)."
+msgstr ""
+
+#. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
 msgstr "Дефинише подразумевану висину оквира за приказ текста  за детаљни приказ елемената анкете."
+
+#. SysConfig
+msgid "Defines the groups (rw) which can delete survey stats."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -456,6 +510,14 @@ msgid ""
 "Defines the shown columns in the survey overview. This option has no effect "
 "on the position of the columns."
 msgstr "Дефинише приказане колоне у прегледу анкете. Ова опције нема утицај на позиције колона."
+
+#. SysConfig
+msgid "Determines if the statistics module may generate survey lists."
+msgstr ""
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -515,6 +577,13 @@ msgstr "Параметри страница (на којима су анкете
 #. SysConfig
 msgid "Public Survey."
 msgstr "Јавна анкета."
+
+#. SysConfig
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -579,10 +648,18 @@ msgid ""
 msgstr "Идентификатор за анкету, нпр Survey#, MySurvey#. Подразумевано је Survey#."
 
 #. SysConfig
+msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
 msgstr "Модул догађаја на тикету за аутоматско слање имејла о истраживању корисницима ако је тикет затворен."
+
+#. SysConfig
+msgid "Trigger delete results (including vote data and requests)."
+msgstr ""
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

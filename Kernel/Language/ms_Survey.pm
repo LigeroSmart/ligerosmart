@@ -20,13 +20,19 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Pengenalan';
     $Self->{Translation}->{'Survey Introduction'} = 'Penyiasatan Pengenalan';
     $Self->{Translation}->{'Notification Body'} = 'Badan Pemberitahuan';
+    $Self->{Translation}->{'Ticket Types'} = 'Jenis Ticket';
     $Self->{Translation}->{'Internal Description'} = 'Description dalaman';
+    $Self->{Translation}->{'Customer conditions'} = '';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
+    $Self->{Translation}->{'Public survey key'} = '';
+    $Self->{Translation}->{'Example survey'} = '';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Edit Maklumat Umum';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edit Soalan';
+    $Self->{Translation}->{'You are here'} = 'Anda di sini';
     $Self->{Translation}->{'Survey Questions'} = 'Penyiasatan Soalan';
     $Self->{Translation}->{'Add Question'} = 'Tambah Soalan';
     $Self->{Translation}->{'Type the question'} = 'Taip soalan';
@@ -36,8 +42,6 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = 'Jawapan diperlukan';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'Apabila anda sudah selesai mengubah soalan kaji selidik hanya tutup skrin ini.';
-    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        'Adakah anda benar-benar ingin memadam soalan ini? SEMUA data berkaitan akan HILANG!';
     $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Edit Soalan';
     $Self->{Translation}->{'go back to questions'} = 'kembali kepada soalan-soalan';
@@ -45,7 +49,6 @@ sub Data {
     $Self->{Translation}->{'Possible Answers For'} = 'Jawapan Kemungkinan Untuk';
     $Self->{Translation}->{'Add Answer'} = 'Tambah Jawab';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Tiada jawapan yang disimpan untuk soalan ini.';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Adakah anda benar-benar ingin memadam jawapan ini?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Ini tidak mempunyai beberapa jawapan, textarea akan dipaparkan.';
     $Self->{Translation}->{'Edit Answer'} = 'Edit Jawapan';
@@ -53,6 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Jawapan:';
 
     # Template: AgentSurveyOverviewNavBar
+    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
+        '';
+    $Self->{Translation}->{'Survey Create Time'} = '';
+    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Maksimum soal selidik ditunjukkan setiap halaman';
 
     # Template: AgentSurveyOverviewSmall
@@ -63,17 +72,23 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Gambaran Keseluruhan Statistik daripada';
     $Self->{Translation}->{'Requests Table'} = 'Jadual permintaan';
+    $Self->{Translation}->{'Select all requests'} = '';
     $Self->{Translation}->{'Send Time'} = 'Masa Hantar';
     $Self->{Translation}->{'Vote Time'} = 'Masa Undi';
+    $Self->{Translation}->{'Select this request'} = '';
     $Self->{Translation}->{'See Details'} = 'Lihat maklumat';
+    $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Penyiasatan Details Stat';
     $Self->{Translation}->{'go back to stats overview'} = 'kembali ke Statistik gambaran keseluruhan';
+    $Self->{Translation}->{'Previous vote'} = '';
+    $Self->{Translation}->{'Next vote'} = '';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Maklumat Ukur';
     $Self->{Translation}->{'Sent requests'} = 'menghantar permintaan';
     $Self->{Translation}->{'Received surveys'} = 'diterima kaji selidik';
     $Self->{Translation}->{'Survey Details'} = 'Penyiasatan terperinchi';
+    $Self->{Translation}->{'Number'} = 'Nombor';
     $Self->{Translation}->{'Ticket Services'} = 'Perkhidmatan tiket';
     $Self->{Translation}->{'Survey Results Graph'} = 'Ukur Keputusan Graf';
     $Self->{Translation}->{'No stat results.'} = 'Tiada stat keputusan.';
@@ -100,26 +115,15 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Ya/Tidak';
     $Self->{Translation}->{'Radio (List)'} = 'Radio (Senarai)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Checkbox (Senarai)';
+    $Self->{Translation}->{'Net Promoter Score'} = '';
     $Self->{Translation}->{'Question Type'} = 'Jenis soalan';
     $Self->{Translation}->{'Complete'} = 'lengkap';
     $Self->{Translation}->{'Incomplete'} = 'tidak lengkap';
     $Self->{Translation}->{'Question Edit'} = 'Edit soalan';
     $Self->{Translation}->{'Answer Edit'} = 'Edit Jawapan';
 
-    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = 'Statistik Tinjauan';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
-
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Tidak boleh menetapkan status baru! Tiada soalan yang ditakrifkan.';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'Status changed.'} = 'status berubah.';
     $Self->{Translation}->{'- No queue selected -'} = '-Tiada giliran dipilih-';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
-    $Self->{Translation}->{'- Change Status -'} = '- Ubah Status -';
-    $Self->{Translation}->{'master'} = '';
     $Self->{Translation}->{'New Status'} = 'Status baharu';
     $Self->{Translation}->{'Survey Description'} = 'Huraian penyiasatan';
     $Self->{Translation}->{'answered'} = 'Dijawab';
@@ -140,6 +144,14 @@ sub Data {
     $Self->{Translation}->{'Survey Vote Data'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Anda telah menjawab kaji selidik.';
 
+    # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+    $Self->{Translation}->{'Survey List'} = '';
+
+    # JS File: Survey.Agent.SurveyEditQuestions
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        'Adakah anda benar-benar ingin memadam soalan ini? SEMUA data berkaitan akan HILANG!';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Adakah anda benar-benar ingin memadam jawapan ini?';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Satu Modul Penyiasatan';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Satu modul untuk mengedit soalan tinjauan';
@@ -157,16 +169,24 @@ sub Data {
         'Mentakrifkan modul gambaran untuk menunjukkan pandangan yang kecil senarai kaji selidik.';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '';
+    $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Mentakrifkan jumlah maksimum kaji selidik yang mendapat dihantar kepada pelanggan setiap 30 hari. (0 bermakna tidak maksimum, semua permintaan kaji selidik akan dihantar).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Mentakrifkan jumlah jam suatu tiket akan ditutup untuk mencetuskan penghantaran suatu kaji selidik, (0 bererti menghantar segera selepas penutupan). Nota: penghantaran kaji selidik tertunda adalah dilakuan oleh OTRS Daemon, pengaktifan sebelumnya tetapan \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\'.';
+    $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Mentakrifkan ketinggian lalai untuk penonton Teks Kaya untuk elemen Zoom Ukur.';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Mentakrifkan ruangan menunjukkan dalam gambaran kajian.Pilihan ini tidak mempunyai kesan ke atas kedudukan tiang.';
+    $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
+        '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -188,6 +208,8 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parameter untuk halaman (di mana kaji selidik ditunjukkan) gambaran kajian kecil.';
     $Self->{Translation}->{'Public Survey.'} = 'Penyiasatan awam.';
+    $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Menunjukkan pautan dalam menu untuk menyunting kaji selidik dalam paparan zum antara muka ejen.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -206,10 +228,21 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Ukur tidak akan dihantar ke alamat e-mel yang dikonfigurasi.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Pengecam untuk kaji selidik, misalnya Penyiasatan # MySurvey #. Lalai adalah Penyiasatan#.';
+    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
+        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Tiket modul acara untuk menghantar permintaan e-mel secara automatik kaji selidik kepada pelanggan jika tiket ditutup.';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Pencetus menghantar permohonan soal selidik ditangguhkan';
     $Self->{Translation}->{'Zoom into statistics details.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this answer?',
+    'Do you really want to delete this question? ALL associated data will be LOST!',
+    'Settings',
+    'Submit',
+    );
 
 }
 

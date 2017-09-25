@@ -20,13 +20,19 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Giới thiệu';
     $Self->{Translation}->{'Survey Introduction'} = 'Giới thiệu khảo sát';
     $Self->{Translation}->{'Notification Body'} = 'Nội dung thông báo';
+    $Self->{Translation}->{'Ticket Types'} = 'Các loại vé';
     $Self->{Translation}->{'Internal Description'} = 'Mô tả nội bộ';
+    $Self->{Translation}->{'Customer conditions'} = '';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
+    $Self->{Translation}->{'Public survey key'} = '';
+    $Self->{Translation}->{'Example survey'} = '';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Sửa thông tin chung';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Sửa câu hỏi';
+    $Self->{Translation}->{'You are here'} = '';
     $Self->{Translation}->{'Survey Questions'} = 'Câu hỏi khảo sát';
     $Self->{Translation}->{'Add Question'} = 'Thêm câu hỏi';
     $Self->{Translation}->{'Type the question'} = 'Nhập câu hỏi';
@@ -36,8 +42,6 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = 'Yêu cầu phải trả lời';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'Khi kết thúc việc sửa câu hỏi khảo sát, chỉ cần đóng màn hình này lại.';
-    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
-        'Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!';
     $Self->{Translation}->{'Close this window'} = '';
     $Self->{Translation}->{'Edit Question'} = 'Sửa câu hỏi';
     $Self->{Translation}->{'go back to questions'} = 'quay lại';
@@ -45,7 +49,6 @@ sub Data {
     $Self->{Translation}->{'Possible Answers For'} = 'Đáp án có thể cho';
     $Self->{Translation}->{'Add Answer'} = 'Thêm đáp án';
     $Self->{Translation}->{'No answers saved for this question.'} = 'Không có đáp án nào được lưu cho câu hỏi này.';
-    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Bạn có thật sự muốn xoá đáp án?';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'Câu hỏi này không có đáp án, một khung soạn thảo sẽ được hiển thị.';
     $Self->{Translation}->{'Edit Answer'} = 'Sửa đáp án';
@@ -53,6 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Đáp án:';
 
     # Template: AgentSurveyOverviewNavBar
+    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
+        '';
+    $Self->{Translation}->{'Survey Create Time'} = '';
+    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Số bài khảo sát tối đa trên một trang';
 
     # Template: AgentSurveyOverviewSmall
@@ -63,17 +72,23 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Thống kê tổng quát của';
     $Self->{Translation}->{'Requests Table'} = 'Bảng yêu cầu';
+    $Self->{Translation}->{'Select all requests'} = '';
     $Self->{Translation}->{'Send Time'} = 'Thời gian gửi';
     $Self->{Translation}->{'Vote Time'} = 'Thời gian bình chọn';
+    $Self->{Translation}->{'Select this request'} = '';
     $Self->{Translation}->{'See Details'} = 'Xem chi tiết';
+    $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Chi tiết thống kê khảo sát';
     $Self->{Translation}->{'go back to stats overview'} = 'quay lại thống kê tổng quát';
+    $Self->{Translation}->{'Previous vote'} = '';
+    $Self->{Translation}->{'Next vote'} = '';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Thông tin khảo sát';
     $Self->{Translation}->{'Sent requests'} = 'Gửi yêu cầu';
     $Self->{Translation}->{'Received surveys'} = 'Nhận khảo sát';
     $Self->{Translation}->{'Survey Details'} = 'Chi tiết khảo sát';
+    $Self->{Translation}->{'Number'} = 'Số';
     $Self->{Translation}->{'Ticket Services'} = 'Dịch vụ phiếu yêu cầu';
     $Self->{Translation}->{'Survey Results Graph'} = 'Đồ thì kết quả khảo sát';
     $Self->{Translation}->{'No stat results.'} = 'Không có kết qủa thống kê.';
@@ -100,26 +115,15 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Có/Không';
     $Self->{Translation}->{'Radio (List)'} = 'Hộp chọn (danh sách)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Hộp kiểm (danh sách)';
+    $Self->{Translation}->{'Net Promoter Score'} = '';
     $Self->{Translation}->{'Question Type'} = 'Loại câu hỏi';
     $Self->{Translation}->{'Complete'} = 'Hoàn tất';
     $Self->{Translation}->{'Incomplete'} = 'Chưa hoàn tất';
     $Self->{Translation}->{'Question Edit'} = 'Sửa câu hỏi';
     $Self->{Translation}->{'Answer Edit'} = 'Sửa đáp án';
 
-    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = 'Thống kê tổng quát';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = 'Thống kê chi tiết';
-
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Không thể đặt trạng thái mới! Không có câu hỏi nào được định nghĩa.';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'Status changed.'} = 'Trạng thái đã đổi.';
     $Self->{Translation}->{'- No queue selected -'} = '- Chưa chọn hàng đợi -';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
-    $Self->{Translation}->{'- Change Status -'} = '- Đổi trạng thái -';
-    $Self->{Translation}->{'master'} = '';
     $Self->{Translation}->{'New Status'} = 'Trạng thái mới';
     $Self->{Translation}->{'Survey Description'} = 'Mô tả khảo sát';
     $Self->{Translation}->{'answered'} = 'đã trả lời';
@@ -140,6 +144,14 @@ sub Data {
     $Self->{Translation}->{'Survey Vote Data'} = '';
     $Self->{Translation}->{'You have already answered the survey.'} = 'Bạn đã tham gia trả lời khảo sát.';
 
+    # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+    $Self->{Translation}->{'Survey List'} = '';
+
+    # JS File: Survey.Agent.SurveyEditQuestions
+    $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
+        'Bạn có thật sự muốn xoá câu hỏi này? TẤT CẢ các dữ liệu liên quan sẽ bị MẤT!';
+    $Self->{Translation}->{'Do you really want to delete this answer?'} = 'Bạn có thật sự muốn xoá đáp án?';
+
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Một mô-đun khảo sát';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'Một mô-đun để sửa câu hỏi khảo sát';
@@ -157,16 +169,24 @@ sub Data {
         'Định nghĩa một mô-đun tổng quát để hiển thị một danh sách khảo sát.';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '';
+    $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
+        '';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Định nghĩa số khảo sát tối đa mà được gửi đến khách hàng mỗi tháng. (0 nghĩa là không giới hạn, tất cả yêu cầu khảo sát sẽ được gửi).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         '';
+    $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
+        '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Định nghĩa chiều cao ngầm định của khung Richtext cho đối tượng xem khảo sát.';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Định nghĩa số cột hiển thị trong màn hình tổng quát. Tuỳ chọn này không ảnh hưởng đến vị trí của cột.';
+    $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
+        '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -188,6 +208,8 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Tham số cho trang (mà hiển thị khảo sát) của danh sách khảo sát tổng quát.';
     $Self->{Translation}->{'Public Survey.'} = 'Khảo sát công cộng.';
+    $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Hiển thị liên kết trong trình đơn để sửa khảo sát trong khi xem chi tiết khảo sát ở giao diện điều hành viên.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -206,10 +228,21 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Khảo sát sẽ không được gửi đến địa chỉ email đã thiết lập.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Định danh cho khảo sát, ví dụ: Khảo sát#, Khảo sát của tôi#. Ngầm định là Khảo sát#.';
+    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
+        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Mô-đun bắt sự kiện của phiếu yêu cầu để gửi email yêu cầu tự động đến khách hàng nếu phiếu yêu cầu được đóng.';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Bẫy gửi yêu cầu khảo sát bị trễ.';
     $Self->{Translation}->{'Zoom into statistics details.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this answer?',
+    'Do you really want to delete this question? ALL associated data will be LOST!',
+    'Settings',
+    'Submit',
+    );
 
 }
 
