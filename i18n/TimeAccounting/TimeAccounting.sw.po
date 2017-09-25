@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 11:01+0000\n"
-"PO-Revision-Date: 2017-07-17 16:02+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:29+0000\n"
+"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,18 +30,6 @@ msgstr "Nenda kwenye mpangilio"
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
 msgstr "Uabiri wa tarehe"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Previous day"
-msgstr "Siku iliyopita"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Next day"
-msgstr "Siku inayofwata"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Go to this date"
-msgstr "Nenda kwenye hii tarehe"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
@@ -72,18 +60,6 @@ msgid "On overtime leave"
 msgstr "Katika ruhusa ya muda wa nyongeza"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please choose at least one day!"
-msgstr "Tafadhali chagua japo siku moja"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Please choose a reason for absence!"
-msgstr "Tafadhali chagua sababu ya kuto kuwepo!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Mass Entry"
-msgstr "Ingizo la pamoja"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
 msgstr "Sehemu zinazotakiwa zina alama \"*\""
 
@@ -108,10 +84,6 @@ msgid "Please add a remark with more than 8 characters!"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr "Muda wa Kuanza"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Muda hasi hauruhusiwi."
 
@@ -130,10 +102,6 @@ msgstr "24:00 inaruhusiwa katika muda wa kumaliza."
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "Muda batili! Siku ina masaa 24 tu."
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr "Muda wa kumaliza"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -160,24 +128,8 @@ msgid "Add one row"
 msgstr "Ongeza safu moja"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Total"
-msgstr "Jumla"
-
-#. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
 msgstr "Unaweza kuchagua elementi moja katika cheki boksi"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Show all items"
-msgstr "Onyesha vipengele vyote"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Delete Time Accounting Entry"
-msgstr "Futa ingizo la Uhasibu wa Muda"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Confirm insert"
-msgstr "Hakiki ingizo"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on sick leave?"
@@ -377,20 +329,8 @@ msgid "Add task"
 msgstr "Ongeza kazi"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New user"
-msgstr "Mtumiaji mpya"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Projects"
-msgstr "Kichujio cha Miradi"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Tasks"
-msgstr "Kichujio cha kazi"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Users"
-msgstr "Kichujio cha Watumiaji"
+msgid "Filter for projects, tasks or users"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -422,24 +362,28 @@ msgid "User List"
 msgstr "Orodha ya mtumiaji"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New User Settings"
-msgstr "Mipangilio ya mtumiaji mpya"
+msgid "User Settings"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "Edit User Settings"
-msgstr "Hariri mipangilio ya mtumiaji"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Comments"
-msgstr "Maoni"
+msgid "User is allowed to see overtimes"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
 msgstr "Onyesha muda wa nyongeza"
 
 #. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "Ruhusu utengenezaji wa mradi"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -504,6 +448,14 @@ msgstr "Onyesha kipengele cha muda"
 #. Template: AgentTimeAccountingView
 msgid "View of "
 msgstr "Muonekano wa"
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Siku iliyopita"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Siku inayofwata"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
@@ -620,11 +572,19 @@ msgid "Unable to add time period!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Mpangilio"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
@@ -642,6 +602,26 @@ msgstr ""
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
 msgstr ""
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Tafadhali chagua japo siku moja"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Ingizo la pamoja"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Tafadhali chagua sababu ya kuto kuwepo!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Futa ingizo la Uhasibu wa Muda"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Hakiki ingizo"
 
 #. SysConfig
 msgid ""
@@ -705,6 +685,10 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa muda."
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -801,7 +785,7 @@ msgstr "Hii moduli ya taarifa inatoa onyo endapo kuna siku nyingi za kazi ambazo
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr ""
+msgstr "Uhasibu wa muda"
 
 #. SysConfig
 msgid "Time accounting edit."

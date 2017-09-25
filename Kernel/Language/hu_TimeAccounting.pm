@@ -23,9 +23,6 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = 'Időfeljegyzés szerkesztése';
     $Self->{Translation}->{'Go to settings'} = 'Ugrás a beállításokhoz';
     $Self->{Translation}->{'Date Navigation'} = 'Dátum navigáció';
-    $Self->{Translation}->{'Previous day'} = 'Előző nap';
-    $Self->{Translation}->{'Next day'} = 'Következő nap';
-    $Self->{Translation}->{'Go to this date'} = 'Ugrás erre a dátumra';
     $Self->{Translation}->{'Days without entries'} = 'Bejegyzések nélküli napok';
     $Self->{Translation}->{'Select all days'} = 'Minden nap kijelölése';
     $Self->{Translation}->{'Mass entry'} = 'Tömeges bejegyzés';
@@ -34,23 +31,18 @@ sub Data {
     $Self->{Translation}->{'On vacation'} = 'Szabadságon';
     $Self->{Translation}->{'On sick leave'} = 'Betegszabadságon';
     $Self->{Translation}->{'On overtime leave'} = 'Csúsztatáson túlóra miatt';
-    $Self->{Translation}->{'Please choose at least one day!'} = 'Legalább egy napot válasszon ki!';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Válassza ki a távollét okát!';
-    $Self->{Translation}->{'Mass Entry'} = 'Tömeges bejegyzés';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = 'A kötelező mezők „*” jellel vannak megjelölve.';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Ki kell töltenie a kezdő és befejező időt vagy egy időszakot.';
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Feladat';
     $Self->{Translation}->{'Remark'} = 'Észrevétel';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Adjon hozzá egy 8 karakternél hosszabb észrevételt!';
-    $Self->{Translation}->{'Start Time'} = 'Kezdési idő';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negatív időpontok nem engedélyezettek.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'Az ismétlődő órák nem engedélyezettek. A kezdési idő egy másik időközre illeszkedik.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Érvénytelen formátum! ÓÓ:PP formátumú időt adjon meg.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = 'A 24:00 csak befejezési időként engedélyezett.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Érvénytelen időpont! Egy napnak csak 24 órája van.';
-    $Self->{Translation}->{'End Time'} = 'Befejezési idő';
     $Self->{Translation}->{'End time must be after start time.'} = 'A befejezési időnek a kezdési idő után kell lennie.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Az ismétlődő órák nem engedélyezettek. A befejezési idő egy másik időközre illeszkedik.';
@@ -58,11 +50,7 @@ sub Data {
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Egy érvényes időszaknak nagyobbnak kell lennie nullánál.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Érvénytelen időszak! Negatív időszakok nem engedélyezettek.';
     $Self->{Translation}->{'Add one row'} = 'Egy sor hozzáadása';
-    $Self->{Translation}->{'Total'} = 'Összesen';
     $Self->{Translation}->{'You can only select one checkbox element!'} = 'Csak egy jelölőnégyzet elemet választhat ki!';
-    $Self->{Translation}->{'Show all items'} = 'Minden elem megjelenítése';
-    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Időelszámolás bejegyzés törlése';
-    $Self->{Translation}->{'Confirm insert'} = 'Beillesztés megerősítése';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = 'Biztos benne, hogy dolgozott, mialatt betegszabadságon volt?';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = 'Biztos benne, hogy dolgozott, mialatt szabadságon volt?';
     $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} =
@@ -123,10 +111,7 @@ sub Data {
         'Már létezik egy ilyen nevű projekt. Válasszon egy másik nevet.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Időelszámolási beállítások szerkesztése';
     $Self->{Translation}->{'Add task'} = 'Feladat hozzáadása';
-    $Self->{Translation}->{'New user'} = 'Új felhasználó';
-    $Self->{Translation}->{'Filter for Projects'} = 'Projektek szűrése';
-    $Self->{Translation}->{'Filter for Tasks'} = 'Feladatok szűrése';
-    $Self->{Translation}->{'Filter for Users'} = 'Felhasználók szűrése';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Az időszakok nem törölhetők.';
     $Self->{Translation}->{'Project List'} = 'Projektlista';
     $Self->{Translation}->{'Task List'} = 'Feladatlista';
@@ -135,11 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Már létezik egy ilyen nevű feladat. Válasszon egy másik nevet.';
     $Self->{Translation}->{'User List'} = 'Felhasználólista';
-    $Self->{Translation}->{'New User Settings'} = 'Új felhasználó beállításai';
-    $Self->{Translation}->{'Edit User Settings'} = 'Felhasználóbeállítások szerkesztése';
-    $Self->{Translation}->{'Comments'} = 'Megjegyzések';
+    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = 'Túlóra megjelenítése';
+    $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'Projektlétrehozás engedélyezése';
+    $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Időszak kezdete';
     $Self->{Translation}->{'Period End'} = 'Időszak vége';
     $Self->{Translation}->{'Days of Vacation'} = 'Szabadság napjai';
@@ -158,6 +144,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Időfeljegyzés megtekintése';
     $Self->{Translation}->{'View of '} = 'A következő megtekintése: ';
+    $Self->{Translation}->{'Previous day'} = 'Előző nap';
+    $Self->{Translation}->{'Next day'} = 'Következő nap';
     $Self->{Translation}->{'No data found for this day.'} = 'Nem található adat erre a napra.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -174,9 +162,9 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'A bejegyzések sikeresen beillesztve a különböző dátumokhoz!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'A megadott dátum érvénytelen volt! A dátum a mai napra lett módosítva.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        'Nincs időszak beállítva, vagy a megadott dátum a meghatározott időszakokon kívül van.';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
-        '';
+        'Vegye fel a kapcsolatot az időelszámolás adminisztrátorával, hogy frissítse az időszakait!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Legutóbb kiválasztott projektek';
     $Self->{Translation}->{'All Projects'} = 'Minden projekt';
 
@@ -194,8 +182,10 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = 'A felhasználó-azonosító nem érvényes!';
     $Self->{Translation}->{'Can\'t insert user data!'} = 'Nem lehet beilleszteni a felhasználóadatokat!';
     $Self->{Translation}->{'Unable to add time period!'} = 'Nem lehet hozzáadni időszakot!';
+    $Self->{Translation}->{'Setting'} = 'Beállítás';
     $Self->{Translation}->{'User updated!'} = 'Felhasználó frissítve!';
     $Self->{Translation}->{'User added!'} = 'Felhasználó hozzáadva!';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '';
     $Self->{Translation}->{'New User'} = 'Új felhasználó';
     $Self->{Translation}->{'Period Status'} = 'Időszak állapot';
 
@@ -204,6 +194,15 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Befejezetlen munkanapok';
+
+    # JS File: TimeAccounting.Agent.EditTimeRecords
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Legalább egy napot válasszon ki!';
+    $Self->{Translation}->{'Mass Entry'} = 'Tömeges bejegyzés';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Válassza ki a távollét okát!';
+
+    # JS File: TimeAccounting.Agent
+    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Időelszámolás bejegyzés törlése';
+    $Self->{Translation}->{'Confirm insert'} = 'Beillesztés megerősítése';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -223,6 +222,7 @@ sub Data {
         'Meghatározza azokat a projekteket, amelyekhez észrevétel szükséges. Ha a reguláris kifejezés illeszkedik a projektre, akkor be kell illesztenie egy észrevételt is. A reguláris kifejezés az smx paramétert használja.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Meghatározza, hogy a statisztika modul előállíthat-e időelszámolási információkat.';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Időelszámolás beállításainak szerkesztése.';
     $Self->{Translation}->{'Edit time record.'} = 'Időfeljegyzés szerkesztése.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Hány nappal ezelőtthöz illeszthet be munkaegységeket.';
@@ -251,7 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Ez a modul kikényszeríti a beszúrásokat az időelszámolásban.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Ez az értesítési modul egy figyelmeztetést ad, ha túl sok befejezetlen munkanap található.';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Időelszámolás';
     $Self->{Translation}->{'Time accounting edit.'} = 'Időelszámolás szerkesztés.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Időelszámolás áttekintő.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Időelszámolás jelentés.';
@@ -260,6 +260,19 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = 'Időelszámolás.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Akkor kell használni, ha néhány művelet csökkentette a munkaidőt (például ha csak az utazási idő fele van kifizetve: Kulcs => utazás; Tartalom => 50).';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm insert',
+    'Delete Time Accounting Entry',
+    'Mass Entry',
+    'No',
+    'Please choose a reason for absence!',
+    'Please choose at least one day!',
+    'Submit',
+    'Yes',
+    );
 
 }
 

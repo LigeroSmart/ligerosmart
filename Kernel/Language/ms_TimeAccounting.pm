@@ -23,9 +23,6 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = 'Sunting Rekod Masa';
     $Self->{Translation}->{'Go to settings'} = 'Pergi ke tetapan';
     $Self->{Translation}->{'Date Navigation'} = 'Navigasi Tarikh';
-    $Self->{Translation}->{'Previous day'} = 'Hari sebelum';
-    $Self->{Translation}->{'Next day'} = 'Hari seterusnya';
-    $Self->{Translation}->{'Go to this date'} = 'Pergi ke tarikh ini';
     $Self->{Translation}->{'Days without entries'} = 'Hari tanpa penyertaan';
     $Self->{Translation}->{'Select all days'} = 'Pilih kesemua hari';
     $Self->{Translation}->{'Mass entry'} = 'Kemasukan besar-besaran';
@@ -34,23 +31,18 @@ sub Data {
     $Self->{Translation}->{'On vacation'} = 'Bercuti';
     $Self->{Translation}->{'On sick leave'} = 'Cuti sakit';
     $Self->{Translation}->{'On overtime leave'} = 'Bercuti lebih masa';
-    $Self->{Translation}->{'Please choose at least one day!'} = 'Sila pilih sekurang-kurangnya sehari!';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Sila pilih sebab ketidakhadiran!';
-    $Self->{Translation}->{'Mass Entry'} = 'Kemasukan besar-besaran';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Medan yang diperlukan ditandai dengan "*".';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Anda perlu mengisi permulaan dan akhir masa atau tempoh masa.';
     $Self->{Translation}->{'Project'} = 'Projek';
     $Self->{Translation}->{'Task'} = 'Tugas';
     $Self->{Translation}->{'Remark'} = 'Komen';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Sila tambah komen dengan lebih daripada 8 karakter!';
-    $Self->{Translation}->{'Start Time'} = 'Waktu Mula';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Waktu negatif tidak dibenarkan.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'Pengulangan jam adalah tidak dibenarkan. Masa mula padan dengan selang lain.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Format tidak sah! Sila masukkan masa dengan format HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00 hanya dibenarkan sebagai masa akhir.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Masa tidak sah! Sehari hanya mempunyai 24 jam.';
-    $Self->{Translation}->{'End Time'} = 'Masa Akhir';
     $Self->{Translation}->{'End time must be after start time.'} = 'Masa tamat mesti selepas masa mula.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Pengulangan jam adalah tidak dibenarkan. Masa akhir padan dengan selang lain.';
@@ -58,11 +50,7 @@ sub Data {
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Tempoh sah mesti lebih besar daripada sifar.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Tempoh tidak sah! Tempoh negatif adalah tidak dibenarkan.';
     $Self->{Translation}->{'Add one row'} = 'Tambah satu baris';
-    $Self->{Translation}->{'Total'} = 'Jumlah';
     $Self->{Translation}->{'You can only select one checkbox element!'} = 'Anda hanya boleh pilih satu elemen kotak semak!';
-    $Self->{Translation}->{'Show all items'} = 'Tunjuk semua butiran';
-    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Padam Kemasukan Masa Perakaunan ';
-    $Self->{Translation}->{'Confirm insert'} = 'Sahkan kemasukan';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = 'Adakah anda pasti bahawa anda bekerja semasa anda bercuti sakit?';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = 'Adakah anda pasti bahawa anda bekerja semasa anda bercuti?';
     $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} =
@@ -123,10 +111,7 @@ sub Data {
         'Sudah ada projek dengan nama ini. Sila pilih yang lain.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Sunting Tetapan Perakaunan Masa';
     $Self->{Translation}->{'Add task'} = 'Tambah tugas';
-    $Self->{Translation}->{'New user'} = 'Pengguna baharu';
-    $Self->{Translation}->{'Filter for Projects'} = 'Tapis bagi projek';
-    $Self->{Translation}->{'Filter for Tasks'} = 'Tapis bagi tugas';
-    $Self->{Translation}->{'Filter for Users'} = 'Tapis bagi pengguna';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Tempoh masa tidak boleh dihapuskan.';
     $Self->{Translation}->{'Project List'} = 'Senarai projek';
     $Self->{Translation}->{'Task List'} = 'Senarai tugas';
@@ -135,11 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Sudah ada tugas dengan nama ini. Sila pilih yang lain.';
     $Self->{Translation}->{'User List'} = 'Senarai Pengguna';
-    $Self->{Translation}->{'New User Settings'} = 'Tetapan Pengguna Baharu';
-    $Self->{Translation}->{'Edit User Settings'} = 'Sunting Tetapan Pengguna';
-    $Self->{Translation}->{'Comments'} = 'Komen';
+    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = 'Tunjuk lebihan masa';
+    $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'Benarkan ciptaan projek';
+    $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Tempoh Mula';
     $Self->{Translation}->{'Period End'} = 'Tempoh tamat';
     $Self->{Translation}->{'Days of Vacation'} = 'Hari Bercuti';
@@ -158,6 +144,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Lihat Rekod Masa';
     $Self->{Translation}->{'View of '} = 'Pandangan';
+    $Self->{Translation}->{'Previous day'} = 'Hari sebelum';
+    $Self->{Translation}->{'Next day'} = 'Hari seterusnya';
     $Self->{Translation}->{'No data found for this day.'} = 'Tiada data dijumpai pada hari ini.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -194,8 +182,10 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = 'ID Pengguna tidak sah!';
     $Self->{Translation}->{'Can\'t insert user data!'} = 'Tidak boleh memasukkan data pengguna!';
     $Self->{Translation}->{'Unable to add time period!'} = 'Tidak boleh menambah tempoh masa!';
+    $Self->{Translation}->{'Setting'} = 'Tetapan';
     $Self->{Translation}->{'User updated!'} = 'Pengguna telah dikemaskini!';
     $Self->{Translation}->{'User added!'} = 'Pengguna telah ditambah!';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '';
     $Self->{Translation}->{'New User'} = 'Pengguna Baharu';
     $Self->{Translation}->{'Period Status'} = 'Status Tempoh';
 
@@ -204,6 +194,15 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Hari bekerja tidak lengkap';
+
+    # JS File: TimeAccounting.Agent.EditTimeRecords
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Sila pilih sekurang-kurangnya sehari!';
+    $Self->{Translation}->{'Mass Entry'} = 'Kemasukan besar-besaran';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Sila pilih sebab ketidakhadiran!';
+
+    # JS File: TimeAccounting.Agent
+    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Padam Kemasukan Masa Perakaunan ';
+    $Self->{Translation}->{'Confirm insert'} = 'Sahkan kemasukan';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -223,6 +222,7 @@ sub Data {
         'Mentakrifkan projek-projek yang mana komen diperlukan. Jika UngkapanBiasa padan dalam projek ini, anda perlu memasukkan komen juga. UngkapanBiasa menggunakan parameter smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Menentukan jika modul statistik boleh menjana masa maklumat perakaunan.';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Sunting tetapan-tetapan perakaunan masa.';
     $Self->{Translation}->{'Edit time record.'} = 'Sunting rekod masa.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Untuk berapa hari yang lalu, anda boleh memasukkan unit kerja.';
@@ -251,7 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Modul ini memaksa kemasukan dalam PerakaunanSemasa.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Modul pemberitahuan ini memberi amaran jika terdapat terlalu banyak hari bekerja tidak lengkap.';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Masa Perakaunan';
     $Self->{Translation}->{'Time accounting edit.'} = 'Sunting perakaunan semasa.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Gambaran keseluruhan perakaunan semasa.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Melapor perakaunan semasa.';
@@ -260,6 +260,19 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = 'Perakaunan semasa.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Untuk digunakan jika beberapa tindakan mengurangkan waktu kerja (contohnya, jika hanya separuh daripada masa perjalanan dibayar Kunci => perjalanan; Kandungan = > 50).';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm insert',
+    'Delete Time Accounting Entry',
+    'Mass Entry',
+    'No',
+    'Please choose a reason for absence!',
+    'Please choose at least one day!',
+    'Submit',
+    'Yes',
+    );
 
 }
 

@@ -1,12 +1,13 @@
 # 
 # Translators:
 # 光中 杨 <yangkwch@163.com>, 2016
+# 汇民 王 <whuim@qq.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 11:01+0000\n"
-"PO-Revision-Date: 2017-07-17 16:02+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:29+0000\n"
+"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,18 +30,6 @@ msgstr "进入设置"
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
 msgstr "日期浏览"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Previous day"
-msgstr "前一天"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Next day"
-msgstr "后一天"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Go to this date"
-msgstr "跳转这一天"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
@@ -71,18 +60,6 @@ msgid "On overtime leave"
 msgstr "加班调休"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please choose at least one day!"
-msgstr "请至少选择一天！"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Please choose a reason for absence!"
-msgstr "请选择缺席原因！"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Mass Entry"
-msgstr "大量记录"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
 msgstr "标记\"*\"的字段为必填。"
 
@@ -107,10 +84,6 @@ msgid "Please add a remark with more than 8 characters!"
 msgstr "请添加一个超过8个字符的备注！"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr "开始时间"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "时间不允许为负。"
 
@@ -129,10 +102,6 @@ msgstr "24:00只允许设置为结束时间。"
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "时间无效！一天只有24小时。"
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr "结束时间"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -159,24 +128,8 @@ msgid "Add one row"
 msgstr "增加一行"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Total"
-msgstr "合计"
-
-#. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
 msgstr "只能选择一个复选框元素。"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Show all items"
-msgstr "显示所有条目"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Delete Time Accounting Entry"
-msgstr "删除工时管理记录"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Confirm insert"
-msgstr "确认插入"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on sick leave?"
@@ -376,20 +329,8 @@ msgid "Add task"
 msgstr "添加任务"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New user"
-msgstr "添加用户"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Projects"
-msgstr "项目过滤"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Tasks"
-msgstr "任务过滤"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Users"
-msgstr "用户过滤"
+msgid "Filter for projects, tasks or users"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -421,24 +362,28 @@ msgid "User List"
 msgstr "用户列表"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New User Settings"
-msgstr "新建用户设置。"
+msgid "User Settings"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "Edit User Settings"
-msgstr "编辑用户设置"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Comments"
-msgstr "注释"
+msgid "User is allowed to see overtimes"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
 msgstr "显示加班"
 
 #. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "允许创建项目"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -505,6 +450,14 @@ msgid "View of "
 msgstr "展示"
 
 #. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "前一天"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "后一天"
+
+#. Template: AgentTimeAccountingView
 msgid "No data found for this day."
 msgstr "没有找到这一天的数据。"
 
@@ -558,13 +511,13 @@ msgstr "输入时间无效！日期改为当前日期。"
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
 "time periods."
-msgstr ""
+msgstr "没有配置时间段，或指定的日期不在定义的时间段内。"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "Please contact the time accounting administrator to update your time "
 "periods!"
-msgstr ""
+msgstr "请联系工时管理员更新您的时间段！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -619,12 +572,20 @@ msgid "Unable to add time period!"
 msgstr "无法添加时间段！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "设置"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
 msgstr "用户已更新！"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
 msgstr "用户已添加！"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -641,6 +602,26 @@ msgstr "视图：需要%s！"
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
 msgstr "不完整的工作日"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "请至少选择一天！"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "大量记录"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "请选择缺席原因！"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "删除工时管理记录"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "确认插入"
 
 #. SysConfig
 msgid ""
@@ -704,6 +685,10 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "确定统计模块是否要生成工时管理信息。"
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -800,7 +785,7 @@ msgstr "如有有太多不完整的工日，该通知模块会发出告警。"
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr ""
+msgstr "工时管理"
 
 #. SysConfig
 msgid "Time accounting edit."

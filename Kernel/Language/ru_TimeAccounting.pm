@@ -23,9 +23,6 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = 'Редактировать запись времени';
     $Self->{Translation}->{'Go to settings'} = 'Перейти к настройкам';
     $Self->{Translation}->{'Date Navigation'} = 'Навигация по времени';
-    $Self->{Translation}->{'Previous day'} = 'Предыдущий день';
-    $Self->{Translation}->{'Next day'} = 'Следующий день';
-    $Self->{Translation}->{'Go to this date'} = 'Перейти к этой дате';
     $Self->{Translation}->{'Days without entries'} = 'Дни без записей';
     $Self->{Translation}->{'Select all days'} = 'Выбрать все дни';
     $Self->{Translation}->{'Mass entry'} = 'Массовый ввод';
@@ -34,23 +31,18 @@ sub Data {
     $Self->{Translation}->{'On vacation'} = 'В отпуске';
     $Self->{Translation}->{'On sick leave'} = 'По болезни';
     $Self->{Translation}->{'On overtime leave'} = 'В отгуле за переработку';
-    $Self->{Translation}->{'Please choose at least one day!'} = 'Выберите хотя бы один день!';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Выберите причину отсутствия!';
-    $Self->{Translation}->{'Mass Entry'} = 'Массовый ввод';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Обязательные поля помечены "*".';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Необходимо заполнить время начала и окончания или период времени.';
     $Self->{Translation}->{'Project'} = 'Планирование';
     $Self->{Translation}->{'Task'} = 'Задача';
     $Self->{Translation}->{'Remark'} = 'Примечание';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = 'Примечание должно быть не менее 8 символов.';
-    $Self->{Translation}->{'Start Time'} = 'Время начала';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Отрицательное значение недопустимо.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'Не допускается повторение. Время начала соответствует другому интервалу.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Неверный формат! Введите время в формате HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = 'Только 24:00 разрешено в качестве времени окончания.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Неверное время! В сутках только 24 часа.';
-    $Self->{Translation}->{'End Time'} = 'Время окончания';
     $Self->{Translation}->{'End time must be after start time.'} = 'Время окончания должно быть позже времени начала.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Не допускается повторение. Время окончания соответствует другому интервалу.';
@@ -58,11 +50,7 @@ sub Data {
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Правильный период должен быть больше нуля.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Неверный период! Отрицательное значение не допускается.';
     $Self->{Translation}->{'Add one row'} = 'Добавить одну строку';
-    $Self->{Translation}->{'Total'} = 'Итого';
     $Self->{Translation}->{'You can only select one checkbox element!'} = 'У вас есть возможность выбрать только один элемент!';
-    $Self->{Translation}->{'Show all items'} = 'Показать все';
-    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Удалить запись затраченного времени';
-    $Self->{Translation}->{'Confirm insert'} = 'Подтвердите вставку';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = 'Вы действительно работали в период болезни?';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = 'Вы действительно работали в период отпуска?';
     $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} =
@@ -123,10 +111,7 @@ sub Data {
         'Уже есть проект с таким наименованием. Выберите другое.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Редактировать настройки учета затраченного времени';
     $Self->{Translation}->{'Add task'} = 'Добавить задачу';
-    $Self->{Translation}->{'New user'} = 'Новый пользователь';
-    $Self->{Translation}->{'Filter for Projects'} = 'Фильтр для Проектов';
-    $Self->{Translation}->{'Filter for Tasks'} = 'Фильтр для задач';
-    $Self->{Translation}->{'Filter for Users'} = 'Фильтр для пользователей';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Периоды времени не могут быть удалены.';
     $Self->{Translation}->{'Project List'} = 'Список проектов';
     $Self->{Translation}->{'Task List'} = 'Список задач';
@@ -135,11 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Уже есть задача с таким именем, Выберите другое.';
     $Self->{Translation}->{'User List'} = 'Список пользователей';
-    $Self->{Translation}->{'New User Settings'} = 'Настройки нового пользователя';
-    $Self->{Translation}->{'Edit User Settings'} = 'Редактировать настройки пользователя';
-    $Self->{Translation}->{'Comments'} = 'Комментарии';
+    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = 'Показать переработку';
+    $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'Разрешить создание проектов';
+    $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Начало периода';
     $Self->{Translation}->{'Period End'} = 'Конец периода';
     $Self->{Translation}->{'Days of Vacation'} = 'Дни отпуска';
@@ -158,6 +144,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Посмотреть запись времени';
     $Self->{Translation}->{'View of '} = 'Просмотр';
+    $Self->{Translation}->{'Previous day'} = 'Предыдущий день';
+    $Self->{Translation}->{'Next day'} = 'Следующий день';
     $Self->{Translation}->{'No data found for this day.'} = 'Для этого дня данные не найдены.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -194,8 +182,10 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = 'Неверный UserID!';
     $Self->{Translation}->{'Can\'t insert user data!'} = 'Не удалось вставить данные пользователя!';
     $Self->{Translation}->{'Unable to add time period!'} = 'Не удалось добавить перид времени!';
+    $Self->{Translation}->{'Setting'} = 'Параметр';
     $Self->{Translation}->{'User updated!'} = 'Пользователь обновлен!';
     $Self->{Translation}->{'User added!'} = 'Пользователь добавлен!';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '';
     $Self->{Translation}->{'New User'} = 'Новый пользователь';
     $Self->{Translation}->{'Period Status'} = 'Статус периода';
 
@@ -204,6 +194,15 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Неполные рабочие дни';
+
+    # JS File: TimeAccounting.Agent.EditTimeRecords
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Выберите хотя бы один день!';
+    $Self->{Translation}->{'Mass Entry'} = 'Массовый ввод';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Выберите причину отсутствия!';
+
+    # JS File: TimeAccounting.Agent
+    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Удалить запись затраченного времени';
+    $Self->{Translation}->{'Confirm insert'} = 'Подтвердите вставку';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -223,6 +222,7 @@ sub Data {
         'Задает проекты для которых требуется занесение замечаний. Если RegExp верно для проекта, вы должны добавить замечания тоже. Для RegExp используйте параметр smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Задает, может ли модуль отчетов генерировать информацию по учету затраченного времени.';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Редактировать настройки учета затраченного времени.';
     $Self->{Translation}->{'Edit time record.'} = 'Редактировать запись времени.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Для какого количества прошедших дней вы можете внести данные о времени.';
@@ -251,7 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Этот модуль ускоряет ввод данных в TimeAccounting.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Модуль уведомлений, для отображения количества незавершенных рабочих дней пользователя.';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Учет затраченного времени';
     $Self->{Translation}->{'Time accounting edit.'} = 'Редактирование затрат времени.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Обзор затрат времени.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Отчеты о затртах времени.';
@@ -260,6 +260,19 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = 'Учет затраченного времени';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Для использования, если некоторые действия уменьшают рабочие часы (например, если только половина времени в пути оплачивается - Key => traveling; Content => 50).';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm insert',
+    'Delete Time Accounting Entry',
+    'Mass Entry',
+    'No',
+    'Please choose a reason for absence!',
+    'Please choose at least one day!',
+    'Submit',
+    'Yes',
+    );
 
 }
 

@@ -1,322 +1,331 @@
+# 
+# Translators:
+# Peter Værlien <pvarlien@online.no>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2017-09-25 10:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Project-Id-Version: OTRS\n"
+"POT-Creation-Date: 2017-09-25 10:29+0000\n"
+"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
+"Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nb_NO\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
-msgstr ""
+msgstr "Vil du virkelig fjerne tidsregistreringen for denne dagen?"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Edit Time Record"
-msgstr ""
+msgstr "Endre tidsregistrering"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Go to settings"
-msgstr ""
+msgstr "Innstillinger"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
-msgstr ""
+msgstr "Navigering mellom datoer"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
-msgstr ""
+msgstr "Dager uten tidregistrering"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Select all days"
-msgstr ""
+msgstr "Velg alle dager"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Mass entry"
-msgstr ""
+msgstr "Masseregistrering"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose the reason for your absence for the selected days"
-msgstr ""
+msgstr "Vennligst velg årsaken til ditt fravær på de valgte dagene"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On vacation"
-msgstr ""
+msgstr "Ferie"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On sick leave"
-msgstr ""
+msgstr "Sykefravær"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On overtime leave"
-msgstr ""
+msgstr "Avspassering"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
-msgstr ""
+msgstr "Obligatoriske felt er markert med \"*\"."
 
 #. Template: AgentTimeAccountingEdit
 msgid "You have to fill in start and end time or a time period."
-msgstr ""
+msgstr "Du må fylle ut start- og sluttidspunkt, eller periodelengden."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Project"
-msgstr ""
+msgstr "Prosjekt"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Task"
-msgstr ""
+msgstr "Aktivitet"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Remark"
-msgstr ""
+msgstr "Merknad"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
-msgstr ""
+msgstr "Vennligst skriv inn en merknad på minst 8 tegn!"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
-msgstr ""
+msgstr "Negativ tid godtas ikke."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. Start time matches another interval."
-msgstr ""
+msgstr "Overlappende perioder ikke tillatt. Starttiden er i en annen periode."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
-msgstr ""
+msgstr "Feil format! Vennligst oppgi ett tidspunkt i formatet TT:MM."
 
 #. Template: AgentTimeAccountingEdit
 msgid "24:00 is only permitted as end time."
-msgstr ""
+msgstr "24:00 godtas bare som sluttid."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
-msgstr ""
+msgstr "Feilaktig tid! Et døgn har kun 24 timer."
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
-msgstr ""
+msgstr "Sluttid må være senere enn starttid."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. End time matches another interval."
-msgstr ""
+msgstr "Overlappende perioder ikke tillatt. Sluttiden er i en annen periode."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! A day has only 24 hours."
-msgstr ""
+msgstr "Feilaktig tid! Et døgn har kun 24 timer."
 
 #. Template: AgentTimeAccountingEdit
 msgid "A valid period must be greater than zero."
-msgstr ""
+msgstr "En tidsperiode må være større enn null."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! Negative periods are not allowed."
-msgstr ""
+msgstr "Feilaktid tid.  Negativ tid godtas ikke."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Add one row"
-msgstr ""
+msgstr "Legg til en rad."
 
 #. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
-msgstr ""
+msgstr "Du kan bare gjøre en avkrysning."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on sick leave?"
-msgstr ""
+msgstr "Er du sikker på at du arbeidet mens du var sykemeldt."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on vacation?"
-msgstr ""
+msgstr "Er du sikker på at du arbeidet mens du hadde ferie?"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on overtime leave?"
-msgstr ""
+msgstr "Er du sikker på at du arbeidet mens du avspasserte."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked more than 16 hours?"
-msgstr ""
+msgstr "Er du sikker på at du arbeidet i flere enn 16 timer?"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Time reporting monthly overview"
-msgstr ""
+msgstr "Månedsoversikt registrert tid"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (Hours)"
-msgstr ""
+msgstr "Overtid (timer)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (this month)"
-msgstr ""
+msgstr "Overtid (denne måned)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (total)"
-msgstr ""
+msgstr "Overtid (totalt)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Remaining overtime leave"
-msgstr ""
+msgstr "Gjenstående avspasseringstimer"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation (Days)"
-msgstr ""
+msgstr "Ferie (dager)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (this month)"
-msgstr ""
+msgstr "Ferie tatt (denne måned)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (total)"
-msgstr ""
+msgstr "Ferie tatt (totalt)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Remaining vacation"
-msgstr ""
+msgstr "Gjenstående feriedager"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick Leave (Days)"
-msgstr ""
+msgstr "Sykefravær (dager)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick leave taken (this month)"
-msgstr ""
+msgstr "Sykefravær (denne måned)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick leave taken (total)"
-msgstr ""
+msgstr "Sykefravær (totalt)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Previous month"
-msgstr ""
+msgstr "Forrige måned"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Next month"
-msgstr ""
+msgstr "Neste måned"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Weekday"
-msgstr ""
+msgstr "Ukedag"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Working Hours"
-msgstr ""
+msgstr "Arbeidet tid"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Total worked hours"
-msgstr ""
+msgstr "Total arbeidet tid"
 
 #. Template: AgentTimeAccountingOverview
 msgid "User's project overview"
-msgstr ""
+msgstr "Brukers prosjektoversikt"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Hours (monthly)"
-msgstr ""
+msgstr "Timer (månedlig)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Hours (Lifetime)"
-msgstr ""
+msgstr "Timer (totalt)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Grand total"
-msgstr ""
+msgstr "Sluttsum"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Time reporting"
-msgstr ""
+msgstr "Tidrapportering"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Month Navigation"
-msgstr ""
+msgstr "Navigering mellom måneder"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Go to date"
-msgstr ""
+msgstr "Gå til dato"
 
 #. Template: AgentTimeAccountingReporting
 msgid "User reports"
-msgstr ""
+msgstr "Brukerrapporter"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Monthly total"
-msgstr ""
+msgstr "Månedssum"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Lifetime total"
-msgstr ""
+msgstr "Totalsum"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Overtime leave"
-msgstr ""
+msgstr "Avspassering"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Vacation"
-msgstr ""
+msgstr "Ferie"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Sick leave"
-msgstr ""
+msgstr "Sykefravær"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Vacation remaining"
-msgstr ""
+msgstr "Gjenstående ferie"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Project reports"
-msgstr ""
+msgstr "Prosjektrapporter"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Project report"
-msgstr ""
+msgstr "Prosjektrapport"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Go to reporting overview"
-msgstr ""
+msgstr "Gå til rapporteringsoversikt"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
-msgstr ""
+msgid ""
+"Currently only active users in this project are shown. To change this "
+"behavior, please update setting:"
+msgstr "For tiden vises bare de aktive brukerne i dette prosjektet. For å endre dette må følgende innstilling endres:"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
-msgstr ""
+msgid ""
+"Currently all time accounting users are shown. To change this behavior, "
+"please update setting:"
+msgstr "For tiden vises alle tidsregistreringsbrukere. For å endre dette må følgende innstilling endres:"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
-msgstr ""
+msgstr "Endre instillinger for tidsregistreringsprosjekt"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add project"
-msgstr ""
+msgstr "Legg til et prosjekt"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Go to settings overview"
-msgstr ""
+msgstr "Gå til oversikten over innstillinger"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add Project"
-msgstr ""
+msgstr "Legg til et prosjekt"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Project Settings"
-msgstr ""
+msgstr "Endre instillinger for prosjektet"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a project with this name. Please, choose a different one."
-msgstr ""
+msgid ""
+"There is already a project with this name. Please, choose a different one."
+msgstr "Det finnes allerede et prosjekt med dette navnet. Vennligst velg et annet navn."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Settings"
-msgstr ""
+msgstr "Endre instillinger for tidsregistrering"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add task"
-msgstr ""
+msgstr "Legg til en aktivitet"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for projects, tasks or users"
@@ -324,31 +333,32 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Tidsperioder kan ikke slettes."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
-msgstr ""
+msgstr "Prosjektliste"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Task List"
-msgstr ""
+msgstr "Aktivitetsliste"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add Task"
-msgstr ""
+msgstr "Legg til en aktivitet"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Task Settings"
-msgstr ""
+msgstr "Endre instillinger for aktiviteten"
 
 #. Template: AgentTimeAccountingSetting
-msgid "There is already a task with this name. Please, choose a different one."
-msgstr ""
+msgid ""
+"There is already a task with this name. Please, choose a different one."
+msgstr "Det finnes allerede en aktivitet med dette navnet. Vennligst velg et annet navn."
 
 #. Template: AgentTimeAccountingSetting
 msgid "User List"
-msgstr ""
+msgstr "Brukerliste"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User Settings"
@@ -360,7 +370,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
-msgstr ""
+msgstr "Vis overtid"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to create projects"
@@ -368,7 +378,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
-msgstr ""
+msgstr "Tillatt bruker å opprette prosjekter"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
@@ -376,79 +386,79 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
-msgstr ""
+msgstr "Periodestart"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period End"
-msgstr ""
+msgstr "Periodeslutt"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Days of Vacation"
-msgstr ""
+msgstr "Feriedager"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Hours per Week"
-msgstr ""
+msgstr "Timer per uke"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Authorized Overtime"
-msgstr ""
+msgstr "Pålagt overtid"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Start Date"
-msgstr ""
+msgstr "Startdato"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
-msgstr ""
+msgstr "Vennligst sett inn en gyldig dato."
 
 #. Template: AgentTimeAccountingSetting
 msgid "End Date"
-msgstr ""
+msgstr "Sluttdato"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
-msgstr ""
+msgstr "Periodeslutt må være etter periodestart."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Leave Days"
-msgstr ""
+msgstr "Dager med gyldig fravær"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Weekly Hours"
-msgstr ""
+msgstr "Ukentlige timer"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Overtime"
-msgstr ""
+msgstr "Overtid"
 
 #. Template: AgentTimeAccountingSetting
 msgid "No time periods found."
-msgstr ""
+msgstr "Ingen tidsperioder funnet"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add time period"
-msgstr ""
+msgstr "Legg til en tidsperiode"
 
 #. Template: AgentTimeAccountingView
 msgid "View Time Record"
-msgstr ""
+msgstr "Se på tidsregistrering"
 
 #. Template: AgentTimeAccountingView
 msgid "View of "
-msgstr ""
+msgstr "Visning av"
 
 #. Template: AgentTimeAccountingView
 msgid "Previous day"
-msgstr ""
+msgstr "Forrige dag"
 
 #. Template: AgentTimeAccountingView
 msgid "Next day"
-msgstr ""
+msgstr "Neste dag"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
-msgstr ""
+msgstr "Ingen data funnet for denne dagen."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
@@ -456,59 +466,65 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr ""
+msgstr "Seneste prosjekter"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "Kan ikke lagre instillingene fordi et døgn har kun 24 timer."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
-msgstr ""
+msgid ""
+"This Date is out of limit, but you haven't insert this day yet, so you get "
+"one(!) chance to insert"
+msgstr "Denne datoen er utenfor tillatt område. Men, du har ikke satt inn denne dagen ennå, så du får en(!) sjanse"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
-msgstr ""
+msgstr "Ufullstendige arbeidsdager"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Please insert your working hours!"
-msgstr ""
+msgstr "Vennligst sett inn dine arbeidstimer!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
-msgstr ""
+msgstr "Vellykket innsetting!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Error while inserting multiple dates!"
-msgstr ""
+msgstr "Feil under innsetting av flere datoer!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successfully inserted entries for several dates!"
-msgstr ""
+msgstr "Innsetting av registreringer for flere datoer var vellykket."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Entered date was invalid! Date was changed to today."
+msgstr "Oppgitt dato var ugyldig! Dato endret til dagens dato."
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
+msgid ""
+"No time period configured, or the specified date is outside of the defined "
+"time periods."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "No time period configured, or the specified date is outside of the defined time periods."
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please contact the time accounting administrator to update your time periods!"
+msgid ""
+"Please contact the time accounting administrator to update your time "
+"periods!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Seneste valgte prosjekter"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "Alle prosjekter"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
@@ -516,55 +532,55 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "Prosjekt som rapporteres"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
-msgstr ""
+msgstr "Rapportering"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
-msgstr ""
+msgstr "Kan ikke endre brukerinnstillinger!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project added!"
-msgstr ""
+msgstr "Prosjekt lagt til!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Project updated!"
-msgstr ""
+msgstr "Prosjekt oppdatert!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task added!"
-msgstr ""
+msgstr "Aktivitet lagt til!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "Aktivitet oppdatert!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
-msgstr ""
+msgstr "BrukerID er ikke gyldig!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "Kan ikke legge til brukerdata!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "Kan ikke legge til tidsperiode!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Setting"
-msgstr ""
+msgstr "Innstilling"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
-msgstr ""
+msgstr "Bruker oppdatert!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
-msgstr ""
+msgstr "Bruker lagt til!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Add a user to time accounting..."
@@ -572,42 +588,44 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Ny bruker"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
-msgstr ""
+msgstr "Periodestatus"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "Visning: Trenger %s!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Ufullstendige arbeidsdager"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"
-msgstr ""
+msgstr "Vennligst velg minst en dag!"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Mass Entry"
-msgstr ""
+msgstr "Masseregistrering"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose a reason for absence!"
-msgstr ""
+msgstr "Vennligst velg fraværsårsak!"
 
 #. JS File: TimeAccounting.Agent
 msgid "Delete Time Accounting Entry"
-msgstr ""
+msgstr "Slett en tidsregistrering"
 
 #. JS File: TimeAccounting.Agent
 msgid "Confirm insert"
-msgstr ""
+msgstr "Bekreft innsetting"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of incomplete working days for the user."
+msgid ""
+"Agent interface notification module to see the number of incomplete working "
+"days for the user."
 msgstr ""
 
 #. SysConfig
@@ -655,11 +673,16 @@ msgid "Default status for new users."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
+msgid ""
+"Defines the projects for which a remark is required. If the RegExp matches "
+"on the project, you have to insert a remark too. The RegExp use the smx "
+"parameter."
 msgstr ""
 
 #. SysConfig
-msgid "Determines if the statistics module may generate time accounting information."
+msgid ""
+"Determines if the statistics module may generate time accounting "
+"information."
 msgstr ""
 
 #. SysConfig
@@ -668,62 +691,85 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "Endre innstillinger for tidsregistrering."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "Endre tidsregistrering"
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
+msgstr "Hvor manger dager tilbake i tid det er anledning til å legge til en tidsbolk."
+
+#. SysConfig
+msgid ""
+"If enabled, only users that has added working time to the selected project "
+"are shown."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, only users that has added working time to the selected project are shown."
+msgid ""
+"If enabled, the dropdown elements in the edit screen are changed to "
+"modernized autocompletion fields."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
+msgid ""
+"If enabled, the filter for the previous projects can be used instead two "
+"list of projects (last and all ones). It could be used only if "
+"TimeAccounting::EnableAutoCompletion is enabled."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
+msgid ""
+"If enabled, the filter for the previous projects is active by default if "
+"there are the previous projects. It could be used only if "
+"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgid ""
+"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
+"leave\" and \"on overtime leave\" to multiple dates at once."
 msgstr ""
 
 #. SysConfig
-msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
+msgid ""
+"Maximum number of working days after which the working units have to be "
+"inserted."
 msgstr ""
 
 #. SysConfig
-msgid "Maximum number of working days after which the working units have to be inserted."
-msgstr ""
-
-#. SysConfig
-msgid "Maximum number of working days without working units entry after which a warning will be shown."
+msgid ""
+"Maximum number of working days without working units entry after which a "
+"warning will be shown."
 msgstr ""
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "Oversikt."
 
 #. SysConfig
 msgid "Project time reporting."
+msgstr "Tidrapportering for prosjekt."
+
+#. SysConfig
+msgid ""
+"Regular expressions for constraining action list according to selected "
+"project. Key contains regular expression for project(s), content contains "
+"regular expressions for action(s)."
 msgstr ""
 
 #. SysConfig
-msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
+msgid ""
+"Regular expressions for constraining project list according to user groups. "
+"Key contains regular expression for project(s), content contains comma "
+"separated list of groups."
 msgstr ""
 
 #. SysConfig
-msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
-msgstr ""
-
-#. SysConfig
-msgid "Specifies if working hours can be inserted without start and end times."
+msgid ""
+"Specifies if working hours can be inserted without start and end times."
 msgstr ""
 
 #. SysConfig
@@ -731,7 +777,9 @@ msgid "This module forces inserts in TimeAccounting."
 msgstr ""
 
 #. SysConfig
-msgid "This notification module gives a warning if there are too many incomplete working days."
+msgid ""
+"This notification module gives a warning if there are too many incomplete "
+"working days."
 msgstr ""
 
 #. SysConfig
@@ -740,29 +788,30 @@ msgstr ""
 
 #. SysConfig
 msgid "Time accounting edit."
-msgstr ""
+msgstr "Endre tidsregistrering."
 
 #. SysConfig
 msgid "Time accounting overview."
-msgstr ""
+msgstr "Oversikt over registrert tid."
 
 #. SysConfig
 msgid "Time accounting reporting."
-msgstr ""
+msgstr "Rapportering av registrert tid."
 
 #. SysConfig
 msgid "Time accounting settings."
-msgstr ""
+msgstr "Innstillinger for tidsregistrering."
 
 #. SysConfig
 msgid "Time accounting view."
-msgstr ""
+msgstr "Se på tidsregistrering."
 
 #. SysConfig
 msgid "Time accounting."
-msgstr ""
+msgstr "Tidsregistrering."
 
 #. SysConfig
-msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
+msgid ""
+"To use if some actions reduced the working hours (for example, if only half "
+"of the traveling time is paid Key => traveling; Content => 50)."
 msgstr ""
-

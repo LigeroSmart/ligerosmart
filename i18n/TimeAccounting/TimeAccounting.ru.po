@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 11:01+0000\n"
-"PO-Revision-Date: 2017-07-17 16:02+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:29+0000\n"
+"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,18 +32,6 @@ msgstr "Перейти к настройкам"
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
 msgstr "Навигация по времени"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Previous day"
-msgstr "Предыдущий день"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Next day"
-msgstr "Следующий день"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Go to this date"
-msgstr "Перейти к этой дате"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
@@ -74,18 +62,6 @@ msgid "On overtime leave"
 msgstr "В отгуле за переработку"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please choose at least one day!"
-msgstr "Выберите хотя бы один день!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Please choose a reason for absence!"
-msgstr "Выберите причину отсутствия!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Mass Entry"
-msgstr "Массовый ввод"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
 msgstr "Обязательные поля помечены \"*\"."
 
@@ -110,10 +86,6 @@ msgid "Please add a remark with more than 8 characters!"
 msgstr "Примечание должно быть не менее 8 символов."
 
 #. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr "Время начала"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Отрицательное значение недопустимо."
 
@@ -132,10 +104,6 @@ msgstr "Только 24:00 разрешено в качестве времени
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "Неверное время! В сутках только 24 часа."
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr "Время окончания"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -162,24 +130,8 @@ msgid "Add one row"
 msgstr "Добавить одну строку"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Total"
-msgstr "Итого"
-
-#. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
 msgstr "У вас есть возможность выбрать только один элемент!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Show all items"
-msgstr "Показать все"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Delete Time Accounting Entry"
-msgstr "Удалить запись затраченного времени"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Confirm insert"
-msgstr "Подтвердите вставку"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on sick leave?"
@@ -379,20 +331,8 @@ msgid "Add task"
 msgstr "Добавить задачу"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New user"
-msgstr "Новый пользователь"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Projects"
-msgstr "Фильтр для Проектов"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Tasks"
-msgstr "Фильтр для задач"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Users"
-msgstr "Фильтр для пользователей"
+msgid "Filter for projects, tasks or users"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -424,24 +364,28 @@ msgid "User List"
 msgstr "Список пользователей"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New User Settings"
-msgstr "Настройки нового пользователя"
+msgid "User Settings"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "Edit User Settings"
-msgstr "Редактировать настройки пользователя"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Comments"
-msgstr "Комментарии"
+msgid "User is allowed to see overtimes"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
 msgstr "Показать переработку"
 
 #. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "Разрешить создание проектов"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -506,6 +450,14 @@ msgstr "Посмотреть запись времени"
 #. Template: AgentTimeAccountingView
 msgid "View of "
 msgstr "Просмотр"
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Предыдущий день"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Следующий день"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
@@ -622,12 +574,20 @@ msgid "Unable to add time period!"
 msgstr "Не удалось добавить перид времени!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Параметр"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
 msgstr "Пользователь обновлен!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
 msgstr "Пользователь добавлен!"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -644,6 +604,26 @@ msgstr "View: Требуется  %s!"
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
 msgstr "Неполные рабочие дни"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Выберите хотя бы один день!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Массовый ввод"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Выберите причину отсутствия!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Удалить запись затраченного времени"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Подтвердите вставку"
 
 #. SysConfig
 msgid ""
@@ -707,6 +687,10 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "Задает, может ли модуль отчетов генерировать информацию по учету затраченного времени."
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -803,7 +787,7 @@ msgstr "Модуль уведомлений, для отображения ко�
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr ""
+msgstr "Учет затраченного времени"
 
 #. SysConfig
 msgid "Time accounting edit."

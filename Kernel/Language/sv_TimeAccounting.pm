@@ -23,9 +23,6 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = '';
     $Self->{Translation}->{'Go to settings'} = 'Gå till inställningar';
     $Self->{Translation}->{'Date Navigation'} = 'Datum-navigering';
-    $Self->{Translation}->{'Previous day'} = 'Föregående dag';
-    $Self->{Translation}->{'Next day'} = 'Nästkommande dag';
-    $Self->{Translation}->{'Go to this date'} = 'Gå till det här datumet';
     $Self->{Translation}->{'Days without entries'} = '';
     $Self->{Translation}->{'Select all days'} = 'Välj alla dagar';
     $Self->{Translation}->{'Mass entry'} = '';
@@ -34,23 +31,18 @@ sub Data {
     $Self->{Translation}->{'On vacation'} = 'På semester';
     $Self->{Translation}->{'On sick leave'} = 'Sjukledig';
     $Self->{Translation}->{'On overtime leave'} = '';
-    $Self->{Translation}->{'Please choose at least one day!'} = 'Vänligen välj åtminstone en dag!';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Vänligen välj en anledning för frånvaro!';
-    $Self->{Translation}->{'Mass Entry'} = '';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = '';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '';
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Uppdrag';
     $Self->{Translation}->{'Remark'} = 'Anmärk';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
-    $Self->{Translation}->{'Start Time'} = 'Starttid';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negativa tider är inte tillåtna.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Ogiltigt format! Vänligen fyll i en tid med formatet HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Ogiltig tid! Ett dygn har bara 24 timmar.';
-    $Self->{Translation}->{'End Time'} = '';
     $Self->{Translation}->{'End time must be after start time.'} = '';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         '';
@@ -58,11 +50,7 @@ sub Data {
     $Self->{Translation}->{'A valid period must be greater than zero.'} = '';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = '';
     $Self->{Translation}->{'Add one row'} = '';
-    $Self->{Translation}->{'Total'} = '';
     $Self->{Translation}->{'You can only select one checkbox element!'} = '';
-    $Self->{Translation}->{'Show all items'} = '';
-    $Self->{Translation}->{'Delete Time Accounting Entry'} = '';
-    $Self->{Translation}->{'Confirm insert'} = '';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = '';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = '';
     $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} =
@@ -123,10 +111,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = '';
     $Self->{Translation}->{'Add task'} = '';
-    $Self->{Translation}->{'New user'} = '';
-    $Self->{Translation}->{'Filter for Projects'} = '';
-    $Self->{Translation}->{'Filter for Tasks'} = '';
-    $Self->{Translation}->{'Filter for Users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = '';
     $Self->{Translation}->{'Task List'} = '';
@@ -135,11 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         '';
     $Self->{Translation}->{'User List'} = '';
-    $Self->{Translation}->{'New User Settings'} = '';
-    $Self->{Translation}->{'Edit User Settings'} = '';
-    $Self->{Translation}->{'Comments'} = '';
+    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = '';
+    $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = '';
     $Self->{Translation}->{'Period End'} = '';
     $Self->{Translation}->{'Days of Vacation'} = '';
@@ -158,6 +144,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = '';
     $Self->{Translation}->{'View of '} = '';
+    $Self->{Translation}->{'Previous day'} = 'Föregående dag';
+    $Self->{Translation}->{'Next day'} = 'Nästkommande dag';
     $Self->{Translation}->{'No data found for this day.'} = '';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -194,8 +182,10 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'Setting'} = '';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '';
     $Self->{Translation}->{'New User'} = '';
     $Self->{Translation}->{'Period Status'} = '';
 
@@ -204,6 +194,15 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';
+
+    # JS File: TimeAccounting.Agent.EditTimeRecords
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Vänligen välj åtminstone en dag!';
+    $Self->{Translation}->{'Mass Entry'} = '';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Vänligen välj en anledning för frånvaro!';
+
+    # JS File: TimeAccounting.Agent
+    $Self->{Translation}->{'Delete Time Accounting Entry'} = '';
+    $Self->{Translation}->{'Confirm insert'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -223,6 +222,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '';
     $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '';
@@ -260,6 +260,19 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = '';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm insert',
+    'Delete Time Accounting Entry',
+    'Mass Entry',
+    'No',
+    'Please choose a reason for absence!',
+    'Please choose at least one day!',
+    'Submit',
+    'Yes',
+    );
 
 }
 

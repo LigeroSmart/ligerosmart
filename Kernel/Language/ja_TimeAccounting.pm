@@ -23,9 +23,6 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = 'タイムレコードの編集';
     $Self->{Translation}->{'Go to settings'} = '設定へ';
     $Self->{Translation}->{'Date Navigation'} = '日別ナビゲーション';
-    $Self->{Translation}->{'Previous day'} = '前の日';
-    $Self->{Translation}->{'Next day'} = '次の日';
-    $Self->{Translation}->{'Go to this date'} = 'この 日 に移動する';
     $Self->{Translation}->{'Days without entries'} = 'エントリーのない日';
     $Self->{Translation}->{'Select all days'} = '全ての日を選択';
     $Self->{Translation}->{'Mass entry'} = '全体入力';
@@ -34,23 +31,18 @@ sub Data {
     $Self->{Translation}->{'On vacation'} = '休暇取得中';
     $Self->{Translation}->{'On sick leave'} = '病欠中';
     $Self->{Translation}->{'On overtime leave'} = '代休中';
-    $Self->{Translation}->{'Please choose at least one day!'} = '少なくとも一日は選択してください';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = '欠勤理由を選択してください';
-    $Self->{Translation}->{'Mass Entry'} = '全体入力';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = '* の項目は入力必須です。';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '開始時間と終了時間、または期間を指定してください。';
     $Self->{Translation}->{'Project'} = 'プロジェクト';
     $Self->{Translation}->{'Task'} = 'タスク';
     $Self->{Translation}->{'Remark'} = '注釈';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '8文字以上の注釈を追加してください。';
-    $Self->{Translation}->{'Start Time'} = 'スタート時間';
     $Self->{Translation}->{'Negative times are not allowed.'} = '－（マイナス）の時間は入力できません';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '繰り返された時間は許可されません。開始時刻は別の間隔と一致します。';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '不正なフォーマットです! 時間の入力はHH:MMのフォーマットに従ってください';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00は終了時間としてのみ入力可能です';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '不正な時間です! 1日は24時間です';
-    $Self->{Translation}->{'End Time'} = '終了時間';
     $Self->{Translation}->{'End time must be after start time.'} = '終了時間の前に開始時間を設定することはできません。';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Diese Endzeit wurde bereits in einem anderen Eintrag angegeben.';
@@ -58,11 +50,7 @@ sub Data {
     $Self->{Translation}->{'A valid period must be greater than zero.'} = '「期間」の設定が不正です。（0は許可されません）';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = '「期間」の設定が不正です。（－（マイナス）は許可されません）';
     $Self->{Translation}->{'Add one row'} = '行の追加';
-    $Self->{Translation}->{'Total'} = '計';
     $Self->{Translation}->{'You can only select one checkbox element!'} = '1項目のみ選択できます。';
-    $Self->{Translation}->{'Show all items'} = 'すべてのアイテムを表示';
-    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'エントリーを削除';
-    $Self->{Translation}->{'Confirm insert'} = '挿入の確認';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = '病欠に設定された期間中に稼働しましたか？';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = '休暇に設定された期間中に稼働しましたか？';
     $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} =
@@ -123,10 +111,7 @@ sub Data {
         '同名のプロジェクトが存在します。名称を変更してください。';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = '設定の編集';
     $Self->{Translation}->{'Add task'} = '新規タスクの追加';
-    $Self->{Translation}->{'New user'} = '新規ユーザ';
-    $Self->{Translation}->{'Filter for Projects'} = 'プロジェクトの絞り込み';
-    $Self->{Translation}->{'Filter for Tasks'} = 'タスクの絞り込み';
-    $Self->{Translation}->{'Filter for Users'} = 'ユーザの絞り込み';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = '時間は削除できません';
     $Self->{Translation}->{'Project List'} = 'プロジェクト一覧';
     $Self->{Translation}->{'Task List'} = 'タスク一覧';
@@ -135,11 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         '同名のタスクが存在します。名称を変更してください。';
     $Self->{Translation}->{'User List'} = 'ユーザ一覧';
-    $Self->{Translation}->{'New User Settings'} = '新規ユーザ設定';
-    $Self->{Translation}->{'Edit User Settings'} = 'ユーザ設定の編集';
-    $Self->{Translation}->{'Comments'} = 'コメント';
+    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = '超過勤務を表示';
+    $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'プロジェクトの新規追加を許可する';
+    $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = '開始点';
     $Self->{Translation}->{'Period End'} = '終了点';
     $Self->{Translation}->{'Days of Vacation'} = '休暇';
@@ -158,6 +144,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'タイム・レコードを表示';
     $Self->{Translation}->{'View of '} = '一覧';
+    $Self->{Translation}->{'Previous day'} = '前の日';
+    $Self->{Translation}->{'Next day'} = '次の日';
     $Self->{Translation}->{'No data found for this day.'} = '該当するデータがありません。';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -194,8 +182,10 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = 'UserID が無効です！';
     $Self->{Translation}->{'Can\'t insert user data!'} = 'ユーザーデータが挿入できません！';
     $Self->{Translation}->{'Unable to add time period!'} = '期間を追加できません！';
+    $Self->{Translation}->{'Setting'} = '設定';
     $Self->{Translation}->{'User updated!'} = 'ユーザーを更新しました！';
     $Self->{Translation}->{'User added!'} = 'ユーザーを追加しました！';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '';
     $Self->{Translation}->{'New User'} = '新規ユーザー';
     $Self->{Translation}->{'Period Status'} = '期間の状態';
 
@@ -204,6 +194,15 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '未完了の可動日';
+
+    # JS File: TimeAccounting.Agent.EditTimeRecords
+    $Self->{Translation}->{'Please choose at least one day!'} = '少なくとも一日は選択してください';
+    $Self->{Translation}->{'Mass Entry'} = '全体入力';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = '欠勤理由を選択してください';
+
+    # JS File: TimeAccounting.Agent
+    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'エントリーを削除';
+    $Self->{Translation}->{'Confirm insert'} = '挿入の確認';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -223,6 +222,7 @@ sub Data {
         '「注釈」エントリーを必要とする項目を定義します。 もしプロジェクト名がここで設定した正規表現にマッチする場合、「注釈｝は必須項目となります。※正規表現にはSMXパラメータを使います。';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '統計モジュールがタイムアカウンティング情報を生成するか選択してください';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '時間会計の設定を編集';
     $Self->{Translation}->{'Edit time record.'} = 'タイムレコードを編集';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '何日前からワーキング・ユニットの新規登録が可能であるかの設定です。';
@@ -251,7 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'TimeAccountingモジュールと同等の項目が設定必須となります。';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'あまりにも多くの不完全な稼働日がある場合、この通知モジュールは警告を与えます。';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'タイムアカウンティング';
     $Self->{Translation}->{'Time accounting edit.'} = 'タイムアカウンティングを編集する';
     $Self->{Translation}->{'Time accounting overview.'} = 'タイムアカウンティングの概要';
     $Self->{Translation}->{'Time accounting reporting.'} = 'タイムアカウンティングの報告';
@@ -260,6 +260,19 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = '時間会計';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         '業務上の行動において、稼働時間として計上する時間を調整する必要がある場合に、この設定を使用します。（例：「移動時間」の50%のみ勤務時間相当とする場合「鍵」に`journey`、「内容」に`50`と設定)';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm insert',
+    'Delete Time Accounting Entry',
+    'Mass Entry',
+    'No',
+    'Please choose a reason for absence!',
+    'Please choose at least one day!',
+    'Submit',
+    'Yes',
+    );
 
 }
 

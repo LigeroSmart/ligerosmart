@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 11:01+0000\n"
-"PO-Revision-Date: 2017-07-17 16:02+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-25 10:29+0000\n"
+"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Galician (http://www.transifex.com/otrs/OTRS/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,18 +30,6 @@ msgstr "Ir á configuración"
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
 msgstr "Navegación entre datas"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Previous day"
-msgstr "Día anterior"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Next day"
-msgstr "Día seguinte"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Go to this date"
-msgstr "Ir a esta data"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
@@ -72,18 +60,6 @@ msgid "On overtime leave"
 msgstr "En permiso de horas extras"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please choose at least one day!"
-msgstr "Escolla ao menos un día!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Please choose a reason for absence!"
-msgstr "Escolla o motivo da ausencia!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Mass Entry"
-msgstr "Introdución en masa"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
 msgstr "Os campos obrigatorios están marcados cun «*»."
 
@@ -108,10 +84,6 @@ msgid "Please add a remark with more than 8 characters!"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr "Hora de inicio"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Non se permiten horas negativas."
 
@@ -130,10 +102,6 @@ msgstr "24:00 só está permitido como hora de finalización."
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "A hora é incorrecta! Un día só ten 24 horas."
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr "Hora de finalización"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -160,24 +128,8 @@ msgid "Add one row"
 msgstr "Engadir unha fila"
 
 #. Template: AgentTimeAccountingEdit
-msgid "Total"
-msgstr "Total"
-
-#. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
 msgstr "Só é posíbel seleccionar un elemento!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Show all items"
-msgstr "Mostrar todos os elementos"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Delete Time Accounting Entry"
-msgstr "Elimine Entrada Tempo Contabilizado"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Confirm insert"
-msgstr "Confirme a inserción"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Are you sure that you worked while you were on sick leave?"
@@ -377,20 +329,8 @@ msgid "Add task"
 msgstr "Engadir unha tarefa"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New user"
-msgstr "Novo usuario"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Projects"
-msgstr "Filtrar por proxectos"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Tasks"
-msgstr "Filtrar por tarefas"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Users"
-msgstr "Filtrar por usuarios"
+msgid "Filter for projects, tasks or users"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -422,24 +362,28 @@ msgid "User List"
 msgstr "Lista de usuarios"
 
 #. Template: AgentTimeAccountingSetting
-msgid "New User Settings"
-msgstr "Axustes Novo Usuario"
+msgid "User Settings"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "Edit User Settings"
-msgstr "Axustes Editar Usuario"
-
-#. Template: AgentTimeAccountingSetting
-msgid "Comments"
-msgstr "Comentarios"
+msgid "User is allowed to see overtimes"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
 msgstr "Mostrar Tempo Exceso"
 
 #. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "Permitir creación proxecto"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -504,6 +448,14 @@ msgstr "Vista Rexistro de Tempo"
 #. Template: AgentTimeAccountingView
 msgid "View of "
 msgstr "Vista de"
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Día anterior"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Día seguinte"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
@@ -620,11 +572,19 @@ msgid "Unable to add time period!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Configuración"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
@@ -642,6 +602,26 @@ msgstr ""
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
 msgstr ""
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Escolla ao menos un día!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr "Introdución en masa"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Escolla o motivo da ausencia!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr "Elimine Entrada Tempo Contabilizado"
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
+msgstr "Confirme a inserción"
 
 #. SysConfig
 msgid ""
@@ -705,6 +685,10 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "Determina se o módulo de estatísticas pode xerar información de contabilización de tempo."
+
+#. SysConfig
+msgid "Dutch"
+msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."
@@ -801,7 +785,7 @@ msgstr "Este módulo de notificación da unha alerta se hai moitos días de trab
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr ""
+msgstr "Contabilizar Tempo"
 
 #. SysConfig
 msgid "Time accounting edit."

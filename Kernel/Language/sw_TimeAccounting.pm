@@ -23,9 +23,6 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = 'Hariri rekodi ya muda';
     $Self->{Translation}->{'Go to settings'} = 'Nenda kwenye mpangilio';
     $Self->{Translation}->{'Date Navigation'} = 'Uabiri wa tarehe';
-    $Self->{Translation}->{'Previous day'} = 'Siku iliyopita';
-    $Self->{Translation}->{'Next day'} = 'Siku inayofwata';
-    $Self->{Translation}->{'Go to this date'} = 'Nenda kwenye hii tarehe';
     $Self->{Translation}->{'Days without entries'} = 'Siku zisizokuwa na maingizo';
     $Self->{Translation}->{'Select all days'} = 'Chagua siku zote';
     $Self->{Translation}->{'Mass entry'} = 'Ingizo la pamoja';
@@ -34,23 +31,18 @@ sub Data {
     $Self->{Translation}->{'On vacation'} = 'Katika likizo';
     $Self->{Translation}->{'On sick leave'} = 'Katika ruhusa ya wagonjwa';
     $Self->{Translation}->{'On overtime leave'} = 'Katika ruhusa ya muda wa nyongeza';
-    $Self->{Translation}->{'Please choose at least one day!'} = 'Tafadhali chagua japo siku moja';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Tafadhali chagua sababu ya kuto kuwepo!';
-    $Self->{Translation}->{'Mass Entry'} = 'Ingizo la pamoja';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Sehemu zinazotakiwa zina alama "*"';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Unatakiwa kujaza muda wa kuanza na kumaliza au muda uliotumika.';
     $Self->{Translation}->{'Project'} = 'Mradi';
     $Self->{Translation}->{'Task'} = 'Kazi';
     $Self->{Translation}->{'Remark'} = 'Maoni';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
-    $Self->{Translation}->{'Start Time'} = 'Muda wa Kuanza';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Muda hasi hauruhusiwi.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'Muda uliojirudia hauruhusiwi. Muda wa kuanza unafanana na muda mwingine.';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Muundo batili! Tafadhali ingiza muda na muundo HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00 inaruhusiwa katika muda wa kumaliza.';
     $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Muda batili! Siku ina masaa 24 tu.';
-    $Self->{Translation}->{'End Time'} = 'Muda wa kumaliza';
     $Self->{Translation}->{'End time must be after start time.'} = 'Muda wa kumaliza lazima uwe baada ya muda wa kuanza.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Masaa yaliyojirudia hayaruhusiwi. Muda wa kumaliza unafanana muda mwingine.';
@@ -58,11 +50,7 @@ sub Data {
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Muda halali una masaa zaidi ya sifuri.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Kipindi batili! Vipindi hasi haviruhusiwi.';
     $Self->{Translation}->{'Add one row'} = 'Ongeza safu moja';
-    $Self->{Translation}->{'Total'} = 'Jumla';
     $Self->{Translation}->{'You can only select one checkbox element!'} = 'Unaweza kuchagua elementi moja katika cheki boksi';
-    $Self->{Translation}->{'Show all items'} = 'Onyesha vipengele vyote';
-    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Futa ingizo la Uhasibu wa Muda';
-    $Self->{Translation}->{'Confirm insert'} = 'Hakiki ingizo';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = 'Una uhakika ulifanya kazi wakati upo likizo ya wagonjwa?';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = 'Una uhakika ulifanya kazi wakati upo likizo?';
     $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} =
@@ -123,10 +111,7 @@ sub Data {
         'Tayari kuna mradi wenye hili jina. Tafadhali, chagua jengine.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Hariri mipangilio ya Uhasubu wa Muda';
     $Self->{Translation}->{'Add task'} = 'Ongeza kazi';
-    $Self->{Translation}->{'New user'} = 'Mtumiaji mpya';
-    $Self->{Translation}->{'Filter for Projects'} = 'Kichujio cha Miradi';
-    $Self->{Translation}->{'Filter for Tasks'} = 'Kichujio cha kazi';
-    $Self->{Translation}->{'Filter for Users'} = 'Kichujio cha Watumiaji';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = '';
     $Self->{Translation}->{'Project List'} = 'Orodha ya miradi';
     $Self->{Translation}->{'Task List'} = 'Orodha ya kazi';
@@ -135,11 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Tayari kuna kazi yenye hili jina. Tafadhali chagua jengine.';
     $Self->{Translation}->{'User List'} = 'Orodha ya mtumiaji';
-    $Self->{Translation}->{'New User Settings'} = 'Mipangilio ya mtumiaji mpya';
-    $Self->{Translation}->{'Edit User Settings'} = 'Hariri mipangilio ya mtumiaji';
-    $Self->{Translation}->{'Comments'} = 'Maoni';
+    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = 'Onyesha muda wa nyongeza';
+    $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'Ruhusu utengenezaji wa mradi';
+    $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Kuanza kwa kipengele';
     $Self->{Translation}->{'Period End'} = 'Kuisha kwa kipengele';
     $Self->{Translation}->{'Days of Vacation'} = 'Siku za likizo';
@@ -158,6 +144,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Onyesha kipengele cha muda';
     $Self->{Translation}->{'View of '} = 'Muonekano wa';
+    $Self->{Translation}->{'Previous day'} = 'Siku iliyopita';
+    $Self->{Translation}->{'Next day'} = 'Siku inayofwata';
     $Self->{Translation}->{'No data found for this day.'} = 'Hakuna data zilizopatikana kwa siku hii';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -194,8 +182,10 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'Setting'} = 'Mpangilio';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '';
     $Self->{Translation}->{'New User'} = '';
     $Self->{Translation}->{'Period Status'} = '';
 
@@ -204,6 +194,15 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';
+
+    # JS File: TimeAccounting.Agent.EditTimeRecords
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Tafadhali chagua japo siku moja';
+    $Self->{Translation}->{'Mass Entry'} = 'Ingizo la pamoja';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Tafadhali chagua sababu ya kuto kuwepo!';
+
+    # JS File: TimeAccounting.Agent
+    $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Futa ingizo la Uhasibu wa Muda';
+    $Self->{Translation}->{'Confirm insert'} = 'Hakiki ingizo';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -223,6 +222,7 @@ sub Data {
         'Inafafanua miradi ambayo maoni yanahitajika. Kama RegExp inafanana katika mradi, unatakiwa kuweka maoni pia. RegExp inatumia parameta ya smx';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa muda.';
+    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '';
     $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Kwa siku ngapi zilizopita unaweza kuingiza vitengo vya kazi.';
@@ -251,7 +251,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Hii moduli inaingiza Uhasibu wa Muda';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Hii moduli ya taarifa inatoa onyo endapo kuna siku nyingi za kazi ambazo hazijakamilika.';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Uhasibu wa muda';
     $Self->{Translation}->{'Time accounting edit.'} = 'Hariri uhasibu wa muda.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Mapitio ya uhasibu wa muda.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Uarifu wa uhasibu wa muda.';
@@ -260,6 +260,19 @@ sub Data {
     $Self->{Translation}->{'Time accounting.'} = 'Uhasibu wa muda';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Itatumika kama baadhi ya vitendo vitapunguza muda wa kazi (mfano, kama nusu ya muda wa kusafiri umelipwa Ufonguo=> kusafiri; maudhui=> 50).';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm insert',
+    'Delete Time Accounting Entry',
+    'Mass Entry',
+    'No',
+    'Please choose a reason for absence!',
+    'Please choose at least one day!',
+    'Submit',
+    'Yes',
+    );
 
 }
 
