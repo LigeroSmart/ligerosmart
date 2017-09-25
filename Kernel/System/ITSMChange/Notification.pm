@@ -50,7 +50,7 @@ This module is managing notifications.
 
 =head2 new()
 
-create a notification object
+Create a notification object.
 
     use Kernel::System::ObjectManager;
     local $Kernel::OM = Kernel::System::ObjectManager->new();
@@ -892,7 +892,7 @@ sub NotificationRuleAdd {
 
 =head2 NotificationRuleUpdate()
 
-updates an existing notification rule
+Updates an existing notification rule.
 
     my $Success = $NotificationObject->NotificationRuleUpdate(
         ID           => 123,
@@ -1326,7 +1326,7 @@ sub RecipientLookup {
 
 =head2 RecipientList()
 
-returns an array reference with hash references. The key of the hash reference is the id
+Returns an array reference with hash references. The key of the hash reference is the id
 of an recipient and the name is the value.
 
     my $List = $NotificationObject->RecipientList();
