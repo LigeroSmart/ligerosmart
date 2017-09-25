@@ -39,6 +39,14 @@ $ConfigObject->Set(
     Key   => 'MasterSlave::ForwardSlaves',
     Value => 1,
 );
+$ConfigObject->Set(
+    Key   => 'CheckMXRecord',
+    Value => 0,
+);
+$ConfigObject->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
 
 # get random ID
 my $RandomID = $HelperObject->GetRandomID();
