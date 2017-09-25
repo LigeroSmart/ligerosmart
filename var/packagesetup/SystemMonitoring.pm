@@ -317,38 +317,15 @@ sub _GetDynamicFieldsDefinition {
     # get dynamic field object
     my $MainObject = $Kernel::OM->Get('Kernel::System::Main');
 
-    # start a new incoming communication
-    my $CommunicationLogObject = $Kernel::OM->Create(
-        'Kernel::System::CommunicationLog',
-        ObjectParams => {
-            Transport   => 'Email',
-            Direction   => 'Incoming',
-            AccountType => 'STDIN',
-        },
-    );
-
-    $CommunicationLogObject->ObjectLogStart( ObjectLogType => 'Connection' );
-
-    $CommunicationLogObject->ObjectLog(
-        ObjectLogType => 'Connection',
-        Priority      => 'Debug',
-        Key           => 'var::packagesetup::SystemMonitoring',
-        Value         => 'Read email in packagesetup.',
-    );
-
     # run all PreFilterModules (modify email params)
-    for my $Key ('PostMaster::PreFilterModule')
-    {
+    for my $Key ('PostMaster::PreFilterModule') {
         if ( ref $ConfigObject->Get($Key) eq 'HASH' ) {
             my %Jobs = %{ $ConfigObject->Get($Key) };
             JOB:
             for my $Job ( sort keys %Jobs ) {
                 return if !$MainObject->Require( $Jobs{$Job}->{Module} );
 
-                if (
-                    $Jobs{$Job}->{Module} ne 'Kernel::System::PostMaster::Filter::SystemMonitoring'
-                    )
-                {
+                if ( $Jobs{$Job}->{Module} ne 'Kernel::System::PostMaster::Filter::SystemMonitoring' ) {
                     next JOB;
                 }
 
@@ -357,7 +334,7 @@ sub _GetDynamicFieldsDefinition {
                 my $FilterObject = $Kernel::OM->Create(
                     $Jobs{$Job}->{Module},
                     ObjectParams => {
-                        CommunicationLogObject => $CommunicationLogObject,
+                        CommuncationLogRequired => 0,
                     },
                 );
 
@@ -386,15 +363,6 @@ sub _GetDynamicFieldsDefinition {
             }
         }
     }
-
-    $CommunicationLogObject->ObjectLogStop(
-        ObjectLogType => 'Connection',
-        Status        => 'Successful',
-    );
-
-    $CommunicationLogObject->CommunicationStop(
-        Status => 'Successful',
-    );
 
     return @AllNewFields;
 }

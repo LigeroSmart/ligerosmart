@@ -64,7 +64,9 @@ sub new {
     };
 
     # get communication log object and MessageID
-    $Self->{CommunicationLogObject} = $Param{CommunicationLogObject} || die "Got no CommunicationLogObject!";
+    if ( !defined $Param{CommuncationLogRequired} || $Param{CommuncationLogRequired} ) {
+        $Self->{CommunicationLogObject} = $Param{CommunicationLogObject} || die "Got no CommunicationLogObject!";
+    }
 
     return $Self;
 }
@@ -74,19 +76,10 @@ sub _GetDynamicFieldDefinition {
 
     for my $Argument (qw(Config Key Default Base Name ObjectType)) {
         if ( !$Param{$Argument} ) {
-
-            $Self->{CommunicationLogObject}->ObjectLog(
-                ObjectLogType => 'Message',
-                Priority      => 'Error',
-                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
-                Value         => "Need $Argument!",
-            );
-
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
             );
-
             return;
         }
     }
@@ -102,38 +95,14 @@ sub _GetDynamicFieldDefinition {
 
     if ( !$ConfigFreeText ) {
         $ConfigFreeText = $Default;
-
-        $Self->{CommunicationLogObject}->ObjectLog(
-            ObjectLogType => 'Message',
-            Priority      => 'Error',
-            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
-            Value         => "Missing CI Config $Key, using value $Default!",
-        );
     }
 
     if ( $ConfigFreeText =~ /^\d+$/ ) {
         if ( ( $ConfigFreeText < 1 ) || ( $ConfigFreeText > 16 ) ) {
-
-            $Self->{CommunicationLogObject}->ObjectLog(
-                ObjectLogType => 'Message',
-                Priority      => 'Error',
-                Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
-                Value         => "Bad value $ConfigFreeText for CI Config $Key, must be between 1 and 16!",
-            );
-
             die "Bad value $ConfigFreeText for CI Config $Key!";
         }
     }
-    else
-    {
-
-        $Self->{CommunicationLogObject}->ObjectLog(
-            ObjectLogType => 'Message',
-            Priority      => 'Error',
-            Key           => 'Kernel::System::PostMaster::Filter::SystemMonitoring',
-            Value         => "Bad value $ConfigFreeText for CI Config $Key, must be numeric!",
-        );
-
+    else {
         die "Bad value $ConfigFreeText for CI Config $Key!";
     }
 
@@ -159,33 +128,30 @@ sub GetDynamicFieldsDefinition {
 
     my $Config = $Param{Config};
 
-    push @{ $Param{NewFields} },
-        $Self->_GetDynamicFieldDefinition(
+    push @{ $Param{NewFields} }, $Self->_GetDynamicFieldDefinition(
         Config     => $Config,
         Key        => 'FreeTextHost',
         Default    => 1,
         Base       => $DynamicFieldTicketTextPrefix,
         Name       => 'HostName',
         ObjectType => 'Ticket',
-        );
-    push @{ $Param{NewFields} },
-        $Self->_GetDynamicFieldDefinition(
+    );
+    push @{ $Param{NewFields} }, $Self->_GetDynamicFieldDefinition(
         Config     => $Config,
         Key        => 'FreeTextService',
         Default    => 2,
         Base       => $DynamicFieldTicketTextPrefix,
         Name       => 'ServiceName',
         ObjectType => 'Ticket',
-        );
-    push @{ $Param{NewFields} },
-        $Self->_GetDynamicFieldDefinition(
+    );
+    push @{ $Param{NewFields} }, $Self->_GetDynamicFieldDefinition(
         Config     => $Config,
         Key        => 'FreeTextState',
         Default    => 1,
         Base       => $DynamicFieldArticleTextPrefix,
         Name       => 'StateName',
         ObjectType => 'Article',
-        );
+    );
 
     return 1;
 }
