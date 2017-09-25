@@ -1103,7 +1103,7 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
 # ITSMCore
 # ---
 #                Message => "UserID $UserIDs[1] is deleted",
-                Message => 'UserID $UserIDs[1] ' . $UserIDs[1] . 'is deleted',
+                Message => 'UserID $UserIDs[1] ' . $UserIDs[1] . ' is deleted',
 # ---
             },
             {
@@ -1118,7 +1118,7 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
 # ITSMCore
 # ---
 #                Message => "UserID $UserIDs[0] is deleted",
-                Message => 'UserID $UserIDs[0] ' .  $UserIDs[0] . 'is deleted',
+                Message => 'UserID $UserIDs[0] ' .  $UserIDs[0] . ' is deleted',
 # ---
             },
             {
