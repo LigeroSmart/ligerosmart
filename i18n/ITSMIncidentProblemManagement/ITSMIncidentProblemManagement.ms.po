@@ -5,31 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-07 13:48+0000\n"
-"PO-Revision-Date: 2017-07-07 11:25+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 09:38+0000\n"
+"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AgentTicketActionCommon
-msgid "Change Decision of Ticket"
-msgstr "Ubah Keputusan Tiket"
-
-#. Template: AgentTicketActionCommon
-msgid "Change ITSM fields of ticket"
-msgstr "Perubahan bidang ITSM tiket"
-
-#. Template: AgentTicketActionCommon
-msgid "Service Incident State"
-msgstr "Keadaan Insiden Perkhidmatan"
-
-#. Template: AgentTicketEmail
-msgid "Link ticket"
-msgstr "Pautan tiket"
 
 #. Template: AgentTicketOverviewPreview
 msgid "Criticality"
@@ -38,6 +22,26 @@ msgstr "Kritikal"
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
 msgstr "Kesan"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Service Incident State"
+msgstr "Keadaan Insiden Perkhidmatan"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr "Pautan tiket"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr ""
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
+msgstr ""
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -96,6 +100,10 @@ msgid "Additional ITSM ticket fields."
 msgstr "tambahan kawasan-kawasan tiket ITSM"
 
 #. SysConfig
+msgid "AgentITSMIncidentProblemManagement"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Allows adding notes in the additional ITSM field screen of the agent "
 "interface."
@@ -104,6 +112,11 @@ msgstr "Membenarkan penambahan catatan dalam skrin medan ITSM tambahan antara mu
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
 msgstr "Membenarkan penambahan nota dalam skrin keputusan bagi ruang antara muka ejen."
+
+#. SysConfig
+msgid ""
+"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr "Membolehkan jenis tiket yang baru didefinasikan (jika fungsi jenis tiket diaktifkan)."
 
 #. SysConfig
 msgid "Change the ITSM fields!"
@@ -230,29 +243,22 @@ msgid ""
 msgstr "Mentakrifkan keadaan seterusnya tiket selepas menambah nota, dalam skrin keputusan bagi antara muka ejen."
 
 #. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and "
-"required."
-msgstr "Bidang dinamik yang ditunjukkan dalam skrin bidang ITSM tambahan bagi antara muka ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan."
+"interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the decision screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Bidang dinamik yang ditunjukkan dalam skrin keputusan bagi antara muka ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan."
+msgid "Dynamic fields shown in the decision screen of the agent interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Medan Dinamik ditunjukkan dalam skrin carian tiket dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Medan Dinamik ditunjukkan dalam skrin zum tiket dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan."
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -277,6 +283,17 @@ msgid ""
 "If a note is added by an agent, sets the state of a ticket in the decision "
 "screen of the agent interface."
 msgstr "Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin keputusan bagi antara muka ejen."
+
+#. SysConfig
+msgid ""
+"Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to dynamically show the service incident state and to calculate the "
+"priority."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -393,6 +410,10 @@ msgstr "Menunjukkan bidang tajuk dalam skrin bidang ITSM tambahan bagi antara mu
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Menunjukkan bidang tajuk dalam skrin keputusan bagi antara muka ejen."
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
+msgstr "Tentukan jenis nota berbeza yang akan digunakan dalam sistem."
 
 #. SysConfig
 msgid "Ticket decision."

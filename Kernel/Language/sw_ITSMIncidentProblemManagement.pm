@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Badilisha tiketi ya uamuzi';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Badili tiketi ya uga wa ITSM';
-    $Self->{Translation}->{'Service Incident State'} = 'Hali ya tukio ya huduma';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Tiketi kiungo';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Kwa kina';
     $Self->{Translation}->{'Impact'} = 'Madhara';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = 'Hali ya tukio ya huduma';
+    $Self->{Translation}->{'Link ticket'} = 'Tiketi kiungo';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'mapitio yanahitajika';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Ongeza uamuzi!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Uga zilizoongezwa Za ITSM';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Ruhusu kuongeza vidokezo katika skrini ya uga nyongeza ya ITSM ya kiolesura cha wakala.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Ruhusu kuongeza vidokezo katika skrini ya maamuzi ya kiolesura cha wakala.';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        'Inaruhusu kufafanua aina mpya kwa ajili ya tiketi (Kama kipengele cha aina ya tiketi kimewezeshwa ).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Badili uga wa ITSM!';
     $Self->{Translation}->{'Decision'} = 'Uamuzi';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,14 +91,13 @@ sub Data {
         'Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya uga wa ITSM uliongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala.';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Uga wenye nguvu unaonyeshwa katika skrini ya uga wa ITSM ulioongezwa katika kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha, 2=Wezesha na inahitajika.';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Uga wenye nguvu unaonyeshwa katika skrini ya maamuzi ya kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha, 2=Wezesha na inahitajika.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye nguvu unaonyeshwa katika skrini ya kutafuta tiketi ya kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Uga wenye nguvu unaonyeshwa katika skrini iliyokuzwa ya tiketi ya kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa kiwango cha ufumbuzi cha ngazi ya kwanza ya tiketi ya ITSM.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -106,6 +106,10 @@ sub Data {
         'Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala.';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
+        '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Inahitaji ruhusa kutumia skrini ya uga wa ITSM uliiongezwa katika kiolesura cha wakala.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
@@ -146,7 +150,13 @@ sub Data {
         'Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha wakala.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        'Inabainisha aina za vidokezo mbalimbali ambavyo vitatumika katika mfumo.';
     $Self->{Translation}->{'Ticket decision.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

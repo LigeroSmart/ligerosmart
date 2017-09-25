@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Zmień decyzję w zgłoszeniu';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Zmień pola ITSM zgłoszenia';
-    $Self->{Translation}->{'Service Incident State'} = '';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Połącz zgłoszenie';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Krytyczność';
     $Self->{Translation}->{'Impact'} = 'Wpływ';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = '';
+    $Self->{Translation}->{'Link ticket'} = 'Połącz zgłoszenie';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Wymagany przegląd';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Dodaj decyzję!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Dodatkowe pola ITSM';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Pozwala na dodawanie notatek na ekranie z dodatkowymi polami ITSM w panelu agenta.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Pozwala na dodawanie notatek na ekranie decyzji w panelu agenta.';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        '';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Zmień pola ITSM!';
     $Self->{Translation}->{'Decision'} = 'Decyzja';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,13 +91,12 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
@@ -105,6 +105,10 @@ sub Data {
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
         '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         '';
@@ -146,7 +150,13 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        '';
     $Self->{Translation}->{'Ticket decision.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2017-08-21 11:57+0000\n"
+"POT-Creation-Date: 2017-09-25 09:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,28 +10,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Template: AgentTicketActionCommon
-msgid "Change Decision of Ticket"
-msgstr ""
-
-#. Template: AgentTicketActionCommon
-msgid "Change ITSM fields of ticket"
-msgstr ""
-
-#. Template: AgentTicketActionCommon
-msgid "Service Incident State"
-msgstr ""
-
-#. Template: AgentTicketEmail
-msgid "Link ticket"
-msgstr ""
-
 #. Template: AgentTicketOverviewPreview
 msgid "Criticality"
 msgstr ""
 
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Service Incident State"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
 msgstr ""
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
@@ -91,11 +91,19 @@ msgid "Additional ITSM ticket fields."
 msgstr ""
 
 #. SysConfig
+msgid "AgentITSMIncidentProblemManagement"
+msgstr ""
+
+#. SysConfig
 msgid "Allows adding notes in the additional ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Allows defining new types for ticket (if ticket type feature is enabled)."
 msgstr ""
 
 #. SysConfig
@@ -183,19 +191,19 @@ msgid "Defines the next state of a ticket after adding a note, in the decision s
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dutch"
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields shown in the additional ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the decision screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -212,6 +220,14 @@ msgstr ""
 
 #. SysConfig
 msgid "If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr ""
+
+#. SysConfig
+msgid "Module to dynamically show the service incident state and to calculate the priority."
 msgstr ""
 
 #. SysConfig
@@ -292,6 +308,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
 msgstr ""
 
 #. SysConfig

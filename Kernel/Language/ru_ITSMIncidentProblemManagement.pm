@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Изменить решение по заявке';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Изменить ITSM поля заявки';
-    $Self->{Translation}->{'Service Incident State'} = 'Состояние Сервиса';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Связать заявку';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Критичность';
     $Self->{Translation}->{'Impact'} = 'Степень влияния';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = 'Состояние Сервиса';
+    $Self->{Translation}->{'Link ticket'} = 'Связать заявку';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Необходим просмотр';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Добавить решение';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Дополнительные ITSM поля';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Дополнительные ITSM поля заявки.';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Разрешает добавить заметку на экране Дополнительные ITSM поля в интерфейсе агента';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Разрешает добавить заметку на экране Решение в интерфейсе агента';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        'Позволяет определить новые Типы для заявок (если включено использование Типа).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Изменить ITSM поля';
     $Self->{Translation}->{'Decision'} = 'Решение';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,14 +91,13 @@ sub Data {
         'Задает следующее состояние заявки после добавления заметки на экране Дополнительные ITSM поля в интерфейсе агента';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Задает следующее состояние заявки после добавления заметки на экране Решение в интерфейсе агента';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Список Динамических полей, показываемых на экране Дополнительные ITSM поля в интерфейсе агента. Возможные значения: 0 - не показывать, 1 - показывать, 2 - показывать, значение обязательно';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Список Динамических полей, показываемых на экране Решение в интерфейсе агента. Возможные значения: 0 - не показывать, 1 - показывать, 2 - показывать, значение обязательно';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Список Динамических полей, показываемых на экране поиска завок в интерфейсе агента. Возможные значения: 0 - не показывать, 1 - показывать';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Список Динамических полей, показываемых на экране подробного просмотра заявки в интерфейсе агента. Возможные значения: 0 - не показывать, 1 - показывать';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Включает модуль отчетов для формирования отчетов о среднем ITSM ticket first level solution rate.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -106,6 +106,10 @@ sub Data {
         'Возможность установить новое состояние завки при добавлении заметки на экране Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Возможность установить новое состояние завки при добавлении заметки на экране Решение в интерфейсе агента.';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
+        '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Задает требуемые права для использования пункта меню Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
@@ -146,7 +150,13 @@ sub Data {
         'Показывает поле Тема на экране Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Показывает поле Тема на экране Решение в интерфейсе агента.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        'Задает различные типы сообщений/заметок для использования в системе.';
     $Self->{Translation}->{'Ticket decision.'} = 'Решение по заявке.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

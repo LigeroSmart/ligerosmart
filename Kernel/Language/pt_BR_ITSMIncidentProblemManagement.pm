@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Alterar Decisão de Chamado';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Alterar os campos ITSM do chamado';
-    $Self->{Translation}->{'Service Incident State'} = 'Estado de Incidente do Serviço';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Associar chamado';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Criticalidade';
     $Self->{Translation}->{'Impact'} = 'Impacto';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = 'Estado de Incidente do Serviço';
+    $Self->{Translation}->{'Link ticket'} = 'Associar chamado';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Revisão Requisitada';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Adicionar uma decisão!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Campos adicionais ITSM';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Campos adicionais de Ticket ITSM';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Permite adicionar notas na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Permite adicionar notas na tela de decisão da interface de atendente.';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        'Permite definir novos tipos de chamado (caso a funcionalidade tipo do chamado esteja habilitada).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Alterar campos ITSM!';
     $Self->{Translation}->{'Decision'} = 'Decisão';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,14 +91,13 @@ sub Data {
         'Define o próximo estado de um chamado após a adição de uma nota, na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Define o próximo estado de um chamado após a adição de uma nota, na tela de decisão da interface de atendente.';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Campos dinâmicos mostrados na tela de campos adicionais ITSM da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido.';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Campos dinâmicos mostrados na tela de decisão da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinâmicos mostrados na tela de pesquisa de chamado da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Campos dinâmicos mostrados na tela de detalhes do chamado da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de chamados ITSM no primeiro nível de solução.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -106,6 +106,10 @@ sub Data {
         'Se uma nota é adicionada por um atendente, define o estado de um chamado na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Se uma nota é adicionada por um atendente, define o estado de um chamado na tela de decisão da interface dd atendente.';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
+        '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Permissões necessárias para usar a tela de campos adicionais ITSM na interface de atendente.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
@@ -146,7 +150,13 @@ sub Data {
         'Mostra os campos de título na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Mostra os campos de título na tela de decisão da interface de atendente.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        '';
     $Self->{Translation}->{'Ticket decision.'} = 'Decisão de Chamado.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

@@ -4,31 +4,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-07 13:48+0000\n"
-"PO-Revision-Date: 2017-07-07 11:25+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 09:38+0000\n"
+"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sw\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AgentTicketActionCommon
-msgid "Change Decision of Ticket"
-msgstr "Badilisha tiketi ya uamuzi"
-
-#. Template: AgentTicketActionCommon
-msgid "Change ITSM fields of ticket"
-msgstr "Badili tiketi ya uga wa ITSM"
-
-#. Template: AgentTicketActionCommon
-msgid "Service Incident State"
-msgstr "Hali ya tukio ya huduma"
-
-#. Template: AgentTicketEmail
-msgid "Link ticket"
-msgstr "Tiketi kiungo"
 
 #. Template: AgentTicketOverviewPreview
 msgid "Criticality"
@@ -37,6 +21,26 @@ msgstr "Kwa kina"
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
 msgstr "Madhara"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Service Incident State"
+msgstr "Hali ya tukio ya huduma"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr "Tiketi kiungo"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr ""
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
+msgstr ""
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -95,6 +99,10 @@ msgid "Additional ITSM ticket fields."
 msgstr ""
 
 #. SysConfig
+msgid "AgentITSMIncidentProblemManagement"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Allows adding notes in the additional ITSM field screen of the agent "
 "interface."
@@ -103,6 +111,11 @@ msgstr "Ruhusu kuongeza vidokezo katika skrini ya uga nyongeza ya ITSM ya kioles
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
 msgstr "Ruhusu kuongeza vidokezo katika skrini ya maamuzi ya kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr "Inaruhusu kufafanua aina mpya kwa ajili ya tiketi (Kama kipengele cha aina ya tiketi kimewezeshwa )."
 
 #. SysConfig
 msgid "Change the ITSM fields!"
@@ -229,29 +242,22 @@ msgid ""
 msgstr "Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala."
 
 #. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and "
-"required."
-msgstr "Uga wenye nguvu unaonyeshwa katika skrini ya uga wa ITSM ulioongezwa katika kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha, 2=Wezesha na inahitajika."
+"interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the decision screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Uga wenye nguvu unaonyeshwa katika skrini ya maamuzi ya kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha, 2=Wezesha na inahitajika."
+msgid "Dynamic fields shown in the decision screen of the agent interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Uga wenye nguvu unaonyeshwa katika skrini ya kutafuta tiketi ya kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Uga wenye nguvu unaonyeshwa katika skrini iliyokuzwa ya tiketi ya kiolesura cha wakala. Mipangilio inayowezeka: 0=Kutokuwezesha, 1=wezesha."
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -276,6 +282,17 @@ msgid ""
 "If a note is added by an agent, sets the state of a ticket in the decision "
 "screen of the agent interface."
 msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala."
+
+#. SysConfig
+msgid ""
+"Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to dynamically show the service incident state and to calculate the "
+"priority."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -392,6 +409,10 @@ msgstr "Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezw
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha wakala."
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
+msgstr "Inabainisha aina za vidokezo mbalimbali ambavyo vitatumika katika mfumo."
 
 #. SysConfig
 msgid "Ticket decision."

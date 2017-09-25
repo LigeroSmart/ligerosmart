@@ -4,35 +4,19 @@
 # nilsleideck <nils.leideck@leidex.net>, 2016
 # ru_otrs <robert.ullrich@otrs.com>, 2014,2016
 # Udo Bretz, 2014
-# Udo Bretz, 2014
+# Udo Bretz, 2014,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-07 13:48+0000\n"
-"PO-Revision-Date: 2017-07-07 11:25+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 09:38+0000\n"
+"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. Template: AgentTicketActionCommon
-msgid "Change Decision of Ticket"
-msgstr "Die Entscheidung des Tickets ändern"
-
-#. Template: AgentTicketActionCommon
-msgid "Change ITSM fields of ticket"
-msgstr "Ändern der ITSM Felder des Tickets"
-
-#. Template: AgentTicketActionCommon
-msgid "Service Incident State"
-msgstr "Service Vorfallsstatus"
-
-#. Template: AgentTicketEmail
-msgid "Link ticket"
-msgstr "Ticket verknüpfen"
 
 #. Template: AgentTicketOverviewPreview
 msgid "Criticality"
@@ -41,6 +25,26 @@ msgstr "Kritikalität"
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
 msgstr "Auswirkung"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Service Incident State"
+msgstr "Service Vorfallsstatus"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr "Ticket verknüpfen"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr ""
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
+msgstr ""
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -76,7 +80,7 @@ msgstr "Wiederherstellung Startzeit"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Date"
-msgstr "Entscheidung"
+msgstr "Entscheidungsdatum"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Due Date"
@@ -99,6 +103,10 @@ msgid "Additional ITSM ticket fields."
 msgstr "Zusätzliche ITSM Ticketfelder."
 
 #. SysConfig
+msgid "AgentITSMIncidentProblemManagement"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Allows adding notes in the additional ITSM field screen of the agent "
 "interface."
@@ -107,6 +115,11 @@ msgstr "Erlaubt das Hinzufügen von Notizen in der zusätzlichen ITSM-Oberfläch
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
 msgstr "Erlaubt das Hinzufügen von Notizen im Entscheidungs-Bildschirm im Agenten-Interface."
+
+#. SysConfig
+msgid ""
+"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr "Ermöglicht die Definition neuer Ticket-Typen  (wenn Ticket-Typ-Funktion aktiviert ist)."
 
 #. SysConfig
 msgid "Change the ITSM fields!"
@@ -233,28 +246,21 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and "
-"required."
+"interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the decision screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields shown in the decision screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -279,6 +285,17 @@ msgstr ""
 msgid ""
 "If a note is added by an agent, sets the state of a ticket in the decision "
 "screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to dynamically show the service incident state and to calculate the "
+"priority."
 msgstr ""
 
 #. SysConfig
@@ -396,6 +413,10 @@ msgstr "Zeigt den Ticket-Titel in der zusätzliche ITSM-Felder-Oberfläche für 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Zeigt den Ticket-Titel in der Entscheidungs-Oberfläche für Tickets im Agentenbereich."
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
+msgstr ""
 
 #. SysConfig
 msgid "Ticket decision."

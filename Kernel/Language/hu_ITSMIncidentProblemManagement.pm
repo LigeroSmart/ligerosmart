@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Jegy döntésének módosítása';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Jegy ITSM mezőinek módosítása';
-    $Self->{Translation}->{'Service Incident State'} = 'Szolgáltatás incidensállapot';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Jegy összekapcsolása';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Kritikusság';
     $Self->{Translation}->{'Impact'} = 'Hatás';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = 'Szolgáltatás incidensállapot';
+    $Self->{Translation}->{'Link ticket'} = 'Jegy összekapcsolása';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Áttekintés szükséges';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Adjon hozzá egy döntést!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'További ITSM mezők';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'További ITSM jegymezők.';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Lehetővé teszi jegyzetek hozzáadását az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Lehetővé teszi jegyzetek hozzáadását az ügyintézői felület döntési képernyőjén.';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        'Lehetővé teszi új típusok meghatározását a jegyekhez (ha a jegytípus szolgáltatás engedélyezve van).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Változtassa meg az ITSM mezőket!';
     $Self->{Translation}->{'Decision'} = 'Döntés';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,14 +91,13 @@ sub Data {
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület döntési képernyőjén.';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Az ügyintézői felület további ITSM mező képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező.';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Az ügyintézői felület döntési képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve, 2 = Engedélyezve és kötelező.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Az ügyintézői felület jegykeresés képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Az ügyintézői felület jegynagyítás képernyőjén megjelenített dinamikus mezők. Lehetséges beállítások: 0 = Letiltva, 1 = Engedélyezve.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Engedélyezi a statisztikák modult az ITSM jegy első szintű megoldási arányának átlagával kapcsolatos statisztikák előállításához.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -106,6 +106,10 @@ sub Data {
         'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület döntési képernyőjén.';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
+        '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'A szükséges jogosultságok a további ITSM mező képernyőjének használatához az ügyintézői felületen.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
@@ -146,7 +150,13 @@ sub Data {
         'Megjeleníti a címmezőket az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Megjeleníti a címmezőket az ügyintézői felület döntési képernyőjén.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        'Megadja a különböző jegyzettípusokat, amelyek a rendszeren használva lesznek.';
     $Self->{Translation}->{'Ticket decision.'} = 'Jegydöntés.';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

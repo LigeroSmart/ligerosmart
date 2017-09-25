@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Ubah Keputusan Tiket';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Perubahan bidang ITSM tiket';
-    $Self->{Translation}->{'Service Incident State'} = 'Keadaan Insiden Perkhidmatan';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Pautan tiket';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = 'Kritikal';
     $Self->{Translation}->{'Impact'} = 'Kesan';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = 'Keadaan Insiden Perkhidmatan';
+    $Self->{Translation}->{'Link ticket'} = 'Pautan tiket';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'kerja semula diperlukan';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Tambah keputusan!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Tambahan ITSM Medan';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'tambahan kawasan-kawasan tiket ITSM';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Membenarkan penambahan catatan dalam skrin medan ITSM tambahan antara muka ejen.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Membenarkan penambahan nota dalam skrin keputusan bagi ruang antara muka ejen.';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        'Membolehkan jenis tiket yang baru didefinasikan (jika fungsi jenis tiket diaktifkan).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Ändern der ITSM-Felder!';
     $Self->{Translation}->{'Decision'} = 'Entscheidung';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,14 +91,13 @@ sub Data {
         'Mentakrifkan keadaan seterusnya tiket selepas menambah nota, dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Mentakrifkan keadaan seterusnya tiket selepas menambah nota, dalam skrin keputusan bagi antara muka ejen.';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Bidang dinamik yang ditunjukkan dalam skrin bidang ITSM tambahan bagi antara muka ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan.';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Bidang dinamik yang ditunjukkan dalam skrin keputusan bagi antara muka ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan, 2 = Diaktifkan dan Diperlukan.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Medan Dinamik ditunjukkan dalam skrin carian tiket dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan.';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Medan Dinamik ditunjukkan dalam skrin zum tiket dari paparan ejen. Tetapan Kemungkinan: 0 = Dilumpuhkan, 1 = Diaktifkan.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Membolehkan modul statistik untuk menjana statistik tentang purata tiket ITSM peringkat pertama kadar penyelesaian.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -106,6 +106,10 @@ sub Data {
         'Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin keputusan bagi antara muka ejen.';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
+        '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Kebenaran yang diperlukan untuk menggunakan skrin bidang ITSM tambahan dalam antara muka ejen.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
@@ -146,7 +150,13 @@ sub Data {
         'Menunjukkan bidang tajuk dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Menunjukkan bidang tajuk dalam skrin keputusan bagi antara muka ejen.';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        'Tentukan jenis nota berbeza yang akan digunakan dalam sistem.';
     $Self->{Translation}->{'Ticket decision.'} = 'keputusan tiket';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

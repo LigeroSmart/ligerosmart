@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '变更工单决定';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = '修改ITSM字段';
-    $Self->{Translation}->{'Service Incident State'} = '服务故障状态';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '链接工单';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = '紧急度';
     $Self->{Translation}->{'Impact'} = '影响度';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = '服务故障状态';
+    $Self->{Translation}->{'Link ticket'} = '链接工单';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = '需要复审';
@@ -46,10 +44,13 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = '添加决定!';
     $Self->{Translation}->{'Additional ITSM Fields'} = '额外的ITSM字段';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '额外的ITSM工单字段。';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '服务人员界面额外的ITSM字段窗口允许添加备注。';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         '服务人员界面决定窗口允许添加备注。';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
+        '允许定义新的工单类型（如果启用了工单类型功能）。';
     $Self->{Translation}->{'Change the ITSM fields!'} = '修改ITSM字段!';
     $Self->{Translation}->{'Decision'} = '决定';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -90,14 +91,13 @@ sub Data {
         '定义服务人员界面在工单额外的ITSM字段窗口添加备注后的下一个工单状态。';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '定义服务人员界面在工单决定窗口添加备注后的下一个工单状态。';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '服务人员界面在工单额外的ITSM字段窗口显示的动态字段。可能的设置：0 - 禁用，1 - 启用，2 - 启用且必填。';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '服务人员界面在工单决定窗口显示的动态字段。可能的设置：0 - 禁用，1 - 启用，2 - 启用且必填。';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '服务人员界面在工单搜索窗口显示的动态字段。可能的设置：0 - 禁用，1 - 启用。';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '服务人员界面在工单详情窗口显示的动态字段。可能的设置：0 - 禁用，1 - 启用。';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '使统计模块能够生成ITSM工单一线平均解决率的统计数据。';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -106,6 +106,10 @@ sub Data {
         '在服务人员界面额外的ITSM字段窗口，如果服务人员添加了一个备注，设置工单的状态。';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         '在服务人员界面工单决定窗口，如果服务人员添加了一个备注，设置工单的状态。';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
+        '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         '服务人员界面使用工单额外的ITSM字段窗口需要的权限。';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
@@ -146,7 +150,13 @@ sub Data {
         '在服务人员界面工单额外的ITSM字段窗口显示工单标题字段。';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '在服务人员界面工单决定窗口显示工单标题字段。';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        '指定将在系统中使用的不同备注类型。';
     $Self->{Translation}->{'Ticket decision.'} = '工单决定。';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 

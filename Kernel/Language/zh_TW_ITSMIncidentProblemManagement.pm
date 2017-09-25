@@ -15,17 +15,15 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '修改工單決定';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = '修改ITSM字段';
-    $Self->{Translation}->{'Service Incident State'} = '服務故障狀態';
-
-    # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '鏈接工單';
-
     # Template: AgentTicketOverviewPreview
     $Self->{Translation}->{'Criticality'} = '重要';
     $Self->{Translation}->{'Impact'} = '影響';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    $Self->{Translation}->{'Service Incident State'} = '服務故障狀態';
+    $Self->{Translation}->{'Link ticket'} = '鏈接工單';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = '需要複審';
@@ -46,9 +44,12 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = '添加決定!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'ITSM字段';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
         '';
     $Self->{Translation}->{'Change the ITSM fields!'} = '修改ITSM字段!';
     $Self->{Translation}->{'Decision'} = '決定';
@@ -90,13 +91,12 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '';
-    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
+    $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
@@ -105,6 +105,10 @@ sub Data {
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
+        '';
+    $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
         '';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         '';
@@ -146,7 +150,13 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
+    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
+        '';
     $Self->{Translation}->{'Ticket decision.'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    );
 
 }
 
