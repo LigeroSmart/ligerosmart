@@ -31,7 +31,7 @@ ITSM.Agent.ChangeManagement.Zoom = (function (TargetNS) {
     TargetNS.Init = function () {
         // init browser link message close button
         if ($('.ITSMMessageBrowser').length) {
-            $('.ITSMMessageBrowser a.Close').on('click', function () {
+            $('.ITSMMessageBrowser a.Close').off('ITSMMessageBrowser').on('click.ITSMMessageBrowser', function () {
                 $('.ITSMMessageBrowser').fadeOut("slow");
                 Core.Agent.PreferencesUpdate('UserAgentDoNotShowBrowserLinkMessage', 1);
                 return false;
@@ -44,12 +44,16 @@ ITSM.Agent.ChangeManagement.Zoom = (function (TargetNS) {
             $(this).attr("src", $(this).attr("data-src"));
         });
 
-        $('ul.Actions a.AsPopup').on('click.ITSMChangeMmgtZoom.ActionPopup', function () {
+        $('ul.Actions a.AsPopup')
+        .off('click.ITSMChangeMmgtZoom.ActionPopup')
+        .on('click.ITSMChangeMmgtZoom.ActionPopup', function () {
             Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
             return false;
         });
 
-        $('ul.Actions a.HistoryBack').on('click.ITSMChangeMmgtZoom.HistoryBack', function () {
+        $('ul.Actions a.HistoryBack')
+        .off('click.ITSMChangeMmgtZoom.HistoryBack')
+        .on('click.ITSMChangeMmgtZoom.HistoryBack', function () {
             // if we have a referrer we use it, so the previous page will be loaded from the server
             // and if the referer is not the current page (AgentITSMWorkOrderZoom)
             if (document.referrer && !document.referrer.match(/AgentITSMWorkOrderZoom/)) {

@@ -67,7 +67,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
             $Label.next().clone().appendTo('#SearchInsert')
 
                 // bind click function to remove button now
-                .find('.RemoveButton').bind('click', function () {
+                .find('.RemoveButton').off('click.RemoveSearchAttribute').on('click.RemoveSearchAttribute', function () {
                     var $Element = $(this).parent();
                     TargetNS.SearchAttributeRemove($Element);
 
@@ -300,13 +300,13 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 Core.UI.InputFields.Activate($('.Dialog:visible'));
 
                 // register add of attribute
-                $('.AddButton').bind('click', function () {
+                $('.AddButton').off('click.AddSearchAttribute').on('click.AddSearchAttribute', function () {
                     var Attribute = $('#Attribute').val();
                     TargetNS.SearchAttributeAdd(Attribute);
                     TargetNS.AdditionalAttributeSelectionRebuild();
 
                     // Register event for tree selection dialog
-                    $('.ShowTreeSelection').unbind('click').bind('click', function () {
+                    $('.ShowTreeSelection').off('click.TreeSelection').on('click.TreeSelection', function () {
                         Core.UI.TreeSelection.ShowTreeSelection($(this));
                         return false;
                     });
@@ -315,7 +315,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // register return key
-                $('#SearchForm').unbind('keypress.FilterInput').bind('keypress.FilterInput', function (Event) {
+                $('#SearchForm').off('keypress.FilterInput').on('keypress.FilterInput', function (Event) {
                     if ((Event.charCode || Event.keyCode) === 13) {
                         if (!CheckForSearchedValues()) {
                             return false;
@@ -328,7 +328,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // register submit
-                $('#SearchFormSubmit').bind('click', function () {
+                $('#SearchFormSubmit').off('click.DoSearch').on('click.DoSearch', function () {
                     var ShownAttributes = '';
 
                     // remember shown attributes
@@ -363,7 +363,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // load profile
-                $('#SearchProfile').bind('change', function () {
+                $('#SearchProfile').off('change.LoadProfile').on('change.LoadProfile', function () {
                     var Profile = $('#SearchProfile').val(),
                         EmptySearch = $('#EmptySearch').val(),
                         Action = $('#SearchAction').val();
@@ -373,7 +373,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // show add profile block or not
-                $('#SearchProfileNew').bind('click', function (Event) {
+                $('#SearchProfileNew').off('click.Profile').on('click.Profile', function (Event) {
                     $('#SearchProfileAddBlock').toggle();
                     $('#SearchProfileAddName').focus();
                     Event.preventDefault();
@@ -381,7 +381,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // add new profile
-                $('#SearchProfileAddAction').bind('click', function () {
+                $('#SearchProfileAddAction').off('click.AddProfile').on('click.AddProfile', function () {
                     var Name, $Element1;
 
                     // get name
@@ -419,7 +419,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // direct link to profile
-                $('#SearchProfileAsLink').bind('click', function () {
+                $('#SearchProfileAsLink').off('click.ShowProfile').on('click.ShowProfile', function () {
                     var Profile = $('#SearchProfile').val(),
                         Action = $('#SearchAction').val();
 
@@ -429,7 +429,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
                 // delete profile
-                $('#SearchProfileDelete').bind('click', function (Event) {
+                $('#SearchProfileDelete').off('click.DeleteProfile').on('click.DeleteProfile', function (Event) {
 
                     // strip all already used attributes
                     $('#SearchProfile').find('option:selected').each(function () {
