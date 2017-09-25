@@ -70,10 +70,6 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
             );
         });
 
-        //$UserSearches.on('click.UserSearch', function() {
-        //    $(this).val('');
-        //});
-
         // On unload remove old selected data. If the page is reloaded (with F5)
         // this data stays in the field and invokes an ajax request otherwise
         $(window).on('beforeunload.UserSearch', function () {
