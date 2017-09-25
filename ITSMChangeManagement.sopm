@@ -26,6 +26,7 @@
         <File Permission="660" Location="Kernel/Language/es_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ITSMChangeManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/id_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ja_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ms_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/nb_NO_ITSMChangeManagement.pm" />
@@ -34,7 +35,10 @@
         <File Permission="660" Location="Kernel/Language/pt_BR_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pt_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ITSMChangeManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMChangeManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ITSMChangeManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/th_TH_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm" />

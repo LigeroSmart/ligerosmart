@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMChangeManagement\n"
-"POT-Creation-Date: 2017-08-21 12:33+0000\n"
+"POT-Creation-Date: 2017-09-25 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,10 +28,6 @@ msgstr ""
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
-msgstr ""
-
-#. Template: AdminITSMChangeNotification
-msgid "Rule"
 msgstr ""
 
 #. Template: AdminITSMChangeNotification
@@ -239,7 +235,15 @@ msgid "History of %s%s"
 msgstr ""
 
 #. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr ""
+
+#. Template: AgentITSMChangeHistory
 msgid "Workorder"
+msgstr ""
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
 msgstr ""
 
 #. Template: AgentITSMChangeHistory
@@ -487,10 +491,6 @@ msgid "Last changed by"
 msgstr ""
 
 #. Template: AgentITSMChangeZoom
-msgid "Ok"
-msgstr ""
-
-#. Template: AgentITSMChangeZoom
 msgid "To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS)."
 msgstr ""
 
@@ -544,14 +544,6 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change Time"
-msgstr ""
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "Edit Template Content"
-msgstr ""
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "Delete Template"
 msgstr ""
 
 #. Template: AgentITSMWorkOrderAdd
@@ -647,11 +639,23 @@ msgid "Workorder Information"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Notification Added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "There was an error creating the notification."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Added!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
@@ -1230,6 +1234,10 @@ msgstr ""
 msgid "set"
 msgstr ""
 
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr ""
+
 #. SysConfig
 msgid "A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1."
 msgstr ""
@@ -1332,6 +1340,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom"
 msgstr ""
 
 #. SysConfig
@@ -1831,39 +1843,43 @@ msgid "Determines if the common stats module may generate stats about the number
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dutch"
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields shown in the change add screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the change edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the change search screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields shown in the change zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields shown in the workorder add screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
+msgid "Dynamic fields shown in the workorder edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
+msgid "Dynamic fields shown in the workorder report screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -1884,6 +1900,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit the workorder."
+msgstr ""
+
+#. SysConfig
+msgid "Enables the minimal change counter size (if \"Date\" was selected as ChangeNumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2019,10 +2039,6 @@ msgid "Link another object to the workorder."
 msgstr ""
 
 #. SysConfig
-msgid "Logfile for the ITSM change counter. This file is used for creating the change numbers."
-msgstr ""
-
-#. SysConfig
 msgid "Lookup of CAB members for autocompletion."
 msgstr ""
 
@@ -2083,6 +2099,10 @@ msgid "Only users of these groups have the permission to use the ticket types as
 msgstr ""
 
 #. SysConfig
+msgid "Other Settings"
+msgstr ""
+
+#. SysConfig
 msgid "Overview over all Changes."
 msgstr ""
 
@@ -2104,6 +2124,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Parameters for the pages (in which the changes are shown) of the small change overview."
+msgstr ""
+
+#. SysConfig
+msgid "Performs the configured action for each event (as an Invoker) for each configured Webservice."
 msgstr ""
 
 #. SysConfig
@@ -2303,6 +2327,10 @@ msgid "Schedule"
 msgstr ""
 
 #. SysConfig
+msgid "Screen"
+msgstr ""
+
+#. SysConfig
 msgid "Screen after creating a workorder"
 msgstr ""
 
@@ -2332,6 +2360,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Sets the minimal change counter size (if \"AutoIncrement\" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the minimal change counter size if \"AutoIncrement\" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000."
 msgstr ""
 
 #. SysConfig
@@ -2516,6 +2548,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Report."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom"
 msgstr ""
 
 #. SysConfig

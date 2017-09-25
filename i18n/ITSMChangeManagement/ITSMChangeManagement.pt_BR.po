@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-10 14:46+0000\n"
-"PO-Revision-Date: 2017-07-10 12:46+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:58+0000\n"
+"PO-Revision-Date: 2017-09-25 08:59+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,10 +33,6 @@ msgstr "Gerenciamento de Notificações de Gerência de Mudança ITSM"
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
 msgstr "Adicionar Regra de Notificação"
-
-#. Template: AdminITSMChangeNotification
-msgid "Rule"
-msgstr "Regra"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
@@ -234,13 +230,25 @@ msgstr "Adicionar nova ação"
 msgid "Do you really want to delete this change?"
 msgstr "Você quer realmente excluir esta mudança?"
 
+#. Template: AgentITSMChangeEdit
+msgid "Edit %s%s"
+msgstr ""
+
 #. Template: AgentITSMChangeHistory
-msgid "History of"
-msgstr "Histórico de"
+msgid "History of %s%s"
+msgstr "Histórico de %s%s"
+
+#. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "Conteúdo do Histórico"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
 msgstr "Ordem de Serviço"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "Hora de criação"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
@@ -251,8 +259,8 @@ msgid "Show workorder"
 msgstr "Mostrar Ordem de Serviço"
 
 #. Template: AgentITSMChangeHistoryZoom
-msgid "Detailed history information of"
-msgstr "Informações detalhadas sobre o histórico  de"
+msgid "Detailed history information of %s"
+msgstr ""
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
@@ -265,6 +273,10 @@ msgstr "Antigo Valor"
 #. Template: AgentITSMChangeHistoryZoom
 msgid "New Value"
 msgstr "Novo valor"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Edit Involved Persons of %s%s"
+msgstr ""
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Involved Persons"
@@ -323,52 +335,60 @@ msgid "Changes per page"
 msgstr "Mudanças por página"
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderTitle"
-msgstr "Título da Ordem de Serviço"
+msgid "Workorder Title"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ChangeTitle"
-msgstr "Título da Mudança"
+msgid "Change Title"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderAgent"
-msgstr "Atendente da Ordem de Serviço"
+msgid "Workorder Agent"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Builder"
+msgstr "Construtor da Mudança"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Manager"
+msgstr "Gerente da Mudança"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
 msgstr "Ordem de Serviço"
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ChangeState"
-msgstr "Estado da Mudança"
+msgid "Change State"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderState"
-msgstr "Estado da Ordem de Serviço"
+msgid "Workorder State"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderType"
-msgstr "Tipo da Ordem de Serviço"
+msgid "Workorder Type"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
 msgstr "Horário solicitado"
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "PlannedStartTime"
-msgstr "Início Planejado"
+msgid "Planned Start Time"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "PlannedEndTime"
-msgstr "Término Planejado"
+msgid "Planned End Time"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ActualStartTime"
-msgstr "Início Real"
+msgid "Actual Start Time"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ActualEndTime"
-msgstr "Término Real"
+msgid "Actual End Time"
+msgstr ""
 
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
@@ -379,28 +399,32 @@ msgid "(e.g. 10*5155 or 105658*)"
 msgstr "(ex. 10*5155 ou 105658*)"
 
 #. Template: AgentITSMChangeSearch
-msgid "CABAgent"
-msgstr "Atendente CCM"
+msgid "CAB Agent"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
 msgstr "ex."
 
 #. Template: AgentITSMChangeSearch
-msgid "CABCustomer"
-msgstr "Cliente CCM"
+msgid "CAB Customer"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
-msgid "ITSM Workorder"
-msgstr "Ordem de Serviço ITSM"
+msgid "ITSM Workorder Instruction"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
-msgid "Instruction"
-msgstr "Instrução"
+msgid "ITSM Workorder Report"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
-msgid "Report"
-msgstr "Relatório"
+msgid "ITSM Change Priority"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Change Impact"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
@@ -447,20 +471,16 @@ msgid "Change Information"
 msgstr "Informação da Mudança"
 
 #. Template: AgentITSMChangeZoom
-msgid "PlannedEffort"
-msgstr "Esforço Planejado"
+msgid "Planned Effort"
+msgstr ""
+
+#. Template: AgentITSMChangeZoom
+msgid "Accounted Time"
+msgstr ""
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
 msgstr "Iniciador(es) da Mudança"
-
-#. Template: AgentITSMChangeZoom
-msgid "Change Manager"
-msgstr "Gerente da Mudança"
-
-#. Template: AgentITSMChangeZoom
-msgid "Change Builder"
-msgstr "Construtor da Mudança"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
@@ -473,14 +493,6 @@ msgstr "Última alteração"
 #. Template: AgentITSMChangeZoom
 msgid "Last changed by"
 msgstr "Última alteração por"
-
-#. Template: AgentITSMChangeZoom
-msgid "Ok"
-msgstr "Ok"
-
-#. Template: AgentITSMChangeZoom
-msgid "ITSMChange"
-msgstr "Mudança"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -530,40 +542,32 @@ msgid "Do you want to proceed?"
 msgstr "Você quer prosseguir?"
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "TemplateID"
-msgstr "Template-ID"
+msgid "Template ID"
+msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
 msgstr "Editar Conteúdo"
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "CreateBy"
-msgstr "Criado por"
+msgid "Create by"
+msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "CreateTime"
-msgstr "Criado em"
+msgid "Change by"
+msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "ChangeBy"
-msgstr "Alterado por"
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "ChangeTime"
-msgstr "Alterado em"
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "Edit Template Content"
-msgstr "Editar Conteúdo do Modelo"
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "Delete Template"
-msgstr "Excluir modelo"
+msgid "Change Time"
+msgstr ""
 
 #. Template: AgentITSMWorkOrderAdd
-msgid "Add Workorder to"
-msgstr "Adicionar ordem de serviço a"
+msgid "Add Workorder to %s%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Instruction"
+msgstr "Instrução"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid workorder type."
@@ -581,6 +585,10 @@ msgstr "Formato inválido."
 msgid "Select Workorder Template"
 msgstr "Selecione modelo de ordem de serviço"
 
+#. Template: AgentITSMWorkOrderAgent
+msgid "Edit Workorder Agent of %s%s"
+msgstr ""
+
 #. Template: AgentITSMWorkOrderDelete
 msgid "Do you really want to delete this workorder?"
 msgstr "Você quer realmente excluir esta ordem de serviço?"
@@ -595,6 +603,10 @@ msgid "This Workorder is used in the following Condition(s)"
 msgstr "Esta ordem de serviço está sendo usada pela(s) condição(ões)"
 
 #. Template: AgentITSMWorkOrderEdit
+msgid "Edit %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderEdit
 msgid "Move following workorders accordingly"
 msgstr "Mover as seguintes ordens de acordo"
 
@@ -603,6 +615,18 @@ msgid ""
 "If the planned end time of this workorder is changed, the planned start "
 "times of all following workorders will be changed accordingly"
 msgstr "Se o término planejado desta ordem de serviço for alterado, o horário planejado de início de todas as seguintes ordens também serão alterados"
+
+#. Template: AgentITSMWorkOrderHistory
+msgid "History of %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Edit Report of %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Report"
+msgstr "Relatório"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be before the actual end time!"
@@ -633,11 +657,23 @@ msgid "Workorder Information"
 msgstr "Informação da Ordem de Serviço"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Notification Added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "There was an error creating the notification."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Added!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
@@ -647,10 +683,6 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
 msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
-msgid "Please contact the admin."
-msgstr "Por favor entre em contato com o administrador."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
@@ -817,12 +849,32 @@ msgid "unknown change title"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder"
+msgstr "Ordem de Serviço ITSM"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedStartTime"
+msgstr "Início Planejado"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEndTime"
+msgstr "Término Planejado"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualStartTime"
+msgstr "Início Real"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualEndTime"
+msgstr "Término Real"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
@@ -841,8 +893,16 @@ msgid "Change Search"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "ChangeTitle"
+msgstr "Título da Mudança"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "Ordens de Serviço"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "ChangeState"
+msgstr "Estado da Mudança"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -853,19 +913,7 @@ msgid "Change Number"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Change Title"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Work Order Title"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "CAB Agent"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "CAB Customer"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
@@ -893,10 +941,6 @@ msgid "Change Impact"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Change State"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Created By"
 msgstr ""
 
@@ -910,26 +954,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Agent"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Planned Start Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Planned End Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Actual Start Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Actual End Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Change Time"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
@@ -1228,6 +1252,10 @@ msgstr "termina com"
 msgid "set"
 msgstr "configurar"
 
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "Ok"
+
 #. SysConfig
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
@@ -1342,6 +1370,10 @@ msgstr "Programação das Futuras Mudanças (PFM)"
 
 #. SysConfig
 msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom"
 msgstr ""
 
 #. SysConfig
@@ -1988,58 +2020,51 @@ msgid ""
 msgstr "Determina se o módulo de estatísticas comuns podem gerar estatísticas sobre o número de chamados RFC a um solicitante criado."
 
 #. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
-" of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Campos dinâmicos (para mudanças e ordens de serviço) exibidos na tela de impressão de mudança da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
+" of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change add screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Campos dinâmicos exibidos na tela de criação de mudança da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
+"Dynamic fields shown in the change search screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change edit screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Campos dinâmicos exibidos na tela de edição de mudança da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
+"Dynamic fields shown in the workorder add screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Campos dinâmicos exibidos na tela de busca de mudança da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
+"Dynamic fields shown in the workorder edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Campos dinâmicos exibidos na tela de detalhes da mudança da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
+"Dynamic fields shown in the workorder report screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the workorder add screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Campos dinâmicos exibidos na tela de criação de ordem de serviço da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder edit screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Campos dinâmicos exibidos na tela de edição de ordem de serviço da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder report screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Campos dinâmicos exibidos na tela de relatório de ordem de serviço da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado, 2 = Habilitado e requerido."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Campos dinâmicos exibidos na tela de detalhes da ordem de serviço da interface de atendente. Configurações possíveis: 0 = Desabilitado, 1 = Habilitado."
+"Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2061,6 +2086,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit the workorder."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the minimal change counter size (if \"Date\" was selected as "
+"ChangeNumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2176,6 +2207,10 @@ msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr "Módulo de evento ITSM para definir o tempo início e de término de ordens de serviço."
 
 #. SysConfig
+msgid "ITSMChange"
+msgstr "Mudança"
+
+#. SysConfig
 msgid "ITSMWorkOrder"
 msgstr "Ordem de Serviço ITSM"
 
@@ -2192,12 +2227,6 @@ msgstr ""
 #. SysConfig
 msgid "Link another object to the workorder."
 msgstr ""
-
-#. SysConfig
-msgid ""
-"Logfile for the ITSM change counter. This file is used for creating the "
-"change numbers."
-msgstr "Arquivo de log para o contador de mudança ITSM. Este arquivo é usado para criar os números de mudança."
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
@@ -2267,6 +2296,10 @@ msgid ""
 msgstr "Somente usuários desses grupos têm permissão para usar os tipos de chamados, tal como definido em \"MudançaITSM:TiposChamadosAdicionarLinkMudança\" se o recurso \"Chamado::ACL:: Módulo###200-Chamado::ACL::Módulo\" é habilitado.."
 
 #. SysConfig
+msgid "Other Settings"
+msgstr "Outras Configurações"
+
+#. SysConfig
 msgid "Overview over all Changes."
 msgstr ""
 
@@ -2293,6 +2326,12 @@ msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
 msgstr "Parâmetros para as páginas (em que as mudanças são mostradas) da pequena visão global de mudança."
+
+#. SysConfig
+msgid ""
+"Performs the configured action for each event (as an Invoker) for each "
+"configured Webservice."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2502,6 +2541,10 @@ msgid "Schedule"
 msgstr ""
 
 #. SysConfig
+msgid "Screen"
+msgstr "Tela"
+
+#. SysConfig
 msgid "Screen after creating a workorder"
 msgstr "Tela Após Criar Ordem de Serviço"
 
@@ -2548,6 +2591,13 @@ msgid ""
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
 msgstr "Configura o tamanho mínimo do contador de mudança (se \"AutoIncremento\" foi selecionado como ITSMChange::NumberGenerator). O padrão é 5, o que significa que o contador inicia em 10000."
+
+#. SysConfig
+msgid ""
+"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
+"ChangeNumberGenerator. Default is 5, this means the counter starts from "
+"10000."
+msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
@@ -2769,10 +2819,6 @@ msgid "Workorder Add."
 msgstr ""
 
 #. SysConfig
-msgid "Workorder Agent"
-msgstr ""
-
-#. SysConfig
 msgid "Workorder Agent."
 msgstr ""
 
@@ -2794,6 +2840,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Report."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom"
 msgstr ""
 
 #. SysConfig

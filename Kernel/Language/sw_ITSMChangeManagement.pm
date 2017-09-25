@@ -24,7 +24,6 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Usimamizi wa Taarifa za ITSM UsimamiziMabadiliko';
     $Self->{Translation}->{'Add Notification Rule'} = 'Ongeza Sheria ya Taarifa';
-    $Self->{Translation}->{'Rule'} = 'Sheria';
     $Self->{Translation}->{'A notification should have a name!'} = 'Taarifa lazima iwe na jina!';
     $Self->{Translation}->{'Name is required.'} = 'Jina linatakiwa.';
 
@@ -94,7 +93,9 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = '';
+    $Self->{Translation}->{'History Content'} = 'Maudhui ya historia';
     $Self->{Translation}->{'Workorder'} = 'Oda ya kazi';
+    $Self->{Translation}->{'Createtime'} = 'Muda wa kutengeneza';
     $Self->{Translation}->{'Show details'} = 'Onyesha undani';
     $Self->{Translation}->{'Show workorder'} = 'Onyesha oda ya kazi';
 
@@ -174,7 +175,6 @@ sub Data {
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Mara ya mwisho imebadilishwa';
     $Self->{Translation}->{'Last changed by'} = 'Mara ya mwisho imebadilishwa na';
-    $Self->{Translation}->{'Ok'} = 'Sawa';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '';
     $Self->{Translation}->{'Download Attachment'} = 'Pakua Kiambatanisho';
@@ -201,8 +201,6 @@ sub Data {
     $Self->{Translation}->{'Create by'} = '';
     $Self->{Translation}->{'Change by'} = '';
     $Self->{Translation}->{'Change Time'} = '';
-    $Self->{Translation}->{'Edit Template Content'} = 'Hariri Maudhui ya Kiolezo';
-    $Self->{Translation}->{'Delete Template'} = 'Futa Kiolezo';
 
     # Template: AgentITSMWorkOrderAdd
     $Self->{Translation}->{'Add Workorder to %s%s'} = '';
@@ -251,8 +249,13 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = 'Taarifa ya Oda ya kazi';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+    $Self->{Translation}->{'Notification Added!'} = '';
     $Self->{Translation}->{'Unknown notification %s!'} = '';
     $Self->{Translation}->{'There was an error creating the notification.'} = '';
+
+    # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+    $Self->{Translation}->{'State Transition Updated!'} = '';
+    $Self->{Translation}->{'State Transition Added!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = '';
@@ -484,6 +487,9 @@ sub Data {
     $Self->{Translation}->{'ends with'} = 'inaishia na';
     $Self->{Translation}->{'set'} = 'seti';
 
+    # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+    $Self->{Translation}->{'Ok'} = 'Sawa';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Orodha ya mawakala wenye ruhusa ya kuchukua oda za kazi. Muhimu ni jina la kuingia. Iliyomo ni 0 au 1.';
@@ -519,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule'} = 'Badili Ratiba';
     $Self->{Translation}->{'Change Schedule.'} = '';
+    $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
     $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
@@ -725,30 +732,33 @@ sub Data {
         'Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu mabadiliko.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu idadi ya tiketi za Rfc zilizotengenezwa na muombaji.';
-    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Sehemu zinazobadilika (kwa mabadiliko na oda za kazi) zilizoonyeshwa kwenye skrini iliyochapishwa ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ongeza mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya hariri mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya tafuta mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ongeza oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya hariri oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ripoti ya oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza oda za kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Moduli ya matukio ya SehemuZinazobadilika kushughulikia usasishaji wa masharti kama sehemu zinazobadilika zimeongezwa, zimesasishwa au kufutwa.';
     $Self->{Translation}->{'Edit a change.'} = '';
     $Self->{Translation}->{'Edit the change.'} = '';
     $Self->{Translation}->{'Edit the conditions of the change.'} = '';
     $Self->{Translation}->{'Edit the workorder.'} = '';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
     $Self->{Translation}->{'History Zoom'} = '';
@@ -786,8 +796,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
-    $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
-        'Failibatli la hesabu ya mabadiliko ya ITSM. Hili faili linatumika kutengeneza nambari za mabadiliko. ';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
@@ -807,6 +815,7 @@ sub Data {
     $Self->{Translation}->{'New (from template)'} = 'Mpya (kutoka kwenye kiolezo)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika "Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko" kama kipengele "Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli" kimewezeshwa.';
+    $Self->{Translation}->{'Other Settings'} = 'Mipangilio mingine';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'Baada ya utekelezaji wa mapitio (PIR)';
@@ -815,6 +824,8 @@ sub Data {
         'Vigezo kwa ajili ya kipengele Barakoa ijayo ya mpangilio kazi wa kutengenezwa na mtumiaji katika mandhari ya mapendeleo ya kiolesura cha wakala.';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         'Vigezo kwa ajili vya kurasa(ambapo tiketi zinaonyeshwa) za mapitio ya mabadiliko madogo.';
+    $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
+        'Fanya kitecndo cha usanidishwaji kwa kila tukio (kama Kichochezi) kwa kila huduma ya wavuti iliyosanidiwa.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Inawasilisha kiunganishi katika menyu kuonyesha watu wanaohusika katika badiliko, katika mandhari iliyokuzwa ya badiliko hilo katika kiolesura cha wakala.';
     $Self->{Translation}->{'Print the change.'} = '';
@@ -874,6 +885,7 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
+    $Self->{Translation}->{'Screen'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Skrini baada ya kutengeneza oda ya kazi.';
     $Self->{Translation}->{'Search Changes'} = 'Tafuta Mabadiliko';
     $Self->{Translation}->{'Search Changes.'} = '';
@@ -886,6 +898,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Inaweka upeo wa chini wa ukubwa wa kihesabuji tiketi (Kama "Inaongezeka otomatiki" imechaguliwa kama Badiliko la ITSM::Kitengeneza namaba za tiketi). Chaguo-msingi ni 5, hii inamaanisha kihesabuji kinaanzia 10000';
+    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
+        '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Inaseti hali ya mashine kwa mabadiliko.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Inaseti hali ya mashine kwa oda za kazi.';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
@@ -960,9 +974,21 @@ sub Data {
     $Self->{Translation}->{'Workorder History Zoom.'} = '';
     $Self->{Translation}->{'Workorder History.'} = '';
     $Self->{Translation}->{'Workorder Report.'} = '';
+    $Self->{Translation}->{'Workorder Zoom'} = '';
     $Self->{Translation}->{'Workorder Zoom.'} = '';
     $Self->{Translation}->{'once'} = '';
     $Self->{Translation}->{'regularly'} = '';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this notification language?',
+    'Do you really want to delete this notification?',
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

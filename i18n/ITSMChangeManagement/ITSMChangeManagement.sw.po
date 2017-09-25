@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-10 14:46+0000\n"
-"PO-Revision-Date: 2017-07-10 12:46+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-25 08:58+0000\n"
+"PO-Revision-Date: 2017-09-25 08:59+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,10 +35,6 @@ msgstr "Usimamizi wa Taarifa za ITSM UsimamiziMabadiliko"
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
 msgstr "Ongeza Sheria ya Taarifa"
-
-#. Template: AdminITSMChangeNotification
-msgid "Rule"
-msgstr "Sheria"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
@@ -236,13 +232,25 @@ msgstr "Ongeza kitendo kipya"
 msgid "Do you really want to delete this change?"
 msgstr "Kweli unataka kufuta mabadiliko haya?"
 
+#. Template: AgentITSMChangeEdit
+msgid "Edit %s%s"
+msgstr ""
+
 #. Template: AgentITSMChangeHistory
-msgid "History of"
-msgstr "Historia ya"
+msgid "History of %s%s"
+msgstr ""
+
+#. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "Maudhui ya historia"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
 msgstr "Oda ya kazi"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "Muda wa kutengeneza"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
@@ -253,8 +261,8 @@ msgid "Show workorder"
 msgstr "Onyesha oda ya kazi"
 
 #. Template: AgentITSMChangeHistoryZoom
-msgid "Detailed history information of"
-msgstr "Undani wa taarifa ya historia ya"
+msgid "Detailed history information of %s"
+msgstr ""
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
@@ -267,6 +275,10 @@ msgstr "Thamani ya Zamani"
 #. Template: AgentITSMChangeHistoryZoom
 msgid "New Value"
 msgstr "Thamani Mpya"
+
+#. Template: AgentITSMChangeInvolvedPersons
+msgid "Edit Involved Persons of %s%s"
+msgstr ""
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Involved Persons"
@@ -325,52 +337,60 @@ msgid "Changes per page"
 msgstr "Mabadiliko kwa kurasa"
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderTitle"
-msgstr "Kichwa cha habari cha Oda ya Kazi"
+msgid "Workorder Title"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ChangeTitle"
-msgstr "Badili Kicha cha Habari"
+msgid "Change Title"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderAgent"
-msgstr "WakalaWaOdaYaKazi"
+msgid "Workorder Agent"
+msgstr ""
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Builder"
+msgstr "Meneja Mjenzi"
+
+#. Template: AgentITSMChangeOverviewSmall
+msgid "Change Manager"
+msgstr "Meneja Mabadiliko"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
 msgstr "Oda za kazi"
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ChangeState"
-msgstr "BadiliHali"
+msgid "Change State"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderState"
-msgstr "HaliYaOdaYaKazi"
+msgid "Workorder State"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "WorkOrderType"
-msgstr "AinaYaOdaYaKazi"
+msgid "Workorder Type"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
 msgstr "Muda Ulioombwa"
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "PlannedStartTime"
-msgstr "MudaKuanzaUliopangwa"
+msgid "Planned Start Time"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "PlannedEndTime"
-msgstr "MudaKuishaUliopangwa"
+msgid "Planned End Time"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ActualStartTime"
-msgstr "MudaHalisiKuanza"
+msgid "Actual Start Time"
+msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
-msgid "ActualEndTime"
-msgstr "MudaHalisiKumaliza"
+msgid "Actual End Time"
+msgstr ""
 
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
@@ -381,28 +401,32 @@ msgid "(e.g. 10*5155 or 105658*)"
 msgstr "(mf. 10*5155 au 105658*)"
 
 #. Template: AgentITSMChangeSearch
-msgid "CABAgent"
-msgstr "WakalaCAB"
+msgid "CAB Agent"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
 msgstr "mf."
 
 #. Template: AgentITSMChangeSearch
-msgid "CABCustomer"
-msgstr "MtejaCAB"
+msgid "CAB Customer"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
-msgid "ITSM Workorder"
-msgstr "Oda ya kazi ya ITSM"
+msgid "ITSM Workorder Instruction"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
-msgid "Instruction"
-msgstr "Melekezo"
+msgid "ITSM Workorder Report"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
-msgid "Report"
-msgstr "Ripoti"
+msgid "ITSM Change Priority"
+msgstr ""
+
+#. Template: AgentITSMChangeSearch
+msgid "ITSM Change Impact"
+msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
@@ -449,20 +473,16 @@ msgid "Change Information"
 msgstr "Badili Taarifa"
 
 #. Template: AgentITSMChangeZoom
-msgid "PlannedEffort"
-msgstr "JuhudiIliyopangwa"
+msgid "Planned Effort"
+msgstr ""
+
+#. Template: AgentITSMChangeZoom
+msgid "Accounted Time"
+msgstr ""
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
 msgstr "Badili Vianzishi"
-
-#. Template: AgentITSMChangeZoom
-msgid "Change Manager"
-msgstr "Meneja Mabadiliko"
-
-#. Template: AgentITSMChangeZoom
-msgid "Change Builder"
-msgstr "Meneja Mjenzi"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
@@ -475,14 +495,6 @@ msgstr "Mara ya mwisho imebadilishwa"
 #. Template: AgentITSMChangeZoom
 msgid "Last changed by"
 msgstr "Mara ya mwisho imebadilishwa na"
-
-#. Template: AgentITSMChangeZoom
-msgid "Ok"
-msgstr "Sawa"
-
-#. Template: AgentITSMChangeZoom
-msgid "ITSMChange"
-msgstr "BadiliITSM"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
@@ -532,40 +544,32 @@ msgid "Do you want to proceed?"
 msgstr "Unataka kuendelea?"
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "TemplateID"
-msgstr "Kitambulisho cha Kiolezo"
+msgid "Template ID"
+msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
 msgstr "Hariri Maudhui"
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "CreateBy"
-msgstr "TengenezaNa"
+msgid "Create by"
+msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "CreateTime"
-msgstr "TengenezaMuda"
+msgid "Change by"
+msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
-msgid "ChangeBy"
-msgstr "BadiliNa"
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "ChangeTime"
-msgstr "BadilishaMuda"
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "Edit Template Content"
-msgstr "Hariri Maudhui ya Kiolezo"
-
-#. Template: AgentITSMTemplateOverviewSmall
-msgid "Delete Template"
-msgstr "Futa Kiolezo"
+msgid "Change Time"
+msgstr ""
 
 #. Template: AgentITSMWorkOrderAdd
-msgid "Add Workorder to"
-msgstr "Ongeza Oda ya kazi kwenye"
+msgid "Add Workorder to %s%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderAdd
+msgid "Instruction"
+msgstr "Melekezo"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid workorder type."
@@ -583,6 +587,10 @@ msgstr "Umbizo batili."
 msgid "Select Workorder Template"
 msgstr "Chagua Kiolezo cha Oda ya kazi"
 
+#. Template: AgentITSMWorkOrderAgent
+msgid "Edit Workorder Agent of %s%s"
+msgstr ""
+
 #. Template: AgentITSMWorkOrderDelete
 msgid "Do you really want to delete this workorder?"
 msgstr "Kweli unataka kufuta oda hii ya kazi?"
@@ -597,6 +605,10 @@ msgid "This Workorder is used in the following Condition(s)"
 msgstr "Hii oda ya kazi inatumika kwenye Masharti yafuatayo."
 
 #. Template: AgentITSMWorkOrderEdit
+msgid "Edit %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderEdit
 msgid "Move following workorders accordingly"
 msgstr "Hamisha oda za kazi zifuatazo ipasavyo"
 
@@ -605,6 +617,18 @@ msgid ""
 "If the planned end time of this workorder is changed, the planned start "
 "times of all following workorders will be changed accordingly"
 msgstr "Kama muda wa kumaliza wa oda ya kazi hii umebadilishwa, muda wa kuanza wa oda za kazi zote zinazofuata zitabadilika"
+
+#. Template: AgentITSMWorkOrderHistory
+msgid "History of %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Edit Report of %s%s-%s"
+msgstr ""
+
+#. Template: AgentITSMWorkOrderReport
+msgid "Report"
+msgstr "Ripoti"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be before the actual end time!"
@@ -635,11 +659,23 @@ msgid "Workorder Information"
 msgstr "Taarifa ya Oda ya kazi"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+msgid "Notification Added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "There was an error creating the notification."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Updated!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+msgid "State Transition Added!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
@@ -648,10 +684,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
-msgid "Please contact the admin."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
@@ -819,12 +851,32 @@ msgid "unknown change title"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder"
+msgstr "Oda ya kazi ya ITSM"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedStartTime"
+msgstr "MudaKuanzaUliopangwa"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEndTime"
+msgstr "MudaKuishaUliopangwa"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualStartTime"
+msgstr "MudaHalisiKuanza"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ActualEndTime"
+msgstr "MudaHalisiKumaliza"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
@@ -843,8 +895,16 @@ msgid "Change Search"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "ChangeTitle"
+msgstr "Badili Kicha cha Habari"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "Oda za kazi"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
+msgid "ChangeState"
+msgstr "BadiliHali"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -855,19 +915,7 @@ msgid "Change Number"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Change Title"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Work Order Title"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "CAB Agent"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "CAB Customer"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
@@ -895,10 +943,6 @@ msgid "Change Impact"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Change State"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Created By"
 msgstr ""
 
@@ -912,26 +956,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Agent"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Planned Start Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Planned End Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Actual Start Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Actual End Time"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "Change Time"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
@@ -1230,6 +1254,10 @@ msgstr "inaishia na"
 msgid "set"
 msgstr "seti"
 
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "Sawa"
+
 #. SysConfig
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
@@ -1344,6 +1372,10 @@ msgstr "Badili Ratiba"
 
 #. SysConfig
 msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change Zoom"
 msgstr ""
 
 #. SysConfig
@@ -1990,58 +2022,51 @@ msgid ""
 msgstr "Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu idadi ya tiketi za Rfc zilizotengenezwa na muombaji."
 
 #. SysConfig
+msgid "Dutch"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
-" of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Sehemu zinazobadilika (kwa mabadiliko na oda za kazi) zilizoonyeshwa kwenye skrini iliyochapishwa ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa."
+" of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change add screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change add screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ongeza mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa."
+"Dynamic fields shown in the change search screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the change zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change edit screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya hariri mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa."
+"Dynamic fields shown in the workorder add screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya tafuta mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa."
+"Dynamic fields shown in the workorder edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the change zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza mabadiliko ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa."
+"Dynamic fields shown in the workorder report screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Dynamic fields shown in the workorder add screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ongeza oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder edit screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya hariri oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder report screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya ripoti ya oda ya kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa."
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "Sehemu zinazobadilika zilizoonyeshwa kwenye skrini ya kuza oda za kazi ya kiolesura cha wakala. Mipango iwezekayo: 0 = Lemazwa, 1 = Wezeshwa, 2 = Wezeshwa na Inatakiwa."
+"Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2063,6 +2088,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Edit the workorder."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Enables the minimal change counter size (if \"Date\" was selected as "
+"ChangeNumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2178,6 +2209,10 @@ msgid "ITSM event module to set the actual start and end times of workorders."
 msgstr "Moduli ya matukio ya ITSM inayoseti muda halisi wa kuanza na kumaliza oda za kazi."
 
 #. SysConfig
+msgid "ITSMChange"
+msgstr "BadiliITSM"
+
+#. SysConfig
 msgid "ITSMWorkOrder"
 msgstr "ITSMOdaYaKazi"
 
@@ -2194,12 +2229,6 @@ msgstr ""
 #. SysConfig
 msgid "Link another object to the workorder."
 msgstr ""
-
-#. SysConfig
-msgid ""
-"Logfile for the ITSM change counter. This file is used for creating the "
-"change numbers."
-msgstr "Failibatli la hesabu ya mabadiliko ya ITSM. Hili faili linatumika kutengeneza nambari za mabadiliko. "
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
@@ -2269,6 +2298,10 @@ msgid ""
 msgstr "Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika \"Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko\" kama kipengele \"Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli\" kimewezeshwa."
 
 #. SysConfig
+msgid "Other Settings"
+msgstr "Mipangilio mingine"
+
+#. SysConfig
 msgid "Overview over all Changes."
 msgstr ""
 
@@ -2295,6 +2328,12 @@ msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
 msgstr "Vigezo kwa ajili vya kurasa(ambapo tiketi zinaonyeshwa) za mapitio ya mabadiliko madogo."
+
+#. SysConfig
+msgid ""
+"Performs the configured action for each event (as an Invoker) for each "
+"configured Webservice."
+msgstr "Fanya kitecndo cha usanidishwaji kwa kila tukio (kama Kichochezi) kwa kila huduma ya wavuti iliyosanidiwa."
 
 #. SysConfig
 msgid ""
@@ -2504,6 +2543,10 @@ msgid "Schedule"
 msgstr ""
 
 #. SysConfig
+msgid "Screen"
+msgstr ""
+
+#. SysConfig
 msgid "Screen after creating a workorder"
 msgstr "Skrini baada ya kutengeneza oda ya kazi."
 
@@ -2550,6 +2593,13 @@ msgid ""
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
 msgstr "Inaweka upeo wa chini wa ukubwa wa kihesabuji tiketi (Kama \"Inaongezeka otomatiki\" imechaguliwa kama Badiliko la ITSM::Kitengeneza namaba za tiketi). Chaguo-msingi ni 5, hii inamaanisha kihesabuji kinaanzia 10000"
+
+#. SysConfig
+msgid ""
+"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
+"ChangeNumberGenerator. Default is 5, this means the counter starts from "
+"10000."
+msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
@@ -2771,10 +2821,6 @@ msgid "Workorder Add."
 msgstr ""
 
 #. SysConfig
-msgid "Workorder Agent"
-msgstr ""
-
-#. SysConfig
 msgid "Workorder Agent."
 msgstr ""
 
@@ -2796,6 +2842,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Report."
+msgstr ""
+
+#. SysConfig
+msgid "Workorder Zoom"
 msgstr ""
 
 #. SysConfig

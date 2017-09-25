@@ -24,7 +24,6 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Управление уведомлениями в ITSM ChangeManagement';
     $Self->{Translation}->{'Add Notification Rule'} = 'Добавить правило уведомления';
-    $Self->{Translation}->{'Rule'} = 'Правило';
     $Self->{Translation}->{'A notification should have a name!'} = 'Уведомление должно иметь имя';
     $Self->{Translation}->{'Name is required.'} = 'Требуется имя';
 
@@ -93,8 +92,10 @@ sub Data {
     $Self->{Translation}->{'Edit %s%s'} = '';
 
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of %s%s'} = '';
+    $Self->{Translation}->{'History of %s%s'} = 'История для %s%s';
+    $Self->{Translation}->{'History Content'} = 'Содержимое истории';
     $Self->{Translation}->{'Workorder'} = 'Задача';
+    $Self->{Translation}->{'Createtime'} = 'Время создания';
     $Self->{Translation}->{'Show details'} = 'Показать подробно';
     $Self->{Translation}->{'Show workorder'} = 'Показать задачу';
 
@@ -174,7 +175,6 @@ sub Data {
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Дата последнего изменеия';
     $Self->{Translation}->{'Last changed by'} = 'Последний изменил';
-    $Self->{Translation}->{'Ok'} = 'О.К.';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'Для открытия ссылки в следующем сообщении/заметке необходимо нажать и удерживать клавишу Ctrl или Cmd или Shift и кликнуть по ссылке (зависит от вашего браузера и ОС).';
     $Self->{Translation}->{'Download Attachment'} = 'Загрузить вложение';
@@ -201,8 +201,6 @@ sub Data {
     $Self->{Translation}->{'Create by'} = '';
     $Self->{Translation}->{'Change by'} = '';
     $Self->{Translation}->{'Change Time'} = 'Время модификации';
-    $Self->{Translation}->{'Edit Template Content'} = 'Редактировать содержание шаблона';
-    $Self->{Translation}->{'Delete Template'} = 'Удалить шаблон';
 
     # Template: AgentITSMWorkOrderAdd
     $Self->{Translation}->{'Add Workorder to %s%s'} = '';
@@ -251,8 +249,13 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = 'Информация о задаче';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+    $Self->{Translation}->{'Notification Added!'} = '';
     $Self->{Translation}->{'Unknown notification %s!'} = 'Неизвестное уведомление %s!';
     $Self->{Translation}->{'There was an error creating the notification.'} = 'Произошла ошибка при создании уведомления.';
+
+    # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+    $Self->{Translation}->{'State Transition Updated!'} = '';
+    $Self->{Translation}->{'State Transition Added!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = 'Обзор: ITSM Изменения';
@@ -484,6 +487,9 @@ sub Data {
     $Self->{Translation}->{'ends with'} = 'окончить с';
     $Self->{Translation}->{'set'} = 'установлено';
 
+    # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+    $Self->{Translation}->{'Ok'} = 'О.К.';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         'Список агентов, имеющих права взять задачу в работу. Ключ - логин, Содержание - 0 или 1';
@@ -519,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Печать Изменения.';
     $Self->{Translation}->{'Change Schedule'} = 'Планировщик изменений';
     $Self->{Translation}->{'Change Schedule.'} = 'Изменение расписания.';
+    $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = 'Подробный просмотр Изменения.';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
     $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '';
@@ -725,30 +732,33 @@ sub Data {
         'Определяет, может ли базовый модуль отчетов строить отчеты об изменениях.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Определяет, может ли базовый модуль отчетов строить отчеты о количестве созданных заявителем заявок с запросами на изменение (Rfc).';
-    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамические поля (для изменений и задач) отображаемые на экране печати изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 - показывать.';
-    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамические поля отображаемые на экране добавления изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
-    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамические поля отображаемые на экране редактирования изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
-    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамические поля отображаемые на экране поиска изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
-    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамические поля отображаемые на экране просмотра изменения в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамические поля отображаемые на экране добавления задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамические поля отображаемые на экране редактирования задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        'Динамические поля отображаемые на экране создания отчета по задаче в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать, 2 = показывать и должно быть заполнено.';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        'Динамические поля отображаемые на экране просмотра задачи в интерфейсе агента. Возможные значения: 0 = не показывать, 1 = показывать.';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Модуль управления событиями для динамических полей при изменении Условий, если динамические поля добавляются, изменяются или удаляются.';
     $Self->{Translation}->{'Edit a change.'} = 'Редактировать изменение.';
     $Self->{Translation}->{'Edit the change.'} = '';
     $Self->{Translation}->{'Edit the conditions of the change.'} = '';
     $Self->{Translation}->{'Edit the workorder.'} = '';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Планирование перемещения Изменений. Обзор порядка утверждения Изменений.';
     $Self->{Translation}->{'History Zoom'} = 'История подробно';
@@ -786,8 +796,6 @@ sub Data {
         'Если частота указана как "regularly" вы можете задать как часто будут отправляться уведомления (каждые Х часов).';
     $Self->{Translation}->{'Link another object to the change.'} = '';
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
-    $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
-        'Лог файл для счетчика ITSM изменений. Он используется создания номеров изменений.';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Список членов CAB для автозавершения.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Список агентов для автозавершения.';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
@@ -807,6 +815,7 @@ sub Data {
     $Self->{Translation}->{'New (from template)'} = 'Новое(ая) из шаблона';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         'Пользователи только указанных групп имеют права на использование типов заявок заданных в "ITSMChange::AddChangeLinkTicketTypes", если параметр "Ticket::Acl::Module###200-Ticket::Acl::Module" включен.';
+    $Self->{Translation}->{'Other Settings'} = 'Прочие настройки';
     $Self->{Translation}->{'Overview over all Changes.'} = 'Обзор всех Изменений.';
     $Self->{Translation}->{'PIR'} = 'PIR';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review/Анализ после выполнения)';
@@ -815,6 +824,8 @@ sub Data {
         'Параметры для объекта UserCreateWorkOrderNextMask  в предварительном просмотре в интерфейсе агента';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         'Параметры для страниц (на которых отображаются изменения) в кратком (small) обзоре изменений.';
+    $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
+        'Выполняет заданное действие для каждого события (как Invoker) для каждого настроенного Webservice.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Показывает ссылку/элемент в меню для показа вовлеченных сотрудников для изменения при подробном просмотре изменения в интерфейсе агента.';
     $Self->{Translation}->{'Print the change.'} = '';
@@ -874,6 +885,7 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
+    $Self->{Translation}->{'Screen'} = 'Экран';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Показать этот экран после создания новой задачи';
     $Self->{Translation}->{'Search Changes'} = 'Поиск изменений';
     $Self->{Translation}->{'Search Changes.'} = 'Поиск изменений.';
@@ -886,6 +898,8 @@ sub Data {
         'Задает максимальную высоту (в пикселах) для inline HTML полей в AgentITSMChangeZoom и AgentITSMWorkOrderZoom.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Задает минимальное количество разрядов для счетчика изменений (если выбран тип  "AutoIncrement" для ITSMChange::NumberGenerator). По умолчанию - 5, что означает, что начальное значение счетчика будет 10000.';
+    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
+        '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Задает state machine для изменений.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Задает state machine для заданий.';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
@@ -960,9 +974,21 @@ sub Data {
     $Self->{Translation}->{'Workorder History Zoom.'} = 'История Задачи подробно.';
     $Self->{Translation}->{'Workorder History.'} = 'История Задачи.';
     $Self->{Translation}->{'Workorder Report.'} = 'Отчет по Задаче.';
+    $Self->{Translation}->{'Workorder Zoom'} = '';
     $Self->{Translation}->{'Workorder Zoom.'} = 'Просмотр Задачи.';
     $Self->{Translation}->{'once'} = 'один раз';
     $Self->{Translation}->{'regularly'} = 'регулярно';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this notification language?',
+    'Do you really want to delete this notification?',
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

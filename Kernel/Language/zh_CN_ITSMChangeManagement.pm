@@ -24,7 +24,6 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '管理变更通知';
     $Self->{Translation}->{'Add Notification Rule'} = '添加通知规则';
-    $Self->{Translation}->{'Rule'} = '规则';
     $Self->{Translation}->{'A notification should have a name!'} = '通知必须有名称！';
     $Self->{Translation}->{'Name is required.'} = '名称是必需的。';
 
@@ -90,22 +89,24 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = '您真的想要删除这个变更吗?';
 
     # Template: AgentITSMChangeEdit
-    $Self->{Translation}->{'Edit %s%s'} = '';
+    $Self->{Translation}->{'Edit %s%s'} = '编辑%s%s';
 
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of %s%s'} = '';
+    $Self->{Translation}->{'History of %s%s'} = '工单%s%s的历史信息';
+    $Self->{Translation}->{'History Content'} = '历史值';
     $Self->{Translation}->{'Workorder'} = '工作指令';
+    $Self->{Translation}->{'Createtime'} = '创建时间';
     $Self->{Translation}->{'Show details'} = '显示详情';
     $Self->{Translation}->{'Show workorder'} = '显示工作指令';
 
     # Template: AgentITSMChangeHistoryZoom
-    $Self->{Translation}->{'Detailed history information of %s'} = '';
+    $Self->{Translation}->{'Detailed history information of %s'} = '%s的详细历史信息';
     $Self->{Translation}->{'Modified'} = '已修改';
     $Self->{Translation}->{'Old Value'} = '旧值';
     $Self->{Translation}->{'New Value'} = '新值';
 
     # Template: AgentITSMChangeInvolvedPersons
-    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '';
+    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '编辑%s%s的相关人员';
     $Self->{Translation}->{'Involved Persons'} = '相关人员';
     $Self->{Translation}->{'ChangeManager'} = '变更经理';
     $Self->{Translation}->{'User invalid.'} = '用户无效。';
@@ -124,15 +125,15 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = '每页显示的变更个数';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Workorder Title'} = '工作指令标题';
     $Self->{Translation}->{'Change Title'} = '变更标题';
     $Self->{Translation}->{'Workorder Agent'} = '工作指令服务人员';
     $Self->{Translation}->{'Change Builder'} = '变更创建人';
     $Self->{Translation}->{'Change Manager'} = '变更经理';
     $Self->{Translation}->{'Workorders'} = '工作指令';
     $Self->{Translation}->{'Change State'} = '变更状态';
-    $Self->{Translation}->{'Workorder State'} = '';
-    $Self->{Translation}->{'Workorder Type'} = '';
+    $Self->{Translation}->{'Workorder State'} = '工作指令状态';
+    $Self->{Translation}->{'Workorder Type'} = '工作指令类型';
     $Self->{Translation}->{'Requested Time'} = '请求时间';
     $Self->{Translation}->{'Planned Start Time'} = '计划的开始时间';
     $Self->{Translation}->{'Planned End Time'} = '计划结束时间';
@@ -147,10 +148,10 @@ sub Data {
     $Self->{Translation}->{'CAB Agent'} = 'CAB服务人员成员';
     $Self->{Translation}->{'e.g.'} = '例如：';
     $Self->{Translation}->{'CAB Customer'} = 'CAB客户成员';
-    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
-    $Self->{Translation}->{'ITSM Workorder Report'} = '';
-    $Self->{Translation}->{'ITSM Change Priority'} = '';
-    $Self->{Translation}->{'ITSM Change Impact'} = '';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = 'ITSM工作指令说明';
+    $Self->{Translation}->{'ITSM Workorder Report'} = 'ITSM工作指令报告';
+    $Self->{Translation}->{'ITSM Change Priority'} = 'ITSM变更优先级';
+    $Self->{Translation}->{'ITSM Change Impact'} = 'ITSM变更影响';
     $Self->{Translation}->{'Change Category'} = '变更风险类别';
     $Self->{Translation}->{'(before/after)'} = '（之前/之后）';
     $Self->{Translation}->{'(between)'} = '（在...之间）';
@@ -168,13 +169,12 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = '变更信息';
-    $Self->{Translation}->{'Planned Effort'} = '';
-    $Self->{Translation}->{'Accounted Time'} = '';
+    $Self->{Translation}->{'Planned Effort'} = '预计耗时';
+    $Self->{Translation}->{'Accounted Time'} = '所用工时';
     $Self->{Translation}->{'Change Initiator(s)'} = '变更发起人';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = '上次修改于';
     $Self->{Translation}->{'Last changed by'} = '上次修改人';
-    $Self->{Translation}->{'Ok'} = '确定';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         '要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。';
     $Self->{Translation}->{'Download Attachment'} = '下载附件';
@@ -196,16 +196,14 @@ sub Data {
     $Self->{Translation}->{'Do you want to proceed?'} = '您要继续进行吗？';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'Template ID'} = '';
+    $Self->{Translation}->{'Template ID'} = '模板ID';
     $Self->{Translation}->{'Edit Content'} = '编辑内容';
-    $Self->{Translation}->{'Create by'} = '';
-    $Self->{Translation}->{'Change by'} = '';
+    $Self->{Translation}->{'Create by'} = '创建人';
+    $Self->{Translation}->{'Change by'} = '修改人';
     $Self->{Translation}->{'Change Time'} = '修改时间';
-    $Self->{Translation}->{'Edit Template Content'} = '编辑模板内容';
-    $Self->{Translation}->{'Delete Template'} = '删除模板';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = '将工作指令添加到%s%s';
     $Self->{Translation}->{'Instruction'} = '指令';
     $Self->{Translation}->{'Invalid workorder type.'} = '无效的工作指令类型。';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = '计划开始时间必须在计划结束时间之前!';
@@ -215,7 +213,7 @@ sub Data {
     $Self->{Translation}->{'Select Workorder Template'} = '选择工作指令模板';
 
     # Template: AgentITSMWorkOrderAgent
-    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '';
+    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '编辑工作指令%s%s的服务人员';
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = '您真的想要删除这个工作指令吗?';
@@ -224,16 +222,16 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = '此工作指令出现在下列条件中';
 
     # Template: AgentITSMWorkOrderEdit
-    $Self->{Translation}->{'Edit %s%s-%s'} = '';
+    $Self->{Translation}->{'Edit %s%s-%s'} = '编辑%s%s-%s';
     $Self->{Translation}->{'Move following workorders accordingly'} = '相应的移动工作指令';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         '如果该工作指令的计划结束时间改变了，所有后续工作指令的计划开始时间将相应的改变';
 
     # Template: AgentITSMWorkOrderHistory
-    $Self->{Translation}->{'History of %s%s-%s'} = '';
+    $Self->{Translation}->{'History of %s%s-%s'} = '%s%s-%s历史';
 
     # Template: AgentITSMWorkOrderReport
-    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '编辑%s%s-%s的报告';
     $Self->{Translation}->{'Report'} = '报告';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = '实际开始时间必须在实际结束时间之前!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
@@ -251,8 +249,13 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = '工作指令信息';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
+    $Self->{Translation}->{'Notification Added!'} = '';
     $Self->{Translation}->{'Unknown notification %s!'} = '未知的通知%s！';
     $Self->{Translation}->{'There was an error creating the notification.'} = '创建通知时出现一个错误。';
+
+    # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
+    $Self->{Translation}->{'State Transition Updated!'} = '';
+    $Self->{Translation}->{'State Transition Added!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = '概览：变更';
@@ -484,6 +487,9 @@ sub Data {
     $Self->{Translation}->{'ends with'} = '以...结束';
     $Self->{Translation}->{'set'} = '设置';
 
+    # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+    $Self->{Translation}->{'Ok'} = '确定';
+
     # SysConfig
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} =
         '有权限接手工作指令的服务人员列表。“键”是登录名，“值”是0或1。';
@@ -519,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
     $Self->{Translation}->{'Change Schedule'} = '变更计划';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
+    $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '变更详情。';
     $Self->{Translation}->{'Change and Workorder Templates'} = '变更和工作指令模板';
     $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '本用户编辑的变更模板和工作指令模板。';
@@ -725,30 +732,33 @@ sub Data {
         '确定通用统计模块能否生成关于变更的统计。';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         '确定通用统计模块能否生成一个请求者创建的RFC（变更请求）的数量的统计。';
-    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '在服务人员界面变更打印窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用。';
-    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '在服务人员界面添加变更窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用，2 = 启用且必需。';
-    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '在服务人员界面编辑变更窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用，2 = 启用且必需。';
-    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '在服务人员界面搜索变更窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用。';
-    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '在服务人员界面变更详情窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用。';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '在服务人员界面添加工作指令窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用，2 = 启用且必需。';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '在服务人员界面编辑工作指令窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用，2 = 启用且必需。';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} =
-        '在服务人员界面工作指令报告窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用，2 = 启用且必需。';
-    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} =
-        '在服务人员界面工作指令详情窗口是否显示动态字段。可能的设置：0 - 禁用， 1 = 启用。';
+    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '处理动态字段更新条件（添加、更新或删除）的动态字段事件模块。';
     $Self->{Translation}->{'Edit a change.'} = '编辑一个变更。';
     $Self->{Translation}->{'Edit the change.'} = '编辑变更。';
     $Self->{Translation}->{'Edit the conditions of the change.'} = '编辑变更条件。';
     $Self->{Translation}->{'Edit the workorder.'} = '编辑工作指令。';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '转发变更的计划表。已批准变更的概览。';
     $Self->{Translation}->{'History Zoom'} = '历史详情';
@@ -786,8 +796,6 @@ sub Data {
         '如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。';
     $Self->{Translation}->{'Link another object to the change.'} = '链接另一对象到变更。';
     $Self->{Translation}->{'Link another object to the workorder.'} = '链接另一对象到工作指令。';
-    $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} =
-        'ITSM变更计数器的日志文件，这个文件在创建变更编号时会用到。';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '查找CAB成员，用于自动补齐功能。';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '查找服务人员，用于自动补齐功能。';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
@@ -807,6 +815,7 @@ sub Data {
     $Self->{Translation}->{'New (from template)'} = '从模板新建变更';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '如果启用了“Ticket::Acl::Module###200-Ticket::Acl::Module”，只有这些组中的用户有权使用“ITSMChange::AddChangeLinkTicketTypes”中定义的工单类型。';
+    $Self->{Translation}->{'Other Settings'} = '其它设置';
     $Self->{Translation}->{'Overview over all Changes.'} = '所有变更的概览。';
     $Self->{Translation}->{'PIR'} = '实施后评审';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (实施后审查)';
@@ -815,6 +824,8 @@ sub Data {
         '服务人员界面偏好设置视图UserCreateWorkOrderNextMask（创建工作指令后的窗口）对象的参数。';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         '变更概览简洁模式显示变更的页面参数。';
+    $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
+        '为每个配置的WEB服务的每个事件执行配置好的操作（以调用程序角色）。';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         '在服务人员界面变更详情窗口，在菜单中显示一个链接以显示变更的相关人员。';
     $Self->{Translation}->{'Print the change.'} = '打印变更。';
@@ -874,6 +885,7 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '保存变更为模板。';
     $Self->{Translation}->{'Save workorder as a template.'} = '保存工作指令为模板。';
     $Self->{Translation}->{'Schedule'} = '计划表';
+    $Self->{Translation}->{'Screen'} = '窗口';
     $Self->{Translation}->{'Screen after creating a workorder'} = '创建工作指令后的窗口';
     $Self->{Translation}->{'Search Changes'} = '搜索变更';
     $Self->{Translation}->{'Search Changes.'} = '搜索变更。';
@@ -886,6 +898,8 @@ sub Data {
         '在“AgentITSMChangeZoom（变更详情窗口）”和“AgentITSMWorkOrderZoom（工作指令详情窗口）”中，设置内置HTML字段的最大高度（单位：像素）。';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         '设置最小的变更计数器大小（如果变更编号生成器选用“自动增量”）。默认是5（位数），意味着计数器从10000开始。';
+    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
+        '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = '设置变更的状态模式转换。';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = '设置工作指令的状态模式转换。';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
@@ -960,9 +974,21 @@ sub Data {
     $Self->{Translation}->{'Workorder History Zoom.'} = '工作指令历史详情。';
     $Self->{Translation}->{'Workorder History.'} = '工作指令历史。';
     $Self->{Translation}->{'Workorder Report.'} = '工作指令报告。';
+    $Self->{Translation}->{'Workorder Zoom'} = '';
     $Self->{Translation}->{'Workorder Zoom.'} = '工作指令详情。';
     $Self->{Translation}->{'once'} = '单次';
     $Self->{Translation}->{'regularly'} = '定期';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this notification language?',
+    'Do you really want to delete this notification?',
+    'No',
+    'Ok',
+    'Settings',
+    'Submit',
+    'Yes',
+    );
 
 }
 

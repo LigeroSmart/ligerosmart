@@ -1,161 +1,164 @@
 # 
 # Translators:
+# Farhan Rinaldi Gunawan <farhan.rg@gmail.com>, 2015
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
+# Sofyan Arifin <sofyanarifin39@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-09-25 08:58+0000\n"
 "PO-Revision-Date: 2017-09-25 08:59+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
+"Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
-msgstr "Categoria <-> Impacto <-> Prioridade"
+msgstr "Kategori <-> Dampak <-> Prioritas"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Gestão de Prioridade a partir da combinação da categoria <-> Impacto."
+msgstr "Mengelola hasil prioritas kombinasi Kategori <-> Dampak."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
-msgstr "Atribuir Prioridade"
+msgstr "Alokasi Prioritas"
 
 #. Template: AdminITSMChangeNotification
 msgid "ITSM ChangeManagement Notification Management"
-msgstr "Gestão de Notificações de gestão de Alteração ITSM"
+msgstr "Manajemen Pemberitahuan ITSM Manajemen Perubahan"
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
-msgstr "Adicionar Regra de Notificação"
+msgstr "Tambah peraturan notifikasi"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
-msgstr "A notificação precisa de um nome!"
+msgstr "Pemberitahuan harus memiliki nama!"
 
 #. Template: AdminITSMChangeNotification
 msgid "Name is required."
-msgstr "Nome é obrigatório."
+msgstr "Nama diperlukan."
 
 #. Template: AdminITSMStateMachine
 msgid "Admin State Machine"
-msgstr "Gerir Máquina de Estado"
+msgstr "Admin State Machine"
 
 #. Template: AdminITSMStateMachine
 msgid "Select a catalog class!"
-msgstr "Selecione uma classe de catálogo!"
+msgstr "Pilih kelas katalog!"
 
 #. Template: AdminITSMStateMachine
 msgid "A catalog class is required!"
-msgstr "A classe de catálogo é necessária!"
+msgstr "Sebuah kelas Katalog diperlukan!"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a state transition"
-msgstr "Adicionar uma transição de estado"
+msgstr "Menambahkan transisi "
 
 #. Template: AdminITSMStateMachine
 msgid "Catalog Class"
-msgstr "Classe de Catálogo"
+msgstr "Kelas Katalog"
 
 #. Template: AdminITSMStateMachine
 msgid "Object Name"
-msgstr "Nome do Objeto"
+msgstr "Nama obyek"
 
 #. Template: AdminITSMStateMachine
 msgid "Overview over state transitions for"
-msgstr "Revisão da transição de estado para"
+msgstr "Keseluruhan state transisi"
 
 #. Template: AdminITSMStateMachine
 msgid "Delete this state transition"
-msgstr "Excluir esta transição de estado"
+msgstr "Hapus transisi state berikut"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a new state transition for"
-msgstr "Adicionar uma nova transição de estado para"
+msgstr "Tambah state transisi baru"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a state!"
-msgstr "Por favor selecione um estado!"
+msgstr "Pilih state"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a next state!"
-msgstr "Por favor, escolha o próximo estado!"
+msgstr "Pilih state berikutnya"
 
 #. Template: AdminITSMStateMachine
 msgid "Edit a state transition for"
-msgstr "Editar uma transição de estado para"
+msgstr "Edit transisi state"
 
 #. Template: AdminITSMStateMachine
 msgid "Do you really want to delete the state transition"
-msgstr "Você quer mesmo Apagar esta transição de estado?"
+msgstr "Apakah Anda benar-benar ingin menghapus transisi?"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
-msgstr "Adicionar Alteração"
+msgstr "Tambah perubahan"
 
 #. Template: AgentITSMChangeAdd
 msgid "ITSM Change"
-msgstr "Alteração"
+msgstr "Ubah ITSM"
 
 #. Template: AgentITSMChangeAdd
 msgid "Justification"
-msgstr "Justificação"
+msgstr "Justifikasi"
 
 #. Template: AgentITSMChangeAdd
 msgid "Input invalid."
-msgstr "Entrada inválida."
+msgstr "Pemasukan tidak sah"
 
 #. Template: AgentITSMChangeAdd
 msgid "Impact"
-msgstr "Impacto"
+msgstr "Dampak"
 
 #. Template: AgentITSMChangeAdd
 msgid "Requested Date"
-msgstr "Data Solicitada"
+msgstr "Tanggal diminta"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Select Change Template"
-msgstr "Selecione modelo de Alteração"
+msgstr "Pilih perubahan template"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Time type"
-msgstr "Tipo de Horário"
+msgstr "Jenis waktu"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Invalid time type."
-msgstr "Tipo de horário inválido."
+msgstr "Jenis waktu tidak sah"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "New time"
-msgstr "Novo horário"
+msgstr "Waktu baru"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Save Change CAB as template"
-msgstr "Guardar CAB da Alteração como modelo"
+msgstr "Simpan perubahan CAB sebagai Template"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
-msgstr "ir para o ecrãn \"Pessoas Envolvidas\""
+msgstr "pergi ke layar orang yang terlibat"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
-msgstr "Nome inválido"
+msgstr "Nama tidak sah"
 
 #. Template: AgentITSMChangeCondition
 msgid "Conditions and Actions"
-msgstr "Condições e Ações"
+msgstr "Kondisi dan Tindakan"
 
 #. Template: AgentITSMChangeCondition
 msgid "Delete Condition"
-msgstr "Apagar Condição"
+msgstr "Hapus kondisi"
 
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
-msgstr "Adicionar nova condição"
+msgstr "Tambah kondisi baru"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Edit Condition"
@@ -163,71 +166,71 @@ msgstr ""
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
-msgstr "Um nome válido é necessário."
+msgstr "Perlu nama yang sah"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "A valid name is needed."
-msgstr ""
+msgstr "Nama yang sah diperlukan"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
-msgstr ""
+msgstr "Duplikasi nama"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "This name is already used by another condition."
-msgstr ""
+msgstr "Nama tersebut telah digunakan oleh kondisi lainnya"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Matching"
-msgstr "Combinação"
+msgstr "Sesuai"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Any expression (OR)"
-msgstr "Qualquer expressão lógica (OU)"
+msgstr "Ekspresi lainnya (OR)"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "All expressions (AND)"
-msgstr "Todas as expressões lógicas (E)"
+msgstr "Semua ekspresi (AND)"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Expressions"
-msgstr "Expressões"
+msgstr "Ekspresi"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Selector"
-msgstr "Seletor"
+msgstr "Pemilih"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Operator"
-msgstr "Operador"
+msgstr "Pengurus"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Expression"
-msgstr "Excluir Expressão"
+msgstr "Hapus ekspresi"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Expressions found."
-msgstr "Nenhuma expressão lógica encontrada."
+msgstr "Ekspresi tidak ditemukan"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new expression"
-msgstr "Adicionar nova expressão"
+msgstr "Tambah ekspresi baru"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Action"
-msgstr "Excluir Ação"
+msgstr "Hapus aksi"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Actions found."
-msgstr "Nenhuma ação encontrada."
+msgstr "Tidak ada aksi ditemukan"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new action"
-msgstr "Adicionar nova ação"
+msgstr "Tambah aksi baru"
 
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
-msgstr "Você quer realmente excluir esta mudança?"
+msgstr "Apakah anda ingin menghapus perubahan ini?"
 
 #. Template: AgentITSMChangeEdit
 msgid "Edit %s%s"
@@ -235,27 +238,27 @@ msgstr ""
 
 #. Template: AgentITSMChangeHistory
 msgid "History of %s%s"
-msgstr ""
+msgstr "Sejarah dari %s%s"
 
 #. Template: AgentITSMChangeHistory
 msgid "History Content"
-msgstr "Histórico do conteúdo"
+msgstr "Isi sejarah"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
-msgstr "Ordem de Serviço"
+msgstr "Tata kerja"
 
 #. Template: AgentITSMChangeHistory
 msgid "Createtime"
-msgstr "Hora de criação"
+msgstr "BuatWaktu"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
-msgstr "Mostrar detalhes"
+msgstr "Tampilkan detail"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show workorder"
-msgstr "Mostrar Ordem de Serviço"
+msgstr "Tampilkan tata kerja"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Detailed history information of %s"
@@ -263,15 +266,15 @@ msgstr ""
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
-msgstr "Modificado"
+msgstr "Diubah"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Old Value"
-msgstr "Antigo valor"
+msgstr "Nilai lama"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "New Value"
-msgstr "Novo valor"
+msgstr "Nilai baru"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Edit Involved Persons of %s%s"
@@ -279,59 +282,59 @@ msgstr ""
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Involved Persons"
-msgstr "Pessoas Envolvidas"
+msgstr "Orang yang terlibat"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeManager"
-msgstr "gestor da Alteração"
+msgstr "Ubah manager"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "User invalid."
-msgstr "Utilizador inválido"
+msgstr "Pengguna tidak sah"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeBuilder"
-msgstr "Construtor da Alteração"
+msgstr "Ubah pembangun"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Change Advisory Board"
-msgstr "Conselho Consultivo de Alteração"
+msgstr "Dewan Penasehat perubahan"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "CAB Template"
-msgstr "Modelo de CAB"
+msgstr "Template CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Apply Template"
-msgstr "Aplicar Modelo"
+msgstr "Terapkan Template"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "NewTemplate"
-msgstr "Novo modelo"
+msgstr "Template baru"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Save this CAB as template"
-msgstr "Guardar este CAB como modelo"
+msgstr "Simpan CAB sebagai template"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Add to CAB"
-msgstr "Adicionar ao CAB"
+msgstr "Tambah CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Invalid User"
-msgstr "Utilizador inválido"
+msgstr "Pengguna tidak sah"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
-msgstr "CAB Atual"
+msgstr "CAB saat ini"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Context Settings"
-msgstr "Configurações de Contexto"
+msgstr "Pengaturan Konteks"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
-msgstr "Alterações por página"
+msgstr "Ubah setiap halaman"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Title"
@@ -339,7 +342,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Title"
-msgstr ""
+msgstr "Ubah judul"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Agent"
@@ -347,19 +350,19 @@ msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Builder"
-msgstr "Construtor da Alteração"
+msgstr "Ubah pembangun"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Manager"
-msgstr "Gestor de Alteração"
+msgstr "Ubah manager"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
-msgstr "Ordem de Serviço"
+msgstr "Tata kerja"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change State"
-msgstr ""
+msgstr "Ubah state"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder State"
@@ -371,43 +374,43 @@ msgstr ""
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
-msgstr "Horário solicitado"
+msgstr "Waktu yang diminta"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Planned Start Time"
-msgstr ""
+msgstr "Perencanaan waktu"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Planned End Time"
-msgstr ""
+msgstr "Perencanaan waktu berakhir"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Actual Start Time"
-msgstr ""
+msgstr "Waktu dimulai"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Actual End Time"
-msgstr ""
+msgstr "Waktu berakhir"
 
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
-msgstr "Você quer realmente redefinir esta mudança?"
+msgstr "Apakah anda ingin mengeset ulang perubahan ini?"
 
 #. Template: AgentITSMChangeSearch
 msgid "(e.g. 10*5155 or 105658*)"
-msgstr "(ex. 10*5155 ou 105658*)"
+msgstr "(Contoh 10*5155 or 105658*)"
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Agent"
-msgstr ""
+msgstr "Agen CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
-msgstr "ex."
+msgstr "Contoh"
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Customer"
-msgstr ""
+msgstr "Pelanggan CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Instruction"
@@ -427,47 +430,47 @@ msgstr ""
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
-msgstr "Categoria da Alteração"
+msgstr "Ubah kategori"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
-msgstr "(antes/depois)"
+msgstr "(Sebelum/Setelah)"
 
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
-msgstr "(entre)"
+msgstr "(diantara)"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
-msgstr "Guardar Alteração como Modelo"
+msgstr "Simpan sebagai template"
 
 #. Template: AgentITSMChangeTemplate
 msgid "A template should have a name!"
-msgstr "Um modelo precisa de um nome!"
+msgstr "Sebuah template harus memiliki nama!"
 
 #. Template: AgentITSMChangeTemplate
 msgid "The template name is required."
-msgstr "O nome do modelo é necessário."
+msgstr "Nama Template diperlukan."
 
 #. Template: AgentITSMChangeTemplate
 msgid "Reset States"
-msgstr "Restabelecer Estados"
+msgstr "Atur ulang state"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Overwrite original template"
-msgstr ""
+msgstr "Template asli ditimpa"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Delete original change"
-msgstr ""
+msgstr "Hapus perubahan asli"
 
 #. Template: AgentITSMChangeTimeSlot
 msgid "Move Time Slot"
-msgstr "Deslocar Horários"
+msgstr "Pindahkan Waktu Slot"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Information"
-msgstr "Informação da Alteração"
+msgstr "Ubah informasi"
 
 #. Template: AgentITSMChangeZoom
 msgid "Planned Effort"
@@ -479,7 +482,7 @@ msgstr ""
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
-msgstr "Iniciador(es) da Alteração"
+msgstr "Perubahan Pemrakarsa (s)"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
@@ -487,58 +490,58 @@ msgstr "CAB"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed"
-msgstr "Última alteração"
+msgstr "Terakhir diubah"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed by"
-msgstr "Última alteração por"
+msgstr "Terakhir dirubah oleh"
 
 #. Template: AgentITSMChangeZoom
 msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr "Para abrir as ligações abaixo poderá necessitar de premir a tecla CTRL (ou CMD) ou Shift (dependendo do browser e do sistema operativo) quando clicar sobre a ligação"
+msgstr "Untuk membuka tautan pada bagian deskripsi berikut, Anda harus menekan tombol Ctrl atau Cms atau Shift sambil menekan tautannya (tergantung pada Sistem Operasi dan Peramban)"
 
 #. Template: AgentITSMChangeZoom
 msgid "Download Attachment"
-msgstr "Descarregar Anexo"
+msgstr "Unduh Lampiran"
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
-msgstr ""
+msgstr "Mengedit CAB Template"
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "This will create a new change from this template, so you can edit and save "
 "it."
-msgstr ""
+msgstr "Ini akan membuat perubahan baru dari template ini, sehingga Anda dapat mengedit dan menyimpannya."
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "The new change will be deleted automatically after it has been saved as "
 "template."
-msgstr ""
+msgstr "Perubahan baru akan dihapus secara otomatis setelah telah disimpan sebagai template."
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "This will create a new workorder from this template, so you can edit and "
 "save it."
-msgstr ""
+msgstr "Ini akan membuat perintah kerja baru dari template ini, sehingga Anda dapat mengedit dan menyimpannya."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "A temporary change will be created which contains the workorder."
-msgstr ""
+msgstr "Sebuah perubahan sementara akan dibuat yang berisi perintah kerja."
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
 "The temporary change and new workorder will be deleted automatically after "
 "the workorder has been saved as template."
-msgstr ""
+msgstr "Perubahan sementara dan perintah kerja baru akan dihapus secara otomatis setelah perintah kerja telah disimpan sebagai template."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "Do you want to proceed?"
-msgstr ""
+msgstr "Apakah Anda ingin melanjutkan?"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Template ID"
@@ -546,7 +549,7 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
-msgstr ""
+msgstr "Ubah isi"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Create by"
@@ -558,7 +561,7 @@ msgstr ""
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change Time"
-msgstr ""
+msgstr "Mengubah waktu"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to %s%s"
@@ -566,23 +569,23 @@ msgstr ""
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Instruction"
-msgstr "Instrução"
+msgstr "Instruksi"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid workorder type."
-msgstr "Tipo de ordem de serviço inválido"
+msgstr "Jenis perintah kerja tidak valid"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "The planned start time must be before the planned end time!"
-msgstr "O tempo de início planeado deve ser anterior ao horário de fim planeado!"
+msgstr "waktu mulai direncanakan harus sebelum waktu akhir yang direncanakan!"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid format."
-msgstr "Formato Inválido."
+msgstr "Format tidak sah"
 
 #. Template: AgentITSMWorkOrderAddFromTemplate
 msgid "Select Workorder Template"
-msgstr "Selecione modelo de ordem de serviço"
+msgstr "Pilih Work Order Template"
 
 #. Template: AgentITSMWorkOrderAgent
 msgid "Edit Workorder Agent of %s%s"
@@ -590,16 +593,16 @@ msgstr ""
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "Do you really want to delete this workorder?"
-msgstr "Deseja apagar esta ordem de serviço?"
+msgstr "Apakah Anda benar-benar ingin menghapus perintah kerja ini?"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid ""
 "You can not delete this Workorder. It is used in at least one Condition!"
-msgstr "Não é possível apagar esta ordem de serviço. É utilizada pelo menos numa condição!"
+msgstr "Anda tidak dapat menghapus Perintah Kerja ini. Hal ini digunakan dalam setidaknya satu Kondisi!"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "This Workorder is used in the following Condition(s)"
-msgstr "Esta ordem de serviço está em utilização na(s) condição(ões)"
+msgstr "Perintah Kerja ini digunakan dalam Kondisi berikut (s)"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "Edit %s%s-%s"
@@ -607,13 +610,13 @@ msgstr ""
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "Move following workorders accordingly"
-msgstr "Mover as seguintes ordens de acordo"
+msgstr "Bergerak mengikuti perintah kerja yang sesuai"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid ""
 "If the planned end time of this workorder is changed, the planned start "
 "times of all following workorders will be changed accordingly"
-msgstr "Se o término planejado desta ordem de serviço for alterado, o horário planejado de início de todas as seguintes ordens também serão alterados"
+msgstr "Jika waktu akhir yang direncanakan dari perintah kerja ini berubah, kali mulai direncanakan semua perintah kerja berikut akan berubah dengan sesuai"
 
 #. Template: AgentITSMWorkOrderHistory
 msgid "History of %s%s-%s"
@@ -625,35 +628,35 @@ msgstr ""
 
 #. Template: AgentITSMWorkOrderReport
 msgid "Report"
-msgstr "Relatório"
+msgstr "Laporan"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be before the actual end time!"
-msgstr "O tempo de início real deve ser anterior ao tempo final real !"
+msgstr "Waktu mulai yang sebenarnya harus sebelum waktu akhir yang sebenarnya!"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be set, when the actual end time is set!"
-msgstr "O tempo de início real deve ser definido, quando o tempo de fim real é configurado!"
+msgstr "Waktu mulai yang sebenarnya harus diatur, ketika waktu akhir yang sebenarnya diatur!"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Current Agent"
-msgstr "agente atual"
+msgstr "Agen saat ini"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Do you really want to take this workorder?"
-msgstr "Deseja assumir esta ordem de serviço?"
+msgstr "Apakah Anda benar-benar ingin mengambil pesanan pekerjaan ini?"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Save Workorder as Template"
-msgstr "Guardar Ordem de Serviço como Modelo"
+msgstr "Hemat Work Order sebagai Template"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Delete original workorder (and surrounding change)"
-msgstr ""
+msgstr "Hapus perintah kerja asli (dan perubahan sekitarnya)"
 
 #. Template: AgentITSMWorkOrderZoom
 msgid "Workorder Information"
-msgstr "Informação da Ordem de Serviço"
+msgstr "Perintah kerja informasi"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Notification Added!"
@@ -661,11 +664,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
-msgstr ""
+msgstr "pemberitahuan tidak diketahui %s!"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "There was an error creating the notification."
-msgstr ""
+msgstr "Ada kesalahan saat membuat pemberitahuan."
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Updated!"
@@ -677,427 +680,427 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
 msgid "Overview: ITSM Changes"
-msgstr ""
+msgstr "Ikhtisar: ITSM Perubahan"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
-msgstr ""
+msgstr "Tiket dengan ID tiket %s tidak ada!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
-msgstr ""
+msgstr "Opsi sysconfig hllang \"ITSMChange::AddChangeLinkTicketTypes\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Was not able to add change!"
-msgstr ""
+msgstr "Tidak dapat menambahkan perubahan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
 msgid "Was not able to create change from template!"
-msgstr ""
+msgstr "Tidak mampu membuat perubahan dari template!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "No ChangeID is given!"
-msgstr ""
+msgstr "Tidak ada Ganti ID diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "No change found for changeID %s."
-msgstr ""
+msgstr "Tidak ada perubahan yang ditemukan untuk ID perubahan."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "The CAB of change \"%s\" could not be serialized."
-msgstr ""
+msgstr "CAB perubahan \"%s\" tidak dapat serial."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "Could not add the template."
-msgstr ""
+msgstr "Tidak dapat menambahkan template."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Change \"%s\" not found in database!"
-msgstr ""
+msgstr "Ganti \"%s\" tidak ditemukan dalam database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Could not delete ConditionID %s!"
-msgstr ""
+msgstr "Tidak dapat menghapus ConditionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "Tidak ada %s diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
-msgstr ""
+msgstr "Tidak dapat membuat kondisi baru!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ConditionID %s!"
-msgstr ""
+msgstr "tidak bisa update ConditionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ExpressionID %s!"
-msgstr ""
+msgstr "tidak bisa update Expression %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not add new Expression!"
-msgstr ""
+msgstr "ak dapat menambahkan Expresi baru!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ActionID %s!"
-msgstr ""
+msgstr "tidak bisa update ActionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not add new Action!"
-msgstr ""
+msgstr "tidak bisa menambah Action baru!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not delete ExpressionID %s!"
-msgstr ""
+msgstr "Tidak dapat menghapus Ekspresi %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not delete ActionID %s!"
-msgstr ""
+msgstr "Tidak dapat menghapus ActionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Error: Unknown field type \"%s\"!"
-msgstr ""
+msgstr "Kesalahan: tidak diketahui jenis field \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
+msgstr "Kondisi ID %s tidak memiliki perubahan ID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Change \"%s\" does not have an allowed change state to be deleted!"
-msgstr ""
+msgstr "Perubahan \"%s\" tidak memiliki  perubahan state yang boleh dihapus!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Was not able to delete the changeID %s!"
-msgstr ""
+msgstr "Tidak bisa menghapus perubahan ID"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
 msgid "Was not able to update Change!"
-msgstr ""
+msgstr "Tidak dapat memperbarui perubahan"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Can't show history, as no ChangeID is given!"
-msgstr ""
+msgstr "tidak bisa menunjukkan sejarah, karena tidak ada perubahan ID yang diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Change \"%s\" not found in the database!"
-msgstr ""
+msgstr "Perubahan \"%s\" tidak ditemukan di dalam database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Unknown type \"%s\" encountered!"
-msgstr ""
+msgstr "Jenis tidak diketahui \"%s\" ditemui!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Change History"
-msgstr ""
+msgstr "Ubah sejarah"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
 msgid "Can't show history zoom, no HistoryEntryID is given!"
-msgstr ""
+msgstr "tidak bisa menunjukkan sejarah zoom, tidak ada Sejarah EntryID diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
 msgid "HistoryEntry \"%s\" not found in database!"
-msgstr ""
+msgstr "Sejarah Entry \"%s\" tidak ditemukan dalam database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
 msgid "Was not able to update Change CAB for Change %s!"
-msgstr ""
+msgstr "Tidak dapat memperbarui Ganti CAB untuk Perubahan %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
 msgid "Was not able to update Change %s!"
-msgstr ""
+msgstr "Tidak dapat memperbarui perubahan %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
 msgid "Overview: ChangeManager"
-msgstr ""
+msgstr "Ikhtisar: Perubahan manajer"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
 msgid "Overview: My CAB"
-msgstr ""
+msgstr "Ikhtisar: CAB saya"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
 msgid "Overview: My Changes"
-msgstr ""
+msgstr "Ikhtisar: Perubahan Saya"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
 msgid "Overview: My Workorders"
-msgstr ""
+msgstr "Ikhtisar: Perintah Kerja Saya"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "Overview: PIR"
-msgstr ""
+msgstr "Ikhtisar: PIR"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "Overview: PSA"
-msgstr ""
+msgstr "Ikhtisar: PSA"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrder \"%s\" not found in database!"
-msgstr ""
+msgstr "Tatakerja \"%s\" tidak ditemukan didalam database"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "Can't create output, as the workorder is not attached to a change!"
-msgstr ""
+msgstr "Tidak dapat membuat output, sebagai perintah kerja tidak terikat pada perubahan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "Can't create output, as no ChangeID is given!"
-msgstr ""
+msgstr "Tidak dapat membuat output, karena tidak ada perubahan ID yang diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown change title"
-msgstr ""
+msgstr "Tidak diketahui perubahan judul"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder"
-msgstr "Ordem de Serviço ITSM"
+msgstr "Tatakerja ITSM"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
-msgstr ""
+msgstr "Tidak diketahui judul perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
-msgstr ""
+msgstr "ITSM Keseluruhan perintah kerja (%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
-msgstr "Início planeado"
+msgstr "Waktu mulai direncanakan"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedEndTime"
-msgstr "fim planeado"
+msgstr "Waktu akhir direncanakan"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualStartTime"
-msgstr "Início Real"
+msgstr "Mulai waktu "
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualEndTime"
-msgstr "fim Real"
+msgstr "Waktu berakhir"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
-msgstr ""
+msgstr "Tidak bisa me-reset Perintah Kerja %s dari perubahan %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset Change %s!"
-msgstr ""
+msgstr "Tidak bisa me-reset Perubahan  %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
 msgid "Overview: Change Schedule"
-msgstr ""
+msgstr "Ikhtisar: Perubahan Jadwal"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search"
-msgstr ""
+msgstr "Mengubah pencarian"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "ChangeTitle"
-msgstr "Título da Alteração"
+msgstr "Ubah judul"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
-msgstr "Ordens de Serviço"
+msgstr "Perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "ChangeState"
-msgstr "Estado da Alteração"
+msgstr "Ubah state"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
-msgstr ""
+msgstr "Mengubah hasil pencarian"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Number"
-msgstr ""
+msgstr "Ubah nomor"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Work Order Title"
-msgstr ""
+msgstr "Judul perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Description"
-msgstr ""
+msgstr "Mengubah deskripsi"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Justification"
-msgstr ""
+msgstr "Mengubah justifikasi"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Instruction"
-msgstr ""
+msgstr "Instruksi perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Report"
-msgstr ""
+msgstr "Laporan perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Priority"
-msgstr ""
+msgstr "Ubah prioritas"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Impact"
-msgstr ""
+msgstr "Ubah dampak"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Created By"
-msgstr ""
+msgstr "Diciptakan oleh"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder State"
-msgstr ""
+msgstr "State perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Type"
-msgstr ""
+msgstr "Jenis perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Agent"
-msgstr ""
+msgstr "Perintah kerja agen"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "before"
-msgstr ""
+msgstr "Sebelum"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
 msgid "The change \"%s\" could not be serialized."
-msgstr ""
+msgstr "Perubahan \"%s\"tidak dapat serial. "
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
 msgid "Could not update the template \"%s\"."
-msgstr ""
+msgstr "tidak bisa update template \"%s\""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTemplate.pm
 msgid "Could not delete change \"%s\"."
-msgstr ""
+msgstr "tidak bisa menghapus perubahan \"%s\""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "The change can't be moved, as it has no workorders."
-msgstr ""
+msgstr "perubahan tidak dapat dipindahkan, karena tidak memiliki perintah kerja."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "Add a workorder first."
-msgstr ""
+msgstr "pertama tambahkan perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "Can't move a change which already has started!"
-msgstr ""
+msgstr "Tidak dapat memindahkan perubahan yang sudah telah dimulai!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "Please move the individual workorders instead."
-msgstr ""
+msgstr "Silakan memindahkan perintah kerja individu sebagai gantinya."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "The current %s could not be determined."
-msgstr ""
+msgstr "Saat ini %s tidak dapat ditentukan."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "The %s of all workorders has to be defined."
-msgstr ""
+msgstr "%s dari semua perintah kerja harus didefinisikan."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "Was not able to move time slot for workorder #%s!"
-msgstr ""
+msgstr "Tidak bisa bergerak slot waktu untuk perintah kerja #%s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "You need %s permission!"
-msgstr ""
+msgstr "Anda perlu %s izin!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "No TemplateID is given!"
-msgstr ""
+msgstr "Tidak ada ID Template diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "Template \"%s\" not found in database!"
-msgstr ""
+msgstr "Template \"%s\" tidak ditemukan dalam database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "Was not able to delete the template %s!"
-msgstr ""
+msgstr "Tidak bisa menghapus template %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateEdit.pm
 msgid "Was not able to update Template %s!"
-msgstr ""
+msgstr "Tidak dapat memperbarui Template %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateEditCAB.pm
 msgid "Was not able to update Template \"%s\"!"
-msgstr ""
+msgstr "Tidak dapat memperbarui Template \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
 msgid "Was not able to create change!"
-msgstr ""
+msgstr "Tidak mampu membuat perubahan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateEditContent.pm
 msgid "Was not able to create workorder from template!"
-msgstr ""
+msgstr "Tidak mampu menciptakan perintah kerja dari Template!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateOverview.pm
 msgid "Overview: Template"
-msgstr ""
+msgstr "Ikhtisar: Template"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
 msgid "You need %s permissions on the change!"
-msgstr ""
+msgstr "Anda perlu %s izin pada perubahan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
 msgid "Was not able to add workorder!"
-msgstr ""
+msgstr "Tidak dapat menambahkan perintah kerja!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "No WorkOrderID is given!"
-msgstr ""
+msgstr "Tidak ada ID perintah kerja diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "Was not able to set the workorder agent of the workorder \"%s\" to empty!"
-msgstr ""
+msgstr "Tidak mampu mengatur agen perintah kerja dari perintah kerja \"%s\" untuk mengosongkan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "Was not able to update the workorder \"%s\"!"
-msgstr ""
+msgstr "Tidak dapat memperbarui perintah kerja \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "Could not find Change for WorkOrder %s!"
-msgstr ""
+msgstr "Tidak dapat memperbarui perintah kerja %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderDelete.pm
 msgid "Was not able to delete the workorder %s!"
-msgstr ""
+msgstr "Tidak dapat menghapus perintah kerja %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderEdit.pm
 msgid "Was not able to update WorkOrder %s!"
-msgstr ""
+msgstr "Tidak dapat memperbarui Perintah Kerja %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "Can't show history, as no WorkOrderID is given!"
-msgstr ""
+msgstr "tidak bisa menunjukkan sejarah, karena tidak ada ID Tata Kerja diberikan!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrder \"%s\" not found in the database!"
-msgstr ""
+msgstr "Work Order \"%s\" tidak ditemukan dalam database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrderHistory::"
-msgstr ""
+msgstr "Riwayat bekerja::"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrder History"
-msgstr ""
+msgstr "Riwayat perintah kerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
 msgid "History entry \"%s\" not found in the database!"
-msgstr ""
+msgstr "entri sejarah \"%s\" tidak ditemukan dalam database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
 msgid "WorkOrder History Zoom"
-msgstr ""
+msgstr "Riwayat Zoom Bekerja"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderTake.pm
 msgid "Was not able to take the workorder %s!"
-msgstr ""
+msgstr "Tidak bisa mengambil perintah kerja!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
 msgid "The workorder \"%s\" could not be serialized."
-msgstr ""
+msgstr "Perintah kerja \"%s\" tidak dapat serial."
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Need config option %s!"
@@ -1117,139 +1120,139 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
 msgid "My CABs"
-msgstr "Os meus CABs"
+msgstr "CABs saya"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
 msgid "My Changes"
-msgstr "As minhas alterações"
+msgstr "Perubahan saya"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
-msgstr ""
+msgstr "Perintah kerja saya"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
-msgstr "Requerida"
+msgstr "Diminta"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pending approval"
-msgstr "Aprovação Pendente"
+msgstr "approval tertunda"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "rejected"
-msgstr "Rejeitada"
+msgstr "Ditolak"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "approved"
-msgstr "Aprovada"
+msgstr "Disetujui"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "in progress"
-msgstr "Em curso"
+msgstr "Dalam proses"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pending pir"
-msgstr "RPI Pendente"
+msgstr "PIR Tertunda"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "successful"
-msgstr "Sucesso"
+msgstr "Berhasil"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "failed"
-msgstr "Falhou"
+msgstr "Gagal"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "canceled"
-msgstr "Cancelada"
+msgstr "Dibatalkan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "retracted"
-msgstr "Retratada"
+msgstr "Dicabut"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "created"
-msgstr "Criada"
+msgstr "Diciptakan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "accepted"
-msgstr "Aceite"
+msgstr "Diterima"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ready"
-msgstr "Pronta"
+msgstr "Sedia"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "approval"
-msgstr "Aprovação"
+msgstr "Persetujuan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "workorder"
-msgstr "Ordem de Serviço"
+msgstr "perintah kerja"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "backout"
-msgstr "Plano de Retorno"
+msgstr "Mungkir"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "decision"
-msgstr "Decisão"
+msgstr "Keputusan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pir"
-msgstr "RPI (Revista Pós-Implementação)"
+msgstr "PIR"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is"
-msgstr "é"
+msgstr "adalah"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is not"
-msgstr "não é"
+msgstr "bukan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is empty"
-msgstr "é vazio"
+msgstr "kosong"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is not empty"
-msgstr "não está vazio"
+msgstr "bukan kosong"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is greater than"
-msgstr "é maior que"
+msgstr "lebih besar dari"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is less than"
-msgstr "é menor que"
+msgstr "kurang dari"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is before"
-msgstr "antes de"
+msgstr "sebelum"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is after"
-msgstr "depois de"
+msgstr "setelah"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "contains"
-msgstr "contém"
+msgstr "Isi"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "not contains"
-msgstr "não contém"
+msgstr "bukan isi"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "begins with"
-msgstr "inicia com"
+msgstr "Dimulai dengan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ends with"
-msgstr "termina com"
+msgstr "Berakhir dengan"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "set"
-msgstr "configurar"
+msgstr "Aturan"
 
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
 msgid "Ok"
@@ -1259,17 +1262,17 @@ msgstr "Ok"
 msgid ""
 "A list of the agents who have permission to take workorders. Key is a login "
 "name. Content is 0 or 1."
-msgstr "Lista dos agentes que têm permissão para ter Ordens de Serviço.Chave é um nome de login.O conteúdo é 0 ou 1"
+msgstr "Sebuah daftar agen yang memiliki izin untuk menerima perintah kerja. Key adalah nama login. Konten adalah 0 atau 1."
 
 #. SysConfig
 msgid ""
 "A list of workorder states, at which the ActualStartTime of a workorder will"
 " be set if it was empty at this point."
-msgstr "Lista de estados de Ordem de Serviço, em que a hora de início real de uma Ordem de Serviço será definida se estiver vazia."
+msgstr "Daftar status perintah kerja di mana sebenarnya Start Time dari workorder akan ditetapkan apakah itu kosong pada saat ini."
 
 #. SysConfig
 msgid "Add Workorder"
-msgstr "Adicionar Ordem"
+msgstr "Tambahkan Work Order"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
@@ -1277,11 +1280,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Add a change from template."
-msgstr ""
+msgstr "Tambah perubahan dari template"
 
 #. SysConfig
 msgid "Add a change."
-msgstr ""
+msgstr "Tambah perubahan"
 
 #. SysConfig
 msgid "Add a workorder (from template) to the change."
@@ -1293,83 +1296,83 @@ msgstr ""
 
 #. SysConfig
 msgid "Add from template"
-msgstr "Adicionar utilizando modelo"
+msgstr "Tambahkan dari template"
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr "Gerir matriz CIP."
+msgstr "Matriks CIP admin"
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr "Gerir máquina de estado."
+msgstr "Mesin state admin"
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of change advisory "
 "boards."
-msgstr "Módulo de notificação da interface do agente para ver o número de CAB."
+msgstr "module notifikasi agen antar muka untuk melihat nomor dari perubahan"
 
 #. SysConfig
 msgid ""
 "Agent interface notification module to see the number of changes managed by "
 "the user."
-msgstr "Módulo de notificação da interface do agente para ver o número de alterações geridas pelo utilizador."
+msgstr "Agen modul pemberitahuan antarmuka untuk melihat jumlah perubahan dikelola oleh pengguna."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of changes."
-msgstr "Módulo de notificação da interface do agente para ver o número de alterações."
+msgstr "Agen modul pemberitahuan antarmuka untuk melihat jumlah perubahan."
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of workorders."
-msgstr ""
+msgstr "Modul pemberitauan di antarmuka agen untuk melihat jumlah perintah kerja"
 
 #. SysConfig
 msgid "CAB Member Search"
-msgstr ""
+msgstr "Cari anggota CAB"
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management toolbars. Default: 3 hours "
 "(180 minutes)."
-msgstr ""
+msgstr "waktu cache di menit untuk toolbar perubahan manajemen. Default: 3 jam (180 menit)."
 
 #. SysConfig
 msgid ""
 "Cache time in minutes for the change management. Default: 5 days (7200 "
 "minutes)."
-msgstr ""
+msgstr "waktu cache di menit untuk manajemen perubahan. Default: 5 hari (7200 menit)."
 
 #. SysConfig
 msgid "Change CAB Templates"
-msgstr ""
+msgstr "Mengubah template CAB"
 
 #. SysConfig
 msgid "Change History."
-msgstr ""
+msgstr "Mengubah sejarah"
 
 #. SysConfig
 msgid "Change Involved Persons."
-msgstr ""
+msgstr "Mengubah orang yang terlibat"
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr "Limite para a vista de Alterações \"pequeno\""
+msgstr "Batas mengubah keseluruhan \"Kecil\" "
 
 #. SysConfig
 msgid "Change Overview."
-msgstr ""
+msgstr "Mengubah keseluruhan"
 
 #. SysConfig
 msgid "Change Print."
-msgstr ""
+msgstr "Mengubah print"
 
 #. SysConfig
 msgid "Change Schedule"
-msgstr "Agenda da alteração"
+msgstr "Ubah jadwal"
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr ""
+msgstr "Mengubah jadwal"
 
 #. SysConfig
 msgid "Change Zoom"
@@ -1377,7 +1380,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change Zoom."
-msgstr ""
+msgstr "Mengubah zoom"
 
 #. SysConfig
 msgid "Change and Workorder Templates"
@@ -1389,7 +1392,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Change area."
-msgstr ""
+msgstr "Mengubah area"
 
 #. SysConfig
 msgid "Change involved persons of the change."
@@ -1401,15 +1404,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
-msgstr "Alterar pesquisa apoiada do router do agente de interface"
+msgstr "Ubah pencarian backend router dari interface agen."
 
 #. SysConfig
 msgid "Condition Edit"
-msgstr "Editar Condição"
+msgstr "Edit kondisi"
 
 #. SysConfig
 msgid "Condition Overview"
-msgstr ""
+msgstr "Kondisi keseluruhan"
 
 #. SysConfig
 msgid ""
@@ -1421,11 +1424,11 @@ msgstr ""
 msgid ""
 "Configures how often the notifications are sent when planned the start time "
 "or other time values have been reached/passed."
-msgstr "Configura a freqüência com que as notificações são enviadas quando o tempo previsto de início ou outros valores de tempo for atingido/ultrpassado."
+msgstr "Mengkonfigurasi seberapa sering pemberitahuan dikirim ketika direncanakan waktu mulai atau waktu lainnya yang telah tercapai / berlalu."
 
 #. SysConfig
 msgid "Create Change"
-msgstr "Criar Alteração"
+msgstr "Membuat perubahan"
 
 #. SysConfig
 msgid "Create Change (from Template)"
@@ -1441,13 +1444,13 @@ msgstr ""
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
-msgstr ""
+msgstr "membuat dan mengelola pemberitahuan ITSM Manajemen Perubahan."
 
 #. SysConfig
 msgid ""
 "Default type for a workorder. This entry must exist in general catalog class"
 " 'ITSM::ChangeManagement::WorkOrder::Type'."
-msgstr "Tipo por omissão de Ordem de Serviço.Esta entrada deve existir na classe catálogo geral 'ITSM::Gestão da Alteração::Ordem de Serviço::Tipo'."
+msgstr "Jenis default untuk perintah kerja. Catatan ini harus ada dalam kelas katalog umum 'ITSM::ChangeManagement::WorkOrder::Type'."
 
 #. SysConfig
 msgid ""
@@ -1456,11 +1459,11 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr "Definir Acções onde um botão de configurações está disponível na widget the objectos ligados (LinkObject::ViewMode = \"complex\").  Estas Acções devem estar registadas nos seguintes ficheiros JS e CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
-msgstr "Definição dos avisos para cada estado de Ordem de Serviço."
+msgstr "Mendefinisikan sinyal untuk setiap negara perintah kerja."
 
 #. SysConfig
 msgid ""
@@ -1480,387 +1483,387 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."
-msgstr "Define uma vista global do módulo para mostrar uma pequena vista da lista de Alterações."
+msgstr "Mendefinisikan sebuah modul gambaran untuk menunjukkan pandangan kecil dari daftar perubahan."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a template list."
-msgstr "Define uma vista global do módulo para mostrar uma pequena vistão da lista de modelos."
+msgstr "Mendefinisikan sebuah modul gambaran untuk menunjukkan pandangan kecil dari daftar template."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the accounted time."
-msgstr "Define se será possível imprimir o tempo contabilizado."
+msgstr "Mendefinisikan jika itu akan mungkin untuk mencetak waktu dipertanggungjawabkan."
 
 #. SysConfig
 msgid "Defines if it will be possible to print the planned effort."
-msgstr "Define se será possível imprimir o esforço planeado."
+msgstr "Mendefinisikan jika itu akan mungkin untuk mencetak upaya yang direncanakan."
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) change end states "
 "should be allowed if a change is in a locked state."
-msgstr ""
+msgstr "Mendefinisikan jika dicapai (seperti yang didefinisikan oleh mesin) state perubahan akhir harus diizinkan jika perubahan dalam keadaan terkunci."
 
 #. SysConfig
 msgid ""
 "Defines if reachable (as defined by the state machine) workorder end states "
 "should be allowed if a workorder is in a locked state."
-msgstr ""
+msgstr "Mendefinisikan jika dicapai (seperti yang didefinisikan oleh mesin) perintah kerja akhir harus diizinkan jika perintah kerja dalam keadaan terkunci."
 
 #. SysConfig
 msgid "Defines if the accounted time should be shown."
-msgstr "Define se o tempo contabilizado deve ser mostrado."
+msgstr "Mendifinisikan waktu untuk ditunjukkan"
 
 #. SysConfig
 msgid "Defines if the actual start and end times should be set."
-msgstr "Define se o real início e de fim deve ser definido."
+msgstr "Mendifinisikan waktu mulai dan waktu berakhir harus bisa diatur"
 
 #. SysConfig
 msgid ""
 "Defines if the change search and the workorder search functions could use "
 "the mirror DB."
-msgstr ""
+msgstr "Mendifinisikan jika perubahan pencarian dan fungsi pencarian perintah kerja bisa menggunakan DB"
 
 #. SysConfig
 msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "Define se o estado de Alteração pode ser definida em agenteITSMEditarAlteração."
+msgstr "Mendefinisikan jika perubahan dapat diatur dalam AgentITSMChangeEdit."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
-msgstr "Define se o esforço planeado deve ser mostrado."
+msgstr "Mendefinisikan jika upaya yang direncanakan harus ditampilkan."
 
 #. SysConfig
 msgid "Defines if the requested date should be print by customer."
-msgstr "Define se a data solicitada deverá ser impressa por cliente"
+msgstr "Mendefinisikan jika tanggal yang diminta harus dicetak oleh pelanggan."
 
 #. SysConfig
 msgid "Defines if the requested date should be searched by customer."
-msgstr "Define se a data solicitada deverá ser pesquisado pelo cliente.."
+msgstr "Mendefinisikan jika tanggal yang diminta harus dicari oleh pelanggan."
 
 #. SysConfig
 msgid "Defines if the requested date should be set by customer."
-msgstr "Define se a data solicitada deverá ser definido pelo cliente."
+msgstr "Mendefinisikan jika tanggal yang diminta harus ditetapkan oleh pelanggan."
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr "Define se a data solicitada deve ser indicada pelo cliente."
+msgstr "Mendefinisikan jika tanggal yang diminta harus ditampilkan oleh pelanggan."
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
-msgstr "Define se o estado da Ordem de Serviço deve ser mostrado."
+msgstr "Mendefinisikan jika perintah kerja harus ditampilkan."
 
 #. SysConfig
 msgid "Defines if the workorder title should be shown."
-msgstr "Define se o título da Ordem de Serviço deve ser mostrado."
+msgstr "Mendefinisikan jika judul perintah kerja harus ditampilkan."
 
 #. SysConfig
 msgid "Defines shown graph attributes."
-msgstr "Define mostrado atributos gráfico."
+msgstr "Mendefinisikan atribut grafik ditampilkan."
 
 #. SysConfig
 msgid ""
 "Defines that only changes containing Workorders linked with services, which "
 "the customer user has permission to use will be shown. Any other changes "
 "will not be displayed."
-msgstr "Define que somente as alterações contendo Ordens de Serviço relacionadas com os serviços, que o utilizador cliente tem permissão para utilizar serão mostradas. Quaisquer outras alterações não serão exibidas."
+msgstr "Mendefinisikan bahwa hanya perubahan yang mengandung Pesanan Kerja terkait dengan layanan yang pengguna pelanggan memiliki izin untuk menggunakan akan ditampilkan. Perubahan lain tidak akan ditampilkan."
 
 #. SysConfig
 msgid "Defines the change states that will be allowed to delete."
-msgstr ""
+msgstr "Mendifinisikan perubahan yang akan diijinkan untuk dihapus"
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change PSA "
 "overview."
-msgstr "Define os estados de alteração que serão utilizado como filtros na vista global de alteração PSA."
+msgstr "Mendefinisikan perubahan akan digunakan sebagai filter dalam perubahan PSA"
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the Change "
 "Schedule overview."
-msgstr "Define os estados de alteração que serão utilizados como filtros na vista global de agendamento de alteração ."
+msgstr "Mendefinisikan perubahan akan digunakan sebagai filter dalam perubahan jadwal"
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyCAB "
 "overview."
-msgstr "Define os estados de alteração que serão utilizados como filtros na minha vista global CAB."
+msgstr "Mendefinisikan perubahan yang akan digunakan sebagai filter dalam MyCAB"
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the MyChanges "
 "overview."
-msgstr "Define os estados de alteração que serão utilizados como filtros na minha vista global de Alteração."
+msgstr "Mendefinisikan perubahan yang akan digunakan sebagai filter dalam MyChages "
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change manager"
 " overview."
-msgstr "Define os estados de alteração que serão utilizados como filtros na vista global do gestor de alterações."
+msgstr "Mendefinisikan perubahan yang akan digunakan sebagai filter dalam perubahan manajer"
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the change "
 "overview."
-msgstr "Define os estados alteração que serão utilizados como filtros na vista global de alterações."
+msgstr "Mendefinisikan perubahan yang akan digunakan sebagai filter dalam perubahan"
 
 #. SysConfig
 msgid ""
 "Defines the change states that will be used as filters in the customer "
 "change schedule overview."
-msgstr "Define os estados de alteração que serão utilizados como filtros na vista global do cliente de agendamento de alterações."
+msgstr "Mendefinisikan perubahan yang akan digunakan sebagai filter dalam perubahan jadwal pelanggan "
 
 #. SysConfig
 msgid ""
 "Defines the default change title for a dummy change which is needed to edit "
 "a workorder template."
-msgstr ""
+msgstr "Mendefinisikan judul perubahan default untuk perubahan boneka yang diperlukan untuk mengedit perintah kerja Template."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change PSA overview."
-msgstr "Define os critérios de classificação por omissão na alteração de vista global da PSA."
+msgstr "Mendefinisikan kriteria standar semacam dalam perubahan PSA "
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change manager overview."
-msgstr "Define os critérios de classificação por omissão na vista global da gestão de alterações."
+msgstr "Mendefinisikan kriteria standar semacam dalam perubahan manajer "
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change overview."
-msgstr "Define os critérios de classificação por omissão na vista global de alteração."
+msgstr "Mendefinisikan kriteria standar semacam dalam perubahan"
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change schedule overview."
-msgstr "Define os critérios de classificação por omissão na vista global de programação de alterações."
+msgstr "Mendefinisikan kriteria standar semacam di jadwal perubahan"
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyCAB overview."
-msgstr "Define os critérios de classificação por omissão na vista global de Alterações do \"Meu CAB\"."
+msgstr "Mendefinisikan kriteria standar semacam perubahan dalam My CAB"
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyChanges overview."
-msgstr "Define os critérios de classificação por omissão na vista global de Alterações da \"Minha Alteração\"."
+msgstr "Mendefinisikan kriteria standar semacam perubahan dalam MyChanges"
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyWorkorders "
 "overview."
-msgstr "Define os critérios de classificação por omissão na vista global de alterações da \"Minha Ordem de Serviço\"."
+msgstr "Mendefinisikan kriteria standar semacam perubahan dalam pesanan Kerja"
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr "Define os critérios de classificação por omissão na vista global de Alterações PIR."
+msgstr "Mendefinisikan kriteria standar semacam perubahan dalam PIR"
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the customer change "
 "schedule overview."
-msgstr "Define os critérios de classificação por omissão na vista global para os clientes programarem a Alteração."
+msgstr "Mendefinisikan kriteria standar semacam perubahan jadwal perubahan pelanggan"
 
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the template overview."
-msgstr "Define os critérios de classificação por omissão na vista global do modelo de Alterações."
+msgstr "Mendefinisikan kriteria standar semacam perubahan dalam template"
 
 #. SysConfig
 msgid "Defines the default sort order in the MyCAB overview."
-msgstr "Define a ordem de classificação por omissão na vista global de \"Meu CAB\"."
+msgstr "Mendefinisikan urutan standar semacam di My CAB"
 
 #. SysConfig
 msgid "Defines the default sort order in the MyChanges overview."
-msgstr "Define a ordem de classificação por omissão na vista global de \"Minha Alteração\"."
+msgstr "Mendefinisikan urutan standar semacam di MyChanges"
 
 #. SysConfig
 msgid "Defines the default sort order in the MyWorkorders overview."
-msgstr "Define a ordem de classificação por omissão na vista global de \"Minha Ordem de Serviço\"."
+msgstr "Mendefinisikan urutan standar semacam di pesanan Kerja"
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr "Define a ordem de classificação por omissão na vista global de PIR."
+msgstr "Mendefinisikan urutan standar semacam di PIR"
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
-msgstr "Define a ordem de classificação por omissão na vista global de Alteração PSA."
+msgstr "Mendefinisikan urutan default di PSA perubahan"
 
 #. SysConfig
 msgid "Defines the default sort order in the change manager overview."
-msgstr "Define a ordem de classificação por omissão na vista global da gestão de Alteração."
+msgstr "Mendefinisikan urutan standar semacam di perubahan manajer"
 
 #. SysConfig
 msgid "Defines the default sort order in the change overview."
-msgstr "Define a ordem de classificação por omissão na vista global de Alteração."
+msgstr "Mendefinisikan urutan default dalam perubahan"
 
 #. SysConfig
 msgid "Defines the default sort order in the change schedule overview."
-msgstr "Define a ordem de classificação por omissão na vista global de programar a Alteração."
+msgstr "Mendefinisikan urutan default dalam jadwal perubahan"
 
 #. SysConfig
 msgid ""
 "Defines the default sort order in the customer change schedule overview."
-msgstr "Define a ordem de classificação por omissão na vista global do cliente programar a Alteração."
+msgstr "Mendefinisikan urutan default dalam jadwal perubahan pelanggan"
 
 #. SysConfig
 msgid "Defines the default sort order in the template overview."
-msgstr "Define a ordem de classificação por omissão na vista global de modelo."
+msgstr "Mendefinisikan urutan standar semacam di template"
 
 #. SysConfig
 msgid "Defines the default value for the category of a change."
-msgstr "Define o valor por omissão para a categoria de uma alteração."
+msgstr "Mendefinisikan nilai default untuk kategori perubahan."
 
 #. SysConfig
 msgid "Defines the default value for the impact of a change."
-msgstr "Define o valor por omissão para o Impacto de uma alteração."
+msgstr "Mendefinisikan nilai default untuk dampak perubahan."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
 "AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
 "a type is not defined, the field will not be shown."
-msgstr "Define o tipo de campo para comparar os campos de valor para o agente de Alteração, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido."
+msgstr "Mendefinisikan jenis bidang bidang Nilai Bandingkan untuk atribut perubahan digunakan dalam AgentITSMChangeConditionEdit. Nilai yang valid dipilih, Teks dan Tanggal. Jika tipe tidak didefinisikan, lapangan tidak akan ditampilkan."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
 "in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
 "If a type is not defined, the field will not be shown."
-msgstr "Define o tipo de campo para comparar os campos de valor para a Ordem de Serviço, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido."
+msgstr "Mendefinisikan jenis bidang bidang Nilai Bandingkan untuk atribut perintah kerja yang digunakan dalam AgentITSMChangeConditionEdit. Nilai yang valid yang Dipilih, Teks dan Tanggal. Jika tipe tidak didefinisikan, lapangan tidak akan ditampilkan."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for change objects in "
 "AgentITSMChangeConditionEdit."
-msgstr "Define os atributos de objeto que são selecionáveis para objetos de Alteração em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan atribut objek yang dipilih untuk perubahan objyek AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
 "AgentITSMChangeConditionEdit."
-msgstr "Define os atributos de objeto que são selecionáveis para objetos de ordem de serviço em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan atribut objek yang dipilih untuk perintah kerja benda di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Tempo Contabilizados em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk AccountedTime atribut di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora de fim real em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk ActualEndTime atribut di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora de início real em Editar a Condição de Alteração do ITSM."
+msgstr "Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Categoria ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Kategori ID di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar Construtor ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut ChangeBuilderID di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar gestor ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Perubahan ManagerId di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
 " AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar Estado ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk ChangeStateID atribut di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
 "AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar Título ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Perubahan Judul di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
 "AgentITSMChangeConditionEdit."
-msgstr ""
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Bidang Dinamis di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ImpactID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Impacto ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut berdampak di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
 " AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Esforço planeado em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Direncanakan Upaya AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora Final Planejada em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk PlannedEndTime atribut di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
 " in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora Ínicio Planejada em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Direncanakan Start Time di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Prioridade ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk ID atribut Prioritas di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Tempo Requerido em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk RequestedTime atribut di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
 " in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Ordem de Serviço agente ID em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderAgentID di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Número Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderNumber di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
 " in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Estado ID Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderStateID di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Título Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderTitle di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Tipo ID Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+msgstr "Mendefinisikan operator yang dipilih untuk atribut Work Order TypeID di AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the period (in years), in which start and end times can be selected."
-msgstr "Define o período (em anos), em que os tempos de início e fim podem ser selecionados."
+msgstr "Mendefinisikan periode (tahun), di mana waktu mulai dan bisa dipilih."
 
 #. SysConfig
 msgid ""
@@ -1868,108 +1871,108 @@ msgid ""
 "graph in the change zoom. To show workorder dynamic fields in the tooltip, "
 "they must be specified like DynamicField_WorkOrderFieldName1, "
 "DynamicField_WorkOrderFieldName2, etc."
-msgstr ""
+msgstr "Mendefinisikan atribut ditampilkan dari perintah kerja di tooltip dari grafik perintah kerja di zoom perubahan. Untuk menampilkan field workorder dinamis dalam tooltip, mereka harus ditentukan seperti DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change PSA overview. This option has no "
 "effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral da PSA. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di Ganti PSA gambaran. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change Schedule overview. This option has "
 "no effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral da Agenda. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di Ubah Jadwal. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyCAB overview. This option has no effect "
 "on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral do \"Meu CAB\". Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di My CAB. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyChanges overview. This option has no "
 "effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral das Minhas Alterações. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di Perubahan gambaran. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyWorkorders overview. This option has no "
 "effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral das Minhas Ordens de Serviço. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di perintah kerja. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the PIR overview. This option has no effect on "
 "the position of the column."
-msgstr "Define as colunas visualizadas na vista geral da PIR. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di PIR. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change manager overview. This option has no"
 " effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral do gestor de Alteração. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom dalam perubahan manajer. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change overview. This option has no effect "
 "on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral da Alteração. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom dalam perubahan. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the change search. This option has no effect on"
 " the position of the column."
-msgstr "Define as colunas visualizadas na pesquisa da Alteração. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom dalam pencarian perubahan. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the customer change schedule overview. This "
 "option has no effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral de Agendar a Alteração. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di pelanggan jadwal perubahan. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the template overview. This option has no "
 "effect on the position of the column."
-msgstr "Define as colunas visualizadas na vista geral do modelo. Esta opção não tem efeito sobre a posição da coluna."
+msgstr "Mendefinisikan acara kolom di template. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
 msgid "Defines the signals for each ITSMChange state."
-msgstr "Define os sinais para cada estado Alteração ITSM."
+msgstr "Mendefinisikan sinyal untuk setiap ITSMChange state."
 
 #. SysConfig
 msgid ""
 "Defines the template types that will be used as filters in the template "
 "overview."
-msgstr "Define os tipos de modelo que serão usados como filtros na vista global de modelo."
+msgstr "Mendefinisikan jenis template yang akan digunakan sebagai filter dalam template"
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the "
 "MyWorkorders overview."
-msgstr "Define os estados de ordem de serviço que serão usados como filtros na vista global das Minhas Ordens de Serviço."
+msgstr "Mendefinisikan state perintah kerja yang akan digunakan sebagai filter dalam MyWorkorders "
 
 #. SysConfig
 msgid ""
 "Defines the workorder states that will be used as filters in the PIR "
 "overview."
-msgstr "Define os estados de ordem de serviço que serão usados como filtros na vista global da PIR."
+msgstr "Mendefinisikan perintah kerja yang akan digunakan sebagai filter dalam PIR"
 
 #. SysConfig
 msgid ""
 "Defines the workorder types that will be used to show the PIR overview."
-msgstr "Define os tipos de ordem de serviço que serão usados como filtros para mostrar na vista global da PIR."
+msgstr "Mendefinisikan jenis perintah kerja yang akan digunakan untuk menunjukkan PIR"
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
-msgstr "Define se as notificações devem ser enviadas."
+msgstr "Mendefinisikan apakah pemberitahuan harus dikirim."
 
 #. SysConfig
 msgid "Delete a change."
-msgstr ""
+msgstr "Menghapus perubahan."
 
 #. SysConfig
 msgid "Delete the change."
@@ -1981,42 +1984,42 @@ msgstr ""
 
 #. SysConfig
 msgid "Details of a change history entry."
-msgstr ""
+msgstr "Rincian dari entri perubahan sejarah."
 
 #. SysConfig
 msgid ""
 "Determines if an agent can exchange the X-axis of a stat if he generates "
 "one."
-msgstr "Define se um agente pode trocar o eixo X de uma estatística gerida por si."
+msgstr "Menentukan apakah agen dapat bertukar X jika ia menghasilkan satu."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes done "
 "for config item classes."
-msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações feitas para as classes de item de configuração."
+msgstr "Menentukan apakah modul statistik umum dapat menghasilkan statistik tentang perubahan dilakukan untuk kelas config barang."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding change state updates within a timeperiod."
-msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações referentes às atualizações Alteração de estado dentro de um período de tempo."
+msgstr "Menentukan apakah modul statistik umum dapat menghasilkan statistik tentang perubahan mengenai update perubahan dalam periode waktu."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes "
 "regarding the relation between changes and incident tickets."
-msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações a respeito da relação entre as Alterações e os tickets de incidente."
+msgstr "Menentukan apakah modul statistik umum dapat menghasilkan statistik tentang perubahan mengenai hubungan antara perubahan dan tiket insiden."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about changes."
-msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre as Alterações."
+msgstr "Menentukan apakah modul statistik umum dapat menghasilkan statistik tentang perubahan."
 
 #. SysConfig
 msgid ""
 "Determines if the common stats module may generate stats about the number of"
 " Rfc tickets a requester created."
-msgstr "Define se o módulo de estatísticas comuns pode gerar estatísticas sobre o número de tickets RFC a um solicitante criado."
+msgstr "Menentukan apakah modul statistik umum dapat menghasilkan statistik tentang jumlah tiket pemohon RFC "
 
 #. SysConfig
 msgid "Dutch"
@@ -2069,11 +2072,11 @@ msgstr ""
 msgid ""
 "DynamicField event module to handle the update of conditions if dynamic "
 "fields are added, updated or deleted."
-msgstr ""
+msgstr "Dinamis modul acara Lapangan untuk menangani update kondisi jika bidang yang dinamis ditambahkan, diperbarui atau dihapus."
 
 #. SysConfig
 msgid "Edit a change."
-msgstr ""
+msgstr "Mengedit perubahan"
 
 #. SysConfig
 msgid "Edit the change."
@@ -2095,129 +2098,129 @@ msgstr ""
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
-msgstr ""
+msgstr "Perubahan bahwa jadwal dimajukan . Ikhtisar lebih perubahan disetujui."
 
 #. SysConfig
 msgid "History Zoom"
-msgstr ""
+msgstr "sejarah Zoom/Dekat"
 
 #. SysConfig
 msgid "ITSM Change CAB Templates."
-msgstr ""
+msgstr "ITSM mengubah template CAB"
 
 #. SysConfig
 msgid "ITSM Change Condition Edit."
-msgstr ""
+msgstr "ITSM mengubah kondisi"
 
 #. SysConfig
 msgid "ITSM Change Condition Overview."
-msgstr ""
+msgstr "Perubahan Kondisi ITSM"
 
 #. SysConfig
 msgid "ITSM Change Management Notifications"
-msgstr ""
+msgstr "Perubahan Pemberitahuan Manajemen ITSM"
 
 #. SysConfig
 msgid "ITSM Change Manager Overview."
-msgstr ""
+msgstr "Mengubah manajer ITSM"
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."
-msgstr ""
+msgstr "Mengubah PIR ITSM"
 
 #. SysConfig
 msgid "ITSM Change notification rules"
-msgstr ""
+msgstr "Mengubah peraturan notifikasi ITSM"
 
 #. SysConfig
 msgid "ITSM Changes"
-msgstr "Alterações ITSM"
+msgstr "Perubahan ITSM"
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
-msgstr ""
+msgstr "Ikhtisar MyCAB ITSM"
 
 #. SysConfig
 msgid "ITSM MyChanges Overview."
-msgstr ""
+msgstr "Ikhtisar MyChanges ITSM"
 
 #. SysConfig
 msgid "ITSM MyWorkorders Overview."
-msgstr ""
+msgstr "Ikhtisar MyWorkorders ITSM"
 
 #. SysConfig
 msgid "ITSM Template Delete."
-msgstr ""
+msgstr "Menghapus template ITSM"
 
 #. SysConfig
 msgid "ITSM Template Edit CAB."
-msgstr ""
+msgstr "ITSM mengedit template CAB"
 
 #. SysConfig
 msgid "ITSM Template Edit Content."
-msgstr ""
+msgstr "Mengedit isi template ITSM"
 
 #. SysConfig
 msgid "ITSM Template Edit."
-msgstr ""
+msgstr "Mengedit template ITSM"
 
 #. SysConfig
 msgid "ITSM Template Overview."
-msgstr ""
+msgstr "Template ITSM"
 
 #. SysConfig
 msgid "ITSM event module that cleans up conditions."
-msgstr "Módulo de evento ITSM que limpa condições."
+msgstr "ITSM acara modul yang membersihkan kondisi."
 
 #. SysConfig
 msgid "ITSM event module that deletes the cache for a toolbar."
-msgstr ""
+msgstr "ITSM acara modul yang menghapus cache untuk toolbar."
 
 #. SysConfig
 msgid "ITSM event module that deletes the history of changes."
-msgstr ""
+msgstr "ITSM acara modul yang menghapus sejarah perubahan."
 
 #. SysConfig
 msgid "ITSM event module that matches conditions and executes actions."
-msgstr "Módulo de evento ITSM que coincide com as condições e executa as ações."
+msgstr "ITSM acara modul yang cocok kondisi dan mengeksekusi tindakan."
 
 #. SysConfig
 msgid "ITSM event module that sends notifications."
-msgstr "Módulo de eventos ITSM que envia notificações."
+msgstr "ITSM acara modul yang mengirimkan pemberitahuan."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of changes."
-msgstr "Módulo de evento ITSM que atualiza o histórico de Alterações."
+msgstr "ITSM acara modul yang update sejarah perubahan."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of conditions."
-msgstr ""
+msgstr "ITSM acara modul yang update sejarah kondisi."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of workorders."
-msgstr ""
+msgstr "ITSM acara modul yang update sejarah perintah kerja."
 
 #. SysConfig
 msgid "ITSM event module to recalculate the workorder numbers."
-msgstr "Módulo de evento ITSM para recalcular os números de ordem de serviço."
+msgstr "ITSM acara modul untuk menghitung angka perintah kerja."
 
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
-msgstr "Módulo de evento ITSM para definir o tempo início e de fim de ordens de serviço."
+msgstr "ITSM acara modul untuk mengatur sebenarnya mulai dan akhir dari perintah kerja."
 
 #. SysConfig
 msgid "ITSMChange"
-msgstr "Alteração"
+msgstr "Perubahan ITSM"
 
 #. SysConfig
 msgid "ITSMWorkOrder"
-msgstr "Ordem de Serviço ITSM"
+msgstr "Tata Kerja ITSM"
 
 #. SysConfig
 msgid ""
 "If frequency is 'regularly', you can configure how often the notifications "
 "are sent (every X hours)."
-msgstr ""
+msgstr "Jika frekuensi 'teratur', Anda dapat mengkonfigurasi seberapa sering pemberitahuan dikirim (setiap X jam)."
 
 #. SysConfig
 msgid "Link another object to the change."
@@ -2229,55 +2232,55 @@ msgstr ""
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
-msgstr ""
+msgstr "Lookup anggota CAB untuk pelengkapan otomatis."
 
 #. SysConfig
 msgid "Lookup of agents, used for autocompletion."
-msgstr ""
+msgstr "Lookup agen, yang digunakan untuk melengkapi."
 
 #. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
-msgstr ""
+msgstr "Modul untuk memeriksa apakah WorkOrderAdd atau Work Order AddFromTemplate harus diijinkan."
 
 #. SysConfig
 msgid "Module to check the CAB members."
-msgstr "Módulo para verificar os membros do CAB."
+msgstr "Modul untuk memeriksa anggota CAB."
 
 #. SysConfig
 msgid "Module to check the agent."
-msgstr "Módulo para verificar o agente."
+msgstr "Modul untuk memeriksa agen."
 
 #. SysConfig
 msgid "Module to check the change builder."
-msgstr "Módulo para verificar o construtor da Alteração."
+msgstr "Modul untuk memeriksa perubahan pembangun"
 
 #. SysConfig
 msgid "Module to check the change manager."
-msgstr "Módulo para verificar o gestor de Alteração."
+msgstr "Modul untuk memeriksa perubahan manajer"
 
 #. SysConfig
 msgid "Module to check the workorder agent."
-msgstr "Módulo para verificar o agente da ordem de serviço."
+msgstr "Modul untuk memeriksa agen perintah kerja."
 
 #. SysConfig
 msgid "Module to check whether no workorder agent is set."
-msgstr "Módulo para verificar se não existe agente de ordem de serviço."
+msgstr "Modul untuk memeriksa apakah ada agen perintah kerja diatur."
 
 #. SysConfig
 msgid "Module to check whether the agent is contained in the configured list."
-msgstr "Módulo para verificar se o agente pertence à lista configurada."
+msgstr "Modul untuk memeriksa apakah agen yang terkandung dalam daftar dikonfigurasi."
 
 #. SysConfig
 msgid ""
 "Module to show a link to create a change from this ticket. The ticket will "
 "be automatically linked with the new change."
-msgstr "Módulo para mostrar um link para criar uma Alteração a partir deste ticket. O ticket será automaticamente ligado com a nova Alteração."
+msgstr "Modul untuk menunjukkan link untuk membuat perubahan dari tiket ini. tiket akan otomatis terhubung dengan perubahan baru."
 
 #. SysConfig
 msgid "Move Time Slot."
-msgstr ""
+msgstr "Pindah Waktu Slot."
 
 #. SysConfig
 msgid "Move all workorders in time."
@@ -2285,22 +2288,22 @@ msgstr ""
 
 #. SysConfig
 msgid "New (from template)"
-msgstr "Nova (utilizando modelo)"
+msgstr "Baru (dari template)"
 
 #. SysConfig
 msgid ""
 "Only users of these groups have the permission to use the ticket types as "
 "defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
 "\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
-msgstr "Somente Utilizadors dos grupos têm permissão para utilizar os tipos de tickets, tal como definido em \"AlteraçãoITSM:TiposticketsAdicionarLinkAlteração\" se o recurso \"ticket::ACL:: Módulo###200-ticket::ACL::Módulo\" estiver ativo."
+msgstr "Hanya pengguna dari kelompok-kelompok ini memiliki izin untuk menggunakan jenis tiket sebagaimana didefinisikan dalam \"ITSM Perubahan :: AddChangeLinkTicketTypes\" jika fitur \"Ticket :: Acl :: Modul ### 200-Ticket :: Acl :: Modul\" diaktifkan."
 
 #. SysConfig
 msgid "Other Settings"
-msgstr "Outras definições"
+msgstr "Pengaturan Lain"
 
 #. SysConfig
 msgid "Overview over all Changes."
-msgstr ""
+msgstr "Gambaran atas semua Perubahan."
 
 #. SysConfig
 msgid "PIR"
@@ -2308,35 +2311,35 @@ msgstr ""
 
 #. SysConfig
 msgid "PIR (Post Implementation Review)"
-msgstr "RPI (Revista Pós-Implementação)"
+msgstr "PIR (Post Implementasi Review)"
 
 #. SysConfig
 msgid "PSA"
-msgstr ""
+msgstr "PSA"
 
 #. SysConfig
 msgid ""
 "Parameters for the UserCreateWorkOrderNextMask object in the preference view"
 " of the agent interface."
-msgstr ""
+msgstr "Parameter untuk Pengguna Buat WorkOrderNextMask objek dalam pandangan preferensi antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Parameters for the pages (in which the changes are shown) of the small "
 "change overview."
-msgstr "Parâmetros para as páginas (em que as Alterações são mostradas) da vista pequena global de Alteração."
+msgstr "Parameter untuk halaman (di mana perubahan akan ditampilkan) dari gambaran perubahan kecil."
 
 #. SysConfig
 msgid ""
 "Performs the configured action for each event (as an Invoker) for each "
 "configured Webservice."
-msgstr ""
+msgstr "Melakukan tindakan dikonfigurasi untuk setiap acara (sebagai Invoker) untuk setiap Layanan Web dikonfigurasi."
 
 #. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
-msgstr "Apresenta um link no menu para mostrar as pessoas envolvidas numa Alteração, na vista a ampliar."
+msgstr "Menyajikan link dalam menu untuk menunjukkan orang-orang yang terlibat dalam perubahan, dalam tampilan zoom perubahan tersebut dalam antarmuka agen."
 
 #. SysConfig
 msgid "Print the change."
@@ -2352,170 +2355,170 @@ msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
-msgstr ""
+msgstr "Proyeksi Layanan Ketersediaan (PSA)"
 
 #. SysConfig
 msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
-msgstr ""
+msgstr "Proyeksi Layanan Ketersediaan (PSA) perubahan. Ikhtisar perubahan disetujui dan layanan mereka."
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
-msgstr "Privilégios necessários para um agente ter uma ordem de serviço."
+msgstr "hak diperlukan agar agen untuk mengambil perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to access the overview of all changes."
-msgstr "Privilégios necessários para aceder à vista global de todas as alterações."
+msgstr "hak yang diperlukan untuk mengakses gambaran dari semua perubahan."
 
 #. SysConfig
 msgid "Required privileges to add a workorder."
-msgstr "Privilégios necessários para adicionar uma ordem de serviço."
+msgstr "hak diperlukan untuk menambahkan perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to change the workorder agent."
-msgstr "Privilégios necessários para alterar o agente de ordem de serviço."
+msgstr "hak diperlukan untuk mengubah agen perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to create a template from a change."
-msgstr "Privilégios necessários para criar um modelo de uma alteração."
+msgstr "hak yang diperlukan untuk membuat template dari perubahan."
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr "Privilégios necessários para criar um modelo de uma Alteração' CAB."
+msgstr "hak yang diperlukan untuk membuat template dari perubahan CAB"
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
-msgstr "Privilégios necessários para criar um modelo de uma ordem de serviço."
+msgstr "hak yang diperlukan untuk membuat template dari perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to create changes from templates."
-msgstr ""
+msgstr "hak yang diperlukan untuk membuat perubahan dari template."
 
 #. SysConfig
 msgid "Required privileges to create changes."
-msgstr "Privilégios necessários para criar Alterações."
+msgstr "hak yang diperlukan untuk membuat perubahan."
 
 #. SysConfig
 msgid "Required privileges to delete a template."
-msgstr "Privilégios necessários para criar um modelo."
+msgstr "hak diperlukan untuk menghapus template."
 
 #. SysConfig
 msgid "Required privileges to delete a workorder."
-msgstr "Privilégios necessários para criar uma ordem de serviço."
+msgstr "hak diperlukan untuk menghapus perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to delete changes."
-msgstr "Privilégios necessários para excluir mudanças."
+msgstr "hak diperlukan untuk menghapus perubahan."
 
 #. SysConfig
 msgid "Required privileges to edit a template."
-msgstr "Privilégios necessários para editar um modelo."
+msgstr "hak diperlukan untuk mengedit template."
 
 #. SysConfig
 msgid "Required privileges to edit a workorder."
-msgstr "Privilégios necessários para editar uma ordem de serviço."
+msgstr "hak diperlukan untuk mengedit perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to edit changes."
-msgstr "Privilégios necessários para editar uma Alteração."
+msgstr "hak diperlukan untuk mengedit perubahan."
 
 #. SysConfig
 msgid "Required privileges to edit the conditions of changes."
-msgstr "Privilégios necessários para editar uma condição de alteração."
+msgstr "hak diperlukan untuk mengedit kondisi perubahan."
 
 #. SysConfig
 msgid "Required privileges to edit the content of a template."
-msgstr ""
+msgstr "hak diperlukan untuk mengedit isi dari template."
 
 #. SysConfig
 msgid "Required privileges to edit the involved persons of a change."
-msgstr "Privilégios necessários para editar pessoas envolvidas na alteração."
+msgstr "hak diperlukan untuk mengedit orang yang terlibat dari perubahan."
 
 #. SysConfig
 msgid "Required privileges to move changes in time."
-msgstr "Privilégios necessários para mover as alterações no tempo."
+msgstr "hak yang dibutuhkan untuk memindahkan perubahan waktu."
 
 #. SysConfig
 msgid "Required privileges to print a change."
-msgstr "Privilégios necessários para imprimir uma alteração"
+msgstr "hak yang diperlukan untuk mencetak perubahan."
 
 #. SysConfig
 msgid "Required privileges to reset changes."
-msgstr "Privilégios necessários para redefinir mudanças."
+msgstr "hak diperlukan untuk me-reset perubahan."
 
 #. SysConfig
 msgid "Required privileges to view a workorder."
-msgstr "Privilégios necessários para visualizar uma ordem de serviço."
+msgstr "hak diperlukan untuk melihat perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to view changes."
-msgstr "Privilégios necessários para visualizar alterações."
+msgstr "hak diperlukan untuk me-review Melihat hal Perintah kerja."
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is a CAB member."
-msgstr "Privilégios necessários para visualizar a lista de alterações, onde o Utilizador é membro do CAB."
+msgstr "hak diperlukan untuk melihat daftar perubahan di mana pengguna adalah anggota CAB."
 
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is the change "
 "manager."
-msgstr "Privilégios necessários para visualizar a lista de alterações, onde o utilizador é o gestor da alteração."
+msgstr "hak diperlukan untuk melihat daftar perubahan di mana pengguna adalah perubahan manajer"
 
 #. SysConfig
 msgid "Required privileges to view overview over all templates."
-msgstr "Privilégios necessários para visualizar a vista global de todos os modelos."
+msgstr "hak diperlukan untuk melihat gambaran atas semua template."
 
 #. SysConfig
 msgid "Required privileges to view the conditions of changes."
-msgstr "Privilégios necessários para visualizar as condições de alterações."
+msgstr "hak diperlukan untuk melihat kondisi perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the history of a change."
-msgstr "Privilégios necessários para visualizar o histórico de uma alteração."
+msgstr "hak diperlukan untuk melihat sejarah perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the history of a workorder."
-msgstr "Privilégios necessários para visualizar o histórico de uma ordem de serviço."
+msgstr "hak diperlukan untuk melihat sejarah perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a change."
-msgstr "Privilégios necessários para visualizar o histórico ampliado de uma alteração."
+msgstr "hak diperlukan untuk melihat zoom sejarah perubahan."
 
 #. SysConfig
 msgid "Required privileges to view the history zoom of a workorder."
-msgstr "Privilégios necessários para visualizar o histórico ampliado de uma ordem de serviço."
+msgstr "hak diperlukan untuk melihat zoom sejarah perintah kerja."
 
 #. SysConfig
 msgid "Required privileges to view the list of Change Schedule."
-msgstr "Privilégios necessários para visualizar a lista da agenda de alteração."
+msgstr "hak diperlukan untuk melihat daftar Perubahan Jadwal."
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
-msgstr "Privilégios necessários para visualizar a lista de Alterações PSA."
+msgstr "hak diperlukan untuk melihat daftar perubahan PSA."
 
 #. SysConfig
 msgid ""
 "Required privileges to view the list of changes with an upcoming PIR (Post "
 "Implementation Review)."
-msgstr "Privilégios necessários para visualizar a lista de Alterações com um PIR."
+msgstr "hak diperlukan untuk melihat daftar perubahan dengan PIR mendatang (Post Pelaksanaan Review)."
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
-msgstr "Privilégios necessários para visualizar a lista de alterações próprias."
+msgstr "hak diperlukan untuk melihat daftar perubahan sendiri."
 
 #. SysConfig
 msgid "Required privileges to view the list of own workorders."
-msgstr "Privilégios necessários para visualizar a lista de ordens de serviço próprias."
+msgstr "hak diperlukan untuk melihat daftar perintah kerja sendiri."
 
 #. SysConfig
 msgid "Required privileges to write a report for the workorder."
-msgstr "Privilégios necessários para escrever um relatório para a ordem de serviço."
+msgstr "hak diperlukan untuk menulis laporan untuk perintah kerja."
 
 #. SysConfig
 msgid "Reset a change and its workorders."
-msgstr ""
+msgstr "Ulang perubahan dan perintah kerja nya."
 
 #. SysConfig
 msgid "Reset change and its workorders."
@@ -2525,7 +2528,7 @@ msgstr ""
 msgid ""
 "Run task to check if specific times have been reached in changes and "
 "workorders."
-msgstr ""
+msgstr "tugas dijalankan untuk memeriksa apakah waktu tertentu telah dicapai dalam perubahan dan perintah kerja."
 
 #. SysConfig
 msgid "Save change as a template."
@@ -2541,19 +2544,19 @@ msgstr ""
 
 #. SysConfig
 msgid "Screen"
-msgstr "Ecran"
+msgstr "Skrin"
 
 #. SysConfig
 msgid "Screen after creating a workorder"
-msgstr "Tela Após Criar Ordem de Serviço"
+msgstr "Layar setelah membuat perintah kerja"
 
 #. SysConfig
 msgid "Search Changes"
-msgstr "Procurar alterações"
+msgstr "Cari perubahan"
 
 #. SysConfig
 msgid "Search Changes."
-msgstr ""
+msgstr "Cari Perubahan."
 
 #. SysConfig
 msgid ""
@@ -2566,7 +2569,7 @@ msgid ""
 "date plus the SystemID. The checksum will be rotated on a daily basis. This "
 "format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
 "2010062410000017, 2010062410000026."
-msgstr ""
+msgstr "Memilih modul jumlah perubahan pembangkit. \"AutoIncrement\" increment jumlah perubahan, SystemID dan meja yang digunakan dengan format yang SystemID.counter (Misalnya 100.118, 100.119). Dengan \"Tanggal\", angka perubahan akan dihasilkan oleh tanggal dan counter; format ini tampak seperti Year.Month.Day.counter, misalnya 2010062400001, 2010062400002. Dengan \"DateChecksum\", counter akan ditambahkan sebagai checksum untuk string dari tanggal ditambah SystemID. checksum akan diputar setiap hari. Format ini terlihat seperti Year.Month.Day.SystemID.Counter.CheckSum, misalnya 2010062410000017, 2010062410000026."
 
 #. SysConfig
 msgid "Set the agent for the workorder."
@@ -2576,20 +2579,20 @@ msgstr ""
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr ""
+msgstr "Mengatur tinggi default (dalam piksel) bidang HTML inline di AgentITSMChangeZoom dan AgentITSMWorkOrderZoom."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in "
 "AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr ""
+msgstr "Mengatur ketinggian maksimum (dalam piksel) bidang HTML inline di AgentITSMChangeZoom dan AgentITSMWorkOrderZoom."
 
 #. SysConfig
 msgid ""
 "Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
-msgstr ""
+msgstr "Menetapkan minimal ukuran perubahan counter (jika \"auto_increment\" terpilih sebagai Perubahan ITSM :: Number Generator). Default adalah 5, ini berarti konter dimulai dari 10000."
 
 #. SysConfig
 msgid ""
@@ -2600,166 +2603,166 @@ msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
-msgstr "Configura a máquina de estado para as Alterações."
+msgstr "Set up mesin untuk perubahan."
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr "Configura a máquina de estado para as ordens de serviço."
+msgstr "Set up mesin untuk perintah kerja."
 
 #. SysConfig
 msgid ""
 "Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
 "the following workorders should also be moved if a workorder is modified and"
 " the planned end time has changed."
-msgstr ""
+msgstr "Menunjukkan kotak centang di layar AgentITSMWorkOrderEdit yang mendefinisikan jika perintah kerja berikut juga harus pindah jika workorder ini dimodifikasi dan waktu akhir yang direncanakan telah berubah."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
 "zoom view of such workorder of the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu yang memungkinkan mengubah agen perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows defining a change as a template in the "
 "zoom view of the change, in the agent interface."
-msgstr "Mostra um link no menu que permite definir uma Alteração como um modelo na vista de alteração, na interface do agente."
+msgstr "Menunjukkan link dalam menu yang memungkinkan mendefinisikan perubahan sebagai template dalam tampilan zoom perubahan, dalam antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows defining a workorder as a template in "
 "the zoom view of the workorder, in the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu yang memungkinkan mendefinisikan perintah kerja sebagai template dalam tampilan zoom dari perintah kerja, di antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
 "the zoom view of such workorder of the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu yang memungkinkan mengedit laporan dari perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a change with another object in"
 " the change zoom view of the agent interface."
-msgstr "Mostra um link no menu que permite ligar uma Alteração com outro objeto na Alteração."
+msgstr "Menunjukkan link dalam menu yang memungkinkan menghubungkan perubahan dengan objek lain pada tampilan perubahan zoom dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
 " in the zoom view of such workorder of the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu yang memungkinkan menghubungkan perintah kerja dengan objek lain dalam tampilan zoom dari perintah kerja seperti antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows moving the time slot of a change in its"
 " zoom view of the agent interface."
-msgstr "Mostra um link no menu que permite mover o intervalo de tempo de uma Alteração na sua opinião."
+msgstr "Menunjukkan link dalam menu yang memungkinkan bergerak slot waktu perubahan dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows taking a workorder in the its zoom view"
 " of the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu yang memungkinkan mengambil perintah kerja dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the conditions of a change in the its "
 "zoom view of the agent interface."
-msgstr "Mostra um link no menu para aceder as condições de uma Alteração."
+msgstr "Menunjukkan link dalam menu untuk mengakses kondisi perubahan yang zoom pandangan agen antarmuka."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a change in the its zoom "
 "view of the agent interface."
-msgstr "Mostra um link no menu para aceder o histórico de uma Alteração."
+msgstr "Menunjukkan link dalam menu untuk mengakses sejarah dari perubahan dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a workorder in the its "
 "zoom view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk mengakses sejarah perintah kerja dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to add a workorder in the change zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk menambahkan perintah kerja dalam tampilan perubahan zoom dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to delete a change in its zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk menghapus perubahan dalam pandangan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to delete a workorder in its zoom view of the agent"
 " interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk menghapus perintah kerja dalam pandangan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a change in the its zoom view of the agent "
 "interface."
-msgstr "Mostra um link no menu para editar uma Alteração."
+msgstr "Menunjukkan link dalam menu untuk mengedit perubahan dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a workorder in the its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk mengedit perintah kerja dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the change zoom view of the agent "
 "interface."
-msgstr "Mostra um link no menu para voltar a Alteração."
+msgstr "Menunjukkan link dalam menu untuk kembali dalam tampilan perubahan zoom dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the workorder zoom view of the agent "
 "interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk kembali dalam urutan kerja tampilan zoom dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a change in the its zoom view of the agent"
 " interface."
-msgstr "Mostra um link no menu para imprimir uma Alteração."
+msgstr "Menunjukkan link dalam menu untuk mencetak perubahan dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a workorder in the its zoom view of the "
 "agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk mencetak perintah kerja dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
-msgstr ""
+msgstr "Menunjukkan link dalam menu untuk mengatur ulang perubahan dan perintah kerja dalam tampilan zoom-nya dari antarmuka agen."
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
-msgstr "Mostra o histórico de alterações (ordem inversa)."
+msgstr "Menunjukkan sejarah perubahan (urutan terbalik) di antarmuka agen."
 
 #. SysConfig
 msgid "State Machine"
-msgstr "Máquina de Estado"
+msgstr "State mesin"
 
 #. SysConfig
 msgid ""
 "Stores change and workorder ids and their corresponding template id, while a"
 " user is editing a template."
-msgstr ""
+msgstr "Simpan perubahan dan perintah kerja id dan Template id yang sesuai mereka, sementara pengguna mengedit template."
 
 #. SysConfig
 msgid "Take Workorder"
-msgstr "Assumir ordem de serviço"
+msgstr "Ambil Work Order"
 
 #. SysConfig
 msgid "Take Workorder."
-msgstr ""
+msgstr "Mengambil perintah kerja"
 
 #. SysConfig
 msgid "Take the workorder."
@@ -2767,23 +2770,23 @@ msgstr ""
 
 #. SysConfig
 msgid "Template Overview"
-msgstr "Cista de Modelos"
+msgstr "Ikhtisar Template"
 
 #. SysConfig
 msgid "Template."
-msgstr ""
+msgstr "Template"
 
 #. SysConfig
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
-msgstr "O identificador de uma Alteração, por exemplo, Alteração#,Minha Alteração#. Por omissão é Alteração#."
+msgstr "Pengenal untuk perubahan, misalnya. Ganti #,  perubahan saya#. default Berubah #."
 
 #. SysConfig
 msgid ""
 "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
 "is Workorder#."
-msgstr "O identificador de uma Ordem de Serviço, por exemplo, Ordem de Serviço#,Minha Ordem de Serviço#. Por omissão é Ordem de Serviço#."
+msgstr "Pengenal untuk perintah kerja, misalnya Workorder #, Workorder #. Standarnya adalah Work Order #."
 
 #. SysConfig
 msgid ""
@@ -2793,53 +2796,53 @@ msgid ""
 "this ACL could collide with other ACLs which are also related to the ticket "
 "type, this sysconfig option is disabled by default and should only be "
 "activated if needed."
-msgstr ""
+msgstr "Modul ACL ini membatasi penggunaan jenis tiket yang didefinisikan dalam pilihan sysconfig 'ITSMChange :: AddChangeLinkTicketTypes', untuk pengguna kelompok sebagaimana didefinisikan dalam \"ITSMChange :: RestrictTicketTypes :: Grup\". Sebagai ACL ini bisa berbenturan dengan ACL lain yang juga terkait dengan jenis tiket, opsi sysconfig ini dinonaktifkan secara default dan hanya harus diaktifkan jika diperlukan."
 
 #. SysConfig
 msgid "Time Slot"
-msgstr ""
+msgstr "waktu Slot"
 
 #. SysConfig
 msgid ""
 "Types of tickets, where in the ticket zoom view a link to add a change will "
 "be displayed."
-msgstr "Tipos de tickets, onde no detalhe de visualização do ticket é mostrado um link para adicionar uma Alteração."
+msgstr "Jenis tiket, di mana dalam zoom tiket melihat link untuk menambahkan perubahan akan ditampilkan."
 
 #. SysConfig
 msgid "User Search"
-msgstr ""
+msgstr "Cari pengguna"
 
 #. SysConfig
 msgid "Workorder Add (from template)."
-msgstr ""
+msgstr "Tambahan Perintah Kerja (dari template)."
 
 #. SysConfig
 msgid "Workorder Add."
-msgstr ""
+msgstr "Perintah kerja ditambah"
 
 #. SysConfig
 msgid "Workorder Agent."
-msgstr ""
+msgstr "Agen perintah kerja"
 
 #. SysConfig
 msgid "Workorder Delete."
-msgstr ""
+msgstr "Perintah kerja dihapus"
 
 #. SysConfig
 msgid "Workorder Edit."
-msgstr ""
+msgstr "Perintah kerja di edit"
 
 #. SysConfig
 msgid "Workorder History Zoom."
-msgstr ""
+msgstr "Sejarah perintah kerja"
 
 #. SysConfig
 msgid "Workorder History."
-msgstr ""
+msgstr "Sejarah perintah kerja"
 
 #. SysConfig
 msgid "Workorder Report."
-msgstr ""
+msgstr "Laporan perintah kerja"
 
 #. SysConfig
 msgid "Workorder Zoom"
@@ -2847,12 +2850,12 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Zoom."
-msgstr ""
+msgstr "Perintah kerja zoom"
 
 #. SysConfig
 msgid "once"
-msgstr ""
+msgstr "Sekali"
 
 #. SysConfig
 msgid "regularly"
-msgstr ""
+msgstr "secara teratur"
