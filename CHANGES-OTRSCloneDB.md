@@ -1,5 +1,4 @@
 #6.0.1 ????-??-??
- - Testing.
  - 2017-09-21 Initial version for OTRS 6
 
 #5.0.3 2017-03-14
