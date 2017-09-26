@@ -118,9 +118,8 @@ $Selenium->RunTest(
         }
 
         # check client side validation
-        my $Element = $Selenium->find_element( "#TemplateName", 'css' );
-        $Element->send_keys("");
-        $Element->submit();
+        $Selenium->find_element( "#TemplateName",      'css' )->send_keys("");
+        $Selenium->find_element( "#SubmitAddTemplate", 'css' )->click();
 
         $Self->Is(
             $Selenium->execute_script(
