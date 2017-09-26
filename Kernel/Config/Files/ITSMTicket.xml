@@ -782,7 +782,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Description Translatable="1">Module to dynamically show the service incident state and to calculate the priority.</Description>
-                <Title Translatable="1">AgentITSMIncidentProblemManagement</Title>
+                <Title Translatable="1">Service Incident State and Priority Calculation</Title>
                 <NavBarName>Ticket</NavBarName>
             </FrontendModuleReg>
         </Setting>

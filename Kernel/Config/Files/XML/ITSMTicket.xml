@@ -625,7 +625,7 @@
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Module to dynamically show the service incident state and to calculate the priority.</Item>
-                    <Item Key="Title" Translatable="1">AgentITSMIncidentProblemManagement</Item>
+                    <Item Key="Title" Translatable="1">Service Incident State and Priority Calculation</Item>
                     <Item Key="NavBarName">Ticket</Item>
                 </Hash>
             </Item>
