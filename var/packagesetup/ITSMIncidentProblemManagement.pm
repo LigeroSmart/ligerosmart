@@ -337,6 +337,8 @@ sub _SetScreenDynamicFieldConfig {
     my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
+    my @NewSettings;
+
     for my $Screen ( sort keys %ScreenDynamicFieldConfig ) {
 
         # get existing config for each screen
@@ -364,35 +366,21 @@ sub _SetScreenDynamicFieldConfig {
 
         my $SettingName = 'Ticket::Frontend::' . $Screen . '###DynamicField';
 
-        # get default setting
-        my %DefaultSetting = $SysConfigObject->SettingGet(
-            Name    => $SettingName,
-            Default => 1,
-        );
-
-        # Lock setting.
-        my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-            Name      => $SettingName,
-            UserID    => 1,
-            Force     => 1,
-            DefaultID => $DefaultSetting{DefaultID},
-        );
-
-        # Update the configuration item.
-        $SysConfigObject->SettingUpdate(
-            Name              => $SettingName,
-            UserID            => 1,
-            IsValid           => 1,
-            EffectiveValue    => \%NewSetting,
-            ExclusiveLockGUID => $ExclusiveLockGUID,
-        );
-
-        # Unlock system config setting.
-        $SysConfigObject->SettingUnlock(
-            UserID    => 1,
-            DefaultID => $DefaultSetting{DefaultID},
-        );
+        # Build new setting.
+        push @NewSettings, {
+            Name           => $SettingName,
+            EffectiveValue => \%NewSetting,
+        };
     }
+
+    return 1 if !@NewSettings;
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ITSMIncidentProblemManagement - package setup function: _SetScreenDynamicFieldConfig',
+        Settings => \@NewSettings,
+    );
 
     return 1;
 }
@@ -835,6 +823,8 @@ sub _MigrateDTLInSysConfig {
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ProviderObject  = Kernel::Output::Template::Provider->new();
 
+    my @NewSettings;
+
     # handle hash settings
     NAME:
     for my $Name (qw(Ticket::Frontend::MenuModule)) {
@@ -870,34 +860,11 @@ sub _MigrateDTLInSysConfig {
                 }
             }
 
-            # Get default setting
-            my %DefaultSetting = $SysConfigObject->SettingGet(
-                Name    => $Name . '###' . $MenuModule,
-                Default => 1,
-            );
-
-            # Lock setting.
-            my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-                Name      => $Name . '###' . $MenuModule,
-                UserID    => 1,
-                Force     => 1,
-                DefaultID => $DefaultSetting{DefaultID},
-            );
-
-            # Update the configuration item.
-            $SysConfigObject->SettingUpdate(
-                Name              => $Name . '###' . $MenuModule,
-                UserID            => 1,
-                IsValid           => 1,
-                EffectiveValue    => $Setting->{$MenuModule},
-                ExclusiveLockGUID => $ExclusiveLockGUID,
-            );
-
-            # Unlock system config setting.
-            $SysConfigObject->SettingUnlock(
-                UserID    => 1,
-                DefaultID => $DefaultSetting{DefaultID},
-            );
+            # Build new setting.
+            push @NewSettings, {
+                Name           => $Name . '###' . $MenuModule,
+                EffectiveValue => $Setting->{$MenuModule},
+            };
         }
     }
 
@@ -937,36 +904,22 @@ sub _MigrateDTLInSysConfig {
                 $Setting->{$SettingItem} = $TTContent;
             }
 
-            # Get default setting
-            my %DefaultSetting = $SysConfigObject->SettingGet(
-                Name    => $Name . '###' . $SettingItem,
-                Default => 1,
-            );
-
-            # Lock setting.
-            my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-                Name      => $Name . '###' . $SettingItem,
-                UserID    => 1,
-                Force     => 1,
-                DefaultID => $DefaultSetting{DefaultID},
-            );
-
-            # Update the configuration item.
-            $SysConfigObject->SettingUpdate(
-                Name              => $Name . '###' . $SettingItem,
-                UserID            => 1,
-                IsValid           => 1,
-                EffectiveValue    => $Setting->{$SettingItem},
-                ExclusiveLockGUID => $ExclusiveLockGUID,
-            );
-
-            # Unlock system config setting.
-            $SysConfigObject->SettingUnlock(
-                UserID    => 1,
-                DefaultID => $DefaultSetting{DefaultID},
-            );
+            # Build new setting.
+            push @NewSettings, {
+                Name           => $Name . '###' . $SettingItem,
+                EffectiveValue => $Setting->{$SettingItem},
+            };
         }
     }
+
+    return 1 if !@NewSettings;
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ITSMIncidentProblemManagement - package setup function: _MigrateDTLInSysConfig',
+        Settings => \@NewSettings,
+    );
 
     return 1;
 }
