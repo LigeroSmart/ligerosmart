@@ -82,9 +82,9 @@ $Selenium->RunTest(
 
         # input change title and number as search param and run it
         $Selenium->find_element("//a[\@class='AddButton']")->click();
-        $Selenium->find_element( "ChangeNumber", 'name' )->send_keys( $ChangeData->{ChangeNumber} );
-        $Selenium->find_element( "ChangeTitle",  'name' )->send_keys( $ChangeData->{ChangeTitle} );
-        $Selenium->find_element( "ChangeTitle",  'name' )->VerifiedSubmit();
+        $Selenium->find_element( "ChangeNumber",      'name' )->send_keys( $ChangeData->{ChangeNumber} );
+        $Selenium->find_element( "ChangeTitle",       'name' )->send_keys( $ChangeData->{ChangeTitle} );
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # check for expected result
         $Self->True(
@@ -98,8 +98,8 @@ $Selenium->RunTest(
         # wait until form and overlay has loaded, if necessary
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
 
-        $Selenium->find_element( "ChangeNumber", 'name' )->send_keys("123455678");
-        $Selenium->find_element( "ChangeNumber", 'name' )->VerifiedSubmit();
+        $Selenium->find_element( "ChangeNumber",      'name' )->send_keys("123455678");
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # check for expected result
         $Self->True(

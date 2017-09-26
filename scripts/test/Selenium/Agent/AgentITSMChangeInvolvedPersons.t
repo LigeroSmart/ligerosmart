@@ -114,7 +114,8 @@ $Selenium->RunTest(
 
         # check client validation
         $Selenium->find_element( "#ChangeManager", 'css' )->clear();
-        $Selenium->find_element( "#ChangeManager", 'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#SubmitButton",  'css' )->VerifiedClick();
+
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#ChangeManager').hasClass('Error')"
