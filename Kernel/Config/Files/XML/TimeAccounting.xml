@@ -132,11 +132,6 @@
                         <Item>TimeAccounting.Table.css</Item>
                     </Array>
                 </Item>
-                <Item Key="JavaScript">
-                    <Array>
-                        <Item>TimeAccounting.Agent.Overview.js</Item>
-                    </Array>
-                </Item>
             </Hash>
         </Value>
     </Setting>
@@ -204,8 +199,6 @@
                 <Item Key="JavaScript">
                     <Array>
                         <Item>TimeAccounting.Agent.js</Item>
-                        <Item>TimeAccounting.Agent.ConfirmationDialog.js</Item>
-                        <Item>TimeAccounting.Agent.EditTimeRecords.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -272,11 +265,6 @@
                         <Item>TimeAccounting.Table.css</Item>
                     </Array>
                 </Item>
-                <Item Key="JavaScript">
-                    <Array>
-                        <Item>TimeAccounting.Agent.Reporting.js</Item>
-                    </Array>
-                </Item>
             </Hash>
         </Value>
     </Setting>
@@ -339,11 +327,6 @@
                     <Array>
                         <Item>TimeAccounting.Defaults.css</Item>
                         <Item>TimeAccounting.Table.css</Item>
-                    </Array>
-                </Item>
-                <Item Key="JavaScript">
-                    <Array>
-                        <Item>TimeAccounting.Agent.View.js</Item>
                     </Array>
                 </Item>
             </Hash>
