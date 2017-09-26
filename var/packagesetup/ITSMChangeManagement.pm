@@ -322,13 +322,13 @@ Migrates the change and workorder freetext fields to dynamic fields.
 =cut
 
 sub _MigrateFreeTextToDynamicFields {
-    my ($Self) = @_;
 
     # ---------------------------------------------------------------------------------------------
     # Migrate freekey and freetext fields to dynamic fields (just the fields, the data comes later)
     # ---------------------------------------------------------------------------------------------
 
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     # get all configured change and workorder freekey and freetext numbers from sysconfig
     my @DynamicFields;
@@ -619,9 +619,11 @@ sub _MigrateFreeTextToDynamicFields {
         }
     }
 
+
     # ---------------------------------------------------------------------------------------------
     # Migrate freetext screen config
     # ---------------------------------------------------------------------------------------------
+    my @NewSettings;
 
     # migrate change freetext frontend config
     CONFIGNAME:
@@ -647,7 +649,7 @@ sub _MigrateFreeTextToDynamicFields {
         }
         $Config = $Config->{$FieldType};
 
-        my %NewSetting;
+        my %SettingNew;
         NUMBER:
         for my $Number ( sort keys %{$Config} ) {
 
@@ -655,16 +657,16 @@ sub _MigrateFreeTextToDynamicFields {
 
             next NUMBER if !$Value;
 
-            $NewSetting{ $FieldType . $Number } = $Value;
+            $SettingNew{ $FieldType . $Number } = $Value;
         }
 
-        next CONFIGNAME if !%NewSetting;
+        next CONFIGNAME if !%SettingNew;
 
-        # update the sysconfig
-        $Self->_SysConfigSettingUpdate(
-            Key   => $ConfigName . '###DynamicField',
-            Value => \%NewSetting,
-        );
+        # Build new setting.
+        push @NewSettings, {
+            Name           => $ConfigName . '###DynamicField',
+            EffectiveValue => \%SettingNew,
+        };
     }
 
     my %ChangeDynamicFieldConfig;
@@ -681,16 +683,23 @@ sub _MigrateFreeTextToDynamicFields {
         }
     }
 
-    # show all change dynamic fields in the change zoom
-    $Self->_SysConfigSettingUpdate(
-        Key   => 'ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField',
-        Value => \%ChangeDynamicFieldConfig,
-    );
+    # Build new setting.
+    push @NewSettings, {
+        Name           => 'ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField',
+        EffectiveValue => \%ChangeDynamicFieldConfig,
+    };
 
-    # show all workorder dynamic fields in the workorder zoom
-    $Self->_SysConfigSettingUpdate(
-        Key   => 'ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField',
-        Value => \%WorkorderDynamicFieldConfig,
+    # Build new setting.
+    push @NewSettings, {
+        Name           => 'ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField',
+        EffectiveValue => \%WorkorderDynamicFieldConfig,
+    };
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ITSMChangeManagement - package setup function: _MigrateFreeTextToDynamicFields',
+        Settings => \@NewSettings,
     );
 
     # ---------------------------------------------------------------------------------------------
@@ -3769,11 +3778,12 @@ Converts DTL settings in sysconfig to TT.
 
 sub _MigrateDTLInSysConfig {
 
-    my ($Self) = @_;
-
     # create needed objects
-    my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
-    my $ProviderObject = Kernel::Output::Template::Provider->new();
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+    my $ProviderObject  = Kernel::Output::Template::Provider->new();
+
+    my @NewSettings;
 
     # handle hash settings
     NAME:
@@ -3793,13 +3803,13 @@ sub _MigrateDTLInSysConfig {
         MENUMODULE:
         for my $MenuModule ( sort keys %{$Setting} ) {
 
-            # setting is a hash
+            # Setting is a hash.
             SETTINGITEM:
             for my $SettingItem ( sort keys %{ $Setting->{$MenuModule} } ) {
 
                 my $SettingContent = $Setting->{$MenuModule}->{$SettingItem};
 
-                # do nothing if there is no value for migrating
+                # Do nothing if there is no value for migrating.
                 next SETTINGITEM if !$SettingContent;
 
                 my $TTContent;
@@ -3817,13 +3827,22 @@ sub _MigrateDTLInSysConfig {
                 }
             }
 
-            # update the config item
-            $Self->_SysConfigSettingUpdate(
-                Key   => $Name,
-                Value => $Setting,
-            );
+            # Build new setting.
+            push @NewSettings, {
+                Name           => $Name . '###' . $MenuModule,
+                EffectiveValue => $Setting->{$MenuModule},
+            };
         }
     }
+
+    return 1 if !@NewSettings;
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ITSMChangeManagement - package setup function: _MigrateDTLInSysConfig',
+        Settings => \@NewSettings,
+    );
 
     return 1;
 }
@@ -3838,10 +3857,11 @@ Change configurations to match the new module location.
 
 sub _MigrateConfigs {
 
-    my ($Self) = @_;
-
     # create needed objects
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    my @NewSettings;
 
     # migrate NavBar menu modules
     # get setting content for NavBar menu modules
@@ -3858,11 +3878,11 @@ sub _MigrateConfigs {
         }
         $Setting->{$ModuleAdmin}->{NavBarModule}->{'Module'} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
 
-        # set new setting,
-        $Self->_SysConfigSettingUpdate(
-            Key   => 'Frontend::Module###' . $ModuleAdmin,
-            Value => $Setting->{$ModuleAdmin},
-        );
+        # Build new setting.
+        push @NewSettings, {
+            Name           => 'Frontend::Module###' . $ModuleAdmin,
+            EffectiveValue => $Setting->{$ModuleAdmin},
+        };
     }
 
     # migrate ITSM menu modules
@@ -3886,11 +3906,11 @@ sub _MigrateConfigs {
 
             $Setting->{$MenuModule}->{'Module'} = $Module;
 
-            # set new setting,
-            $Self->_SysConfigSettingUpdate(
-                Key   => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
-                Value => $Setting->{$MenuModule},
-            );
+            # Build new setting.
+            push @NewSettings, {
+                Name           => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
+                EffectiveValue => $Setting->{$MenuModule},
+            };
         }
     }
 
@@ -3910,12 +3930,21 @@ sub _MigrateConfigs {
         $Module =~ s{Kernel::Output::HTML::Preferences(\w+)}{Kernel::Output::HTML::Preferences::$1}xmsg;
         $Setting->{$PreferenceModule}->{'Module'} = $Module;
 
-        # set new setting,
-        $Self->_SysConfigSettingUpdate(
-            Key   => 'PreferencesGroups###' . $PreferenceModule,
-            Value => $Setting->{$PreferenceModule},
-        );
+        # Build new setting.
+        push @NewSettings, {
+            Name           => 'PreferencesGroups###' . $PreferenceModule,
+            EffectiveValue => $Setting->{$PreferenceModule},
+        };
     }
+
+    return 1 if !@NewSettings;
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ITSMChangeManagement - package setup function: _MigrateConfigs',
+        Settings => \@NewSettings,
+    );
 
     return 1;
 }
@@ -3930,10 +3959,11 @@ Change configurations to match the new file location.
 
 sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
 
-    my ($Self) = @_;
-
     # create needed objects
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    my @NewSettings;
 
     # get setting content for all frontend modules
     my $FrontendConfig = $ConfigObject->Get('Frontend::Module');
@@ -3967,11 +3997,11 @@ sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
         # change the JS loader settings
         $FrontendConfig->{$Module}->{Loader}->{JavaScript} = \@NewJavascriptLoaderSettings;
 
-        # set new setting,
-        $Self->_SysConfigSettingUpdate(
-            Key   => 'Frontend::Module###' . $Module,
-            Value => $FrontendConfig->{$Module},
-        );
+        # Build new setting.
+        push @NewSettings, {
+            Name           => 'Frontend::Module###' . $Module,
+            EffectiveValue => $FrontendConfig->{$Module},
+        };
     }
 
     # migrate ITSM menu modules
@@ -3993,58 +4023,21 @@ sub _MigrateConfigsFromLowerThan_5_0_12 {    ## no critic
             # update to new name
             $Setting->{$MenuModule}->{'Target'} = 'ConfirmDialog';
 
-            # set new setting,
-            $Self->_SysConfigSettingUpdate(
-                Key   => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
-                Value => $Setting->{$MenuModule},
-            );
+            # Build new setting.
+            push @NewSettings, {
+                Name           => $Type . '::Frontend::MenuModule' . '###' . $MenuModule,
+                EffectiveValue => $Setting->{$MenuModule},
+            };
         }
     }
 
-    return 1;
-}
+    return 1 if !@NewSettings;
 
-=head2 _SysConfigSettingUpdate()
-
-Helper function to update a setting, locking the setting before and unlocking it after.
-
-    $Self->_SysConfigSettingUpdate(
-        Key   => $Name,
-        Value => $Setting,
-    );
-
-=cut
-
-sub _SysConfigSettingUpdate {
-    my ( $Self, %Param ) = @_;
-
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-    # setting get
-    my %ModuleSetting = $SysConfigObject->SettingGet(
-        Name    => $Param{Key},
-        Default => 1,
-    );
-
-    # setting lock
-    my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-        UserID    => 1,
-        Force     => 1,
-        DefaultID => $ModuleSetting{DefaultID},
-    );
-
-    # setting update
-    $SysConfigObject->SettingUpdate(
-        Name              => $Param{Key},
-        EffectiveValue    => $Param{Value},
-        ExclusiveLockGUID => $ExclusiveLockGUID,
-        UserID            => 1,
-    );
-
-    # setting unlock
-    $SysConfigObject->SettingUnlock(
-        UserID    => 1,
-        DefaultID => $ModuleSetting{DefaultID},
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ITSMChangeManagement - package setup function: _MigrateConfigsFromLowerThan_5_0_12',
+        Settings => \@NewSettings,
     );
 
     return 1;
