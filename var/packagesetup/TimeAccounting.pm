@@ -83,8 +83,6 @@ sub CodeInstall {
     # delete the group cache to avoid permission problems
     $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'Group' );
 
-    $Self->_MigrateConfigs();
-
     return 1;
 }
 
