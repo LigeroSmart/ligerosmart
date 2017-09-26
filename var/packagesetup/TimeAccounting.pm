@@ -83,6 +83,8 @@ sub CodeInstall {
     # delete the group cache to avoid permission problems
     $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'Group' );
 
+    $Self->_MigrateConfigs();
+
     return 1;
 }
 
@@ -282,30 +284,29 @@ change configurations to match the new module location.
 
 sub _MigrateConfigs {
 
-    # create needed objects
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
 
-    # migrate time accounting notification SysConfig
-    # get setting content for time accounting SysConfig
-    my $Setting = $ConfigObject->Get('Frontend::Agent::ModuleNotify');
+    # Migrate time accounting notification SysConfig
+    #   get setting content for time accounting SysConfig.
+    my $Setting = $ConfigObject->Get('Frontend::NotifyModule');
 
-    if ( $Setting->{'TimeAccounting'}->{Module} ) {
+    my @NewSettings;
+
+    if ( $Setting->{'888-TimeAccounting'}->{Module} ) {
 
         # update module location
-        $Setting->{'TimeAccounting'}->{Module} = "Kernel::Output::HTML::Notification::TimeAccounting";
+        $Setting->{'888-TimeAccounting'}->{Module} = "Kernel::Output::HTML::Notification::TimeAccounting";
 
         # set new setting
-        my $Success = $SysConfigObject->SettingUpdate(
+        push @NewSettings, {
             Name           => 'Frontend::NotifyModule###888-TimeAccounting',
-            IsValid        => 1,
             EffectiveValue => $Setting->{'TimeAccounting'},
-            UserID         => 1,
-        );
+        };
     }
 
-    # migrate time accounting tool bar SysConfig
-    # get setting content for time accounting SysConfig
+    # Migrate time accounting tool bar SysConfig
+    #   get setting content for time accounting SysConfig.
     $Setting = $ConfigObject->Get('Frontend::ToolBarModule');
 
     if ( $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} ) {
@@ -314,13 +315,19 @@ sub _MigrateConfigs {
         $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
 
         # set new setting
-        my $Success = $SysConfigObject->SettingUpdate(
+       push @NewSettings, {
             Name           => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
-            IsValid        => 1,
             EffectiveValue => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
-            UserID         => 1,
-        );
+        }
     }
+
+    return 1 if !@NewSettings;
+
+    my $Success = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingsSet(
+        UserID   => 1,
+        Comments => 'TimeAccounting - package setup function: MigrateConfigs',
+        Settings => \@NewSettings
+    );
 
     return 1;
 }
