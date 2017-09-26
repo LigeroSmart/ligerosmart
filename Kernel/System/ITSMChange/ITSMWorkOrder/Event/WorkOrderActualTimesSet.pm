@@ -114,19 +114,16 @@ sub Run {
 
                 # increase the current time stamp by one second to avoid the case that
                 # actual start and end times are the same
-                my $CurrentSystemTime = $Kernel::OM->Create(
-                    'Kernel::System::DateTime',
-                    ObjectParams => {
-                        String => $CurrentTimeStamp,
-                        }
-                )->ToEpoch();
-
                 my $ActualEndTime = $Kernel::OM->Create(
                     'Kernel::System::DateTime',
                     ObjectParams => {
-                        Epoch => $CurrentSystemTime + 1,
-                        }
-                )->ToString();
+                        String => $CurrentTimeStamp,
+                    },
+                );
+                $ActualEndTime->Add(
+                    Seconds => 1,
+                );
+                $ActualEndTime = $ActualEndTime->ToString();
 
                 # set the actual end time,
                 # and if the actual start time was not set, set it also
