@@ -174,8 +174,10 @@ change configurations to match the new module location.
 sub _MigrateConfigs {
 
     # create needed objects
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    my @NewSettings;
 
     # migrate ImportExport config
     # get setting content for ImportExport config
@@ -184,28 +186,17 @@ sub _MigrateConfigs {
     # update module location
     $Setting->{'AdminImportExport'}->{Module} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
 
-    my %ImportExportSettings = $SysConfigObject->SettingGet(
-        Name    => 'Frontend::NavigationModule###AdminImportExport',
-        Default => 1
-    );
+    # Build new setting.
+    push @NewSettings, {
+        Name           => 'Frontend::NavigationModule###AdminImportExport',
+        EffectiveValue => $Setting->{'AdminImportExport'},
+    };
 
-    my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-        UserID    => 1,
-        Force     => 1,
-        DefaultID => $ImportExportSettings{DefaultID},
-    );
-
-    # set new setting,
-    $SysConfigObject->SettingUpdate(
-        Name              => 'Frontend::NavigationModule###AdminImportExport',
-        EffectiveValue    => $Setting->{'AdminImportExport'},
-        ExclusiveLockGUID => $ExclusiveLockGUID,
-        UserID            => 1,
-    );
-
-    $SysConfigObject->SettingUnlock(
-        UserID    => 1,
-        DefaultID => $ImportExportSettings{DefaultID},
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'ImportExport - package setup function: _MigrateConfigs',
+        Settings => \@NewSettings,
     );
 
     return 1;
