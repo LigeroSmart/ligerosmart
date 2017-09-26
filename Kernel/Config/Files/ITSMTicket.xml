@@ -789,7 +789,7 @@
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::FilterElementPost###ITSMIncidentProblemManagement" Required="0" Valid="1">
         <Description Translatable="1">Modifies the display order of the dynamic field ITSMImpact and other things.</Description>
-        <Group>FAQ</Group>
+        <Group>Ticket</Group>
         <SubGroup>Frontend::Base::OutputFilter</SubGroup>
         <Setting>
             <Hash>
