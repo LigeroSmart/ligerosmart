@@ -202,13 +202,12 @@ change configurations to match the new module location.
 
 sub _MigrateConfigs {
 
-    # create needed objects
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
     my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
 
-    # migrate GeneralCatalog Preferences
-    # get setting content for GeneralCatalog Preferences
     my $Setting = $ConfigObject->Get('GeneralCatalogPreferences');
+
+    my @NewSettings;
 
     CONFIGITEM:
     for my $MenuModule ( sort keys %{$Setting} ) {
@@ -219,33 +218,24 @@ sub _MigrateConfigs {
             next CONFIGITEM;
         }
 
-        my %GeneralCatalogPreferencesSetting = $SysConfigObject->SettingGet(
-            Name    => 'GeneralCatalogPreferences###' . $MenuModule,
-            Default => 1,
-        );
-
-        my $ExclusiveLockGUID = $SysConfigObject->SettingLock(
-            UserID    => 1,
-            Force     => 1,
-            DefaultID => $GeneralCatalogPreferencesSetting{DefaultID},
-        );
-
+        # Define the new setting value.
         $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::GeneralCatalogPreferences::Generic";
 
-        # set new setting
-        $SysConfigObject->SettingUpdate(
-            Name              => 'GeneralCatalogPreferences###' . $MenuModule,
-            EffectiveValue    => $Setting->{$MenuModule},
-            ExclusiveLockGUID => $ExclusiveLockGUID,
-            UserID            => 1,
-        );
-
-        $SysConfigObject->SettingUnlock(
-            UserID    => 1,
-            DefaultID => $GeneralCatalogPreferencesSetting{DefaultID},
-        );
-
+        # Build new setting.
+        push @NewSettings, {
+            Name           => 'GeneralCatalogPreferences###' . $MenuModule,
+            EffectiveValue => $Setting->{$MenuModule},
+        };
     }
+
+    return 1 if !@NewSettings;
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'GeneralCatalog - package setup function: _MigrateConfigs',
+        Settings => \@NewSettings,
+    );
 
     return 1;
 }
