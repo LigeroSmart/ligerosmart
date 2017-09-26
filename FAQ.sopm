@@ -136,7 +136,6 @@
         <File Permission="660" Location="scripts/test/FAQ/RelatedArticle.t" />
         <File Permission="660" Location="scripts/test/FAQ/Category/CheckCategoryUserPermission.t" />
         <File Permission="660" Location="scripts/test/GenericInterface/FAQConnector.t" />
-        <File Permission="660" Location="scripts/test/GenericInterface/Event/ObjectType/FAQ/DataGet.t" />
         <File Permission="660" Location="scripts/test/sample/FAQ-Test1.doc" />
         <File Permission="660" Location="scripts/test/sample/FAQ-Test1.pdf" />
         <File Permission="660" Location="scripts/test/sample/FAQ.csv" />
