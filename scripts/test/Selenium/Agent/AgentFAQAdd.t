@@ -71,11 +71,13 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#StateID').val('2').trigger('redraw.InputField').trigger('change');");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->execute_script("\$('#LanguageID').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element( "#Field1", 'css' )->send_keys($FAQSymptom);
-        $Selenium->find_element( "#Field2", 'css' )->send_keys($FAQProblem);
-        $Selenium->find_element( "#Field3", 'css' )->send_keys($FAQSolution);
-        $Selenium->find_element( "#Field6", 'css' )->send_keys($FAQComment);
-        $Selenium->find_element( "#Title",  'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#Field1",    'css' )->send_keys($FAQSymptom);
+        $Selenium->find_element( "#Field2",    'css' )->send_keys($FAQProblem);
+        $Selenium->find_element( "#Field3",    'css' )->send_keys($FAQSolution);
+        $Selenium->find_element( "#Field6",    'css' )->send_keys($FAQComment);
+        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQBody").length' );
 
         # verify test FAQ is created
         $Self->True(

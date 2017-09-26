@@ -81,7 +81,7 @@ $Selenium->RunTest(
 JAVASCRIPT
             $Selenium->execute_script($CheckConfirmJS);
 
-            $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
+            $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
             $Self->Is(
                 $Selenium->execute_script(
                     "return \$('#Name').hasClass('ServerError')"
@@ -96,7 +96,7 @@ JAVASCRIPT
         }
         else {
             $Selenium->find_element( "#Name", 'css' )->send_keys($FAQLanguage);
-            $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
+            $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
         }
 
         $Selenium->WaitFor( JavaScript => 'return $(".DataTable").length' );
