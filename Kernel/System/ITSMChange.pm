@@ -47,8 +47,6 @@ All functions for changes in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object
@@ -3148,7 +3146,7 @@ sub DESTROY {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _CheckChangeStateIDs()
 
@@ -3521,8 +3519,6 @@ sub _CheckChangeParams {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

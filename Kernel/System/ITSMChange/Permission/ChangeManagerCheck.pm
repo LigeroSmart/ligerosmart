@@ -22,8 +22,6 @@ Kernel::System::ITSMChange::Permission::ChangeManagerCheck - change manager base
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

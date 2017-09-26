@@ -553,7 +553,7 @@ sub OperatorExecute {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _OperatorExecute()
 
@@ -1014,7 +1014,7 @@ sub _OperatorIsAfter {
 
 =head2 _OperatorContains()
 
-Returns true or false (1/undef) if value1 contains value2.
+Returns true or false (1/undef) if C<value1> contains C<value2>.
 
     my $Result = $ConditionObject->_OperatorContains(
         Value1 => 'SomeValue',
@@ -1050,7 +1050,7 @@ sub _OperatorContains {
 
 =head2 _OperatorNotContains()
 
-Returns true or false (1/undef) if value1 not contains value2.
+Returns true or false (1/undef) if C<value1> not contains C<value2>.
 
     my $Result = $ConditionObject->_OperatorNotContains(
         Value1 => 'SomeValue',
@@ -1079,7 +1079,7 @@ sub _OperatorNotContains {
 
 =head2 _OperatorBeginsWith()
 
-Returns true or false (1/undef) if value1 begins with value2.
+Returns true or false (1/undef) if C<value1> begins with C<value2>.
 
     my $Result = $ConditionObject->_OperatorBeginsWith(
         Value1 => 'SomeValue',
@@ -1115,7 +1115,7 @@ sub _OperatorBeginsWith {
 
 =head2 _OperatorEndsWith()
 
-Returns true or false (1/undef) if value1 ends with value2.
+Returns true or false (1/undef) if C<value1> ends with C<value2>.
 
     my $Result = $ConditionObject->_OperatorEndsWith(
         Value1 => 'SomeValue',
@@ -1267,8 +1267,6 @@ sub _OperatorSet {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

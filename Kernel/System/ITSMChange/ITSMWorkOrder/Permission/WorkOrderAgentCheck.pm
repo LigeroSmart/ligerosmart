@@ -23,8 +23,6 @@ Kernel::System::ITSMChange::ITSMWorkOrder::Permission::WorkOrderAgentCheck - wor
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

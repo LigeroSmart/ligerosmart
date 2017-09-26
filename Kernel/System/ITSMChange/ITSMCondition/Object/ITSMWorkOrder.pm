@@ -24,8 +24,6 @@ Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder - condition its
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object
@@ -223,7 +221,7 @@ sub SelectorList {
     return \%SelectorList;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _DataGetAll()
 
@@ -278,8 +276,6 @@ sub _DataGetAll {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

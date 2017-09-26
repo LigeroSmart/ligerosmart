@@ -26,8 +26,6 @@ Kernel::System::ITSMChange::Template::CAB - all template functions for CAB
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object

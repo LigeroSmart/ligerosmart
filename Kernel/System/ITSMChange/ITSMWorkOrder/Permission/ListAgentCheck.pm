@@ -25,8 +25,6 @@ Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ListAgentCheck - grant pe
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object

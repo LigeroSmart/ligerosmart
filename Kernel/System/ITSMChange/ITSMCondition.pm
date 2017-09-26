@@ -39,8 +39,6 @@ All functions for conditions in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object
@@ -1354,7 +1352,7 @@ sub ConditionListByObjectType {
     return \@AffectedConditionIDs;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _ConditionMatch()
 
@@ -1543,8 +1541,6 @@ sub _ConditionListByObject {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

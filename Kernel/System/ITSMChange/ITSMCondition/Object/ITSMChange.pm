@@ -23,8 +23,6 @@ Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange - condition itsm c
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object

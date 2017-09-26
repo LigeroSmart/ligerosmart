@@ -26,8 +26,6 @@ Kernel::System::ITSMChange::Template::ITSMCondition - all template functions for
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.
@@ -202,7 +200,7 @@ sub DeSerialize {
     return $Self->$Sub(%Param);
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _ConditionAdd()
 
@@ -392,8 +390,6 @@ sub _ActionAdd {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

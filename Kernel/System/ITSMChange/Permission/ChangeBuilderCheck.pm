@@ -23,8 +23,6 @@ Kernel::System::ITSMChange::Permission::ChangeBuilderCheck - change builder base
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

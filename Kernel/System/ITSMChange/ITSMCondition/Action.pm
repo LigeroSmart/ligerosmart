@@ -767,6 +767,8 @@ sub ActionExecute {
     return $Result;
 }
 
+=head1 PRIVATE INTERFACE
+
 =head2 _ActionExecuteInit()
 
 Returns object, attribute and operator of a given action.

@@ -23,8 +23,6 @@ Kernel::System::ITSMChange::ITSMWorkOrder::Permission::CABCheck - CAB based perm
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

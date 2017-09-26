@@ -22,8 +22,6 @@ Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMWorkOrder - condition i
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

@@ -36,8 +36,6 @@ All functions for change templates in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object
@@ -301,7 +299,7 @@ sub DeSerialize {
     return $Self->$Sub(%Param);
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _ChangeAdd()
 
@@ -438,7 +436,7 @@ sub _GetTimeDifference {
 
 =head2 _AttachmentAdd()
 
-Creates new attachments for a change or a workorder based on the given template.
+Creates new attachments for a change or a C<workorder> based on the given template.
 It returns a hash of information (with just one key - "Success")
 
     my %Info = $TemplateObject->_AttachmentAdd(
@@ -485,7 +483,7 @@ sub _AttachmentAdd {
 
 =head2 _LinkAdd()
 
-Creates new links for a change or a workorder based on the given template. It
+Creates new links for a change or a C<workorder> based on the given template. It
 returns a hash of information (with just one key - "Success")
 
     my %Info = $TemplateObject->_LinkAdd(
@@ -544,8 +542,6 @@ sub _LinkAdd {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

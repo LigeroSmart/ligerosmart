@@ -29,8 +29,6 @@ Kernel::System::ITSMChange::Template - template lib
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.
@@ -1118,13 +1116,13 @@ sub TemplateDeSerialize {
     return $Info{ID};
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _CreateTemplateElements()
 
 This method dispatches the elements creation. It calls the subroutine
 that belongs to the given type (e.g. ChangeAdd). After that it
-invokes itself for all the childrens of the main element.
+invokes itself for all the children of the main element.
 
 This method returns the ID of the main element.
 
@@ -1280,8 +1278,6 @@ sub _CheckTemplateTypeIDs {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

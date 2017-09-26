@@ -22,8 +22,6 @@ Kernel::System::ITSMChange::Permission::CABCheck - CAB based permission check
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

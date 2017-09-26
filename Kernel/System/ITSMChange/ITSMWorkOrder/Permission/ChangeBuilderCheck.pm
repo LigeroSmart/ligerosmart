@@ -24,8 +24,6 @@ Kernel::System::ITSMChange::ITSMWorkOrder::Permission::ChangeBuilderCheck - chan
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

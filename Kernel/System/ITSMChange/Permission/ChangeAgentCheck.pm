@@ -22,8 +22,6 @@ Kernel::System::ITSMChange::Permission::ChangeAgentCheck - change agent based pe
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 Create an object.

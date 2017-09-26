@@ -390,7 +390,7 @@ sub _WorkOrderAdd {
     return %Info;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _GetTimeDifference()
 
@@ -591,8 +591,6 @@ sub _LinkAdd {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

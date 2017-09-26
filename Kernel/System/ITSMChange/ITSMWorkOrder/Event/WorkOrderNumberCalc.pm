@@ -69,7 +69,7 @@ sub Run {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _WorkOrderNumberCalc()
 
@@ -166,5 +166,3 @@ sub _WorkOrderNumberCalc {
 }
 
 1;
-
-=end Internal:

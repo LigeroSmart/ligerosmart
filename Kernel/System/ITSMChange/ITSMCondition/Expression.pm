@@ -739,6 +739,8 @@ sub ExpressionMatch {
     return $Result;
 }
 
+=head1 PRIVATE INTERFACE
+
 =head2 _ExpressionMatchInit()
 
 Returns object, attribute and operator of a given expression.

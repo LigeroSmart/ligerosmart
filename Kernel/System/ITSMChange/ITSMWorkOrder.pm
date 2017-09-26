@@ -40,8 +40,6 @@ Kernel::System::ITSMChange::ITSMWorkOrder - workorder lib
 
 =head1 PUBLIC INTERFACE
 
-=cut
-
 =head2 new()
 
 create an object
@@ -2920,7 +2918,7 @@ sub DESTROY {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _CheckWorkOrderTypeIDs()
 
@@ -3205,7 +3203,7 @@ sub _CheckWorkOrderParams {
 
 =head2 _CheckTimestamps()
 
-Checks the constraints of timestamps: xxxStartTime must be before xxxEndTime
+Checks the constraints of timestamps: C<xxxStartTime> must be before C<xxxEndTime>
 
     my $Ok = $WorkOrderObject->_CheckTimestamps(
         WorkOrderData    => $WorkOrderData,
@@ -3341,8 +3339,6 @@ sub _CheckTimestamps {
 }
 
 1;
-
-=end Internal:
 
 =head1 TERMS AND CONDITIONS
 

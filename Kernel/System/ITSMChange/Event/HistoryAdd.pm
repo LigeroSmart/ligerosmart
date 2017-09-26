@@ -625,12 +625,12 @@ sub Run {
     return 1;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _HasFieldChanged()
 
 This method checks whether a field was changed or not. It returns 1 when field
-was changed, undef othrewise.
+was changed, undef otherwise.
 
     my $FieldHasChanged = $HistoryObject->_HasFieldChanged(
         Old => 'old value', # can be array reference or hash reference as well
@@ -683,5 +683,3 @@ sub _HasFieldChanged {
 }
 
 1;
-
-=end Internal:
