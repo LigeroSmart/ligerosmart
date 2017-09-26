@@ -149,35 +149,20 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
 
         # Create Users.
         my $UserObject = $Kernel::OM->Get('Kernel::System::User');
-        my @Users      = (
-            {
-                FirstName => 'UserFirstName1' . $RandomID,
-                LastName  => 'UserLastName1' . $RandomID,
-                Login     => 'UserLogin1' . $RandomID,
-                Email     => 'User1' . $RandomID . '@example.com',
-            },
-            {
-                FirstName => 'UserFirstName2' . $RandomID,
-                LastName  => 'UserLastName2' . $RandomID,
-                Login     => 'UserLogin2' . $RandomID,
-                Email     => 'User2' . $RandomID . '@example.com',
-            },
-        );
-        my @UserIDs;
-        for my $User (@Users) {
-            my $UserID = $UserObject->UserAdd(
-                UserFirstname => $User->{FirstName},
-                UserLastname  => $User->{LastName},
-                UserLogin     => $User->{Login},
-                UserEmail     => $User->{Email},
-                ValidID       => 1,
-                ChangeUserID  => 1,
+        my @Users;
+        for my $UserCount ( 1 .. 2 ) {
+
+            # Create test User and login.
+            my $TestUserLogin = $Helper->TestUserCreate(
+                Groups => [ 'users' ],
+            ) || die "Did not get test user";
+
+            # Get user data.
+            my %UserData = $UserObject->GetUserData(
+                User => $TestUserLogin,
             );
-            $Self->True(
-                $UserID,
-                "Created UserID $UserID"
-            );
-            push @UserIDs, $UserID;
+
+            push @Users, \%UserData;
         }
 
         # Create Customer Company.
@@ -245,8 +230,8 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 SLAID         => $SLAID,
                 CustomerID    => $CustomerCompanyID,
                 CustomerUser  => $CustomerUserID,
-                OwnerID       => $UserIDs[0],
-                ResponsibleID => $UserIDs[1],
+                OwnerID       => $Users[0]->{UserID},
+                ResponsibleID => $Users[1]->{UserID},
 
             );
             my $TicketID = $TicketObject->TicketCreate(
@@ -641,17 +626,17 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 Interface => 'All',
             },
             {
-                Value     => $Users[0]->{Login},
+                Value     => $Users[0]->{UserLogin},
                 Message   => 'Owner first row value is correct',
                 Interface => 'All',
             },
             {
-                Value     => '(' . $Users[0]->{FirstName},
+                Value     => '(' . $Users[0]->{UserFirstname},
                 Message   => 'Owner second row value is correct',
                 Interface => 'Agent',
             },
             {
-                Value     => $Users[0]->{LastName} . ')',
+                Value     => $Users[0]->{UserLastname} . ')',
                 Message   => 'Owner third row value is correct',
                 Interface => 'Agent',
             },
@@ -661,17 +646,17 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 Interface => 'All',
             },
             {
-                Value     => $Users[1]->{Login},
+                Value     => $Users[1]->{UserLogin},
                 Message   => 'Responsible first row value is correct',
                 Interface => 'All',
             },
             {
-                Value     => '(' . $Users[1]->{FirstName},
+                Value     => '(' . $Users[1]->{UserFirstname},
                 Message   => 'Responsible second row value is correct',
                 Interface => 'Agent',
             },
             {
-                Value     => $Users[1]->{LastName} . ')',
+                Value     => $Users[1]->{UserLastname} . ')',
                 Message   => 'Responsible third row value is correct',
                 Interface => 'Agent',
             },
@@ -1090,36 +1075,6 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 SQL     => "DELETE FROM customer_company WHERE customer_id = ?",
                 Bind    => $CustomerCompanyID,
                 Message => "CustomerCompanyID $CustomerCompanyID is deleted",
-            },
-            {
-                SQL     => "DELETE FROM user_preferences WHERE user_id = ?",
-                Bind    => $UserIDs[1],
-                Message => "User preferences for $UserIDs[1] is deleted",
-            },
-            {
-                SQL     => "DELETE FROM users WHERE id = ?",
-                Bind    => $UserIDs[1],
-# ---
-# ITSMCore
-# ---
-#                Message => "UserID $UserIDs[1] is deleted",
-                Message => 'UserID $UserIDs[1] ' . $UserIDs[1] . ' is deleted',
-# ---
-            },
-            {
-                SQL     => "DELETE FROM user_preferences WHERE user_id = ?",
-                Bind    => $UserIDs[0],
-                Message => "User preferences for $UserIDs[0] is deleted",
-            },
-            {
-                SQL     => "DELETE FROM users WHERE id = ?",
-                Bind    => $UserIDs[0],
-# ---
-# ITSMCore
-# ---
-#                Message => "UserID $UserIDs[0] is deleted",
-                Message => 'UserID $UserIDs[0] ' .  $UserIDs[0] . ' is deleted',
-# ---
             },
             {
                 SQL     => "DELETE FROM ticket_type WHERE id = ?",
