@@ -50,35 +50,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    $Kernel::OM->ObjectsDiscard();
-
-    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
-
-    # Convert XML files to entries in the database.
-    if (
-        !$SysConfigObject->ConfigurationXML2DB(
-            CleanUp => 1,
-            Force   => 1,
-            UserID  => 1,
-        )
-        )
-    {
-        return;
-    }
-
-    if (
-        !$SysConfigObject->ConfigurationDeploy(
-            Comments => $Param{Comments} || "Configuration Rebuild",
-            AllSettings  => 1,
-            Force        => 1,
-            NoValidation => 1,
-            UserID       => 1,
-        )
-        )
-    {
-        return;
-    }
-
     # Force a reload of ZZZAuto.pm to get the fresh configuration values.
     for my $Module ( sort keys %INC ) {
         if ( $Module =~ m/ZZZAA?uto\.pm$/ ) {
@@ -325,10 +296,11 @@ sub _MigrateConfigs {
         $Setting->{'TimeAccounting'}->{Module} = "Kernel::Output::HTML::Notification::TimeAccounting";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Frontend::NotifyModule###888-TimeAccounting',
-            Value => $Setting->{'TimeAccounting'},
+        my $Success = $SysConfigObject->SettingUpdate(
+            Name           => 'Frontend::NotifyModule###888-TimeAccounting',
+            IsValid        => 1,
+            EffectiveValue => $Setting->{'TimeAccounting'},
+            UserID         => 1,
         );
     }
 
@@ -339,14 +311,14 @@ sub _MigrateConfigs {
     if ( $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} ) {
 
         # update module location
-        $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module}
-            = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
+        $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
 
         # set new setting
-        my $Success = $SysConfigObject->ConfigItemUpdate(
-            Valid => 1,
-            Key   => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
-            Value => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
+        my $Success = $SysConfigObject->SettingUpdate(
+            Name           => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
+            IsValid        => 1,
+            EffectiveValue => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
+            UserID         => 1,
         );
     }
 
