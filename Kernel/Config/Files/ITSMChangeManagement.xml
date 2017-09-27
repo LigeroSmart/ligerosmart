@@ -40,7 +40,7 @@
                 </NavBarModule>
                 <Loader>
                     <CSS>Core.Agent.Admin.NotificationEvent.css</CSS>
-                    <JavaScript>ITSM.Admin.ChangeNotification.js</JavaScript>
+                    <JavaScript>ITSM.Admin.ChangeManagement.ChangeNotification.js</JavaScript>
                     <JavaScript>ITSM.Agent.ChangeManagement.NotificationEvent.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -567,7 +567,7 @@
                 <Description Translatable="1">ITSM Template Edit CAB.</Description>
                 <Title Translatable="1">ITSM Change</Title>
                 <Loader>
-                    <JavaScript>ITSM.Agent.CABTemplateEdit.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ChangeManagement.CABTemplateEdit.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -4743,9 +4743,9 @@
         <SubGroup>Frontend::Base::Loader</SubGroup>
         <Setting>
             <Array>
+                <Item>ITSM.Agent.ChangeManagement.CABMemberSearch.js</Item>
                 <Item>ITSM.Agent.ChangeManagement.Search.js</Item>
-                <Item>ITSM.Agent.UserSearch.js</Item>
-                <Item>ITSM.Agent.CABMemberSearch.js</Item>
+                <Item>ITSM.Agent.ChangeManagement.UserSearch.js</Item>
             </Array>
         </Setting>
     </ConfigItem>

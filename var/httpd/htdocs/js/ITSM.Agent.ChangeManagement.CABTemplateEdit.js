@@ -10,6 +10,7 @@
 
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
+ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
 
 /**
  * @namespace ITSM.Agent.ChangeManagement.Add
@@ -18,7 +19,7 @@ ITSM.Agent = ITSM.Agent || {};
  * @description
  *      This namespace contains the special module functions for the change-management add screen.
  */
-ITSM.Agent.CABTemplateEdit = (function (TargetNS) {
+ITSM.Agent.ChangeManagement.CABTemplateEdit = (function (TargetNS) {
 
     /**
      * @private
@@ -44,7 +45,7 @@ ITSM.Agent.CABTemplateEdit = (function (TargetNS) {
 
     /**
      * @name Init
-     * @namespace ITSM.Agent.CABTemplateEdit
+     * @namespace ITSM.Agent.ChangeManagement.CABTemplateEdit
      * @function
      * @description
      *      This function initializes some behaviours for the add screen.
@@ -68,4 +69,4 @@ ITSM.Agent.CABTemplateEdit = (function (TargetNS) {
 
     return TargetNS;
 
-}(ITSM.Agent.CABTemplateEdit || {}));
+}(ITSM.Agent.ChangeManagement.CABTemplateEdit || {}));

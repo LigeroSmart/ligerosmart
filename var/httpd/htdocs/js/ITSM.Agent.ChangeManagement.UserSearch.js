@@ -10,20 +10,21 @@
 
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
+ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
 
 
 /**
- * @namespace ITSM.Agent.UserSearch
- * @memberof ITSM.Agent.UserSearch
+ * @namespace ITSM.Agent.ChangeManagement.UserSearch
+ * @memberof ITSM.Agent.ChangeManagement
  * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the user search.
  */
-ITSM.Agent.UserSearch = (function (TargetNS) {
+ITSM.Agent.ChangeManagement.UserSearch = (function (TargetNS) {
 
     /**
      * @name Init
-     * @namespace ITSM.Agent.UserAgent
+     * @namespace ITSM.Agent.ChangeManagement.UserAgent
      * @function
      * @param {jQueryObject} $UserSearches elements to add autocomplete behaviour (optional)
      *      if not given, will search for all inputs with the class '.UserSearch'
@@ -81,4 +82,4 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
-}(ITSM.Agent.UserSearch || {}));
+}(ITSM.Agent.ChangeManagement.UserSearch || {}));

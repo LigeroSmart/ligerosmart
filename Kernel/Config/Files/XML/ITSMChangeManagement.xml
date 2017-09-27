@@ -92,7 +92,7 @@
                 </Item>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>ITSM.Admin.ChangeNotification.js</Item>
+                        <Item>ITSM.Admin.ChangeManagement.ChangeNotification.js</Item>
                         <Item>ITSM.Agent.ChangeManagement.NotificationEvent.js</Item>
                     </Array>
                 </Item>
@@ -1214,7 +1214,7 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>ITSM.Agent.CABTemplateEdit.js</Item>
+                        <Item>ITSM.Agent.ChangeManagement.CABTemplateEdit.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -5262,9 +5262,9 @@
         <Navigation>Frontend::Base::Loader</Navigation>
         <Value>
             <Array>
+                <Item>ITSM.Agent.ChangeManagement.CABMemberSearch.js</Item>
                 <Item>ITSM.Agent.ChangeManagement.Search.js</Item>
-                <Item>ITSM.Agent.UserSearch.js</Item>
-                <Item>ITSM.Agent.CABMemberSearch.js</Item>
+                <Item>ITSM.Agent.ChangeManagement.UserSearch.js</Item>
             </Array>
         </Value>
     </Setting>

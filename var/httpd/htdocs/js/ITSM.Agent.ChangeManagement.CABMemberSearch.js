@@ -10,23 +10,24 @@
 
 var ITSM = ITSM || {};
 ITSM.Agent = ITSM.Agent || {};
+ITSM.Agent.ChangeManagement = ITSM.Agent.ChangeManagement || {};
 
 /**
- * @namespace ITSM.Agent.CABMemberSearch
+ * @namespace ITSM.Agent.ChangeManagement.CABMemberSearch
  * @memberof ITSM.Agent
  * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the CAB search.
  */
-ITSM.Agent.CABMemberSearch = (function (TargetNS) {
+ITSM.Agent.ChangeManagement.CABMemberSearch = (function (TargetNS) {
 
     /**
      * @name Init
-     * @memberof ITSM.Agent.CABMemberSearch
+     * @memberof ITSM.Agent.ChangeManagement.CABMemberSearch
      * @function
      * @param {jQueryObject} $Element - The jQuery object of the input field with autocomplete.
      * @description
-            This function initializes the special module functions.
+     *      This function initializes the special module functions.
      */
     TargetNS.Init = function () {
 
@@ -84,4 +85,4 @@ ITSM.Agent.CABMemberSearch = (function (TargetNS) {
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
 
     return TargetNS;
-}(ITSM.Agent.CABMemberSearch || {}));
+}(ITSM.Agent.ChangeManagement.CABMemberSearch || {}));

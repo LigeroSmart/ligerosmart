@@ -98,7 +98,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $(this).removeClass('ITSMUserSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
-                ITSM.Agent.UserSearch.Init($('#' + Core.App.EscapeSelector(InputID)));
+                ITSM.Agent.ChangeManagement.UserSearch.Init($('#' + Core.App.EscapeSelector(InputID)));
 
                 // prevent dialog closure when select a customer from the list
                 $('ul.ui-autocomplete').off('click.ITSMUserSearch').on('click.ITSMUserSearch', function(Event){

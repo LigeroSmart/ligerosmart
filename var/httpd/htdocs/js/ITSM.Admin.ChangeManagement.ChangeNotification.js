@@ -10,19 +10,21 @@
 
 var ITSM = ITSM || {};
 ITSM.Admin = ITSM.Admin || {};
+ITSM.Admin.ChangeManagement = ITSM.Admin.ChangeManagement || {};
+
 
 /**
- * @namespace ITSM.Admin.ChangeNotification
- * @memberof ITSM.Admin
+ * @namespace ITSM.Admin.ChangeManagement.ChangeNotification
+ * @memberof ITSM.Admin.ChangeManagement
  * @author OTRS AG
  * @description
  *      This namespace contains the special module functions for the Change Notification
  */
-ITSM.Admin.ChangeNotification = (function (TargetNS) {
+ITSM.Admin.ChangeManagement.ChangeNotification = (function (TargetNS) {
 
     /**
      * @name Init
-     * @memberof ITSM.Admin.ChangeNotification
+     * @memberof ITSM.Admin.ChangeManagement.ChangeNotification
      * @function
      * @description
             This function initializes the special module functions.
@@ -56,4 +58,4 @@ ITSM.Admin.ChangeNotification = (function (TargetNS) {
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
     return TargetNS;
-}(ITSM.Admin.ChangeNotification || {}));
+}(ITSM.Admin.ChangeManagement.ChangeNotification || {}));
