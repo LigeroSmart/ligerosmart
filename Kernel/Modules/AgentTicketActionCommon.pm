@@ -92,6 +92,16 @@ sub new {
     if ( !$Self->{FormID} ) {
         $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
     }
+# ---
+# ITSMIncidentProblemManagement
+# ---
+
+    # Check if ITSMIncidentProblemManagement is used.
+    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
+    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
+        $Self->{ITSMIncidentProblemManagement} = 1;
+    }
+# ---
 
     return $Self;
 }
@@ -393,86 +403,87 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
-
-    # get needed stuff
-    $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
-    $GetParam{PriorityRC}              = $ParamObject->GetParam(Param => 'PriorityRC');
-    $GetParam{ElementChanged}          = $ParamObject->GetParam(Param => 'ElementChanged') || '';
-
-    # check if priority needs to be recalculated
-    if ( $GetParam{ElementChanged} eq 'ServiceID' || ( $GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' ) ) {
-        $GetParam{PriorityRC} = 1;
-    }
-
-    # set service id from ticket
-    if ( !defined $GetParam{ServiceID} && $Ticket{ServiceID} ) {
-        $GetParam{ServiceID} = $Ticket{ServiceID};
-    }
-
-    # set impact from ticket
-    if ( !defined $GetParam{DynamicField_ITSMImpact} ) {
-        $GetParam{DynamicField_ITSMImpact} = $Ticket{DynamicField_ITSMImpact};
-    }
-
     my %Service;
-    if ( $GetParam{ServiceID} ) {
+    if ( $Self->{ITSMIncidentProblemManagement} ) {
 
-        # get service
-        %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-            ServiceID     => $GetParam{ServiceID},
-            IncidentState => $Config->{ShowIncidentState} || 0,
-            UserID        => $Self->{UserID},
-        );
+        # get needed stuff
+        $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
+        $GetParam{PriorityRC}              = $ParamObject->GetParam(Param => 'PriorityRC');
+        $GetParam{ElementChanged}          = $ParamObject->GetParam(Param => 'ElementChanged') || '';
 
-        # recalculate impact if impact is not set until now
-        if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
-
-            # get default selection
-            my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue};
-
-            if ($DefaultSelection) {
-
-                # get default impact
-                $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
-                $GetParam{PriorityRC} = 1;
-            }
+        # check if priority needs to be recalculated
+        if ( $GetParam{ElementChanged} eq 'ServiceID' || ( $GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' ) ) {
+            $GetParam{PriorityRC} = 1;
         }
 
-        # recalculate priority
-        if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} && $Config->{Priority} ) {
+        # set service id from ticket
+        if ( !defined $GetParam{ServiceID} && $Ticket{ServiceID} ) {
+            $GetParam{ServiceID} = $Ticket{ServiceID};
+        }
 
-            if ( $GetParam{DynamicField_ITSMImpact} ) {
+        # set impact from ticket
+        if ( !defined $GetParam{DynamicField_ITSMImpact} ) {
+            $GetParam{DynamicField_ITSMImpact} = $Ticket{DynamicField_ITSMImpact};
+        }
 
-                # get priority
-                $GetParam{PriorityIDFromImpact} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                    Criticality => $Service{Criticality},
-                    Impact      => $GetParam{DynamicField_ITSMImpact},
-                );
+        if ( $GetParam{ServiceID} ) {
 
-                if ( $GetParam{PriorityIDFromImpact} ) {
-                    $GetParam{NewPriorityID} = $GetParam{PriorityIDFromImpact};
+            # get service
+            %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
+                ServiceID     => $GetParam{ServiceID},
+                IncidentState => $Config->{ShowIncidentState} || 0,
+                UserID        => $Self->{UserID},
+            );
+
+            # recalculate impact if impact is not set until now
+            if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
+
+                # get default selection
+                my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue};
+
+                if ($DefaultSelection) {
+
+                    # get default impact
+                    $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
+                    $GetParam{PriorityRC} = 1;
                 }
             }
-            else {
-                $GetParam{NewPriorityID} = '';
+
+            # recalculate priority
+            if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} && $Config->{Priority} ) {
+
+                if ( $GetParam{DynamicField_ITSMImpact} ) {
+
+                    # get priority
+                    $GetParam{PriorityIDFromImpact} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
+                        Criticality => $Service{Criticality},
+                        Impact      => $GetParam{DynamicField_ITSMImpact},
+                    );
+
+                    if ( $GetParam{PriorityIDFromImpact} ) {
+                        $GetParam{NewPriorityID} = $GetParam{PriorityIDFromImpact};
+                    }
+                }
+                else {
+                    $GetParam{NewPriorityID} = '';
+                }
             }
         }
+
+        # no service was selected
+        else {
+
+            # do not show the default selection
+            $ImpactDynamicFieldConfig->{Config}->{DefaultValue} = '';
+
+            # show only the empty selection
+            $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = {};
+            $GetParam{DynamicField_ITSMImpact} = '';
+        }
+
+        # set the selected impact
+        $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
     }
-
-    # no service was selected
-    else {
-
-        # do not show the default selection
-        $ImpactDynamicFieldConfig->{Config}->{DefaultValue} = '';
-
-        # show only the empty selection
-        $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = {};
-        $GetParam{DynamicField_ITSMImpact} = '';
-    }
-
-    # set the selected impact
-    $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
-
 # ---
 
     # convert dynamic field values into a structure for ACLs
@@ -1337,7 +1348,7 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
-        if ( ($GetParam{ServiceID} && $Service{Criticality} ) || !$GetParam{ServiceID} ) {
+        if ( $Self->{ITSMIncidentProblemManagement} && ( ($GetParam{ServiceID} && $Service{Criticality} ) || !$GetParam{ServiceID} ) ) {
 
             # get config for criticality dynamic field
             my $CriticalityDynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(

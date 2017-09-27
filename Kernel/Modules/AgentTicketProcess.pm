@@ -53,6 +53,16 @@ sub new {
         PendingTime    => 'PendingTime',
         Article        => 'Article',
     };
+# ---
+# ITSMIncidentProblemManagement
+# ---
+
+    # Check if ITSMIncidentProblemManagement is used.
+    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
+    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
+        $Self->{ITSMIncidentProblemManagement} = 1;
+    }
+# ---
 
     return $Self;
 }
@@ -712,7 +722,8 @@ sub _RenderAjax {
 # ---
             # check if priority needs to be recalculated
             if (
-                ( $Param{GetParam}->{ElementChanged} eq 'ServiceID'
+                $Self->{ITSMIncidentProblemManagement}
+                && ( $Param{GetParam}->{ElementChanged} eq 'ServiceID'
                 || $Param{GetParam}->{ElementChanged} eq 'DynamicField_ITSMImpact'
                 )
                 && $Param{GetParam}->{ServiceID}
@@ -1058,7 +1069,7 @@ sub _GetParam {
 # ITSMIncidentProblemManagement
 # ---
             # set the criticality from the service
-            if ( $DynamicFieldName eq 'ITSMCriticality' && $ParamObject->GetParam( Param => 'ServiceID' ) ) {
+            if ( $Self->{ITSMIncidentProblemManagement} && $DynamicFieldName eq 'ITSMCriticality' && $ParamObject->GetParam( Param => 'ServiceID' ) ) {
 
                 # get service
                 my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(

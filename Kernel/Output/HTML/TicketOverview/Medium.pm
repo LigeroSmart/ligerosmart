@@ -40,6 +40,16 @@ sub new {
 
     # get UserID param
     $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
+# ---
+# ITSMIncidentProblemManagement
+# ---
+
+    # Check if ITSMIncidentProblemManagement is used.
+    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
+    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
+        $Self->{ITSMIncidentProblemManagement} = 1;
+    }
+# ---
 
     return $Self;
 }
@@ -561,6 +571,11 @@ sub _Show {
         Data => {
             %Param,
             %Article,
+# ---
+# ITSMIncidentProblemManagement
+# ---
+            ITSMIncidentProblemManagement => $Self->{ITSMIncidentProblemManagement},
+# ---
         },
     );
 

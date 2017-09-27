@@ -45,6 +45,16 @@ sub new {
     if ( !$Self->{FormID} ) {
         $Self->{FormID} = $Kernel::OM->Get('Kernel::System::Web::UploadCache')->FormIDCreate();
     }
+# ---
+# ITSMIncidentProblemManagement
+# ---
+
+    # Check if ITSMIncidentProblemManagement is used.
+    my $OutputFilterConfig = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Output::FilterElementPost');
+    if ( $OutputFilterConfig->{ITSMIncidentProblemManagement} ) {
+        $Self->{ITSMIncidentProblemManagement} = 1;
+    }
+# ---
 
     return $Self;
 }
@@ -198,69 +208,74 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
-    # get needed stuff
-    $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
-    $GetParam{PriorityRC}              = $ParamObject->GetParam(Param => 'PriorityRC');
-    $GetParam{ElementChanged}          = $ParamObject->GetParam(Param => 'ElementChanged') || '';
-
-    # check if priority needs to be recalculated
-    if ( $GetParam{ElementChanged} eq 'ServiceID' || $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' ) {
-        $GetParam{PriorityRC} = 1;
-    }
-
     my %Service;
-    # service was selected
-    if ( $GetParam{ServiceID} ) {
 
-        # get service
-        %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
-            ServiceID     => $GetParam{ServiceID},
-            IncidentState => $Config->{ShowIncidentState} || 0,
-            UserID        => $Self->{UserID},
-        );
+    if ( $Self->{ITSMIncidentProblemManagement} ) {
 
-        # recalculate impact if impact is not set until now
-        if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
+        # get needed stuff
+        $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
+        $GetParam{PriorityRC}              = $ParamObject->GetParam(Param => 'PriorityRC');
+        $GetParam{ElementChanged}          = $ParamObject->GetParam(Param => 'ElementChanged') || '';
 
-            # get default selection
-            my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue};
+        # check if priority needs to be recalculated
+        if ( $GetParam{ElementChanged} eq 'ServiceID' || $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' ) {
+            $GetParam{PriorityRC} = 1;
+        }
 
-            if ($DefaultSelection) {
+        # service was selected
+        if ( $GetParam{ServiceID} ) {
 
-                # get default impact
-                $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
-                $GetParam{PriorityRC} = 1;
+            # get service
+            %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
+                ServiceID     => $GetParam{ServiceID},
+                IncidentState => $Config->{ShowIncidentState} || 0,
+                UserID        => $Self->{UserID},
+            );
+
+            # recalculate impact if impact is not set until now
+            if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
+
+                # get default selection
+                my $DefaultSelection = $ImpactDynamicFieldConfig->{Config}->{DefaultValue};
+
+                if ($DefaultSelection) {
+
+                    # get default impact
+                    $GetParam{DynamicField_ITSMImpact} = $DefaultSelection;
+                    $GetParam{PriorityRC} = 1;
+                }
+            }
+
+            # recalculate priority
+            if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} ) {
+
+                # get priority
+                $GetParam{PriorityIDFromImpact} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
+                    Criticality => $Service{Criticality},
+                    Impact      => $GetParam{DynamicField_ITSMImpact},
+                );
+            }
+
+            if ( $GetParam{PriorityIDFromImpact} ) {
+                $GetParam{PriorityID} = $GetParam{PriorityIDFromImpact};
             }
         }
 
-        # recalculate priority
-        if ( $GetParam{PriorityRC} && $GetParam{DynamicField_ITSMImpact} ) {
+        # no service was selected
+        else {
 
-            # get priority
-            $GetParam{PriorityIDFromImpact} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                Criticality => $Service{Criticality},
-                Impact      => $GetParam{DynamicField_ITSMImpact},
-            );
+            # do not show the default selection
+            $ImpactDynamicFieldConfig->{Config}->{DefaultValue} = '';
+
+            # show only the empty selection
+            $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = {};
+            $GetParam{DynamicField_ITSMImpact} = '';
         }
 
-        if ( $GetParam{PriorityIDFromImpact} ) {
-            $GetParam{PriorityID} = $GetParam{PriorityIDFromImpact};
-        }
+        # set the selected impact
+        $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
     }
 
-    # no service was selected
-    else {
-
-        # do not show the default selection
-        $ImpactDynamicFieldConfig->{Config}->{DefaultValue} = '';
-
-        # show only the empty selection
-        $ImpactDynamicFieldConfig->{Config}->{PossibleValues} = {};
-        $GetParam{DynamicField_ITSMImpact} = '';
-    }
-
-    # set the selected impact
-    $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
 # ---
 
     # transform pending time, time stamp based on user time zone
@@ -1355,7 +1370,7 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
-        if ( $GetParam{ServiceID} && $Service{Criticality} ) {
+        if ( $Self->{ITSMIncidentProblemManagement} && $GetParam{ServiceID} && $Service{Criticality} ) {
 
             # get config for criticality dynamic field
             my $CriticalityDynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
@@ -1729,6 +1744,8 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
+        if ( $Self->{ITSMIncidentProblemManagement} ) {
+
             # get the temporarily links
             my $TempLinkList = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
                 Object => 'Ticket',
@@ -1790,6 +1807,7 @@ sub Run {
                     }
                 }
             }
+        }
 # ---
 
         # get redirect screen
@@ -2837,7 +2855,7 @@ sub _MaskPhoneNew {
 # ---
     # make sure to show the options block so that the "Link Ticket" option is shown
     # even if spellchecker and OptionCustomer is turned off
-    if ( !$ShownOptionsBlock ) {
+    if ( $Self->{ITSMIncidentProblemManagement} && !$ShownOptionsBlock ) {
         $LayoutObject->Block(
             Name => 'TicketOptions',
             Data => {
