@@ -14,13 +14,13 @@ use utf8;
 use vars (qw($Self));
 
 # get needed objects
-my $TicketObject            = $Kernel::OM->Get('Kernel::System::Ticket');
-my $DynamicFieldValueObject = $Kernel::OM->Get('Kernel::System::DynamicFieldValue');
-my $LinkObject              = $Kernel::OM->Get('Kernel::System::LinkObject');
-my $DynamicFieldObject      = $Kernel::OM->Get('Kernel::System::DynamicField');
-my $UserObject              = $Kernel::OM->Get('Kernel::System::User');
-my $CustomerUserObject      = $Kernel::OM->Get('Kernel::System::CustomerUser');
-my $ConfigObject            = $Kernel::OM->Get('Kernel::Config');
+my $TicketObject              = $Kernel::OM->Get('Kernel::System::Ticket');
+my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+my $LinkObject                = $Kernel::OM->Get('Kernel::System::LinkObject');
+my $DynamicFieldObject        = $Kernel::OM->Get('Kernel::System::DynamicField');
+my $UserObject                = $Kernel::OM->Get('Kernel::System::User');
+my $CustomerUserObject        = $Kernel::OM->Get('Kernel::System::CustomerUser');
+my $ConfigObject              = $Kernel::OM->Get('Kernel::Config');
 
 # start RestoreDatabse
 $Kernel::OM->ObjectParamAdd(
@@ -117,16 +117,16 @@ $Self->True(
     "ArticleCreate() Article ID $ArticleID",
 );
 
+my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+    ID => $MasterSlaveDynamicFieldData->{ID},
+);
+
 # set test ticket as master ticket
-my $Success = $DynamicFieldValueObject->ValueSet(
-    FieldID  => $MasterSlaveDynamicFieldData->{ID},
-    ObjectID => $MasterTicketID,
-    Value    => [
-        {
-            ValueText => 'Master',
-        },
-    ],
-    UserID => 1,
+my $Success = $DynamicFieldBackendObject->ValueSet(
+    DynamicFieldConfig => $DynamicField,
+    ObjectID           => $MasterTicketID,
+    Value              => 'Master',
+    UserID             => 1,
 );
 $Self->True(
     $Success,
@@ -151,36 +151,11 @@ $Self->True(
     $SlaveTicketID,
     "TicketCreate() Ticket ID $SlaveTicketID",
 );
-
-# set test ticket as slave ticket
-$Success = $DynamicFieldValueObject->ValueSet(
-    FieldID  => $MasterSlaveDynamicFieldData->{ID},
-    ObjectID => $SlaveTicketID,
-    Value    => [
-        {
-            ValueText => "SlaveOf:$MasterTicketNumber",
-        },
-    ],
-    UserID => 1,
-);
-$Self->True(
-    $Success,
-    "ValueSet() Ticket ID $SlaveTicketID DynamicField $MasterSlaveDynamicField updated as SlaveOf:$MasterTicketNumber",
-);
-
-# add parent-child link between master/slave tickets
-$Success = $LinkObject->LinkAdd(
-    SourceObject => 'Ticket',
-    SourceKey    => $MasterTicketID,
-    TargetObject => 'Ticket',
-    TargetKey    => $SlaveTicketID,
-    Type         => 'ParentChild',
-    State        => 'Valid',
-    UserID       => 1,
-);
-$Self->True(
-    $Success,
-    "LinkAdd() MasterSlave link established",
+$Success = $DynamicFieldBackendObject->ValueSet(
+    DynamicFieldConfig => $DynamicField,
+    ObjectID           => $SlaveTicketID,
+    Value              => "SlaveOf:$MasterTicketNumber",
+    UserID             => 1,
 );
 
 # ------------------------------------------------------------ #

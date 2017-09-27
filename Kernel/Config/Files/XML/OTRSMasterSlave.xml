@@ -356,6 +356,7 @@
                         <Item Key="Type">1</Item>
                     </Hash>
                 </Item>
+                <Item Key="Mandatory">0</Item>
             </Hash>
         </Value>
     </Setting>
@@ -401,6 +402,7 @@
                         <Item Key="Type">1</Item>
                     </Hash>
                 </Item>
+                <Item Key="Mandatory">0</Item>
             </Hash>
         </Value>
     </Setting>
