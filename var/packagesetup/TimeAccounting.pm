@@ -310,13 +310,14 @@ sub _MigrateConfigs {
     if ( $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} ) {
 
         # update module location
-        $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module} = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
+        $Setting->{'201-TimeAccounting::IncompleteWorkingDays'}->{Module}
+            = "Kernel::Output::HTML::ToolBar::IncompleteWorkingDays";
 
         # set new setting
-       push @NewSettings, {
+        push @NewSettings, {
             Name           => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
             EffectiveValue => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
-        }
+            }
     }
 
     return 1 if !@NewSettings;
