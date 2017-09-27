@@ -619,7 +619,6 @@ sub _MigrateFreeTextToDynamicFields {
         }
     }
 
-
     # ---------------------------------------------------------------------------------------------
     # Migrate freetext screen config
     # ---------------------------------------------------------------------------------------------
@@ -3858,7 +3857,7 @@ Change configurations to match the new module location.
 sub _MigrateConfigs {
 
     # create needed objects
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
     my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
 
     my @NewSettings;
