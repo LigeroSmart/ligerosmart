@@ -666,11 +666,11 @@ sub ITSMChangeListShow {
     return $OutputRaw;
 }
 
-=begin Internal:
+=head1 PRIVATE INTERFACE
 
 =head2 _ITSMChangeGetChangeTicks()
 
-a helper method for the workorder graph of a change
+a helper method for the C<workorder> graph of a change
 
 =cut
 
@@ -698,7 +698,7 @@ sub _ITSMChangeGetChangeTicks {
 
 =head2 _ITSMChangeGetChangeScale()
 
-a helper method for the workorder graph of a change
+a helper method for the C<workorder> graph of a change
 
 =cut
 
@@ -761,7 +761,7 @@ sub _ITSMChangeGetChangeScale {
 
 =head2 _ITSMChangeGetWorkOrderGraph()
 
-a helper method for the workorder graph of a change
+a helper method for the C<workorder> graph of a change
 
 =cut
 
@@ -1006,7 +1006,7 @@ sub _ITSMChangeGetWorkOrderGraph {
 
 =head2 _ITSMChangeGetTimeLine()
 
-a helper method for the workorder graph of a change
+a helper method for the C<workorder> graph of a change
 
 =cut
 
@@ -1084,7 +1084,7 @@ sub _TimeStamp2Epoch {
 
 =head2 _Epoch2TimeStamp()
 
-Convert a epoch (unix time) to a timestamp (yyyy-mm-dd hh:mm:ss).
+Convert a epoch (unix time) to a timestamp (C<yyyy-mm-dd hh:mm:ss>).
 
 =cut
 
@@ -1101,9 +1101,5 @@ sub _Epoch2TimeStamp {
     return $DateTimeObject->ToString() if $DateTimeObject;
     return;
 }
-
-=end Internal:
-
-=cut
 
 1;

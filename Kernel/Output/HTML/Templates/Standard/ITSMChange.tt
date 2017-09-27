@@ -21,11 +21,8 @@
         width: [% Data.LabelWidth | html %]px;
     }
 
-/* [% RenderBlockStart("CSSWorkOrderType") %] */
     span.[% Data.WorkOrderTypeName | html %] { background-color: [% Data.WorkOrderTypeColor | html %]; }
-/* [% RenderBlockEnd("CSSWorkOrderType") %] */
 
-/* [% RenderBlockStart("CSSTimeLine") %] */
     div.Timeline {
         background-color: [% Data.TimeLineColor | html %];
         left: [% Data.TimeLineLeft | html %]%;
@@ -36,7 +33,6 @@
         left: auto;
         right: [% Data.TimeLineLeft | html %]%;
     }
-/* [% RenderBlockEnd("CSSTimeLine") %] */
 </style>
 
 <div class="WorkorderGraphBox">

@@ -124,7 +124,6 @@ sub Run {
 
     # get ToolBar object parameters
     my $Class = $Param{Config}->{CssClass};
-    my $Text  = $LayoutObject->{LanguageObject}->Translate('My Changes');
 
     # set ToolBar object
     my $URL      = $LayoutObject->{Baselink};
@@ -133,7 +132,7 @@ sub Run {
     if ($Count) {
         $Return{$Priority} = {
             Block       => 'ToolBarItem',
-            Description => $Text,
+            Description => 'My Changes',
             Count       => $Count,
             Class       => $Class,
             Icon        => $Icon,

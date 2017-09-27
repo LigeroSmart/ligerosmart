@@ -280,51 +280,6 @@ sub Run {
             }
         }
 
-        # check if an attachment must be deleted
-        #my @AttachmentIDs = map {
-        #    my ($ID) = $_ =~ m{ \A AttachmentDelete (\d+) \z }xms;
-        #    $ID ? $ID : ();
-        #} $ParamObject->GetParamNames();
-
-        # check if an attachment must be deleted
-        #ATTACHMENT:
-        #for my $Number ( reverse sort @AttachmentIDs ) {
-
-        #    # check if the delete button was pressed for this attachment
-        #    my $Delete = $ParamObject->GetParam( Param => "AttachmentDelete$Number" );
-
-        #    # check next attachment if it was not pressed
-        #    next ATTACHMENT if !$Delete;
-
-        #    # remember that we need to show the page again
-        #    $ValidationError{Attachment} = 1;
-
-        #    # remove the attachment from the upload cache
-        #    $UploadCacheObject->FormIDRemoveFile(
-        #        FormID => $Self->{FormID},
-        #        FileID => $Number,
-        #    );
-        #}
-
-        # check if there was an attachment upload
-        #if ( $GetParam{AttachmentUpload} ) {
-
-        #    # remember that we need to show the page again
-        #    $ValidationError{Attachment} = 1;
-
-        #    # get the uploaded attachment
-        #    my %UploadStuff = $ParamObject->GetUploadAll(
-        #        Param  => 'FileUpload',
-        #        Source => 'string',
-        #    );
-
-        #    # add attachment to the upload cache
-        #    $UploadCacheObject->FormIDAddFile(
-        #        FormID => $Self->{FormID},
-        #        %UploadStuff,
-        #    );
-        #}
-
         # if all passed data is valid
         if ( !%ValidationError ) {
             my $CouldUpdateWorkOrder = $WorkOrderObject->WorkOrderUpdate(

@@ -60,13 +60,10 @@ sub Run {
         $RequiredPriv = 'rw';
     }
 
-    my $Access;
-    if ( !$RequiredPriv ) {
+    # Display the menu-link, when no privilege is required
+    my $Access = 1;
 
-        # Display the menu-link, when no privilege is required
-        $Access = 1;
-    }
-    else {
+    if ($RequiredPriv) {
 
         # check permissions, based on the required privilege
         $Access = $Kernel::OM->Get('Kernel::System::ITSMChange')->Permission(

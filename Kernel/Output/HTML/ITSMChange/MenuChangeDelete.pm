@@ -58,13 +58,10 @@ sub Run {
         $RequiredPriv = $FrontendConfig->{Permission};
     }
 
-    my $Access;
-    if ( !$RequiredPriv ) {
+    # Display the menu-link, when no privilege is required
+    my $Access = 1;
 
-        # Display the menu-link, when no privilege is required
-        $Access = 1;
-    }
-    else {
+    if ($RequiredPriv) {
 
         # get the required group for the frontend module
         my $Group = $ConfigObject->Get('Frontend::Module')->{ $Param{Config}->{Action} }
