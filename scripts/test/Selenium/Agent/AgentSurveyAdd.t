@@ -76,11 +76,11 @@ $Selenium->RunTest(
             "\$('#CustomerUserConditions')[0].scrollIntoView(true);",
         );
 
-        $Selenium->execute_script("return \$('#CustomerUserConditions').val('UserLogin').trigger('change');");
+        $Selenium->execute_script("\$('#CustomerUserConditions').val('UserLogin').change();");
         $Selenium->find_element( "#Description", 'css' )->send_keys('customer');
 
         # UserLogin
-        $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedSubmit();
+        $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedClick();
 
         # check for test created survey values
         $Self->True(
