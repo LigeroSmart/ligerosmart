@@ -69,7 +69,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Name",     'css' )->send_keys($CatalogClassName);
         $Selenium->find_element( "#Comment",  'css' )->send_keys("Selenium catalog class");
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element( '#Submit', 'css' )->VerifiedClick();
 
         # click "Go to overview"
         $Selenium->find_element("//a[contains(\@href, \'Action=AdminGeneralCatalog' )]")->VerifiedClick();
