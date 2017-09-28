@@ -155,7 +155,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#EndTime1",   'css' )->send_keys( '16:00', "\t" );
 
         # submit work accounting edit time record
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedSubmit();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify that period calculate correct time
         $Self->Is(

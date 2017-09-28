@@ -148,8 +148,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Description",   'css' )->send_keys($UserDescription);
         $Selenium->find_element( "#ShowOvertime",  'css' )->VerifiedClick();
         $Selenium->find_element( "#CreateProject", 'css' )->VerifiedClick();
-
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedSubmit();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
         # verify test user setting
         my $SettingUser = "$TestUser $TestUser ($TestUser)";
