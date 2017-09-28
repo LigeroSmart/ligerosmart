@@ -813,6 +813,7 @@ sub _MigrateConfigs {
     # Get setting content for FAQ menu modules.
     my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
 
+    my @NewSettings;
     MENUMODULE:
     for my $MenuModule ( sort keys %{$Setting} ) {
 
@@ -824,13 +825,11 @@ sub _MigrateConfigs {
 
         $Setting->{$MenuModule}->{Module} = "Kernel::Output::HTML::FAQMenu::Generic";
 
-        # Set new setting.
-        my $Success = $SysConfigObject->SettingUpdate(
+        # Build new setting.
+        push @NewSettings, {
             Name           => 'FAQ::Frontend::MenuModule###' . $MenuModule,
-            IsValid        => 1,
             EffectiveValue => $Setting->{$MenuModule},
-            UserID         => 1,
-        );
+        };
     }
 
     # Migrate FAQ config items.
@@ -905,15 +904,21 @@ sub _MigrateConfigs {
         # Set module.
         $Setting->{$ConfigItem}->{'Module'} = $Config->{Module};
 
-        # Set new setting.
-        my $Success = $SysConfigObject->SettingUpdate(
+        # Build new setting.
+        push @NewSettings, {
             Name           => $Config->{Name} . '###' . $ConfigItem,
-            IsValid        => 1,
             EffectiveValue => $Setting->{$ConfigItem},
-            UserID         => 1,
-        );
-
+        };
     }
+
+    return 1 if !@NewSettings;
+
+    # Write new setting.
+    $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'FAQ - package setup function: _MigrateConfigs',
+        Settings => \@NewSettings,
+    );
 
     return 1;
 }
