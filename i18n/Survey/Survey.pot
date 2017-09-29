@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2017-09-25 11:18+0000\n"
+"POT-Creation-Date: 2017-09-29 15:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,10 +236,6 @@ msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
-msgstr ""
-
-#. Template: AgentSurveyZoom
-msgid "Number"
 msgstr ""
 
 #. Template: AgentSurveyZoom
@@ -484,10 +480,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig
