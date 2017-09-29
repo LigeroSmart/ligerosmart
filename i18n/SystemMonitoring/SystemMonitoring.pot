@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-09-25 09:52+0000\n"
+"POT-Creation-Date: 2017-09-29 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,10 +20,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig
