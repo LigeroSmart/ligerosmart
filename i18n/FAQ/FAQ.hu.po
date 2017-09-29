@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"PO-Revision-Date: 2017-09-29 14:43+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -36,11 +36,11 @@ msgstr "GyIK kategória kezelés"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "GyIK kategória hozzáadása"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "GyIK kategória szerkesztése"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -146,11 +146,11 @@ msgstr "GyIK nyelvkezelés"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "GyIK nyelv hozzáadása"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "GyIK nyelv szerkesztése"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -748,7 +748,7 @@ msgstr "Kategóriakezelés"
 
 #. SysConfig
 msgid "Category Management."
-msgstr ""
+msgstr "Kategóriakezelés."
 
 #. SysConfig
 msgid "Customer FAQ Print."
@@ -959,70 +959,66 @@ msgid "Delete this FAQ"
 msgstr "A GyIK törlése"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK hozzáadása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK szerkesztése képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK áttekintő képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface."
-msgstr ""
+msgstr "A nyilvános felület GyIK áttekintő képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK nyomtatása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK nyomtatása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface."
-msgstr ""
+msgstr "A nyilvános felület GyIK nyomtatása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK keresése képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK keresése képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface."
-msgstr ""
+msgstr "A nyilvános felület GyIK keresése képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK kis formátum áttekintő képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület GyIK nagyítása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
-msgstr ""
+msgstr "Az ügyfélfelület GyIK nagyítása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
-msgstr ""
+msgstr "A nyilvános felület GyIK nagyítása képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1070,7 +1066,7 @@ msgstr "GyIK szerkesztés."
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "GyIK előzmények."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1142,7 +1138,7 @@ msgstr "Nyelvkezelés"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "Nyelvkezelés."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1270,15 +1266,11 @@ msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK ker
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "Új GyIK bejegyzés."
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "Az új GyIK bejegyzések jóváhagyása szükséges a közzétételük előtt."
-
-#. SysConfig
-msgid "Number"
-msgstr "Szám"
 
 #. SysConfig
 msgid ""
@@ -1378,21 +1370,21 @@ msgstr "GyIK keresése"
 
 #. SysConfig
 msgid "Search FAQ Small."
-msgstr ""
+msgstr "Kis GyIK keresése."
 
 #. SysConfig
 msgid "Search FAQ."
-msgstr ""
+msgstr "GyIK keresése."
 
 #. SysConfig
 msgid ""
 "Select how many items should be shown in Journal Overview \"Small\" by "
 "default."
-msgstr ""
+msgstr "Annak kiválasztása, hogy alapértelmezetten hány elem jelenjen meg a „kis” napló áttekintőben."
 
 #. SysConfig
 msgid "Select how many items should be shown in Overview \"Small\" by default."
-msgstr ""
+msgstr "Annak kiválasztása, hogy alapértelmezetten hány elem jelenjen meg a „kis” áttekintőben."
 
 #. SysConfig
 msgid ""

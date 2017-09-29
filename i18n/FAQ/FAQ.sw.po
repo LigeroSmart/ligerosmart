@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"PO-Revision-Date: 2017-09-29 14:43+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -963,10 +963,6 @@ msgid "Delete this FAQ"
 msgstr "Futa haya maswali yaliyoulizwa mara kwa mara"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
 msgstr ""
 
@@ -1279,10 +1275,6 @@ msgstr ""
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "Makala mpya ya maswali yanahitaji idhinisho kabla hayatolewa."
-
-#. SysConfig
-msgid "Number"
-msgstr "Namba"
 
 #. SysConfig
 msgid ""

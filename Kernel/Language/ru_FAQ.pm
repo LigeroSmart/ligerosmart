@@ -356,7 +356,6 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Определяет, где будет отображаться ссылка "Вставить из FAQ"/\'Insert FAQ\'';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Определение свободных полей элементов FAQ.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Удалить этот FAQ';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
@@ -462,7 +461,6 @@ sub Data {
         'Модуль для генерации HTML OpenSearch шаблонов для быстрого поиска в FAQ.';
     $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Новая статья FAQ перед публикацией требует одобрения.';
-    $Self->{Translation}->{'Number'} = 'Число';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Количество статей, выводимых в FAQ Explorer в интерфейсе клиента.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =

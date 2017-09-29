@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"PO-Revision-Date: 2017-09-29 14:43+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -962,10 +962,6 @@ msgid "Delete this FAQ"
 msgstr "Удалить этот FAQ"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
 msgstr ""
 
@@ -1278,10 +1274,6 @@ msgstr ""
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "Новая статья FAQ перед публикацией требует одобрения."
-
-#. SysConfig
-msgid "Number"
-msgstr "Число"
 
 #. SysConfig
 msgid ""

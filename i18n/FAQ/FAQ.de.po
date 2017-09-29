@@ -5,7 +5,7 @@
 # Jonas Kohls <Jonas.kohls@outlook.de>, 2016
 # eliasp <mail@eliasprobst.eu>, 2015
 # Mainboarder, 2014
-# Mainboarder, 2014
+# mainboarder, 2014
 # Martin Gruner <martin.gruner@otrs.com>, 2014
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2015
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"PO-Revision-Date: 2017-09-29 14:43+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -969,10 +969,6 @@ msgid "Delete this FAQ"
 msgstr "Diese FAQ löschen!"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
 msgstr ""
 
@@ -1285,10 +1281,6 @@ msgstr ""
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "Neue FAQ-Artikel benötigen eine Freigabe vor der Veröffentlichung."
-
-#. SysConfig
-msgid "Number"
-msgstr "Nummer"
 
 #. SysConfig
 msgid ""

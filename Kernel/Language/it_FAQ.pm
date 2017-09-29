@@ -189,7 +189,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'FAQ History'} = 'Cronologia FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Registro delle FAQ';
@@ -275,7 +275,7 @@ sub Data {
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 articoli FAQ';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
-    $Self->{Translation}->{'Content Type'} = '';
+    $Self->{Translation}->{'Content Type'} = 'Tipo di contenuto';
 
     # Database XML Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'interno';
@@ -356,7 +356,6 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Definisce dove verrà visualizzato il collegamento \'Inserisci FAQ\'.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definizione del campo testo libero delle FAQ';
     $Self->{Translation}->{'Delete this FAQ'} = 'Elimina questa FAQ';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
@@ -462,7 +461,6 @@ sub Data {
         '';
     $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'I nuovi articoli FAQ richiedono approvazione prima di essere pubblicati.';
-    $Self->{Translation}->{'Number'} = 'Numero';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -489,7 +487,7 @@ sub Data {
     $Self->{Translation}->{'Public FAQ.'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Coda per l\'approvazione degli articoli delle FAQ.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
-    $Self->{Translation}->{'S'} = '';
+    $Self->{Translation}->{'S'} = 'S';
     $Self->{Translation}->{'Search FAQ'} = 'Cerca FAQ';
     $Self->{Translation}->{'Search FAQ Small.'} = '';
     $Self->{Translation}->{'Search FAQ.'} = '';
@@ -536,7 +534,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Solution'} = 'Soluzione';
     $Self->{Translation}->{'Symptom'} = 'Sintomo';
-    $Self->{Translation}->{'Text Only'} = '';
+    $Self->{Translation}->{'Text Only'} = 'Solo testo';
     $Self->{Translation}->{'The default languages for the related FAQ articles.'} = '';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Identificatore per le FAQ, es: FAQ#, KB#, MyFAQ#. Il valore predefinito è FAQ#.';

@@ -356,7 +356,6 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'กำหนดสถานที่ที่ลิงค์ \'แทรกFAQ \' จะปรากฏ';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'คำนิยามของช่องข้อความของรายการ FAQ';
     $Self->{Translation}->{'Delete this FAQ'} = 'ลบ FAQ นี้!';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
@@ -462,7 +461,6 @@ sub Data {
         '';
     $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'บทความFAQ ใหม่ต้องที่ได้รับการอนุมัติก่อนได้รับการตีพิมพ์';
-    $Self->{Translation}->{'Number'} = 'หมายเลข';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'จำนวนบทความ FAQ ที่จะแสดงใน FAQ Explorer ในอินเตอร์เฟซของลูกค้า';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =

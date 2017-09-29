@@ -5,12 +5,13 @@
 # 光中 杨 <yangkwch@163.com>, 2016
 # 文浩坚 <never.min@gmail.com>, 2015
 # 汇民 王 <whuim@163.com>, 2016-2017
+# 汇民 王 <whuim@qq.com>, 2017
 # 陈德文 <sggggy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"PO-Revision-Date: 2017-09-29 14:43+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -41,11 +42,11 @@ msgstr "FAQ类别管理"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "添加FAQ类别"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "编辑FAQ类别"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -151,11 +152,11 @@ msgstr "FAQ语言管理"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "添加FAQ语言"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "编辑FAQ语言"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -753,7 +754,7 @@ msgstr "管理类别"
 
 #. SysConfig
 msgid "Category Management."
-msgstr ""
+msgstr "管理类别。"
 
 #. SysConfig
 msgid "Customer FAQ Print."
@@ -964,70 +965,66 @@ msgid "Delete this FAQ"
 msgstr "删除这篇FAQ"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面添加FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面编辑FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface."
-msgstr ""
+msgstr "在客户界面FAQ概览窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface."
-msgstr ""
+msgstr "在公共界面FAQ概览窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面打印FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface."
-msgstr ""
+msgstr "在客户界面打印FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface."
-msgstr ""
+msgstr "在公共界面打印FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面搜索FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface."
-msgstr ""
+msgstr "在客户界面搜索FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface."
-msgstr ""
+msgstr "在公共界面搜索FAQ窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr ""
+msgstr "在服务人员界面FAQ概览简洁格式窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面FAQ详情窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
-msgstr ""
+msgstr "在客户界面FAQ详情窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
-msgstr ""
+msgstr "在公共界面FAQ详情窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1075,7 +1072,7 @@ msgstr "FAQ编辑。"
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "FAQ历史。"
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1147,7 +1144,7 @@ msgstr "管理语言"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "管理语言"
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1275,15 +1272,11 @@ msgstr "在服务人员界面中，用于简短的FAQ搜索而生成HTML开放�
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "创建FAQ文章。"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr "新建的FAQ文章在发布之前需要审批。"
-
-#. SysConfig
-msgid "Number"
-msgstr "编号"
 
 #. SysConfig
 msgid ""
@@ -1383,21 +1376,21 @@ msgstr "搜索FAQ"
 
 #. SysConfig
 msgid "Search FAQ Small."
-msgstr ""
+msgstr "搜索FAQ（简洁格式）。"
 
 #. SysConfig
 msgid "Search FAQ."
-msgstr ""
+msgstr "搜索FAQ。"
 
 #. SysConfig
 msgid ""
 "Select how many items should be shown in Journal Overview \"Small\" by "
 "default."
-msgstr ""
+msgstr "选择期刊概览（简洁格式）中默认的显示条目数。"
 
 #. SysConfig
 msgid "Select how many items should be shown in Overview \"Small\" by default."
-msgstr ""
+msgstr "选择概览（简洁格式）中默认的显示条目数。"
 
 #. SysConfig
 msgid ""

@@ -356,7 +356,6 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Ufafanuzi wa uga ya matini huru ya kipengele cha maswali yanayoulizwa mara kwa mara.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Futa haya maswali yaliyoulizwa mara kwa mara';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
@@ -462,7 +461,6 @@ sub Data {
         '';
     $Self->{Translation}->{'New FAQ Article.'} = '';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Makala mpya ya maswali yanahitaji idhinisho kabla hayatolewa.';
-    $Self->{Translation}->{'Number'} = 'Namba';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Namba ya makala ya maswali yanayoulizwa mara kwa mara yatakayoonyeshwa katika kitafuta maswali yanayoulizwa mara kwa mara ya kiolesura cha mteja.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =

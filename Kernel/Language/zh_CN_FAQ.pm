@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ类别管理';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = '添加FAQ类别';
+    $Self->{Translation}->{'Edit FAQ Category'} = '编辑FAQ类别';
     $Self->{Translation}->{'Add category'} = '添加类别';
     $Self->{Translation}->{'Add Category'} = '添加类别';
     $Self->{Translation}->{'Edit Category'} = '编辑类别';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ语言管理';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = '添加FAQ语言';
+    $Self->{Translation}->{'Edit FAQ Language'} = '编辑FAQ语言';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '如果要使用多语言就使用本功能。';
     $Self->{Translation}->{'Add language'} = '添加语言';
@@ -289,7 +289,7 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = '投票结果的CSS颜色。';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ文章能显示的时间。';
     $Self->{Translation}->{'Category Management'} = '管理类别';
-    $Self->{Translation}->{'Category Management.'} = '';
+    $Self->{Translation}->{'Category Management.'} = '管理类别。';
     $Self->{Translation}->{'Customer FAQ Print.'} = '客户FAQ打印。';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '客户FAQ详情。';
     $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索';
@@ -356,35 +356,34 @@ sub Data {
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = '定义“插入FAQ”链接在何处显示。';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '定义 FAQ 条目的不受限文字字段.';
     $Self->{Translation}->{'Delete this FAQ'} = '删除这篇FAQ';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
-        '';
+        '在服务人员界面添加FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
-        '';
+        '在服务人员界面编辑FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
-        '';
+        '在客户界面FAQ概览窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
-        '';
+        '在公共界面FAQ概览窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
-        '';
+        '在服务人员界面打印FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
-        '';
+        '在客户界面打印FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
-        '';
+        '在公共界面打印FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
-        '';
+        '在服务人员界面搜索FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
-        '';
+        '在客户界面搜索FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
-        '';
+        '在公共界面搜索FAQ窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
-        '';
+        '在服务人员界面FAQ概览简洁格式窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
-        '';
+        '在服务人员界面FAQ详情窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
-        '';
+        '在客户界面FAQ详情窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
-        '';
+        '在公共界面FAQ详情窗口中显示的动态字段。';
     $Self->{Translation}->{'Edit this FAQ'} = '编辑FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '在FAQ模块中启用多种语言。';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -397,7 +396,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = 'FAQ区域。';
     $Self->{Translation}->{'FAQ Delete.'} = 'FAQ删除。';
     $Self->{Translation}->{'FAQ Edit.'} = 'FAQ编辑。';
-    $Self->{Translation}->{'FAQ History.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = 'FAQ历史。';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQ日志概览“简洁视图”限制';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ概览“简洁视图”限制';
     $Self->{Translation}->{'FAQ Print.'} = 'FAQ打印。';
@@ -415,7 +414,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '快速搜索时显示的界面';
     $Self->{Translation}->{'Journal'} = '日志';
     $Self->{Translation}->{'Language Management'} = '管理语言';
-    $Self->{Translation}->{'Language Management.'} = '';
+    $Self->{Translation}->{'Language Management.'} = '管理语言';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '为建立关键字FAQ文章列表的搜索限制。';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象到这个FAQ条目';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -460,9 +459,8 @@ sub Data {
         '在公共界面中，为优化FAQ搜索用于生成HTML开放搜索（OpenSearch）配置的模块。';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '在服务人员界面中，用于简短的FAQ搜索而生成HTML开放式搜索配置文件的模块。';
-    $Self->{Translation}->{'New FAQ Article.'} = '';
+    $Self->{Translation}->{'New FAQ Article.'} = '创建FAQ文章。';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新建的FAQ文章在发布之前需要审批。';
-    $Self->{Translation}->{'Number'} = '编号';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '在客户界面中，FAQ浏览器视图显示的FAQ文章数量。';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} =
@@ -491,12 +489,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '好评率, 键值必须以百分比表示。';
     $Self->{Translation}->{'S'} = '简洁';
     $Self->{Translation}->{'Search FAQ'} = '搜索FAQ';
-    $Self->{Translation}->{'Search FAQ Small.'} = '';
-    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Search FAQ Small.'} = '搜索FAQ（简洁格式）。';
+    $Self->{Translation}->{'Search FAQ.'} = '搜索FAQ。';
     $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
-        '';
+        '选择期刊概览（简洁格式）中默认的显示条目数。';
     $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
-        '';
+        '选择概览（简洁格式）中默认的显示条目数。';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         '在”AgentFAQZoom“中，设置内置HTML字段的默认高度（单位：像素）。';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =

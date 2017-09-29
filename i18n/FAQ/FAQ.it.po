@@ -7,12 +7,12 @@
 # Marthe Ngo Temb <ngotemb@gmail.com>, 2015
 # Nicola Biada <nicola.biada@wuerth-phoenix.com>, 2014
 # Paolo <paolo.larcheri@gmail.com>, 2015
-# Vincenzo Reale <vinx.reale@gmail.com>, 2015-2016
+# Vincenzo Reale <vinx.reale@gmail.com>, 2015-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
+"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"PO-Revision-Date: 2017-09-29 14:43+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -503,7 +503,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "Cronologia FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -715,7 +715,7 @@ msgstr "Top 10 articoli FAQ"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "Tipo di contenuto"
 
 #. Database XML Definition: FAQ.sopm
 msgid "internal"
@@ -964,10 +964,6 @@ msgstr "Definizione del campo testo libero delle FAQ"
 #. SysConfig
 msgid "Delete this FAQ"
 msgstr "Elimina questa FAQ"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
@@ -1284,10 +1280,6 @@ msgid "New FAQ articles need approval before they get published."
 msgstr "I nuovi articoli FAQ richiedono approvazione prima di essere pubblicati."
 
 #. SysConfig
-msgid "Number"
-msgstr "Numero"
-
-#. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
@@ -1377,7 +1369,7 @@ msgstr ""
 
 #. SysConfig
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. SysConfig
 msgid "Search FAQ"
@@ -1523,7 +1515,7 @@ msgstr "Sintomo"
 
 #. SysConfig
 msgid "Text Only"
-msgstr ""
+msgstr "Solo testo"
 
 #. SysConfig
 msgid "The default languages for the related FAQ articles."
