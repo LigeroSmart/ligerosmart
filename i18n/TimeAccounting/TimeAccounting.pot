@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2017-09-25 10:31+0000\n"
+"POT-Creation-Date: 2017-09-29 15:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -660,10 +660,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Determines if the statistics module may generate time accounting information."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig
