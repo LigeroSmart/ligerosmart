@@ -112,9 +112,10 @@ $Selenium->RunTest(
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until form has loaded, if necessary
+        # Wait until popup is completely loaded.
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
         );
 
         # set test ticket as master ticket
@@ -125,6 +126,12 @@ $Selenium->RunTest(
 
         $Selenium->switch_to_window( $Handles->[0] );
         $Selenium->WaitFor( WindowCount => 1 );
+
+        # Wait until popup is completely loaded.
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
+        );
 
         # select second and third test created ticket
         $Selenium->find_element("//input[\@value='$TicketIDs[1]']")->VerifiedClick();
@@ -137,16 +144,17 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until form has loaded, if necessary
+        # Wait until popup is completely loaded.
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
         );
 
         # set test tickets as slave tickets
-        my $SlaveAutoComplete = "Slave of Ticket#$TicketNumbers[0]: $TicketTitle";
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$TicketNumbers[0]').trigger('redraw.InputField').trigger('change');"
         );
+
         $Selenium->find_element( "#submitRichText", 'css' )->click();
 
         $Selenium->switch_to_window( $Handles->[0] );
