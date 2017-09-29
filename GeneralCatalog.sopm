@@ -113,6 +113,22 @@
         <TableDrop Name="general_catalog_preferences" />
         <TableDrop Name="general_catalog" />
     </DatabaseUninstall>
+    <CodeInstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeInstall();
+
+    ]]></CodeInstall>
+    <CodeReinstall Type="post"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeReinstall();
+
+    ]]></CodeReinstall>
     <!-- It is IMPORTANT that this CodeUpgrade (Version="1.3.72") comes BEFORE the regular CodeUpgrade block without any version number! -->
     <CodeUpgrade Type="post" Version="1.3.72"><![CDATA[
 
@@ -136,6 +152,14 @@
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
 
     ]]></CodeUpgrade>
+    <CodeUninstall Type="pre"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUninstall();
+
+    ]]></CodeUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br/>
