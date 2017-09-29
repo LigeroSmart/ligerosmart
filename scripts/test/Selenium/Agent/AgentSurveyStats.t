@@ -168,8 +168,6 @@ $Selenium->RunTest(
                 $PublicSurveyKey = $Row[0];
             }
 
-            # $PublicSurveyKey = 'b5c5a263385734934fb42f7fbc48dd6f';
-
             $Kernel::OM->Get('Kernel::System::Log')
                 ->Dumper( 'Debug - ModuleName', '$PublicSurveyKey', \$PublicSurveyKey );
 
@@ -222,7 +220,13 @@ $Selenium->RunTest(
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # Wait until page has loaded, if necessary.
+        # Wait until popup is completely loaded.
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
+        );
+
+        # Wait until details are present.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".SeeDetails").length' );
 
         # Check screen.
