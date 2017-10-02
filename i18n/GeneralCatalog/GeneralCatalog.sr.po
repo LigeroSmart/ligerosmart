@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Dusan Vuckovic, 2017
 # Udo Bretz, 2016
 # Милорад Јовановић <j.milorad@gmail.com>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:33+0000\n"
-"PO-Revision-Date: 2017-09-25 08:33+0000\n"
+"POT-Creation-Date: 2017-09-29 14:55+0000\n"
+"PO-Revision-Date: 2017-09-29 14:56+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -45,15 +46,11 @@ msgstr "Креирање и управљање Општим каталогом."
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr "Дефинисаље групе са правима."
+msgstr "Дефинише групе са дозволама."
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Дефинише URL путању за JS Color Picker."
 
 #. SysConfig
 msgid ""

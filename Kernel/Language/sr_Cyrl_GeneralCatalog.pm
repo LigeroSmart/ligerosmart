@@ -27,9 +27,8 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Креирање и управљање Општим каталогом.';
-    $Self->{Translation}->{'Define the group with permissions.'} = 'Дефинисаље групе са правима.';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
-    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Define the group with permissions.'} = 'Дефинише групе са дозволама.';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Дефинише URL путању за JS Color Picker.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Регистрација "Frontend" модула за конфигурацију Администрације општег каталога у простору администратора.';
     $Self->{Translation}->{'General Catalog'} = 'Општи каталог';

@@ -28,8 +28,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Az általános katalógus létrehozása és kezelése.';
     $Self->{Translation}->{'Define the group with permissions.'} = 'A jogosultságokkal rendelkező csoport meghatározása.';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
-    $Self->{Translation}->{'Dutch'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Meghatározza a JS színválasztó útvonalának URL-ét.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Előtétprogram modul regisztráció az adminisztrációs területen lévő AdminGeneralCatalog beállításhoz.';
     $Self->{Translation}->{'General Catalog'} = 'Általános katalógus';

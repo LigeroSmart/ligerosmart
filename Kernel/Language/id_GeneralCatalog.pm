@@ -29,7 +29,6 @@ sub Data {
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Buat dan kelola Katalog Umum';
     $Self->{Translation}->{'Define the group with permissions.'} = '';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Registrasi modul frontend untuk pengaturan AdminKatalogUmum di area admin.';
     $Self->{Translation}->{'General Catalog'} = 'Katalog Umum';

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:33+0000\n"
-"PO-Revision-Date: 2017-09-25 08:33+0000\n"
+"POT-Creation-Date: 2017-09-29 14:55+0000\n"
+"PO-Revision-Date: 2017-09-29 14:56+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -51,10 +51,6 @@ msgstr "Definir el grupo con permisos."
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig
