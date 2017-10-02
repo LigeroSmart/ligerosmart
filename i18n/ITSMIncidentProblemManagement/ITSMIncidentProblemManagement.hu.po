@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 09:38+0000\n"
-"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"POT-Creation-Date: 2017-09-29 15:28+0000\n"
+"PO-Revision-Date: 2017-09-29 15:29+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -35,12 +35,12 @@ msgstr "Jegy összekapcsolása"
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change Decision of %s%s%s"
-msgstr ""
+msgstr "%s%s%s döntésének megváltoztatása"
 
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change ITSM fields of %s%s%s"
-msgstr ""
+msgstr "%s%s%s ITSM mezőinek megváltoztatása"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -100,7 +100,7 @@ msgstr "További ITSM jegymezők."
 
 #. SysConfig
 msgid "AgentITSMIncidentProblemManagement"
-msgstr ""
+msgstr "Ügyintézői ITSM incidens problémamenedzsment"
 
 #. SysConfig
 msgid ""
@@ -242,22 +242,18 @@ msgid ""
 msgstr "Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
 "interface."
-msgstr ""
+msgstr "Az ügyintézői felület további ITSM mező képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the decision screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület döntési képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
-msgstr ""
+msgstr "Az ügyintézői felület jegynagyítás képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
 msgid ""
@@ -286,13 +282,13 @@ msgstr "Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy 
 #. SysConfig
 msgid ""
 "Modifies the display order of the dynamic field ITSMImpact and other things."
-msgstr ""
+msgstr "Módosítja az ITSM hatás dinamikus mező és egyéb dolgok megjelenítési sorrendjét."
 
 #. SysConfig
 msgid ""
 "Module to dynamically show the service incident state and to calculate the "
 "priority."
-msgstr ""
+msgstr "Egy modul a szolgáltatás incidensállapotának dinamikus megjelenítéséhez és a prioritás kiszámításához."
 
 #. SysConfig
 msgid ""

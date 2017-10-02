@@ -15,12 +15,14 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'วิกฤต';
     $Self->{Translation}->{'Impact'} = 'ผลกระทบ';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'การบริการสถานภาพของเหตุการณ์';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'ลิงค์ตั๋ว';
     $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
@@ -44,7 +46,6 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'เพิ่มการตัดสินใจ!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'ฟิลด์เพิ่มเติมของ ITSM ';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'อนุญาติให้เพิ่มโน้ตในหน้าจอฟิลด์เพิ่มเติมของ ITSM ในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -91,7 +92,6 @@ sub Data {
         'กำหนดค่าเริ่มต้นของสถานภาพถัดไปของตั๋วหลังจากเพิ่มโน้ตในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'กำหนดค่าเริ่มต้นของสถานภาพถัดไปของตั๋วหลังจากเพิ่มโน้ตในหน้าจอการตัดสินใจในอินเตอร์เฟซของเอเย่นต์';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
@@ -114,6 +114,7 @@ sub Data {
         'จำเป็นต้องมีการอนญาติการใช้งานในหน้าจอฟิลด์เพิ่มเติมของ ITSM ในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'จำเป็นต้องมีการอนญาติการใช้งานในหน้าจอการตัดสินใจ ในอินเตอร์เฟซของเอเย่นต์';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'เซตการบริการในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์(ตั๋ว::ต้องมีการเปิดใช้งานการบริการ)';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -156,6 +157,7 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

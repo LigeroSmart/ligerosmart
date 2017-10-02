@@ -15,12 +15,14 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'Kwa kina';
     $Self->{Translation}->{'Impact'} = 'Madhara';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'Hali ya tukio ya huduma';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Tiketi kiungo';
     $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
@@ -44,7 +46,6 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Ongeza uamuzi!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Uga zilizoongezwa Za ITSM';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Ruhusu kuongeza vidokezo katika skrini ya uga nyongeza ya ITSM ya kiolesura cha wakala.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -91,7 +92,6 @@ sub Data {
         'Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya uga wa ITSM uliongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
@@ -114,6 +114,7 @@ sub Data {
         'Inahitaji ruhusa kutumia skrini ya uga wa ITSM uliiongezwa katika kiolesura cha wakala.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Inahitaji ruhusa kutumia skrini ya maamuzi katika kiolesura cha wakala.';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Inawekwa katika huduma katika skrini ya uga wa ITSM uliiongezwa katika kioelesura cha wakala (Tiketi:: Huduma inahitaji kuamilishwa).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -156,6 +157,7 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

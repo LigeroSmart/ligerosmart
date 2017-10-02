@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 09:38+0000\n"
-"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"POT-Creation-Date: 2017-09-29 15:28+0000\n"
+"PO-Revision-Date: 2017-09-29 15:29+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -243,10 +243,6 @@ msgid ""
 "Defines the next state of a ticket after adding a note, in the decision "
 "screen of the agent interface."
 msgstr "Define el siguiente estado de un ticket, luego de agregar una nota en la ventana de decisión de la interfaz del agente."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid ""

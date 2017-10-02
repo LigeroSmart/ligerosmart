@@ -5,31 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-07 13:48+0000\n"
-"PO-Revision-Date: 2017-07-07 11:25+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-29 15:28+0000\n"
+"PO-Revision-Date: 2017-09-29 15:29+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#. Template: AgentTicketActionCommon
-msgid "Change Decision of Ticket"
-msgstr "チケットの変更決定"
-
-#. Template: AgentTicketActionCommon
-msgid "Change ITSM fields of ticket"
-msgstr "チケットのITSM項目を変更する"
-
-#. Template: AgentTicketActionCommon
-msgid "Service Incident State"
-msgstr "サービスインシデント状況"
-
-#. Template: AgentTicketEmail
-msgid "Link ticket"
-msgstr "チケットをリンクする"
 
 #. Template: AgentTicketOverviewPreview
 msgid "Criticality"
@@ -38,6 +22,26 @@ msgstr "重要度"
 #. Template: AgentTicketOverviewPreview
 msgid "Impact"
 msgstr "影響度"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Service Incident State"
+msgstr "サービスインシデント状況"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr "チケットをリンクする"
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr ""
+
+#. Perl Module:
+#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
+msgstr ""
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -96,6 +100,10 @@ msgid "Additional ITSM ticket fields."
 msgstr "追加の ITSM チケット･フィールド"
 
 #. SysConfig
+msgid "AgentITSMIncidentProblemManagement"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Allows adding notes in the additional ITSM field screen of the agent "
 "interface."
@@ -104,6 +112,11 @@ msgstr "エージェントインターフェイスのアディショナルITSM�
 #. SysConfig
 msgid "Allows adding notes in the decision screen of the agent interface."
 msgstr "担当者インタフェースの決定 画面で、メモの追加を許可します。"
+
+#. SysConfig
+msgid ""
+"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr "チケットに関して新規タイプを定義することを許可します（チケット責任者機能が有効となっている場合）。"
 
 #. SysConfig
 msgid "Change the ITSM fields!"
@@ -232,27 +245,16 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
-"interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and "
-"required."
-msgstr "担当者インターフェイスの追加 ITSMフィールド画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+"interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the decision screen of the agent interface. Possible"
-" settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required."
-msgstr "担当者インターフェイスの決定画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効, 2 = 有効かつ必須項目"
+msgid "Dynamic fields shown in the decision screen of the agent interface."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket search screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのチケット検索画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
-
-#. SysConfig
-msgid ""
-"Dynamic fields shown in the ticket zoom screen of the agent interface. "
-"Possible settings: 0 = Disabled, 1 = Enabled."
-msgstr "担当者インターフェイスのチケットズーム画面で表示される動的フィールド。 選択可能な設定値: 0 = 無効, 1 = 有効"
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -276,6 +278,17 @@ msgstr ""
 msgid ""
 "If a note is added by an agent, sets the state of a ticket in the decision "
 "screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Module to dynamically show the service incident state and to calculate the "
+"priority."
 msgstr ""
 
 #. SysConfig
@@ -393,6 +406,10 @@ msgstr ""
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr ""
+
+#. SysConfig
+msgid "Specifies the different note types that will be used in the system."
+msgstr "システムで使用される、異なるメモのタイプを特定します。"
 
 #. SysConfig
 msgid "Ticket decision."

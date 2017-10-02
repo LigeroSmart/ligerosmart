@@ -15,12 +15,14 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'Criticality';
     $Self->{Translation}->{'Impact'} = 'Impact';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'Service Incident State';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Link ticket';
     $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
@@ -44,7 +46,6 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Add a decision!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Additional ITSM Fields';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Additional ITSM ticket fields.';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Allows adding notes in the additional ITSM field screen of the agent interface.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -91,7 +92,6 @@ sub Data {
         'Defines the next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
@@ -114,6 +114,7 @@ sub Data {
         'Required permissions to use the additional ITSM field screen in the agent interface.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Required permissions to use the decision screen in the agent interface.';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -156,6 +157,7 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

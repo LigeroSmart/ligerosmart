@@ -15,12 +15,14 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'Krytyczność';
     $Self->{Translation}->{'Impact'} = 'Wpływ';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = '';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Połącz zgłoszenie';
     $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
@@ -44,13 +46,12 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Dodaj decyzję!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Dodatkowe pola ITSM';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Pozwala na dodawanie notatek na ekranie z dodatkowymi polami ITSM w panelu agenta.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         'Pozwala na dodawanie notatek na ekranie decyzji w panelu agenta.';
     $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
-        '';
+        'Pozwala na definiowanie nowych typów dla zgłoszenia (jeśli funkcjonalność typu zgłoszenia została włączona).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Zmień pola ITSM!';
     $Self->{Translation}->{'Decision'} = 'Decyzja';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -91,7 +92,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
@@ -114,6 +114,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         '';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -151,11 +152,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
+        'Wskazuje różne rodzaje notatek które będą używane w systemie.';
     $Self->{Translation}->{'Ticket decision.'} = '';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

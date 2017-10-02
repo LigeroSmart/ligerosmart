@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 09:38+0000\n"
-"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"POT-Creation-Date: 2017-09-29 15:28+0000\n"
+"PO-Revision-Date: 2017-09-29 15:29+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -240,10 +240,6 @@ msgid ""
 "Defines the next state of a ticket after adding a note, in the decision "
 "screen of the agent interface."
 msgstr "Inaelezea hali ifuatayo ya tiketi baada ya kuongeza kidokezo, katika skrini ya maamuzi ya kiolesura cha wakala."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid ""

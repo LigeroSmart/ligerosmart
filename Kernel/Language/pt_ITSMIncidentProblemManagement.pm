@@ -15,23 +15,25 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'Criticidade';
     $Self->{Translation}->{'Impact'} = 'Impacto';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'Estado de Incidente do Serviço';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Associar ticket';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
-    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = 'Alterar a Decisão de%s%s%s';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = 'Altera campos ITSM de %s%s%s';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Avaliação necessária ';
     $Self->{Translation}->{'Decision Result'} = 'Resultado da decisão';
     $Self->{Translation}->{'Approved'} = 'Aprovado';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = 'Adiado';
+    $Self->{Translation}->{'Pre-approved'} = 'Pré-aprovado';
+    $Self->{Translation}->{'Rejected'} = 'Rejeitado';
     $Self->{Translation}->{'Repair Start Time'} = 'Horário Inicial de Reparação';
     $Self->{Translation}->{'Recovery Start Time'} = 'Horário Inicial da Recuperação';
     $Self->{Translation}->{'Decision Date'} = 'Data da Decisão';
@@ -44,7 +46,6 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Adicionar uma decisão!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Campos ITSM adicionais';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Campos adicionais de ticket ITSM.';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Permite adicionar notas ao formulário de campos adicionais ITSM da interface de agente.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -91,13 +92,12 @@ sub Data {
         'Define o próximo estado de um ticket após a adição de uma nota, no formulário de campos adicionais ITSM da interface de agente.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Define o próximo estado de um ticket após a adição de uma nota, no formulário de decisão da interface de agente.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados no ecrâ adicional ITSM da interface do agente.';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados no ecrâ de decisão da interface do agente.';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados no ecrâ de zoom do pedido da interface do agente.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de tickets ITSM no primeiro nível de solução.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -107,13 +107,14 @@ sub Data {
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Se uma nota é adicionada por um agente, define o estado do ticket no formulário de decisão da interface de agente.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
-        '';
+        'Modifica a ordem de exibição do campo dinâmico ITSMImpact e outras coisas.';
     $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
-        '';
+        'Módulo para mostrar dinamicamente o estado do incidente do serviço e calcular a prioridade.';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Permissões necessárias para utilizar o formulário de campos adicionais ITSM do agente.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Permissões necessárias para utilizar o formulário de decisão do agente.';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Define o serviço adicional ao formulário de campos adicionais ITSM de interface do agente (ticket::Serviço necessita de estar ativo).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -151,11 +152,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Mostra os campos de título no formulário de decisão do agente.';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
+        'Especifica os diferentes tipos de notas que serão utilizados no sistema.';
     $Self->{Translation}->{'Ticket decision.'} = 'Decisão de ticket.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

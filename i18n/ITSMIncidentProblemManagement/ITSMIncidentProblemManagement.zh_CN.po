@@ -1,11 +1,12 @@
 # 
 # Translators:
 # 汇民 王 <whuim@163.com>, 2016-2017
+# 汇民 王 <whuim@qq.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 09:38+0000\n"
-"PO-Revision-Date: 2017-09-25 09:38+0000\n"
+"POT-Creation-Date: 2017-09-29 15:28+0000\n"
+"PO-Revision-Date: 2017-09-29 15:29+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -35,12 +36,12 @@ msgstr "链接工单"
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change Decision of %s%s%s"
-msgstr ""
+msgstr "工单 %s%s%s的变更决定"
 
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change ITSM fields of %s%s%s"
-msgstr ""
+msgstr "修改%s%s%s的ITSM字段"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -100,7 +101,7 @@ msgstr "额外的ITSM工单字段。"
 
 #. SysConfig
 msgid "AgentITSMIncidentProblemManagement"
-msgstr ""
+msgstr "服务人员ITSM事件管理和问题管理"
 
 #. SysConfig
 msgid ""
@@ -242,22 +243,18 @@ msgid ""
 msgstr "定义服务人员界面在工单决定窗口添加备注后的下一个工单状态。"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
 "interface."
-msgstr ""
+msgstr "在服务人员界面的附加ITSM字段窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the decision screen of the agent interface."
-msgstr ""
+msgstr "服务人员界面决定窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
-msgstr ""
+msgstr "服务人员界面工单详情窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
@@ -286,13 +283,13 @@ msgstr "在服务人员界面工单决定窗口，如果服务人员添加了一
 #. SysConfig
 msgid ""
 "Modifies the display order of the dynamic field ITSMImpact and other things."
-msgstr ""
+msgstr "修改ITSM影响度等动态字段的显示顺序。"
 
 #. SysConfig
 msgid ""
 "Module to dynamically show the service incident state and to calculate the "
 "priority."
-msgstr ""
+msgstr "动态显示服务故障状态并计算优先级的模块。"
 
 #. SysConfig
 msgid ""

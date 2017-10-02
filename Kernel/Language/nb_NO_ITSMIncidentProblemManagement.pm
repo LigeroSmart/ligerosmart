@@ -15,12 +15,14 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'Kritikalitet';
     $Self->{Translation}->{'Impact'} = 'Omfang';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'Hendelsestilstand for tjenesten';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Koble sak';
     $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
@@ -44,13 +46,12 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Legg til en beslutning!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Ekstra ITSM-felt';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Ekstra ITSM-felt for saken.';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Tillater å legge til notiser i de ekstra ITSM-feltene i saksbehandlerdelen';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
-        '';
+        'Tillater å definere nye typer saker (dersom sakstype-funksjonaliteten er slått på).';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Endre ITSM-feltene!';
     $Self->{Translation}->{'Decision'} = 'Beslutning';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -91,7 +92,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
@@ -114,6 +114,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         '';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -151,11 +152,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
+        'Spesifiserer de forskjellige notis-typene som skal brukes i systemet.';
     $Self->{Translation}->{'Ticket decision.'} = 'Beslutning for saken.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

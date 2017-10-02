@@ -15,12 +15,14 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = '重要度';
     $Self->{Translation}->{'Impact'} = '影響度';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'サービスインシデント状況';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'チケットをリンクする';
     $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
@@ -44,13 +46,12 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = '決定を追加する！';
     $Self->{Translation}->{'Additional ITSM Fields'} = '追加のITSM項目';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = '追加の ITSM チケット･フィールド';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'エージェントインターフェイスのアディショナルITSM項目画面で追加のノートを許可する';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
         '担当者インタフェースの決定 画面で、メモの追加を許可します。';
     $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
-        '';
+        'チケットに関して新規タイプを定義することを許可します（チケット責任者機能が有効となっている場合）。';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'ITSM項目を変更する！';
     $Self->{Translation}->{'Decision'} = '決定';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
@@ -91,7 +92,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
@@ -114,6 +114,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         '';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -151,11 +152,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
+        'システムで使用される、異なるメモのタイプを特定します。';
     $Self->{Translation}->{'Ticket decision.'} = '';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

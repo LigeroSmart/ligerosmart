@@ -15,15 +15,17 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AgentTicketOverviewPreview
+    # Template: AgentTicketOverviewMedium
     $Self->{Translation}->{'Criticality'} = 'Kritikusság';
     $Self->{Translation}->{'Impact'} = 'Hatás';
 
-    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+    # JS Template: ServiceIncidentState
     $Self->{Translation}->{'Service Incident State'} = 'Szolgáltatás incidensállapot';
+
+    # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Jegy összekapcsolása';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
-    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '%s%s%s döntésének megváltoztatása';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '%s%s%s ITSM mezőinek megváltoztatása';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Áttekintés szükséges';
@@ -44,7 +46,6 @@ sub Data {
     $Self->{Translation}->{'Add a decision!'} = 'Adjon hozzá egy döntést!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'További ITSM mezők';
     $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'További ITSM jegymezők.';
-    $Self->{Translation}->{'AgentITSMIncidentProblemManagement'} = '';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
         'Lehetővé teszi jegyzetek hozzáadását az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
@@ -91,13 +92,12 @@ sub Data {
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület döntési képernyőjén.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület további ITSM mező képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület döntési képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület jegynagyítás képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Engedélyezi a statisztikák modult az ITSM jegy első szintű megoldási arányának átlagával kapcsolatos statisztikák előállításához.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -107,13 +107,14 @@ sub Data {
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület döntési képernyőjén.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
-        '';
+        'Módosítja az ITSM hatás dinamikus mező és egyéb dolgok megjelenítési sorrendjét.';
     $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
-        '';
+        'Egy modul a szolgáltatás incidensállapotának dinamikus megjelenítéséhez és a prioritás kiszámításához.';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'A szükséges jogosultságok a további ITSM mező képernyőjének használatához az ügyintézői felületen.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'A szükséges jogosultságok a döntési képernyő használatához az ügyintézői felületen.';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Beállítja a szolgáltatást az ügyintézői felület további ITSM mező képernyőjén (a Ticket::Service lehetőségnek bekapcsolva kell lennie).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
@@ -156,6 +157,7 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Service Incident State',
     );
 
 }

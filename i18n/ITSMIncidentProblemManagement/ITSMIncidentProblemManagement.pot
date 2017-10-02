@@ -1,7 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2017-09-29 15:28+0000\n"
+=======
+"POT-Creation-Date: 2017-10-02 10:54+0000\n"
+>>>>>>> Updated translations.
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,15 +14,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Criticality"
 msgstr ""
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Impact"
 msgstr ""
 
-#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. JS Template: ServiceIncidentState
 msgid "Service Incident State"
 msgstr ""
 
@@ -88,10 +92,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Additional ITSM ticket fields."
-msgstr ""
-
-#. SysConfig
-msgid "AgentITSMIncidentProblemManagement"
 msgstr ""
 
 #. SysConfig
@@ -232,6 +232,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Required permissions to use the decision screen in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Service Incident State and Priority Calculation"
 msgstr ""
 
 #. SysConfig
