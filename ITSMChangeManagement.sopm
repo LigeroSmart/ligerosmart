@@ -181,7 +181,7 @@
         <File Permission="660" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/EmptyAgentCheck.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm" />
-        <File Permission="660" Location="Kernel/System/ITSMChange/Number/Base.pm" />
+        <File Permission="660" Location="Kernel/System/ITSMChange/NumberBase.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/Number/AutoIncrement.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/Number/Date.pm" />
         <File Permission="660" Location="Kernel/System/ITSMChange/Number/DateChecksum.pm" />
