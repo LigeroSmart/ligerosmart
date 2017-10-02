@@ -23,7 +23,7 @@ package Kernel::System::ITSMChange::Number::DateChecksum;
 use strict;
 use warnings;
 
-use parent qw(Kernel::System::ITSMChange::Number::Base);
+use parent qw(Kernel::System::ITSMChange::NumberBase);
 
 our @ObjectDependencies = (
     'Kernel::Config',

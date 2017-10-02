@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::System::ITSMChange::Number::Base;
+package Kernel::System::ITSMChange::NumberBase;
 
 use strict;
 use warnings;
@@ -27,7 +27,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::ITSMChange::Number::Base - Common functions for change number generators
+Kernel::System::ITSMChange::NumberBase - Common functions for change number generators
 
 =head1 PUBLIC INTERFACE
 
