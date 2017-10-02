@@ -3,12 +3,12 @@
 # Fabio Bucci <fabietto82@gmail.com>, 2017
 # Luca Maranzano <liuk@linux.it>, 2014
 # Marthe Ngo Temb <ngotemb@gmail.com>, 2015
-# Vincenzo Reale <vinx.reale@gmail.com>, 2015
+# Vincenzo Reale <vinx.reale@gmail.com>, 2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:49+0000\n"
-"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"POT-Creation-Date: 2017-09-29 14:57+0000\n"
+"PO-Revision-Date: 2017-09-29 14:58+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -24,10 +24,6 @@ msgstr "Gestione Importazione/Esportazione"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Crea un template per importare ed esportare le informazioni degli oggetti."
-
-#. Template: AdminImportExport
-msgid "Number"
-msgstr "Numero"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -95,7 +91,7 @@ msgstr "Archivio origine"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "Importa riepilogo per %s"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -171,7 +167,7 @@ msgstr "Elemento richiesto, inserisci dati gentilmente"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr ""
+msgstr "Dati non validi, inserisci un %s valido"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
@@ -212,10 +208,6 @@ msgstr "Includi le Colonne di Intestazione"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Colonna"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Usimamizi wa kuleta/Hamisha';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tengeneza kiolezo kuleta na kuhamisha taarifa za kipengee';
-    $Self->{Translation}->{'Number'} = 'Namba';
     $Self->{Translation}->{'Start Import'} = 'Anza kuleta';
     $Self->{Translation}->{'Start Export'} = 'Anza kuhamisha';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Safuwima';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Umbiza usajili wa moduli wa mazingira ya nyuma kwa ajili ya moduli ya kuleta/kuhamisha';
     $Self->{Translation}->{'Import and export object information.'} = 'Leta na hamisha taarifa za kipengee';

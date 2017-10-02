@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Uvoz/Izvoz upravljanje';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Kreiraj šablon za uvoz i izvoz informacija o objektu.';
-    $Self->{Translation}->{'Number'} = 'Broj';
     $Self->{Translation}->{'Start Import'} = 'Počni uvoz';
     $Self->{Translation}->{'Start Export'} = 'Počni izvoz';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Korak 1 od 5 - Uredi zajedničke informacije';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Kolona';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Format registracije „backend” modula za uvoz/izvoz modul.';
     $Self->{Translation}->{'Import and export object information.'} = 'Informacije o uvozu i izvozu objekata';

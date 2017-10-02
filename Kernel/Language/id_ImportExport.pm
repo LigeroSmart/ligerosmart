@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Manajamen Impor/Ekspor';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Buat sebuah template untuk mengimpor dan ekspor obyek informasi.';
-    $Self->{Translation}->{'Number'} = 'Nomor';
     $Self->{Translation}->{'Start Import'} = 'Mulai Impor';
     $Self->{Translation}->{'Start Export'} = 'Mulai Ekspor';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Kolom';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Format modul pendaftaran backend untuk modul impor/ekspor.';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasi obyek impor dan ekspor.';

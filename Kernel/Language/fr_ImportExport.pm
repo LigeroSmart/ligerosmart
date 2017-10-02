@@ -18,9 +18,8 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestion de l\'Import/Export';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Créer un modèle pour importer et exporter les informations d\'objet';
-    $Self->{Translation}->{'Number'} = 'Nombre';
-    $Self->{Translation}->{'Start Import'} = 'Démarrer Import';
-    $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
+    $Self->{Translation}->{'Start Import'} = 'Démarrer l\'import';
+    $Self->{Translation}->{'Start Export'} = 'Démarrer l\'export';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Etape 1 sur 5 - Editer l\'information commune';
     $Self->{Translation}->{'Name is required!'} = 'Un Nom est requis!';
     $Self->{Translation}->{'Object is required!'} = 'Un Objet est requis!';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Colonne';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Enregistrement en arrière plan du module d\'import/export';
     $Self->{Translation}->{'Import and export object information.'} = 'Importer et exporter des informations d\'objet';

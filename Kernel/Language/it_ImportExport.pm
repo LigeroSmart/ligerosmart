@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestione Importazione/Esportazione';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crea un template per importare ed esportare le informazioni degli oggetti.';
-    $Self->{Translation}->{'Number'} = 'Numero';
     $Self->{Translation}->{'Start Import'} = 'Inizia Importazione';
     $Self->{Translation}->{'Start Export'} = 'Inizia Esportazione';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -35,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Restringere esportazione per ricerca';
     $Self->{Translation}->{'Import information'} = 'Importare informazione';
     $Self->{Translation}->{'Source File'} = 'Archivio origine';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = 'Importa riepilogo per %s';
     $Self->{Translation}->{'Records'} = 'Voci';
     $Self->{Translation}->{'Success'} = 'Successo';
     $Self->{Translation}->{'Duplicate names'} = 'Duplica i nomi';
@@ -56,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'integer'} = 'intero';
     $Self->{Translation}->{'integer bigger than zero'} = 'intero più grande di zero';
     $Self->{Translation}->{'Element required, please insert data'} = 'Elemento richiesto, inserisci dati gentilmente';
-    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
+    $Self->{Translation}->{'Invalid data, please insert a valid %s'} = 'Dati non validi, inserisci un %s valido';
     $Self->{Translation}->{'Format not found!'} = 'Formato non trovato!';
 
     # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Colonna';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Registrazione del modulo di backend del formato per il modulo di importazione/esportazione.';
     $Self->{Translation}->{'Import and export object information.'} = 'Importa ed esporta le informazioni sull\'oggetto.';

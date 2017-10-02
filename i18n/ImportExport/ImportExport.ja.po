@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:49+0000\n"
-"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"POT-Creation-Date: 2017-09-29 14:57+0000\n"
+"PO-Revision-Date: 2017-09-29 14:58+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -22,10 +22,6 @@ msgstr "Import/Export マネージャ"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "オブジェクトのインポート・エクスポート用のテンプレートを作成する"
-
-#. Template: AdminImportExport
-msgid "Number"
-msgstr "番号"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -210,10 +206,6 @@ msgstr "ヘッダ情報を含む"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "桁"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

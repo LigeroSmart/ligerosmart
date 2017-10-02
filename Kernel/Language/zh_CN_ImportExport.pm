@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = '导入/导出管理';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '创建模板导入和导出对象信息。';
-    $Self->{Translation}->{'Number'} = '编号';
     $Self->{Translation}->{'Start Import'} = '开始导入';
     $Self->{Translation}->{'Start Export'} = '开始导出';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '步骤 1/5 - 编辑通用信息';
@@ -35,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = '按搜索限制导出';
     $Self->{Translation}->{'Import information'} = '导入信息';
     $Self->{Translation}->{'Source File'} = '源文件';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = '%s的导入摘要';
     $Self->{Translation}->{'Records'} = '记录';
     $Self->{Translation}->{'Success'} = '成功';
     $Self->{Translation}->{'Duplicate names'} = '重复的名称';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = '列';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '为导入/导出模块的格式后端模块注册。';
     $Self->{Translation}->{'Import and export object information.'} = '导入和导出对象信息。';

@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Увоз/Извоз управљање';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Креирај шаблон за увоз и извоз информација о објекту.';
-    $Self->{Translation}->{'Number'} = 'Број';
     $Self->{Translation}->{'Start Import'} = 'Почни увоз';
     $Self->{Translation}->{'Start Export'} = 'Почни извоз';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Корак 1 од 5 - Уреди заједничке информације';
@@ -35,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничење извоза по претрази';
     $Self->{Translation}->{'Import information'} = 'Увоз информација';
     $Self->{Translation}->{'Source File'} = 'Изворна датотека';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = 'Резиме увоза за %s';
     $Self->{Translation}->{'Records'} = 'Записи';
     $Self->{Translation}->{'Success'} = 'Успешно';
     $Self->{Translation}->{'Duplicate names'} = 'Дупликат имена';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Колона';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Формат регистрације „backend” модула за увоз/извоз модул.';
     $Self->{Translation}->{'Import and export object information.'} = 'Информације о увозу и извозу објеката';

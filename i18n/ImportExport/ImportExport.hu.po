@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:49+0000\n"
-"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"POT-Creation-Date: 2017-09-29 14:57+0000\n"
+"PO-Revision-Date: 2017-09-29 14:58+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -21,10 +21,6 @@ msgstr "Importálás/exportálás kezelés"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Sablon létrehozása objektuminformációk importálásához és exportálásához."
-
-#. Template: AdminImportExport
-msgid "Number"
-msgstr "Szám"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -92,7 +88,7 @@ msgstr "Forrásfájl"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "%s importálási összegzése"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -209,10 +205,6 @@ msgstr "Oszlopfejlécek felvétele"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "Oszlop"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

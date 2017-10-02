@@ -18,7 +18,6 @@ sub Data {
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Quản lý Nhập/Xuất';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tạo một mẫu để nhập và xuất thông tin đối tượng.';
-    $Self->{Translation}->{'Number'} = 'Số';
     $Self->{Translation}->{'Start Import'} = 'Bắt đầu nhập vào';
     $Self->{Translation}->{'Start Export'} = 'Bắt đầu xuất ra';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
@@ -71,7 +70,6 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Cột';
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Đăng ký mô-đun định dạng nền cho mô-đun nhập/xuất';
     $Self->{Translation}->{'Import and export object information.'} = 'Thông tin nhập và xuất đối tượng.';

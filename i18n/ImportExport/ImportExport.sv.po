@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-04-28 13:37+0000\n"
-"PO-Revision-Date: 2017-04-28 11:38+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-09-29 14:57+0000\n"
+"PO-Revision-Date: 2017-09-29 14:58+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,8 +89,8 @@ msgid "Source File"
 msgstr "Källfil"
 
 #. Template: AdminImportExport
-msgid "Import summary for"
-msgstr "Importsummering för"
+msgid "Import summary for %s"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -99,10 +99,6 @@ msgstr "Poster"
 #. Template: AdminImportExport
 msgid "Success"
 msgstr "Lyckad"
-
-#. Template: AdminImportExport
-msgid "Failed"
-msgstr "Misslyckad"
 
 #. Template: AdminImportExport
 msgid "Duplicate names"

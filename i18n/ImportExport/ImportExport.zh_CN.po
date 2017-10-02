@@ -2,11 +2,12 @@
 # Translators:
 # 张梦 <adoeh@sina.com>, 2014
 # 汇民 王 <whuim@163.com>, 2017
+# 汇民 王 <whuim@qq.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:49+0000\n"
-"PO-Revision-Date: 2017-09-25 08:49+0000\n"
+"POT-Creation-Date: 2017-09-29 14:57+0000\n"
+"PO-Revision-Date: 2017-09-29 14:58+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -22,10 +23,6 @@ msgstr "导入/导出管理"
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "创建模板导入和导出对象信息。"
-
-#. Template: AdminImportExport
-msgid "Number"
-msgstr "编号"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -93,7 +90,7 @@ msgstr "源文件"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "%s的导入摘要"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -210,10 +207,6 @@ msgstr "包括列标题"
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
 msgstr "列"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
