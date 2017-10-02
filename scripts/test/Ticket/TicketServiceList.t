@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - cf9caaaf21c6da76089b2d7c58e29ff332c9a7fd - scripts/test/Ticket/TicketServiceList.t
+# $origin: otrs - 85e18c399a78e6d41b335cd91fddb98051661708 - scripts/test/Ticket/TicketServiceList.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -70,6 +70,10 @@ my $ServiceID1 = $ServiceObject->ServiceAdd(
 # ---
     ValidID => 1,
     UserID  => 1,
+
+    # Parameters needed if ITSM is installed.
+    TypeID      => 2,
+    Criticality => '3 normal',
 );
 $Self->True(
     $ServiceID1,
@@ -85,6 +89,10 @@ my $ServiceID2 = $ServiceObject->ServiceAdd(
 # ---
     ValidID => 1,
     UserID  => 1,
+
+    # Parameters needed if ITSM is installed.
+    TypeID      => 2,
+    Criticality => '3 normal',
 );
 $Self->True(
     $ServiceID2,
