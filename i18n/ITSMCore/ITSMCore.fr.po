@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 09:28+0000\n"
-"PO-Revision-Date: 2017-09-25 09:28+0000\n"
+"POT-Creation-Date: 2017-09-29 15:04+0000\n"
+"PO-Revision-Date: 2017-09-29 15:06+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -199,10 +199,6 @@ msgstr ""
 #. SysConfig
 msgid "Depends on"
 msgstr "Dépend de"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid ""

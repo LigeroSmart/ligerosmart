@@ -83,7 +83,6 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Defina quais colunas são mostradas no widget de serviços vinculados (LinkObject::ViewMode="complex"). Observação: somente atributos de serviço são permitidos para DefaultColumns. Definições possíveis: 0 = Desativado, 1 = Disponível, 2 = Activado por padrão.';
     $Self->{Translation}->{'Depends on'} = 'Depende de';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registro de módulo de interface para a configuração AdminITSMCIPAllocate na área administrativa.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =

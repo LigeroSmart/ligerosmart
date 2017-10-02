@@ -83,7 +83,6 @@ sub Data {
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Takrifkan lajur-lajur yang mana ditunjukkan dalam widget perkhidmatan bersambung (ObjekSambungan::ModPemandangan:: "kompleks"). Nota: Hanya sifat-sifat perkhidmatan yang dibenarkan untuk LajurLalai. Tetapan Mustahil: 0 = Tidak Dibolehkan, 1 = Ada, 2 = Dibolehkan dengan lalai.';
     $Self->{Translation}->{'Depends on'} = 'Bergantung kepada';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Frontend pendaftaran modul untuk konfigurasi AdminITSMCIPAllocate di kawasan admin.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
