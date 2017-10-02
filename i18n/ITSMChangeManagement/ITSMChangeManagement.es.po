@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:58+0000\n"
-"PO-Revision-Date: 2017-09-25 08:59+0000\n"
+"POT-Creation-Date: 2017-09-29 14:59+0000\n"
+"PO-Revision-Date: 2017-09-29 15:00+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -2022,10 +2022,6 @@ msgid ""
 "Determines if the common stats module may generate stats about the number of"
 " Rfc tickets a requester created."
 msgstr "Determina si el módulo comun de estadísticas debe generar estadísticas sobre el número de tickets Rfc que una persona creó."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid ""

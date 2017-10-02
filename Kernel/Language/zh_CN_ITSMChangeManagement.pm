@@ -249,13 +249,13 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = '工作指令信息';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
-    $Self->{Translation}->{'Notification Added!'} = '';
+    $Self->{Translation}->{'Notification Added!'} = '通知已添加！';
     $Self->{Translation}->{'Unknown notification %s!'} = '未知的通知%s！';
     $Self->{Translation}->{'There was an error creating the notification.'} = '创建通知时出现一个错误。';
 
     # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
-    $Self->{Translation}->{'State Transition Updated!'} = '';
-    $Self->{Translation}->{'State Transition Added!'} = '';
+    $Self->{Translation}->{'State Transition Updated!'} = '状态转换已更新！';
+    $Self->{Translation}->{'State Transition Added!'} = '状态转换已添加！';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = '概览：变更';
@@ -525,7 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
     $Self->{Translation}->{'Change Schedule'} = '变更计划';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
-    $Self->{Translation}->{'Change Zoom'} = '';
+    $Self->{Translation}->{'Change Zoom'} = '变更详情';
     $Self->{Translation}->{'Change Zoom.'} = '变更详情。';
     $Self->{Translation}->{'Change and Workorder Templates'} = '变更和工作指令模板';
     $Self->{Translation}->{'Change and workorder templates edited by this user.'} = '本用户编辑的变更模板和工作指令模板。';
@@ -732,25 +732,24 @@ sub Data {
         '确定通用统计模块能否生成关于变更的统计。';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         '确定通用统计模块能否生成一个请求者创建的RFC（变更请求）的数量的统计。';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
-        '';
+        '在服务人员界面变更打印窗口中显示的（变更和工作指令）动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
-        '';
+        '在服务人员界面添加变更窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface.'} =
-        '';
+        '在服务人员界面编辑变更窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface.'} =
-        '';
+        '在服务人员界面搜索变更窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface.'} =
-        '';
+        '在服务人员界面变更详情窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface.'} =
-        '';
+        '在服务人员界面添加工作指令窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface.'} =
-        '';
+        '在服务人员界面编辑工作指令窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface.'} =
-        '';
+        '在服务人员界面工作指令报告窗口中显示的动态字段。';
     $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface.'} =
-        '';
+        '在服务人员界面工作指令详情窗口中显示的动态字段。';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         '处理动态字段更新条件（添加、更新或删除）的动态字段事件模块。';
     $Self->{Translation}->{'Edit a change.'} = '编辑一个变更。';
@@ -758,7 +757,7 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change.'} = '编辑变更条件。';
     $Self->{Translation}->{'Edit the workorder.'} = '编辑工作指令。';
     $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        '';
+        '启用最小的变更计数器大小（如果ChangeNumberGenerator变更编号生成器选择为“日期”）';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '转发变更的计划表。已批准变更的概览。';
     $Self->{Translation}->{'History Zoom'} = '历史详情';
@@ -899,7 +898,7 @@ sub Data {
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         '设置最小的变更计数器大小（如果变更编号生成器选用“自动增量”）。默认是5（位数），意味着计数器从10000开始。';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        '';
+        '设置最小的变更计数器大小（如果变更编号生成器选用“自动增量”）。默认是5（位数），意味着计数器从10000开始。';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = '设置变更的状态模式转换。';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = '设置工作指令的状态模式转换。';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
@@ -974,7 +973,7 @@ sub Data {
     $Self->{Translation}->{'Workorder History Zoom.'} = '工作指令历史详情。';
     $Self->{Translation}->{'Workorder History.'} = '工作指令历史。';
     $Self->{Translation}->{'Workorder Report.'} = '工作指令报告。';
-    $Self->{Translation}->{'Workorder Zoom'} = '';
+    $Self->{Translation}->{'Workorder Zoom'} = '工作指令详情';
     $Self->{Translation}->{'Workorder Zoom.'} = '工作指令详情。';
     $Self->{Translation}->{'once'} = '单次';
     $Self->{Translation}->{'regularly'} = '定期';

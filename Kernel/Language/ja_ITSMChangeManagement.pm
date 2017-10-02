@@ -93,9 +93,9 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = '';
-    $Self->{Translation}->{'History Content'} = '';
+    $Self->{Translation}->{'History Content'} = '履歴内容';
     $Self->{Translation}->{'Workorder'} = '作業オーダー';
-    $Self->{Translation}->{'Createtime'} = '';
+    $Self->{Translation}->{'Createtime'} = '作成日時';
     $Self->{Translation}->{'Show details'} = '詳細を表示';
     $Self->{Translation}->{'Show workorder'} = '作業オーダーを表示';
 
@@ -732,7 +732,6 @@ sub Data {
         '共通統計モジュールが、変更の統計を生成してよいかどうかを定義します。';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         '共通統計モジュールが、リクエスター（要求者）が作成したRfcチケットの数の統計を生成してよいかどうかを定義します。';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
@@ -815,7 +814,7 @@ sub Data {
     $Self->{Translation}->{'New (from template)'} = '新規(テンプレートから)';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
-    $Self->{Translation}->{'Other Settings'} = '';
+    $Self->{Translation}->{'Other Settings'} = 'その他の設定';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = '事後レビュー';
@@ -885,7 +884,7 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen'} = '';
+    $Self->{Translation}->{'Screen'} = '画面';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Search Changes'} = '変更管理項目を検索';
     $Self->{Translation}->{'Search Changes.'} = '変更管理項目を検索します。';

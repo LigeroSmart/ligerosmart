@@ -16,13 +16,13 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMChangeCIPAllocate
-    $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategorija <-> Uticaj <-> Prioritet';
+    $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategorija <-> uticaj <-> prioritet';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
-        'Upravljanje rezultatom prioriteta kombinacijom Kategorija <-> Uticaj.';
+        'Upravljanje rezultatom prioriteta kombinacijom kategorija <-> uticaj.';
     $Self->{Translation}->{'Priority allocation'} = 'Raspodela prioriteta';
 
     # Template: AdminITSMChangeNotification
-    $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Upravljanje obaveštenjima u „ITSM” Upravljanju promenama';
+    $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Upravljanje obaveštenjima u ITSM upravljanju promenama';
     $Self->{Translation}->{'Add Notification Rule'} = 'Dodaj pravilo obaveštavanja';
     $Self->{Translation}->{'A notification should have a name!'} = 'Obaveštenje treba da ima ime!';
     $Self->{Translation}->{'Name is required.'} = 'Ime je obavezno.';
@@ -44,7 +44,7 @@ sub Data {
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Dodaj promenu';
-    $Self->{Translation}->{'ITSM Change'} = '„ITSM” promena';
+    $Self->{Translation}->{'ITSM Change'} = 'ITSM promena';
     $Self->{Translation}->{'Justification'} = 'Opravdanje';
     $Self->{Translation}->{'Input invalid.'} = 'Neispravan unos.';
     $Self->{Translation}->{'Impact'} = 'Uticaj';
@@ -57,12 +57,12 @@ sub Data {
     $Self->{Translation}->{'New time'} = 'Novo vreme';
 
     # Template: AgentITSMChangeCABTemplate
-    $Self->{Translation}->{'Save Change CAB as template'} = 'Sačuvaj promenu SOP kao šablon';
+    $Self->{Translation}->{'Save Change CAB as template'} = 'Sačuvaj promenu CAB kao šablon';
     $Self->{Translation}->{'go to involved persons screen'} = 'idi na ekran uključenih osoba';
     $Self->{Translation}->{'Invalid Name'} = 'Pogrešno ime';
 
     # Template: AgentITSMChangeCondition
-    $Self->{Translation}->{'Conditions and Actions'} = 'Uslovi i Akcije';
+    $Self->{Translation}->{'Conditions and Actions'} = 'Uslovi i akcije';
     $Self->{Translation}->{'Delete Condition'} = 'Uslov brisanja';
     $Self->{Translation}->{'Add new condition'} = 'Dodaj novi uslov';
 
@@ -112,13 +112,13 @@ sub Data {
     $Self->{Translation}->{'User invalid.'} = 'Neispravan korisnik.';
     $Self->{Translation}->{'ChangeBuilder'} = 'Graditelj promene';
     $Self->{Translation}->{'Change Advisory Board'} = 'Savetodavni odbor za promene';
-    $Self->{Translation}->{'CAB Template'} = 'SOP šablon';
+    $Self->{Translation}->{'CAB Template'} = 'CAB šablon';
     $Self->{Translation}->{'Apply Template'} = 'Primeni šablon';
     $Self->{Translation}->{'NewTemplate'} = 'Novi šablon';
-    $Self->{Translation}->{'Save this CAB as template'} = 'Sačuvaj ovo kao SOP šablon';
-    $Self->{Translation}->{'Add to CAB'} = 'Dodaj u SOP';
+    $Self->{Translation}->{'Save this CAB as template'} = 'Sačuvaj ovo kao CAB šablon';
+    $Self->{Translation}->{'Add to CAB'} = 'Dodaj u CAB';
     $Self->{Translation}->{'Invalid User'} = 'Pogrešan korisnik';
-    $Self->{Translation}->{'Current CAB'} = 'Aktuelni SOP';
+    $Self->{Translation}->{'Current CAB'} = 'Aktuelni CAB';
 
     # Template: AgentITSMChangeOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = 'Podešavanje konteksta';
@@ -145,9 +145,9 @@ sub Data {
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(npr 10*5155 ili 105658*)';
-    $Self->{Translation}->{'CAB Agent'} = 'Operater SOP';
-    $Self->{Translation}->{'e.g.'} = 'npr';
-    $Self->{Translation}->{'CAB Customer'} = 'Klijent SOP';
+    $Self->{Translation}->{'CAB Agent'} = 'Operater CAB';
+    $Self->{Translation}->{'e.g.'} = 'npr.';
+    $Self->{Translation}->{'CAB Customer'} = 'CAB klijent';
     $Self->{Translation}->{'ITSM Workorder Instruction'} = 'Uputstvo ITSM radnog naloga';
     $Self->{Translation}->{'ITSM Workorder Report'} = 'Izveštaj ITSM radnog naloga';
     $Self->{Translation}->{'ITSM Change Priority'} = 'Prioritet ITSM promene';
@@ -172,15 +172,15 @@ sub Data {
     $Self->{Translation}->{'Planned Effort'} = 'Planirani napor';
     $Self->{Translation}->{'Accounted Time'} = 'Obračunato vreme';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Inicijator(i) promene';
-    $Self->{Translation}->{'CAB'} = 'SOP';
+    $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Zadnji put promenjeno';
     $Self->{Translation}->{'Last changed by'} = 'Promenio';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        'Da biste otvorili veze u sledećim blokovima opisa, možda ćete trebati da pritisnete „Ctrl” ili „Cmd” ili „Shift” taster dok istovremeno kliknete na vezu (zavisi od vašeg OS i pregledača).';
+        'Da biste otvorili veze u sledećim blokovima opisa, možda ćete trebati da pritisnete "Ctrl" ili "Cmd" ili "Shift" taster dok istovremeno kliknete na vezu (zavisi od vašeg operativnog sistema i pretraživača).';
     $Self->{Translation}->{'Download Attachment'} = 'Preuzmi prilog';
 
     # Template: AgentITSMTemplateEditCAB
-    $Self->{Translation}->{'Edit CAB Template'} = 'Uredi SOP šablon';
+    $Self->{Translation}->{'Edit CAB Template'} = 'Uredi CAB šablon';
 
     # Template: AgentITSMTemplateEditContent
     $Self->{Translation}->{'This will create a new change from this template, so you can edit and save it.'} =
@@ -249,76 +249,76 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = 'Informacija o radnom nalogu';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
-    $Self->{Translation}->{'Notification Added!'} = '';
+    $Self->{Translation}->{'Notification Added!'} = 'Dodato obaveštenje!';
     $Self->{Translation}->{'Unknown notification %s!'} = 'Nepoznato obaveštenje %s!';
     $Self->{Translation}->{'There was an error creating the notification.'} = 'Došlo je do greške prilikom kreiranja obaveštenja.';
 
     # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
-    $Self->{Translation}->{'State Transition Updated!'} = '';
-    $Self->{Translation}->{'State Transition Added!'} = '';
+    $Self->{Translation}->{'State Transition Updated!'} = 'Ažurirano tranziciono stanje!';
+    $Self->{Translation}->{'State Transition Added!'} = 'Dodato tranziciono stanje!';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
-    $Self->{Translation}->{'Overview: ITSM Changes'} = 'Pregled: „ITSM” promene';
+    $Self->{Translation}->{'Overview: ITSM Changes'} = 'Pregled: ITSM promene';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
-    $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'Tiket sa ID tiketa %s ne postoji!';
+    $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'Tiket sa TicketID %s ne postoji!';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
-        'Nedostaje opcija sistemske konfiguracije „ITSMChange::AddChangeLinkTicketTypes”!';
+        'Nedostaje opcija sistemske konfiguracije "ITSMChange::AddChangeLinkTicketTypes"!';
     $Self->{Translation}->{'Was not able to add change!'} = 'Nije bilo moguće dodati promenu!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
     $Self->{Translation}->{'Was not able to create change from template!'} = 'Nije bilo moguće kreirati promenu iz šablona!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
-    $Self->{Translation}->{'No ChangeID is given!'} = 'Nije dat ID Promene!';
-    $Self->{Translation}->{'No change found for changeID %s.'} = 'Nije pronađena promena za ID promene %s.';
-    $Self->{Translation}->{'The CAB of change "%s" could not be serialized.'} = 'SOP promene %s se ne može serijalizovati.';
+    $Self->{Translation}->{'No ChangeID is given!'} = 'Nije dat ChangeID!';
+    $Self->{Translation}->{'No change found for changeID %s.'} = 'Nije pronađena promena za ChangeID %s.';
+    $Self->{Translation}->{'The CAB of change "%s" could not be serialized.'} = 'CAB promene %s se ne može serijalizovati.';
     $Self->{Translation}->{'Could not add the template.'} = 'Nije moguće dodati šablon.';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
-    $Self->{Translation}->{'Change "%s" not found in database!'} = 'Promena „%s” nije nađena u bazi podataka!';
-    $Self->{Translation}->{'Could not delete ConditionID %s!'} = 'Nije moguće obrisati ID uslova %s!';
+    $Self->{Translation}->{'Change "%s" not found in database!'} = 'Promena "%s" nije nađena u bazi podataka!';
+    $Self->{Translation}->{'Could not delete ConditionID %s!'} = 'Nije moguće obrisati ConditionID %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
     $Self->{Translation}->{'No %s is given!'} = 'Nije dat %s!';
     $Self->{Translation}->{'Could not create new condition!'} = 'Nije moguće kreirati novi uslov!';
-    $Self->{Translation}->{'Could not update ConditionID %s!'} = 'Nije moguće ažurirati uslov ID %s!';
-    $Self->{Translation}->{'Could not update ExpressionID %s!'} = 'Nije moguće ažurirati ID izraza %s!';
-    $Self->{Translation}->{'Could not add new Expression!'} = 'Nije moguće dodati novi Izraz!';
-    $Self->{Translation}->{'Could not update ActionID %s!'} = 'Nije moguće ažurirati ID akcije %s!';
-    $Self->{Translation}->{'Could not add new Action!'} = 'Nije moguće dodati novu Akciju!';
-    $Self->{Translation}->{'Could not delete ExpressionID %s!'} = 'Nije moguće obrisati ID izraza %s!';
-    $Self->{Translation}->{'Could not delete ActionID %s!'} = 'Nije moguće obrisati ID akcije %s!';
+    $Self->{Translation}->{'Could not update ConditionID %s!'} = 'Nije moguće ažurirati ConditionID %s!';
+    $Self->{Translation}->{'Could not update ExpressionID %s!'} = 'Nije moguće ažurirati ExpressionID %s!';
+    $Self->{Translation}->{'Could not add new Expression!'} = 'Nije moguće dodati novi Expression!';
+    $Self->{Translation}->{'Could not update ActionID %s!'} = 'Nije moguće ažurirati ActionID %s!';
+    $Self->{Translation}->{'Could not add new Action!'} = 'Nije moguće dodati novi Action!';
+    $Self->{Translation}->{'Could not delete ExpressionID %s!'} = 'Nije moguće obrisati ExpressionID %s!';
+    $Self->{Translation}->{'Could not delete ActionID %s!'} = 'Nije moguće obrisati ActionID %s!';
     $Self->{Translation}->{'Error: Unknown field type "%s"!'} = 'Greška: Nepoznat tip polja "%s"!';
-    $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = 'ID uslova %s ne pripada datom ID promene %s!';
+    $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = 'ConditionID %s ne pripada datom ChangeID %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
     $Self->{Translation}->{'Change "%s" does not have an allowed change state to be deleted!'} =
-        'Promena „%s” nije u dozvoljenom stanju da bi bila obrisana!';
-    $Self->{Translation}->{'Was not able to delete the changeID %s!'} = 'Nije bilo moguće obrisati ID promene %s!';
+        'Promena "%s" nije u dozvoljenom stanju da bi bila obrisana!';
+    $Self->{Translation}->{'Was not able to delete the changeID %s!'} = 'Nije bilo moguće obrisati ChangeID %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
     $Self->{Translation}->{'Was not able to update Change!'} = 'Nije bilo moguće ažurirati promenu!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = 'Ne može se prikazati istorijat, jer nije dat ID Promene!';
+    $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = 'Ne može se prikazati istorijat, jer nije dat ChangeID!';
     $Self->{Translation}->{'Change "%s" not found in the database!'} = 'Promena "%s" nije nađena u bazi podataka!';
     $Self->{Translation}->{'Unknown type "%s" encountered!'} = 'Nepoznat tip "%s"!';
     $Self->{Translation}->{'Change History'} = 'Istorijat promene';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
-    $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = 'Ne mogu se prikazati detalji istorijata jer nije dat ID Istorijata promene!';
-    $Self->{Translation}->{'HistoryEntry "%s" not found in database!'} = 'Stavka istorijata „%s” nije nađena u bazi podataka!';
+    $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = 'Ne mogu se prikazati detalji istorijata jer nije dat HistoryEntryID!';
+    $Self->{Translation}->{'HistoryEntry "%s" not found in database!'} = 'Stavka istorijata "%s" nije nađena u bazi podataka!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
-    $Self->{Translation}->{'Was not able to update Change CAB for Change %s!'} = 'Nije bilo moguće ažurirati SOP promen za promenu %s!';
+    $Self->{Translation}->{'Was not able to update Change CAB for Change %s!'} = 'Nije bilo moguće ažurirati CAB promen za promenu %s!';
     $Self->{Translation}->{'Was not able to update Change %s!'} = 'Nije bilo moguće ažurirati promenu %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
     $Self->{Translation}->{'Overview: ChangeManager'} = 'Pregled: Upravljač promenama';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
-    $Self->{Translation}->{'Overview: My CAB'} = 'Pregled: Moj SOP';
+    $Self->{Translation}->{'Overview: My CAB'} = 'Pregled: Moj CAB';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
     $Self->{Translation}->{'Overview: My Changes'} = 'Pregled: Moje promene';
@@ -327,20 +327,20 @@ sub Data {
     $Self->{Translation}->{'Overview: My Workorders'} = 'Pregled: Moji radni nalozi';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
-    $Self->{Translation}->{'Overview: PIR'} = 'Pregled: RPS';
+    $Self->{Translation}->{'Overview: PIR'} = 'Pregled: PIR';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
-    $Self->{Translation}->{'Overview: PSA'} = 'Pregled: PDS';
+    $Self->{Translation}->{'Overview: PSA'} = 'Pregled: PSA';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
     $Self->{Translation}->{'WorkOrder "%s" not found in database!'} = 'Radni nalog "%s" nije nađen u bazi podataka!';
     $Self->{Translation}->{'Can\'t create output, as the workorder is not attached to a change!'} =
         'Ne može se krirati izlaz jer radni nalog nije pridodat promeni!';
-    $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Ne može se krirati izlaz jer nije dat ID Promene!';
+    $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Ne može se krirati izlaz jer nije dat ChangeID!';
     $Self->{Translation}->{'unknown change title'} = 'nepoznat naslov promene';
-    $Self->{Translation}->{'ITSM Workorder'} = '„ITSM” radni nalog';
+    $Self->{Translation}->{'ITSM Workorder'} = 'ITSM radni nalog';
     $Self->{Translation}->{'unknown workorder title'} = 'nepoznat naslov radnog naloga';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'Pregled „ITSM” radnog naloga (%s)';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'Pregled ITSM radnog naloga (%s)';
     $Self->{Translation}->{'PlannedStartTime'} = 'Planirano vreme početka';
     $Self->{Translation}->{'PlannedEndTime'} = 'Planirano vreme završetka';
     $Self->{Translation}->{'ActualStartTime'} = 'Stvarno vreme početka';
@@ -389,7 +389,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
     $Self->{Translation}->{'You need %s permission!'} = 'Potrebna vam je %s dozvola!';
-    $Self->{Translation}->{'No TemplateID is given!'} = 'Nije dat ID Šablona!';
+    $Self->{Translation}->{'No TemplateID is given!'} = 'Nije dat TemplateID!';
     $Self->{Translation}->{'Template "%s" not found in database!'} = 'Šablon "%s" nije nađen u bazi podataka!';
     $Self->{Translation}->{'Was not able to delete the template %s!'} = 'Nije bilo moguće obrisati šablon %s!';
 
@@ -411,7 +411,7 @@ sub Data {
     $Self->{Translation}->{'Was not able to add workorder!'} = 'Nije bilo moguće dodati radni nalog!';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
-    $Self->{Translation}->{'No WorkOrderID is given!'} = 'Nije dat ID Radnog naloga!';
+    $Self->{Translation}->{'No WorkOrderID is given!'} = 'Nije dat WorkOrderID!';
     $Self->{Translation}->{'Was not able to set the workorder agent of the workorder "%s" to empty!'} =
         'Nije bilo moguće podesiti radni nalog "%s" bez operatera!';
     $Self->{Translation}->{'Was not able to update the workorder "%s"!'} = 'Nije bilo moguće ažurirati radni nalog "%s"!';
@@ -424,7 +424,7 @@ sub Data {
     $Self->{Translation}->{'Was not able to update WorkOrder %s!'} = 'Nije bilo moguće ažurirati radni nalog %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no WorkOrderID is given!'} = 'Ne može se prikazati istorijat jer nije dat ID radnog naloga!';
+    $Self->{Translation}->{'Can\'t show history, as no WorkOrderID is given!'} = 'Ne može se prikazati istorijat jer nije dat WorkOrderID!';
     $Self->{Translation}->{'WorkOrder "%s" not found in the database!'} = 'Radni nalog "%s" nije nađen u bazi podataka!';
     $Self->{Translation}->{'WorkOrderHistory::'} = 'WorkOrderHistory::';
     $Self->{Translation}->{'WorkOrder History'} = 'Istorijat radnog naloga';
@@ -437,19 +437,19 @@ sub Data {
     $Self->{Translation}->{'Was not able to take the workorder %s!'} = 'Nije bilo moguće preuzeti radni nalog %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
-    $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = 'Radni nalog „%s” se ne može serijalizovati.';
+    $Self->{Translation}->{'The workorder "%s" could not be serialized.'} = 'Radni nalog "%s" se ne može serijalizovati.';
 
     # Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
     $Self->{Translation}->{'Need config option %s!'} = 'Potrebna konfiguraciona opcija %s!';
-    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = 'Konfiguraciona opcija %s mora biti ”HASH" referenca!';
+    $Self->{Translation}->{'Config option %s needs to be a HASH ref!'} = 'Konfiguraciona opcija %s mora biti HASH referenca!';
     $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Nije pronađena konfiguraciona stavka za pregled "%s"!';
     $Self->{Translation}->{'Title: %s | Type: %s'} = 'Naslov: %s | Tip: %s';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
-    $Self->{Translation}->{'My CABs'} = 'Moji SOP';
+    $Self->{Translation}->{'My CABs'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
-    $Self->{Translation}->{'My Changes'} = 'Moje promene';
+    $Self->{Translation}->{'My Changes'} = '';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Moji radni nalozi';
@@ -460,7 +460,7 @@ sub Data {
     $Self->{Translation}->{'rejected'} = 'odbijeno';
     $Self->{Translation}->{'approved'} = 'odobreno';
     $Self->{Translation}->{'in progress'} = 'u toku';
-    $Self->{Translation}->{'pending pir'} = 'rps na čekanju';
+    $Self->{Translation}->{'pending pir'} = 'PIR na čekanju';
     $Self->{Translation}->{'successful'} = 'uspešno';
     $Self->{Translation}->{'failed'} = 'neuspešno';
     $Self->{Translation}->{'canceled'} = 'otkazano';
@@ -472,7 +472,7 @@ sub Data {
     $Self->{Translation}->{'workorder'} = 'radni nalog';
     $Self->{Translation}->{'backout'} = 'odustanak';
     $Self->{Translation}->{'decision'} = 'odluka';
-    $Self->{Translation}->{'pir'} = 'rps';
+    $Self->{Translation}->{'pir'} = 'PIR';
     $Self->{Translation}->{'is'} = 'je';
     $Self->{Translation}->{'is not'} = 'nije';
     $Self->{Translation}->{'is empty'} = 'je prazno';
@@ -512,26 +512,26 @@ sub Data {
         'Modul interfejsa operatera za obaveštavanje, pregled broja promena.';
     $Self->{Translation}->{'Agent interface notification module to see the number of workorders.'} =
         'Modul obaveštavanja u interfejsu operatera za prikaz broja radnih naloga.';
-    $Self->{Translation}->{'CAB Member Search'} = 'Pretraga članova SOP';
+    $Self->{Translation}->{'CAB Member Search'} = 'Pretraga članova CAB';
     $Self->{Translation}->{'Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes).'} =
         'Vreme keširanja u minutama za alatne trake upravljača promenama. Podrazumevano 3 sata (180 minuta).';
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =
         'Vreme keširanja u minutima za upravljanje promenama. Podrazumevano: 5 dana (7200 minuta).';
-    $Self->{Translation}->{'Change CAB Templates'} = 'Šabloni promena SOP';
+    $Self->{Translation}->{'Change CAB Templates'} = 'Šabloni promena CAB';
     $Self->{Translation}->{'Change History.'} = 'Istorijat promene.';
     $Self->{Translation}->{'Change Involved Persons.'} = 'Osobe uključene u promenu.';
-    $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Ograničenje pregleda promena - "malo"';
+    $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Ograničenje pregleda promena malog formata';
     $Self->{Translation}->{'Change Overview.'} = 'Pregled promene.';
     $Self->{Translation}->{'Change Print.'} = 'Štampa promene.';
     $Self->{Translation}->{'Change Schedule'} = 'Planer promena';
     $Self->{Translation}->{'Change Schedule.'} = 'Planer promena.';
-    $Self->{Translation}->{'Change Zoom'} = '';
+    $Self->{Translation}->{'Change Zoom'} = 'Detalji promene.';
     $Self->{Translation}->{'Change Zoom.'} = 'Detalji promene.';
     $Self->{Translation}->{'Change and Workorder Templates'} = 'Izmeni šablone radnog naloga';
     $Self->{Translation}->{'Change and workorder templates edited by this user.'} = 'Šabloni promena i radnih naloga koje je menjao ovaj korisnik.';
     $Self->{Translation}->{'Change area.'} = 'Prostor promene.';
     $Self->{Translation}->{'Change involved persons of the change.'} = 'Izmeni osobe uključene u ovu promenu.';
-    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = 'Ograničenje broja promena po stranici za pregled - "malo".';
+    $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = 'Ograničenje broja promena po stranici za pregled malog formata.';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Pozadinski modul pretrage za promene u interfejsu operatera';
     $Self->{Translation}->{'Condition Edit'} = 'Uredi uslov';
     $Self->{Translation}->{'Condition Overview'} = 'Pregled uslova';
@@ -543,9 +543,9 @@ sub Data {
     $Self->{Translation}->{'Create Change (from Template)'} = 'Napravi promenu (od šablona)';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Napravi promenu (od šablona) iz ovog tiketa.';
     $Self->{Translation}->{'Create a change from this ticket.'} = 'Napravi promenu iz ovog tiketa.';
-    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'Kreiranje i upravljanje obaveštenjima „ITSM” Upravljača promenama.';
+    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'Kreiranje i upravljanje obaveštenjima ITSM upravljanjem promenama.';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
-        'Podrazumeveni tip radnog naloga. Ovaj unos mora da postoji u klasi opšteg kataloga „ITSM::Upravljanje promenama::radni nalog::Tip”.';
+        'Podrazumeveni tip radnog naloga. Ovaj unos mora da postoji u klasi opšteg kataloga \'ITSM::ChangeManagement::WorkOrder::Type\'.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
         'Definiše Akcije gde je dugme postavki dostupno u povezanom grafičkom elementu objekta (LinkObject::ViewMode = "complex"). Molimo da imate na umu da ove Akcije moraju da budu registrovane u sledećim JS i CSS datotekama: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js i Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Definiše signale za svaki status radnog naloga.';
@@ -568,7 +568,7 @@ sub Data {
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
         'Određuje da li funkcije pretrage promena i pretrage radnih naloga mogu da koriste preslikanu bazu podataka.';
     $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        'Određuje da li status promene može da se podesi u „AgentITSMChangeEdit”.';
+        'Određuje da li status promene može da se podesi u AgentITSMChangeEdit.';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Određuje da li planirani napor treba da bude prikazan.';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Definiše da li klijent treba da štampa traženi datum.';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
@@ -598,30 +598,30 @@ sub Data {
     $Self->{Translation}->{'Defines the default change title for a dummy change which is needed to edit a workorder template.'} =
         'Određuje podrazumevani naslov prazne promene koja je potrebna za izmenu šablona radnog naloga.';
     $Self->{Translation}->{'Defines the default sort criteria in the change PSA overview.'} =
-        'Definiše podrazumevani kriterijum sortiranja u PDS pregledu promena.';
+        'Definiše podrazumevani kriterijum sortiranja u PSA pregledu promena.';
     $Self->{Translation}->{'Defines the default sort criteria in the change manager overview.'} =
         'Određuje podrazumevane uslove sortiranja u pregledu upravljača promenama.';
     $Self->{Translation}->{'Defines the default sort criteria in the change overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu promena.';
     $Self->{Translation}->{'Defines the default sort criteria in the change schedule overview.'} =
         'Definiše podrazumevani kriterijum sortiranja u pregledu planera promena.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} =
-        'Definiše podrazumevani kriterijum sortiranja u pregledu promena mojih SOP.';
+        'Definiše podrazumevani kriterijum sortiranja u pregledu promena mojih CAB.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyChanges overview.'} =
         'Određuje podrazumevane uslove sortiranja promena u pregledu mojih promena.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyWorkorders overview.'} =
         'Određuje podrazumevane uslove sortiranja promena u pregledu mojih radnih naloga.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
-        'Definiše podrazumevani kriterijum sortiranja u pregledu RPS promena.';
+        'Definiše podrazumevani kriterijum sortiranja u pregledu PIR promena.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
         'Određuje podrazumevane uslove sortiranja promena u pregledu klijentskog planera promena.';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
         'Definiše podrazumevani kriterijum sortiranja promena u pregledu šablona.';
-    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu mojih SOP.';
+    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu mojih CAB.';
     $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = 'Određuje podrazumevane uslove sortiranja u pregledu mojih promena.';
     $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} =
         'Određuje podrazumevane uslove sortiranja u pregledu mojih radnih naloga.';
-    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu RPS.';
-    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu  PDS promena.';
+    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu PIR.';
+    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Definiše podrazumevani kriterijum sortiranja u pregledu PSA promena.';
     $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} =
         'Određuje podrazumevane uslove sortiranja u pregledu upravljača promenama.';
     $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Definiše podrazumevani redosled u pregledu promena.';
@@ -637,65 +637,65 @@ sub Data {
     $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
         'Definiše tip polja za CompareValue atribute radnih naloga u AgentITSMChangeConditionEdit. Ispravne vrednosti su Selection, Text i Date. Ukoliko tip nije definisan, polje neće biti prikazano.';
     $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje atribute objekta je moguće izabrati za objekat promene u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje atribute objekta je moguće izabrati za objekat promene u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje atribute objekta je moguće izabrati za objekat radnog naloga u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje atribute objekta je moguće izabrati za objekat radnog naloga u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Obračunato vreme” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut AccountedTime u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Stvarno vreme završetka” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ActualEndTime u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Stvarno vreme početka” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ActualStartTime u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „ID kategorije” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut CategoryID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „ID graditelja promene” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ChangeBuilderID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „ID upravljača promenom” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ChangeManagerID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „ID statusa promene” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ChangeStateID u „gentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Naslov promene” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ChangeTitle u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Dinamičko polje” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut DynamicField u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „ID uticaja” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut ImpactID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Planirani napor” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut PlannedEffort u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Planirano vreme završetka” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut PlannedEndTime u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Planirano vreme početka” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut PlannedStartTime u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „ID prioriteta” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut PriorityID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Traženo vreme” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut RequestedTime u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „WorkOrderAgentID” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut WorkOrderAgentID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Broj radnog naloga” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut WorkOrderNumber u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „WorkOrderStateID” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut WorkOrderStateID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „Naslov radnog naloga” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut WorkOrderTitle u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        'Određuje koje operatore je moguće izabrati za atribut „WorkOrderTypeID” u „AgentITSMChangeConditionEdit”.';
+        'Određuje koje operatore je moguće izabrati za atribut WorkOrderTypeID u AgentITSMChangeConditionEdit.';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         'Određuje period (u godinama), unutar kog je moguće izabrati vremena početka i završetka.';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
         'Definiše prikazane atribute u porukama na grafiku radnih naloga u detaljnom ekranu promena. Za prikaz dinamičkih polja radnih naloga u porukama, moraju biti definisani kao DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, itd.';
     $Self->{Translation}->{'Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.'} =
-        'Određuje kolone prikazane u pregledu PDS promena. Ova opcija nema uticaj na pozicije kolona.';
+        'Određuje kolone prikazane u pregledu PSA promena. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.'} =
-        'Određuje kolone prikazane u pregledu Planera promena. Ova opcija nema uticaj na pozicije kolona.';
+        'Određuje kolone prikazane u pregledu planera promena. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.'} =
-        'Određuje kolone prikazane u pregledu mojih SOP. Ova opcija nema uticaj na pozicije kolona.';
+        'Određuje kolone prikazane u pregledu mojih CAB. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.'} =
         'Određuje kolone prikazane u pregledu mojih promena. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.'} =
         'Određuje kolone prikazane u pregledu mojih radnih naloga. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the PIR overview. This option has no effect on the position of the column.'} =
-        'Definiše prikazane kolone u pregledu RPS. Ova opcije nema uticaj na pozicije kolona.';
+        'Definiše prikazane kolone u pregledu PIR. Ova opcije nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the change manager overview. This option has no effect on the position of the column.'} =
         'Određuje prikazane kolone u pregledu upravljača promenama. Ova opcije nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the change overview. This option has no effect on the position of the column.'} =
@@ -706,15 +706,15 @@ sub Data {
         'Određuje prikazane kolone u pregledu klijentskog planera promena. Ova opcije nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'Određuje prikazane kolone u pregledu šablona. Ova opcije nema uticaj na pozicije kolona.';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Određuje signale za svaki status „ITSM” promene.';
+    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Određuje signale za svaki status ITSM promene.';
     $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
         'Određuje tipove šablona koji će biti korišteni kao filteri u pregledu šablona.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
         'Određuje statuse radnih naloga koji će biti korišteni kao filteri u pregledu mojih radnih naloga.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the PIR overview.'} =
-        'Određuje statuse radnih naloga koji će se koristiti kao filteri u pregledu RPS.';
+        'Određuje statuse radnih naloga koji će se koristiti kao filteri u pregledu PIR.';
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
-        'Određuje tipove radnih naloga koji će se koristiti za prikaz RPS pregleda.';
+        'Određuje tipove radnih naloga koji će se koristiti za prikaz PIR pregleda.';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = 'Određuje da li će obaveštenja biti poslata.';
     $Self->{Translation}->{'Delete a change.'} = 'Obriši promenu.';
     $Self->{Translation}->{'Delete the change.'} = 'Obriši promenu.';
@@ -731,26 +731,25 @@ sub Data {
     $Self->{Translation}->{'Determines if the common stats module may generate stats about changes.'} =
         'Utvrđuje da li zajednički modul statistike može da generiše statistiku o promenama.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
-        'Utvrđuje da li zajednički modul statistike može da generiše statistiku o broju „Rfc” tiketa koje je kreirao tražilac.';
-    $Self->{Translation}->{'Dutch'} = '';
+        'Utvrđuje da li zajednički modul statistike može da generiše statistiku o broju Rfc tiketa koje je kreirao tražilac.';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
-        '';
+        'Dinamička polja (za promene i radne naloge) prikazana u ekranu štampe promene u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u ekranu dodavanja promene u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u ekranu izmene promene u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u ekranu pretrage promena u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u detaljnom pregledu promene u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u ekranu dodavanja radnog naloga u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u ekranu izmene radnog naloga u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u ekranu izveštaja radnog naloga u interfejsu operatera.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface.'} =
-        '';
+        'Dinamička polja prikazana u detaljnom pregledu radnog naloga u interfejsu operatera.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Modul događaja dinamičkih polja za baratanje sa ažuriranjem uslova ako se dinamička polja dodaju, ažuriraju ili brišu.';
     $Self->{Translation}->{'Edit a change.'} = 'Uredi promenu.';
@@ -758,49 +757,49 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'Uredi uslove za promenu.';
     $Self->{Translation}->{'Edit the workorder.'} = 'Uredi radni nalog.';
     $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        '';
+        'Aktivira minimalnu veličinu brojača promena (ako je izabran "Datum" za ChangeNumberGenerator).';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Prosledi raspored promena. Pregled odobrenih promena.';
     $Self->{Translation}->{'History Zoom'} = 'Detalji istorijata';
-    $Self->{Translation}->{'ITSM Change CAB Templates.'} = '„ITSM” šabloni promena SOP';
-    $Self->{Translation}->{'ITSM Change Condition Edit.'} = '„ITSM” uređivanje uslova promene.';
-    $Self->{Translation}->{'ITSM Change Condition Overview.'} = '„ITSM” pregled uslova promene.';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = 'Obaveštenja u „ITSM” Upravljanju promenama';
-    $Self->{Translation}->{'ITSM Change Manager Overview.'} = '„ITSM” pregled promena.';
-    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '„ITSM” pregled RPS promena.';
-    $Self->{Translation}->{'ITSM Change notification rules'} = '„ITSM” pravila obaveštavanja o promeni.';
-    $Self->{Translation}->{'ITSM Changes'} = '„ITSM” promene';
-    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '„ITSM” pregled mojih SOP.';
-    $Self->{Translation}->{'ITSM MyChanges Overview.'} = '„ITSM” pregled mojih promena.';
-    $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '„ITSM” pregled mojih radnih naloga.';
-    $Self->{Translation}->{'ITSM Template Delete.'} = '„ITSM” brisanje šablona.';
-    $Self->{Translation}->{'ITSM Template Edit CAB.'} = '„ITSM” uređivanje SOP šablona.';
-    $Self->{Translation}->{'ITSM Template Edit Content.'} = '„ITSM” sadržaj uređivanja šablona.';
-    $Self->{Translation}->{'ITSM Template Edit.'} = '„ITSM” uređivanje šablona.';
-    $Self->{Translation}->{'ITSM Template Overview.'} = 'Pregled „ITSM” šablona.';
-    $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = '„ITSM” modul događaja koji čisti uslove.';
-    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '„ITSM” modul događaja koji briše keš alatne trake.';
-    $Self->{Translation}->{'ITSM event module that deletes the history of changes.'} = '„ITSM” modul događaja koji briše istorijat promena.';
+    $Self->{Translation}->{'ITSM Change CAB Templates.'} = 'ITSM šabloni promena CAB';
+    $Self->{Translation}->{'ITSM Change Condition Edit.'} = 'ITSM uređivanje uslova promene.';
+    $Self->{Translation}->{'ITSM Change Condition Overview.'} = 'ITSM pregled uslova promene.';
+    $Self->{Translation}->{'ITSM Change Management Notifications'} = 'Obaveštenja u ITSM upravljanju promenama';
+    $Self->{Translation}->{'ITSM Change Manager Overview.'} = 'ITSM pregled promena.';
+    $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'ITSM pregled PIR promena.';
+    $Self->{Translation}->{'ITSM Change notification rules'} = 'ITSM pravila obaveštavanja o promeni.';
+    $Self->{Translation}->{'ITSM Changes'} = 'ITSM promene';
+    $Self->{Translation}->{'ITSM MyCAB Overview.'} = 'ITSM pregled mojih CAB.';
+    $Self->{Translation}->{'ITSM MyChanges Overview.'} = 'ITSM pregled mojih promena.';
+    $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = 'ITSM pregled mojih radnih naloga.';
+    $Self->{Translation}->{'ITSM Template Delete.'} = 'ITSM brisanje šablona.';
+    $Self->{Translation}->{'ITSM Template Edit CAB.'} = 'ITSM uređivanje CAB šablona.';
+    $Self->{Translation}->{'ITSM Template Edit Content.'} = 'ITSM sadržaj uređivanja šablona.';
+    $Self->{Translation}->{'ITSM Template Edit.'} = 'ITSM uređivanje šablona.';
+    $Self->{Translation}->{'ITSM Template Overview.'} = 'Pregled ITSM šablona.';
+    $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = 'ITSM modul događaja koji čisti uslove.';
+    $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = 'ITSM modul događaja koji briše keš alatne trake.';
+    $Self->{Translation}->{'ITSM event module that deletes the history of changes.'} = 'ITSM modul događaja koji briše istorijat promena.';
     $Self->{Translation}->{'ITSM event module that matches conditions and executes actions.'} =
-        '„ITSM” modul događaja koji uparuje uslove i izvršava akcije.';
-    $Self->{Translation}->{'ITSM event module that sends notifications.'} = '„ITSM” modul događaja koji šalje obaveštenja.';
-    $Self->{Translation}->{'ITSM event module that updates the history of changes.'} = '„ITSM” modul događaja koji ažurira istorijat promena.';
-    $Self->{Translation}->{'ITSM event module that updates the history of conditions.'} = '„ITSM” modul događaja ažurira istorijat uslova.';
-    $Self->{Translation}->{'ITSM event module that updates the history of workorders.'} = '„ITSM” modul događaja ažurira istorijat radnih naloga.';
-    $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '„ITSM” modul događaja koji preračunava brojeve radnih naloga.';
+        'ITSM modul događaja koji uparuje uslove i izvršava akcije.';
+    $Self->{Translation}->{'ITSM event module that sends notifications.'} = 'ITSM modul događaja koji šalje obaveštenja.';
+    $Self->{Translation}->{'ITSM event module that updates the history of changes.'} = 'ITSM modul događaja koji ažurira istorijat promena.';
+    $Self->{Translation}->{'ITSM event module that updates the history of conditions.'} = 'ITSM modul događaja ažurira istorijat uslova.';
+    $Self->{Translation}->{'ITSM event module that updates the history of workorders.'} = 'ITSM modul događaja ažurira istorijat radnih naloga.';
+    $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'ITSM modul događaja koji preračunava brojeve radnih naloga.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
-        '„ITSM” modul događaja koji podešava aktuelna vremena početka i završetka radnih naloga.';
-    $Self->{Translation}->{'ITSMChange'} = '„ITSM” promena';
-    $Self->{Translation}->{'ITSMWorkOrder'} = '„ITSM” radni nalog';
+        'ITSM modul događaja koji podešava aktuelna vremena početka i završetka radnih naloga.';
+    $Self->{Translation}->{'ITSMChange'} = 'ITSM promena';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSM radni nalog';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
-        'Ako je učestalost „redovno”, možete podesiti koliko često se šalju obaveštenja (na svakih X sati).';
+        'Ako je učestalost \'redovno\', možete podesiti koliko često se šalju obaveštenja (na svakih X sati).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Poveži drugi objekat sa promenom.';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Poveži drugi objekat sa radnim nalogom.';
-    $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Potraži članove SOP radi automatskog dovršavanja.';
+    $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Potraži članove CAB radi automatskog dovršavanja.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Potraži operatere, upotrebljene za automatsko dovršavanje.';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Modul za proveru da li dodavanje radnog naloga ili dodavanje radnog naloga iz šablona treba da bude dozvoljeno.';
-    $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul za proveru članova SOP.';
+    $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul za proveru članova CAB.';
     $Self->{Translation}->{'Module to check the agent.'} = 'Modul za proveru operatera.';
     $Self->{Translation}->{'Module to check the change builder.'} = 'Modul za proveru graditelja promena.';
     $Self->{Translation}->{'Module to check the change manager.'} = 'Modul za proveru upravljača promenama.';
@@ -817,23 +816,23 @@ sub Data {
         'Samo korisnici ovih grupa imaće dozvolu za korišćenje tipova tiketa definisanih u "ITSMChange::AddChangeLinkTicketTypes" ukoliko je funkcija "Ticket::Acl::Module###200-Ticket::Acl::Module" omogućena.';
     $Self->{Translation}->{'Other Settings'} = 'Druga podešavanja';
     $Self->{Translation}->{'Overview over all Changes.'} = 'Pregled svih promena.';
-    $Self->{Translation}->{'PIR'} = 'RPS';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'RPS (recenzija posle sprovođenja)';
-    $Self->{Translation}->{'PSA'} = 'PDS';
+    $Self->{Translation}->{'PIR'} = 'PIR';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (recenzija posle sprovođenja)';
+    $Self->{Translation}->{'PSA'} = 'PSA';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         'Parametri za UserCreateWorkOrderNextMask objekat u prikazu podešavanja u interfejsu operatera.';
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         'Parametri stranica (na kojima su promene vidljive) smanjenog pregleda tiketa.';
     $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
-        'Izvršava podešenu akciju za svaki događaj (kao pozivaoc) za svaki podešeni veb servis.';
+        'Izvršava podešenu akciju za svaki događaj (kao pozivalac) za svaki konfigurisan veb servis.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'U meniju prikazuje vezu koja omogućava prikaz osoba uključenih u promenu  na detaljnom prikazu u interfejsu operatera.';
     $Self->{Translation}->{'Print the change.'} = 'Odštampaj promenu.';
     $Self->{Translation}->{'Print the workorder.'} = 'Odštampaj radni nalog.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Projektovana dostupnost servisa';
-    $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Projektovana dostupnost servisa (PDS)';
+    $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Projektovana dostupnost servisa (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
-        'Projektovana dostupnost servisa (PDS) promena. Pregled odobrenih promena i ljihovih servisa.';
+        'Projektovana dostupnost servisa (PSA) promena. Pregled odobrenih promena i ljihovih servisa.';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         'Potrebna prava za dodavanje redosleda rada.';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Potrebna prava za pristup pregledu svih promena.';
@@ -841,7 +840,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to change the workorder agent.'} = 'Potrebna prava za izmenu operatera radnog naloga.';
     $Self->{Translation}->{'Required privileges to create a template from a change.'} = 'Potrebna prava za kreiranje šablona od promene.';
     $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} =
-        'Potrebna prava za kreiranje šablona od promene SOP.';
+        'Potrebna prava za kreiranje šablona od promene CAB.';
     $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'Potrebna prava za kreiranje šablona od radnog naloga.';
     $Self->{Translation}->{'Required privileges to create changes from templates.'} = 'Potrebna prava za kreiranje promena od šablona.';
     $Self->{Translation}->{'Required privileges to create changes.'} = 'Potrebna prava za kreiranje promena.';
@@ -861,7 +860,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Potrebna prava za prikaz radnog naloga.';
     $Self->{Translation}->{'Required privileges to view changes.'} = 'Potrebna prava za prikaz promena.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} =
-        'Potrebna prava za prikaz liste promena gde je korisnik član SOP.';
+        'Potrebna prava za prikaz liste promena gde je korisnik član CAB.';
     $Self->{Translation}->{'Required privileges to view list of changes where the user is the change manager.'} =
         'Potrebna prava za prikaz liste promena gde korisnik upravlja promenom.';
     $Self->{Translation}->{'Required privileges to view overview over all templates.'} = 'Potrebna prava za prikaz pregleda svih šablona.';
@@ -872,9 +871,9 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the history zoom of a workorder.'} =
         'Potrebna prava za detaljan prikaz istorijata radnog naloga';
     $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'Potrebna prava za prikaz liste Planera promena.';
-    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Potrebna prava za prikaz liste promena PDS.';
+    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Potrebna prava za prikaz liste promena PSA.';
     $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} =
-        'Potrebna prava za prikaz liste promena sa predstojećim RPS (Recenzija Posle Sprovođenja).';
+        'Potrebna prava za prikaz liste promena sa predstojećim PIR (recenzija posle sprovođenja).';
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Potrebna prava za prikaz liste sopstvenih promena.';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Potrebna prava za prikaz liste sopstvenih radnih naloga.';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Potrebna prava za pisnje izveštaja za radni nalog.';
@@ -897,9 +896,9 @@ sub Data {
     $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
         'Definiše maksimalnu visinu reda (u pikselima) HTML polja u AgentITSMChangeZoom i AgentITSMWorkOrderZoom.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
-        'Podešava minimalnu veličinu brojača promena ( ako je izabran „operator uvećanja” kao „ITSM Promena::Generator brojeva”). Podrazumevano je 5, što znači da brojač počinje od 10000.';
+        'Podešava minimalnu veličinu brojača promena (ako je izabran "AutoIncrement" za ITSMChange::NumberGenerator). Podrazumevano je 5, što znači da brojač počinje od 10000.';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        '';
+        'Definiše minimalnu veličinu brojača promena ukoliko je izabran "AutoIncrement" kao ChangeNumberGenerator. Podrazumevano je 5, što znači da brojač počinje od 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Podesi mašinu stanja za promene.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Podesi mašinu stanja za radne naloge.';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
@@ -957,9 +956,9 @@ sub Data {
     $Self->{Translation}->{'Template Overview'} = 'Pregled šablona';
     $Self->{Translation}->{'Template.'} = 'Šablon.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
-        'Identifikator za promenu, npr Promena#, MojaPromena#. Podrazumevano je Promena#.';
+        'Identifikator za promenu, npr. Change#, MyChange#. Podrazumevano je Change#.';
     $Self->{Translation}->{'The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#.'} =
-        'Identifikator za radni nalog, npr RadniNalog#, MojRadniNalog#. Podrazumevano je RadniNalog#.';
+        'Identifikator za radni nalog, npr. Workorder#, MyWorkorder#. Podrazumevano je Workorder#.';
     $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed.'} =
         'Ovaj ACL modul ograničava mogućnost korišćenja tipova tiketa koji su definisani u podešavanju \'ITSMChange::AddChangeLinkTicketTypes\', i to korisnicima grupa definisanim u "ITSMChange::RestrictTicketTypes::Groups". Kako ovaj ACL može da se sukobi sa drugim ACL-ovima koji se isto odnose na tip tiketa, podešavanje je podrazumevano isključeno i treba ga aktivirati samo ukoliko je neophodno.';
     $Self->{Translation}->{'Time Slot'} = 'Vremenski termin';
@@ -974,7 +973,7 @@ sub Data {
     $Self->{Translation}->{'Workorder History Zoom.'} = 'Detalji istorijata radnog naloga.';
     $Self->{Translation}->{'Workorder History.'} = 'Istorijat radnog naloga.';
     $Self->{Translation}->{'Workorder Report.'} = 'Izveštaj radnog naloga.';
-    $Self->{Translation}->{'Workorder Zoom'} = '';
+    $Self->{Translation}->{'Workorder Zoom'} = 'Detalji radnog naloga';
     $Self->{Translation}->{'Workorder Zoom.'} = 'Detalji radnog naloga.';
     $Self->{Translation}->{'once'} = 'jednom';
     $Self->{Translation}->{'regularly'} = 'redovno';

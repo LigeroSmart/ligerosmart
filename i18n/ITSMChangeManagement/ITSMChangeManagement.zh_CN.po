@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:58+0000\n"
-"PO-Revision-Date: 2017-09-25 08:59+0000\n"
+"POT-Creation-Date: 2017-09-29 14:59+0000\n"
+"PO-Revision-Date: 2017-09-29 15:00+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -659,7 +659,7 @@ msgstr "工作指令信息"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Notification Added!"
-msgstr ""
+msgstr "通知已添加！"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
@@ -671,11 +671,11 @@ msgstr "创建通知时出现一个错误。"
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Updated!"
-msgstr ""
+msgstr "状态转换已更新！"
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Added!"
-msgstr ""
+msgstr "状态转换已添加！"
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
 msgid "Overview: ITSM Changes"
@@ -1375,7 +1375,7 @@ msgstr "变更计划表。"
 
 #. SysConfig
 msgid "Change Zoom"
-msgstr ""
+msgstr "变更详情"
 
 #. SysConfig
 msgid "Change Zoom."
@@ -2021,51 +2021,47 @@ msgid ""
 msgstr "确定通用统计模块能否生成一个请求者创建的RFC（变更请求）的数量的统计。"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
 " of the agent interface."
-msgstr ""
+msgstr "在服务人员界面变更打印窗口中显示的（变更和工作指令）动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the change add screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面添加变更窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the change edit screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面编辑变更窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change search screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面搜索变更窗口中显示的动态字段。"
 
 #. SysConfig
 msgid "Dynamic fields shown in the change zoom screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面变更详情窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder add screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面添加工作指令窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder edit screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面编辑工作指令窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder report screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面工作指令报告窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder zoom screen of the agent interface."
-msgstr ""
+msgstr "在服务人员界面工作指令详情窗口中显示的动态字段。"
 
 #. SysConfig
 msgid ""
@@ -2093,7 +2089,7 @@ msgstr "编辑工作指令。"
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
 "ChangeNumberGenerator)."
-msgstr ""
+msgstr "启用最小的变更计数器大小（如果ChangeNumberGenerator变更编号生成器选择为“日期”）"
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2598,7 +2594,7 @@ msgid ""
 "Sets the minimal change counter size if \"AutoIncrement\" was selected as "
 "ChangeNumberGenerator. Default is 5, this means the counter starts from "
 "10000."
-msgstr ""
+msgstr "设置最小的变更计数器大小（如果变更编号生成器选用“自动增量”）。默认是5（位数），意味着计数器从10000开始。"
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
@@ -2845,7 +2841,7 @@ msgstr "工作指令报告。"
 
 #. SysConfig
 msgid "Workorder Zoom"
-msgstr ""
+msgstr "工作指令详情"
 
 #. SysConfig
 msgid "Workorder Zoom."

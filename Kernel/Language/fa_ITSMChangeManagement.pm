@@ -93,9 +93,9 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = '';
-    $Self->{Translation}->{'History Content'} = '';
+    $Self->{Translation}->{'History Content'} = 'محتوای سابقه';
     $Self->{Translation}->{'Workorder'} = 'دستور کار';
-    $Self->{Translation}->{'Createtime'} = '';
+    $Self->{Translation}->{'Createtime'} = 'زمان ایجاد ';
     $Self->{Translation}->{'Show details'} = 'نمایش جزئیات';
     $Self->{Translation}->{'Show workorder'} = 'نمایش دستور کارها';
 
@@ -732,7 +732,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
@@ -815,7 +814,7 @@ sub Data {
     $Self->{Translation}->{'New (from template)'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
-    $Self->{Translation}->{'Other Settings'} = '';
+    $Self->{Translation}->{'Other Settings'} = 'تنظیمات دیگر';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'بررسی پس از پیاده‌سازی';
@@ -825,7 +824,7 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the changes are shown) of the small change overview.'} =
         '';
     $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
-        '';
+        'انجام عمل پیکربندی برای هر رویداد (به عنوان یک Invoker) برای هر از webservice پیکربندی شده است.';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         '';
     $Self->{Translation}->{'Print the change.'} = '';
@@ -885,7 +884,7 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen'} = '';
+    $Self->{Translation}->{'Screen'} = 'صفحه نمایش';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Search Changes'} = 'جستجوی تغییرات';
     $Self->{Translation}->{'Search Changes.'} = '';

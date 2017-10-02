@@ -732,7 +732,6 @@ sub Data {
         'Determina se o módulo de estatísticas comuns podem gerar estatísticas sobre as mudanças.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Determina se o módulo de estatísticas comuns podem gerar estatísticas sobre o número de chamados RFC a um solicitante criado.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =

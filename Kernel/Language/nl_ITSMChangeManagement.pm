@@ -92,10 +92,10 @@ sub Data {
     $Self->{Translation}->{'Edit %s%s'} = '';
 
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of %s%s'} = '';
-    $Self->{Translation}->{'History Content'} = '';
+    $Self->{Translation}->{'History of %s%s'} = 'Geschiedenis van %s%s';
+    $Self->{Translation}->{'History Content'} = 'Inhoud';
     $Self->{Translation}->{'Workorder'} = 'Work Order';
-    $Self->{Translation}->{'Createtime'} = '';
+    $Self->{Translation}->{'Createtime'} = 'Aangemaakt op';
     $Self->{Translation}->{'Show details'} = 'Toon details';
     $Self->{Translation}->{'Show workorder'} = 'Toon Work Order';
 
@@ -732,7 +732,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
@@ -815,7 +814,7 @@ sub Data {
     $Self->{Translation}->{'New (from template)'} = '';
     $Self->{Translation}->{'Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.'} =
         '';
-    $Self->{Translation}->{'Other Settings'} = '';
+    $Self->{Translation}->{'Other Settings'} = 'Overige voorkeuren';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';

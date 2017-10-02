@@ -249,13 +249,13 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = 'Munkamegrendelés-információk';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
-    $Self->{Translation}->{'Notification Added!'} = '';
+    $Self->{Translation}->{'Notification Added!'} = 'Értesítés hozzáadva!';
     $Self->{Translation}->{'Unknown notification %s!'} = 'Ismeretlen értesítés: %s!';
     $Self->{Translation}->{'There was an error creating the notification.'} = 'Hiba történt az értesítés létrehozásakor.';
 
     # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
-    $Self->{Translation}->{'State Transition Updated!'} = '';
-    $Self->{Translation}->{'State Transition Added!'} = '';
+    $Self->{Translation}->{'State Transition Updated!'} = 'Állapotátmenet frissítve!';
+    $Self->{Translation}->{'State Transition Added!'} = 'Állapotátmenet hozzáadva!';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = 'Áttekintő: ITSM változások';
@@ -525,7 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Változásnyomtatás.';
     $Self->{Translation}->{'Change Schedule'} = 'Változtatási ütemterv';
     $Self->{Translation}->{'Change Schedule.'} = 'Változtatási ütemterv.';
-    $Self->{Translation}->{'Change Zoom'} = '';
+    $Self->{Translation}->{'Change Zoom'} = 'Változásnagyítás';
     $Self->{Translation}->{'Change Zoom.'} = 'Változásnagyítás.';
     $Self->{Translation}->{'Change and Workorder Templates'} = 'Változás és munkamegrendelés sablonok';
     $Self->{Translation}->{'Change and workorder templates edited by this user.'} = 'A felhasználó által szerkesztett változás és munkamegrendelés sablonok.';
@@ -732,25 +732,24 @@ sub Data {
         'Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat a változásokról.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Meghatározza, hogy a közös statisztikák modul előállíthat-e statisztikákat egy kérő által létrehozott változáskérelem jegyek számáról.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület változás nyomtatás képernyőjén megjelenített dinamikus mezők (változásokhoz és munkamegrendelésekhez).';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület változás hozzáadása képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the change edit screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület változás szerkesztése képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the change search screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület változás keresése képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the change zoom screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület változás nagyítása képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder add screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület munkamegrendelés hozzáadása képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder edit screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület munkamegrendelés szerkesztése képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder report screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület munkamegrendelés jelentése képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'Dynamic fields shown in the workorder zoom screen of the agent interface.'} =
-        '';
+        'Az ügyintézői felület munkamegrendelés nagyítása képernyőjén megjelenített dinamikus mezők.';
     $Self->{Translation}->{'DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted.'} =
         'Dinamikus mező eseménymodul a feltételek frissítésének kezeléséhez, ha dinamikus mezők kerülnek hozzáadásra, frissítésre vagy törlésre.';
     $Self->{Translation}->{'Edit a change.'} = 'Egy változás szerkesztése.';
@@ -758,7 +757,7 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'A változás feltételeinek szerkesztése.';
     $Self->{Translation}->{'Edit the workorder.'} = 'A munkamegrendelés szerkesztése.';
     $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        '';
+        'Engedélyezi a legkisebb változásszámláló méretet (ha „Dátum” lett kiválasztva változásszám-előállítóként).';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Változások előjegyzési terve. A jóváhagyott változások áttekintése.';
     $Self->{Translation}->{'History Zoom'} = 'Előzménynagyítás';
@@ -899,7 +898,7 @@ sub Data {
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Beállítja a legkisebb változásszámláló méretet (ha „AutoIncrement” lett kiválasztva ITSM változás::Számelőállítóként) Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni.';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        '';
+        'Beállítja a legkisebb változásszámláló méretet, ha „AutoIncrement” lett kiválasztva változásszám-előállítóként. Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Beállítja az állapotgépet a változásoknál.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Beállítja az állapotgépet a munkamegrendeléseknél.';
     $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
@@ -974,7 +973,7 @@ sub Data {
     $Self->{Translation}->{'Workorder History Zoom.'} = 'Munkamegrendelés előzményeinek nagyítása.';
     $Self->{Translation}->{'Workorder History.'} = 'Munkamegrendelés előzményei.';
     $Self->{Translation}->{'Workorder Report.'} = 'Munkamegrendelés jelentése.';
-    $Self->{Translation}->{'Workorder Zoom'} = '';
+    $Self->{Translation}->{'Workorder Zoom'} = 'Munkamegrendelés nagyítása';
     $Self->{Translation}->{'Workorder Zoom.'} = 'Munkamegrendelés nagyítása.';
     $Self->{Translation}->{'once'} = 'egyszer';
     $Self->{Translation}->{'regularly'} = 'rendszeresen';

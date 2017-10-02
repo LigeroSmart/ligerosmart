@@ -732,7 +732,6 @@ sub Data {
         'Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu mabadiliko.';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu idadi ya tiketi za Rfc zilizotengenezwa na muombaji.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =

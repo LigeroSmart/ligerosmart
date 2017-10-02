@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:58+0000\n"
-"PO-Revision-Date: 2017-09-25 08:59+0000\n"
+"POT-Creation-Date: 2017-09-29 14:59+0000\n"
+"PO-Revision-Date: 2017-09-29 15:00+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category <-> Impact <-> Priority"
-msgstr "Категорија <-> Утицај <-> Приоритет"
+msgstr "Категорија <-> утицај <-> приоритет"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Управљање резултатом приоритета комбинацијом Категорија <-> Утицај."
+msgstr "Управљање резултатом приоритета комбинацијом категорија <-> утицај."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -30,7 +30,7 @@ msgstr "Расподела приоритета"
 
 #. Template: AdminITSMChangeNotification
 msgid "ITSM ChangeManagement Notification Management"
-msgstr "Управљање обавештењима у „ITSM” Управљању променама"
+msgstr "Управљање обавештењима у ITSM управљању променама"
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
@@ -102,7 +102,7 @@ msgstr "Додај промену"
 
 #. Template: AgentITSMChangeAdd
 msgid "ITSM Change"
-msgstr "„ITSM” промена"
+msgstr "ITSM промена"
 
 #. Template: AgentITSMChangeAdd
 msgid "Justification"
@@ -138,7 +138,7 @@ msgstr "Ново време"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Save Change CAB as template"
-msgstr "Сачувај промену СОП као шаблон"
+msgstr "Сачувај промену CAB као шаблон"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
@@ -150,7 +150,7 @@ msgstr "Погрешно име"
 
 #. Template: AgentITSMChangeCondition
 msgid "Conditions and Actions"
-msgstr "Услови и Акције"
+msgstr "Услови и акције"
 
 #. Template: AgentITSMChangeCondition
 msgid "Delete Condition"
@@ -242,7 +242,7 @@ msgstr "Историјат од %s%s"
 
 #. Template: AgentITSMChangeHistory
 msgid "History Content"
-msgstr "Садржај историје"
+msgstr "Садржај историјата"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
@@ -302,7 +302,7 @@ msgstr "Саветодавни одбор за промене"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "CAB Template"
-msgstr "СОП шаблон"
+msgstr "CAB шаблон"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Apply Template"
@@ -314,11 +314,11 @@ msgstr "Нови шаблон"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Save this CAB as template"
-msgstr "Сачувај ово као СОП шаблон"
+msgstr "Сачувај ово као CAB шаблон"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Add to CAB"
-msgstr "Додај у СОП"
+msgstr "Додај у CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Invalid User"
@@ -326,7 +326,7 @@ msgstr "Погрешан корисник"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
-msgstr "Актуелни СОП"
+msgstr "Актуелни CAB"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Context Settings"
@@ -402,15 +402,15 @@ msgstr "(нпр 10*5155 или 105658*)"
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Agent"
-msgstr "Оператер СОП"
+msgstr "Оператер CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
-msgstr "нпр"
+msgstr "нпр."
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Customer"
-msgstr "Клијент СОП"
+msgstr "CAB клијент"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Instruction"
@@ -486,7 +486,7 @@ msgstr "Иницијатор(и) промене"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
-msgstr "СОП"
+msgstr "CAB"
 
 #. Template: AgentITSMChangeZoom
 msgid "Last changed"
@@ -501,7 +501,7 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr "Да бисте отворили везе у следећим блоковима описа, можда ћете требати да притиснете „Ctrl” или „Cmd” или „Shift” тастер док истовремено кликнете на везу (зависи од вашег ОС и прегледача)."
+msgstr "Да бисте отворили везе у следећим блоковима описа, можда ћете требати да притиснете \"Ctrl\" или \"Cmd\" или \"Shift\" тастер док истовремено кликнете на везу (зависи од вашег оперативног система и претраживача)."
 
 #. Template: AgentITSMChangeZoom
 msgid "Download Attachment"
@@ -509,7 +509,7 @@ msgstr "Преузми прилог"
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
-msgstr "Уреди СОП шаблон"
+msgstr "Уреди CAB шаблон"
 
 #. Template: AgentITSMTemplateEditContent
 msgid ""
@@ -660,7 +660,7 @@ msgstr "Информација о радном налогу"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Notification Added!"
-msgstr ""
+msgstr "Додато обавештење!"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
@@ -672,23 +672,23 @@ msgstr "Дошло је до грешке приликом креирања об
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Updated!"
-msgstr ""
+msgstr "Ажурирано транзиционо стање!"
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Added!"
-msgstr ""
+msgstr "Додато транзиционо стање!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
 msgid "Overview: ITSM Changes"
-msgstr "Преглед: „ITSM” промене"
+msgstr "Преглед: ITSM промене"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
-msgstr "Тикет са ИД тикета %s не постоји!"
+msgstr "Тикет са TicketID %s не постоји!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
-msgstr "Недостаје опција системске конфигурације „ITSMChange::AddChangeLinkTicketTypes”!"
+msgstr "Недостаје опција системске конфигурације \"ITSMChange::AddChangeLinkTicketTypes\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Was not able to add change!"
@@ -700,15 +700,15 @@ msgstr "Није било могуће креирати промену из ша
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "No ChangeID is given!"
-msgstr "Није дат ИД Промене!"
+msgstr "Није дат ChangeID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "No change found for changeID %s."
-msgstr "Није пронађена промена за ИД промене %s."
+msgstr "Није пронађена промена за ChangeID %s."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "The CAB of change \"%s\" could not be serialized."
-msgstr "СОП промене %s се не може серијализовати."
+msgstr "CAB промене %s се не може серијализовати."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "Could not add the template."
@@ -716,11 +716,11 @@ msgstr "Није могуће додати шаблон."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Change \"%s\" not found in database!"
-msgstr "Промена „%s” није нађена у бази података!"
+msgstr "Промена \"%s\" није нађена у бази података!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Could not delete ConditionID %s!"
-msgstr "Није могуће обрисати ИД услова %s!"
+msgstr "Није могуће обрисати ConditionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "No %s is given!"
@@ -732,31 +732,31 @@ msgstr "Није могуће креирати нови услов!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ConditionID %s!"
-msgstr "Није могуће ажурирати услов ИД %s!"
+msgstr "Није могуће ажурирати ConditionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ExpressionID %s!"
-msgstr "Није могуће ажурирати ИД израза %s!"
+msgstr "Није могуће ажурирати ExpressionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not add new Expression!"
-msgstr "Није могуће додати нови Израз!"
+msgstr "Није могуће додати нови Expression!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ActionID %s!"
-msgstr "Није могуће ажурирати ИД акције %s!"
+msgstr "Није могуће ажурирати ActionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not add new Action!"
-msgstr "Није могуће додати нову Акцију!"
+msgstr "Није могуће додати нови Action!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not delete ExpressionID %s!"
-msgstr "Није могуће обрисати ИД израза %s!"
+msgstr "Није могуће обрисати ExpressionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not delete ActionID %s!"
-msgstr "Није могуће обрисати ИД акције %s!"
+msgstr "Није могуће обрисати ActionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Error: Unknown field type \"%s\"!"
@@ -764,15 +764,15 @@ msgstr "Грешка: Непознат тип поља \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr "ИД услова %s не припада датом ИД промене %s!"
+msgstr "ConditionID %s не припада датом ChangeID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Change \"%s\" does not have an allowed change state to be deleted!"
-msgstr "Промена „%s” није у дозвољеном стању да би била обрисана!"
+msgstr "Промена \"%s\" није у дозвољеном стању да би била обрисана!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Was not able to delete the changeID %s!"
-msgstr "Није било могуће обрисати ИД промене %s!"
+msgstr "Није било могуће обрисати ChangeID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
 msgid "Was not able to update Change!"
@@ -780,7 +780,7 @@ msgstr "Није било могуће ажурирати промену!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Can't show history, as no ChangeID is given!"
-msgstr "Не може се приказати историјат, јер није дат ИД Промене!"
+msgstr "Не може се приказати историјат, јер није дат ChangeID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Change \"%s\" not found in the database!"
@@ -796,15 +796,15 @@ msgstr "Историјат промене"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
 msgid "Can't show history zoom, no HistoryEntryID is given!"
-msgstr "Не могу се приказати детаљи историјата јер није дат ИД Историјата промене!"
+msgstr "Не могу се приказати детаљи историјата јер није дат HistoryEntryID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
 msgid "HistoryEntry \"%s\" not found in database!"
-msgstr "Ставка историјата „%s” није нађена у бази података!"
+msgstr "Ставка историјата \"%s\" није нађена у бази података!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
 msgid "Was not able to update Change CAB for Change %s!"
-msgstr "Није било могуће ажурирати СОП промен за промену %s!"
+msgstr "Није било могуће ажурирати CAB промен за промену %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
 msgid "Was not able to update Change %s!"
@@ -816,7 +816,7 @@ msgstr "Преглед: Управљач променама"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
 msgid "Overview: My CAB"
-msgstr "Преглед: Мој СОП"
+msgstr "Преглед: Мој CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
 msgid "Overview: My Changes"
@@ -828,11 +828,11 @@ msgstr "Преглед: Моји радни налози"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "Overview: PIR"
-msgstr "Преглед: РПС"
+msgstr "Преглед: PIR"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "Overview: PSA"
-msgstr "Преглед: ПДС"
+msgstr "Преглед: PSA"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrder \"%s\" not found in database!"
@@ -844,7 +844,7 @@ msgstr "Не може се крирати излаз јер радни нало�
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "Can't create output, as no ChangeID is given!"
-msgstr "Не може се крирати излаз јер није дат ИД Промене!"
+msgstr "Не може се крирати излаз јер није дат ChangeID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown change title"
@@ -852,7 +852,7 @@ msgstr "непознат наслов промене"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder"
-msgstr "„ITSM” радни налог"
+msgstr "ITSM радни налог"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
@@ -860,7 +860,7 @@ msgstr "непознат наслов радног налога"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
-msgstr "Преглед „ITSM” радног налога (%s)"
+msgstr "Преглед ITSM радног налога (%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
@@ -1008,7 +1008,7 @@ msgstr "Потребна вам је %s дозвола!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "No TemplateID is given!"
-msgstr "Није дат ИД Шаблона!"
+msgstr "Није дат TemplateID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMTemplateDelete.pm
 msgid "Template \"%s\" not found in database!"
@@ -1048,7 +1048,7 @@ msgstr "Није било могуће додати радни налог!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "No WorkOrderID is given!"
-msgstr "Није дат ИД Радног налога!"
+msgstr "Није дат WorkOrderID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "Was not able to set the workorder agent of the workorder \"%s\" to empty!"
@@ -1072,7 +1072,7 @@ msgstr "Није било могуће ажурирати радни налог 
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "Can't show history, as no WorkOrderID is given!"
-msgstr "Не може се приказати историјат јер није дат ИД радног налога!"
+msgstr "Не може се приказати историјат јер није дат WorkOrderID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrder \"%s\" not found in the database!"
@@ -1100,7 +1100,7 @@ msgstr "Није било могуће преузети радни налог %s
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderTemplate.pm
 msgid "The workorder \"%s\" could not be serialized."
-msgstr "Радни налог „%s” се не може серијализовати."
+msgstr "Радни налог \"%s\" се не може серијализовати."
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Need config option %s!"
@@ -1108,7 +1108,7 @@ msgstr "Потребна конфигурациона опција %s!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Config option %s needs to be a HASH ref!"
-msgstr "Конфигурациона опција %s мора бити ”HASH\" референца!"
+msgstr "Конфигурациона опција %s мора бити HASH референца!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "No config option found for the view \"%s\"!"
@@ -1120,7 +1120,7 @@ msgstr "Наслов: %s | Тип: %s"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
 msgid "My CABs"
-msgstr "Моји СОП"
+msgstr "Моји CAB"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
 msgid "My Changes"
@@ -1152,7 +1152,7 @@ msgstr "у току"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pending pir"
-msgstr "рпс на чекању"
+msgstr "PIR на чекању"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "successful"
@@ -1200,7 +1200,7 @@ msgstr "одлука"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pir"
-msgstr "рпс"
+msgstr "PIR"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is"
@@ -1328,7 +1328,7 @@ msgstr "Модул обавештавања у интерфејсу операт
 
 #. SysConfig
 msgid "CAB Member Search"
-msgstr "Претрага чланова СОП"
+msgstr "Претрага чланова CAB"
 
 #. SysConfig
 msgid ""
@@ -1344,7 +1344,7 @@ msgstr "Време кеширања у минутима за управљање 
 
 #. SysConfig
 msgid "Change CAB Templates"
-msgstr "Шаблони промена СОП"
+msgstr "Шаблони промена CAB"
 
 #. SysConfig
 msgid "Change History."
@@ -1356,7 +1356,7 @@ msgstr "Особе укључене у промену."
 
 #. SysConfig
 msgid "Change Overview \"Small\" Limit"
-msgstr "Ограничење прегледа промена - \"мало\""
+msgstr "Ограничење прегледа промена малог формата"
 
 #. SysConfig
 msgid "Change Overview."
@@ -1376,7 +1376,7 @@ msgstr "Планер промена."
 
 #. SysConfig
 msgid "Change Zoom"
-msgstr ""
+msgstr "Детаљи промене."
 
 #. SysConfig
 msgid "Change Zoom."
@@ -1400,7 +1400,7 @@ msgstr "Измени особе укључене у ову промену."
 
 #. SysConfig
 msgid "Change limit per page for Change Overview \"Small\"."
-msgstr "Ограничење броја промена по страници за преглед - \"мало\"."
+msgstr "Ограничење броја промена по страници за преглед малог формата."
 
 #. SysConfig
 msgid "Change search backend router of the agent interface."
@@ -1444,13 +1444,13 @@ msgstr "Направи промену из овог тикета."
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
-msgstr "Креирање и управљање обавештењима „ITSM” Управљача променама."
+msgstr "Креирање и управљање обавештењима ITSM управљањем променама."
 
 #. SysConfig
 msgid ""
 "Default type for a workorder. This entry must exist in general catalog class"
 " 'ITSM::ChangeManagement::WorkOrder::Type'."
-msgstr "Подразумевени тип радног налога. Овај унос мора да постоји у класи општег каталога „ITSM::Управљање променама::радни налог::Тип”."
+msgstr "Подразумевени тип радног налога. Овај унос мора да постоји у класи општег каталога 'ITSM::ChangeManagement::WorkOrder::Type'."
 
 #. SysConfig
 msgid ""
@@ -1525,7 +1525,7 @@ msgstr "Одређује да ли функције претраге проме�
 
 #. SysConfig
 msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "Одређује да ли статус промене може да се подеси у „AgentITSMChangeEdit”."
+msgstr "Одређује да ли статус промене може да се подеси у AgentITSMChangeEdit."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -1620,7 +1620,7 @@ msgstr "Одређује подразумевани наслов празне п
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change PSA overview."
-msgstr "Дефинише подразумевани критеријум сортирања у ПДС прегледу промена."
+msgstr "Дефинише подразумевани критеријум сортирања у PSA прегледу промена."
 
 #. SysConfig
 msgid "Defines the default sort criteria in the change manager overview."
@@ -1637,7 +1637,7 @@ msgstr "Дефинише подразумевани критеријум сор�
 #. SysConfig
 msgid ""
 "Defines the default sort criteria of the changes in the MyCAB overview."
-msgstr "Дефинише подразумевани критеријум сортирања у прегледу промена мојих СОП."
+msgstr "Дефинише подразумевани критеријум сортирања у прегледу промена мојих CAB."
 
 #. SysConfig
 msgid ""
@@ -1652,7 +1652,7 @@ msgstr "Одређује подразумеване услове сортира�
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr "Дефинише подразумевани критеријум сортирања у прегледу РПС промена."
+msgstr "Дефинише подразумевани критеријум сортирања у прегледу PIR промена."
 
 #. SysConfig
 msgid ""
@@ -1667,7 +1667,7 @@ msgstr "Дефинише подразумевани критеријум сор�
 
 #. SysConfig
 msgid "Defines the default sort order in the MyCAB overview."
-msgstr "Дефинише подразумевани критеријум сортирања у прегледу мојих СОП."
+msgstr "Дефинише подразумевани критеријум сортирања у прегледу мојих CAB."
 
 #. SysConfig
 msgid "Defines the default sort order in the MyChanges overview."
@@ -1679,11 +1679,11 @@ msgstr "Одређује подразумеване услове сортира�
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr "Дефинише подразумевани критеријум сортирања у прегледу РПС."
+msgstr "Дефинише подразумевани критеријум сортирања у прегледу PIR."
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
-msgstr "Дефинише подразумевани критеријум сортирања у прегледу  ПДС промена."
+msgstr "Дефинише подразумевани критеријум сортирања у прегледу PSA промена."
 
 #. SysConfig
 msgid "Defines the default sort order in the change manager overview."
@@ -1732,133 +1732,133 @@ msgstr "Дефинише тип поља за CompareValue атрибуте ра
 msgid ""
 "Defines the object attributes that are selectable for change objects in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које атрибуте објекта је могуће изабрати за објекат промене у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које атрибуте објекта је могуће изабрати за објекат промене у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које атрибуте објекта је могуће изабрати за објекат радног налога у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које атрибуте објекта је могуће изабрати за објекат радног налога у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Обрачунато време” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут AccountedTime у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Стварно време завршетка” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ActualEndTime у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Стварно време почетка” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ActualStartTime у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „ИД категорије” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут CategoryID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „ИД градитеља промене” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ChangeBuilderID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „ИД управљача променом” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ChangeManagerID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
 " AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „ИД статуса промене” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ChangeStateID у „gentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Наслов промене” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ChangeTitle у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Динамичко поље” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут DynamicField у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ImpactID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „ИД утицаја” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут ImpactID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
 " AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Планирани напор” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут PlannedEffort у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Планирано време завршетка” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут PlannedEndTime у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
 " in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Планирано време почетка” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут PlannedStartTime у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
 "AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „ИД приоритета” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут PriorityID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Тражено време” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут RequestedTime у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
 " in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „WorkOrderAgentID” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут WorkOrderAgentID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Број радног налога” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут WorkOrderNumber у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
 " in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „WorkOrderStateID” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут WorkOrderStateID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „Наслов радног налога” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут WorkOrderTitle у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
 "in AgentITSMChangeConditionEdit."
-msgstr "Одређује које операторе је могуће изабрати за атрибут „WorkOrderTypeID” у „AgentITSMChangeConditionEdit”."
+msgstr "Одређује које операторе је могуће изабрати за атрибут WorkOrderTypeID у AgentITSMChangeConditionEdit."
 
 #. SysConfig
 msgid ""
@@ -1877,19 +1877,19 @@ msgstr "Дефинише приказане атрибуте у порукама
 msgid ""
 "Defines the shown columns in the Change PSA overview. This option has no "
 "effect on the position of the column."
-msgstr "Одређује колоне приказане у прегледу ПДС промена. Ова опција нема утицај на позиције колона."
+msgstr "Одређује колоне приказане у прегледу PSA промена. Ова опција нема утицај на позиције колона."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the Change Schedule overview. This option has "
 "no effect on the position of the column."
-msgstr "Одређује колоне приказане у прегледу Планера промена. Ова опција нема утицај на позиције колона."
+msgstr "Одређује колоне приказане у прегледу планера промена. Ова опција нема утицај на позиције колона."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the MyCAB overview. This option has no effect "
 "on the position of the column."
-msgstr "Одређује колоне приказане у прегледу мојих СОП. Ова опција нема утицај на позиције колона."
+msgstr "Одређује колоне приказане у прегледу мојих CAB. Ова опција нема утицај на позиције колона."
 
 #. SysConfig
 msgid ""
@@ -1907,7 +1907,7 @@ msgstr "Одређује колоне приказане у прегледу м�
 msgid ""
 "Defines the shown columns in the PIR overview. This option has no effect on "
 "the position of the column."
-msgstr "Дефинише приказане колоне у прегледу РПС. Ова опције нема утицај на позиције колона."
+msgstr "Дефинише приказане колоне у прегледу PIR. Ова опције нема утицај на позиције колона."
 
 #. SysConfig
 msgid ""
@@ -1941,7 +1941,7 @@ msgstr "Одређује приказане колоне у прегледу ш�
 
 #. SysConfig
 msgid "Defines the signals for each ITSMChange state."
-msgstr "Одређује сигнале за сваки статус „ITSM” промене."
+msgstr "Одређује сигнале за сваки статус ITSM промене."
 
 #. SysConfig
 msgid ""
@@ -1959,12 +1959,12 @@ msgstr "Одређује статусе радних налога који ће 
 msgid ""
 "Defines the workorder states that will be used as filters in the PIR "
 "overview."
-msgstr "Одређује статусе радних налога који ће се користити као филтери у прегледу РПС."
+msgstr "Одређује статусе радних налога који ће се користити као филтери у прегледу PIR."
 
 #. SysConfig
 msgid ""
 "Defines the workorder types that will be used to show the PIR overview."
-msgstr "Одређује типове радних налога који ће се користити за приказ РПС прегледа."
+msgstr "Одређује типове радних налога који ће се користити за приказ PIR прегледа."
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
@@ -2019,54 +2019,50 @@ msgstr "Утврђује да ли заједнички модул статис�
 msgid ""
 "Determines if the common stats module may generate stats about the number of"
 " Rfc tickets a requester created."
-msgstr "Утврђује да ли заједнички модул статистике може да генерише статистику о броју „Rfc” тикета које је креирао тражилац."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Утврђује да ли заједнички модул статистике може да генерише статистику о броју Rfc тикета које је креирао тражилац."
 
 #. SysConfig
 msgid ""
 "Dynamic fields (for changes and workorders) shown in the change print screen"
 " of the agent interface."
-msgstr ""
+msgstr "Динамичка поља (за промене и радне налоге) приказана у екрану штампе промене у интерфејсу оператера."
 
 #. SysConfig
 msgid "Dynamic fields shown in the change add screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у екрану додавања промене у интерфејсу оператера."
 
 #. SysConfig
 msgid "Dynamic fields shown in the change edit screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у екрану измене промене у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the change search screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у екрану претраге промена у интерфејсу оператера."
 
 #. SysConfig
 msgid "Dynamic fields shown in the change zoom screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у детаљном прегледу промене у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder add screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у екрану додавања радног налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder edit screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у екрану измене радног налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder report screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у екрану извештаја радног налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the workorder zoom screen of the agent interface."
-msgstr ""
+msgstr "Динамичка поља приказана у детаљном прегледу радног налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -2094,7 +2090,7 @@ msgstr "Уреди радни налог."
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
 "ChangeNumberGenerator)."
-msgstr ""
+msgstr "Активира минималну величину бројача промена (ако је изабран \"Датум\" за ChangeNumberGenerator)."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2106,121 +2102,121 @@ msgstr "Детаљи историјата"
 
 #. SysConfig
 msgid "ITSM Change CAB Templates."
-msgstr "„ITSM” шаблони промена СОП"
+msgstr "ITSM шаблони промена CAB"
 
 #. SysConfig
 msgid "ITSM Change Condition Edit."
-msgstr "„ITSM” уређивање услова промене."
+msgstr "ITSM уређивање услова промене."
 
 #. SysConfig
 msgid "ITSM Change Condition Overview."
-msgstr "„ITSM” преглед услова промене."
+msgstr "ITSM преглед услова промене."
 
 #. SysConfig
 msgid "ITSM Change Management Notifications"
-msgstr "Обавештења у „ITSM” Управљању променама"
+msgstr "Обавештења у ITSM управљању променама"
 
 #. SysConfig
 msgid "ITSM Change Manager Overview."
-msgstr "„ITSM” преглед промена."
+msgstr "ITSM преглед промена."
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."
-msgstr "„ITSM” преглед РПС промена."
+msgstr "ITSM преглед PIR промена."
 
 #. SysConfig
 msgid "ITSM Change notification rules"
-msgstr "„ITSM” правила обавештавања о промени."
+msgstr "ITSM правила обавештавања о промени."
 
 #. SysConfig
 msgid "ITSM Changes"
-msgstr "„ITSM” промене"
+msgstr "ITSM промене"
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
-msgstr "„ITSM” преглед мојих СОП."
+msgstr "ITSM преглед мојих CAB."
 
 #. SysConfig
 msgid "ITSM MyChanges Overview."
-msgstr "„ITSM” преглед мојих промена."
+msgstr "ITSM преглед мојих промена."
 
 #. SysConfig
 msgid "ITSM MyWorkorders Overview."
-msgstr "„ITSM” преглед мојих радних налога."
+msgstr "ITSM преглед мојих радних налога."
 
 #. SysConfig
 msgid "ITSM Template Delete."
-msgstr "„ITSM” брисање шаблона."
+msgstr "ITSM брисање шаблона."
 
 #. SysConfig
 msgid "ITSM Template Edit CAB."
-msgstr "„ITSM” уређивање СОП шаблона."
+msgstr "ITSM уређивање CAB шаблона."
 
 #. SysConfig
 msgid "ITSM Template Edit Content."
-msgstr "„ITSM” садржај уређивања шаблона."
+msgstr "ITSM садржај уређивања шаблона."
 
 #. SysConfig
 msgid "ITSM Template Edit."
-msgstr "„ITSM” уређивање шаблона."
+msgstr "ITSM уређивање шаблона."
 
 #. SysConfig
 msgid "ITSM Template Overview."
-msgstr "Преглед „ITSM” шаблона."
+msgstr "Преглед ITSM шаблона."
 
 #. SysConfig
 msgid "ITSM event module that cleans up conditions."
-msgstr "„ITSM” модул догађаја који чисти услове."
+msgstr "ITSM модул догађаја који чисти услове."
 
 #. SysConfig
 msgid "ITSM event module that deletes the cache for a toolbar."
-msgstr "„ITSM” модул догађаја који брише кеш алатне траке."
+msgstr "ITSM модул догађаја који брише кеш алатне траке."
 
 #. SysConfig
 msgid "ITSM event module that deletes the history of changes."
-msgstr "„ITSM” модул догађаја који брише историјат промена."
+msgstr "ITSM модул догађаја који брише историјат промена."
 
 #. SysConfig
 msgid "ITSM event module that matches conditions and executes actions."
-msgstr "„ITSM” модул догађаја који упарује услове и извршава акције."
+msgstr "ITSM модул догађаја који упарује услове и извршава акције."
 
 #. SysConfig
 msgid "ITSM event module that sends notifications."
-msgstr "„ITSM” модул догађаја који шаље обавештења."
+msgstr "ITSM модул догађаја који шаље обавештења."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of changes."
-msgstr "„ITSM” модул догађаја који ажурира историјат промена."
+msgstr "ITSM модул догађаја који ажурира историјат промена."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of conditions."
-msgstr "„ITSM” модул догађаја ажурира историјат услова."
+msgstr "ITSM модул догађаја ажурира историјат услова."
 
 #. SysConfig
 msgid "ITSM event module that updates the history of workorders."
-msgstr "„ITSM” модул догађаја ажурира историјат радних налога."
+msgstr "ITSM модул догађаја ажурира историјат радних налога."
 
 #. SysConfig
 msgid "ITSM event module to recalculate the workorder numbers."
-msgstr "„ITSM” модул догађаја који прерачунава бројеве радних налога."
+msgstr "ITSM модул догађаја који прерачунава бројеве радних налога."
 
 #. SysConfig
 msgid "ITSM event module to set the actual start and end times of workorders."
-msgstr "„ITSM” модул догађаја који подешава актуелна времена почетка и завршетка радних налога."
+msgstr "ITSM модул догађаја који подешава актуелна времена почетка и завршетка радних налога."
 
 #. SysConfig
 msgid "ITSMChange"
-msgstr "„ITSM” промена"
+msgstr "ITSM промена"
 
 #. SysConfig
 msgid "ITSMWorkOrder"
-msgstr "„ITSM” радни налог"
+msgstr "ITSM радни налог"
 
 #. SysConfig
 msgid ""
 "If frequency is 'regularly', you can configure how often the notifications "
 "are sent (every X hours)."
-msgstr "Ако је учесталост „редовно”, можете подесити колико често се шаљу обавештења (на сваких X сати)."
+msgstr "Ако је учесталост 'редовно', можете подесити колико често се шаљу обавештења (на сваких X сати)."
 
 #. SysConfig
 msgid "Link another object to the change."
@@ -2232,7 +2228,7 @@ msgstr "Повежи други објекат са радним налогом.
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
-msgstr "Потражи чланове СОП ради аутоматског довршавања."
+msgstr "Потражи чланове CAB ради аутоматског довршавања."
 
 #. SysConfig
 msgid "Lookup of agents, used for autocompletion."
@@ -2246,7 +2242,7 @@ msgstr "Модул за проверу да ли додавање радног �
 
 #. SysConfig
 msgid "Module to check the CAB members."
-msgstr "Модул за проверу чланова СОП."
+msgstr "Модул за проверу чланова CAB."
 
 #. SysConfig
 msgid "Module to check the agent."
@@ -2307,15 +2303,15 @@ msgstr "Преглед свих промена."
 
 #. SysConfig
 msgid "PIR"
-msgstr "РПС"
+msgstr "PIR"
 
 #. SysConfig
 msgid "PIR (Post Implementation Review)"
-msgstr "РПС (рецензија после спровођења)"
+msgstr "PIR (рецензија после спровођења)"
 
 #. SysConfig
 msgid "PSA"
-msgstr "ПДС"
+msgstr "PSA"
 
 #. SysConfig
 msgid ""
@@ -2333,7 +2329,7 @@ msgstr "Параметри страница (на којима су промен
 msgid ""
 "Performs the configured action for each event (as an Invoker) for each "
 "configured Webservice."
-msgstr "Извршава подешену акцију за сваки догађај (као позиваоц) за сваки подешени веб сервис."
+msgstr "Извршава подешену акцију за сваки догађај (као позивалац) за сваки конфигурисан веб сервис."
 
 #. SysConfig
 msgid ""
@@ -2355,13 +2351,13 @@ msgstr "Пројектована доступност сервиса"
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
-msgstr "Пројектована доступност сервиса (ПДС)"
+msgstr "Пројектована доступност сервиса (PSA)"
 
 #. SysConfig
 msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
-msgstr "Пројектована доступност сервиса (ПДС) промена. Преглед одобрених промена и љихових сервиса."
+msgstr "Пројектована доступност сервиса (PSA) промена. Преглед одобрених промена и љихових сервиса."
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2385,7 +2381,7 @@ msgstr "Потребна права за креирање шаблона од п
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr "Потребна права за креирање шаблона од промене СОП."
+msgstr "Потребна права за креирање шаблона од промене CAB."
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
@@ -2458,7 +2454,7 @@ msgstr "Потребна права за приказ промена."
 #. SysConfig
 msgid ""
 "Required privileges to view list of changes where the user is a CAB member."
-msgstr "Потребна права за приказ листе промена где је корисник члан СОП."
+msgstr "Потребна права за приказ листе промена где је корисник члан CAB."
 
 #. SysConfig
 msgid ""
@@ -2496,13 +2492,13 @@ msgstr "Потребна права за приказ листе Планера 
 
 #. SysConfig
 msgid "Required privileges to view the list of change PSA."
-msgstr "Потребна права за приказ листе промена ПДС."
+msgstr "Потребна права за приказ листе промена PSA."
 
 #. SysConfig
 msgid ""
 "Required privileges to view the list of changes with an upcoming PIR (Post "
 "Implementation Review)."
-msgstr "Потребна права за приказ листе промена са предстојећим РПС (Рецензија После Спровођења)."
+msgstr "Потребна права за приказ листе промена са предстојећим PIR (рецензија после спровођења)."
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
@@ -2592,14 +2588,14 @@ msgid ""
 "Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
 "ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
 "from 10000."
-msgstr "Подешава минималну величину бројача промена ( ако је изабран „оператор увећања” као „ITSM Промена::Генератор бројева”). Подразумевано је 5, што значи да бројач почиње од 10000."
+msgstr "Подешава минималну величину бројача промена (ако је изабран \"AutoIncrement\" за ITSMChange::NumberGenerator). Подразумевано је 5, што значи да бројач почиње од 10000."
 
 #. SysConfig
 msgid ""
 "Sets the minimal change counter size if \"AutoIncrement\" was selected as "
 "ChangeNumberGenerator. Default is 5, this means the counter starts from "
 "10000."
-msgstr ""
+msgstr "Дефинише минималну величину бројача промена уколико је изабран \"AutoIncrement\" као ChangeNumberGenerator. Подразумевано је 5, што значи да бројач почиње од 10000."
 
 #. SysConfig
 msgid "Sets up the state machine for changes."
@@ -2780,13 +2776,13 @@ msgstr "Шаблон."
 msgid ""
 "The identifier for a change, e.g. Change#, MyChange#. The default is "
 "Change#."
-msgstr "Идентификатор за промену, нпр Промена#, МојаПромена#. Подразумевано је Промена#."
+msgstr "Идентификатор за промену, нпр. Change#, MyChange#. Подразумевано је Change#."
 
 #. SysConfig
 msgid ""
 "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
 "is Workorder#."
-msgstr "Идентификатор за радни налог, нпр РадниНалог#, МојРадниНалог#. Подразумевано је РадниНалог#."
+msgstr "Идентификатор за радни налог, нпр. Workorder#, MyWorkorder#. Подразумевано је Workorder#."
 
 #. SysConfig
 msgid ""
@@ -2846,7 +2842,7 @@ msgstr "Извештај радног налога."
 
 #. SysConfig
 msgid "Workorder Zoom"
-msgstr ""
+msgstr "Детаљи радног налога"
 
 #. SysConfig
 msgid "Workorder Zoom."

@@ -732,7 +732,6 @@ sub Data {
         'กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลง';
     $Self->{Translation}->{'Determines if the common stats module may generate stats about the number of Rfc tickets a requester created.'} =
         'กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับจำนวนของตั๋ว RFC ผู้ร้องขอที่สร้างขึ้น';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the change add screen of the agent interface.'} =
