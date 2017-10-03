@@ -128,6 +128,7 @@
                <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
+                    <JavaScript>TimeAccounting.Agent.Reporting.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>

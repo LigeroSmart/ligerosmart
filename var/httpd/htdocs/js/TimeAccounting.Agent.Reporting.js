@@ -9,6 +9,7 @@
 "use strict";
 
 var TimeAccounting = TimeAccounting || {};
+TimeAccounting.Agent = TimeAccounting.Agent || {};
 
 /**
  * @namespace TimeAccounting.Agent.Reporting
@@ -20,28 +21,8 @@ TimeAccounting.Agent.Reporting = (function (TargetNS) {
 
     TargetNS.Init = function () {
 
-        var $MasterActionLink;
-
-        $('#NavigationSelect').bind('click', function(){
+        $('#NavigationSelect').on('click', function(){
             $('#DateSelectionForm').submit();
-        });
-
-        $('.MasterAction').bind('click', function (Event) {
-            $MasterActionLink = $(this).parents().find('.MasterActionLink' + $(this).attr('data-project-id'));
-            // only act if the link was not clicked directly
-            if (Event.target !== $MasterActionLink.get(0)) {
-                window.location = $MasterActionLink.attr('href');
-                return false;
-            }
-        });
-
-        $('.MasterActionUser').bind('click', function (Event) {
-            $MasterActionLink = $(this).find('.MasterActionLink');
-            // only act if the link was not clicked directly
-            if (Event.target !== $MasterActionLink.get(0)) {
-                window.location = $MasterActionLink.attr('href');
-                return false;
-            }
         });
     };
 

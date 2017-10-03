@@ -22,13 +22,16 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
     // Adds option to a selection
     function AddSelectionOption($SelectionElement, OptionText, OptionValue, SelectedOption) {
-        var $Option = $('<option value="' + OptionValue + '">' + OptionText + '</option>');
+        var OptionHTML = Core.Template.Render(
+            'Agent/TimeAccounting/Option',
+            {
+                Value:    OptionValue,
+                Text:     OptionText,
+                Selected: OptionValue === SelectedOption
+            }
+        );
 
-        if (OptionValue === SelectedOption) {
-            $Option.prop('selected', true);
-        }
-
-        $SelectionElement.append($Option);
+        $SelectionElement.append(OptionHTML);
     }
 
     /**
@@ -81,7 +84,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
 
     function InitAddRow() {
-        $('#MoreInputFields').unbind('click.MoreInputFields').bind('click.MoreInputFields', function () {
+        $('#MoreInputFields').off('click.MoreInputFields').on('click.MoreInputFields', function () {
             var $LastRow = $('#InsertWorkingHours tbody tr.WorkingHours:last'),
                 $NewRow, NewRowHTML,
                 RecordNumber = parseInt($('#RecordsNumber').val(), 10) + 1;
@@ -142,7 +145,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
     function InitPeriodCalculation() {
         // init calculation of period field after working hours where added/substracted/whatever...
-        $('.Period').unbind('change.PeriodCalculation').bind('change.PeriodCalculation', function () {
+        $('.Period').off('change.PeriodCalculation').on('change.PeriodCalculation', function () {
            var FieldValue = $(this).val();
 
            // replace , with .
@@ -178,7 +181,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         });
 
         // init period calculation on starttime and endtime fields
-        $('.StartTime, .EndTime').unbind('change.PeriodCalculation').bind('change.PeriodCalculation', function () {
+        $('.StartTime, .EndTime').off('change.PeriodCalculation').on('change.PeriodCalculation', function () {
             var $StartTime, $EndTime,
                 StartTimeHour, StartTimeMinute, EndTimeHour, EndTimeMinute,
                 StartDate, EndDate, Today,
@@ -348,11 +351,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      *      This function initializes the javascript for the mass entry functionality
      */
     TargetNS.MassEntryInit = function() {
-        $('#IncompleteWorkingDay-All').unbind('click.SelectAllDays').bind('click.SelectAllDays', function () {
+        $('#IncompleteWorkingDay-All').off('click.SelectAllDays').on('click.SelectAllDays', function () {
             var State = $(this).prop('checked');
             $('.IncompleteWorkingDays tbody input:checkbox').prop('checked', State);
         });
-        $('#MassEntrySubmit').unbind('click.MassEntrySubmit').bind('click.MassEntrySubmit', function () {
+        $('#MassEntrySubmit').off('click.MassEntrySubmit').on('click.MassEntrySubmit', function () {
             var $WorkingDayCheckboxes = $('.IncompleteWorkingDays tbody input:checkbox:checked').filter('[name!=IncompleteWorkingDay-All]');
 
             if (!$WorkingDayCheckboxes.length) {
@@ -403,7 +406,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                         .find('.InnerContent')
                         .width($('.Dialog:visible').find('.InnerContent').width())
                         .empty()
-                        .append('<span class="AJAXLoader"></span>');
+                        .append(Core.Template.Render('Agent/TimeAccounting/Dialog/AjaxLoader'));
 
                         // Submit form
                         $('#MassEntry').submit();

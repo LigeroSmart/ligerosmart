@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
 [% RenderBlockStart("User") %]
-                        <tr class="MasterActionUser">
+                        <tr class="MasterAction">
                             <td>
                                 <a href="[% Env("Baselink") %]Action=AgentTimeAccountingOverview;Year=[% Data.Year | uri %];Month=[% Data.Month | uri %];UserID=[% Data.UserID | uri %]" class="MasterActionLink">
                                     [% Data.User | html %]
@@ -133,9 +133,11 @@
                         <tr class="MasterAction" data-project-id="[% Data.ProjectID | html%]">
 [% RenderBlockStart("Project") %]
                             <td rowspan="[% Data.RowSpan %]" class="RowSpan">
-                                <strong><a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]" class="[% Data.Class %]">
-                                [% Data.Project %]
-                            </a></strong>
+                                <strong>
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ReportingProject;ProjectID=[% Data.ProjectID | uri %]" class="MasterActionLink">
+                                        [% Data.Project %]
+                                    </a>
+                                </strong>
 [% RenderBlockStart("ProjectDescription") %]
                             <br />[% Data.ProjectDescription %]
 [% RenderBlockEnd("ProjectDescription") %]

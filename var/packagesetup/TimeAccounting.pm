@@ -23,17 +23,13 @@ our @ObjectDependencies = (
 
 TimeAccounting.pm - code to execute during package installation
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All functions
 
 =head1 PUBLIC INTERFACE
 
-=over 4
-
-=cut
-
-=item new()
+=head2 new()
 
 create an object
 
@@ -63,7 +59,7 @@ sub new {
     return $Self;
 }
 
-=item CodeInstall()
+=head2 CodeInstall()
 
 run the code install part
 
@@ -86,7 +82,7 @@ sub CodeInstall {
     return 1;
 }
 
-=item CodeUninstall()
+=head2 CodeUninstall()
 
 run the code uninstall part
 
@@ -105,7 +101,7 @@ sub CodeUninstall {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_4_0_91()
+=head2 CodeUpgradeFromLowerThan_4_0_91()
 
 This function is only executed if the installed module version is smaller than 4.0.91.
 
@@ -122,7 +118,9 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=item _GroupAdd()
+=head1 PRIVATE INTERFACE
+
+=head2 _GroupAdd()
 
 add a group
 
@@ -218,7 +216,7 @@ sub _GroupAdd {
     return 1;
 }
 
-=item _GroupDeactivate()
+=head2 _GroupDeactivate()
 
 deactivate a group
 
@@ -272,7 +270,7 @@ sub _GroupDeactivate {
     return 1;
 }
 
-=item _MigrateConfigs()
+=head2 _MigrateConfigs()
 
 change configurations to match the new module location.
 
@@ -332,8 +330,6 @@ sub _MigrateConfigs {
 }
 
 1;
-
-=back
 
 =head1 TERMS AND CONDITIONS
 

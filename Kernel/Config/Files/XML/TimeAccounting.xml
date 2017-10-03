@@ -267,6 +267,11 @@
                         <Item>TimeAccounting.Table.css</Item>
                     </Array>
                 </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>TimeAccounting.Agent.Reporting.js</Item>
+                    </Array>
+                </Item>
             </Hash>
         </Value>
     </Setting>

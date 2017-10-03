@@ -119,7 +119,7 @@ sub Run {
             Year  => $Param{Year},
             Month => $Param{Month},
             Day   => 1,
-            }
+        },
     );
 
     my $DateTimeObjectNext = $DateTimeObjectGiven->Clone();
@@ -128,9 +128,7 @@ sub Run {
 
     # calculate the next month
     $DateTimeObjectNext->Add(
-        Years  => 0,
         Months => 1,
-        Days   => 0,
     );
 
     my $DateParamsNext = $DateTimeObjectNext->Get();
@@ -141,9 +139,7 @@ sub Run {
 
     # calculate the next month
     $DateTimeObjectPrev->Subtract(
-        Years  => 0,
         Months => 1,
-        Days   => 0,
     );
 
     my $DateParamsBack = $DateTimeObjectPrev->Get();

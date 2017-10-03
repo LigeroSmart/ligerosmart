@@ -46,6 +46,8 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentTimeAccountingView.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Notification/TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm" />
+        <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/TimeAccounting/Option.html.tmpl" />
+        <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/TimeAccounting/Dialog/AjaxLoader.html.tmpl" />
         <File Permission="660" Location="Kernel/System/TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm" />
         <File Permission="660" Location="scripts/test/TimeAccounting.t" />

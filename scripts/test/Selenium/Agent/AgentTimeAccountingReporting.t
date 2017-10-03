@@ -69,13 +69,17 @@ $Selenium->RunTest(
         my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
 
         $DateTimeObject->Subtract( Days => 40 );
-        my $DateTimeSettingsStart = $DateTimeObject->Get();
-        my $YearStart             = $DateTimeSettingsStart->{Year};
-        my $MonthStart            = $DateTimeSettingsStart->{Month};
-        my $DayStart              = $DateTimeSettingsStart->{Day};
+        my $YearStart = $DateTimeObject->Format(
+            Format => '%Y',
+        );
+        my $MonthStart = $DateTimeObject->Format(
+            Format => '%m',
+        );
+        my $DayStart = $DateTimeObject->Format(
+            Format => '%d',
+        );
 
         $DateTimeObject->Add(
-            Days    => 40,
             Seconds => 1
         );
         my $DateTimeSettings = $DateTimeObject->Get();
@@ -84,9 +88,11 @@ $Selenium->RunTest(
         my $MonthCurrent = $DateTimeSettings->{Month};
         my $DayCurrent   = $DateTimeSettings->{Day};
 
-        $DateTimeObject->Subtract( Seconds => 1 );
-        $DateTimeObject->Add( Days => 1 );
-        my $DateTimeSettingsEnd = $DateTimeObject->Get();
+        $DateTimeSettings = $Kernel::OM->Create('Kernel::System::DateTime');
+        $DateTimeSettings->Add(
+            Days => 1,
+        );
+        my $DateTimeSettingsEnd = $DateTimeSettings->Get();
 
         my $YearEnd  = $DateTimeSettingsEnd->{Year};
         my $MonthEnd = $DateTimeSettingsEnd->{Month};

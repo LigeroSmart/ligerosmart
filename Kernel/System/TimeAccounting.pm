@@ -26,13 +26,13 @@ our @ObjectDependencies = (
 
 Kernel::System::TimeAccounting - time accounting lib
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 All time accounting functions
 
 =head1 PUBLIC INTERFACE
 
-=head1 new()
+=head2 new()
 
 create an object
 
@@ -58,7 +58,7 @@ sub new {
     return $Self;
 }
 
-=head1 UserCurrentPeriodGet()
+=head2 UserCurrentPeriodGet()
 
 returns a hash with the current period data of the specified user
 
@@ -100,7 +100,7 @@ sub UserCurrentPeriodGet {
     }
 
     # build date string for given params
-    my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} ) . ' 00:00:00';
+    my $Date = sprintf "%04d-%02d-%02d 00:00:00", $Param{Year}, $Param{Month}, $Param{Day};
 
     # check cache
     if ( $Self->{'Cache::UserCurrentPeriodGet'}{$Date} ) {
@@ -147,7 +147,7 @@ sub UserCurrentPeriodGet {
     return %Data;
 }
 
-=head1 UserReporting()
+=head2 UserReporting()
 
 returns a hash with information about leave days, overtimes,
 working hours etc. of all users
@@ -184,20 +184,11 @@ sub UserReporting {
         ObjectParams => {
             Year  => $Param{Year},
             Month => $Param{Month},
-            Day   => 1,
-            }
+            Day   => $Param{Day} || 1,
+        },
     );
 
-    my $DateTimeValid = $DateTimeObject->Validate(
-        Year     => $Param{Year},
-        Month    => $Param{Month},
-        Day      => $Param{Day} || 1,
-        Hour     => 0,
-        Minute   => 0,
-        Second   => 0,
-        TimeZone => 'UTC',
-    );
-    return if !$DateTimeValid;
+    return if !$DateTimeObject;
 
     # get days of month if not provided
     my $LastDayOfMonth = $DateTimeObject->LastDayOfMonthGet();
@@ -222,17 +213,16 @@ sub UserReporting {
             $DayStart   = $3;
         }
 
-        $DateTimeValid = $DateTimeObject->Validate(
-            Year     => $YearStart,
-            Month    => $MonthStart,
-            Day      => $DayStart,
-            Hour     => 0,
-            Minute   => 0,
-            Second   => 0,
-            TimeZone => 'UTC',
+        my $DateTimeObject = $Kernel::OM->Create(
+            'Kernel::System::DateTime',
+            ObjectParams => {
+                Year  => $YearStart,
+                Month => $MonthStart,
+                Day   => $DayStart,
+            },
         );
 
-        if ( !$DateTimeValid ) {
+        if ( !$DateTimeObject ) {
 
             $LogObject->Log(
                 Priority => 'notice',
@@ -352,7 +342,7 @@ sub UserReporting {
     return %Data;
 }
 
-=head1 ProjectSettingsGet()
+=head2 ProjectSettingsGet()
 
 returns a hash with all the projects' data
 
@@ -394,7 +384,7 @@ sub ProjectSettingsGet {
     return %Data;
 }
 
-=head1 ProjectGet()
+=head2 ProjectGet()
 
 returns a hash with the requested project data
 
@@ -485,7 +475,7 @@ sub ProjectGet {
     return %Project;
 }
 
-=head1 ProjectSettingsInsert()
+=head2 ProjectSettingsInsert()
 
 inserts a new project in the db
 
@@ -542,7 +532,7 @@ sub ProjectSettingsInsert {
     return $ProjectID;
 }
 
-=head1 ProjectSettingsUpdate()
+=head2 ProjectSettingsUpdate()
 
 updates a project
 
@@ -584,7 +574,7 @@ sub ProjectSettingsUpdate {
     return 1;
 }
 
-=head1 ActionSettingsGet()
+=head2 ActionSettingsGet()
 
 returns a hash with all the actions settings
 
@@ -615,7 +605,7 @@ sub ActionSettingsGet {
     return %Data;
 }
 
-=head1 ActionGet()
+=head2 ActionGet()
 
 returns a hash with the requested action (task) data
 
@@ -702,7 +692,7 @@ sub ActionGet {
     return %Task;
 }
 
-=head1 ActionSettingsInsert()
+=head2 ActionSettingsInsert()
 
 inserts a new action in the db
 
@@ -738,7 +728,7 @@ sub ActionSettingsInsert {
     return 1;
 }
 
-=head1 ActionSettingsUpdate()
+=head2 ActionSettingsUpdate()
 
 updates an action (task)
 
@@ -779,7 +769,7 @@ sub ActionSettingsUpdate {
     return 1;
 }
 
-=head1 UserList()
+=head2 UserList()
 
 returns a hash with the user data of all users
 
@@ -813,7 +803,7 @@ sub UserList {
     return %Data;
 }
 
-=head1 UserGet()
+=head2 UserGet()
 
 returns a hash with the user data of one user
 
@@ -861,7 +851,7 @@ sub UserGet {
     return %Data;
 }
 
-=head1 UserSettingsGet()
+=head2 UserSettingsGet()
 
 returns a hash with the complete user period data for all users
 
@@ -937,7 +927,7 @@ sub UserSettingsGet {
     return %Data;
 }
 
-=head1 SingleUserSettingsGet()
+=head2 SingleUserSettingsGet()
 
 returns a hash with the requested user's period data
 
@@ -986,7 +976,7 @@ sub SingleUserSettingsGet {
     return %UserData;
 }
 
-=head1 UserLastPeriodNumberGet()
+=head2 UserLastPeriodNumberGet()
 
 returns the number of the last registered period for the specified user
 
@@ -1026,7 +1016,7 @@ sub UserLastPeriodNumberGet {
     return $LastPeriodNumber;
 }
 
-=head1 UserSettingsInsert()
+=head2 UserSettingsInsert()
 
 insert new user data in the db
 
@@ -1128,7 +1118,7 @@ sub UserSettingsInsert {
     return 1;
 }
 
-=head1 UserSettingsUpdate()
+=head2 UserSettingsUpdate()
 
 updates user data in the db
 
@@ -1219,7 +1209,7 @@ sub UserSettingsUpdate {
     return 1;
 }
 
-=head1 WorkingUnitsCompletnessCheck()
+=head2 WorkingUnitsCompletnessCheck()
 
 returns a hash with the incomplete working days and
 the information if the incomplete working days are in the allowed
@@ -1329,7 +1319,7 @@ sub WorkingUnitsCompletnessCheck {
                 $DayEndPoint = $Self->DaysInMonth( $Year, $Month );
             }
 
-            my $MonthString = sprintf( "%02d", $Month );
+            my $MonthString = sprintf "%02d", $Month;
 
             for my $Day ( $DayStartPoint .. $DayEndPoint ) {
 
@@ -1340,40 +1330,80 @@ sub WorkingUnitsCompletnessCheck {
                     Calendar => $Calendar || '',
                 );
 
-                my $DateTimeObject = $Kernel::OM->Create(
+                # Get calendar timezone or use the one of time-accounting object.
+                my $TimeZone = $ConfigObject->Get( "TimeZone::Calendar" . ( $Calendar || '' ) )
+                    || $Self->{TimeZone};
+
+                my $DayStartTime = $Kernel::OM->Create(
                     'Kernel::System::DateTime',
                     ObjectParams => {
-                        Year  => $Year,
-                        Month => $Month,
-                        Day   => $Day,
+                        Year     => $Year,
+                        Month    => $Month,
+                        Day      => $Day,
+                        Hour     => 0,
+                        Minute   => 0,
+                        Second   => 0,
+                        TimeZone => $TimeZone,
                     },
                 );
 
-                my $Date = sprintf( "%04d-%02d-%02d", $Year, $Month, $Day );
-
-                my $DateTimeObjectStart = $Kernel::OM->Create(
-                    'Kernel::System::DateTime',
-                    ObjectParams => {
-                        String => $Date . ' 00:00:00',
-                        }
+                my $DayStopTime = $DayStartTime->Clone();
+                $DayStopTime->Set(
+                    Hour   => 23,
+                    Minute => 59,
+                    Second => 59,
                 );
-                my $DayStartTime = $DateTimeObjectStart->ToEpoch();
 
-                my $DateTimeObjectStop = $Kernel::OM->Create(
-                    'Kernel::System::DateTime',
-                    ObjectParams => {
-                        String => $Date . ' 23:59:59',
-                        }
+                # Convert to the timezone of time-accounting object.
+                $DayStartTime->ToTimeZone(
+                    TimeZone => $Self->{TimeZone},
                 );
-                my $DayStopTime = $DateTimeObjectStop->ToEpoch();
+                $DayStopTime->ToTimeZone(
+                    TimeZone => $Self->{TimeZone},
+                );
+
+                # Convert to epochs.
+                $DayStartTime = $DayStartTime->ToEpoch();
+                $DayStopTime  = $DayStopTime->ToEpoch();
+
+                # OLD CODE
+
+                #my $DateTimeObject = $Kernel::OM->Create(
+                #    'Kernel::System::DateTime',
+                #    ObjectParams => {
+                #        Year  => $Year,
+                #        Month => $Month,
+                #        Day   => $Day,
+                #    },
+                #);
+
+                #my $Date = sprintf "%04d-%02d-%02d", $Year, $Month, $Day;
+
+                #my $DateTimeObjectStart = $Kernel::OM->Create(
+                #    'Kernel::System::DateTime',
+                #    ObjectParams => {
+                #        String => $Date . ' 00:00:00',
+                #    },
+                #);
+                #my $DayStartTime = $DateTimeObjectStart->ToEpoch();
+
+                #my $DateTimeObjectStop = $Kernel::OM->Create(
+                #    'Kernel::System::DateTime',
+                #    ObjectParams => {
+                #        String => $Date . ' 23:59:59',
+                #    },
+                #);
+                #my $DayStopTime = $DateTimeObjectStop->ToEpoch();
 
                 # add time zone to calculation
-                my $Zone = $ConfigObject->Get( "TimeZone::Calendar" . ( $Calendar || '' ) );
-                if ($Zone) {
-                    my $ZoneSeconds = $Zone * 60 * 60;
-                    $DayStartTime = $DayStartTime - $ZoneSeconds;
-                    $DayStopTime  = $DayStopTime - $ZoneSeconds;
-                }
+                #my $Zone = $ConfigObject->Get( "TimeZone::Calendar" . ( $Calendar || '' ) );
+                #if ($Zone) {
+                #    my $ZoneSeconds = $Zone * 60 * 60;
+                #    $DayStartTime = $DayStartTime - $ZoneSeconds;
+                #    $DayStopTime  = $DayStopTime - $ZoneSeconds;
+                #}
+
+                # END
 
                 my $ThisDayWorkingTime = $Self->WorkingTime(
                     StartTime => $DayStartTime,
@@ -1381,10 +1411,10 @@ sub WorkingUnitsCompletnessCheck {
                     Calendar  => $Calendar || '',
                 ) || '0';
 
-                my $DayString = sprintf( "%02d", $Day );
+                my $DayString = sprintf "%02d", $Day;
 
                 if ( $ThisDayWorkingTime && !$VacationCheck ) {
-                    $WorkingDays++;
+                    $WorkingDays += 1;
                 }
                 if (
                     $ThisDayWorkingTime
@@ -1428,7 +1458,7 @@ sub WorkingUnitsCompletnessCheck {
     return %Data;
 }
 
-=head1 WorkingUnitsGet()
+=head2 WorkingUnitsGet()
 
 returns a hash with the working units data
 
@@ -1526,7 +1556,7 @@ sub WorkingUnitsGet {
     return %Data;
 }
 
-=head1 WorkingUnitsInsert()
+=head2 WorkingUnitsInsert()
 
 insert working units in the db
 
@@ -1625,7 +1655,7 @@ sub WorkingUnitsInsert {
     return 1;
 }
 
-=head1 WorkingUnitsDelete()
+=head2 WorkingUnitsDelete()
 
 deletes working units in the db
 
@@ -1668,7 +1698,7 @@ sub WorkingUnitsDelete {
     return 1;
 }
 
-=head1 ProjectActionReporting()
+=head2 ProjectActionReporting()
 
 returns a hash with the hours dependent project and action data
 
@@ -1780,7 +1810,7 @@ sub ProjectActionReporting {
     return %Data;
 }
 
-=head1 ProjectTotalHours()
+=head2 ProjectTotalHours()
 
 returns the sum of all hours related to a project
 
@@ -1825,7 +1855,7 @@ sub ProjectTotalHours {
     return $Total;
 }
 
-=head1 ProjectHistory()
+=head2 ProjectHistory()
 
 returns an array with all WorkingUnits related to a project
 
@@ -1925,7 +1955,7 @@ sub ProjectHistory {
     return @Data;
 }
 
-=head1 LastProjectsOfUser()
+=head2 LastProjectsOfUser()
 
 returns an array with the last projects of the current user
 

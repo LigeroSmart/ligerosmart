@@ -123,7 +123,9 @@ TimeAccounting.Agent.ConfirmationDialog = (function (TargetNS) {
         DialogData[Data.ElementID] = Data;
 
         // binding a click event to the defined element
-        $(DialogData[Data.ElementID].ElementSelector).bind('click', TimeAccounting.Agent.ConfirmationDialog.ShowConfirmationDialog);
+        $(DialogData[Data.ElementID].ElementSelector)
+            .off('click.TimeAccounting.BindConfirmationDialog')
+            .on('click.TimeAccounting.BindConfirmationDialog', TimeAccounting.Agent.ConfirmationDialog.ShowConfirmationDialog);
     };
 
     return TargetNS;

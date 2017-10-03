@@ -384,6 +384,8 @@
         <input type="hidden" name="Action" value="[% Env("Action") %]" />
         <input type="hidden" name="Subaction" value="[% Data.Subaction | html %]" />
         <input type="hidden" name="UserID" value="[% Data.UserID | html %]" />
+        <input type="hidden" name="AddPeriod" value="" />
+        <input type="hidden" name="SubmitUserData" value="" />
 
         <div class="WidgetSimple">
             <div class="Header">
@@ -492,7 +494,7 @@
                     </tbody>
                 </table>
 
-                <button type="button" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" id="AddPeriod" class="CallForAction Plus SpacingTopSmall"><span><i class="fa fa-plus-square"></i> [% Translate("Add time period") | html %]</span></button>
+                <button type="submit" title="[% Translate("Add time period") | html %]" value="[% Translate("Add time period") | html %]" id="AddPeriod" class="CallForAction Plus SpacingTopSmall"><span><i class="fa fa-plus-square"></i> [% Translate("Add time period") | html %]</span></button>
             </div>
         </div>
         <div class="WidgetSimple">

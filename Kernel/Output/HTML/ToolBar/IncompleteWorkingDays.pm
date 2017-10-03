@@ -118,7 +118,7 @@ sub Run {
 
     # get ToolBar object parameters
     my $Class = $Param{Config}->{CssClass};
-    my $Text  = $LayoutObject->{LanguageObject}->Translate('Incomplete working days');
+    my $Text  = 'Incomplete working days';
     my $URL   = $LayoutObject->{Baselink};
     my $Icon  = $Param{Config}->{Icon};
 

@@ -29,11 +29,13 @@ TimeAccounting.Agent = (function (TargetNS) {
         });
 
         $('#AddPeriod').off('click').on('click', function() {
-            $(this).prepend('<input type="hidden" name="AddPeriod" value="1" />').closest('form').submit();
+            var $Form = $(this).closest('form');
+            $('input[name="AddPeriod"]', $Form).val(1);
         });
 
         $('#SubmitUserData').off('click').on('click', function() {
-            $(this).prepend('<input type="hidden" name="SubmitUserData" value="1" />').closest('form').submit();
+            var $Form = $(this).closest('form');
+            $('input[name="SubmitUserData"]', $Form).val(1);
         });
 
         $('#NavigationSelect').bind('click', function(){

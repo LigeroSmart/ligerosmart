@@ -493,7 +493,6 @@ sub Run {
                             ProjectDescription => $ProjectDescription,
                             Project            => $ProjectRef->{Name},
                             ProjectID          => $ProjectID,
-                            Class              => 'MasterActionLink' . $ProjectID,
                         },
                     );
                 }
