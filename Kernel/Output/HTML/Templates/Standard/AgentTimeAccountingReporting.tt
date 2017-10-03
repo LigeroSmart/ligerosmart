@@ -130,7 +130,7 @@
                     </thead>
                     <tbody>
 [% RenderBlockStart("Action") %]
-                        <tr class="MasterAction" data-project-id="[% Data.ProjectID | html%]">
+                        <tr class="MasterAction">
 [% RenderBlockStart("Project") %]
                             <td rowspan="[% Data.RowSpan %]" class="RowSpan">
                                 <strong>
