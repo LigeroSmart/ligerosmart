@@ -97,6 +97,9 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCABUser)').click()");
 
         $Selenium->find_element( "#AddCABMemberButton", 'css' )->click();
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents-$TestCABUserID').length"
+        );
 
         # Verify CAB user.
         $Self->True(
@@ -136,10 +139,13 @@ $Selenium->RunTest(
 
         # Delete previous CAB user first.
         $Selenium->find_element( "#ChangeManager", 'css' )->send_keys($TestUserLogin);
-
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click()");
+
         $Selenium->find_element( "#CABAgents-$TestCABUserID", 'css' )->click();
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && !\$('#CABAgents-$TestCABUserID').length"
+        );
 
         # Verify CAB user deletion.
         $Self->True(

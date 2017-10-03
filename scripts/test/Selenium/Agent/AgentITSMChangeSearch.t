@@ -12,25 +12,22 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
+# Get Selenium object.
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-        # get change state data
+        # Get change state data.
         my $ChangeDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -44,13 +41,13 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get test created change data
+        # Get test created change data.
         my $ChangeData = $ChangeObject->ChangeGet(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
 
-        # create and log in builder user
+        # Create and login as test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         ) || die "Did not get test builder user";
@@ -61,16 +58,16 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
+        # Get script alias.
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # click on AgentITSMChangeSearch
+        # Navigate to AgentITSMChangeSearch.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeSearch");
 
-        # wait until form and overlay has loaded, if necessary
+        # Wait until form and overlay has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
 
-        # check change search page
+        # Check change search page.
         for my $ID (
             qw(SearchProfile SearchProfileNew Attribute ResultForm SearchFormSubmit)
             )
@@ -80,34 +77,35 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # input change title and number as search param and run it
+        # Input change title and number as search param and run it.
         $Selenium->find_element("//a[\@class='AddButton']")->click();
         $Selenium->find_element( "ChangeNumber",      'name' )->send_keys( $ChangeData->{ChangeNumber} );
         $Selenium->find_element( "ChangeTitle",       'name' )->send_keys( $ChangeData->{ChangeTitle} );
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
-        # check for expected result
+        # Check for expected result.
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
             "$ChangeTitleRandom is found",
         );
 
-        # input wrong search parameters, result should be 'No data found'
+        # Navigate to AgentITSMChangeSearch.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeSearch");
 
-        # wait until form and overlay has loaded, if necessary
+        # Wait until form and overlay has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
 
+        # Input wrong search parameters, result should be 'No data found'.
         $Selenium->find_element( "ChangeNumber",      'name' )->send_keys("123455678");
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
-        # check for expected result
+        # Check for expected result.
         $Self->True(
             index( $Selenium->get_page_source(), "No data found." ) > -1,
             "Change is not found",
         );
 
-        # delete created test change
+        # Delete created test change.
         my $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -117,7 +115,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
