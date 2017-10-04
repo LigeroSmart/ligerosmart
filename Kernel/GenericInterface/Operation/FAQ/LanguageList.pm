@@ -38,7 +38,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
     for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
 
@@ -85,8 +84,7 @@ perform LanguageList Operation. This will return the current FAQ Languages.
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get languages list
-    # set UserID to root because in public interface there is no user
+    # Set UserID to root because in public interface there is no user.
     my %Languages = $Kernel::OM->Get('Kernel::System::FAQ')->LanguageList(
         UserID => 1,
     );
@@ -111,7 +109,6 @@ sub Run {
         push @LanguageList, {%Language};
     }
 
-    # return result
     return {
         Success => 1,
         Data    => {

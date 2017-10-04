@@ -18,7 +18,7 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -28,10 +28,9 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # permission check
+    # Permission check.
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You need ro permission!'),
@@ -39,26 +38,20 @@ sub Run {
         );
     }
 
-    # get params
     my %GetParam;
 
-    # get needed Item id
+    # Get needed ItemID
     $GetParam{ItemID} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ItemID' );
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
-
-        # error page
         return $LayoutObject->ErrorScreen(
             Message => Translatable('Can\'t show history, as no ItemID is given!'),
             Comment => Translatable('Please contact the administrator.'),
         );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 0,
@@ -68,14 +61,12 @@ sub Run {
         return $LayoutObject->ErrorScreen();
     }
 
-    # check user permission
+    # Check user permission.
     my $Permission = $FAQObject->CheckCategoryUserPermission(
         UserID     => $Self->{UserID},
         CategoryID => $FAQData{CategoryID},
         Type       => 'ro',
     );
-
-    # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You have no permission for this category!'),
@@ -83,7 +74,6 @@ sub Run {
         );
     }
 
-    # get FAQ article history
     my $History = $FAQObject->FAQHistoryGet(
         ItemID => $FAQData{ItemID},
         UserID => $Self->{UserID},
@@ -91,14 +81,13 @@ sub Run {
 
     for my $HistoryEntry ( @{$History} ) {
 
-        # replace ID to full user name on CreatedBy key
+        # Replace ID with full user name on CreatedBy key
         my %User = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
             UserID => $HistoryEntry->{CreatedBy},
             Cached => 1,
         );
         $HistoryEntry->{CreatedBy} = "$User{UserLogin} ($User{UserFullname})";
 
-        # call Row block
         $LayoutObject->Block(
             Name => 'Row',
             Data => {
@@ -107,13 +96,10 @@ sub Run {
         );
     }
 
-    # output header
     my $Output = $LayoutObject->Header(
         Type  => 'Small',
         Title => Translatable('FAQ History'),
     );
-
-    # start template output
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentFAQHistory',
         Data         => {
@@ -121,8 +107,6 @@ sub Run {
             %FAQData,
         },
     );
-
-    # add footer
     $Output .= $LayoutObject->Footer(
         Type => 'Small',
     );

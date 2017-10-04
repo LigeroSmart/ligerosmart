@@ -18,7 +18,7 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -28,10 +28,9 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # permission check
+    # Permission check.
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You need ro permission!'),
@@ -39,14 +38,14 @@ sub Run {
         );
     }
 
-    # get needed objects
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # get config of frontend module
+    # Get config of frontend module.
     my $Config = $ConfigObject->Get("FAQ::Frontend::$Self->{Action}");
 
-    # get config data
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+
+    # Get config data.
     my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     my $SearchLimit = $Config->{SearchLimit} || 500;
     my $Filter = $ParamObject->GetParam( Param => 'Filter' ) || '';
@@ -58,49 +57,45 @@ sub Run {
         || $Config->{'Order::Default'}
         || 'Down';
 
-    # get category id
+    # Get CategoryID.
     my $CategoryID = $ParamObject->GetParam( Param => 'CategoryID' ) || 0;
 
-    # check for non numeric CategoryID
+    # Check for non numeric CategoryID
     if ( $CategoryID !~ /\d+/ ) {
         $CategoryID = 0;
     }
 
-    # get category by name
     my $Category = $ParamObject->GetParam( Param => 'Category' ) || '';
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # try to get the Category ID from category name if no Category ID
+    # Try to get the CategoryID from category name if no CategoryID
     if ( $Category && !$CategoryID ) {
 
-        # get the category tree
+        # Get the category tree.
         my $CategoryTree = $FAQObject->CategoryTreeList(
             UserID => $Self->{UserID},
         );
 
-        # reverse the has for easy lookup
+        # Reverse the hash for easy lookup.
         my %ReverseCategoryTree = reverse %{$CategoryTree};
 
         $CategoryID = $ReverseCategoryTree{$Category} || 0;
     }
 
-    # get navigation bar option
+    # Get navigation bar option.
     my $Nav = $ParamObject->GetParam( Param => 'Nav' ) || '';
 
-    # get session object
     my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
-    # save category id to session, to be used in FAQ add screen
+    # Save CategoryID to session, to be used in FAQ add screen.
     $SessionObject->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastViewedCategory',
         Value     => $CategoryID,
     );
 
-    # store last overview screen (for back menu action)
-    # but only if the FAQ explorer is not shown as overlay
+    # Store last overview screen (for back menu action) but only if the FAQ explorer is not shown as overlay.
     if ( !$Nav || $Nav ne 'None' ) {
 
         my $URL = "Action=AgentFAQExplorer;SortBy=$SortBy"
@@ -118,11 +113,10 @@ sub Run {
         );
     }
 
-    # try to get the category data
+    # Try to get the category data.
     my %CategoryData;
     if ($CategoryID) {
 
-        # get category data
         %CategoryData = $FAQObject->CategoryGet(
             CategoryID => $CategoryID,
             UserID     => $Self->{UserID},
@@ -134,14 +128,12 @@ sub Run {
             );
         }
 
-        # check user permission
+        # Check user permission.
         my $Permission = $FAQObject->CheckCategoryUserPermission(
             UserID     => $Self->{UserID},
             CategoryID => $CategoryID,
             Type       => 'ro',
         );
-
-        # show error message
         if ( !$Permission ) {
             return $LayoutObject->NoPermission(
                 Message    => Translatable('You have no permission for this category!'),
@@ -152,20 +144,15 @@ sub Run {
 
     my $Output;
     if ( $Nav && $Nav eq 'None' ) {
-
-        # output header small and no Navigation bar
         $Output = $LayoutObject->Header(
             Type => 'Small',
         );
     }
     else {
-
-        # output header and navigation bar
         $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
     }
 
-    # show FAQ path
     $LayoutObject->FAQPathShow(
         FAQObject  => $FAQObject,
         CategoryID => $CategoryID,
@@ -173,13 +160,12 @@ sub Run {
         Nav        => $Nav,
     );
 
-    # get all direct subcategories of the selected category
+    # Get all direct subcategories of the selected category.
     my $CategoryIDsRef = $FAQObject->AgentCategorySearch(
         ParentID => $CategoryID,
         UserID   => $Self->{UserID},
     );
 
-    # show subcategories list
     $LayoutObject->Block(
         Name => 'Subcategories',
         Data => {},
@@ -189,7 +175,7 @@ sub Run {
         Data => {},
     );
 
-    # set default interface settings
+    # Set default interface settings.
     my $Interface = $FAQObject->StateTypeGet(
         Name   => 'internal',
         UserID => $Self->{UserID},
@@ -199,7 +185,7 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    # get all items (valid and invalid) if SySConfig is set
+    # Get all items (valid and invalid) if SySConfig is set.
     my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
     my @ValidIDs;
     my $Valid = 1;
@@ -212,25 +198,24 @@ sub Run {
         @ValidIDs = ( $ValidObject->ValidLookup( Valid => 'valid' ) );
     }
 
-    # check if there are subcategories
+    # Check if there are subcategories.
     if ( $CategoryIDsRef && ref $CategoryIDsRef eq 'ARRAY' && @{$CategoryIDsRef} ) {
 
-        # show data for each subcategory
+        # Show data for each subcategory.
         for my $SubCategoryID ( @{$CategoryIDsRef} ) {
 
-            # get the category data
             my %SubCategoryData = $FAQObject->CategoryGet(
                 CategoryID => $SubCategoryID,
                 UserID     => $Self->{UserID},
             );
 
-            # get the number of subcategories of this subcategory
+            # Get the number of subcategories of this subcategory.
             $SubCategoryData{SubCategoryCount} = $FAQObject->CategoryCount(
                 ParentIDs => [$SubCategoryID],
                 UserID    => $Self->{UserID},
             );
 
-            # get the number of FAQ articles in this category
+            # Get the number of FAQ articles in this category.
             $SubCategoryData{ArticleCount} = $FAQObject->FAQCount(
                 CategoryIDs  => [$SubCategoryID],
                 ItemStates   => $InterfaceStates,
@@ -239,7 +224,7 @@ sub Run {
                 UserID       => $Self->{UserID},
             );
 
-            # output the category data
+            # Output the category data.
             $LayoutObject->Block(
                 Name => 'OverviewResultRow',
                 Data => {
@@ -250,14 +235,14 @@ sub Run {
         }
     }
 
-    # otherwise a no data found message is displayed
+    # Otherwise a no data found message is displayed.
     else {
         $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
         );
     }
 
-    # search all FAQ articles within the given category
+    # Search all FAQ items within the given category.
     my @ViewableItemIDs = $FAQObject->FAQSearch(
         OrderBy          => [$SortBy],
         OrderByDirection => [$OrderBy],
@@ -269,7 +254,7 @@ sub Run {
         ValidIDs         => \@ValidIDs,
     );
 
-    # build necessary stuff for the FAQ article list
+    # Build necessary stuff for the FAQ article list.
     my $LinkPage = 'Filter='
         . $LayoutObject->LinkEncode($Filter)
         . ';View=' . $LayoutObject->LinkEncode($View)
@@ -291,32 +276,32 @@ sub Run {
         . ';CategoryID=' . $CategoryID
         . ';';
 
-    # find out which columns should be shown
+    # Find out which columns should be shown.
     my @ShowColumns;
     if ( $Config->{ShowColumns} ) {
 
-        # get all possible columns from config
+        # Get all possible columns from config.
         my %PossibleColumn = %{ $Config->{ShowColumns} };
 
-        # get the column names that should be shown
+        # Get the column names that should be shown.
         COLUMNNAME:
         for my $Name ( sort keys %PossibleColumn ) {
             next COLUMNNAME if !$PossibleColumn{$Name};
             push @ShowColumns, $Name;
         }
 
-        # enforce FAQ number column since is the link MasterAction hook
+        # Enforce FAQ number column since is the link MasterAction hook.
         if ( !$PossibleColumn{'Number'} ) {
             push @ShowColumns, 'Number';
         }
     }
 
-    # build the title value (on top of the article list)
+    # Build the title value (on top of the article list).
     my $Title = $CategoryData{Name}
         || $ConfigObject->Get('FAQ::Default::RootCategoryName')
         || '';
 
-    # build the HTML for the list of FAQ articles in the given category
+    # Build the HTML for the list of FAQ articles in the given category.
     my $FAQItemListHTML = $LayoutObject->FAQListShow(
         FAQIDs     => \@ViewableItemIDs,
         Total      => scalar @ViewableItemIDs,
@@ -340,7 +325,7 @@ sub Run {
         FAQTitleSize => $Config->{TitleSize},
     );
 
-    # show the FAQ article list
+    # Show the FAQ article list.
     $LayoutObject->Block(
         Name => 'FAQItemList',
         Data => {
@@ -348,13 +333,13 @@ sub Run {
         },
     );
 
-    # set QuickSearch mode
+    # Set QuickSearch mode.
     my $Mode = 'Agent';
     if ( $Nav eq 'None' ) {
         $Mode = 'AgentSmall';
     }
 
-    # show QuickSearch
+    # Show QuickSearch.
     $LayoutObject->FAQShowQuickSearch(
         Mode            => $Mode,
         Interface       => $Interface,
@@ -365,7 +350,7 @@ sub Run {
 
     my %InfoBoxResults;
 
-    # show last added and last updated articles
+    # Show last added and last updated articles.
     for my $Type (qw(LastCreate LastChange)) {
 
         my $ShowOk = $LayoutObject->FAQShowLatestNewsBox(
@@ -378,17 +363,15 @@ sub Run {
             UserID          => $Self->{UserID},
             Nav             => $Nav,
         );
-
-        # check error
         if ( !$ShowOk ) {
             return $LayoutObject->ErrorScreen();
         }
 
-        # store the NewsBoxResult
+        # Store the NewsBoxResult.
         $InfoBoxResults{$Type} = $ShowOk;
     }
 
-    # show top ten articles
+    # Show top ten articles.
     my $ShowOk = $LayoutObject->FAQShowTop10(
         FAQObject       => $FAQObject,
         Mode            => 'Agent',
@@ -398,19 +381,17 @@ sub Run {
         UserID          => $Self->{UserID},
         Nav             => $Nav,
     );
-
-    # check error
     if ( !$ShowOk ) {
         return $LayoutObject->ErrorScreen();
     }
 
-    # store the NewsBoxResult
+    # Store the NewsBoxResult.
     $InfoBoxResults{Top10} = $ShowOk;
 
-    # set the Sidebar width
+    # Set the Sidebar width.
     my $SidebarClass = 'Large';
 
-    # check if all InfoBoxes are empty and hide the Sidebar
+    # Check if all InfoBoxes are empty and hide the Sidebar.
     if (
         $InfoBoxResults{LastCreate} eq -1
         && $InfoBoxResults{LastChange} eq -1
@@ -424,7 +405,6 @@ sub Run {
         $SidebarClass = 'Medium';
     }
 
-    # start template output
     $Output .= $LayoutObject->Output(
         TemplateFile => 'AgentFAQExplorer',
         Data         => {
@@ -435,7 +415,6 @@ sub Run {
         },
     );
 
-    # add footer
     if ( $Nav && $Nav eq 'None' ) {
         $Output .= $LayoutObject->Footer(
             Type => 'Small',

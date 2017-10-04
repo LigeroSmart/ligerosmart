@@ -39,7 +39,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
     for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
 
@@ -105,18 +104,16 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get config data
-    # set SearchLimit on 0 because we need to get all entries
+    # Set SearchLimit on 0 because we need to get all entries.
     my $SearchLimit = 0;
 
-    # get config for frontend
     my $Config = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::PublicFAQSearch");
 
     my $SortBy = $Param{Data}->{OrderBy}
         || $Config->{'SortBy::Default'}
         || 'FAQID';
 
-    # the CategoryID param could be an ARRAY an SCALAR or an empty value
+    # The SortBy param could be an ARRAY an SCALAR or an empty value.
     if ( !IsArrayRefWithData($SortBy) && $SortBy ne '' ) {
         $SortBy = [$SortBy];
     }
@@ -127,7 +124,7 @@ sub Run {
 
     my $CategoryIDs;
 
-    # the CategoryID param could be an ARRAY an SCALAR or an empty value
+    # The CategoryID param could be an ARRAY an SCALAR or an empty value.
     $Param{Data}->{CategoryIDs} = $Param{Data}->{CategoryIDs} || '';
     if ( !IsArrayRefWithData( $Param{Data}->{CategoryIDs} ) && $Param{Data}->{CategoryIDs} ne '' ) {
         $CategoryIDs = [ $Param{Data}->{CategoryIDs} ];
@@ -138,7 +135,7 @@ sub Run {
 
     my $LanguageIDs;
 
-    # the LanguageID param could be an ARRAY an SCALAR or an empty value
+    # The LanguageID param could be an ARRAY an SCALAR or an empty value.
     $Param{Data}->{LanguageIDs} = $Param{Data}->{LanguageIDs} || '';
     if ( !IsArrayRefWithData( $Param{Data}->{LanguageIDs} ) && $Param{Data}->{LanguageIDs} ne '' ) {
         $LanguageIDs = [ $Param{Data}->{LanguageIDs} ];
@@ -147,13 +144,12 @@ sub Run {
         $LanguageIDs = $Param{Data}->{LanguageIDs};
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # set UserID to root because in public interface there is no user
+    # Set UserID to root because in public interface there is no user.
     my $UserID = 1;
 
-    # set default interface settings
+    # Set default interface settings.
     my $Interface = $FAQObject->StateTypeGet(
         Name   => 'public',
         UserID => $UserID,
@@ -163,7 +159,7 @@ sub Run {
         UserID => $UserID,
     );
 
-    # perform FAQ search
+    # Perform FAQ search.
     my @ViewableItemIDs = $FAQObject->FAQSearch(
         Number  => $Param{Data}->{Number}  || '',
         Title   => $Param{Data}->{Title}   || '',
@@ -190,13 +186,13 @@ sub Run {
 
     }
 
-    # prepare return data
+    # Prepare return data.
     my $ReturnData = {
         Data    => {},
         Success => 1,
     };
 
-    # set FAQ entry data
+    # Set FAQ entry data.
     if ( scalar @ViewableItemIDs > 1 ) {
         $ReturnData->{Data}->{ID} = \@ViewableItemIDs;
     }
@@ -204,7 +200,6 @@ sub Run {
         $ReturnData->{Data}->{ID} = $ViewableItemIDs[0];
     }
 
-    # return result
     return $ReturnData;
 }
 

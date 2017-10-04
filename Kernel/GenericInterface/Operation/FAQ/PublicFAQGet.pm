@@ -39,7 +39,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
     for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
 
@@ -186,23 +185,20 @@ sub Run {
     my @ItemIDs = split( /,/, $Param{Data}->{ItemID} );
     my @Item;
 
-    # get needed objects
+    # Set UserID to root because in public interface there is no user.
+    my $UserID = 1;
+
     my $FAQObject    = $Kernel::OM->Get('Kernel::System::FAQ');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # set UserID to root because in public interface there is no user
-    my $UserID = 1;
-
-    # get public state types
-    my $InterfaceStates = $Kernel::OM->Get('Kernel::System::FAQ')->StateTypeList(
+    # Get public state types.
+    my $InterfaceStates = $FAQObject->StateTypeList(
         Types  => $ConfigObject->Get('FAQ::Public::StateTypes'),
         UserID => $UserID,
     );
 
-    # start main loop
     for my $ItemID (@ItemIDs) {
 
-        # get the FAQ entry
         my %FAQEntry = $FAQObject->FAQGet(
             ItemID     => $ItemID,
             ItemFields => 1,
@@ -220,7 +216,7 @@ sub Run {
             );
         }
 
-        # check permissions
+        # Check permissions.
         my $ApprovalSuccess = 1;
         if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
             $ApprovalSuccess = $FAQEntry{Approved};
@@ -235,11 +231,6 @@ sub Run {
                 ErrorMessage => "PublicFAQGet: $ErrorMessage",
             );
         }
-
-        # set FAQ entry data
-        my $Article = {
-            Article => \%FAQEntry,
-        };
 
         my @Index = $FAQObject->AttachmentIndex(
             ItemID     => $ItemID,
@@ -260,7 +251,7 @@ sub Run {
                         UserID => $UserID,
                     );
 
-                    # convert content to base64
+                    # Convert content to base64.
                     $File{Content} = encode_base64( $File{Content} );
                     $File{Inline}  = $Attachment->{Inline};
                     $File{FileID}  = $Attachment->{FileID};
@@ -278,13 +269,12 @@ sub Run {
                 push @Attachments, {%File};
             }
 
-            # set FAQ entry data
+            # Set FAQ entry data.
             $FAQEntry{Attachment} = \@Attachments;
         }
 
-        # add
         push @Item, \%FAQEntry;
-    }    # finish main loop
+    }
 
     if ( !scalar @Item ) {
         $ErrorMessage = 'Could not get FAQ data'
@@ -299,7 +289,6 @@ sub Run {
 
     $ReturnData->{Data}->{FAQItem} = \@Item;
 
-    # return result
     return $ReturnData;
 }
 

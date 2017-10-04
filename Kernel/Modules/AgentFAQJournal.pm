@@ -18,7 +18,7 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -28,16 +28,14 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get config for frontend
+    # Get config for frontend.
     my $Config = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}");
 
-    # get journal limit data
     my $JournalLimit = $Config->{JournalLimit} || 500;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # permission check
+    # Permission check.
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You need ro permission!'),
@@ -45,38 +43,36 @@ sub Run {
         );
     }
 
-    # get Journal entries
+    # Get Journal entries.
     my $Journal = $Kernel::OM->Get('Kernel::System::FAQ')->FAQJournalGet(
         UserID => $Self->{UserID},
     );
 
-    # find out which columns should be shown
+    # Find out which columns should be shown.
     my @ShowColumns;
     if ( $Config->{ShowColumns} ) {
 
-        # get all possible columns from config
+        # Get all possible columns from config.
         my %PossibleColumn = %{ $Config->{ShowColumns} };
 
-        # get the column names that should be shown
+        # Get the column names that should be shown.
         COLUMNNAME:
         for my $Name ( sort keys %PossibleColumn ) {
             next COLUMNNAME if !$PossibleColumn{$Name};
             push @ShowColumns, $Name;
         }
 
-        # enforce FAQ number column since is the link MasterAction hook
+        # Enforce FAQ number column since is the link MasterAction hook.
         if ( !$PossibleColumn{'Number'} ) {
             push @ShowColumns, 'Number';
         }
     }
 
-    # output header
     my $Output = $LayoutObject->Header(
         Value => Translatable('FAQ Journal'),
     );
     $Output .= $LayoutObject->NavigationBar();
 
-    # output Journal
     $Output .= $Self->_FAQJournalShow(
         Journal          => $Journal,
         Total            => scalar @{$Journal},
@@ -85,8 +81,6 @@ sub Run {
         ShowColumns      => \@ShowColumns,
         JournalTitleSize => $Config->{TitleSize},
     );
-
-    # build footer
     $Output .= $LayoutObject->Footer();
 
     return $Output;
@@ -95,28 +89,26 @@ sub Run {
 sub _FAQJournalShow {
     my ( $Self, %Param ) = @_;
 
-    # lookup latest used view mode
+    # Lookup latest used view mode.
     if ( !$Param{View} && $Self->{ 'UserFAQJournalOverview' . $Self->{Action} } ) {
         $Param{View} = $Self->{ 'UserFAQJournalOverview' . $Self->{Action} };
     }
 
-    # set frontend
+    # Set frontend.
     my $Frontend = 'Agent';
 
-    # set default view mode to 'small'
+    # Set default view mode to 'small'.
     my $View = $Param{View} || 'Small';
 
-    # get session object
     my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
-    # store latest view mode
+    # Store latest view mode.
     $SessionObject->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'UserFAQJournalOverview' . $Self->{Action},
         Value     => $View,
     );
 
-    # get needed objects
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
@@ -127,44 +119,41 @@ sub _FAQJournalShow {
             Message => Translatable('Need config option FAQ::Frontend::Overview'),
         );
     }
-
-    # check for hash-ref
     if ( ref $Backends ne 'HASH' ) {
         return $LayoutObject->FatalError(
             Message => Translatable('Config option FAQ::Frontend::Overview needs to be a HASH ref!'),
         );
     }
 
-    # check for config key
+    # Check for config key.
     if ( !$Backends->{$View} ) {
         return $LayoutObject->FatalError(
             Message => $LayoutObject->{LanguageObject}->Translate( 'No config option found for the view "%s"!', $View ),
         );
     }
 
-    # navigation bar
     my $StartHit = int( $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'StartHit' ) || 1 );
 
-    # get personal page shown count
+    # Get personal page shown count.
     my $PageShownPreferencesKey = 'UserFAQJournalOverview' . $View . 'PageShown';
     my $PageShown               = $Self->{$PageShownPreferencesKey} || 10;
     my $Group                   = 'FAQJournalOverview' . $View . 'PageShown';
 
-    # check start option, if higher then elements available, set
-    # it to the last overview page (Thanks to Stefan Schmidt!)
+    # Check start option, if higher then elements available, set it to the last overview page
+    #   (Thanks to Stefan Schmidt!)
     if ( $StartHit > $Param{Total} ) {
         my $Pages = int( ( $Param{Total} / $PageShown ) + 0.99999 );
         $StartHit = ( ( $Pages - 1 ) * $PageShown ) + 1;
     }
 
-    # get data selection
+    # Get data selection.
     my %Data;
     my $Config = $ConfigObject->Get('PreferencesGroups');
     if ( $Config && $Config->{$Group} && $Config->{$Group}->{Data} ) {
         %Data = %{ $Config->{$Group}->{Data} };
     }
 
-    # set page limit and build page navigation
+    # Set page limit and build page navigation.
     my $Limit = $Param{Limit} || 20_000;
     my %PageNav = $LayoutObject->PageNavBar(
         Limit     => $Limit,
@@ -175,7 +164,7 @@ sub _FAQJournalShow {
         Link      => $Param{LinkPage},
     );
 
-    # build shown FAQ articles on a page
+    # Build shown FAQ articles on a page.
     $Param{RequestedURL}    = "Action=$Self->{Action}";
     $Param{Group}           = $Group;
     $Param{PreferencesKey}  = $PageShownPreferencesKey;
@@ -185,7 +174,7 @@ sub _FAQJournalShow {
         Data       => \%Data,
     );
 
-    # store last overview screen (for back menu action)
+    # Store last overview screen (for back menu action).
     $SessionObject->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenOverview',
@@ -197,16 +186,15 @@ sub _FAQJournalShow {
         Value     => $Param{RequestedURL},
     );
 
-    # build navigation bar content
+    # Build navigation bar content.
     $LayoutObject->Block(
         Name => 'OverviewNavBar',
         Data => \%Param,
     );
 
-    # loop over configured back-ends
     for my $Backend ( sort keys %{$Backends} ) {
 
-        # build navigation bar view mode
+        # Build navigation bar view mode.
         $LayoutObject->Block(
             Name => 'OverviewNavBarViewMode',
             Data => {
@@ -217,7 +205,7 @@ sub _FAQJournalShow {
             },
         );
 
-        # current view is configured in backend
+        # Current view is configured in backend.
         if ( $View eq $Backend ) {
             $LayoutObject->Block(
                 Name => 'OverviewNavBarViewModeSelected',
@@ -242,15 +230,15 @@ sub _FAQJournalShow {
         }
     }
 
-    # check if page navigation is available
+    # Check if page navigation is available.
     if (%PageNav) {
         $LayoutObject->Block(
             Name => 'OverviewNavBarPageNavBar',
             Data => \%PageNav,
         );
 
-        # don't show context settings in AJAX case (e. g. in customer FAQ history),
-        # because the submit with page reload will not work there
+        # Don't show context settings in AJAX case (e. g. in customer FAQ history), because the
+        #   submit with page reload will not work there
         if ( !$Param{AJAX} ) {
             $LayoutObject->Block(
                 Name => 'ContextSettings',
@@ -262,7 +250,6 @@ sub _FAQJournalShow {
         }
     }
 
-    # build HTML content
     my $OutputNavBar = $LayoutObject->Output(
         TemplateFile => 'AgentFAQOverviewNavBar',
         Data         => {
@@ -271,19 +258,17 @@ sub _FAQJournalShow {
         },
     );
 
-    # create output
     my $OutputRaw = $OutputNavBar;
 
-    # load module
     if ( !$Kernel::OM->Get('Kernel::System::Main')->Require( $Backends->{$View}->{Module} ) ) {
         return $LayoutObject->FatalError();
     }
 
-    # check for backend object
+    # Check for backend object.
     my $Object = $Backends->{$View}->{Module}->new( %{$Self} );
     return if !$Object;
 
-    # run module
+    # Run module.
     my $Output = $Object->Run(
         %Param,
         Limit     => $Limit,
@@ -296,13 +281,13 @@ sub _FAQJournalShow {
 
     $OutputRaw .= $Output;
 
-    # create overview navigation bar
+    # Create overview navigation bar.
     $LayoutObject->Block(
         Name => 'OverviewNavBar',
         Data => {%Param},
     );
 
-    # return content if available
+    # Return content if available.
     return $OutputRaw;
 }
 

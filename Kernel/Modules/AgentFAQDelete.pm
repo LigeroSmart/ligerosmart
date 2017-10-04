@@ -18,7 +18,7 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -28,10 +28,9 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # permission check
+    # Permission check.
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You need ro permission!'),
@@ -39,26 +38,20 @@ sub Run {
         );
     }
 
-    # get params
     my %GetParam;
 
-    # get needed Item id
+    # Get needed ItemID
     $GetParam{ItemID} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ItemID' );
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
-
-        # error page
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ItemID is given!'),
             Comment => Translatable('Please contact the administrator.'),
         );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 0,
@@ -68,14 +61,12 @@ sub Run {
         return $LayoutObject->ErrorScreen();
     }
 
-    # check user permission
+    # Check user permission.
     my $Permission = $FAQObject->CheckCategoryUserPermission(
         UserID     => $Self->{UserID},
         CategoryID => $FAQData{CategoryID},
         Type       => 'rw',
     );
-
-    # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You have no permission for this category!'),
@@ -85,7 +76,7 @@ sub Run {
 
     if ( $Self->{Subaction} eq 'Delete' ) {
 
-        # delete the FAQ article
+        # Delete the FAQ article.
         my $CouldDeleteItem = $FAQObject->FAQDelete(
             ItemID => $FAQData{ItemID},
             UserID => $Self->{UserID},
@@ -93,14 +84,14 @@ sub Run {
 
         if ($CouldDeleteItem) {
 
-            # redirect to explorer, when the deletion was successful
+            # Redirect to explorer, when the deletion was successful.
             return $LayoutObject->Redirect(
                 OP => "Action=AgentFAQExplorer;CategoryID=$FAQData{CategoryID}",
             );
         }
         else {
 
-            # show error message, when delete failed
+            # Show error message, when delete failed.
             return $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}->Translate(
                     'Was not able to delete the FAQ article %s!',
@@ -111,10 +102,9 @@ sub Run {
         }
     }
 
-    # set the dialog type. As default, the dialog will have 2 buttons: Yes and No
+    # Set the dialog type. As default, the dialog will have 2 buttons: Yes and No.
     my $DialogType = 'Confirmation';
 
-    # output content
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentFAQDelete',
         Data         => {
@@ -123,13 +113,13 @@ sub Run {
         },
     );
 
-    # build the returned data structure
+    # Build the returned data structure.
     my %Data = (
         HTML       => $Output,
         DialogType => $DialogType,
     );
 
-    # return JSON-String because of AJAX-Mode
+    # Return JSON-String because of AJAX-Mode.
     my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
     return $LayoutObject->Attachment(

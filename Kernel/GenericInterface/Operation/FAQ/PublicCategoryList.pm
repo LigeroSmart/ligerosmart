@@ -38,7 +38,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
     for my $Needed (qw( DebuggerObject WebserviceID )) {
         if ( !$Param{$Needed} ) {
 
@@ -85,8 +84,7 @@ perform PublicCategoryList Operation. This will return the current FAQ Categorie
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get all categories with their long names
-    # set UserID to root because in public interface there is no user
+    # Set UserID to root because in public interface there is no user.
     my $CategoryTree = $Kernel::OM->Get('Kernel::System::FAQ')->GetPublicCategoriesLongNames(
         Valid  => 1,
         Type   => 'rw',
@@ -114,7 +112,7 @@ sub Run {
         push @PublicCategoryList, {%Category};
     }
 
-    # prepare return data
+    # Prepare return data.
     my $ReturnData = {
         Success => 1,
         Data    => {},
@@ -126,7 +124,6 @@ sub Run {
         $ReturnData->{Data}->{Category} = $PublicCategoryList[0];
     }
 
-    # return result
     return $ReturnData;
 }
 

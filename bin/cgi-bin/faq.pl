@@ -21,7 +21,7 @@
 use strict;
 use warnings;
 
-# use ../../ as lib location
+# Use ../../ as lib location.
 use FindBin qw($Bin);
 use lib "$Bin/../..";
 use lib "$Bin/../../Kernel/cpan-lib";
