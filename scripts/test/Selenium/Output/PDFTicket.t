@@ -128,6 +128,11 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
             SolutionTime      => 200,
             ValidID           => 1,
             Comment           => 'Selenium SLA',
+# ---
+# ITSMCore
+# ---
+            TypeID            => $ServiceTypeName2ID{Training},
+# ---
             UserID            => 1,
         );
         $Self->True(
@@ -572,7 +577,7 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
             },
             {
                 Value     => 'Solution Time',
-                Message   => 'Accounted time label is correct',
+                Message   => 'Solution time label is correct',
                 Interface => 'Agent',
             },
             {
