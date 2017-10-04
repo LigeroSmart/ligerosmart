@@ -95,6 +95,11 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        # wait until page has loaded, if necessary
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $(".Cluster").length'
+        );
+
         # force sub menus to be visible in order to be able to click one of the links
         $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
 
