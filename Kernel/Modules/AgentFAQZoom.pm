@@ -19,7 +19,7 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -42,10 +42,9 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # permission check
+    # Permission check.
     if ( !$Self->{AccessRo} ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You need ro permission!'),
@@ -53,18 +52,16 @@ sub Run {
         );
     }
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # get params
+    # Get parameters from web request.
     my %GetParam;
     $GetParam{ItemID} = $ParamObject->GetParam( Param => 'ItemID' );
     $GetParam{Rate}   = $ParamObject->GetParam( Param => 'Rate' );
 
-    # get navigation bar option
+    # Get navigation bar option.
     my $Nav = $ParamObject->GetParam( Param => 'Nav' ) || '';
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->ErrorScreen(
             Message => Translatable('No ItemID is given!'),
@@ -72,10 +69,8 @@ sub Run {
         );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID        => $GetParam{ItemID},
         ItemFields    => 1,
@@ -86,14 +81,12 @@ sub Run {
         return $LayoutObject->ErrorScreen();
     }
 
-    # check user permission
+    # Check user permission.
     my $Permission = $FAQObject->CheckCategoryUserPermission(
         UserID     => $Self->{UserID},
         CategoryID => $FAQData{CategoryID},
         Type       => 'ro',
     );
-
-    # show error message
     if ( !$Permission ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You have no permission for this category!'),
@@ -101,7 +94,6 @@ sub Run {
         );
     }
 
-    # get HTML utils object
     my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
     # ---------------------------------------------------------- #
@@ -109,10 +101,9 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'HTMLView' ) {
 
-        # get params
+        # gGet parameters from web request.
         my $Field = $ParamObject->GetParam( Param => "Field" );
 
-        # needed params
         for my $Needed (qw( ItemID Field )) {
             if ( !$Needed ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -123,19 +114,19 @@ sub Run {
             }
         }
 
-        # get the Field content
+        # Get the Field content.
         my $FieldContent = $FAQObject->ItemFieldGet(
             ItemID => $GetParam{ItemID},
             Field  => $Field,
             UserID => $Self->{UserID},
         );
 
-        # rewrite handle and action, take care of old style before FAQ 2.0.x
+        # Rewrite handle and action, take care of old style before FAQ 2.0.x.
         $FieldContent =~ s{
             Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
         }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
 
-        # build base URL for in-line images
+        # Build base URL for in-line images.
         my $SessionID = '';
         if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
             $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
@@ -144,7 +135,7 @@ sub Run {
             }{$1$SessionID}gmsx;
         }
 
-        # convert content to HTML if needed
+        # Convert content to HTML if needed.
         if (
             $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Item::HTML')
             && $LayoutObject->{BrowserRichText}
@@ -156,25 +147,25 @@ sub Run {
             ) || '';
         }
 
-        # detect all plain text links and put them into an HTML <a> tag
+        # Detect all plain text links and put them into an HTML <a> tag.
         $FieldContent = $HTMLUtilsObject->LinkQuote(
             String => $FieldContent,
         );
 
-        # set target="_blank" attribute to all HTML <a> tags
-        # the LinkQuote function needs to be called again
+        # Set target="_blank" attribute to all HTML <a> tags the LinkQuote function needs to be
+        #   called again
         $FieldContent = $HTMLUtilsObject->LinkQuote(
             String    => $FieldContent,
             TargetAdd => 1,
         );
 
-        # add needed HTML headers
+        # Add needed HTML headers.
         $FieldContent = $HTMLUtilsObject->DocumentComplete(
             String  => $FieldContent,
             Charset => 'utf-8',
         );
 
-        # return complete HTML as an attachment
+        # Return complete HTML as an attachment.
         return $LayoutObject->Attachment(
             Type        => 'inline',
             ContentType => 'text/html',
@@ -187,7 +178,6 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
-        # manage parameters
         $GetParam{FileID} = $ParamObject->GetParam( Param => 'FileID' );
 
         if ( !defined $GetParam{FileID} ) {
@@ -196,7 +186,7 @@ sub Run {
             );
         }
 
-        # get attachments
+        # Get attachments.
         my %File = $FAQObject->AttachmentGet(
             ItemID => $GetParam{ItemID},
             FileID => $GetParam{FileID},
@@ -215,24 +205,20 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # other sub-actions continues here
+    # Other sub-actions continues here
     # ---------------------------------------------------------- #
     my $Output;
     if ( $Nav eq 'None' ) {
-
-        # output header small and no Navbar
         $Output = $LayoutObject->Header( Type => 'Small' );
     }
     else {
-
-        # output header and navigation bar
         $Output = $LayoutObject->Header(
             Value => $FAQData{Title},
         );
         $Output .= $LayoutObject->NavigationBar();
     }
 
-    # define different notifications
+    # Define different notifications.
     my %Notifications = (
         Thanks => {
             Priority => 'Info',
@@ -248,7 +234,7 @@ sub Run {
         },
     );
 
-    # output notifications if any
+    # Output notifications if any.
     my $Notify = $ParamObject->GetParam( Param => 'Notify' ) || '';
     if ( $Notify && IsHashRefWithData( $Notifications{$Notify} ) ) {
         $Output .= $LayoutObject->Notify(
@@ -256,14 +242,13 @@ sub Run {
         );
     }
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get default options
+    # Get default options.
     my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
     my $Voting        = $ConfigObject->Get('FAQ::Voting');
 
-    # set default interface settings
+    # Set default interface settings.
     my $Interface = $FAQObject->StateTypeGet(
         Name   => 'internal',
         UserID => $Self->{UserID},
@@ -273,7 +258,7 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    # get FAQ vote information
+    # Get FAQ vote information.
     my $VoteData;
     if ($Voting) {
         $VoteData = $FAQObject->VoteGet(
@@ -285,7 +270,7 @@ sub Run {
         );
     }
 
-    # check if user already voted this FAQ item
+    # Check if user already voted this FAQ item.
     my $AlreadyVoted;
     if ($VoteData) {
 
@@ -313,17 +298,17 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
 
-        # user can't use this sub-action if is not enabled
+        # User can't use this sub-action if is not enabled.
         if ( !$Voting ) {
             $LayoutObject->FatalError(
                 Message => Translatable('The voting mechanism is not enabled!'),
             );
         }
 
-        # user can vote only once per FAQ revision
+        # User can vote only once per FAQ revision.
         if ($AlreadyVoted) {
 
-            # redirect to FAQ zoom
+            # Redirect to FAQ zoom.
             return $LayoutObject->Redirect(
                 OP => 'Action=AgentFAQZoom;ItemID='
                     . $GetParam{ItemID}
@@ -331,21 +316,21 @@ sub Run {
             );
         }
 
-        # set the vote if any
+        # Set the vote if any.
         elsif ( defined $GetParam{Rate} ) {
 
-            # get rates config
+            # Get rates config.
             my $VotingRates = $ConfigObject->Get('FAQ::Item::Voting::Rates');
             my $Rate        = $GetParam{Rate};
 
-            # send error if rate is not defined in config
+            # Send error if rate is not defined in config.
             if ( !$VotingRates->{$Rate} ) {
                 $LayoutObject->FatalError(
                     Message => Translatable('The vote rate is not defined!'),
                 );
             }
 
-            # otherwise add the vote
+            # Otherwise add the vote.
             else {
                 $FAQObject->VoteAdd(
                     CreatedBy => $Self->{UserID},
@@ -356,10 +341,10 @@ sub Run {
                     UserID    => $Self->{UserID},
                 );
 
-                # do not show the voting form
+                # Do not show the voting form.
                 $AlreadyVoted = 1;
 
-                # refresh FAQ item data
+                # Refresh FAQ item data.
                 %FAQData = $FAQObject->FAQGet(
                     ItemID        => $GetParam{ItemID},
                     ItemFields    => 1,
@@ -370,7 +355,7 @@ sub Run {
                     return $LayoutObject->ErrorScreen();
                 }
 
-                # redirect to FAQ zoom
+                # Redirect to FAQ zoom.
                 return $LayoutObject->Redirect(
                     OP => 'Action=AgentFAQZoom;ItemID='
                         . $GetParam{ItemID}
@@ -379,29 +364,30 @@ sub Run {
             }
         }
 
-        # user is able to vote but no rate has been selected
+        # User is able to vote but no rate has been selected.
         else {
-            # redirect to FAQ zoom
+
+            # Redirect to FAQ zoom
             return $LayoutObject->Redirect(
                 OP => 'Action=AgentFAQZoom;ItemID=' . $GetParam{ItemID} . ';Nav=$Nav;Notify=NoRate'
             );
         }
     }
 
-    # prepare fields data (Still needed for PlainText)
+    # Prepare fields data (Still needed for PlainText).
     FIELD:
     for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next FIELD if !$FAQData{$Field};
 
-        # rewrite handle and action, take care of old style before FAQ 2.0.x
+        # Rewrite handle and action, take care of old style before FAQ 2.0.x.
         $FAQData{$Field} =~ s{
             Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
         }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
 
-        # no quoting if HTML view is enabled
+        # No quoting if HTML view is enabled.
         next FIELD if $ConfigObject->Get('FAQ::Item::HTML');
 
-        # HTML quoting
+        # HTML quoting.
         $FAQData{$Field} = $LayoutObject->Ascii2Html(
             NewLine        => 0,
             Text           => $FAQData{$Field},
@@ -411,22 +397,21 @@ sub Run {
         );
     }
 
-    # get user object
     my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
-    # get user info (CreatedBy)
+    # Get user info (CreatedBy).
     my %UserInfo = $UserObject->GetUserData(
         UserID => $FAQData{CreatedBy}
     );
     $Param{CreatedByUser} = "$UserInfo{UserFullname}";
 
-    # get user info (ChangedBy)
+    # Get user info (ChangedBy).
     %UserInfo = $UserObject->GetUserData(
         UserID => $FAQData{ChangedBy}
     );
     $Param{ChangedByUser} = "$UserInfo{UserFullname}";
 
-    # set voting results
+    # Set voting results.
     $Param{VotingResultColor} = $LayoutObject->GetFAQItemVotingRateColor(
         Rate => $FAQData{VoteResult},
     );
@@ -437,20 +422,20 @@ sub Run {
 
     if ( $Nav ne 'None' ) {
 
-        # run FAQ menu modules
+        # Run FAQ menu modules.
         if ( ref $ConfigObject->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
             my %Menus   = %{ $ConfigObject->Get('FAQ::Frontend::MenuModule') };
             my $Counter = 0;
             for my $Menu ( sort keys %Menus ) {
 
-                # load module
+                # Load module.
                 if ( $Kernel::OM->Get('Kernel::System::Main')->Require( $Menus{$Menu}->{Module} ) ) {
                     my $Object = $Menus{$Menu}->{Module}->new(
                         %{$Self},
                         ItemID => $FAQData{ItemID},
                     );
 
-                    # set classes
+                    # Set CSS classes.
                     if ( $Menus{$Menu}->{Target} ) {
 
                         if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
@@ -465,7 +450,7 @@ sub Run {
 
                     }
 
-                    # run module
+                    # Run module.
                     $Counter = $Object->Run(
                         %Param,
                         FAQItem => {%FAQData},
@@ -481,7 +466,7 @@ sub Run {
         }
     }
 
-    # output approval state
+    # Output approval state.
     if ( $ConfigObject->Get('FAQ::ApprovalRequired') ) {
         $Param{Approval} = $FAQData{Approved} ? 'Yes' : 'No';
         $LayoutObject->Block(
@@ -492,7 +477,7 @@ sub Run {
 
     if ($Voting) {
 
-        # output votes number if any
+        # Output votes number if any.
         if ( $FAQData{Votes} ) {
             $LayoutObject->Block(
                 Name => 'ViewVotes',
@@ -500,13 +485,12 @@ sub Run {
             );
         }
 
-        # otherwise display a No Votes found message
+        # Otherwise display a No Votes found message.
         else {
             $LayoutObject->Block( Name => 'ViewNoVotes' );
         }
     }
 
-    # show FAQ path
     my $ShowFAQPath = $LayoutObject->FAQPathShow(
         FAQObject   => $FAQObject,
         CategoryID  => $FAQData{CategoryID},
@@ -522,10 +506,10 @@ sub Run {
         );
     }
 
-    # show keywords as search links
+    # Show keywords as search links.
     if ( $FAQData{Keywords} ) {
 
-        # replace commas and semicolons
+        # Replace commas and semicolons.
         $FAQData{Keywords} =~ s/,/ /g;
         $FAQData{Keywords} =~ s/;/ /g;
 
@@ -540,7 +524,7 @@ sub Run {
         }
     }
 
-    # show languages
+    # Show languages.
     if ($MultiLanguage) {
         $LayoutObject->Block(
             Name => 'Language',
@@ -550,7 +534,7 @@ sub Run {
         );
     }
 
-    # output rating stars
+    # Output rating stars.
     if ($Voting) {
         $LayoutObject->FAQRatingStarsShow(
             VoteResult => $FAQData{VoteResult},
@@ -559,14 +543,14 @@ sub Run {
     }
     if ( $Nav ne 'None' ) {
 
-        # output existing attachments
+        # Output existing attachments.
         my @AttachmentIndex = $FAQObject->AttachmentIndex(
             ItemID     => $GetParam{ItemID},
             ShowInline => 0,
             UserID     => $Self->{UserID},
         );
 
-        # output header and all attachments
+        # Output header and all attachments.
         if (@AttachmentIndex) {
             $LayoutObject->Block(
                 Name => 'AttachmentHeader',
@@ -583,14 +567,14 @@ sub Run {
         }
     }
 
-    # show message about links in iframes, if user didn't close it already
+    # Show message about links in iframes, if user didn't close it already.
     if ( !$Self->{DoNotShowBrowserLinkMessage} ) {
         $LayoutObject->Block(
             Name => 'BrowserLinkMessage',
         );
     }
 
-    # show FAQ Content
+    # Show FAQ Content.
     my $FAQBody = $LayoutObject->FAQContentShow(
         FAQObject       => $FAQObject,
         InterfaceStates => $InterfaceStates,
@@ -599,22 +583,21 @@ sub Run {
         ReturnContent   => 1,
     );
 
-    # get config of frontend module
+    # Get config of frontend module.
     my $Config = $ConfigObject->Get("FAQ::Frontend::$Self->{Action}");
 
-    # get the dynamic fields for this screen
+    # Get the dynamic fields for this screen.
     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => 'FAQ',
         FieldFilter => $Config->{DynamicField} || {},
     );
 
-    # cycle trough the activated Dynamic Fields for faq object
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get print string for this dynamic field
+        # Get print string for this dynamic field.
         my $ValueStrg = $Kernel::OM->Get('Kernel::System::DynamicField::Backend')->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $FAQData{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
@@ -652,7 +635,7 @@ sub Run {
             );
         }
 
-        # example of dynamic fields order customization
+        # Example of dynamic fields order customization.
         $LayoutObject->Block(
             Name => 'FAQDynamicField_' . $DynamicFieldConfig->{Name},
             Data => {
@@ -671,21 +654,21 @@ sub Run {
 
     if ( $Nav ne 'None' ) {
 
-        # show FAQ Voting
+        # Show FAQ Voting.
         if ($Voting) {
 
-            # get voting config
+            # Get voting config.
             my $ShowVotingConfig = $ConfigObject->Get('FAQ::Item::Voting::Show');
             if ( $ShowVotingConfig->{ $Interface->{Name} } ) {
 
-                # check if the user already voted after last change
+                # Check if the user already voted after last change.
                 if ( !$AlreadyVoted ) {
                     $Self->_FAQVoting( FAQData => {%FAQData} );
                 }
             }
         }
 
-        # get linked objects
+        # Get linked objects.
         my $LinkListWithData = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkListWithData(
             Object => 'FAQ',
             Key    => $GetParam{ItemID},
@@ -693,10 +676,9 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # get link table view mode
         my $LinkTableViewMode = $ConfigObject->Get('LinkObject::ViewMode');
 
-        # create the link table
+        # Create the link table.
         my $LinkTableStrg = $LayoutObject->LinkObjectTableCreate(
             LinkListWithData => $LinkListWithData,
             ViewMode         => $LinkTableViewMode,
@@ -704,7 +686,7 @@ sub Run {
             Key              => $GetParam{ItemID},
         );
 
-        # output the link table
+        # Output the link table.
         if ($LinkTableStrg) {
             $LayoutObject->Block(
                 Name => 'LinkTable' . $LinkTableViewMode,
@@ -715,17 +697,17 @@ sub Run {
         }
     }
 
-    # log access to this FAQ item
+    # Log access to this FAQ item.
     $FAQObject->FAQLogAdd(
         ItemID    => $ParamObject->GetParam( Param => 'ItemID' ),
         Interface => $Interface->{Name},
         UserID    => $Self->{UserID},
     );
 
-    # start template output
+    # Start template output.
     if ( $Nav && $Nav eq 'None' ) {
 
-        # only convert HTML to plain text if rich text editor is not used
+        # Only convert HTML to plain text if rich text editor is not used.
         if ( $ConfigObject->Get('Frontend::RichText') ) {
             $FAQData{FullBody} = $FAQBody;
         }
@@ -735,17 +717,17 @@ sub Run {
             );
         }
 
-        # get the public state type
+        # Get the public state type.
         my $PublicStateType = $FAQObject->StateTypeGet(
             Name   => 'public',
             UserID => $Self->{UserID},
         );
 
-        # remove in-line image links to FAQ images
+        # Remove in-line image links to FAQ images.
         $FAQData{FullBody}
             =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
 
-        # get configuration options for Ticket Compose
+        # Get configuration options for Ticket Compose.
         my $TicketComposeConfig = $ConfigObject->Get('FAQ::TicketCompose');
 
         $Param{UpdateArticleSubject} = $TicketComposeConfig->{UpdateArticleSubject} || 0;
@@ -764,7 +746,7 @@ sub Run {
 
         my $ShowOrBlock;
 
-        # show "Insert Text" button
+        # Show "Insert Text" button.
         if ( $TicketComposeConfig->{ShowInsertTextButton} ) {
             if (
                 defined $TicketComposeConfig->{InsertMethod}
@@ -786,21 +768,21 @@ sub Run {
             $ShowOrBlock = 1;
         }
 
-        # check if FAQ article is public
+        # Check if FAQ article is public.
         if ( $FAQData{StateTypeID} == $PublicStateType->{StateID} ) {
 
             my $HTTPType = $ConfigObject->Get('HttpType');
             my $FQDN     = $ConfigObject->Get('FQDN');
             my $Baselink = $LayoutObject->{Baselink};
 
-            # rewrite handle
+            # Rewrite handle.
             $Baselink
                 =~ s{ index[.]pl [?] }{public.pl?}gxms;
 
             $FAQData{Publiclink} = $HTTPType . '://' . $FQDN . $Baselink
                 . "Action=PublicFAQZoom;ItemID=$FAQData{ItemID}";
 
-            # show "Insert Link" button
+            #Sshow "Insert Link" button.
             if ( $TicketComposeConfig->{ShowInsertLinkButton} ) {
                 $LayoutObject->Block(
                     Name => 'InsertLink',
@@ -809,7 +791,7 @@ sub Run {
                 $ShowOrBlock = 1;
             }
 
-            # show "Insert Text and Link" button
+            # Show "Insert Text and Link" button.
             if ( $TicketComposeConfig->{ShowInsertTextAndLinkButton} ) {
                 if (
                     defined $TicketComposeConfig->{InsertMethod}
@@ -833,14 +815,14 @@ sub Run {
 
         my $CancelButtonClass = 'ZoomSmallButton';
 
-        # show the "Or" block between the buttons and the Cancel & close window label
+        # Show the "Or" block between the buttons and the Cancel & close window label.
         if ($ShowOrBlock) {
             $LayoutObject->Block(
                 Name => 'Or',
                 Data => {},
             );
 
-            # set the $CancelButtonClass to '';
+            # Set the $CancelButtonClass to ''.
             $CancelButtonClass = '';
         }
 
@@ -870,8 +852,6 @@ sub Run {
             },
         );
     }
-
-    # add footer
     if ( $Nav && $Nav eq 'None' ) {
         $Output .= $LayoutObject->Footer( Type => 'Small' );
     }
@@ -887,26 +867,23 @@ sub _FAQVoting {
 
     my %FAQData = %{ $Param{FAQData} };
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # output voting block
     $LayoutObject->Block(
         Name => 'FAQVoting',
         Data => {%FAQData},
     );
 
-    # get Voting rates setting
+    # Get Voting rates setting.
     my $VotingRates = $Kernel::OM->Get('Kernel::Config')->Get('FAQ::Item::Voting::Rates');
     for my $RateValue ( sort { $a <=> $b } keys %{$VotingRates} ) {
 
-        # create data structure for output
+        # Create data structure for output.
         my %Data = (
             Value => $RateValue,
             Title => $VotingRates->{$RateValue},
         );
 
-        # output vote rating row block
         $LayoutObject->Block(
             Name => 'FAQVotingRateRow',
             Data => {%Data},

@@ -19,14 +19,14 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get config for frontend
+    # Get config for frontend.
     $Self->{Config} = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::AgentFAQSearch");
 
-    # get the dynamic fields for FAQ object
+    # Get the dynamic fields for FAQ object.
     $Self->{DynamicField} = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(
         Valid       => 1,
         ObjectType  => 'FAQ',
@@ -41,14 +41,12 @@ sub Run {
 
     my $Output;
 
-    # get needed object
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # get config from the constructor
+    # Get config from constructor.
     my $Config = $Self->{Config};
 
-    # get config data
+    # Get config data.
     my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     my $SearchLimit = $Config->{SearchLimit} || 500;
     my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
@@ -63,10 +61,9 @@ sub Run {
     my $EraseTemplate  = $ParamObject->GetParam( Param => 'EraseTemplate' )  || '';
     my $Nav            = $ParamObject->GetParam( Param => 'Nav' )            || '';
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # search with a saved template
+    # Search with a saved template.
     if ( $ParamObject->GetParam( Param => 'SearchTemplate' ) && $Profile ) {
         return $LayoutObject->Redirect(
             OP =>
@@ -74,16 +71,13 @@ sub Run {
         );
     }
 
-    # get single params
+    # Get single params.
     my %GetParam;
 
-    # get dynamic field backend object
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+    my $SearchProfileObject       = $Kernel::OM->Get('Kernel::System::SearchProfile');
 
-    # get search profile object
-    my $SearchProfileObject = $Kernel::OM->Get('Kernel::System::SearchProfile');
-
-    # load profiles string params (press load profile)
+    # Load profiles string params (press load profile).
     if ( ( $Self->{Subaction} eq 'LoadProfile' && $Profile ) || $TakeLastSearch ) {
         %GetParam = $SearchProfileObject->SearchProfileGet(
             Base      => 'FAQSearch',
@@ -92,10 +86,10 @@ sub Run {
         );
     }
 
-    # get search string params (get submitted params)
+    # Get search string parameters (get submitted params).
     else {
 
-        # get scalar search params
+        # Get scalar search parameters from web request.
         for my $ParamName (
             qw(Number Title Keyword Fulltext ResultForm VoteSearch VoteSearchType VoteSearchOption
             RateSearch RateSearchType RateSearchOption ApprovedSearch
@@ -117,14 +111,14 @@ sub Run {
         {
             $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
 
-            # remove whitespace on the start and end
+            # Remove whitespace on the start and end.
             if ( $GetParam{$ParamName} ) {
                 $GetParam{$ParamName} =~ s{ \A \s+ }{}xms;
                 $GetParam{$ParamName} =~ s{ \s+ \z }{}xms;
             }
         }
 
-        # get array search params
+        # Get array search parameters from web request.
         for my $SearchParam (
             qw(CategoryIDs LanguageIDs ValidIDs StateIDs CreatedUserIDs LastChangedUserIDs)
             )
@@ -135,13 +129,12 @@ sub Run {
             }
         }
 
-        # get Dynamic fields from param object
-        # cycle trough the activated Dynamic Fields for this screen
+        # Get Dynamic fields from param object.
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # get search field preferences
+            # Get search field preferences.
             my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
@@ -151,7 +144,7 @@ sub Run {
             PREFERENCE:
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
-                # extract the dynamic field value from the web request
+                # Extract the dynamic field value from the web request.
                 my $DynamicFieldValue = $DynamicFieldBackendObject->SearchFieldValueGet(
                     DynamicFieldConfig     => $DynamicFieldConfig,
                     ParamObject            => $ParamObject,
@@ -160,7 +153,7 @@ sub Run {
                     Type                   => $Preference->{Type},
                 );
 
-                # set the complete value structure in GetParam to store it later in the search profile
+                # Set the complete value structure in GetParam to store it later in the search profile.
                 if ( IsHashRefWithData($DynamicFieldValue) ) {
                     %GetParam = ( %GetParam, %{$DynamicFieldValue} );
                 }
@@ -168,7 +161,7 @@ sub Run {
         }
     }
 
-    # get approved option
+    # Get approved option.
     if ( $GetParam{ApprovedSearch} && $GetParam{ApprovedSearch} eq 'Yes' ) {
         $GetParam{Approved} = 1;
     }
@@ -176,7 +169,7 @@ sub Run {
         $GetParam{Approved} = 0;
     }
 
-    # get vote option
+    # Get vote option.
     if ( !$GetParam{VoteSearchOption} ) {
         $GetParam{'VoteSearchOption::None'} = 'checked="checked"';
     }
@@ -184,7 +177,7 @@ sub Run {
         $GetParam{'VoteSearchOption::VotePoint'} = 'checked="checked"';
     }
 
-    # get rate option
+    # Get rate option.
     if ( !$GetParam{RateSearchOption} ) {
         $GetParam{'RateSearchOption::None'} = 'checked="checked"';
     }
@@ -192,7 +185,7 @@ sub Run {
         $GetParam{'RateSearchOption::RatePoint'} = 'checked="checked"';
     }
 
-    # get create time option
+    # Get create time option.
     if ( !$GetParam{TimeSearchType} ) {
         $GetParam{'TimeSearchType::None'} = 'checked="checked"';
     }
@@ -203,7 +196,7 @@ sub Run {
         $GetParam{'TimeSearchType::TimeSlot'} = 'checked="checked"';
     }
 
-    # get change time option
+    # Get change time option.
     if ( !$GetParam{ChangeTimeSearchType} ) {
         $GetParam{'ChangeTimeSearchType::None'} = 'checked="checked"';
     }
@@ -214,23 +207,24 @@ sub Run {
         $GetParam{'ChangeTimeSearchType::TimeSlot'} = 'checked="checked"';
     }
 
-    # set result form ENV
+    # Set result form ENV.
     if ( !$GetParam{ResultForm} ) {
         $GetParam{ResultForm} = '';
     }
 
-    # show result site
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    # Show result site.
     if ( $Self->{Subaction} eq 'Search' && !$EraseTemplate ) {
 
-        # fill up profile name (e.g. with last-search)
+        # Fill up profile name (e.g. with last-search).
         if ( !$Profile || !$SaveProfile ) {
             $Profile = 'last-search';
         }
 
-        # get session object
         my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
-        # store last overview screen
+        # Store last overview screen.
         my $URL = "Action=AgentFAQSearchSmall;Subaction=Search"
             . ";Profile=" . $LayoutObject->LinkEncode($Profile)
             . ";SortBy=" . $LayoutObject->LinkEncode($SortBy)
@@ -250,20 +244,20 @@ sub Run {
             Value     => $URL,
         );
 
-        # save search profile (under last-search or real profile name)
+        # Save search profile (under last-search or real profile name).
         $SaveProfile = 1;
 
-        # remember last search values
+        # Remember last search values.
         if ( $SaveProfile && $Profile ) {
 
-            # remove old profile stuff
+            # Remove old profile stuff.
             $SearchProfileObject->SearchProfileDelete(
                 Base      => 'FAQSearch',
                 Name      => $Profile,
                 UserLogin => $Self->{UserLogin},
             );
 
-            # insert new profile params
+            # Insert new profile parameters.
             for my $Key ( sort keys %GetParam ) {
                 if ( $GetParam{$Key} ) {
                     $SearchProfileObject->SearchProfileAdd(
@@ -277,14 +271,14 @@ sub Run {
             }
         }
 
-        # prepare votes search
+        # Prepare votes search.
         if ( IsNumber( $GetParam{VoteSearch} ) && $GetParam{VoteSearchOption} ) {
             $GetParam{Votes} = {
                 $GetParam{VoteSearchType} => $GetParam{VoteSearch}
             };
         }
 
-        # prepare rate search
+        # Prepare rate search.
         if ( IsNumber( $GetParam{RateSearch} ) && $GetParam{RateSearchOption} ) {
             $GetParam{Rate} = {
                 $GetParam{RateSearchType} => $GetParam{RateSearch}
@@ -298,10 +292,10 @@ sub Run {
 
         for my $TimeType ( sort keys %TimeMap ) {
 
-            # get create time settings
+            # Get create time settings.
             if ( !$GetParam{ $TimeMap{$TimeType} . 'SearchType' } ) {
 
-                # do nothing with time stuff
+                # Do nothing with time stuff.
             }
             elsif ( $GetParam{ $TimeMap{$TimeType} . 'SearchType' } eq 'TimeSlot' ) {
                 for my $Key (qw(Month Day)) {
@@ -361,17 +355,17 @@ sub Run {
                     }
                     if ( $GetParam{ $TimeType . 'TimePointStart' } eq 'Before' ) {
 
-                        # more than ... ago
+                        # More than ... ago.
                         $GetParam{ $TimeType . 'TimeOlderMinutes' } = $Time;
                     }
                     elsif ( $GetParam{ $TimeType . 'TimePointStart' } eq 'Next' ) {
 
-                        # within next
+                        # Within next.
                         $GetParam{ $TimeType . 'TimeNewerMinutes' } = 0;
                         $GetParam{ $TimeType . 'TimeOlderMinutes' } = -$Time;
                     }
                     else {
-                        # within last ...
+                        # Within last ...
                         $GetParam{ $TimeType . 'TimeOlderMinutes' } = 0;
                         $GetParam{ $TimeType . 'TimeNewerMinutes' } = $Time;
                     }
@@ -379,20 +373,18 @@ sub Run {
             }
         }
 
-        # prepare full-text search
+        # Prepare full-text search.
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
             $GetParam{What}          = $GetParam{Fulltext};
         }
 
-        # get valid list
         my %ValidList   = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
         my @AllValidIDs = keys %ValidList;
 
-        # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # set default interface settings
+        # Set default interface settings.
         my $Interface = $FAQObject->StateTypeGet(
             Name   => 'internal',
             UserID => $Self->{UserID},
@@ -402,7 +394,7 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # prepare search states
+        # Prepare search states.
         my $SearchStates;
         if ( !IsArrayRefWithData( $GetParam{StateIDs} ) ) {
             $SearchStates = $InterfaceStates;
@@ -416,29 +408,28 @@ sub Run {
             }
         }
 
-        # prepare votes search
+        # Prepare votes search.
         if ( IsNumber( $GetParam{VoteSearch} ) && $GetParam{VoteSearchOption} ) {
             $GetParam{Votes} = {
                 $GetParam{VoteSearchType} => $GetParam{VoteSearch}
             };
         }
 
-        # prepare rate search
+        # Prepare rate search.
         if ( IsNumber( $GetParam{RateSearch} ) && $GetParam{RateSearchOption} ) {
             $GetParam{Rate} = {
                 $GetParam{RateSearchType} => $GetParam{RateSearch}
             };
         }
 
-        # dynamic fields search parameters for FAQ search
+        # Dynamic fields search parameters for FAQ search.
         my %DynamicFieldSearchParameters;
 
-        # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-            # get search field preferences
+            # Get search field preferences.
             my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
@@ -448,7 +439,7 @@ sub Run {
             PREFERENCE:
             for my $Preference ( @{$SearchFieldPreferences} ) {
 
-                # extract the dynamic field value from the profile
+                # Extract the dynamic field value from the profile.
                 my $SearchParameter = $DynamicFieldBackendObject->SearchFieldParameterBuild(
                     DynamicFieldConfig => $DynamicFieldConfig,
                     Profile            => \%GetParam,
@@ -456,7 +447,7 @@ sub Run {
                     Type               => $Preference->{Type},
                 );
 
-                # set search parameter
+                # Set search parameter.
                 if ( defined $SearchParameter ) {
                     $DynamicFieldSearchParameters{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
                         = $SearchParameter->{Parameter};
@@ -464,7 +455,7 @@ sub Run {
             }
         }
 
-        # Get UserCategoryGroup Hash
+        # Get UserCategoryGroup Hash.
         # This returns a Hash of the following sample data structure:
         #
         # $UserCatGroup = {
@@ -479,10 +470,10 @@ sub Run {
         #   '2' => {}
         # };
         #
-        # Keys of the outer hash inform about subcategories
-        # 0 Shows top level CategoryIDs.
-        # 1 Shows the SubcategoryIDs of Category 1.
-        # 2 and 3 are empty hashes because these categories don't have subcategories.
+        # Keys of the outer hash inform about subcategories.
+        #   0 Shows top level CategoryIDs.
+        #   1 Shows the SubcategoryIDs of Category 1.
+        #   2 and 3 are empty hashes because these categories don't have subcategories.
         #
         # Keys of the inner hashes are CategoryIDs a user is allowed to have rw access to.
         # Values are the Category names.
@@ -492,37 +483,36 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # Find CategoryIDs the current User is allowed to view
+        # Find CategoryIDs the current User is allowed to view.
         my %AllowedCategoryIDs = ();
 
         if ( $UserCatGroup && ref $UserCatGroup eq 'HASH' ) {
 
-            # So now we have to extract all Category ID's of the "inner hashes".
-            # -> Loop through the outer category ID's
+            # So now we have to extract all CategoryID's of the "inner hashes"
+            #   -> Loop through the outer CategoryID's.
             for my $Level ( sort keys %{$UserCatGroup} ) {
 
                 # Check if the Value of the current hash key is a hash ref
                 if ( $UserCatGroup->{$Level} && ref $UserCatGroup->{$Level} eq 'HASH' ) {
 
-                    # Map the keys of the inner hash to a TempIDs hash
+                    # Map the keys of the inner hash to a TempIDs hash.
                     # Original Datastructure:
-                    # {
-                    #  '1' => 'Misc',
-                    #  '2' => 'secret'
-                    # }
+                    #   {
+                    #       '1' => 'Misc',
+                    #       '2' => 'secret'
+                    #   }
                     #
-                    # after mapping:
+                    #   after mapping:
                     #
-                    # {
-                    #  '1' => 1,
-                    #  '2' => 1'
-                    # }
+                    #   {
+                    #       '1' => 1,
+                    #       '2' => 1'
+                    #   }
 
                     my %TempIDs = map { $_ => 1 } keys %{ $UserCatGroup->{$Level} };
 
-                    # Put the TempIDs over the formally found AllowedCategorys
-                    # to produce a hash that holds all CategoryID as keys
-                    # and the number 1 as values.
+                    # Put the TempIDs over the formally found AllowedCategorys to produce a hash
+                    #   that holds all CategoryID as keys and the number 1 as values.
                     %AllowedCategoryIDs = (
                         %AllowedCategoryIDs,
                         %TempIDs
@@ -531,8 +521,7 @@ sub Run {
             }
         }
 
-        # For the database query it's necessary to have an array
-        # of CategoryIDs
+        # For the database query it's necessary to have an array of CategoryIDs.
         my @CategoryIDs = ();
 
         if (%AllowedCategoryIDs) {
@@ -543,24 +532,24 @@ sub Run {
         #    temper with the categories drop-box, a check is needed.
         #
         # "Map" copy from one array to another, while "grep" will only let pass the categories
-        #    that are defined in the %AllowedCategoryIDs hash
+        #    that are defined in the %AllowedCategoryIDs hash.
         if ( IsArrayRefWithData( $GetParam{CategoryIDs} ) ) {
             @{ $GetParam{CategoryIDs} } = map {$_} grep { $AllowedCategoryIDs{$_} } @{ $GetParam{CategoryIDs} };
         }
 
         # Just search if we do have categories, we have access to.
         # If we don't have access to any category, a search with no CategoryIDs
-        # would result in finding all categories.
+        #   would result in finding all categories.
         #
         # It is not possible to create FAQ's without categories
-        # so at least one category has to be present
+        #   so at least one category has to be present.
 
         my @ViewableItemIDs = ();
 
         if (@CategoryIDs) {
 
-            # perform FAQ search
-            # default search on all valid ids, this can be overwritten by %GetParam
+            # Perform FAQ search.
+            # Default search on all valid ids, this can be overwritten by %GetParam.
             @ViewableItemIDs = $FAQObject->FAQSearch(
                 OrderBy             => [$SortBy],
                 OrderByDirection    => [$OrderBy],
@@ -577,7 +566,7 @@ sub Run {
             );
         }
 
-        # start HTML page
+        # Start HTML page.
         my $Output = $LayoutObject->Header(
             Type => 'Small',
         );
@@ -589,7 +578,7 @@ sub Run {
         my $Filter = $ParamObject->GetParam( Param => 'Filter' ) || '';
         my $View   = $ParamObject->GetParam( Param => 'View' )   || '';
 
-        # show FAQ's
+        # Show FAQ's.
         my $LinkPage = 'Filter='
             . $LayoutObject->LinkEncode($Filter)
             . ';View=' . $LayoutObject->LinkEncode($View)
@@ -621,21 +610,21 @@ sub Run {
             . ';Nav=' . $Nav
             . ';';
 
-        # find out which columns should be shown
+        # Find out which columns should be shown.
         my @ShowColumns;
         if ( $Config->{ShowColumns} ) {
 
-            # get all possible columns from config
+            # Get all possible columns from config.
             my %PossibleColumn = %{ $Config->{ShowColumns} };
 
-            # get the column names that should be shown
+            # Get the column names that should be shown.
             COLUMNNAME:
             for my $Name ( sort keys %PossibleColumn ) {
                 next COLUMNNAME if !$PossibleColumn{$Name};
                 push @ShowColumns, $Name;
             }
 
-            # enforce FAQ number column since is the link MasterAction hook
+            # Enforce FAQ number column since is the link MasterAction hook.
             if ( !$PossibleColumn{'Number'} ) {
                 push @ShowColumns, 'Number';
             }
@@ -667,7 +656,6 @@ sub Run {
             Nav         => $Nav,
         );
 
-        # build footer
         $Output .= $LayoutObject->Footer(
             Type => 'Small',
         );
@@ -679,7 +667,6 @@ sub Run {
             Type => 'Small',
         );
 
-        # create output
         $Output .= $Self->_MaskForm(
             Nav => $Nav,
             %GetParam,
@@ -695,25 +682,21 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get list type
     my $TreeView = 0;
     if ( $ConfigObject->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
     }
 
-    # get profiles list
     my %Profiles = $Kernel::OM->Get('Kernel::System::SearchProfile')->SearchProfileList(
         Base      => 'FAQSearch',
         UserLogin => $Self->{UserLogin},
     );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # build profiles output list
+    # Build profiles output list.
     $Param{ProfilesStrg} = $LayoutObject->BuildSelection(
         Data         => {%Profiles},
         PossibleNone => 1,
@@ -722,15 +705,13 @@ sub _MaskForm {
         Class        => 'Modernize',
     );
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get languages list
     my %Languages = $FAQObject->LanguageList(
         UserID => $Self->{UserID},
     );
 
-    # drop-down menu for 'languages'
+    # Drop-down menu for 'languages'.
     $Param{LanguagesSelectionStrg} = $LayoutObject->BuildSelection(
         Data       => \%Languages,
         Name       => 'LanguageIDs',
@@ -740,13 +721,13 @@ sub _MaskForm {
         Class      => 'Modernize',
     );
 
-    # get categories (with category long names) where user has rights
+    # Get categories (with category long names) where user has rights.
     my $UserCategoriesLongNames = $FAQObject->GetUserCategoriesLongNames(
         Type   => 'ro',
         UserID => $Self->{UserID},
     );
 
-    # build the category selection
+    # Build the category selection.
     $Param{CategoriesSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
@@ -758,10 +739,9 @@ sub _MaskForm {
         Class       => 'Modernize',
     );
 
-    # get valid list
     my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
 
-    # build the valid selection
+    # Build the valid selection.
     $Param{ValidSelectionStrg} = $LayoutObject->BuildSelection(
         Data        => \%ValidList,
         Name        => 'ValidIDs',
@@ -772,8 +752,7 @@ sub _MaskForm {
         Class       => 'Modernize',
     );
 
-    # create a mix of state and state types hash in order to have the state type IDs with state
-    # names
+    # Create a mix of state and state types hash in order to have the state type IDs with state names.
     my %StateList = $FAQObject->StateList(
         UserID => $Self->{UserID},
     );
@@ -854,17 +833,16 @@ sub _MaskForm {
         Class        => 'Modernize',
     );
 
-    # get a list of all users to display
+    # Get a list of all users to display.
     my %ShownUsers = $Kernel::OM->Get('Kernel::System::User')->UserList(
         Type  => 'Long',
         Valid => 1,
     );
 
-    # get the UserIDs from FAQ and faq_admin members
+    # Get the UserIDs from FAQ and faq_admin members.
     my %GroupUsers;
     for my $Group (qw(faq faq_admin)) {
 
-        # get group object
         my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
         my $GroupID = $GroupObject->GroupLookup( Group => $Group );
@@ -876,7 +854,7 @@ sub _MaskForm {
         %GroupUsers = ( %GroupUsers, %Users );
     }
 
-    # remove all users that are not in the FAQ or faq_admin groups
+    # Remove all users that are not in the FAQ or faq_admin groups.
     for my $UserID ( sort keys %ShownUsers ) {
         if ( !$GroupUsers{$UserID} ) {
             delete $ShownUsers{$UserID};
@@ -973,18 +951,16 @@ sub _MaskForm {
         Format => 'DateInputFormat',
     );
 
-    # create HTML strings for all dynamic fields
+    # Create HTML strings for all dynamic fields.
     my %DynamicFieldHTML;
 
-    # get dynamic field backend object
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
-    # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get search field preferences
+        # Get search field preferences.
         my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
             DynamicFieldConfig => $DynamicFieldConfig,
         );
@@ -994,7 +970,7 @@ sub _MaskForm {
         PREFERENCE:
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            # get field HTML
+            # Get field HTML.
             $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
                 = $DynamicFieldBackendObject->SearchFieldRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
@@ -1007,13 +983,11 @@ sub _MaskForm {
         }
     }
 
-    # HTML search mask output
     $LayoutObject->Block(
         Name => 'Search',
         Data => {%Param},
     );
 
-    # show languages select
     my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
     if ($MultiLanguage) {
         $LayoutObject->Block(
@@ -1022,13 +996,12 @@ sub _MaskForm {
         );
     }
 
-    # output Dynamic fields blocks
-    # cycle trough the activated Dynamic Fields for this screen
+    # Output Dynamic fields blocks.
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
-        # get search field preferences
+        # Get search field preferences.
         my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
             DynamicFieldConfig => $DynamicFieldConfig,
         );
@@ -1038,7 +1011,7 @@ sub _MaskForm {
         PREFERENCE:
         for my $Preference ( @{$SearchFieldPreferences} ) {
 
-            # skip fields that HTML could not be retrieved
+            # Skip fields that HTML could not be retrieved.
             next PREFERENCE if !IsHashRefWithData(
                 $DynamicFieldHTML{ $DynamicFieldConfig->{Name} . $Preference->{Type} }
             );
@@ -1057,7 +1030,6 @@ sub _MaskForm {
         }
     }
 
-    # HTML search mask output
     return $LayoutObject->Output(
         TemplateFile => 'AgentFAQSearchSmall',
         Data         => {%Param},
