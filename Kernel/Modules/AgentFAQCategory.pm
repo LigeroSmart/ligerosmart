@@ -18,7 +18,7 @@ our $ObjectManagerDisabled = 1;
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -28,10 +28,9 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # permission check
+    # Permission check.
     if ( !$Self->{AccessRw} ) {
         return $LayoutObject->NoPermission(
             Message    => Translatable('You need rw permission!'),
@@ -39,56 +38,48 @@ sub Run {
         );
     }
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    # get parameters
+    # Get parameters from web request.
     my %GetParam;
     for my $ParamName (qw(CategoryID Name ParentID Comment ValidID)) {
         $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName );
     }
 
-    # set default category id
+    # Set defaults
     $GetParam{CategoryID} ||= 0;
+    $GetParam{ParentID}   ||= 0;
 
-    # set default parent id
-    $GetParam{ParentID} ||= 0;
-
-    # get array parameters
+    # Get array parameters from web request.
     @{ $GetParam{PermissionGroups} } = $ParamObject->GetArray( Param => 'PermissionGroups' );
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # ------------------------------------------------------------ #
-    # change
+    # Change
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
 
-        # check required parameters
         if ( !$GetParam{CategoryID} ) {
             $LayoutObject->FatalError(
                 Message => Translatable('Need CategoryID!'),
             );
         }
 
-        # get category data
         my %CategoryData = $FAQObject->CategoryGet(
             CategoryID => $GetParam{CategoryID},
             UserID     => $Self->{UserID},
         );
 
-        # get permission groups
+        # Get permission groups.
         $CategoryData{PermissionGroups} = $FAQObject->CategoryGroupGet(
             CategoryID => $GetParam{CategoryID},
             UserID     => $Self->{UserID},
         );
 
-        # header
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
-        # HTML output
         $Self->_Edit(
             Action => 'Change',
             %CategoryData,
@@ -98,25 +89,22 @@ sub Run {
             Data         => \%Param,
         );
 
-        # footer
         $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
 
     # ------------------------------------------------------------ #
-    # change action
+    # Change action
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'ChangeAction' ) {
 
-        # challenge token check for write action
+        # Challenge token check for write action.
         $LayoutObject->ChallengeTokenCheck();
 
-        # header
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
-        # check required parameters
         for my $ParamName (qw(ParentID ValidID)) {
             if ( !defined $GetParam{$ParamName} ) {
 
@@ -126,27 +114,39 @@ sub Run {
             }
         }
 
-        # check required parameters
         my %Error;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
 
-            # if required field is not given
             if ( !$GetParam{$ParamName} ) {
 
-                # add server error error class
+                # Add server error error class.
                 $Error{ $ParamName . 'ServerError' } = 'ServerError';
 
-                # add server error string for category name field
+                # Add server error string for category name field.
                 if ( $ParamName eq 'Name' ) {
                     $Error{NameServerErrorMessage} = Translatable('A category should have a name!');
                 }
             }
         }
 
-        # send server error if any required parameter is missing
+        if ( $GetParam{Name} ) {
+
+            # Check for duplicate category name with the same parent category.
+            my $CategoryExistsAlready = $FAQObject->CategoryDuplicateCheck(
+                CategoryID => $GetParam{CategoryID},
+                Name       => $GetParam{Name},
+                ParentID   => $GetParam{ParentID},
+                UserID     => $Self->{UserID},
+            );
+            if ($CategoryExistsAlready) {
+                $Error{NameServerError}        = 'ServerError';
+                $Error{NameServerErrorMessage} = Translatable('This category already exists');
+            }
+        }
+
+        # Send server error if any required parameter is missing or wrong.
         if (%Error) {
 
-            # HTML output
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
@@ -156,90 +156,48 @@ sub Run {
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
-
-            # footer
             $Output .= $LayoutObject->Footer();
 
             return $Output;
         }
 
-        # check for duplicate category name with the same parent category
-        my $CategoryExistsAlready = $FAQObject->CategoryDuplicateCheck(
-            CategoryID => $GetParam{CategoryID},
-            Name       => $GetParam{Name},
-            ParentID   => $GetParam{ParentID},
-            UserID     => $Self->{UserID},
-        );
-
-        # show the edit screen again
-        if ($CategoryExistsAlready) {
-
-            # set server errors
-            $GetParam{NameServerError}        = 'ServerError';
-            $GetParam{NameServerErrorMessage} = Translatable('This category already exists');
-
-            # HTML output
-            $Self->_Edit(
-                Action => 'Change',
-                %GetParam,
-            );
-            $Output .= $LayoutObject->Output(
-                TemplateFile => 'AgentFAQCategory',
-                Data         => \%Param,
-            );
-
-            # footer
-            $Output .= $LayoutObject->Footer();
-
-            return $Output;
-        }
-
-        # update category
         my $CategoryUpdateSuccessful = $FAQObject->CategoryUpdate(
             %GetParam,
             UserID => $Self->{UserID},
         );
-
-        # check error
         if ( !$CategoryUpdateSuccessful ) {
             return $LayoutObject->ErrorScreen();
         }
 
-        # set category group
         $FAQObject->SetCategoryGroup(
             CategoryID => $GetParam{CategoryID},
             GroupIDs   => $GetParam{PermissionGroups},
             UserID     => $Self->{UserID},
         );
 
-        # show notification
+        # Show notification.
         $Output .= $LayoutObject->Notify(
             Info => Translatable('FAQ category updated!'),
         );
 
-        # show overview
         $Self->_Overview();
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
-
-        # footer
         $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
 
     # ------------------------------------------------------------ #
-    # add
+    # Add
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Add' ) {
 
-        # header
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
-        # HTML output
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
@@ -249,7 +207,6 @@ sub Run {
             Data         => \%Param,
         );
 
-        # footer
         $Output .= $LayoutObject->Footer();
 
         return $Output;
@@ -260,14 +217,13 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'AddAction' ) {
 
-        # challenge token check for write action
+        # Challenge token check for write action.
         $LayoutObject->ChallengeTokenCheck();
 
-        # header
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
-        # check required parameters
+        # Check required parameters.
         for my $ParamName (qw(ParentID ValidID)) {
             if ( !defined $GetParam{$ParamName} ) {
                 return $LayoutObject->FatalError(
@@ -276,26 +232,39 @@ sub Run {
             }
         }
 
-        # check required parameters
+        # Check required parameters
         my %Error;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
 
-            # if required field is not given
+            # If required field is not given.
             if ( !$GetParam{$ParamName} ) {
 
-                # add validation class and server error error class
-                if ( $ParamName eq 'PermissionGroups' ) {
-                    $Error{ $ParamName . 'ServerError' } = 'ServerError';
-                }
+                # Add validation class and server error error class.
+                $Error{ $ParamName . 'ServerError' } = 'ServerError';
 
-                # add server error string for category name field
+                # Add server error string for category name field.
                 if ( $ParamName eq 'Name' ) {
                     $Error{NameServerErrorMessage} = Translatable('A category should have a name!');
                 }
             }
         }
 
-        # send server error if any required parameters are missing
+        if ( $GetParam{Name} ) {
+
+            # Check for duplicate category name with the same parent category
+            my $CategoryExistsAlready = $FAQObject->CategoryDuplicateCheck(
+                CategoryID => $GetParam{CategoryID},
+                Name       => $GetParam{Name},
+                ParentID   => $GetParam{ParentID},
+                UserID     => $Self->{UserID},
+            );
+            if ($CategoryExistsAlready) {
+                $Error{NameServerError}        = 'ServerError';
+                $Error{NameServerErrorMessage} = Translatable('This category already exists!');
+            }
+        }
+
+        # Send server error if any required parameters are missing or wrong
         if (%Error) {
 
             # HTML output
@@ -315,82 +284,43 @@ sub Run {
             return $Output;
         }
 
-        # check for duplicate category name with the same parent category
-        my $CategoryExistsAlready = $FAQObject->CategoryDuplicateCheck(
-            CategoryID => $GetParam{CategoryID},
-            Name       => $GetParam{Name},
-            ParentID   => $GetParam{ParentID},
-            UserID     => $Self->{UserID},
-        );
-
-        # show the edit screen again
-        if ($CategoryExistsAlready) {
-
-            # set server errors
-            $GetParam{NameServerError}        = 'ServerError';
-            $GetParam{NameServerErrorMessage} = Translatable('This category already exists!');
-
-            # HTML output
-            $Self->_Edit(
-                Action => 'Add',
-                %GetParam,
-            );
-            $Output .= $LayoutObject->Output(
-                TemplateFile => 'AgentFAQCategory',
-                Data         => \%Param,
-            );
-
-            # footer
-            $Output .= $LayoutObject->Footer();
-
-            return $Output;
-        }
-
-        # add new category
+        # Add new category.
         my $CategoryID = $FAQObject->CategoryAdd(
             %GetParam,
             UserID => $Self->{UserID},
         );
-
-        # check error
         if ( !$CategoryID ) {
             return $LayoutObject->ErrorScreen();
         }
 
-        # set category group
         $FAQObject->SetCategoryGroup(
             CategoryID => $CategoryID,
             GroupIDs   => $GetParam{PermissionGroups},
             UserID     => $Self->{UserID},
         );
 
-        # show notification
+        # Show notification.
         $Output .= $LayoutObject->Notify(
             Info => Translatable('FAQ category added!'),
         );
 
-        # show overview
+        # Show overview.
         $Self->_Overview();
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
-
-        # footer
         $Output .= $LayoutObject->Footer();
 
         return $Output;
     }
 
     # ------------------------------------------------------------ #
-    # delete
+    # Delete
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Delete' ) {
 
-        # get the CategoryID
         my $CategoryID = $ParamObject->GetParam( Param => 'CategoryID' ) || '';
-
-        # check required parameters
         if ( !$CategoryID ) {
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('No CategoryID is given!'),
@@ -398,42 +328,39 @@ sub Run {
             );
         }
 
-        # get category data
         my %CategoryData = $FAQObject->CategoryGet(
             CategoryID => $CategoryID,
             UserID     => $Self->{UserID},
         );
-
         if ( !%CategoryData ) {
             return $LayoutObject->ErrorScreen();
         }
 
-        # get all affected FAQ articles
+        # Get all affected FAQ articles
         my @AffectedItems = $FAQObject->FAQSearch(
             CategoryIDs => [$CategoryID],
             UserID      => 1,
         );
 
-        # get all affected SubCcategories
+        # Get all affected SubCcategories.
         my $AffectedSubCategories = $FAQObject->CategorySubCategoryIDList(
             ParentID => $CategoryID,
             Mode     => 'Agent',
             UserID   => 1,
         );
 
-        # call Delete block
         $LayoutObject->Block(
             Name => 'Delete',
             Data => {%CategoryData},
         );
 
-        # set the dialog type. As default, the dialog will have 2 buttons: Yes and No
+        # Set the dialog type. As default, the dialog will have 2 buttons: Yes and No.
         my $DialogType = 'Confirmation';
 
-        # display list of affected FAQ articles or SubCategories
+        # Display list of affected FAQ articles or SubCategories.
         if ( @AffectedItems || @{$AffectedSubCategories} ) {
 
-            # set the dialog type to have only 1 button: OK
+            # Set the dialog type to have only 1 button: OK.
             $DialogType = 'Message';
 
             $LayoutObject->Block(
@@ -441,7 +368,7 @@ sub Run {
                 Data => {},
             );
 
-            # display Affected FAQ articles
+            # Display Affected FAQ articles.
             if (@AffectedItems) {
 
                 $LayoutObject->Block(
@@ -452,14 +379,11 @@ sub Run {
                 ITEMID:
                 for my $ItemID (@AffectedItems) {
 
-                    # get FAQ article
                     my %FAQData = $FAQObject->FAQGet(
                         ItemID     => $ItemID,
                         ItemFields => 0,
                         UserID     => $Self->{UserID},
                     );
-
-                    # check FAQ article
                     next ITEMID if !%FAQData;
 
                     $LayoutObject->Block(
@@ -472,10 +396,10 @@ sub Run {
                 }
             }
 
-            # display Affected Subcategories
+            # Display Affected Subcategories.
             if ( @{$AffectedSubCategories} ) {
 
-                # get categories long names
+                # Get categories long names.
                 my $CategoryLongNames = $FAQObject->GetUserCategoriesLongNames(
                     Type   => 'ro',
                     UserID => 1,
@@ -487,16 +411,14 @@ sub Run {
                 CATEGORYID:
                 for my $CategoryID ( @{$AffectedSubCategories} ) {
 
-                    # get category
                     my %CategoryData = $FAQObject->CategoryGet(
                         CategoryID => $CategoryID,
                         UserID     => $Self->{UserID},
                     );
 
-                    # set category long name
+                    # Set category long name.
                     $CategoryData{LongName} = $CategoryLongNames->{$CategoryID};
 
-                    # check category
                     next CATEGORYID if !%CategoryData;
 
                     $LayoutObject->Block(
@@ -508,7 +430,6 @@ sub Run {
                     );
                 }
             }
-
         }
         else {
             $LayoutObject->Block(
@@ -517,19 +438,18 @@ sub Run {
             );
         }
 
-        # output content
         my $Output = $LayoutObject->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => {},
         );
 
-        # build the returned data structure
+        # Build the returned data structure.
         my %Data = (
             HTML       => $Output,
             DialogType => $DialogType,
         );
 
-        # return JSON-String because of AJAX-Mode
+        # Return JSON-String because of AJAX-Mode.
         my $OutputJSON = $LayoutObject->JSONEncode( Data => \%Data );
 
         return $LayoutObject->Attachment(
@@ -545,10 +465,8 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'DeleteAction' ) {
 
-        # get the CategoryID
         my $CategoryID = $ParamObject->GetParam( Param => 'CategoryID' ) || '';
 
-        # check required parameters
         if ( !$CategoryID ) {
             return $LayoutObject->ErrorScreen(
                 Message => Translatable('No CategoryID is given!'),
@@ -556,7 +474,6 @@ sub Run {
             );
         }
 
-        # get category data
         my %CategoryData = $FAQObject->CategoryGet(
             CategoryID => $CategoryID,
             UserID     => $Self->{UserID},
@@ -566,7 +483,7 @@ sub Run {
             return $LayoutObject->ErrorScreen();
         }
 
-        # delete the category
+        # Delete the category.
         my $CouldDeleteCategory = $FAQObject->CategoryDelete(
             CategoryID => $CategoryID,
             UserID     => $Self->{UserID},
@@ -574,14 +491,14 @@ sub Run {
 
         if ($CouldDeleteCategory) {
 
-            # redirect to explorer, when the deletion was successful
+            # Redirect to explorer, when the deletion was successful.
             return $LayoutObject->Redirect(
                 OP => "Action=AgentFAQCategory",
             );
         }
         else {
 
-            # show error message, when delete failed
+            # Show error message, when delete failed.
             return $LayoutObject->ErrorScreen(
                 Message => $LayoutObject->{LanguageObject}->Translate(
                     'Was not able to delete the category %s!',
@@ -593,15 +510,13 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # overview
+    # Overview
     # ---------------------------------------------------------- #
     else {
 
-        # header
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
-        # HTML output
         $Self->_Overview();
         $Output .= $LayoutObject->Output(
             TemplateFile => 'AgentFAQCategory',
@@ -610,8 +525,6 @@ sub Run {
                 %GetParam,
             },
         );
-
-        # footer
         $Output .= $LayoutObject->Footer();
 
         return $Output;
@@ -621,16 +534,12 @@ sub Run {
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # show overview
     $LayoutObject->Block(
         Name => 'Overview',
         Data => \%Param,
     );
-
-    # output overview blocks
     $LayoutObject->Block(
         Name => 'ActionList',
         Data => {},
@@ -640,13 +549,12 @@ sub _Edit {
         Data => {},
     );
 
-    # get the valid list
     my %ValidList        = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     my %ValidListReverse = reverse %ValidList;
 
     my %Data;
 
-    # build the valid selection
+    # Build the valid selection.
     $Data{ValidOption} = $LayoutObject->BuildSelection(
         Data       => \%ValidList,
         Name       => 'ValidID',
@@ -654,15 +562,15 @@ sub _Edit {
         Class      => 'Modernize',
     );
 
-    # get all valid groups
+    # Get all valid groups.
     my %Groups = $Kernel::OM->Get('Kernel::System::Group')->GroupList(
         Valid => 1,
     );
 
-    # set no server error class as default
+    # Set no server error class as default.
     $Param{PermissionGroupsServerError} ||= '';
 
-    # build the group selection
+    # Build the group selection.
     $Data{GroupOption} = $LayoutObject->BuildSelection(
         Data       => \%Groups,
         Name       => 'PermissionGroups',
@@ -671,13 +579,13 @@ sub _Edit {
         SelectedID => $Param{PermissionGroups},
     );
 
-    # get all categories with their long names
+    # Get all categories with their long names.
     my $CategoryTree = $Kernel::OM->Get('Kernel::System::FAQ')->CategoryTreeList(
         Valid  => 0,
         UserID => $Self->{UserID},
     );
 
-    # build the category selection
+    # Build the category selection.
     $Data{CategoryOption} = $LayoutObject->BuildSelection(
         Data           => $CategoryTree,
         Name           => 'ParentID',
@@ -696,7 +604,6 @@ sub _Edit {
         },
     );
 
-    # show header
     if ( $Param{Action} eq 'Change' ) {
         $LayoutObject->Block(
             Name => 'HeaderEdit',
@@ -718,10 +625,8 @@ sub _Overview {
 
     my $Output = '';
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # output overview blocks
     $LayoutObject->Block(
         Name => 'Overview',
         Data => {},
@@ -739,27 +644,25 @@ sub _Overview {
         Data => {},
     );
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get all categories with their long names
+    # Get all categories with their long names.
     my $CategoryTree = $FAQObject->CategoryTreeList(
         Valid  => 0,
         UserID => $Self->{UserID},
     );
 
-    # if there are any categories, they are shown
+    # If there are any categories, they are shown.
     if ( $CategoryTree && ref $CategoryTree eq 'HASH' && %{$CategoryTree} ) {
 
-        # get the valid list
         my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
 
-        # sort the category ids by the long category name
+        # Sort the category ids by the long category name.
         my @CategoryIDsSorted = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
 
         my %JSData;
 
-        # show all categories
+        # Show all categories.
         for my $CategoryID (@CategoryIDsSorted) {
 
             # Create structure for JS.
@@ -777,19 +680,19 @@ sub _Overview {
                 },
             };
 
-            # get category data
+            # Get category data.
             my %CategoryData = $FAQObject->CategoryGet(
                 CategoryID => $CategoryID,
                 UserID     => $Self->{UserID},
             );
 
-            # get valid string based on ValidID
+            # Get valid string based on ValidID.
             $CategoryData{Valid} = $ValidList{ $CategoryData{ValidID} };
 
-            # overwrite the name with the long name
+            # Overwrite the name with the long name.
             $CategoryData{Name} = $CategoryTree->{$CategoryID};
 
-            # output the category data
+            # Output the category data.
             $LayoutObject->Block(
                 Name => 'OverviewResultRow',
                 Data => {%CategoryData},
@@ -802,7 +705,7 @@ sub _Overview {
         );
     }
 
-    # otherwise a no data found message is displayed
+    # Otherwise a no data found message is displayed.
     else {
         $LayoutObject->Block(
             Name => 'NoDataFoundMsg',
