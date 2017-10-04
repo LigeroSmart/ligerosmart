@@ -16,22 +16,21 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
-
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # do not really send emails
+        # Do not really send emails.
         $Helper->ConfigSettingChange(
             Key   => 'SendmailModule',
             Value => 'Kernel::System::Email::DoNotSendEmail',
         );
 
-        # Do not check email adresses in this test.
+        # Do not check email addresses in this test.
         $Helper->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0,
         );
 
-        # set send period to always send survey
+        # Set send period to zero to always send survey.
         $Helper->ConfigSettingChange(
             Key   => 'Survey::SendPeriod',
             Value => 0,
@@ -43,7 +42,7 @@ $Selenium->RunTest(
             Value => 0,
         );
 
-        # Create test Survey.
+        # Create test survey.
         my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
         my $SurveyTitle  = 'Survey ' . $Helper->GetRandomID();
         my $SurveyID     = $SurveyObject->SurveyAdd(
@@ -58,10 +57,10 @@ $Selenium->RunTest(
         );
         $Self->True(
             $SurveyID,
-            "Survey ID $SurveyID is created",
+            "Survey ID $SurveyID is created"
         );
 
-        # Add question to test Survey.
+        # Add question to test survey.
         my $QuestionName = 'Question ' . $Helper->GetRandomID();
         $SurveyObject->QuestionAdd(
             UserID         => 1,
@@ -71,25 +70,26 @@ $Selenium->RunTest(
             Type           => 'YesNo',
         );
 
-        # Get QuestionID from the test Survey.
+        # Get question ID from the test survey.
         my @QuestionList = $SurveyObject->QuestionList(
             SurveyID => $SurveyID,
         );
         my $QuestionID = $QuestionList[0]->{QuestionID};
 
-        # Set test Survey on master status.
+        # Set test survey on master status.
         my $StatusSet = $SurveyObject->SurveyStatusSet(
             SurveyID  => $SurveyID,
-            NewStatus => 'Master'
+            NewStatus => 'Master',
         );
 
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
         my $DBObject     = $Kernel::OM->Get('Kernel::System::DB');
-        my $ScriptAlias  = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # my $ArticleBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
-        #     ChannelName => 'Email',
-        # );
+        my $ArticleInternalBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
+            ChannelName => 'Internal',
+        );
+
+        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         my @TicketNumbers;
         my @TicketIDs;
@@ -111,16 +111,12 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $TicketID,
-                "Ticket ID $TicketID is created",
+                "Ticket ID $TicketID is created"
             );
             push @TicketIDs,     $TicketID;
             push @TicketNumbers, $TicketNumber;
 
-            my $ArticleInternalBackendObject = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel(
-                ChannelName => 'Internal',
-            );
-
-            # Add article to test created ticket.
+            # Add article to test ticket.
             my $ArticleID = $ArticleInternalBackendObject->ArticleCreate(
                 TicketID             => $TicketID,
                 IsVisibleForCustomer => 0,
@@ -142,51 +138,46 @@ $Selenium->RunTest(
 
             $Self->True(
                 $TicketID,
-                "Article ID $ArticleID is created",
+                "Article ID $ArticleID is created"
             );
 
-            # Send Survey request.
+            # Send survey request.
             my $Request = $SurveyObject->RequestSend(
                 TicketID => $TicketID,
             );
 
             $Self->True(
                 $Request,
-                "Survey request is sent",
+                'Survey request is sent'
             );
 
-            # get DB object
-            my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
-
-            # Get public Survey key from test Survey request
+            # Get public survey key from test survey request.
             $DBObject->Prepare(
-                SQL  => "SELECT public_survey_key FROM survey_request WHERE survey_id = ?",
-                Bind => [ \$SurveyID ],
+                SQL  => "SELECT public_survey_key FROM survey_request WHERE survey_id = ? AND ticket_id = ?",
+                Bind => [ \$SurveyID, \$TicketID ],
             );
             my $PublicSurveyKey;
             while ( my @Row = $DBObject->FetchrowArray() ) {
                 $PublicSurveyKey = $Row[0];
             }
 
-            $Kernel::OM->Get('Kernel::System::Log')
-                ->Dumper( 'Debug - ModuleName', '$PublicSurveyKey', \$PublicSurveyKey );
-
             # Create public answer votes.
             if ( $Count == '1' ) {
 
-                # Navigate to PublicSurvey of created test Survey, add public answer via frontend.
+                # Navigate to public page of created test survey and add public answer via frontend.
                 $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
 
-                # Select 'Yes' as answer.
+                # Select 'Yes' as an answer.
                 $Selenium->find_element("//input[\@value='Yes'][\@type='radio']")->VerifiedClick();
                 $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->VerifiedClick();
             }
+
+            # Add public vote via backend.
             else {
 
                 # Sleep one second between public answer.
                 sleep 1;
 
-                # Add public vote via backend.
                 $SurveyObject->PublicAnswerSet(
                     PublicSurveyKey => $PublicSurveyKey,
                     QuestionID      => $QuestionID,
@@ -210,10 +201,10 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # Navigate to AgentSurveyZoom of created test Survey.
+        # Navigate to zoom screen of created test survey.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
-        # Click on Survey 'Stats Details' and switch window.
+        # Click on survey 'Stats Details' and switch window.
         $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->VerifiedClick();
 
         $Selenium->WaitFor( WindowCount => 2 );
@@ -234,75 +225,75 @@ $Selenium->RunTest(
         $Selenium->find_element( "table thead tr th", 'css' );
         $Selenium->find_element( "table tbody tr td", 'css' );
 
-        # Verify stats are for right ticket.
+        # Verify stats are present for all tickets.
         for my $TicketNumber (@TicketNumbers) {
             $Self->True(
                 index( $Selenium->get_page_source(), $TicketNumber ) > -1,
-                "Ticket number $TicketNumber is found",
+                "Ticket number $TicketNumber is found"
             );
         }
 
-        # Click to see details of Survey.
+        # Click to see details of survey.
         $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[2]' )]")->VerifiedClick();
 
         # Verify question values.
         $Self->True(
             index( $Selenium->get_page_source(), $QuestionName ) > -1,
-            "$QuestionName is found",
+            "$QuestionName is found"
         );
         $Self->True(
             index( $Selenium->get_page_source(), 'Yes' ) > -1,
-            "Answer 'Yes' is found",
+            "Answer 'Yes' is found"
         );
 
         # Check if 'Previous Vote' exists.
         $Self->False(
             $Selenium->execute_script("return \$('.SurveyArrowLeft').length"),
-            "'Previous Vote' is not found for first answer",
+            "'Previous Vote' is not found for first answer"
         );
 
-        # Check if 'next Vote' exist.
+        # Check if 'Next Vote' exists.
         $Self->True(
             $Selenium->execute_script("return \$('.SurveyArrowRight').length"),
-            "'Next Vote' is found for first answer",
+            "'Next Vote' is found for first answer"
         );
 
-        # Click on the Next Vote link.
+        # Click on the 'Next Vote' link.
         $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[1]' )]")->VerifiedClick();
 
-        # Check if Ticket number is correct, and links to 'Previous Vote' and 'Next Vote' exist.
+        # Check if ticket number is correct, and links to 'Previous Vote' and 'Next Vote' exist.
         $Self->True(
             index( $Selenium->get_page_source(), "$TicketNumbers[1]" ) > -1,
-            "Ticket number $TicketNumbers[1] is found",
+            "Ticket number $TicketNumbers[1] is found"
         );
 
         $Self->True(
             $Selenium->execute_script("return \$('.SurveyArrowLeft').length"),
-            "'Previous Vote' is found for second answer",
+            "'Previous Vote' is found for second answer"
         );
         $Self->True(
             $Selenium->execute_script("return \$('.SurveyArrowRight').length"),
-            "'Next Vote' is found for second answer",
+            "'Next Vote' is found for second answer"
         );
 
         # Go to next vote.
         $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[0]' )]")->VerifiedClick();
 
-        # Check if Ticket number is correct, 'Previous Vote' exists, and 'Next Vote' does not exists.
+        # Check if ticket number is correct, 'Previous Vote' exists and 'Next Vote' does not exist.
         $Self->True(
             index( $Selenium->get_page_source(), "$TicketNumbers[0]" ) > -1,
-            "Ticket number $TicketNumbers[0] is found",
+            "Ticket number $TicketNumbers[0] is found"
         );
         $Self->True(
             $Selenium->execute_script("return \$('.SurveyArrowLeft').length"),
-            "'Previous Vote' is found for third answer",
+            "'Previous Vote' is found for third answer"
         );
         $Self->False(
             $Selenium->execute_script("return \$('.SurveyArrowRight').length"),
-            "'Next Vote' is not found for third answer",
+            "'Next Vote' is not found for third answer"
         );
 
-        # Get clean-up data.
+        # Define data for cleanup.
         my @CleanData = (
             {
                 Name  => 'Queue',
@@ -342,7 +333,7 @@ $Selenium->RunTest(
             },
         );
 
-        # Delete test created tickets.
+        # Delete created test tickets.
         my $Success;
         for my $TicketID (@TicketIDs) {
             $Success = $TicketObject->TicketDelete(
@@ -355,7 +346,7 @@ $Selenium->RunTest(
             );
         }
 
-        # Delete test data from DB.
+        # Delete test survey data from DB.
         for my $Delete (@CleanData) {
             $Success = $DBObject->Do(
                 SQL  => "DELETE FROM $Delete->{Table} WHERE $Delete->{SQLID} = ?",
