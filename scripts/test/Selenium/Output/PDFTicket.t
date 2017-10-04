@@ -118,6 +118,11 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
         my $SLAID   = $Kernel::OM->Get('Kernel::System::SLA')->SLAAdd(
             ServiceIDs        => [$ServiceID],
             Name              => $SLAName,
+# ---
+# ITSMCore
+# ---
+            TypeID => $SLATypeName2ID{Other},
+# ---
             FirstResponseTime => 50,
             UpdateTime        => 100,
             SolutionTime      => 200,
