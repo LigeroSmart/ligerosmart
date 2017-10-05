@@ -38,10 +38,8 @@ sub Run {
     my %GetParam;
     $GetParam{ItemID} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ItemID' );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
             Message => Translatable('No ItemID is given!'),
@@ -49,10 +47,8 @@ sub Run {
         );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 1,
@@ -62,7 +58,6 @@ sub Run {
         return $LayoutObject->CustomerFatalError();
     }
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get interface state list
@@ -137,7 +132,6 @@ sub Run {
     $Page{PageText}     = $LayoutObject->{LanguageObject}->Translate('Page');
     $Page{PageCount}    = 1;
 
-    # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
     # create new PDF document
@@ -248,7 +242,6 @@ sub Run {
 sub _PDFOutputFAQHeaderInfo {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -261,7 +254,6 @@ sub _PDFOutputFAQHeaderInfo {
     my %FAQData = %{ $Param{FAQData} };
     my %Page    = %{ $Param{PageData} };
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # create left table
@@ -276,7 +268,6 @@ sub _PDFOutputFAQHeaderInfo {
         },
     ];
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get default multi language option
@@ -352,7 +343,6 @@ sub _PDFOutputFAQHeaderInfo {
     $TableParam{PaddingTop}          = 3;
     $TableParam{PaddingBottom}       = 3;
 
-    # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
     # output table
@@ -380,7 +370,6 @@ sub _PDFOutputFAQHeaderInfo {
 sub _PDFOutputKeywords {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -397,7 +386,6 @@ sub _PDFOutputKeywords {
     $TableParam{CellData}[0][0]{Content} = $FAQData{Keywords} || '';
     $TableParam{ColumnData}[0]{Width} = 511;
 
-    # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
     # set new position
@@ -456,7 +444,6 @@ sub _PDFOutputKeywords {
 sub _PDFOutputFAQDynamicFields {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -483,11 +470,9 @@ sub _PDFOutputFAQDynamicFields {
         FieldFilter => $DynamicFieldFilter || {},
     );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # generate table
-    # cycle trough the activated Dynamic Fields for FAQ object
     DYNAMICFIELDCONFIG:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
@@ -533,7 +518,6 @@ sub _PDFOutputFAQDynamicFields {
     # output FAQ dynamic fields
     if ($Output) {
 
-        # get PDF object
         my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
         # set new position
@@ -593,7 +577,6 @@ sub _PDFOutputFAQDynamicFields {
 sub _PDFOuputFAQContent {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(PageData FAQData)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -607,7 +590,6 @@ sub _PDFOuputFAQContent {
     my %FAQData = %{ $Param{FAQData} };
     my %Page    = %{ $Param{PageData} };
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get the config of FAQ fields that should be shown
@@ -625,7 +607,6 @@ sub _PDFOuputFAQContent {
         $Fields{ "Field" . $Number } = $Config;
     }
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # sort shown fields by priority
@@ -651,7 +632,6 @@ sub _PDFOuputFAQContent {
         $TableParam{CellData}[0][0]{Content} = $AsciiField || '';
         $TableParam{ColumnData}[0]{Width} = 511;
 
-        # get PDF object
         my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
         # set new position

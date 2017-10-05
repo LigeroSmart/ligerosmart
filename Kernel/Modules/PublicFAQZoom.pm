@@ -33,17 +33,14 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get params
     my %GetParam;
     $GetParam{ItemID} = $ParamObject->GetParam( Param => 'ItemID' );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
             Message => Translatable('Need ItemID!'),
@@ -56,10 +53,8 @@ sub Run {
         $GetParam{ZoomBackLink} = MIME::Base64::decode_base64( $GetParam{ZoomBackLink} );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 1,
@@ -73,7 +68,6 @@ sub Run {
     my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
     my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get interface state list
@@ -102,7 +96,6 @@ sub Run {
         # get params
         my $Field = $ParamObject->GetParam( Param => "Field" );
 
-        # needed params
         for my $Needed (qw( ItemID Field )) {
             if ( !$Needed ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -199,7 +192,6 @@ sub Run {
         }
     }
 
-    # output header
     my $Output = $LayoutObject->CustomerHeader(
         Value => $FAQData{Title},
     );
@@ -365,10 +357,8 @@ sub Run {
         FieldFilter => $Config->{DynamicField} || {},
     );
 
-    # get dynamic field backend object
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
-    # cycle trough the activated Dynamic Fields for ticket object
     DYNAMICFIELDCONFIG:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);

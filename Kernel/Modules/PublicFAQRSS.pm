@@ -35,7 +35,6 @@ sub Run {
     # get RSS type
     my $Type = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'Type' );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check needed stuff
@@ -56,7 +55,6 @@ sub Run {
     my @ItemIDs;
     my $Title;
 
-    # get needed objects
     my $FAQObject    = $Kernel::OM->Get('Kernel::System::FAQ');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
@@ -124,7 +122,6 @@ sub Run {
 
     $RSSObject->title($Title);
 
-    # get the FAQ data
     for my $ItemID (@ItemIDs) {
 
         my %ItemData = $FAQObject->FAQGet(
@@ -161,8 +158,6 @@ sub Run {
 
     # convert to string
     my $Output = $RSSObject->as_string();
-
-    # check error
     if ( !$Output ) {
         return $LayoutObject->FatalError(
             Message => Translatable('Can\'t create RSS file!'),

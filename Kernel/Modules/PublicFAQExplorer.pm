@@ -31,13 +31,11 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get config of frontend module
     my $Config = $ConfigObject->Get("FAQ::Frontend::$Self->{Action}");
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get config data
@@ -54,7 +52,6 @@ sub Run {
     # get Item ID
     my $ItemID = $ParamObject->GetParam( Param => 'ItemID' ) || 0;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check if ItemID parameter was sent and redirect to FAQ article zoom screen
@@ -64,7 +61,6 @@ sub Run {
         return $LayoutObject->Redirect( OP => 'Action=PublicFAQZoom;ItemID=' . $ItemID );
     }
 
-    # get category ID
     my $CategoryID = $ParamObject->GetParam( Param => 'CategoryID' ) || 0;
 
     # check for non numeric CategoryID
@@ -75,7 +71,6 @@ sub Run {
     # get category by name
     my $Category = $ParamObject->GetParam( Param => 'Category' ) || '';
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # try to get the category ID from category name if no category ID
@@ -144,7 +139,6 @@ sub Run {
         },
     );
 
-    # output header
     my $Output = $LayoutObject->CustomerHeader();
 
     # show FAQ path
@@ -183,7 +177,6 @@ sub Run {
         # show data for each subcategory
         for my $SubCategoryID ( @{$CategoryIDsRef} ) {
 
-            # get the category data
             my %SubCategoryData = $FAQObject->CategoryGet(
                 CategoryID => $SubCategoryID,
                 UserID     => $Self->{UserID},
@@ -303,7 +296,6 @@ sub Run {
                 )
             {
 
-                # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 0,
@@ -395,8 +387,6 @@ sub Run {
             InterfaceStates => $InterfaceStates,
             UserID          => $Self->{UserID},
         );
-
-        # check error
         if ( !$ShowOk ) {
             return $LayoutObject->ErrorScreen();
         }
@@ -411,13 +401,10 @@ sub Run {
         InterfaceStates => $InterfaceStates,
         UserID          => $Self->{UserID},
     );
-
-    # check error
     if ( !$ShowOk ) {
         return $LayoutObject->ErrorScreen();
     }
 
-    # start template output
     $Output .= $LayoutObject->Output(
         TemplateFile => 'PublicFAQExplorer',
         Data         => {
@@ -426,8 +413,6 @@ sub Run {
             %CategoryData,
         },
     );
-
-    # add footer
     $Output .= $LayoutObject->CustomerFooter();
 
     return $Output;
