@@ -42,7 +42,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get params
@@ -50,7 +49,6 @@ sub Run {
     $GetParam{ItemID} = $ParamObject->GetParam( Param => 'ItemID' );
     $GetParam{Rate}   = $ParamObject->GetParam( Param => 'Rate' );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # save, if browser link message was closed
@@ -70,17 +68,14 @@ sub Run {
         );
     }
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
             Message => Translatable('Need ItemID!'),
         );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID        => $GetParam{ItemID},
         ItemFields    => 1,
@@ -102,7 +97,6 @@ sub Run {
         UserID       => $Self->{UserID},
     );
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get interface state list
@@ -137,7 +131,6 @@ sub Run {
         # get params
         my $Field = $ParamObject->GetParam( Param => "Field" );
 
-        # needed params
         for my $Needed (qw( ItemID Field )) {
             if ( !$Needed ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -232,7 +225,6 @@ sub Run {
         }
     }
 
-    # output header
     my $Output = $LayoutObject->CustomerHeader(
         Value => $FAQData{Title},
     );
@@ -287,7 +279,7 @@ sub Run {
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
 
-        # customer can't use this subaction if is not enabled
+        # customer can't use this sub-action if is not enabled
         if ( !$Voting ) {
             $LayoutObject->CustomerFatalError(
                 Message => Translatable('The voting mechanism is not enabled!'),
@@ -510,10 +502,8 @@ sub Run {
         FieldFilter => $Config->{DynamicField} || {},
     );
 
-    # get dynamic field backend object
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
-    # cycle trough the activated Dynamic Fields for ticket object
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -574,7 +564,6 @@ sub Run {
         UserID    => $Self->{UserID},
     );
 
-    # start template output
     $Output .= $LayoutObject->Output(
         TemplateFile => 'CustomerFAQZoom',
         Data         => {
@@ -583,8 +572,6 @@ sub Run {
             %Param,
         },
     );
-
-    # add footer
     $Output .= $LayoutObject->CustomerFooter();
 
     return $Output;
@@ -595,10 +582,8 @@ sub _FAQVoting {
 
     my %FAQData = %{ $Param{FAQData} };
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # output voting block
     $LayoutObject->Block(
         Name => 'FAQVoting',
         Data => {%FAQData},
@@ -614,7 +599,6 @@ sub _FAQVoting {
             Title => $VotingRates->{$RateValue},
         );
 
-        # output vote rating row block
         $LayoutObject->Block(
             Name => 'FAQVotingRateRow',
             Data => {%Data},

@@ -29,7 +29,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # permission check
@@ -44,7 +43,6 @@ sub Run {
     my %GetParam;
     $GetParam{ItemID} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => 'ItemID' );
 
-    # check needed stuff
     if ( !$GetParam{ItemID} ) {
         return $LayoutObject->CustomerFatalError(
             Message => Translatable('No ItemID is given!'),
@@ -52,10 +50,8 @@ sub Run {
         );
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get FAQ item data
     my %FAQData = $FAQObject->FAQGet(
         ItemID     => $GetParam{ItemID},
         ItemFields => 1,
@@ -109,7 +105,6 @@ sub Run {
         }
     }
 
-    # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
     # generate PDF output
@@ -253,7 +248,6 @@ sub Run {
 sub _PDFOutputFAQHeaderInfo {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -266,7 +260,6 @@ sub _PDFOutputFAQHeaderInfo {
     my %FAQData = %{ $Param{FAQData} };
     my %Page    = %{ $Param{PageData} };
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # create left table
@@ -281,7 +274,6 @@ sub _PDFOutputFAQHeaderInfo {
         },
     ];
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get default multi language option
@@ -357,7 +349,6 @@ sub _PDFOutputFAQHeaderInfo {
     $TableParam{PaddingTop}          = 3;
     $TableParam{PaddingBottom}       = 3;
 
-    # get PDF object
     my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
     # output table
@@ -385,7 +376,6 @@ sub _PDFOutputFAQHeaderInfo {
 sub _PDFOutputKeywords {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -461,7 +451,6 @@ sub _PDFOutputKeywords {
 sub _PDFOutputFAQDynamicFields {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageData FAQData)) {
         if ( !defined( $Param{$Needed} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -488,12 +477,10 @@ sub _PDFOutputFAQDynamicFields {
         FieldFilter => $DynamicFieldFilter || {},
     );
 
-    # get needed objects
     my $LayoutObject              = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     # generate table
-    # cycle trough the activated Dynamic Fields for FAQ object
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -536,7 +523,6 @@ sub _PDFOutputFAQDynamicFields {
     # output FAQ dynamic fields
     if ($Output) {
 
-        # get PDF object
         my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
         # set new position
@@ -596,7 +582,6 @@ sub _PDFOutputFAQDynamicFields {
 sub _PDFOuputFAQContent {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(PageData FAQData)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -610,7 +595,6 @@ sub _PDFOuputFAQContent {
     my %FAQData = %{ $Param{FAQData} };
     my %Page    = %{ $Param{PageData} };
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get the config of FAQ fields that should be shown
@@ -628,7 +612,6 @@ sub _PDFOuputFAQContent {
         $Fields{ "Field" . $Number } = $Config;
     }
 
-    # get needed objects
     my $FAQObject       = $Kernel::OM->Get('Kernel::System::FAQ');
     my $PDFObject       = $Kernel::OM->Get('Kernel::System::PDF');
     my $HTMLUtilsObject = $Kernel::OM->Get('Kernel::System::HTMLUtils');

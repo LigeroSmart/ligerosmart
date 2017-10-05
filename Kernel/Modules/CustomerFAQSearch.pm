@@ -63,7 +63,6 @@ sub Run {
     # get config from constructor
     my $Config = $Self->{Config};
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get config data
@@ -82,7 +81,6 @@ sub Run {
     my $TakeLastSearch = $ParamObject->GetParam( Param => 'TakeLastSearch' ) || '';
     my $EraseTemplate  = $ParamObject->GetParam( Param => 'EraseTemplate' )  || '';
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # search with a saved template
@@ -127,7 +125,6 @@ sub Run {
     # get single params
     my %GetParam;
 
-    # get needed object
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
     my $SearchProfileObject       = $Kernel::OM->Get('Kernel::System::SearchProfile');
 
@@ -176,7 +173,6 @@ sub Run {
         }
 
         # get Dynamic fields form param object
-        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -284,7 +280,6 @@ sub Run {
             . ";SortBy=$SortBy;OrderBy=$OrderBy;TakeLastSearch=1"
             . ";StartHit=$StartHit";
 
-        # get session object
         my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
 
         # store last screen
@@ -330,7 +325,6 @@ sub Run {
         my %DynamicFieldSearchParameters;
         my %DynamicFieldSearchDisplay;
 
-        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -483,7 +477,6 @@ sub Run {
             }
         }
 
-        # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # set default interface settings
@@ -543,7 +536,6 @@ sub Run {
 
             for my $ItemID (@ViewableItemIDs) {
 
-                # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID        => $ItemID,
                     ItemFields    => 0,
@@ -697,13 +689,11 @@ sub Run {
         }
         elsif ( $GetParam{ResultForm} eq 'Print' ) {
 
-            # get PDF object
             my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
             my @PDFData;
             for my $ItemID (@ViewableItemIDs) {
 
-                # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 0,
@@ -920,7 +910,6 @@ sub Run {
             }
 
             # Dynamic fields table headers
-            # cycle through the activated Dynamic Fields for this screen
             DYNAMICFIELD:
             for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
                 next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1002,7 +991,6 @@ sub Run {
                     )
                 {
 
-                    # get FAQ data details
                     my %FAQData = $FAQObject->FAQGet(
                         ItemID        => $ItemID,
                         ItemFields    => 0,
@@ -1032,7 +1020,6 @@ sub Run {
                     }
 
                     # Dynamic fields
-                    # cycle through the activated Dynamic Fields for this screen
                     DYNAMICFIELD:
                     for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
                         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1389,10 +1376,8 @@ sub Run {
 sub MaskForm {
     my ( $Self, %Param ) = @_;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get list type
     my $TreeView = 0;
     if ( $ConfigObject->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
@@ -1405,7 +1390,6 @@ sub MaskForm {
         CSV    => Translatable('CSV'),
     );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # build output formats list
@@ -1416,7 +1400,6 @@ sub MaskForm {
         Class      => 'Modernize',
     );
 
-    # get profiles list
     my %Profiles = $Kernel::OM->Get('Kernel::System::SearchProfile')->SearchProfileList(
         Base      => 'CustomerFAQSearch',
         UserLogin => $Self->{UserLogin},
@@ -1431,10 +1414,8 @@ sub MaskForm {
         Class        => 'Modernize',
     );
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get languages list
     my %Languages = $FAQObject->LanguageList(
         UserID => $Self->{UserID},
     );
@@ -1449,7 +1430,6 @@ sub MaskForm {
         Class      => 'Modernize',
     );
 
-    # get categories list
     my $Categories = $FAQObject->GetCustomerCategoriesLongNames(
         CustomerUser => $Self->{UserLogin},
         Type         => 'rw',
@@ -1558,7 +1538,6 @@ sub MaskForm {
     );
 
     # output Dynamic fields blocks
-    # cycle through the activated Dynamic Fields for this screen
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);

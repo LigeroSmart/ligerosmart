@@ -26,13 +26,11 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get config of frontend module
     my $Config = $ConfigObject->Get("FAQ::Frontend::$Self->{Action}");
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get config data
@@ -46,10 +44,8 @@ sub Run {
         || $Config->{'Order::Default'}
         || 'Down';
 
-    # get category id
     my $CategoryID = $ParamObject->GetParam( Param => 'CategoryID' ) || 0;
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # check for non numeric CategoryID
@@ -74,7 +70,6 @@ sub Run {
         $CategoryID = $ReverseCategoryTree{$Category} || 0;
     }
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # try to get the category data
@@ -98,8 +93,6 @@ sub Run {
             CategoryID   => $CategoryID,
             UserID       => $Self->{UserID},
         );
-
-        # permission check
         if ( !$Permission ) {
             return $LayoutObject->CustomerNoPermission(
                 WithHeader => 'yes',
@@ -114,7 +107,6 @@ sub Run {
         Value     => $Self->{RequestedURL},
     );
 
-    # output header
     my $Output = $LayoutObject->CustomerHeader(
         Value => '',
     );
@@ -157,7 +149,6 @@ sub Run {
         # show data for each subcategory
         for my $SubCategoryID ( @{$CategoryIDsRef} ) {
 
-            # get the category data
             my %SubCategoryData = $FAQObject->CategoryGet(
                 CategoryID => $SubCategoryID,
                 UserID     => $Self->{UserID},
@@ -269,7 +260,6 @@ sub Run {
                 )
             {
 
-                # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 0,
@@ -356,8 +346,6 @@ sub Run {
             InterfaceStates => $InterfaceStates,
             UserID          => $Self->{UserID},
         );
-
-        # check error
         if ( !$ShowOk ) {
             return $LayoutObject->ErrorScreen();
         }
@@ -373,13 +361,10 @@ sub Run {
         InterfaceStates => $InterfaceStates,
         UserID          => $Self->{UserID},
     );
-
-    # check error
     if ( !$ShowOk ) {
         return $LayoutObject->ErrorScreen();
     }
 
-    # start template output
     $Output .= $LayoutObject->Output(
         TemplateFile => 'CustomerFAQExplorer',
         Data         => {
@@ -388,8 +373,6 @@ sub Run {
             %CategoryData,
         },
     );
-
-    # add footer
     $Output .= $LayoutObject->CustomerFooter();
 
     return $Output;
