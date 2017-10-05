@@ -38,7 +38,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -49,7 +48,6 @@ sub Run {
         }
     }
 
-    # need FAQIDs
     if ( !$Param{FAQIDs} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -64,7 +62,6 @@ sub Run {
         @IDs = @{ $Param{FAQIDs} };
     }
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     my $MultiLanguage = $ConfigObject->Get('FAQ::MultiLanguage');
@@ -81,7 +78,6 @@ sub Run {
 
     my @ShowColumns;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     if (@IDs) {
@@ -146,7 +142,6 @@ sub Run {
             }
 
             # Dynamic fields
-            # cycle trough the activated Dynamic Fields for this screen
             DYNAMICFIELD:
             for my $DynamicFieldConfig ( @{$DynamicField} ) {
                 next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -268,10 +263,8 @@ sub Run {
                 # to store all data
                 my %Data;
 
-                # get FAQ object
                 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-                # get FAQ data
                 my %FAQ = $FAQObject->FAQGet(
                     ItemID     => $ID,
                     ItemFields => 0,
@@ -335,7 +328,6 @@ sub Run {
                 }
 
                 # Dynamic fields
-                # cycle trough the activated Dynamic Fields for this screen
                 DYNAMICFIELD:
                 for my $DynamicFieldConfig ( @{$DynamicField} ) {
                     next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -419,7 +411,6 @@ sub Run {
         $LayoutObject->Block( Name => 'NoFAQFound' );
     }
 
-    # use template
     my $Output = $LayoutObject->Output(
         TemplateFile => 'AgentFAQOverviewSmall',
         Data         => {

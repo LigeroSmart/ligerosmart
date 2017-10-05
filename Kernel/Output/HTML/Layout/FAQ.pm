@@ -111,7 +111,6 @@ sub FAQListShow {
         Value     => $View,
     );
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get backend from config
@@ -411,7 +410,6 @@ If exist ReturnContent parameter it returns the FAQ items fields on a HTML forma
 sub FAQContentShow {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(FAQObject FAQData InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -425,7 +423,6 @@ sub FAQContentShow {
     # store FAQ object locally
     my $FAQObject = $Param{FAQObject};
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get the config of FAQ fields that should be shown
@@ -607,7 +604,6 @@ sub FAQPathShow {
         return;
     }
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     my $Block = 'FAQPathCategoryElement';
@@ -631,10 +627,8 @@ sub FAQPathShow {
     # do not display the path if setting is off
     return if !$ShowPath;
 
-    # store FAQ object locally
     my $FAQObject = $Param{FAQObject};
 
-    # get category list to construct the path
     my $CategoryList = $FAQObject->FAQPathListGet(
         CategoryID => $Param{CategoryID},
         UserID     => $Param{UserID},
@@ -678,7 +672,6 @@ as "Stars" in the scale from 1 to 5.
 sub FAQRatingStarsShow {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(VoteResult Votes)) {
         if ( !defined $Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -759,7 +752,6 @@ articles are shown here.
 sub FAQShowLatestNewsBox {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(FAQObject Type Mode Interface InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -770,7 +762,6 @@ sub FAQShowLatestNewsBox {
         }
     }
 
-    # check needed stuff
     if ( !defined $Param{CategoryID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -823,14 +814,12 @@ sub FAQShowLatestNewsBox {
 
     my $Result = -1;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # show last added/updated articles
     my $Show = $ConfigObject->Get("FAQ::Explorer::$Param{Type}::Show");
     if ( $Show->{ $Param{Interface}->{Name} } ) {
 
-        # store FAQ object locally
         my $FAQObject = $Param{FAQObject};
 
         # to store search param for categories
@@ -940,7 +929,6 @@ articles are shown here.
 sub FAQShowTop10 {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(FAQObject Mode Interface InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -951,7 +939,6 @@ sub FAQShowTop10 {
         }
     }
 
-    # check needed stuff
     if ( !defined $Param{CategoryID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -987,7 +974,6 @@ sub FAQShowTop10 {
     my $Show = $ConfigObject->Get('FAQ::Explorer::Top10::Show');
     if ( $Show->{ $Param{Interface}->{Name} } ) {
 
-        # store FAQ object locally
         my $FAQObject = $Param{FAQObject};
 
         # to store search param for categories
@@ -1048,7 +1034,6 @@ sub FAQShowTop10 {
                 # increase the number
                 $Number++;
 
-                # get FAQ data
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $Top10Item->{ItemID},
                     ItemFields => 1,
@@ -1096,7 +1081,6 @@ Shows an info box with the Quick Search.
 sub FAQShowQuickSearch {
     my ( $Self, %Param ) = @_;
 
-    # check parameters
     for my $ParamName (qw(Mode Interface InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(

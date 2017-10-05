@@ -24,7 +24,6 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # get needed params
     for my $Needed (qw(Config Name UserID))
     {
         die "Got no $Needed!" if ( !$Self->{$Needed} );
@@ -50,7 +49,6 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # set default interface settings
@@ -63,7 +61,6 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     $LayoutObject->FAQShowLatestNewsBox(

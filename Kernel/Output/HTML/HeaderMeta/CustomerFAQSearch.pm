@@ -29,7 +29,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     my $Session = '';
@@ -37,7 +36,6 @@ sub Run {
         $Session = ';' . $LayoutObject->{SessionName} . '=' . $LayoutObject->{SessionID};
     }
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # build open search description for FAQ number

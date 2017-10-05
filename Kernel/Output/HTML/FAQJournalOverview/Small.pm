@@ -33,7 +33,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -44,7 +43,6 @@ sub Run {
         }
     }
 
-    # need Journal
     if ( !$Param{Journal} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -61,7 +59,6 @@ sub Run {
 
     my @ShowColumns;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # show Journal Entries as rows
@@ -92,7 +89,6 @@ sub Run {
 
         my $Counter = 0;
 
-        # get FAQ object
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         JOURNALENTRY:

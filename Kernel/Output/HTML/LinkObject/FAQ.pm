@@ -317,7 +317,7 @@ sub TableCreateComplex {
         # Always present, already added.
         next COLUMN if $Column eq 'FAQNumber';
 
-        # Ff enabled by default.
+        # if enabled by default.
         if ( $UserColumns{$Column} == 2 ) {
             my $ColumnName = '';
 
@@ -493,7 +493,6 @@ a result could be Return
 sub TableCreateSimple {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{ObjectLinkListWithData} || ref $Param{ObjectLinkListWithData} ne 'HASH' ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -553,7 +552,6 @@ return a output string
 sub ContentStringCreate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{ContentData} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -660,7 +658,6 @@ sub SearchOptionList {
         $Row->{FormKey} = 'SEARCH::' . $Row->{Key};
     }
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # add form data and input string

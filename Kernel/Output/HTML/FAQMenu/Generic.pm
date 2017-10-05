@@ -34,7 +34,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{FAQItem} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',

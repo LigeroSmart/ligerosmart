@@ -31,13 +31,11 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # check data
     return if !$Param{Data};
     return if ref $Param{Data} ne 'SCALAR';
     return if !${ $Param{Data} };
     return if !$Param{TemplateFile};
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # check permission
@@ -48,7 +46,6 @@ sub Run {
     );
     return if !$HasPermission;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get allowed template names
