@@ -9,7 +9,7 @@
                 <Item Key="TargetDatabaseType">mysql</Item>
                 <Item Key="TargetDatabase">target</Item>
                 <Item Key="TargetDatabaseUser">user</Item>
-                <Item Key="TargetDatabasePw">password</Item>
+                <Item Key="TargetDatabasePw" ValueType="Password">password</Item>
             </Hash>
         </Value>
     </Setting>
