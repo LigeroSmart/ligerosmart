@@ -52,8 +52,8 @@ $Selenium->RunTest(
         }
 
         # check client side validation
-        $Selenium->find_element( "#Name", 'css' )->clear();
-        $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#Name",   'css' )->clear();
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#Name').hasClass('Error')"
@@ -87,8 +87,8 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
         # check client side validation
-        $Selenium->find_element( "#Name", 'css' )->clear();
-        $Selenium->find_element( "#Name", 'css' )->VerifiedSubmit();
+        $Selenium->find_element( "#Name",   'css' )->clear();
+        $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#Name').hasClass('Error')"
