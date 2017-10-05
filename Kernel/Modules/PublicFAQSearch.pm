@@ -67,7 +67,6 @@ sub Run {
     # get config from constructor
     my $Config = $Self->{Config};
 
-    # get param object
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get config data
@@ -81,7 +80,6 @@ sub Run {
         || $Config->{'Order::Default'}
         || 'Down';
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # build output for open search description by FAQ number
@@ -161,7 +159,6 @@ sub Run {
         },
     );
 
-    # get needed object
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
     # get array params
@@ -177,59 +174,58 @@ sub Run {
                 $Self->{Profile} .= $ParamName . '=' . $Element . ';';
             }
         }
+    }
 
-        # get Dynamic fields from param object
-        # cycle through the activated Dynamic Fields for this screen
-        DYNAMICFIELDCONFIG:
-        for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-            next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
+    # get Dynamic fields from param object
+    DYNAMICFIELDCONFIG:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
 
-            # get search field preferences
-            my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
-                DynamicFieldConfig => $DynamicFieldConfig,
+        # get search field preferences
+        my $SearchFieldPreferences = $DynamicFieldBackendObject->SearchFieldPreferences(
+            DynamicFieldConfig => $DynamicFieldConfig,
+        );
+
+        next DYNAMICFIELDCONFIG if !IsArrayRefWithData($SearchFieldPreferences);
+
+        PREFERENCE:
+        for my $Preference ( @{$SearchFieldPreferences} ) {
+
+            # extract the dynamic field value from the web request
+            my $DynamicFieldValue = $DynamicFieldBackendObject->SearchFieldValueGet(
+                DynamicFieldConfig     => $DynamicFieldConfig,
+                ParamObject            => $ParamObject,
+                ReturnProfileStructure => 1,
+                LayoutObject           => $LayoutObject,
+                Type                   => $Preference->{Type},
             );
 
-            next DYNAMICFIELDCONFIG if !IsArrayRefWithData($SearchFieldPreferences);
+            # set the complete value structure in GetParam to store it later in the search
+            # profile
+            if ( IsHashRefWithData($DynamicFieldValue) ) {
+                %GetParam = ( %GetParam, %{$DynamicFieldValue} );
+            }
 
-            PREFERENCE:
-            for my $Preference ( @{$SearchFieldPreferences} ) {
+            # add dynamic fields to profile to include them in the back-link
+            KEYITEM:
+            for my $KeyItem ( sort keys %{$DynamicFieldValue} ) {
 
-                # extract the dynamic field value from the web request
-                my $DynamicFieldValue = $DynamicFieldBackendObject->SearchFieldValueGet(
-                    DynamicFieldConfig     => $DynamicFieldConfig,
-                    ParamObject            => $ParamObject,
-                    ReturnProfileStructure => 1,
-                    LayoutObject           => $LayoutObject,
-                    Type                   => $Preference->{Type},
-                );
-
-                # set the complete value structure in GetParam to store it later in the search
-                # profile
-                if ( IsHashRefWithData($DynamicFieldValue) ) {
-                    %GetParam = ( %GetParam, %{$DynamicFieldValue} );
+                # convert scalar values to array to use same code base
+                if (
+                    defined $DynamicFieldValue->{$KeyItem}
+                    && ref $DynamicFieldValue->{$KeyItem} eq ''
+                    )
+                {
+                    $DynamicFieldValue->{$KeyItem} = [ $DynamicFieldValue->{$KeyItem} ];
                 }
 
-                # add dynamic fields to profile to include them in the back-link
-                KEYITEM:
-                for my $KeyItem ( sort keys %{$DynamicFieldValue} ) {
+                next KEYITEM if !IsArrayRefWithData( $DynamicFieldValue->{$KeyItem} );
 
-                    # convert scalar values to array to use same code base
-                    if (
-                        defined $DynamicFieldValue->{$KeyItem}
-                        && ref $DynamicFieldValue->{$KeyItem} eq ''
-                        )
-                    {
-                        $DynamicFieldValue->{$KeyItem} = [ $DynamicFieldValue->{$KeyItem} ];
-                    }
-
-                    next KEYITEM if !IsArrayRefWithData( $DynamicFieldValue->{$KeyItem} );
-
-                    # concatenate dynamic fields values into the profile
-                    VALUEITEM:
-                    for my $ValueItem ( @{ $DynamicFieldValue->{$KeyItem} } ) {
-                        next VALUEITEM if !$ValueItem;
-                        $Self->{Profile} .= "$KeyItem=$ValueItem;";
-                    }
+                # concatenate dynamic fields values into the profile
+                VALUEITEM:
+                for my $ValueItem ( @{ $DynamicFieldValue->{$KeyItem} } ) {
+                    next VALUEITEM if !$ValueItem;
+                    $Self->{Profile} .= "$KeyItem=$ValueItem;";
                 }
             }
         }
@@ -298,7 +294,6 @@ sub Run {
         my %DynamicFieldSearchParameters;
         my %DynamicFieldSearchDisplay;
 
-        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELDCONFIG:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELDCONFIG if !IsHashRefWithData($DynamicFieldConfig);
@@ -451,7 +446,6 @@ sub Run {
             }
         }
 
-        # get needed objects
         my $FAQObject    = $Kernel::OM->Get('Kernel::System::FAQ');
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
@@ -513,7 +507,6 @@ sub Run {
 
             for my $ItemID (@ViewableItemIDs) {
 
-                # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID        => $ItemID,
                     ItemFields    => 0,
@@ -664,13 +657,11 @@ sub Run {
         }
         elsif ( $GetParam{ResultForm} eq 'Print' ) {
 
-            # get PDF object
             my $PDFObject = $Kernel::OM->Get('Kernel::System::PDF');
 
             my @PDFData;
             for my $ItemID (@ViewableItemIDs) {
 
-                # get FAQ data details
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 0,
@@ -907,7 +898,6 @@ sub Run {
             $OverviewDynamicField = \@OverviewCustomerDynamicFields;
 
             # Dynamic fields table headers
-            # cycle through the activated Dynamic Fields for this screen
             DYNAMICFIELD:
             for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
                 next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1020,7 +1010,6 @@ sub Run {
                     }
 
                     # Dynamic fields
-                    # cycle through the activated Dynamic Fields for this screen
                     DYNAMICFIELD:
                     for my $DynamicFieldConfig ( @{$OverviewDynamicField} ) {
                         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1309,7 +1298,6 @@ sub Run {
         # create HTML strings for all dynamic fields
         my %DynamicFieldHTML;
 
-        # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1354,10 +1342,8 @@ sub Run {
 sub MaskForm {
     my ( $Self, %Param ) = @_;
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    # get list type
     my $TreeView = 0;
     if ( $ConfigObject->Get('Ticket::Frontend::ListType') eq 'tree' ) {
         $TreeView = 1;
@@ -1370,7 +1356,6 @@ sub MaskForm {
         CSV    => Translatable('CSV')
     );
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # build output formats list
@@ -1381,10 +1366,8 @@ sub MaskForm {
         Class      => 'Modernize',
     );
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get languages list
     my %Languages = $FAQObject->LanguageList(
         UserID => $Self->{UserID},
     );
@@ -1399,7 +1382,6 @@ sub MaskForm {
         Class      => 'Modernize',
     );
 
-    # get categories list
     my $Categories = $FAQObject->GetPublicCategoriesLongNames(
         CustomerUser => $Self->{UserLogin},
         Type         => 'rw',
@@ -1508,7 +1490,6 @@ sub MaskForm {
     );
 
     # output Dynamic fields blocks
-    # cycle through the activated Dynamic Fields for this screen
     DYNAMICFIELDCONFIG:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
 
