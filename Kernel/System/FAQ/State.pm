@@ -46,7 +46,6 @@ Returns:
 sub StateAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Name TypeID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -90,7 +89,6 @@ Returns:
 sub StateGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(StateID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -102,7 +100,6 @@ sub StateGet {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SQL
@@ -148,7 +145,6 @@ Returns:
 sub StateList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -158,7 +154,6 @@ sub StateList {
         return;
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SQL
@@ -196,7 +191,6 @@ Returns:
 sub StateUpdate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(StateID Name TypeID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -248,7 +242,6 @@ Returns:
 sub StateTypeGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -275,7 +268,6 @@ sub StateTypeGet {
         $CacheKey .= 'Name::' . $Param{Name};
     }
 
-    # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
     # check cache
@@ -286,7 +278,6 @@ sub StateTypeGet {
 
     return $Cache if $Cache;
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SQL
@@ -342,7 +333,6 @@ Returns:
 sub StateTypeList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -385,7 +375,6 @@ sub StateTypeList {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # prepare SQL

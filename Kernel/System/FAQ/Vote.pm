@@ -49,7 +49,6 @@ Returns:
 sub VoteAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CreatedBy ItemID IP Interface UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -99,7 +98,6 @@ Returns:
 sub VoteDelete {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(VoteID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -149,7 +147,6 @@ Returns:
 sub VoteGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CreateBy ItemID Interface IP UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -187,7 +184,6 @@ sub VoteGet {
     $SQL .= '
         ORDER BY created DESC';
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
@@ -233,7 +229,6 @@ Returns:
 sub VoteSearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -245,7 +240,6 @@ sub VoteSearch {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
@@ -286,7 +280,6 @@ Returns:
 sub ItemVoteDataGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -298,7 +291,6 @@ sub ItemVoteDataGet {
         }
     }
 
-    # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
     # check cache
@@ -310,7 +302,6 @@ sub ItemVoteDataGet {
 
     return $Cache if $Cache;
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get vote from db

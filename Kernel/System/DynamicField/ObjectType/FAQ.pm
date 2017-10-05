@@ -65,7 +65,6 @@ perform specific functions after the Value set for this object type.
 sub PostValueSet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(DynamicFieldConfig ObjectID UserID)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -99,7 +98,6 @@ sub PostValueSet {
         }
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # history insert
@@ -109,7 +107,6 @@ sub PostValueSet {
         UserID => $Param{UserID},
     );
 
-    # clear FAQ cache
     $FAQObject->_DeleteFromFAQCache( ItemID => $Param{ObjectID} );
 
     # Trigger event.
@@ -154,7 +151,6 @@ returns:
 sub ObjectDataGet {
     my ( $Self, %Param ) = @_;
 
-    # Check needed stuff.
     for my $Needed (qw(DynamicFieldConfig UserID)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(

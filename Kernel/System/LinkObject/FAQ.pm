@@ -45,10 +45,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # create additional objects
-    # $GroupObject = Kernel::System::Group->new( %{$Self} );
-    # $FAQObject   = Kernel::System::FAQ->new( %{$Self} );
-
     return $Self;
 }
 
@@ -66,7 +62,6 @@ fill up the link list with data
 sub LinkListWithData {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(LinkList UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -88,7 +83,6 @@ sub LinkListWithData {
         return;
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     for my $LinkType ( sort keys %{ $Param{LinkList} } ) {
@@ -98,7 +92,6 @@ sub LinkListWithData {
             ITEMID:
             for my $ItemID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
-                # get FAQ data
                 my %FAQData = $FAQObject->FAQGet(
                     ItemID     => $ItemID,
                     ItemFields => 1,
@@ -135,7 +128,6 @@ checks read permission for a given object and UserID.
 sub ObjectPermission {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -159,7 +151,6 @@ sub ObjectPermission {
         return 1;
     }
 
-    # get database object
     my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
     PERMISSION:
@@ -216,7 +207,6 @@ Return
 sub ObjectDescriptionGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Object Key UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -236,7 +226,6 @@ sub ObjectDescriptionGet {
 
     return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
 
-    # get FAQ
     my %FAQ = $Kernel::OM->Get('Kernel::System::FAQ')->FAQGet(
         ItemID     => $Param{Key},
         ItemFields => 1,
@@ -283,7 +272,6 @@ Return
 sub ObjectSearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -308,7 +296,6 @@ sub ObjectSearch {
         $Search{What} = '*' . $Param{SearchParams}->{What} . '*';
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # search the FAQs
@@ -325,7 +312,6 @@ sub ObjectSearch {
     ITEMID:
     for my $ItemID (@ItemIDs) {
 
-        # get FAQ data
         my %FAQData = $FAQObject->FAQGet(
             ItemID     => $ItemID,
             ItemFields => 1,
@@ -370,7 +356,6 @@ link add pre event module
 sub LinkAddPre {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -416,7 +401,6 @@ link add pre event module
 sub LinkAddPost {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -462,7 +446,6 @@ link delete pre event module
 sub LinkDeletePre {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -508,7 +491,6 @@ link delete post event module
 sub LinkDeletePost {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Key Type State UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(

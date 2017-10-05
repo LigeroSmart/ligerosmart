@@ -45,7 +45,6 @@ Returns:
 sub LanguageAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -85,7 +84,6 @@ Returns
 sub LanguageDelete {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Attribute (qw(LanguageID UserID)) {
         if ( !$Param{$Attribute} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -127,7 +125,6 @@ Returns:
 sub LanguageDuplicateCheck {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -148,7 +145,6 @@ sub LanguageDuplicateCheck {
         $SQL .= " AND id != ?";
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # prepare SQL statement
@@ -188,7 +184,6 @@ Returns:
 sub LanguageGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(LanguageID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -200,7 +195,6 @@ sub LanguageGet {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SQL
@@ -245,7 +239,6 @@ Returns:
 sub LanguageList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -255,7 +248,6 @@ sub LanguageList {
         return;
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # build SQL
@@ -329,7 +321,6 @@ sub LanguageLookup {
         return;
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # prepare SQL statements
@@ -384,7 +375,6 @@ Returns:
 sub LanguageUpdate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(LanguageID Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -396,7 +386,6 @@ sub LanguageUpdate {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # build SQL

@@ -103,15 +103,12 @@ sub Run {
         return $Self->ExitCodeError();
     }
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get all FAQ language ids
     my %LanguageID = reverse $FAQObject->LanguageList(
         UserID => 1,
     );
 
-    # get all state type ids
     my %StateTypeID = reverse %{ $FAQObject->StateTypeList( UserID => 1 ) };
 
     # get group id for FAQ group
@@ -152,7 +149,6 @@ sub Run {
         my $CategoryID;
         my $ParentID = 0;
 
-        # get database object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
         for my $Category (@CategoryArray) {
@@ -211,7 +207,6 @@ sub Run {
             }
         }
 
-        # get config object
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
         # set content type

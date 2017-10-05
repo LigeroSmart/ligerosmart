@@ -73,7 +73,6 @@ sub new {
     # get like escape string needed for some databases (e.g. oracle)
     $Self->{LikeEscapeString} = $Kernel::OM->Get('Kernel::System::DB')->GetDatabaseFunction('LikeEscapeString');
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get default options
@@ -188,12 +187,11 @@ Returns:
 sub FAQGet {
     my ( $Self, %Param ) = @_;
 
-    # Failures rename from ItemID to FAQID
+    # Backwards compatibility rename from ItemID to FAQID
     if ( $Param{FAQID} ) {
         $Param{ItemID} = $Param{FAQID};
     }
 
-    # check needed stuff
     for my $Argument (qw(UserID ItemID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -210,7 +208,6 @@ sub FAQGet {
 
     my $CacheKey = 'FAQGet::ItemID::' . $Param{ItemID} . '::ItemFields::' . $FetchItemFields;
 
-    # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
     my $Cache = $CacheObject->Get(
@@ -218,11 +215,8 @@ sub FAQGet {
         Key  => $CacheKey,
     );
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-
-    # get database object
-    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+    my $DBObject     = $Kernel::OM->Get('Kernel::System::DB');
 
     # set %Data from cache if any
     my %Data;
@@ -279,8 +273,6 @@ sub FAQGet {
                 StateTypeName => $Row[18],
             );
         }
-
-        # check error
         if ( !%Data ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -343,7 +335,6 @@ sub FAQGet {
         );
     }
 
-    # get vote data for this FAQ item
     my $VoteData;
     if ( $Self->{Voting} ) {
         $VoteData = $Self->ItemVoteDataGet(
@@ -396,7 +387,6 @@ sub FAQGet {
 sub ItemFieldGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(UserID ItemID Field)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -421,7 +411,6 @@ sub ItemFieldGet {
     # check cache
     my $CacheKey = 'ItemFieldGet::ItemID::' . $Param{ItemID};
 
-    # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
     my $Cache = $CacheObject->Get(
@@ -445,7 +434,6 @@ sub ItemFieldGet {
         Field6 => 'f_field6',
     );
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
@@ -517,10 +505,8 @@ Returns:
 sub FAQAdd {
     my ( $Self, %Param ) = @_;
 
-    # get log object
     my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
-    # check needed stuff
     for my $Argument (qw(CategoryID StateID LanguageID Title UserID ContentType)) {
         if ( !$Param{$Argument} ) {
             $LogObject->Log(
@@ -546,7 +532,6 @@ sub FAQAdd {
         $Param{Name} = time() . '-' . rand(100);
     }
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # check number
@@ -639,8 +624,6 @@ sub FAQAdd {
         $SQL .= '
             AND ((f_keywords = ?) OR (f_keywords IS NULL)) ';
     }
-
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get id
@@ -695,8 +678,6 @@ sub FAQAdd {
             StateID    => $Param{StateID},
             UserID     => $Param{UserID},
         );
-
-        # check error
         if ( !$Success ) {
             $LogObject->Log(
                 Priority => 'error',
@@ -745,7 +726,6 @@ Returns:
 sub FAQUpdate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID CategoryID StateID LanguageID Title UserID ContentType)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -757,7 +737,6 @@ sub FAQUpdate {
         }
     }
 
-    # get FAQ data
     my %FAQData = $Self->FAQGet(
         ItemID     => $Param{ItemID},
         ItemFields => 0,
@@ -799,7 +778,6 @@ sub FAQUpdate {
     # delete cache
     $Self->_DeleteFromFAQCache(%Param);
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # update approval
@@ -826,8 +804,6 @@ sub FAQUpdate {
             Approved => $Param{Approved} || 0,
             UserID   => $Param{UserID},
         );
-
-        # check error
         if ( !$UpdateSuccess ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -876,7 +852,6 @@ Returns:
 sub AttachmentAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID Content ContentType Filename UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -937,8 +912,6 @@ sub AttachmentAdd {
 
     # store the new filename
     $Param{Filename} = $NewFileName;
-
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # encode attachment if it's a postgresql backend!!!
@@ -1008,7 +981,6 @@ Returns:
 sub AttachmentGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID FileID UserID)) {
         if ( !defined $Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1020,7 +992,6 @@ sub AttachmentGet {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
@@ -1069,7 +1040,6 @@ Returns:
 sub AttachmentDelete {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID FileID UserID)) {
         if ( !defined $Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1133,7 +1103,6 @@ Returns:
 sub AttachmentIndex {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1144,7 +1113,6 @@ sub AttachmentIndex {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
@@ -1223,7 +1191,6 @@ Returns:
 sub FAQCount {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CategoryIDs ItemStates UserID)) {
         if ( !defined $Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1237,8 +1204,6 @@ sub FAQCount {
 
     # set default value
     my $Valid = $Param{Valid} ? 1 : 0;
-
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     my $CategoryIDString = '';
@@ -1329,7 +1294,6 @@ Returns:
 sub FAQDelete {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1414,7 +1378,6 @@ Returns:
 sub FAQHistoryAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1467,7 +1430,6 @@ Returns:
 sub FAQHistoryGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1479,7 +1441,6 @@ sub FAQHistoryGet {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     return if !$DBObject->Prepare(
@@ -1522,7 +1483,6 @@ Returns:
 sub FAQHistoryDelete {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1577,7 +1537,6 @@ Returns:
 sub FAQJournalGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -1601,8 +1560,6 @@ sub FAQJournalGet {
 
     # add order by clause
     $SQL .= 'ORDER BY h.created DESC';
-
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get the data from db
@@ -1654,7 +1611,6 @@ Returns:
 sub KeywordList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -1670,7 +1626,6 @@ sub KeywordList {
         $Valid = $Param{Valid};
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get keywords from db
@@ -1875,7 +1830,6 @@ Returns:
 sub FAQPathListGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -1923,7 +1877,6 @@ Returns:
 sub FAQLogAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID Interface UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1946,7 +1899,6 @@ sub FAQLogAdd {
     $DateTimeObject->Subtract( Seconds => $ReloadBlockTime );
     my $TimeStamp = $DateTimeObject->ToString();
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # check if a log entry exists newer than the ReloadBlockTime
@@ -2050,7 +2002,6 @@ Returns:
 sub FAQTop10Get {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Interface UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -2074,7 +2025,6 @@ sub FAQTop10Get {
         . "AND faq_item.valid_id IN ($ValidIDsString) "
         . 'AND faq_state.type_id = faq_state_type.id ';
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # filter just categories with at least ro permission
@@ -2172,7 +2122,6 @@ Returns:
 sub FAQInlineAttachmentURLUpdate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID Attachment FormID FileID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -2197,7 +2146,6 @@ sub FAQInlineAttachmentURLUpdate {
     # only consider inline attachments here (they have a content id)
     return 1 if !$Param{Attachment}->{ContentID};
 
-    # get FAQ data
     my %FAQData = $Self->FAQGet(
         ItemID     => $Param{ItemID},
         ItemFields => 1,
@@ -2304,7 +2252,6 @@ sub FAQContentTypeSet {
         return;
     }
 
-    # Get config object.
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     my $ContentType = $Param{ContentType} || '';
@@ -2335,7 +2282,6 @@ sub FAQContentTypeSet {
             WHERE id IN ($IDString)";
     }
 
-    # Get DB object.
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # Set the content type either by the given param or according to the system settings.
@@ -2455,10 +2401,8 @@ update the approval state of an article
 sub _FAQApprovalUpdate {
     my ( $Self, %Param ) = @_;
 
-    # get log object
     my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
-    # check needed stuff
     for my $Argument (qw(ItemID UserID)) {
         if ( !$Param{$Argument} ) {
             $LogObject->Log(
@@ -2496,7 +2440,6 @@ sub _FAQApprovalUpdate {
     # approval feature is activated and FAQ article is not approved yet
     if ( $Kernel::OM->Get('Kernel::Config')->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
 
-        # get FAQ data
         my %FAQData = $Self->FAQGet(
             ItemID     => $Param{ItemID},
             ItemFields => 0,
@@ -2513,8 +2456,6 @@ sub _FAQApprovalUpdate {
             StateID    => $FAQData{StateID},
             UserID     => $Param{UserID},
         );
-
-        # check error
         if ( !$Success ) {
             $LogObject->Log(
                 Priority => 'error',
@@ -2545,7 +2486,6 @@ creates an approval ticket
 sub _FAQApprovalTicketCreate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(ItemID CategoryID FAQNumber Title StateID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -2557,10 +2497,8 @@ sub _FAQApprovalTicketCreate {
         }
     }
 
-    # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-    # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # get subject
@@ -2594,7 +2532,6 @@ sub _FAQApprovalTicketCreate {
         $TicketType = $TypeLookup{$TicketType} ? $TicketType : '';
     }
 
-    # create ticket
     my $TicketID = $TicketObject->TicketCreate(
         Title    => $Subject,
         Queue    => $ConfigObject->Get('FAQ::ApprovalQueue') || 'Raw',
@@ -2608,15 +2545,12 @@ sub _FAQApprovalTicketCreate {
 
     if ($TicketID) {
 
-        # get user object
         my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
-        # get UserName
         my $UserName = $UserObject->UserName(
             UserID => $Param{UserID},
         );
 
-        # get FAQ state
         my %State = $Self->StateGet(
             StateID => $Param{StateID},
             UserID  => $Param{UserID},
@@ -2658,7 +2592,6 @@ sub _FAQApprovalTicketCreate {
         $Body =~ s{ <OTRS_FAQ_AUTHOR>     }{$UserName}xms;
         $Body =~ s{ <OTRS_FAQ_STATE>      }{$State{Name}}xms;
 
-        #  gather user data
         my %User = $UserObject->GetUserData(
             UserID => $Param{UserID},
         );
@@ -2669,7 +2602,6 @@ sub _FAQApprovalTicketCreate {
         my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
         my $InternalArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
 
-        # create article
         my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
             TicketID             => $TicketID,
             SenderType           => 'agent',
@@ -2699,7 +2631,6 @@ sub _FAQApprovalTicketCreate {
 sub _DeleteFromFAQCache {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Needed (qw(ItemID)) {
         if ( !$Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -2711,7 +2642,6 @@ sub _DeleteFromFAQCache {
         }
     }
 
-    # get cache object
     my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
     # Clear FAQGet cache

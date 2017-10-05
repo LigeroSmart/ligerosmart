@@ -161,7 +161,6 @@ Returns:
 sub FAQSearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -329,7 +328,6 @@ sub FAQSearch {
     # extended SQL
     my $Ext = '';
 
-    # get needed objects
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # full-text search

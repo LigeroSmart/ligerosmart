@@ -53,7 +53,6 @@ Returns:
 sub CategoryAdd {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -65,7 +64,6 @@ sub CategoryAdd {
         }
     }
 
-    # check needed stuff
     if ( !defined $Param{ParentID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -85,7 +83,6 @@ sub CategoryAdd {
         return;
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # insert record
@@ -143,7 +140,6 @@ Returns:
 sub CategoryCount {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -153,7 +149,6 @@ sub CategoryCount {
         return;
     }
 
-    # check needed stuff
     if ( !defined $Param{ParentIDs} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -171,7 +166,6 @@ sub CategoryCount {
         . join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet()
         . ')';
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # parent ids are given
@@ -222,7 +216,6 @@ Returns:
 sub CategoryDelete {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Attribute (qw(CategoryID UserID)) {
         if ( !$Param{$Attribute} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -234,7 +227,6 @@ sub CategoryDelete {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # delete the category
@@ -277,7 +269,6 @@ Returns:
 sub CategoryDuplicateCheck {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -294,7 +285,6 @@ sub CategoryDuplicateCheck {
     push @Values, \$Param{Name};
     push @Values, \$Param{ParentID};
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # db quote
@@ -353,7 +343,6 @@ Returns:
 sub CategoryGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -363,7 +352,6 @@ sub CategoryGet {
         return;
     }
 
-    # check needed stuff
     if ( !defined $Param{CategoryID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -386,7 +374,6 @@ sub CategoryGet {
 
     return %{$Cache} if $Cache;
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SQL
@@ -443,7 +430,6 @@ Returns:
 sub CategoryGroupGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CategoryID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -455,7 +441,6 @@ sub CategoryGroupGet {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get groups
@@ -515,7 +500,6 @@ Returns:
 sub CategoryGroupGetAll {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -531,7 +515,6 @@ sub CategoryGroupGetAll {
         return $Self->{Cache}->{CategoryGroupGetAll};
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get groups
@@ -579,7 +562,6 @@ Returns:
 sub CategoryList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -613,7 +595,6 @@ sub CategoryList {
             . ')';
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # prepare SQL statement
@@ -656,7 +637,6 @@ Returns:
 sub CategorySearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -676,7 +656,6 @@ sub CategorySearch {
 
     my $Ext = '';
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # search for name
@@ -794,7 +773,6 @@ Returns:
 sub CategorySubCategoryIDList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -804,7 +782,6 @@ sub CategorySubCategoryIDList {
         return;
     }
 
-    # check needed stuff
     if ( !defined $Param{ParentID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -889,7 +866,6 @@ Returns:
 sub CategoryTreeList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -923,7 +899,6 @@ sub CategoryTreeList {
             . ')';
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # prepare SQL
@@ -995,7 +970,6 @@ Returns:
 sub CategoryUpdate {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Name UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1007,7 +981,6 @@ sub CategoryUpdate {
         }
     }
 
-    # check needed stuff
     for my $Argument (qw(CategoryID ParentID)) {
         if ( !defined $Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1029,7 +1002,6 @@ sub CategoryUpdate {
         return;
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # SQL
@@ -1082,7 +1054,6 @@ Returns:
 sub AgentCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     if ( !$Param{UserID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'error',
@@ -1132,7 +1103,6 @@ Returns:
 sub CustomerCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CustomerUser Mode UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1180,7 +1150,6 @@ sub CustomerCategorySearch {
                 AND faq_item.valid_id IN ($ValidIDsString)
                 AND faq_item.approved = 1";
 
-        # get database object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
         return if !$DBObject->Prepare(
@@ -1241,7 +1210,6 @@ Returns:
 sub PublicCategorySearch {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Mode UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1271,7 +1239,6 @@ sub PublicCategorySearch {
     # build valid id string
     my $ValidIDsString = join ', ', $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     for my $CategoryID (@CategoryIDs) {
@@ -1354,7 +1321,6 @@ Returns:
 sub GetUserCategories {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1414,7 +1380,6 @@ Returns:
 sub GetUserCategoriesLongNames {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1488,7 +1453,6 @@ Returns:
 sub GetCustomerCategories {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CustomerUser Type UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1559,7 +1523,6 @@ Returns:
 sub GetCustomerCategoriesLongNames {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CustomerUser Type UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1657,7 +1620,6 @@ Returns:
 sub GetPublicCategoriesLongNames {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Type UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1746,7 +1708,6 @@ Returns:
 sub CheckCategoryUserPermission {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CategoryID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1808,7 +1769,6 @@ Returns:
 sub CheckCategoryCustomerPermission {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CustomerUser CategoryID UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1859,7 +1819,6 @@ Returns:
 sub SetCategoryGroup {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(CategoryID GroupIDs UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -1871,7 +1830,6 @@ sub SetCategoryGroup {
         }
     }
 
-    # get database object
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # delete old groups
@@ -1932,7 +1890,6 @@ Returns:
 sub _UserCategories {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $Argument (qw(Categories UserID)) {
         if ( !$Param{$Argument} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(

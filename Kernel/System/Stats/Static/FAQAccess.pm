@@ -123,7 +123,6 @@ sub Param {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
     for my $ParamName (qw(StartYear StartMonth StartDay EndYear EndMonth EndDay)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -150,7 +149,6 @@ sub Run {
     my $StartDate = "$Param{StartYear}-$Param{StartMonth}-$StartDay 00:00:00";
     my $EndDate   = "$Param{EndYear}-$Param{EndMonth}-$EndDay 23:59:59";
 
-    # get FAQ object
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
     # get a count of all FAQ articles
@@ -165,14 +163,12 @@ sub Run {
     my @Data;
     for my $ItemIDRef ( @{$Top10ItemIDsRef} ) {
 
-        # get FAQ data
         my %FAQData = $FAQObject->FAQGet(
             ItemID     => $ItemIDRef->{ItemID},
             ItemFields => 0,
             UserID     => 1,
         );
 
-        # get vote data
         my $VoteData = $FAQObject->ItemVoteDataGet(
             ItemID => $ItemIDRef->{ItemID},
             UserID => 1,
