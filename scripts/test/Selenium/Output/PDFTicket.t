@@ -577,7 +577,7 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
             },
             {
                 Value     => 'Solution Time',
-                Message   => 'Solution time label is correct',
+                Message   => 'Accounted time label is correct',
                 Interface => 'Agent',
             },
             {
