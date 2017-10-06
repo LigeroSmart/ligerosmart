@@ -9,10 +9,6 @@
     <Description Lang="en">The OTRS CloneDB package.</Description>
     <Description Lang="de">Das OTRS CloneDB Paket.</Description>
     <Description Lang="hu">Az OTRS CloneDB csomag.</Description>
-    <!--
-        Note for module porting: please verify that the mysql UTF8 replacement in Base.pm
-        is still needed in future versions of OTRS.
-    -->
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/OTRSCloneDB.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCloneDB.xml" />
