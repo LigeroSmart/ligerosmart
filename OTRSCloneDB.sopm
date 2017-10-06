@@ -9,6 +9,17 @@
     <Description Lang="en">The OTRS CloneDB package.</Description>
     <Description Lang="de">Das OTRS CloneDB Paket.</Description>
     <Description Lang="hu">Az OTRS CloneDB csomag.</Description>
+    <!--
+        Note for module porting: please verify that the mysql UTF8 replacement in Base.pm
+        is still needed in future versions of OTRS.
+
+        Quote:
+        Replace any unicode characters that need more then three bytes in UTF8
+        with the unicode replacement character. MySQL's utf8 encoding only
+        supports three bytes. In future we might want to use utf8mb4 (supported
+        since 5.5.3+).
+        See also http://mathiasbynens.be/notes/mysql-utf8mb4.
+    -->
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/OTRSCloneDB.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCloneDB.xml" />
