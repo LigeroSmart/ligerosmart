@@ -93,7 +93,7 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Istorijat od %s%s';
-    $Self->{Translation}->{'History Content'} = 'Sadržaj istorije';
+    $Self->{Translation}->{'History Content'} = 'Sadržaj istorijata';
     $Self->{Translation}->{'Workorder'} = 'Radni nalog';
     $Self->{Translation}->{'Createtime'} = 'Vreme kreiranja';
     $Self->{Translation}->{'Show details'} = 'Prikaži detalje';
@@ -446,10 +446,10 @@ sub Data {
     $Self->{Translation}->{'Title: %s | Type: %s'} = 'Naslov: %s | Tip: %s';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyCAB.pm
-    $Self->{Translation}->{'My CABs'} = '';
+    $Self->{Translation}->{'My CABs'} = 'Moji CAB';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyChanges.pm
-    $Self->{Translation}->{'My Changes'} = '';
+    $Self->{Translation}->{'My Changes'} = 'Moje promene';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Moji radni nalozi';
