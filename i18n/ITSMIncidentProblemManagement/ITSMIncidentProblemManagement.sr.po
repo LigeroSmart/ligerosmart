@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:28+0000\n"
-"PO-Revision-Date: 2017-09-29 15:29+0000\n"
+"POT-Creation-Date: 2017-10-02 10:54+0000\n"
+"PO-Revision-Date: 2017-10-03 08:07+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,15 @@ msgstr ""
 "Language: sr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Criticality"
 msgstr "Значај"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Impact"
 msgstr "Утицај"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. JS Template: ServiceIncidentState
 msgid "Service Incident State"
 msgstr "Стање инцидента сервиса"
 
@@ -99,10 +98,6 @@ msgstr "Додатна ITSM поља"
 #. SysConfig
 msgid "Additional ITSM ticket fields."
 msgstr "Додатна ITSM поља тикета."
-
-#. SysConfig
-msgid "AgentITSMIncidentProblemManagement"
-msgstr "AgentITSMIncidentProblemManagement"
 
 #. SysConfig
 msgid ""
@@ -302,6 +297,10 @@ msgstr "Потребне дозволе за употребу екрана до�
 msgid ""
 "Required permissions to use the decision screen in the agent interface."
 msgstr "Потребне дозволе за употребу екрана одлуке у интерфејсу оператера."
+
+#. SysConfig
+msgid "Service Incident State and Priority Calculation"
+msgstr "Прорачун приоритета и стања инцидента сервиса"
 
 #. SysConfig
 msgid ""

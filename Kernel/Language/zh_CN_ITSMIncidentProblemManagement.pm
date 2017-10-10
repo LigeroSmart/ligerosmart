@@ -114,7 +114,7 @@ sub Data {
         '服务人员界面使用工单额外的ITSM字段窗口需要的权限。';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         '服务人员界面使用工单决定窗口需要的权限。';
-    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '服务故障状态和优先级计算';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         '设置服务人员界面工单额外的ITSM字段窗口的服务（工单::服务需要被激活）。';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =

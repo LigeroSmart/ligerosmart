@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:28+0000\n"
-"PO-Revision-Date: 2017-09-29 15:29+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-02 10:54+0000\n"
+"PO-Revision-Date: 2017-10-05 17:02+0000\n"
+"Last-Translator: 汇民 王 <whuim@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,16 +15,15 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Criticality"
 msgstr "紧急度"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Impact"
 msgstr "影响度"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. JS Template: ServiceIncidentState
 msgid "Service Incident State"
 msgstr "服务故障状态"
 
@@ -98,10 +97,6 @@ msgstr "额外的ITSM字段"
 #. SysConfig
 msgid "Additional ITSM ticket fields."
 msgstr "额外的ITSM工单字段。"
-
-#. SysConfig
-msgid "AgentITSMIncidentProblemManagement"
-msgstr "服务人员ITSM事件管理和问题管理"
 
 #. SysConfig
 msgid ""
@@ -301,6 +296,10 @@ msgstr "服务人员界面使用工单额外的ITSM字段窗口需要的权限�
 msgid ""
 "Required permissions to use the decision screen in the agent interface."
 msgstr "服务人员界面使用工单决定窗口需要的权限。"
+
+#. SysConfig
+msgid "Service Incident State and Priority Calculation"
+msgstr "服务故障状态和优先级计算"
 
 #. SysConfig
 msgid ""

@@ -24,16 +24,16 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Связать заявку';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
-    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = 'Изменить решение %s%s%s';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = 'Изменить поля ITSM %s%s%s';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Необходим просмотр';
     $Self->{Translation}->{'Decision Result'} = 'Результат решения';
     $Self->{Translation}->{'Approved'} = 'Утверждено';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = 'Отложено';
+    $Self->{Translation}->{'Pre-approved'} = 'Предварительно одобрено';
+    $Self->{Translation}->{'Rejected'} = 'Отклонено';
     $Self->{Translation}->{'Repair Start Time'} = 'Дата начала работ';
     $Self->{Translation}->{'Recovery Start Time'} = 'Дата восстановления сервиса';
     $Self->{Translation}->{'Decision Date'} = 'Дата решения';
@@ -93,11 +93,11 @@ sub Data {
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Задает следующее состояние заявки после добавления заметки на экране Решение в интерфейсе агента';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'Динамические поля, показанные на дополнительном экране поля ITSM интерфейса агента.';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые на экране решения интерфейса агента.';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне просмотра заявки интерфейса агента.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Включает модуль отчетов для формирования отчетов о среднем ITSM ticket first level solution rate.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -107,14 +107,14 @@ sub Data {
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Возможность установить новое состояние завки при добавлении заметки на экране Решение в интерфейсе агента.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
-        '';
+        'Изменяет порядок отображения динамического поля ITSMImpact и другие вещи.';
     $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
-        '';
+        'Модуль для динамического отображения состояния сервисного инцидента и вычисления приоритета.';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Задает требуемые права для использования пункта меню Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Задает требуемые права для использования пункта меню Решение в интерфейсе агента.';
-    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = 'Состояние сервисного инцидента и расчет приоритетов';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Позволяет задать Сервис на экране Дополнительные ITSM поля в интерфейсе агента (Ticket::Service должен быть активирован).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
