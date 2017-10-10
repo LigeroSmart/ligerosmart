@@ -124,11 +124,12 @@ $Selenium->RunTest(
 
         # add test user to time account setting
         $Selenium->find_element( "#NewUserID_Search", 'css' )->send_keys($TestUser);
+        sleep 2;
         $Selenium->WaitFor(
             Time       => 30,
             JavaScript => 'return typeof($) === "function" && $("li.jstree-node:visible").length'
         );
-        $Selenium->find_element("//a[contains(., '$TestUser')]")->click();
+        $Selenium->find_element("//a[contains(., '$TestUser')]")->VerifiedClick();
 
         # check edit user page
         for my $EditUserPageID (
