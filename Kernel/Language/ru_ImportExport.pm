@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
     $Self->{Translation}->{'Import information'} = 'Информация об импорте';
     $Self->{Translation}->{'Source File'} = 'Исходный файл';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = 'Импорт содержания для %s';
     $Self->{Translation}->{'Records'} = 'Записей';
     $Self->{Translation}->{'Success'} = 'Успешно';
     $Self->{Translation}->{'Duplicate names'} = 'Дублирующие имена';
@@ -49,7 +49,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = 'Требуется ID Шаблона!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ошибка. Импорт невозможен! Смотри подробности в Syslog.';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = 'Ошибка. Экспорт невозможен! Смотри подробности в Syslog.';
-    $Self->{Translation}->{'Template List'} = '';
+    $Self->{Translation}->{'Template List'} = 'Список шаблонов';
     $Self->{Translation}->{'number'} = 'номер';
     $Self->{Translation}->{'number bigger than zero'} = 'номер больше нуля';
     $Self->{Translation}->{'integer'} = 'целое число';
@@ -64,7 +64,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Точка с запятой (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Двоеточие (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Точка (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Запятая (,)';
     $Self->{Translation}->{'Charset'} = 'Кодировка';
     $Self->{Translation}->{'Include Column Headers'} = 'Включить заголовки столбцов';
     $Self->{Translation}->{'Column'} = 'Столбец ';

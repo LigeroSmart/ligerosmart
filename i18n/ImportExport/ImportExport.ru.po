@@ -2,14 +2,15 @@
 # Translators:
 # Alex Pelikh <alex.pelikh@icloud.com>, 2016
 # Anatoly A <aaksinenko@gmail.com>, 2017
+# Ilya Ko <mchammer@inbox.ru>, 2017
 # Shader <shader@dautkom.lv>, 2016
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:57+0000\n"
-"PO-Revision-Date: 2017-09-29 14:58+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-02 12:20+0000\n"
+"PO-Revision-Date: 2017-10-04 07:37+0000\n"
+"Last-Translator: Ilya Ko <mchammer@inbox.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -91,7 +92,7 @@ msgstr "Исходный файл"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "Импорт содержания для %s"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -143,7 +144,7 @@ msgstr "Ошибка. Экспорт невозможен! Смотри подр
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr ""
+msgstr "Список шаблонов"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
@@ -195,7 +196,7 @@ msgstr "Точка (.)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Comma (,)"
-msgstr ""
+msgstr "Запятая (,)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Charset"

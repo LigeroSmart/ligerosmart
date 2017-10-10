@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ograničenje izvoza po pretrazi';
     $Self->{Translation}->{'Import information'} = 'Uvoz informacija';
     $Self->{Translation}->{'Source File'} = 'Izvorna datoteka';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = 'Rezime uvoza za %s';
     $Self->{Translation}->{'Records'} = 'Zapisi';
     $Self->{Translation}->{'Success'} = 'Uspešno';
     $Self->{Translation}->{'Duplicate names'} = 'Duplikat imena';
