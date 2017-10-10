@@ -42,13 +42,13 @@ sub Data {
     $Self->{Translation}->{'Impact'} = 'Auswirkung';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
-    $Self->{Translation}->{'No SLAID is given!'} = '';
-    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
+    $Self->{Translation}->{'No SLAID is given!'} = 'Keine SLAID vorhanden!';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = 'SLAID "%s" in der Datenbank nicht gefunden! ';
     $Self->{Translation}->{'Calendar Default'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
-    $Self->{Translation}->{'No ServiceID is given!'} = '';
-    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
+    $Self->{Translation}->{'No ServiceID is given!'} = 'Keine ServiceID vorhanden!';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = 'ServiceID "%s" in der Datenbank nicht gefunden!';
     $Self->{Translation}->{'Current Incident State'} = 'Aktueller Vorfallsstatus';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Required for'} = 'Benötigt für';
     $Self->{Translation}->{'SLA Overview'} = 'SLA-Übersicht';
     $Self->{Translation}->{'SLA Print.'} = 'SLA-Druck.';
-    $Self->{Translation}->{'SLA Zoom.'} = '';
+    $Self->{Translation}->{'SLA Zoom.'} = 'SLA Zoom.';
     $Self->{Translation}->{'Service Overview'} = 'Dienstübersicht';
     $Self->{Translation}->{'Service Print.'} = 'Dienst Drucken.';
     $Self->{Translation}->{'Service Zoom.'} = 'Dienst Zoom.';

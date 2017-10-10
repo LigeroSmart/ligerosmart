@@ -1,15 +1,16 @@
 # 
 # Translators:
 # Anatoly A <aaksinenko@gmail.com>, 2017
+# Ilya Ko <mchammer@inbox.ru>, 2017
 # Rasim Kalimullin <neutrino.vm@gmail.com>, 2017
 # Shader <shader@dautkom.lv>, 2016
 # Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:04+0000\n"
-"PO-Revision-Date: 2017-09-29 15:06+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-02 10:12+0000\n"
+"PO-Revision-Date: 2017-10-04 08:03+0000\n"
+"Last-Translator: Ilya Ko <mchammer@inbox.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,11 +72,11 @@ msgstr "Влияние"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "No SLAID is given!"
-msgstr ""
+msgstr "SLAID не назначен!"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "SLAID %s not found in database!"
-msgstr ""
+msgstr "SLAID %s не найден в базе!"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "Calendar Default"
@@ -83,11 +84,11 @@ msgstr "Календарь по умолчанию"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
-msgstr ""
+msgstr "ServiceID не назначен!"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "ServiceID %s not found in database!"
-msgstr ""
+msgstr "ServiceID %s не найден в базе!"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"

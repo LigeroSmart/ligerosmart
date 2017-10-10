@@ -42,13 +42,13 @@ sub Data {
     $Self->{Translation}->{'Impact'} = 'Влияние';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
-    $Self->{Translation}->{'No SLAID is given!'} = '';
-    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
+    $Self->{Translation}->{'No SLAID is given!'} = 'SLAID не назначен!';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = 'SLAID %s не найден в базе!';
     $Self->{Translation}->{'Calendar Default'} = 'Календарь по умолчанию';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
-    $Self->{Translation}->{'No ServiceID is given!'} = '';
-    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
+    $Self->{Translation}->{'No ServiceID is given!'} = 'ServiceID не назначен!';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = 'ServiceID %s не найден в базе!';
     $Self->{Translation}->{'Current Incident State'} = 'Текущее состояние инцидента';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
