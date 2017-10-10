@@ -92,6 +92,19 @@ my $SLATypeList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
 
 # build a lookup hash
 my %SLATypeName2ID = reverse %{ $SLATypeList };
+
+# Get the current setting for customer ticket print
+my %CustomerTicketPrintSysConfig = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
+    Name => 'CustomerFrontend::Module###CustomerTicketPrint',
+);
+
+# Make sure CustomerTicket print is enabled.
+$Helper->ConfigSettingChange(
+    Valid => 1,
+    Key   => 'CustomerFrontend::Module###CustomerTicketPrint',
+    Value => $CustomerTicketPrintSysConfig{EffectiveValue},
+);
+
 # ---
 
         # Create Service.
