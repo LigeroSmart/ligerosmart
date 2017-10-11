@@ -104,8 +104,7 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@value='Add task'][\@type='submit']")->VerifiedClick();
 
         # check task page IDs
-        for my $TaskPageID (qw(Task TaskStatus))
-        {
+        for my $TaskPageID (qw(Task TaskStatus)) {
             my $Element = $Selenium->find_element( "#$TaskPageID", 'css' );
             $Element->is_enabled();
             $Element->is_displayed();
@@ -122,14 +121,14 @@ $Selenium->RunTest(
             "$ActionTitle is found",
         );
 
-        # add test user to time account setting
-        $Selenium->find_element( "#NewUserID_Search", 'css' )->send_keys($TestUser);
-        sleep 2;
-        $Selenium->WaitFor(
-            Time       => 30,
-            JavaScript => 'return typeof($) === "function" && $("li.jstree-node:visible").length'
+        # This change triggered a page load on a new page.
+        $Selenium->execute_script(
+            "\$('#NewUserID').val('$TestUserID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//a[contains(., '$TestUser')]")->VerifiedClick();
+
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+        );
 
         # check edit user page
         for my $EditUserPageID (
