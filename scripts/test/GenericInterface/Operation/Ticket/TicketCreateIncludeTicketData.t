@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 30fe74f7113e791bef702f72abfd9db7e45608da - scripts/test/GenericInterface/Operation/Ticket/TicketCreateIncludeTicketData.t
+# $origin: otrs - 1b2bde9abd03b57cba2648af3e9db40b5b230967 - scripts/test/GenericInterface/Operation/Ticket/TicketCreateIncludeTicketData.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -93,8 +93,9 @@ $Self->Is(
 my $TestOwnerLogin        = $Helper->TestUserCreate();
 my $TestResponsibleLogin  = $Helper->TestUserCreate();
 my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
-
-# create user object
+my $TestUserLogin         = $Helper->TestUserCreate(
+    Groups => [ 'admin', 'users', ],
+);
 my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
 my $OwnerID = $UserObject->UserLookup(
@@ -102,6 +103,9 @@ my $OwnerID = $UserObject->UserLookup(
 );
 my $ResponsibleID = $UserObject->UserLookup(
     UserLogin => $TestResponsibleLogin,
+);
+my $UserID = $UserObject->UserLookup(
+    UserLogin => $TestUserLogin,
 );
 
 my $InvalidID = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup( Valid => 'invalid' );
@@ -583,9 +587,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => [
                 {
@@ -897,6 +901,7 @@ $Self->True(
 
 # get DB object
 my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
 my $Success;
 
 # delete queues

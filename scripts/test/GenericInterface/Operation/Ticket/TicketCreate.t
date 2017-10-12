@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 30fe74f7113e791bef702f72abfd9db7e45608da - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: otrs - 1b2bde9abd03b57cba2648af3e9db40b5b230967 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -97,8 +97,10 @@ $Self->Is(
 my $TestOwnerLogin        = $Helper->TestUserCreate();
 my $TestResponsibleLogin  = $Helper->TestUserCreate();
 my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
+my $TestUserLogin         = $Helper->TestUserCreate(
+    Groups => [ 'admin', 'users', ],
+);
 
-# create user object
 my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
 my $OwnerID = $UserObject->UserLookup(
@@ -106,6 +108,9 @@ my $OwnerID = $UserObject->UserLookup(
 );
 my $ResponsibleID = $UserObject->UserLookup(
     UserLogin => $TestResponsibleLogin,
+);
+my $UserID = $UserObject->UserLookup(
+    UserLogin => $TestUserLogin,
 );
 
 my $InvalidID = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup( Valid => 'invalid' );
@@ -2468,7 +2473,7 @@ my @Tests        = (
                 HistoryType                 => 'NewTicket',
                 HistoryComment              => '% % ',
                 TimeUnit                    => 25,
-                ForceNotificationToUserID   => [1],
+                ForceNotificationToUserID   => [$UserID],
                 ExcludeNotificationToUserID => {
                     Item => 1,
                 },
@@ -2525,7 +2530,7 @@ my @Tests        = (
                 HistoryType                 => 'NewTicket',
                 HistoryComment              => '% % ',
                 TimeUnit                    => 25,
-                ForceNotificationToUserID   => [1],
+                ForceNotificationToUserID   => [$UserID],
                 ExcludeNotificationToUserID => [ 'Invalid' . $RandomID ],
             },
             DynamicField => {
@@ -2580,8 +2585,8 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
                 ExcludeMuteNotificationToUserID => {
                     Item => 1,
                 },
@@ -2638,8 +2643,8 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
                 ExcludeMuteNotificationToUserID => [ 'Invalid' . $RandomID ],
             },
             DynamicField => {
@@ -2694,9 +2699,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Test => 1,
@@ -2750,9 +2755,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name => 'Invalid' . $RandomID,
@@ -2806,9 +2811,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => 'Invalid' . $RandomID,
@@ -2863,9 +2868,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -2920,9 +2925,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -2977,9 +2982,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3034,9 +3039,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3092,9 +3097,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3151,9 +3156,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3199,9 +3204,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3251,9 +3256,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3306,9 +3311,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3361,9 +3366,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3412,9 +3417,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3464,9 +3469,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3516,9 +3521,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25.5,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3568,9 +3573,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3632,9 +3637,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3688,9 +3693,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3751,9 +3756,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => [
                 {
@@ -3814,9 +3819,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => [
                 {
@@ -3877,9 +3882,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => [
                 {
@@ -3943,9 +3948,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -3996,9 +4001,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -4050,9 +4055,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -4103,9 +4108,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -4156,9 +4161,9 @@ my @Tests        = (
                 HistoryType                     => 'NewTicket',
                 HistoryComment                  => '% % ',
                 TimeUnit                        => 25,
-                ForceNotificationToUserID       => [1],
-                ExcludeNotificationToUserID     => [1],
-                ExcludeMuteNotificationToUserID => [1],
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
             },
             DynamicField => {
                 Name  => $DynamicFieldDateTimeConfig{Name},
@@ -4626,6 +4631,7 @@ $Self->Is(
     'Kernel::System::DB',
     "DBObject created correctly",
 );
+
 my $Success;
 
 # delete queues

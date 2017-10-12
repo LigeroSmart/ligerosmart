@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - f407d4862a60a1654b6374beab45b0d01b8e9896 - Kernel/Modules/AdminService.pm
+# $origin: otrs - 58bebdd2b637d90a46a9afb8826073ba8337e611 - Kernel/Modules/AdminService.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -363,8 +363,9 @@ sub _MaskNew {
 
     # generate ParentOptionStrg
     my %ServiceList = $ServiceObject->ServiceList(
-        Valid  => 0,
-        UserID => $Self->{UserID},
+        Valid        => 1,
+        KeepChildren => $ConfigObject->Get('Ticket::Service::KeepChildren') // 0,
+        UserID       => $Self->{UserID},
     );
     $ServiceData{ParentOptionStrg} = $LayoutObject->BuildSelection(
         Data           => \%ServiceList,
