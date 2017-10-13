@@ -300,7 +300,8 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 Core.UI.InputFields.Activate($('.Dialog:visible'));
 
                 // register add of attribute
-                $('.AddButton').off('click.AddSearchAttribute').on('click.AddSearchAttribute', function () {
+                $('#Attribute').on('change', function () {
+
                     var Attribute = $('#Attribute').val();
                     TargetNS.SearchAttributeAdd(Attribute);
                     TargetNS.AdditionalAttributeSelectionRebuild();
