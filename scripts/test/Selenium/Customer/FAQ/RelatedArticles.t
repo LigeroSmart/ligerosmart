@@ -154,9 +154,85 @@ $Selenium->RunTest(
             "Found message for no related FAQ article",
         );
 
-        for my $FAQ (@FAQArticles) {
+        # Test case for bug#12900 ( https://bugs.otrs.org/show_bug.cgi?id=12900 ).
+        # Create new categry which is subcategory of default 'Misc' category.
+        my $RandomID      = $Helper->GetRandomID();
+        my $SubCategoryID = $FAQObject->CategoryAdd(
+            Name     => 'SubCategory' . $RandomID,
+            Comment  => 'SubCategory',
+            ParentID => 1,
+            ValidID  => 1,
+            UserID   => 1,
+        );
+        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
+            Group => 'users',
+        );
+        $FAQObject->SetCategoryGroup(
+            CategoryID => $SubCategoryID,
+            GroupIDs   => [$GroupID],
+            UserID     => 1,
+        );
 
-            my $Success = $FAQObject->FAQDelete(
+        # Create two FAQ articles in Misc and test created subcategory.
+        my @Articles = (
+            {
+                Title      => "MiscArticle $RandomID",
+                CategoryID => 1,
+            },
+            {
+                Title      => "SubCategoryArticle $RandomID",
+                CategoryID => $SubCategoryID,
+            },
+        );
+
+        my $Keyword = "Keyword $RandomID";
+        my @RelatedFAQArticles;
+        for my $Test (@Articles) {
+            my $ItemID = $FAQObject->FAQAdd(
+                Title       => $Test->{Title},
+                CategoryID  => $Test->{CategoryID},
+                StateID     => 3,
+                LanguageID  => 1,
+                Keywords    => $Keyword,
+                Field1      => 'Symptom...',
+                Field2      => 'Problem...',
+                Field3      => 'Solution...',
+                ContentType => 'text/html',
+                UserID      => 1,
+            );
+            $Self->True(
+                $ItemID,
+                "FAQ article is created - $ItemID",
+            );
+            push @RelatedFAQArticles, {
+                ID    => $ItemID,
+                Title => $Test->{Title},
+            };
+        }
+
+        $Selenium->VerifiedRefresh();
+
+        # Type in subject keyword to show two FAQ articles in the side widget hint.
+        # One from 'Misc' category and second one from subcategory of 'Misc'.
+        $Selenium->find_element( "#Subject", 'css' )->send_keys( $RandomID, " " );
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && !$("span.AJAXLoader:visible").length'
+        );
+
+        for my $Check (@RelatedFAQArticles) {
+            $Self->True(
+                $Selenium->find_element("//a[contains(\@title, '$Check->{Title}')]"),
+                "Related FAQ article for subject keyword $RandomID is found - $Check->{Title}"
+            );
+            $Self->True(
+                $Selenium->find_element("//a[contains(\@href, 'Action=CustomerFAQZoom;ItemID=$Check->{ID}')]"),
+                "Link for related FAQ article is found - $Check->{Title}"
+            );
+        }
+
+        my $Success;
+        for my $FAQ ( @FAQArticles, @RelatedFAQArticles ) {
+            $Success = $FAQObject->FAQDelete(
                 ItemID => $FAQ->{ID},
                 UserID => 1,
             );
@@ -165,6 +241,16 @@ $Selenium->RunTest(
                 "FAQ is deleted - $FAQ->{ID}",
             );
         }
+
+        # Delete test created subcategory.
+        $Success = $FAQObject->CategoryDelete(
+            CategoryID => $SubCategoryID,
+            UserID     => 1,
+        );
+        $Self->True(
+            $Success,
+            "FAQ category ID $SubCategoryID is deleted",
+        );
 
         for my $Cache (qw(FAQ FAQKeywordArticleList)) {
             $CacheObject->CleanUp(
