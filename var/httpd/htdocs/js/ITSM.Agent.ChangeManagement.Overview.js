@@ -49,7 +49,7 @@ ITSM.Agent.ChangeManagement.Overview = (function (TargetNS) {
         });
 
         // On row click go the change zoom.
-        $('.MasterAction').bind('click', function (Event) {
+        $('.MasterAction').on('click', function (Event) {
             var $MasterActionLink = $(this).find('.MasterActionLink');
             // only act if the link was not clicked directly
             if (Event.target !== $MasterActionLink.get(0)) {

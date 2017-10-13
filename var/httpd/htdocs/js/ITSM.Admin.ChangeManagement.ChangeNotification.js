@@ -32,7 +32,7 @@ ITSM.Admin.ChangeManagement.ChangeNotification = (function (TargetNS) {
     TargetNS.Init = function () {
 
         if (Core.Config.Get('OverviewResult')) {
-            $('.NotificationDelete').bind('click', function (Event) {
+            $('.NotificationDelete').on('click', function (Event) {
 
                 if (window.confirm(Core.Language.Translate('Do you really want to delete this notification?'))) {
                     window.location = $(this).attr('href');
