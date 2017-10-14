@@ -78,7 +78,9 @@ $Selenium->RunTest(
         }
 
         # Input change title and number as search param and run it.
-        $Selenium->find_element("//a[\@class='AddButton']")->click();
+        $Selenium->execute_script("\$('#Attribute').val('ChangeTitle').trigger('redraw.InputField').trigger('change');");
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('input[name=\"ChangeTitle\"]').length" );
+
         $Selenium->find_element( "ChangeNumber",      'name' )->send_keys( $ChangeData->{ChangeNumber} );
         $Selenium->find_element( "ChangeTitle",       'name' )->send_keys( $ChangeData->{ChangeTitle} );
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
