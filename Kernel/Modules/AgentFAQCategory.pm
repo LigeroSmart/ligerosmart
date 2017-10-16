@@ -672,12 +672,7 @@ sub _Overview {
                 DialogContentQueryString   => 'Action=AgentFAQCategory;Subaction=Delete;CategoryID=' . $CategoryID,
                 ConfirmedActionQueryString => 'Action=AgentFAQCategory;Subaction=DeleteAction;CategoryID='
                     . $CategoryID,
-                DialogTitle    => $LayoutObject->{LanguageObject}->Translate('Delete Category'),
-                TranslatedText => {
-                    Yes => $LayoutObject->{LanguageObject}->Translate('Yes'),
-                    No  => $LayoutObject->{LanguageObject}->Translate('No'),
-                    Ok  => $LayoutObject->{LanguageObject}->Translate('Ok'),
-                },
+                DialogTitle => $LayoutObject->{LanguageObject}->Translate('Delete Category'),
             };
 
             # Get category data.

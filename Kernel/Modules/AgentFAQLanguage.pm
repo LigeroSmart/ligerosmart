@@ -526,11 +526,6 @@ sub _Overview {
                         'Delete Language %s',
                         $Languages{$LanguageID},
                     ),
-                    TranslatedText => {
-                        Yes => $LayoutObject->{LanguageObject}->Translate('Yes'),
-                        No  => $LayoutObject->{LanguageObject}->Translate('No'),
-                        Ok  => $LayoutObject->{LanguageObject}->Translate('Ok'),
-                    },
                 };
 
                 # Get languages result.
