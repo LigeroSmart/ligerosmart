@@ -14,9 +14,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:42+0000\n"
-"PO-Revision-Date: 2017-09-29 14:43+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -480,10 +480,6 @@ msgstr "Kategorie %s konnte nicht gelöscht werden!"
 msgid "Delete Category"
 msgstr "Kategorie löschen"
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr "Ok"
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "Es wurde keine ItemID vergeben!"
@@ -732,6 +728,10 @@ msgstr "extern"
 msgid "public"
 msgstr "öffentlich"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "Ok"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -765,6 +765,14 @@ msgid "Customer FAQ Print."
 msgstr "Kunden-FAQ Drucken."
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr "Kunden FAQ Detailansicht."
 
@@ -775,10 +783,6 @@ msgstr "Kunden-FAQ Suchen."
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "Kunden-FAQ."
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
-msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."

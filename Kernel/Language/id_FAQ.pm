@@ -177,7 +177,6 @@ sub Data {
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
     $Self->{Translation}->{'Delete Category'} = 'Hapus Kategori';
-    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '';
@@ -282,6 +281,9 @@ sub Data {
     $Self->{Translation}->{'external'} = 'eksternal';
     $Self->{Translation}->{'public'} = 'umum';
 
+    # JS File: FAQ.Agent.ConfirmationDialog
+    $Self->{Translation}->{'Ok'} = 'Ok';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Sebuah filter untuk output HTML untuk menambahkan tautan terkait string yang ditentukan. Dua buah masukan diperkenankan untuk Elemen Gambar. Pertama nama dari gambar (contoh: faq.png). Pada kasus ini path gambar OTRS yang digunakan. Kemungkinan kedua adalah memasukkan tautan ke dalam gambar.';
@@ -291,10 +293,11 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Manajemen Kategori';
     $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Posisi desimal pada hasil pemilihan.';
     $Self->{Translation}->{'Default category name.'} = 'Nama kategori default.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Bahasa default untuk artikel FAQ pada mode satu bahasa.';

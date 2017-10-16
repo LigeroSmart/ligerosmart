@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:42+0000\n"
-"PO-Revision-Date: 2017-09-29 14:43+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -470,10 +470,6 @@ msgstr "Nem sikerült a(z) %s kategória törlése!"
 msgid "Delete Category"
 msgstr "Kategória törlése"
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr "OK"
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "Nincs elemazonosító megadva!"
@@ -722,6 +718,10 @@ msgstr "külső"
 msgid "public"
 msgstr "nyilvános"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "OK"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -755,6 +755,14 @@ msgid "Customer FAQ Print."
 msgstr "Ügyfél GyIK nyomtatás."
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr "Ügyfél GyIK nagyítás."
 
@@ -765,10 +773,6 @@ msgstr "Ügyfél GyIK keresés."
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "Ügyfél GyIK."
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
-msgstr "Ügyfél GyIK kapcsolódó bejegyzések."
 
 #. SysConfig
 msgid "Decimal places of the voting result."

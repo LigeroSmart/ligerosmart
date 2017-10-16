@@ -177,7 +177,6 @@ sub Data {
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
     $Self->{Translation}->{'Delete Category'} = 'Futa sehemu';
-    $Self->{Translation}->{'Ok'} = 'Sawa';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '';
@@ -282,6 +281,9 @@ sub Data {
     $Self->{Translation}->{'external'} = 'nje';
     $Self->{Translation}->{'public'} = 'umma';
 
+    # JS File: FAQ.Agent.ConfirmationDialog
+    $Self->{Translation}->{'Ok'} = 'Sawa';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Kichujio cha matokeo ya HTML ili kuongeza viungo kwa tungo zilizo fafanuliwa. Sura ya elemnti hii inaruhusu maingizo ya aina mbili. Kwanza jinala sura (mf. faq.png). Kwa kesi hii sura ya njia ya OTRS itatumika. Njia ya pili ni kuingiza kiungo cha hiyo sura.';
@@ -291,10 +293,11 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Usimamizi wa kategori';
     $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '';
     $Self->{Translation}->{'Customer FAQ search.'} = '';
     $Self->{Translation}->{'Customer FAQ.'} = '';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Mwongo wa matokeo ya kura';
     $Self->{Translation}->{'Default category name.'} = 'Jina la chaguo-msingi la kategori';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Chaguo-msingi la lugha ya makala ya maswali yaliyoulizwa mara nyingi katika lugha moja.';

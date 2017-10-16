@@ -177,7 +177,6 @@ sub Data {
     $Self->{Translation}->{'No CategoryID is given!'} = 'Nincs kategória-azonosító megadva!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Nem sikerült a(z) %s kategória törlése!';
     $Self->{Translation}->{'Delete Category'} = 'Kategória törlése';
-    $Self->{Translation}->{'Ok'} = 'OK';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'Nincs elemazonosító megadva!';
@@ -282,6 +281,9 @@ sub Data {
     $Self->{Translation}->{'external'} = 'külső';
     $Self->{Translation}->{'public'} = 'nyilvános';
 
+    # JS File: FAQ.Agent.ConfirmationDialog
+    $Self->{Translation}->{'Ok'} = 'OK';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Egy szűrő a HTML kimenethez, hogy hivatkozásokat adjon egy meghatározott szöveg mögé. Az Image elem kétféle bemenetet fogad. Az első a kép neve (például faq.png). Ebben az esetben az OTRS képek útvonala lesz felhasználva. A második lehetőség a képre mutató hivatkozás beszúrása.';
@@ -291,10 +293,11 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Kategóriakezelés';
     $Self->{Translation}->{'Category Management.'} = 'Kategóriakezelés.';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Ügyfél GyIK nyomtatás.';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Ügyfél GyIK nagyítás.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Ügyfél GyIK keresés.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Ügyfél GyIK.';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = 'Ügyfél GyIK kapcsolódó bejegyzések.';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'A szavazási eredmény tizedesjegyeinek száma.';
     $Self->{Translation}->{'Default category name.'} = 'Alapértelmezett kategórianév.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'A GyIK bejegyzések alapértelmezett nyelve egynyelvű módban.';

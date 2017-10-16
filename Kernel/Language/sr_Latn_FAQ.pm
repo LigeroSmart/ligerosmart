@@ -177,7 +177,6 @@ sub Data {
     $Self->{Translation}->{'No CategoryID is given!'} = 'Nije dat ID Kategorije!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Nije bilo moguće obrisati kategoriju %s!';
     $Self->{Translation}->{'Delete Category'} = 'Obriši kategoriju';
-    $Self->{Translation}->{'Ok'} = 'U redu';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'Nije dat ID Stavke!';
@@ -282,6 +281,9 @@ sub Data {
     $Self->{Translation}->{'external'} = 'eksterno';
     $Self->{Translation}->{'public'} = 'javno';
 
+    # JS File: FAQ.Agent.ConfirmationDialog
+    $Self->{Translation}->{'Ok'} = 'U redu';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'Filter za „HTML” izlaz za dodavanje veze iza definisanog niza znakova. Element Slika dozvoljava dva načina unosa. Prvi je naziv slike (npr faq.png). u ovom slučaju biće korišćena „OTRS” putanja do slike.  Druga mogućnost je unos veze do slike.';
@@ -291,10 +293,11 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Upravljanje kategorijama';
     $Self->{Translation}->{'Category Management.'} = 'Upravljanje kategorijama.';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Štampanje klijentskog FAQ.';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Detalji klijentskog FAQ.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Pretraga klijentskog FAQ.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Klijentski FAQ.';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = 'CustomerFAQRelatedArticles.';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Broj decimala u rezultatu glasanja.';
     $Self->{Translation}->{'Default category name.'} = 'Naziv podrazumevane kategorije.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Podrazumevani jezik FAQ članaka u jednojezičkom načinu rada.';

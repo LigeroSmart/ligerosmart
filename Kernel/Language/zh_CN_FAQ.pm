@@ -177,7 +177,6 @@ sub Data {
     $Self->{Translation}->{'No CategoryID is given!'} = '没有指定CategoryID ！';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '不能删除类别%s！';
     $Self->{Translation}->{'Delete Category'} = '删除类别';
-    $Self->{Translation}->{'Ok'} = '确定';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = '没有指定ItemID！';
@@ -282,6 +281,9 @@ sub Data {
     $Self->{Translation}->{'external'} = '外部';
     $Self->{Translation}->{'public'} = '公开';
 
+    # JS File: FAQ.Agent.ConfirmationDialog
+    $Self->{Translation}->{'Ok'} = '确定';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '在HTML输出结果中为预定义字符串添加链接的过滤器。图像元素允许两种输入方式：第一种是用图像的名称（如faq.png），在这种情况下会使用OTRS的图像路径；第二种是插入图像的链接。';
@@ -291,10 +293,11 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = '管理类别';
     $Self->{Translation}->{'Category Management.'} = '管理类别。';
     $Self->{Translation}->{'Customer FAQ Print.'} = '客户FAQ打印。';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '客户FAQ详情。';
     $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索';
     $Self->{Translation}->{'Customer FAQ.'} = '客户FAQ。';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '客户常见问题相关文章。';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '以十分制显示评分结果。';
     $Self->{Translation}->{'Default category name.'} = '默认的目录名称。';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '单语言模式下FAQ文章的默认语言。';

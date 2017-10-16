@@ -1,14 +1,16 @@
 # 
 # Translators:
 # Alexander Korsikov <korsikov@rbcgrp.com>, 2015
+# Alexander Korsikov <korsikov@rbcgrp.com>, 2015
 # Vira Motorko <ato4ka@i.ua>, 2015
+# Роман Свистун <svystun09@gmail.com>, 2015
 # Роман Свистун <svystun09@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/otrs/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +20,7 @@ msgstr ""
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
-msgstr "Добавити артикул довідника"
+msgstr "Додати артикул довідника"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
@@ -26,35 +28,35 @@ msgstr "Ключові слова"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
-msgstr ""
+msgstr "Категорія обов'язкова"
 
 #. Template: AgentFAQAdd
 msgid "Approval"
-msgstr "Уточнить смысл и изменить(Approval)"
+msgstr "Погодження"
 
 #. Template: AgentFAQCategory
 msgid "FAQ Category Management"
-msgstr ""
+msgstr "Менеджер категорії FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "Додати категорію FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "Редагувати категорію FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
-msgstr ""
+msgstr "Додати категорію"
 
 #. Template: AgentFAQCategory
 msgid "Add Category"
-msgstr ""
+msgstr "Додати категорію"
 
 #. Template: AgentFAQCategory
 msgid "Edit Category"
-msgstr ""
+msgstr "Редагувати категорію"
 
 #. Template: AgentFAQCategory
 msgid "Subcategory of"
@@ -62,11 +64,11 @@ msgstr "Підкатегорії"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
-msgstr ""
+msgstr "Будь ласка виберіть хоч одну групу доступу"
 
 #. Template: AgentFAQCategory
 msgid "Agent groups that can access articles in this category."
-msgstr ""
+msgstr "Групи ангентів, що мають доступ до статтей в цій категорії"
 
 #. Template: AgentFAQCategory
 msgid "Will be shown as comment in Explorer."
@@ -74,25 +76,25 @@ msgstr "Буде показано, як коментар у Провіднику
 
 #. Template: AgentFAQCategory
 msgid "Do you really want to delete this category?"
-msgstr ""
+msgstr "Ви дійсно хочете видалити цю категорію?"
 
 #. Template: AgentFAQCategory
 msgid ""
 "You can not delete this category. It is used in at least one FAQ article "
 "and/or is parent of at least one other category"
-msgstr ""
+msgstr "Ви не можете видалити цю категорію. Вона використовується або є батьківською для іншої категорії"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
-msgstr ""
+msgstr "Ця категорія використовується в наступних статтях FAQ"
 
 #. Template: AgentFAQCategory
 msgid "This category is parent of the following subcategories"
-msgstr ""
+msgstr "Ця категорія є батьківською для наступних підкатегорій"
 
 #. Template: AgentFAQDelete
 msgid "Do you really want to delete this FAQ article?"
-msgstr ""
+msgstr "Ви дійсно хочете видалити цю статтю?"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
@@ -100,31 +102,31 @@ msgstr "База знань"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
-msgstr ""
+msgstr "Огляд Бази знань"
 
 #. Template: AgentFAQExplorer
 msgid "Quick Search"
-msgstr ""
+msgstr "Швидкий пошук"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
-msgstr ""
+msgstr "Підстановка дозволена"
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
-msgstr ""
+msgstr "Розширений пошук"
 
 #. Template: AgentFAQExplorer
 msgid "Subcategories"
-msgstr ""
+msgstr "Підкатегорії"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Articles"
-msgstr ""
+msgstr "Статті Бази знань"
 
 #. Template: AgentFAQExplorer
 msgid "No subcategories found."
-msgstr ""
+msgstr "Підкатегорії не знайдені"
 
 #. Template: AgentFAQHistory
 msgid "History of"
@@ -140,39 +142,39 @@ msgstr "Час створення"
 
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
-msgstr ""
+msgstr "Не має журналу FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "FAQ Language Management"
-msgstr ""
+msgstr "Керування мовами FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "Додати мову FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "Редагувати мову FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Використовуйте цю опцію якщо ви хочете працювати з декількома мовами"
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
-msgstr ""
+msgstr "Додати мову"
 
 #. Template: AgentFAQLanguage
 msgid "Add Language"
-msgstr ""
+msgstr "Додати мову"
 
 #. Template: AgentFAQLanguage
 msgid "Edit Language"
-msgstr ""
+msgstr "Редагувати мову"
 
 #. Template: AgentFAQLanguage
 msgid "Do you really want to delete this language?"
-msgstr ""
+msgstr "Ви дійсно хочете видалити цю мову?"
 
 #. Template: AgentFAQLanguage
 msgid ""
@@ -181,216 +183,216 @@ msgstr ""
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
-msgstr ""
+msgstr "Ця мова використовується в наступних статтях"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "Context Settings"
-msgstr ""
+msgstr "Налаштування контексту"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "FAQ articles per page"
-msgstr ""
+msgstr "Кількість статтей на сторінку"
 
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
-msgstr ""
+msgstr "Не знайдено даних"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr ""
+msgstr "Ключовеслово"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr ""
+msgstr "Оцінка (діапазон значення)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr ""
+msgstr "Рейтинг %"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
-msgstr ""
+msgstr "Погоджено"
 
 #. Template: AgentFAQSearch
 msgid "Last changed by"
-msgstr ""
+msgstr "В останнє змінено:"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr ""
+msgstr "Час створення статті (до/після)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr ""
+msgstr "Час створення статті (між)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr ""
+msgstr "Час зміни статті (до/після)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr ""
+msgstr "Час зміни статті (між)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
-msgstr ""
+msgstr "Повнотектовий"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
-msgstr ""
+msgstr "Пошук FAQ"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr ""
+msgstr "Вибір профілю"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
-msgstr ""
+msgstr "Оцінка"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr ""
+msgstr "Немає оцінок"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
-msgstr ""
+msgstr "Окремі оцінки"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr ""
+msgstr "Приклад: рівне 10 чи більше ніж 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
-msgstr ""
+msgstr "Рейтинг"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr ""
+msgstr "Немає рейтингу"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
-msgstr ""
+msgstr "Окремий рейтинг"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr ""
+msgstr "Приклад: Рівне 25% або бюільше ніж 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr ""
+msgstr "Час ствоерння статті"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr ""
+msgstr "Час зміни статті"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
-msgstr ""
+msgstr "Інформація Бази знань"
 
 #. Template: AgentFAQZoom
 msgid "Rating"
-msgstr ""
+msgstr "Рейтинг"
 
 #. Template: AgentFAQZoom
 msgid "out of 5"
-msgstr ""
+msgstr "з 5"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
-msgstr "Голосів"
+msgstr "Оцінки"
 
 #. Template: AgentFAQZoom
 msgid "No votes found!"
-msgstr ""
+msgstr "Немає оцінок"
 
 #. Template: AgentFAQZoom
 msgid "No votes found! Be the first one to rate this FAQ article."
-msgstr ""
+msgstr "Не знайдено оцінок! Будьте першим хто оцінить данц статтю"
 
 #. Template: AgentFAQZoom
 msgid "Download Attachment"
-msgstr ""
+msgstr "Завантажити вкладення"
 
 #. Template: AgentFAQZoom
 msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr ""
+msgstr "Для вікриття посилання в наступних описових блоках, Вам можливо доведеться натиснути Ctrl або Cmd або Shift під час вибору"
 
 #. Template: AgentFAQZoom
 msgid ""
 "How helpful was this article? Please give us your rating and help to improve"
 " the FAQ Database. Thank You!"
-msgstr ""
+msgstr "Наскільки корисною була ця стаття? Будь ласка залиште оціку і допоможіть нам покращувати Базу Знань."
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
-msgstr ""
+msgstr "не допомогло"
 
 #. Template: AgentFAQZoom
 msgid "very helpful"
-msgstr ""
+msgstr "дуже допомогло"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr ""
+msgstr "Додати заголовок статті до теми"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
-msgstr ""
+msgstr "Вставити текст статті"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr ""
+msgstr "Вставити повну статтю"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
-msgstr ""
+msgstr "Вставити посилання на статтю"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text & Link"
-msgstr ""
+msgstr "Вставити текст статті та посилання"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
-msgstr ""
+msgstr "Вставити повну статтю та лінк"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
-msgstr ""
+msgstr "Не знайдено статтей"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Це може бути корисним"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "Не знайдено кориснолї інформації по введеній темі та тілу звернення"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "Введіть тему чи текст звернення щоб отримати корисну інформцію"
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
-msgstr ""
+msgstr "Повнотекстовий пошук по статтях Бази Знань"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr ""
+msgstr "Обмеження оцінки"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr ""
+msgstr "Тільки статті з оцінками..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr ""
+msgstr "Обмеження рейтингу"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr ""
+msgstr "Тільки статті з рейтингом"
 
 #. Template: CustomerFAQSearch
 msgid "Time restrictions"
@@ -398,35 +400,35 @@ msgstr "Тимчасові рамки"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr ""
+msgstr "Тільки статті створені"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr ""
+msgstr "Тільки статті створені між"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr ""
+msgstr "Профіль пошуку як шаблон?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
-msgstr ""
+msgstr "Номер статті"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
-msgstr ""
+msgstr "Шукати статтю поключовому слову"
 
 #. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
 msgid "Public"
-msgstr ""
+msgstr "Публічний"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr ""
+msgstr "Повернутись до провідника Бази Знань"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "You need rw permission!"
-msgstr ""
+msgstr "Вам необхідні права на запис"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
@@ -470,10 +472,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -724,6 +722,10 @@ msgstr "зовнiшнє"
 msgid "public"
 msgstr "публічне"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr ""
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -757,6 +759,14 @@ msgid "Customer FAQ Print."
 msgstr ""
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr ""
 
@@ -766,10 +776,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig
@@ -958,10 +964,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Delete this FAQ"
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig
@@ -1277,10 +1279,6 @@ msgstr ""
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
 msgstr ""
-
-#. SysConfig
-msgid "Number"
-msgstr "Число"
 
 #. SysConfig
 msgid ""

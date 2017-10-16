@@ -1,14 +1,14 @@
 # 
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017
-# Kentaro Hori <kentaro0919@gmail.com>, 2014-2015
+# Kentaro Hori <kentaro0919@gmail.com>, 2014-2015,2017
 # Norihiro Tanaka <noritnk@kcn.ne.jp>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:42+0000\n"
-"PO-Revision-Date: 2017-09-29 14:43+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,11 +38,11 @@ msgstr "FAQ カテゴリ管理"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "FAQ カテゴリを追加"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "FAQ カテゴリを編集"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -148,11 +148,11 @@ msgstr "FAQ 言語管理"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "FAQ 言語を追加"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "FAQ 言語を編集"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -362,15 +362,15 @@ msgstr "該当する記事はありません。"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "こちらの情報も役にたつかもしれません"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "件名と本文から有効な情報は見つかりませんでした"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "件名か本文を記入して、有効な情報のリストを取得"
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -430,7 +430,7 @@ msgstr "読書き(rw)の権限が必要です！"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr ""
+msgstr "ユーザーが　読む/書く 権限のあるカテゴリーが見つかりませんでした"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
@@ -472,10 +472,6 @@ msgstr ""
 msgid "Delete Category"
 msgstr "カテゴリを削除"
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr "はい"
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "アイテムID が指定されていません！"
@@ -498,7 +494,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "FAQ ヒストリー"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -724,6 +720,10 @@ msgstr "外部向"
 msgid "public"
 msgstr "公開"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "はい"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -757,6 +757,14 @@ msgid "Customer FAQ Print."
 msgstr "顧客用FAQの表示"
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr "顧客用FAQの詳細表示"
 
@@ -767,10 +775,6 @@ msgstr "顧客用FAQの検索"
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "顧客用FAQ"
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
-msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."

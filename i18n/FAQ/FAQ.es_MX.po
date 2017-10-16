@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:42+0000\n"
-"PO-Revision-Date: 2017-09-29 14:43+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,11 +41,11 @@ msgstr "Gestión de categorías de FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "Añadir Categoría de FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "Editar Categoría de FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -151,11 +151,11 @@ msgstr "Gestión de Idiomas de FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "Añadir Idioma de FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "Editor Idioma de FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -475,10 +475,6 @@ msgstr "No fue posible borrar la categoría %s!"
 msgid "Delete Category"
 msgstr "Borrar categoría"
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr "Aceptar"
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "No se ha dado ItemID!"
@@ -727,6 +723,10 @@ msgstr "externo"
 msgid "public"
 msgstr "público"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "Aceptar"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -753,11 +753,19 @@ msgstr "Gestión de las Categorías"
 
 #. SysConfig
 msgid "Category Management."
-msgstr ""
+msgstr "Gestión de Categorías."
 
 #. SysConfig
 msgid "Customer FAQ Print."
 msgstr "Imprimir FAQ del Cliente."
+
+#. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr "Artículos FAQ Relacionados Para Los Clientes"
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr "Artículos FAQ Relacionados Para Los Clientes."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
@@ -770,10 +778,6 @@ msgstr "Búsqueda FAQ del Cliente."
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "FAQ del Cliente."
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
-msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -820,7 +824,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Define las Acciones donde el botón de configuraciones esta disponible en el \"widget\" de objetos vinculados (LinkObject::ViewMode = \"complex\"). Por favor note que dichas Acciones deben tener registrados los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -832,7 +836,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Define cuales columnas serán mostradas en el \"widget\" de FAQ vinculados (LinkObject::ViewMode = \"complex\"). Nota: Solamente atributos de FAQ y Campos Dinámicos (DynamicField_NombreX) son permitidos para columnas por omisión. Posibles configuraciones: 0 = Deshabitado, 1 = Habilitado, 2 = Habilitado por  omisión."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -965,65 +969,65 @@ msgstr "Borrar este artículo FAQ"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de añadir FAQ en la interfaz del agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de vista general de FAQ en la interfaz del agente."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de vista general de FAQ en la interfaz del cliente."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de vista general de FAQ en la interfaz pública."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de impresión de FAQ en la interfaz del agente."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de impresión de FAQ en la interfaz del cliente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de impresión de FAQ en la interfaz pública."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de búsqueda de FAQ en la interfaz del agente."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de búsqueda de FAQ en la interfaz del cliente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de búsqueda de FAQ en la interfaz pública."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de vista general de FAQ en formato pequeño en la interfaz del agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de detalle de FAQ en la interfaz del agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de detalle de FAQ en la interfaz del cliente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
-msgstr ""
+msgstr "Campos dinámicos mostrados en la pantalla de detalle de FAQ en la interfaz pública."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1035,7 +1039,7 @@ msgstr "Habilitar múltiples idiomas en el módulo FAQ"
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
-msgstr ""
+msgstr "Habilitar la funcionalidad de artículos relacionados en la interfaz del cliente."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
@@ -1047,11 +1051,11 @@ msgstr "Explorador"
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "Respondedor AJAX de FAQ."
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "Respondedor AJAX de FAQ para texto enriquecido."
 
 #. SysConfig
 msgid "FAQ Area"
@@ -1071,7 +1075,7 @@ msgstr "Editar FAQ."
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "Historial de FAQ."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1143,11 +1147,11 @@ msgstr "Gestión de Idiomas"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "Gestión de Idiomas."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
+msgstr "Límite de la búsqueda para construir el listado de palabras clave de artículos FAQ."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1257,7 +1261,7 @@ msgstr "Tamaño máximo del título en un artículo  FAQ a ser mostrado en el Di
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "customer interface."
-msgstr ""
+msgstr "Módulo para generar el perfil html \"OpenSearch\" para la búsqueda rápida de FAQ en la interface del cliente."
 
 #. SysConfig
 msgid ""
@@ -1267,11 +1271,11 @@ msgstr "Módulo para generar el perfil HTML OpenSearch para la búsqueda corta d
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
-msgstr ""
+msgstr "Módulo para generar el perfil html \"OpenSearch\" para la búsqueda rápida de FAQ."
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "Nuevo Artículo FAQ."
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
@@ -1323,7 +1327,7 @@ msgstr "Filtro de salida para agregar Java-Script a la pantalla CustomerTicketMe
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
-msgstr ""
+msgstr "Límite de desplome de artículos FAQ relacionados"
 
 #. SysConfig
 msgid ""
@@ -1375,21 +1379,21 @@ msgstr "Búsqueda de FAQ"
 
 #. SysConfig
 msgid "Search FAQ Small."
-msgstr ""
+msgstr "Búsqueda pequeña de FAQ"
 
 #. SysConfig
 msgid "Search FAQ."
-msgstr ""
+msgstr "Búsqueda de FAQ."
 
 #. SysConfig
 msgid ""
 "Select how many items should be shown in Journal Overview \"Small\" by "
 "default."
-msgstr ""
+msgstr "Seleccionar cuántos elementos deberán ser mostrados en la vista la vista general del diario \"pequeño\" por omisión."
 
 #. SysConfig
 msgid "Select how many items should be shown in Overview \"Small\" by default."
-msgstr ""
+msgstr "Seleccionar cuántos elementos deberán ser mostrados en la vista la vista general \"pequeña\" por omisión."
 
 #. SysConfig
 msgid ""
@@ -1457,7 +1461,7 @@ msgstr "Mostrar los últimos artículos creados en las interfaces definidas."
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactive the output)."
-msgstr ""
+msgstr "Mostrar las estrellas para los artículos con valoración igual o mayor al valor definido (utilizar el valor '0' para desactivar)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

@@ -6,13 +6,14 @@
 # Patrick Lentz, 2017
 # Richard BARET <inactive+rbaret@transifex.com>, 2015
 # ShevAbam, 2016
+# Thomas Imbreckx <zinks@linux.com>, 2017
 # Vincent SAOUT <v.saout@atool-dev.fr>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 08:19+0000\n"
-"PO-Revision-Date: 2017-09-25 08:20+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -476,10 +477,6 @@ msgstr ""
 msgid "Delete Category"
 msgstr "Supprimer Catégorie"
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr "Ok"
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr ""
@@ -728,6 +725,10 @@ msgstr "externe"
 msgid "public"
 msgstr "public"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "Ok"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -761,6 +762,14 @@ msgid "Customer FAQ Print."
 msgstr "Impression FAQ Client."
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr "Zoom FAQ Client."
 
@@ -771,10 +780,6 @@ msgstr "Recherche FAQ Client."
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "FAQ Client."
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
-msgstr ""
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -963,10 +968,6 @@ msgstr ""
 #. SysConfig
 msgid "Delete this FAQ"
 msgstr "Supprimer cette FAQ"
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
@@ -1283,10 +1284,6 @@ msgid "New FAQ articles need approval before they get published."
 msgstr "Les nouveaux articles FAQ doivent être approuvés avant d'être publiés"
 
 #. SysConfig
-msgid "Number"
-msgstr "Nombre"
-
-#. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
@@ -1324,7 +1321,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Other Settings"
-msgstr "Autres paramétrages"
+msgstr "Autres paramètres"
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."

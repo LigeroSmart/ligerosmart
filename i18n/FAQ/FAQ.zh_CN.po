@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:42+0000\n"
-"PO-Revision-Date: 2017-09-29 14:43+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-16 22:56+0000\n"
+"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -476,10 +476,6 @@ msgstr "不能删除类别%s！"
 msgid "Delete Category"
 msgstr "删除类别"
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr "确定"
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr "没有指定ItemID！"
@@ -728,6 +724,10 @@ msgstr "外部"
 msgid "public"
 msgstr "公开"
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr "确定"
+
 #. SysConfig
 msgid ""
 "A filter for HTML output to add links behind a defined string. The element "
@@ -761,6 +761,14 @@ msgid "Customer FAQ Print."
 msgstr "客户FAQ打印。"
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr "客户FAQ详情。"
 
@@ -771,10 +779,6 @@ msgstr "客户FAQ搜索"
 #. SysConfig
 msgid "Customer FAQ."
 msgstr "客户FAQ。"
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
-msgstr "客户常见问题相关文章。"
 
 #. SysConfig
 msgid "Decimal places of the voting result."

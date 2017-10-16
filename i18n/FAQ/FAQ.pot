@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2017-09-29 14:42+0000\n"
+"POT-Creation-Date: 2017-10-16 23:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -458,10 +458,6 @@ msgstr ""
 msgid "Delete Category"
 msgstr ""
 
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "Ok"
-msgstr ""
-
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
 msgstr ""
@@ -710,6 +706,10 @@ msgstr ""
 msgid "public"
 msgstr ""
 
+#. JS File: FAQ.Agent.ConfirmationDialog
+msgid "Ok"
+msgstr ""
+
 #. SysConfig
 msgid "A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image."
 msgstr ""
@@ -739,6 +739,14 @@ msgid "Customer FAQ Print."
 msgstr ""
 
 #. SysConfig
+msgid "Customer FAQ Related Articles"
+msgstr ""
+
+#. SysConfig
+msgid "Customer FAQ Related Articles."
+msgstr ""
+
+#. SysConfig
 msgid "Customer FAQ Zoom."
 msgstr ""
 
@@ -748,10 +756,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
-
-#. SysConfig
-msgid "CustomerFAQRelatedArticles."
 msgstr ""
 
 #. SysConfig

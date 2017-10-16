@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ カテゴリ管理';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'FAQ カテゴリを追加';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'FAQ カテゴリを編集';
     $Self->{Translation}->{'Add category'} = 'カテゴリを追加';
     $Self->{Translation}->{'Add Category'} = 'カテゴリを追加';
     $Self->{Translation}->{'Edit Category'} = 'カテゴリを編集';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ 言語管理';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'FAQ 言語を追加';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'FAQ 言語を編集';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '多言語で作業をしたい場合、この項目を設定してください。';
     $Self->{Translation}->{'Add language'} = '言語を追加';
@@ -137,9 +137,9 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = '該当する記事はありません。';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'こちらの情報も役にたつかもしれません';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '件名と本文から有効な情報は見つかりませんでした';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '件名か本文を記入して、有効な情報のリストを取得';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'FAQ全文検索（例："John*n"、"Will*"）';
@@ -164,7 +164,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
     $Self->{Translation}->{'You need rw permission!'} = '読書き(rw)の権限が必要です！';
-    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'ユーザーが　読む/書く 権限のあるカテゴリーが見つかりませんでした';
     $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
@@ -177,7 +177,6 @@ sub Data {
     $Self->{Translation}->{'No CategoryID is given!'} = 'カテゴリID が指定されていません！';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
     $Self->{Translation}->{'Delete Category'} = 'カテゴリを削除';
-    $Self->{Translation}->{'Ok'} = 'はい';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'アイテムID が指定されていません！';
@@ -189,7 +188,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'FAQ History'} = 'FAQ ヒストリー';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ ジャーナル';
@@ -282,6 +281,9 @@ sub Data {
     $Self->{Translation}->{'external'} = '外部向';
     $Self->{Translation}->{'public'} = '公開';
 
+    # JS File: FAQ.Agent.ConfirmationDialog
+    $Self->{Translation}->{'Ok'} = 'はい';
+
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         'フィルタ定義　-定義された文字列（string）にリンクを追加するhtmlアウトプット-  エレメント・イメージは、2種類のインプットが可能です。1つ目、イメージの名前です (例. faq.png)。この場合、OTRSイメージ・パスが使用されます。2つ目、イメージにリンクを挿入することが可能性です。';
@@ -291,10 +293,11 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'カテゴリー管理';
     $Self->{Translation}->{'Category Management.'} = '';
     $Self->{Translation}->{'Customer FAQ Print.'} = '顧客用FAQの表示';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '顧客用FAQの詳細表示';
     $Self->{Translation}->{'Customer FAQ search.'} = '顧客用FAQの検索';
     $Self->{Translation}->{'Customer FAQ.'} = '顧客用FAQ';
-    $Self->{Translation}->{'CustomerFAQRelatedArticles.'} = '';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '投票の結果の小数点以下の桁数';
     $Self->{Translation}->{'Default category name.'} = '既定のカテゴリ';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '規定の言語（単一言語モードで運用時）';

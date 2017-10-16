@@ -1,5 +1,6 @@
 #6.0.0.beta1 2017-??-??
  - 2017-10-16 Initial version for OTRS 6.
+ - 2016-10-16 Updated translations, thanks to all translators.
  - 2017-06-30 Replaced UserFistname, UserLastname in favor of a more flexible UserFullname, thanks to Dian Tong Software.
 
 #5.0.10 2017-??-??
