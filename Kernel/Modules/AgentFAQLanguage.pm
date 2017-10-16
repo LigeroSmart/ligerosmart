@@ -124,7 +124,7 @@ sub Run {
             );
             if ($LanguageExistsAlready) {
                 $Error{NameServerError}        = 'ServerError';
-                $Error{NameServerErrorMessage} = Translatable('his language already exists!');
+                $Error{NameServerErrorMessage} = Translatable('This language already exists!');
             }
         }
 
@@ -223,7 +223,7 @@ sub Run {
             );
             if ($LanguageExistsAlready) {
                 $Error{NameServerError}        = 'ServerError';
-                $Error{NameServerErrorMessage} = Translatable('his language already exists!');
+                $Error{NameServerErrorMessage} = Translatable('This language already exists!');
             }
         }
 
