@@ -83,7 +83,9 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length' );
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+        );
 
         # Prepare CAB for test template.
         $Selenium->find_element( "#ChangeManager", 'css' )->clear();
