@@ -88,12 +88,12 @@ $Selenium->RunTest(
         );
 
         # Prepare CAB for test template.
-        $Selenium->find_element( "#ChangeManager", 'css' )->clear();
+        $Selenium->find_element( "#ChangeManager", 'css' )->send_keys("");
         $Selenium->find_element( "#ChangeManager", 'css' )->send_keys($TestUserLogin);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click()");
 
-        $Selenium->find_element( "#NewCABMember", 'css' )->clear();
+        $Selenium->find_element( "#NewCABMember", 'css' )->send_keys("");
         $Selenium->find_element( "#NewCABMember", 'css' )->send_keys($TestCABUser);
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCABUser)').click()");
