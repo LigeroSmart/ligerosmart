@@ -40,7 +40,7 @@ our @ObjectDependencies = (
 
 ITSMChangeManagement.pm - code to execute during package installation
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
 Functions for installing the ITSMChangeManagement package.
 
