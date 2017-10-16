@@ -2242,8 +2242,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description Translatable="1">CustomerFAQRelatedArticles.</Description>
-                <Title>CustomerFAQRelatedArticles</Title>
+                <Description Translatable="1">Customer FAQ Related Articles.</Description>
+                <Title Translatable="1">Customer FAQ Related Articles</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>

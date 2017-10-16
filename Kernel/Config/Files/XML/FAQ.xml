@@ -2663,8 +2663,8 @@ Your OTRS Notification Master
                         <Array>
                         </Array>
                     </Item>
-                    <Item Key="Description" Translatable="1">CustomerFAQRelatedArticles.</Item>
-                    <Item Key="Title">CustomerFAQRelatedArticles</Item>
+                    <Item Key="Description" Translatable="1">Customer FAQ Related Articles.</Item>
+                    <Item Key="Title" Translatable="1">Customer FAQ Related Articles</Item>
                     <Item Key="NavBarName"></Item>
                 </Hash>
             </Item>
