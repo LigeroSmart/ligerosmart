@@ -27,6 +27,7 @@
         <File Permission="660" Location="Kernel/System/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.pm" />
         <File Permission="660" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm" />
         <File Permission="660" Location="Kernel/System/Ticket/Event/NagiosAcknowledge.pm" />
+        <File Permission="660" Location="Kernel/System/Ticket/Event/Icinga2Acknowledge.pm" />
         <File Permission="660" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheck.t" />
         <File Permission="660" Location="scripts/test/Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount.t" />
         <File Permission="660" Location="scripts/test/SystemMonitoring.t" />

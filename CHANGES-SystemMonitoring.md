@@ -1,4 +1,5 @@
 #6.0.0.beta2 2017-??-??
+ - 2017-10-17 Added support for Icinga2, thanks to Emerson Pinter.
 
 #6.0.0.beta1 2017-11-01
  - 2017-08-25 Improved the communication log for the packagesetup functions.

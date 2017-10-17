@@ -137,4 +137,84 @@
             <Item ValueType="String" ValueRegex="">some_pass</Item>
         </Value>
     </Setting>
+    <Setting Name="Icinga2::Acknowledge::Enabled" Required="1" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement enabled?</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::EventModulePost###9-Icinga2Acknowledge" Required="1" Valid="1">
+        <Description Translatable="1">Ticket event module to send an acknowledge to Icinga2.</Description>
+        <Navigation>Core::Event::Icinga2</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::Icinga2Acknowledge</Item>
+                <Item Key="Event">TicketLockUpdate</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::FreeField::Host" Required="1" Valid="1">
+        <Description Translatable="1">Name of the Dynamic Field for Host.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::FreeField::Service" Required="1" Valid="1">
+        <Description Translatable="1">Name of the Dynamic Field for Service.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">DynamicField_TicketFreeText2</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::HTTP::URL" Required="0" Valid="1">
+        <Description Translatable="1">Icinga API URL .</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">http://icinga2.example.com:5665/v1/actions/acknowledge-problem</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::HTTP::User" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge user.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">John</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::HTTP::Password" Required="0" Valid="1">
+        <Description Translatable="1">The HTTP acknowledge password.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">some_pass</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Author" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement author.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex=""></Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Comment" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement comment.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">Ticket#&lt;TicketNumber&gt;</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Sticky" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement sticky.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Icinga2::Acknowledge::Notify" Required="0" Valid="1">
+        <Description Translatable="1">Icinga2 acknowledgement notify.</Description>
+        <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
 </otrs_config>
