@@ -2,6 +2,7 @@
 
 #6.0.0.beta1 2017-11-01
  - 2017-09-25 Updated translations, thanks to all translators.
+ - 2017-09-05 Ported to OTRS 6.
  - 2017-08-15 Fixed bug#[7929](https://bugs.otrs.org/show_bug.cgi?id=7929) - Accessing freetext answers is cumbersome.
  - 2017-08-25 Added tag reference in the Add/Edit survey screens.
 
