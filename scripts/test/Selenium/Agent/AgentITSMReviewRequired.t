@@ -131,7 +131,9 @@ $Selenium->RunTest(
 
         # click on search
         $Selenium->find_element( "#GlobalSearchNav", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return $("#SearchProfileNew").length' );
+
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketSearch");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#GlobalSearchNav").length' );
 
         # select review required and title search field
         my $ReviewRequiredID = "Search_DynamicField_ITSMReviewRequired";
@@ -139,6 +141,7 @@ $Selenium->RunTest(
             "\$('#Attribute').val('$ReviewRequiredID').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("input[name*=Title]:eq(0)").length' );
 
         # search tickets by review required and ticket title
         $Selenium->find_element("//input[\@name='Title']")->send_keys($TicketTitle);
