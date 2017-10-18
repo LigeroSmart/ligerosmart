@@ -205,167 +205,222 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
         <title>Frontend::Module###AgentTimeAccountingEdit.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentTimeAccountingOverview.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentTimeAccountingReporting.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentTimeAccountingSetting.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentTimeAccountingView.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
+        <title>Frontend::Navigation###AgentTimeAccountingEdit###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingEdit###2.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingOverview###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingReporting###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingSetting###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTimeAccountingView###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
         <title>Frontend::NotifyModule###888-TimeAccounting.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ModuleNotify.</para>
+        <para>Navigation: Frontend::Agent::FrontendNotification.</para>
         <para>This notification module gives a warning if there are too many incomplete working days.</para>
     </section>
     <section>
         <title>Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::ToolBarModule.</para>
+        <para>Navigation: Frontend::Agent::ToolBar.</para>
         <para>Agent interface notification module to see the number of incomplete working days for the user.</para>
     </section>
     <section>
+        <title>Loader::Module::AgentTimeAccountingEdit###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingOverview###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingReporting###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingSetting###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentTimeAccountingView###002-TimeAccounting.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
         <title>PreApplicationModule###AgentTimeAccounting.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent.</para>
+        <para>Navigation: Frontend::Base::PreApplicationModule.</para>
         <para>This module forces inserts in TimeAccounting.</para>
     </section>
     <section>
         <title>Stats::DynamicObjectRegistration###TimeAccounting.</title>
-        <para>Group: TimeAccounting, Subgroup: Core::Stats.</para>
+        <para>Navigation: Core::Stats.</para>
         <para>Determines if the statistics module may generate time accounting information.</para>
     </section>
     <section>
         <title>TimeAccounting::ActionListConstraints.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</para>
     </section>
     <section>
         <title>TimeAccounting::ActiveFilter.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.</para>
     </section>
     <section>
         <title>TimeAccounting::AllowMassEntryForUser.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>If enabled, the user is allowed to enter &quot;on vacation leave&quot;, &quot;on sick leave&quot; and &quot;on overtime leave&quot; to multiple dates at once.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultActionName.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default name for new actions.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultActionStatus.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default status for new actions.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultProjectName.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default name for new projects.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultProjectStatus.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default status for new projects.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserDateEnd.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default setting for date end.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserDateStart.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default setting for date start.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserDescription.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default setting for description.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserLeaveDays.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default setting for leave days.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserOvertime.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default setting for overtime.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserStatus.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default status for new users.</para>
     </section>
     <section>
         <title>TimeAccounting::DefaultUserWeeklyHours.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewSetting.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingSetting.</para>
         <para>Default setting for the standard weekly hours.</para>
     </section>
     <section>
         <title>TimeAccounting::EnableAutoCompletion.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.</para>
     </section>
     <section>
         <title>TimeAccounting::Frontend::ReportingProject###ShowOnlyActiveUsers.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccoutning::ViewReportingProject.</para>
+        <para>Navigation: Core::TimeAccounting::ViewReportingProject.</para>
         <para>If enabled, only users that has added working time to the selected project are shown.</para>
     </section>
     <section>
         <title>TimeAccounting::InputHoursWithoutStartEndTime.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>Specifies if working hours can be inserted without start and end times.</para>
     </section>
     <section>
         <title>TimeAccounting::MaxAllowedInsertDays.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent.</para>
+        <para>Navigation: Core::TimeAccounting.</para>
         <para>For how many days ago you can insert working units.</para>
     </section>
     <section>
         <title>TimeAccounting::MaxIntervalOfIncompleteDays.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent.</para>
+        <para>Navigation: Core::TimeAccounting.</para>
         <para>Maximum number of working days after which the working units have to be inserted.</para>
     </section>
     <section>
         <title>TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent.</para>
+        <para>Navigation: Core::TimeAccounting.</para>
         <para>Maximum number of working days without working units entry after which a warning will be shown.</para>
     </section>
     <section>
         <title>TimeAccounting::Project2RemarkRegExp.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.</para>
     </section>
     <section>
         <title>TimeAccounting::ProjectListConstraints.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</para>
     </section>
     <section>
         <title>TimeAccounting::ReduceTime.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key =&gt; traveling; Content =&gt; 50).</para>
     </section>
     <section>
         <title>TimeAccounting::UseFilter.</title>
-        <para>Group: TimeAccounting, Subgroup: Frontend::Agent::TimeAccounting::ViewEdit.</para>
+        <para>Navigation: Frontend::Agent::View::TimeAccountingEdit.</para>
         <para>If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.</para>
     </section>
 </chapter>
