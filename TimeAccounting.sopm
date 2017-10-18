@@ -50,6 +50,7 @@
         <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/TimeAccounting/Dialog/AjaxLoader.html.tmpl" />
         <File Permission="660" Location="Kernel/System/TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm" />
+        <File Permission="660" Location="scripts/test/TimeAccounting/VacationCheck.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTimeAccountingEdit.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTimeAccountingOverview.t" />

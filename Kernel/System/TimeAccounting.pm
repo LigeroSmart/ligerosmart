@@ -2160,6 +2160,13 @@ sub VacationCheck {
             TimeZone => $Self->{TimeZone},
         },
     );
+    if ( !$DateTimeObject ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Error creating DateTime object.",
+        );
+        return;
+    }
 
     return $DateTimeObject->IsVacationDay(
         Calendar => $Param{Calendar},

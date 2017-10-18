@@ -661,7 +661,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting --directory TimeAccounting
         </screen>
         <para>Selenium unit tests</para>
         <para>
