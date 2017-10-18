@@ -159,7 +159,7 @@
     <ConfigItem Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new projects.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex=""></String>
         </Setting>
@@ -167,7 +167,7 @@
     <ConfigItem Name="TimeAccounting::DefaultProjectStatus" Required="1" Valid="1">
         <Description Translatable="1">Default status for new projects.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">invalid</Item>
@@ -178,7 +178,7 @@
     <ConfigItem Name="TimeAccounting::DefaultActionName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new actions.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex=""></String>
         </Setting>
@@ -186,7 +186,7 @@
     <ConfigItem Name="TimeAccounting::DefaultActionStatus" Required="1" Valid="1">
         <Description Translatable="1">Default status for new actions.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">invalid</Item>
@@ -197,7 +197,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserWeeklyHours" Required="1" Valid="1">
         <Description Translatable="1">Default setting for the standard weekly hours.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex="">40</String>
         </Setting>
@@ -205,7 +205,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserLeaveDays" Required="1" Valid="1">
         <Description Translatable="1">Default setting for leave days.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex="">23</String>
         </Setting>
@@ -213,7 +213,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserOvertime" Required="1" Valid="1">
         <Description Translatable="1">Default setting for overtime.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex="">0</String>
         </Setting>
@@ -221,7 +221,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserDateStart" Required="1" Valid="1">
         <Description Translatable="1">Default setting for date start.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex="">2015-01-01</String>
         </Setting>
@@ -229,7 +229,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserDateEnd" Required="1" Valid="1">
         <Description Translatable="1">Default setting for date end.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex="">2015-12-31</String>
         </Setting>
@@ -237,7 +237,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserDescription" Required="1" Valid="1">
         <Description Translatable="1">Default setting for description.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <String Regex="">Put your description here.</String>
         </Setting>
@@ -245,7 +245,7 @@
     <ConfigItem Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
         <Description Translatable="1">Default status for new users.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewSetting</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingSetting</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">invalid</Item>
@@ -256,7 +256,7 @@
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDays" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of working days after which the working units have to be inserted.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent</SubGroup>
+        <SubGroup>Core::TimeAccounting</SubGroup>
         <Setting>
             <String Regex="">4</String>
         </Setting>
@@ -264,7 +264,7 @@
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of working days without working units entry after which a warning will be shown.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent</SubGroup>
+        <SubGroup>Core::TimeAccounting</SubGroup>
         <Setting>
             <String Regex="">2</String>
         </Setting>
@@ -282,7 +282,7 @@
     <ConfigItem Name="TimeAccounting::MaxAllowedInsertDays" Required="1" Valid="1">
         <Description Translatable="1">For how many days ago you can insert working units.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent</SubGroup>
+        <SubGroup>Core::TimeAccounting</SubGroup>
         <Setting>
             <String Regex="">10</String>
         </Setting>
@@ -290,7 +290,7 @@
     <ConfigItem Name="TimeAccounting::ReduceTime" Required="0" Valid="1">
         <Description Translatable="1">To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key =&gt; traveling; Content =&gt; 50).</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="traveling">50</Item>
@@ -300,7 +300,7 @@
     <ConfigItem Name="TimeAccounting::InputHoursWithoutStartEndTime" Required="0" Valid="1">
         <Description Translatable="1">Specifies if working hours can be inserted without start and end times.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -311,7 +311,7 @@
     <ConfigItem Name="PreApplicationModule###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">This module forces inserts in TimeAccounting.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent</SubGroup>
+        <SubGroup>Frontend::Base::PreApplicationModule</SubGroup>
         <Setting>
             <String Regex="">Kernel::Modules::AgentTimeAccountingEdit</String>
         </Setting>
@@ -319,7 +319,7 @@
     <ConfigItem Name="TimeAccounting::Project2RemarkRegExp" Required="0" Valid="1">
         <Description Translatable="1">Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <String Regex="">^(?: PROJECT\# | INFRA: | PRODUCT: )</String>
         </Setting>
@@ -327,7 +327,7 @@
     <ConfigItem Name="TimeAccounting::ProjectListConstraints" Required="0" Valid="1">
         <Description Translatable="1">Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -336,7 +336,7 @@
     <ConfigItem Name="TimeAccounting::ActionListConstraints" Required="0" Valid="1">
         <Description Translatable="1">Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Hash>
             </Hash>
@@ -345,7 +345,7 @@
     <ConfigItem Name="TimeAccounting::EnableAutoCompletion" Required="0" Valid="1">
         <Description Translatable="1">If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -356,7 +356,7 @@
     <ConfigItem Name="TimeAccounting::UseFilter" Required="0" Valid="1">
         <Description Translatable="1">If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -367,7 +367,7 @@
     <ConfigItem Name="TimeAccounting::ActiveFilter" Required="0" Valid="1">
         <Description Translatable="1">If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -378,7 +378,7 @@
     <ConfigItem Name="TimeAccounting::AllowMassEntryForUser" Required="0" Valid="1">
         <Description Translatable="1">If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccounting::ViewEdit</SubGroup>
+        <SubGroup>Frontend::Agent::View::TimeAccountingEdit</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -411,7 +411,7 @@
     <ConfigItem Name="TimeAccounting::Frontend::ReportingProject###ShowOnlyActiveUsers" Required="0" Valid="1">
         <Description Translatable="1">If enabled, only users that has added working time to the selected project are shown.</Description>
         <Group>TimeAccounting</Group>
-        <SubGroup>Frontend::Agent::TimeAccoutning::ViewReportingProject</SubGroup>
+        <SubGroup>Core::TimeAccounting::ViewReportingProject</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
