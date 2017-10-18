@@ -668,8 +668,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTimeAccountingEdit:AgentTimeAccountingOverview:AgentTimeAccountingReporting:
-AgentTimeAccountingSetting:AgentTimeAccountingView
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTimeAccountingEdit --test AgentTimeAccountingOverview --test AgentTimeAccountingReporting --test AgentTimeAccountingSetting --test AgentTimeAccountingView
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Notification/TimeAccounting:ToolBar/IncompleteWorkingDays
          </screen>
          <para>Run all available unit tests</para>
