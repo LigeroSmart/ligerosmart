@@ -267,7 +267,7 @@ sub UserReporting {
                     $DayEndPoint = $DayEnd;
                 }
                 else {
-                    $DayEndPoint = $Self->DaysInMonth( $Param{Year}, $Param{Month} );
+                    $DayEndPoint = $Self->DaysInMonth( $Year, $Month );
                 }
 
                 DAY:
