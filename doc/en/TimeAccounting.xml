@@ -661,7 +661,8 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting --directory TimeAccounting
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory TimeAccounting
         </screen>
         <para>Selenium unit tests</para>
         <para>
@@ -669,7 +670,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TimeAccounting --direc
         </para>
         <screen>
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTimeAccountingEdit --test AgentTimeAccountingOverview --test AgentTimeAccountingReporting --test AgentTimeAccountingSetting --test AgentTimeAccountingView
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Notification/TimeAccounting:ToolBar/IncompleteWorkingDays
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Notification/TimeAccounting --test ToolBar/IncompleteWorkingDays
          </screen>
          <para>Run all available unit tests</para>
          <para>
