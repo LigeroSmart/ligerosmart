@@ -228,7 +228,7 @@
                                     <div class="WidgetAction Toggle">
                                         <a href="#" title="[% Translate("Toggle this widget") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a>
                                     </div>
-                                    <h2 class="Title">[% Translate(Data.Language) %]</h2>
+                                    <h2 class="Title">[% Translate(Data.Language) | html %]</h2>
 [% RenderBlockStart("NotificationLanguageRemoveButton") %]
                                     <div class="AdditionalInformation">
                                         <a value="Remove Language" class="RemoveButton LanguageRemove [% Data.Type | html %]LanguageRemove" id="[% Data.Type | html %]_[% Data.LanguageID | html %]_Language_Remove" href="" name="[% Data.Type | html %]_[% Data.LanguageID | html %]_Language_Remove"><i class="fa fa-minus-square-o"></i><span class="InvisibleText">[% Translate("Remove Notification Language") | html %]</span></a>
