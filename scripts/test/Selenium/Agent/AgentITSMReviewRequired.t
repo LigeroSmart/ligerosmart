@@ -12,23 +12,22 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users', 'itsm-service' ],
         ) || die "Did not get test user";
@@ -39,15 +38,12 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get test user ID
+        # Get test user ID.
         my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserLogin => $TestUserLogin,
         );
 
-        # get ticket object
-        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-        # create two test tickets
+        # Create two test tickets.
         my @TicketIDs;
         my @TicketNumbers;
         my $TicketTitle = "Selenium Ticket" . $Helper->GetRandomID();
@@ -73,24 +69,32 @@ $Selenium->RunTest(
             push @TicketNumbers, $TicketNumber;
         }
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to zoom view of first created test ticket
+        # Navigate to zoom view of first created test ticket.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[0]");
 
-        # set review required via Close menu
+        # Wait until a link has loaded to the element.
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentTicketClose;TicketID=$TicketIDs[0]\"]').length"
+        );
+
+        # Set review required via Close menu.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketClose;TicketID=$TicketIDs[0]' )]")->click();
 
-        # switch to Close window
+        # Switch to Close window.
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $("#DynamicField_ITSMReviewRequired").length && $("#Subject").length'
+        );
 
-        # close ticket and set review required
+        # Close ticket and set review required.
         $Selenium->execute_script(
             "\$('#DynamicField_ITSMReviewRequired').val('Yes').trigger('redraw.InputField').trigger('change');"
         );
@@ -101,22 +105,29 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#GlobalSearchNav").length' );
-
-        # navigate to zoom view of second created test ticket
+        # Navigate to zoom view of second created test ticket.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
 
-        # set review required via Close menu
+        # Wait until a link has loaded to the element.
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentTicketClose;TicketID=$TicketIDs[1]\"]').length"
+        );
+
+        # Set review required via Close menu.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketClose;TicketID=$TicketIDs[1]' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $("#DynamicField_ITSMReviewRequired").length && $("#Subject").length'
+        );
 
-        # close ticket and set review required
+        # Close ticket and set review required.
         $Selenium->execute_script(
             "\$('#DynamicField_ITSMReviewRequired').val('Yes').trigger('redraw.InputField').trigger('change');"
         );
@@ -127,38 +138,54 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        $Selenium->VerifiedRefresh();
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#GlobalSearchNav").length' );
 
-        # click on search
+        # Click on search.
         $Selenium->find_element( "#GlobalSearchNav", 'css' )->click();
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('#Attribute').length && \$('#SearchFormSubmit').length"
+        );
 
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketSearch");
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#GlobalSearchNav").length' );
-
-        # select review required and title search field
+        # Select review required and title search field.
         my $ReviewRequiredID = "Search_DynamicField_ITSMReviewRequired";
         $Selenium->execute_script(
             "\$('#Attribute').val('$ReviewRequiredID').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("input[name*=Title]:eq(0)").length' );
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('#SearchInsert #$ReviewRequiredID').length"
+        );
 
-        # search tickets by review required and ticket title
+        $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('#SearchInsert input[name=\"Title\"]').length"
+        );
+
+        # Search tickets by review required and ticket title.
         $Selenium->find_element("//input[\@name='Title']")->send_keys($TicketTitle);
         $Selenium->execute_script(
             "\$('#$ReviewRequiredID').val('Yes').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
 
-        # check for test created tickets on screen
-        for my $Ticket (@TicketNumbers) {
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && !\$('.Dialog.Modal').length" );
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a:contains(\"$TicketNumbers[0]\")').length && \$('a:contains(\"$TicketNumbers[1]\")').length"
+        );
+
+        # Check for test created tickets on screen.
+        for my $TicketNumber (@TicketNumbers) {
             $Self->True(
-                index( $Selenium->get_page_source(), $Ticket ) > -1,
-                "Test ticket number $Ticket - found",
+                $Selenium->execute_script("return \$('a:contains(\"$TicketNumber\")').length"),
+                "Test ticket number $TicketNumber - found",
             );
         }
 
-        # delete created test tickets
+        # Delete created test tickets.
         for my $TicketDelete (@TicketIDs) {
             my $Success = $TicketObject->TicketDelete(
                 TicketID => $TicketDelete,
@@ -170,7 +197,7 @@ $Selenium->RunTest(
             );
         }
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
