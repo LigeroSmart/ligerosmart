@@ -140,7 +140,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <String Regex="">MasterSlave</String>
         </Setting>
@@ -148,7 +148,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###RequiredLock" Required="0" Valid="1">
         <Description Translatable="1">Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -159,7 +159,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###TicketType" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -170,7 +170,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Service" Required="0" Valid="1">
         <Description Translatable="1">Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -181,7 +181,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Owner" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -192,7 +192,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###OwnerMandatory" Required="0" Valid="1">
         <Description Translatable="1">Sets if ticket owner must be selected by the agent.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -203,7 +203,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Responsible" Required="0" Valid="1">
         <Description Translatable="1">Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -214,7 +214,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###State" Required="0" Valid="1">
         <Description Translatable="1">If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -225,7 +225,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###StateType" Required="1" Valid="1">
         <Description Translatable="1">Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Array>
                 <Item>open</Item>
@@ -238,7 +238,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###StateDefault" Required="0" Valid="1">
         <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <ValidateModule>Kernel::System::SysConfig::StateValidate</ValidateModule>
         <Setting>
             <String Regex="">pending reminder</String>
@@ -247,7 +247,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Note" Required="0" Valid="1">
         <Description Translatable="1">Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -258,7 +258,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###NoteMandatory" Required="0" Valid="1">
         <Description Translatable="1">Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="1">
                 <Item Key="0" Translatable="1">No</Item>
@@ -269,7 +269,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Subject" Required="0" Valid="1">
         <Description Translatable="1">Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <String Regex="">[% Translate("MasterSlave") | html %]!</String>
         </Setting>
@@ -277,7 +277,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Body" Required="0" Valid="1">
         <Description Translatable="1">Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <TextArea></TextArea>
         </Setting>
@@ -285,7 +285,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent" Required="0" Valid="0">
         <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -296,7 +296,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###InformAgent" Required="0" Valid="0">
         <Description Translatable="1">Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -307,7 +307,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypeDefault" Required="0" Valid="1">
         <Description Translatable="1">Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <String Regex="">note-internal</String>
         </Setting>
@@ -315,7 +315,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypes" Required="0" Valid="1">
         <Description Translatable="1">Specifies the different note types that will be used in the system.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="note-internal">1</Item>
@@ -327,7 +327,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Priority" Required="0" Valid="0">
         <Description Translatable="1">Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -338,7 +338,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###PriorityDefault" Required="0" Valid="0">
         <Description Translatable="1">Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <ValidateModule>Kernel::System::SysConfig::PriorityValidate</ValidateModule>
         <Setting>
             <String Regex="">3 normal</String>
@@ -347,7 +347,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Title" Required="0" Valid="1">
         <Description Translatable="1">Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0" Translatable="1">No</Item>
@@ -358,7 +358,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryType" Required="0" Valid="1">
         <Description Translatable="1">Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <String Regex="">AddNote</String>
         </Setting>
@@ -366,7 +366,7 @@
     <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryComment" Required="0" Valid="1">
         <Description Translatable="1">Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <String Regex="">%%MasterSlave</String>
         </Setting>
@@ -466,7 +466,7 @@
     <ConfigItem Name="ReplaceCustomerRealNameOnSlaveArticleTypes" Required="0" Valid="1">
         <Description Translatable="1">Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketMasterSlave</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="email-external">0</Item>
@@ -528,7 +528,7 @@
     <ConfigItem Name="Ticket::Frontend::BulkModule###010-MasterSlave" Required="0" Valid="1">
         <Description Translatable="1">MasterSlave module for Ticket Bulk feature.</Description>
         <Group>MasterSlave</Group>
-        <SubGroup>Frontend::Agent::TicketBulkModule</SubGroup>
+        <SubGroup>Frontend::Agent::View::TicketBulk::Module</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketBulk::MasterSlave</Item>

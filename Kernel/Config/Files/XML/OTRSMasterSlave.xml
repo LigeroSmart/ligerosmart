@@ -146,63 +146,63 @@
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">MasterSlave</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###RequiredLock" Required="0" Valid="1">
         <Description Translatable="1">Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###TicketType" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Service" Required="0" Valid="1">
         <Description Translatable="1">Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Owner" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###OwnerMandatory" Required="0" Valid="1">
         <Description Translatable="1">Sets if ticket owner must be selected by the agent.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Responsible" Required="0" Valid="1">
         <Description Translatable="1">Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###State" Required="0" Valid="1">
         <Description Translatable="1">If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###StateType" Required="1" Valid="1">
         <Description Translatable="1">Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Array>
                 <Item>open</Item>
@@ -214,63 +214,63 @@
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###StateDefault" Required="0" Valid="1">
         <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">pending reminder</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Note" Required="0" Valid="1">
         <Description Translatable="1">Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###NoteMandatory" Required="0" Valid="1">
         <Description Translatable="1">Sets if note must be filled in by the agent. Can be overwritten by Ticket::Frontend::NeedAccountedTime.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Subject" Required="0" Valid="1">
         <Description Translatable="1">Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">[% Translate("MasterSlave") | html %]!</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Body" Required="0" Valid="1">
         <Description Translatable="1">Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Textarea"></Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent" Required="0" Valid="0">
         <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###InformAgent" Required="0" Valid="0">
         <Description Translatable="1">Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypeDefault" Required="0" Valid="1">
         <Description Translatable="1">Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">note-internal</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypes" Required="0" Valid="1">
         <Description Translatable="1">Specifies the different note types that will be used in the system.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Hash>
                 <Item Key="note-internal">1</Item>
@@ -281,35 +281,35 @@
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Priority" Required="0" Valid="0">
         <Description Translatable="1">Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###PriorityDefault" Required="0" Valid="0">
         <Description Translatable="1">Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Title" Required="0" Valid="1">
         <Description Translatable="1">Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryType" Required="0" Valid="1">
         <Description Translatable="1">Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">AddNote</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryComment" Required="0" Valid="1">
         <Description Translatable="1">Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">%%MasterSlave</Item>
         </Value>
@@ -408,7 +408,7 @@
     </Setting>
     <Setting Name="ReplaceCustomerRealNameOnSlaveArticleTypes" Required="0" Valid="1">
         <Description Translatable="1">Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.</Description>
-        <Navigation>Frontend::Agent::Ticket::ViewMasterSlave</Navigation>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Hash>
                 <Item Key="email-external">0</Item>
@@ -489,7 +489,7 @@
     </Setting>
     <Setting Name="Ticket::Frontend::BulkModule###010-MasterSlave" Required="0" Valid="1">
         <Description Translatable="1">MasterSlave module for Ticket Bulk feature.</Description>
-        <Navigation>Frontend::Agent::TicketBulkModule</Navigation>
+        <Navigation>Frontend::Agent::View::TicketBulk::Module</Navigation>
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::TicketBulk::MasterSlave</Item>
