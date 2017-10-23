@@ -1,4 +1,7 @@
-#6.0.0.beta1 2017-??-??
+#6.0.0.beta2 2017-??-??
+
+#6.0.0.beta1 2017-10-23
+ - 2017-10-22 Initial version for OTRS 6.
  - 2017-10-22 Updated translations, thanks to all translators.
  - 2017-07-28 Fixed bug#[12104](https://bugs.otrs.org/show_bug.cgi?id=12104) - TimeAccounting statistic silently returns only last full month unless Period filter is used.
 
