@@ -192,9 +192,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Visning: Trenger %s!';
 
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Ufullstendige arbeidsdager';
-
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Vennligst velg minst en dag!';
     $Self->{Translation}->{'Mass Entry'} = 'Masseregistrering';
@@ -222,7 +219,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Endre innstillinger for tidsregistrering.';
     $Self->{Translation}->{'Edit time record.'} = 'Endre tidsregistrering';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Hvor manger dager tilbake i tid det er anledning til å legge til en tidsbolk.';
@@ -251,7 +247,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         '';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Tidsregistrering';
     $Self->{Translation}->{'Time accounting edit.'} = 'Endre tidsregistrering.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Oversikt over registrert tid.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Rapportering av registrert tid.';

@@ -75,7 +75,7 @@ sub Data {
     $Self->{Translation}->{'Weekday'} = '曜日';
     $Self->{Translation}->{'Working Hours'} = '稼働時間';
     $Self->{Translation}->{'Total worked hours'} = '総稼働時間';
-    $Self->{Translation}->{'User\'s project overview'} = 'ユーザのプロジェクト一覧';
+    $Self->{Translation}->{'User\'s project overview'} = 'ユーザーのプロジェクト一覧';
     $Self->{Translation}->{'Hours (monthly)'} = '時間（今月）';
     $Self->{Translation}->{'Hours (Lifetime)'} = '時間（通算）';
     $Self->{Translation}->{'Grand total'} = '合計';
@@ -111,7 +111,7 @@ sub Data {
         '同名のプロジェクトが存在します。名称を変更してください。';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = '設定の編集';
     $Self->{Translation}->{'Add task'} = '新規タスクの追加';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'プロジェクト、タスク、またはユーザーのフィルタリング';
     $Self->{Translation}->{'Time periods can not be deleted.'} = '時間は削除できません';
     $Self->{Translation}->{'Project List'} = 'プロジェクト一覧';
     $Self->{Translation}->{'Task List'} = 'タスク一覧';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         '同名のタスクが存在します。名称を変更してください。';
     $Self->{Translation}->{'User List'} = 'ユーザ一覧';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'ユーザー設定';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'ユーザーはオーバータイムを見ることができます。';
     $Self->{Translation}->{'Show Overtime'} = '超過勤務を表示';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'ユーザーはプロジェクトを作成できます。';
     $Self->{Translation}->{'Allow project creation'} = 'プロジェクトの新規追加を許可する';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = '期間';
     $Self->{Translation}->{'Period Begin'} = '開始点';
     $Self->{Translation}->{'Period End'} = '終了点';
     $Self->{Translation}->{'Days of Vacation'} = '休暇';
@@ -162,9 +162,9 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '入力された日付は不正です ! 日付は本日に変更されました';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        '指定された期間が設定されていないか、または指定された日付が定義された期間外です。';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
-        '';
+        '勤怠管理担当者に連絡して期間を更新してください！';
     $Self->{Translation}->{'Last Selected Projects'} = '前回選択されたプロジェクト';
     $Self->{Translation}->{'All Projects'} = '全プロジェクト';
 
@@ -185,15 +185,12 @@ sub Data {
     $Self->{Translation}->{'Setting'} = '設定';
     $Self->{Translation}->{'User updated!'} = 'ユーザーを更新しました！';
     $Self->{Translation}->{'User added!'} = 'ユーザーを追加しました！';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'タイムアカウンティングにユーザーを追加...';
     $Self->{Translation}->{'New User'} = '新規ユーザー';
     $Self->{Translation}->{'Period Status'} = '期間の状態';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '注目！： %s の入力が必要です。';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '未完了の可動日';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = '少なくとも一日は選択してください';
@@ -222,7 +219,6 @@ sub Data {
         '「注釈」エントリーを必要とする項目を定義します。 もしプロジェクト名がここで設定した正規表現にマッチする場合、「注釈｝は必須項目となります。※正規表現にはSMXパラメータを使います。';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '統計モジュールがタイムアカウンティング情報を生成するか選択してください';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '時間会計の設定を編集';
     $Self->{Translation}->{'Edit time record.'} = 'タイムレコードを編集';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '何日前からワーキング・ユニットの新規登録が可能であるかの設定です。';

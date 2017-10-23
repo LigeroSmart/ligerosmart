@@ -111,7 +111,7 @@ sub Data {
         'Esiste già un progetto con questo nome. Scegleire un nome diverso.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Modificare le configurazioni della rendicontazione';
     $Self->{Translation}->{'Add task'} = 'Aggiungere compito';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Filtro per progetti, attività o utenti';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'I periodi di tempo non possono essere eliminati.';
     $Self->{Translation}->{'Project List'} = 'Elenco dei progetti';
     $Self->{Translation}->{'Task List'} = 'Elenco dei compiti';
@@ -120,7 +120,7 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Esiste già un compito con questo nome. Scegliere un nome diverso.';
     $Self->{Translation}->{'User List'} = 'Elenco utenti';
-    $Self->{Translation}->{'User Settings'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Impostazioni utente';
     $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrare straordinari';
     $Self->{Translation}->{'User is allowed to create projects'} = '';
@@ -177,7 +177,7 @@ sub Data {
     $Self->{Translation}->{'Unable to update user settings!'} = 'Impossibile aggiornare le impostazioni utente!';
     $Self->{Translation}->{'Project added!'} = 'Progetto aggiunto!';
     $Self->{Translation}->{'Project updated!'} = 'Progetto aggiornato!';
-    $Self->{Translation}->{'Task added!'} = '';
+    $Self->{Translation}->{'Task added!'} = 'Attività aggiunta!';
     $Self->{Translation}->{'Task updated!'} = '';
     $Self->{Translation}->{'The UserID is not valid!'} = 'Lo UserID non è valido!';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
@@ -191,9 +191,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Giorni lavorativi incompleti';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Specificare almeno un giorno!';
@@ -222,7 +219,6 @@ sub Data {
         'Definisce i progetti per i quali una annotazione è obbligatoria. Se la RegExp coincide il progetto si è obbligati ad inserire una annotazione. La RegExp utilizza il parametro smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Determina se il modulo statistiche può generare informazioni di rendicontazione temporale.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '';
     $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Numero massimo di giorni nel passato in cui è possibile inserire le unità di lavoro.';

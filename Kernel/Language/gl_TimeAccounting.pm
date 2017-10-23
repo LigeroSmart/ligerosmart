@@ -192,9 +192,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
 
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
-
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Escolla ao menos un día!';
     $Self->{Translation}->{'Mass Entry'} = 'Introdución en masa';
@@ -222,7 +219,6 @@ sub Data {
         'Define os proxectos para os cales un comentario é requirido. Se a ExpReg coincide no proxecto, ten que insertar un comentario tamén. A ExpReg usa o parámetro smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Determina se o módulo de estatísticas pode xerar información de contabilización de tempo.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '';
     $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Por cantos días atrás pode insertar unidades de traballo.';

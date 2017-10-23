@@ -36,7 +36,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Proyecto';
     $Self->{Translation}->{'Task'} = 'Tarea';
     $Self->{Translation}->{'Remark'} = 'Comentario';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '¡Por favor agregue una observación de m\'s de 8 caracteres!';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'No se permite la inserción de horas negativas.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         'No se permite la inserción de horas repetidas. La hora de inicio está incluída en otro intervalo.';
@@ -111,7 +111,7 @@ sub Data {
         'Ya existe un proyecto con este nombre. Por favor, elija uno diferente.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Modificar la Configuración de la Contabilidad de Tiempo';
     $Self->{Translation}->{'Add task'} = 'Agregar tarea';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Filtro para proyectos, tareas o usuarios';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Los períodos de tiempo no pueden ser eliminados.';
     $Self->{Translation}->{'Project List'} = 'Lista de Proyectos';
     $Self->{Translation}->{'Task List'} = 'Lista de Tareas';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Ya existe una tarea con este nombre. Por favor, elija uno diferente.';
     $Self->{Translation}->{'User List'} = 'Lista de Usuarios';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Ajustes del Usuario';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'El usuario puede ver horas extras';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar horas extra';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'El usuario puede crear proyectos';
     $Self->{Translation}->{'Allow project creation'} = 'Permitir creación de proyectos';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = 'Espacios de tiempo';
     $Self->{Translation}->{'Period Begin'} = 'Periodo de inicio';
     $Self->{Translation}->{'Period End'} = 'Periodo de finalización';
     $Self->{Translation}->{'Days of Vacation'} = 'Días de Vacaciones';
@@ -149,12 +149,12 @@ sub Data {
     $Self->{Translation}->{'No data found for this day.'} = 'No se encontraron datos de este día.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-    $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t insert Working Units!'} = '¡No se pudieron intentar las Unidades de Trabajo!';
     $Self->{Translation}->{'Last Projects'} = 'Últimos Proyectos';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '¡No se pudieron guardar los ajustes, porque el día solo tiene 24 horas!';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = '¡No se pudieron guardar las Unidades de Trabajo!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        'Esta Fecha esta fuera del límite, pero todavía no ha insertado este día, entonces usted tiene solo una oportunidad de insertar.';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Días Laborales Incompletos';
     $Self->{Translation}->{'Please insert your working hours!'} = 'Por favor inserte sus horas de trabajo!';
     $Self->{Translation}->{'Successful insert!'} = 'Inserción exitosa!';
@@ -162,38 +162,35 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Se insertaron satisfactoriamente las entradas de varias fechas! ';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'La fecha entrada es incorrecta! La fecha de ha cambiado a hoy.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        '¡No hay un periodo de tiempo configurado, or la fecha especificada está fuera de los periodos de tiempo definidos!';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
-        '';
+        '¡Por favor contacte al administrador de contabilidad de tiempos para actualizar sus periodos de tiempo!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Los Últimos Proyectos Seleccionados';
     $Self->{Translation}->{'All Projects'} = 'Todos los Proyectos';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
-    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
-    $Self->{Translation}->{'Reporting Project'} = '';
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'ReporteDeProyectos: Necesita "ProjectID"';
+    $Self->{Translation}->{'Reporting Project'} = 'Reporte de Proyectos';
     $Self->{Translation}->{'Reporting'} = 'Reportes';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
-    $Self->{Translation}->{'Unable to update user settings!'} = '';
-    $Self->{Translation}->{'Project added!'} = '';
-    $Self->{Translation}->{'Project updated!'} = '';
-    $Self->{Translation}->{'Task added!'} = '';
-    $Self->{Translation}->{'Task updated!'} = '';
-    $Self->{Translation}->{'The UserID is not valid!'} = '';
+    $Self->{Translation}->{'Unable to update user settings!'} = '¡No fue posible actualizar los ajustes del usuario!';
+    $Self->{Translation}->{'Project added!'} = '¡Proyecto añadido!';
+    $Self->{Translation}->{'Project updated!'} = '¡Proyecto actualizado!';
+    $Self->{Translation}->{'Task added!'} = '¡Tarea añadida!';
+    $Self->{Translation}->{'Task updated!'} = '¡Tarea actualizada!';
+    $Self->{Translation}->{'The UserID is not valid!'} = '¡El "UserID" no es válido!';
     $Self->{Translation}->{'Can\'t insert user data!'} = '¡No se puede insertar datos del usuario!';
-    $Self->{Translation}->{'Unable to add time period!'} = '';
+    $Self->{Translation}->{'Unable to add time period!'} = '¡No fue posible añadir el periodo de tiempo!';
     $Self->{Translation}->{'Setting'} = 'Configuración';
-    $Self->{Translation}->{'User updated!'} = '';
-    $Self->{Translation}->{'User added!'} = '';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'User updated!'} = '¡Usuario actualizado!';
+    $Self->{Translation}->{'User added!'} = '¡Usuario añadido!';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Añadir usuario a contabilidad de tiempos...';
     $Self->{Translation}->{'New User'} = 'Usuario Nuevo';
     $Self->{Translation}->{'Period Status'} = 'Estado del Periodo';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
-    $Self->{Translation}->{'View: Need %s!'} = '';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Días laborales incompletos';
+    $Self->{Translation}->{'View: Need %s!'} = 'Vista: ¡Necesita %s!';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Por favor seleccione al menos un día.';
@@ -222,9 +219,8 @@ sub Data {
         'Define para cuáles proyectos es obligatoria la inserción de comentarios. Si la expresión regular coincide con el proyecto, se tiene que escribir un comentario. La expresión regular usa el parámetro smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Determina si el módulo de estadísticas debe generar información de contabilidad de tiempo.';
-    $Self->{Translation}->{'Dutch'} = '';
-    $Self->{Translation}->{'Edit time accounting settings.'} = '';
-    $Self->{Translation}->{'Edit time record.'} = '';
+    $Self->{Translation}->{'Edit time accounting settings.'} = 'Editar ajustes de contabilidad de tiempos.';
+    $Self->{Translation}->{'Edit time record.'} = 'Editar registro de tiempo.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Especifica el número máximo de días para registrar horas de trabajo atrasadas (por ejemplo: 10 días de antigüedad).';
     $Self->{Translation}->{'If enabled, only users that has added working time to the selected project are shown.'} =
         'Si se habilita, solamente los usuarios que han registrado sus tiempos en el proyecto seleccionado serán mostrados';
@@ -240,8 +236,8 @@ sub Data {
         'Número máximo de días laborales después de los cuales es obligatorio reportar las horas trabajadas.';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         'Número máximo de días laborales sin registro de horas trabajadas después de los cuales se mostrará una advertencia';
-    $Self->{Translation}->{'Overview.'} = '';
-    $Self->{Translation}->{'Project time reporting.'} = '';
+    $Self->{Translation}->{'Overview.'} = 'Vista General.';
+    $Self->{Translation}->{'Project time reporting.'} = 'Reporte de tiempos del proyecto.';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         'Expresiones regulares para restringir la lista de acciones, de acuerdo al proyecto seleccionado. Key contiene la expresión regular para los proyectos y Content, las expresiones regulares para las acciones.';
     $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} =

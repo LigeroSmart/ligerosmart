@@ -111,7 +111,7 @@ sub Data {
         'Már létezik egy ilyen nevű projekt. Válasszon egy másik nevet.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Időelszámolási beállítások szerkesztése';
     $Self->{Translation}->{'Add task'} = 'Feladat hozzáadása';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Szűrő a projektkehez, feladatokhoz vagy felhasználókhoz';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Az időszakok nem törölhetők.';
     $Self->{Translation}->{'Project List'} = 'Projektlista';
     $Self->{Translation}->{'Task List'} = 'Feladatlista';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Már létezik egy ilyen nevű feladat. Válasszon egy másik nevet.';
     $Self->{Translation}->{'User List'} = 'Felhasználólista';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Felhasználói beállítások';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'A felhasználó megtekintheti a túlórákat';
     $Self->{Translation}->{'Show Overtime'} = 'Túlóra megjelenítése';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'A felhasználó létrehozhat projekteket';
     $Self->{Translation}->{'Allow project creation'} = 'Projektlétrehozás engedélyezése';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = 'Időtartamok';
     $Self->{Translation}->{'Period Begin'} = 'Időszak kezdete';
     $Self->{Translation}->{'Period End'} = 'Időszak vége';
     $Self->{Translation}->{'Days of Vacation'} = 'Szabadság napjai';
@@ -185,15 +185,12 @@ sub Data {
     $Self->{Translation}->{'Setting'} = 'Beállítás';
     $Self->{Translation}->{'User updated!'} = 'Felhasználó frissítve!';
     $Self->{Translation}->{'User added!'} = 'Felhasználó hozzáadva!';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Felhasználó hozzáadása az időelszámoláshoz…';
     $Self->{Translation}->{'New User'} = 'Új felhasználó';
     $Self->{Translation}->{'Period Status'} = 'Időszak állapot';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Nézet: %s szükséges!';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Befejezetlen munkanapok';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Legalább egy napot válasszon ki!';
@@ -222,7 +219,6 @@ sub Data {
         'Meghatározza azokat a projekteket, amelyekhez észrevétel szükséges. Ha a reguláris kifejezés illeszkedik a projektre, akkor be kell illesztenie egy észrevételt is. A reguláris kifejezés az smx paramétert használja.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Meghatározza, hogy a statisztika modul előállíthat-e időelszámolási információkat.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Időelszámolás beállításainak szerkesztése.';
     $Self->{Translation}->{'Edit time record.'} = 'Időfeljegyzés szerkesztése.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Hány nappal ezelőtthöz illeszthet be munkaegységeket.';

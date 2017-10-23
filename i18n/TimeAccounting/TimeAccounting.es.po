@@ -1,6 +1,7 @@
 # 
 # Translators:
 # Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2017
+# Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2017
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
@@ -8,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:29+0000\n"
-"PO-Revision-Date: 2017-09-25 10:29+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-23 02:57+0000\n"
+"PO-Revision-Date: 2017-10-23 03:01+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -378,7 +379,7 @@ msgstr "Mostrar horas extra"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to create projects"
-msgstr ""
+msgstr "El usuario tiene permitido crear proyectos"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
@@ -602,10 +603,6 @@ msgstr "Estado del período"
 msgid "View: Need %s!"
 msgstr "Ver: ¡Necesita %s!"
 
-#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-msgid "Incomplete working days"
-msgstr "Días laborales incompletos"
-
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"
 msgstr "¡Por favor seleccione al menos un día!"
@@ -688,10 +685,6 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "Determina si el módulo de estadísticas debe generar información de contabilidad de tiempo."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."

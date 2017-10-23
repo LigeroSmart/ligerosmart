@@ -1,4 +1,5 @@
 #6.0.0.beta1 2017-??-??
+ - 2017-10-22 Updated translations, thanks to all translators.
  - 2017-07-28 Fixed bug#[12104](https://bugs.otrs.org/show_bug.cgi?id=12104) - TimeAccounting statistic silently returns only last full month unless Period filter is used.
 
 #5.0.8 2017-??-??

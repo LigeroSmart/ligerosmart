@@ -171,7 +171,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'Projeto de Relatório: Necessário ProjectID';
     $Self->{Translation}->{'Reporting Project'} = 'Projeto de Relatório';
-    $Self->{Translation}->{'Reporting'} = 'Relatórios';
+    $Self->{Translation}->{'Reporting'} = 'Relatório';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Impossível atualizar configurações de usuário!';
@@ -191,9 +191,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Visão: Necessário %s!';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Dias de trabalhos incompletos';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Por favor, escolha pelo menos um dia!';
@@ -222,7 +219,6 @@ sub Data {
         'Define os projetos para os quais é necessária uma observação. Se o RegExp é encontrado no projeto, você tem que inserir uma observação. O RegExp usa o parâmetro smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Determina se o módulo de estatísticas pode gerar informações do time accounting.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Editar configurações da contabilidade de tempo.';
     $Self->{Translation}->{'Edit time record.'} = 'Editar registro de tempo.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Para quantos dias atrás você pode inserir unidades de trabalho.';

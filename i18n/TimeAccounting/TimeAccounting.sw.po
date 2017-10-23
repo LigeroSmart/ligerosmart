@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:29+0000\n"
-"PO-Revision-Date: 2017-09-25 10:29+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-23 02:57+0000\n"
+"PO-Revision-Date: 2017-10-23 02:59+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -599,10 +599,6 @@ msgstr ""
 msgid "View: Need %s!"
 msgstr ""
 
-#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-msgid "Incomplete working days"
-msgstr ""
-
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"
 msgstr "Tafadhali chagua japo siku moja"
@@ -685,10 +681,6 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "Inahakiki kama moduli ya takwimu inaweza kutengeneza taarifa ya uhasibu wa muda."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."

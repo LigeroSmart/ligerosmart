@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:29+0000\n"
-"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"POT-Creation-Date: 2017-09-29 15:37+0000\n"
+"PO-Revision-Date: 2017-09-29 15:38+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -329,7 +329,7 @@ msgstr "Feladat hozzáadása"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for projects, tasks or users"
-msgstr ""
+msgstr "Szűrő a projektkehez, feladatokhoz vagy felhasználókhoz"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -362,11 +362,11 @@ msgstr "Felhasználólista"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User Settings"
-msgstr ""
+msgstr "Felhasználói beállítások"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to see overtimes"
-msgstr ""
+msgstr "A felhasználó megtekintheti a túlórákat"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
@@ -374,7 +374,7 @@ msgstr "Túlóra megjelenítése"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to create projects"
-msgstr ""
+msgstr "A felhasználó létrehozhat projekteket"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
@@ -382,7 +382,7 @@ msgstr "Projektlétrehozás engedélyezése"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
-msgstr ""
+msgstr "Időtartamok"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -584,7 +584,7 @@ msgstr "Felhasználó hozzáadva!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Add a user to time accounting..."
-msgstr ""
+msgstr "Felhasználó hozzáadása az időelszámoláshoz…"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -684,10 +684,6 @@ msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
 msgstr "Meghatározza, hogy a statisztika modul előállíthat-e időelszámolási információkat."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Edit time accounting settings."

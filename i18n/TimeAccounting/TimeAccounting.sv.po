@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 11:01+0000\n"
-"PO-Revision-Date: 2017-07-17 16:02+0000\n"
+"POT-Creation-Date: 2017-10-23 02:57+0000\n"
+"PO-Revision-Date: 2017-10-23 02:59+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -31,18 +31,6 @@ msgstr "Gå till inställningar"
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
 msgstr "Datum-navigering"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Previous day"
-msgstr "Föregående dag"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Next day"
-msgstr "Nästkommande dag"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Go to this date"
-msgstr "Gå till det här datumet"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
@@ -73,18 +61,6 @@ msgid "On overtime leave"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
-msgid "Please choose at least one day!"
-msgstr "Vänligen välj åtminstone en dag!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Please choose a reason for absence!"
-msgstr "Vänligen välj en anledning för frånvaro!"
-
-#. Template: AgentTimeAccountingEdit
-msgid "Mass Entry"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
 msgstr ""
 
@@ -109,10 +85,6 @@ msgid "Please add a remark with more than 8 characters!"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
-msgid "Start Time"
-msgstr "Starttid"
-
-#. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
 msgstr "Negativa tider är inte tillåtna."
 
@@ -131,10 +103,6 @@ msgstr ""
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
 msgstr "Ogiltig tid! Ett dygn har bara 24 timmar."
-
-#. Template: AgentTimeAccountingEdit
-msgid "End Time"
-msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -161,23 +129,7 @@ msgid "Add one row"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
-msgid "Total"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "Show all items"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "Delete Time Accounting Entry"
-msgstr ""
-
-#. Template: AgentTimeAccountingEdit
-msgid "Confirm insert"
 msgstr ""
 
 #. Template: AgentTimeAccountingEdit
@@ -378,19 +330,7 @@ msgid "Add task"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "New user"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Projects"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Tasks"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Filter for Users"
+msgid "Filter for projects, tasks or users"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
@@ -423,15 +363,11 @@ msgid "User List"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "New User Settings"
+msgid "User Settings"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
-msgid "Edit User Settings"
-msgstr ""
-
-#. Template: AgentTimeAccountingSetting
-msgid "Comments"
+msgid "User is allowed to see overtimes"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
@@ -439,7 +375,15 @@ msgid "Show Overtime"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
+msgid "User is allowed to create projects"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Time Spans"
 msgstr ""
 
 #. Template: AgentTimeAccountingSetting
@@ -505,6 +449,14 @@ msgstr ""
 #. Template: AgentTimeAccountingView
 msgid "View of "
 msgstr ""
+
+#. Template: AgentTimeAccountingView
+msgid "Previous day"
+msgstr "Föregående dag"
+
+#. Template: AgentTimeAccountingView
+msgid "Next day"
+msgstr "Nästkommande dag"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
@@ -621,11 +573,19 @@ msgid "Unable to add time period!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Setting"
+msgstr "Inställning"
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User added!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
+msgid "Add a user to time accounting..."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
@@ -640,8 +600,24 @@ msgstr ""
 msgid "View: Need %s!"
 msgstr ""
 
-#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-msgid "Incomplete working days"
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose at least one day!"
+msgstr "Vänligen välj åtminstone en dag!"
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Mass Entry"
+msgstr ""
+
+#. JS File: TimeAccounting.Agent.EditTimeRecords
+msgid "Please choose a reason for absence!"
+msgstr "Vänligen välj en anledning för frånvaro!"
+
+#. JS File: TimeAccounting.Agent
+msgid "Delete Time Accounting Entry"
+msgstr ""
+
+#. JS File: TimeAccounting.Agent
+msgid "Confirm insert"
 msgstr ""
 
 #. SysConfig

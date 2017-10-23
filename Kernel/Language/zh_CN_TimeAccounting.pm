@@ -111,7 +111,7 @@ sub Data {
         '已存在同名的项目，请选择不同的名字。';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = '编辑工时管理设置';
     $Self->{Translation}->{'Add task'} = '添加任务';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = '按项目、任务或用户过滤';
     $Self->{Translation}->{'Time periods can not be deleted.'} = '无法删除工时周期。';
     $Self->{Translation}->{'Project List'} = '项目列表';
     $Self->{Translation}->{'Task List'} = '任务列表';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         '已存在同名的任务，请选择不同的名字。';
     $Self->{Translation}->{'User List'} = '用户列表';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = '用户设置';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = '允许用户看到加班时间';
     $Self->{Translation}->{'Show Overtime'} = '显示加班';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = '允许用户创建项目';
     $Self->{Translation}->{'Allow project creation'} = '允许创建项目';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = '时间跨度';
     $Self->{Translation}->{'Period Begin'} = '时段开始';
     $Self->{Translation}->{'Period End'} = '时段结束';
     $Self->{Translation}->{'Days of Vacation'} = '休假天数';
@@ -185,15 +185,12 @@ sub Data {
     $Self->{Translation}->{'Setting'} = '设置';
     $Self->{Translation}->{'User updated!'} = '用户已更新！';
     $Self->{Translation}->{'User added!'} = '用户已添加！';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = '添加一个用户到工时管理...';
     $Self->{Translation}->{'New User'} = '添加用户';
     $Self->{Translation}->{'Period Status'} = '时段状态';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '视图：需要%s！';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '不完整的工作日';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = '请至少选择一天！';
@@ -222,7 +219,6 @@ sub Data {
         '指定备注必填的项目。如果RegExp匹配项目，你也需要添加备注。RegExp使用smx参数。';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '确定统计模块是否要生成工时管理信息。';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '编辑工时管理设置。';
     $Self->{Translation}->{'Edit time record.'} = '编辑工时记录。';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '你可以插入多久以前的工作数据。';

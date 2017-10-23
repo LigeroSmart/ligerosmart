@@ -111,7 +111,7 @@ sub Data {
         'Уже есть проект с таким наименованием. Выберите другое.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Редактировать настройки учета затраченного времени';
     $Self->{Translation}->{'Add task'} = 'Добавить задачу';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Фильтр для проектов, задач или пользователей';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Периоды времени не могут быть удалены.';
     $Self->{Translation}->{'Project List'} = 'Список проектов';
     $Self->{Translation}->{'Task List'} = 'Список задач';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Уже есть задача с таким именем, Выберите другое.';
     $Self->{Translation}->{'User List'} = 'Список пользователей';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Пользовательские настройки';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'Пользователю разрешено просматривать время';
     $Self->{Translation}->{'Show Overtime'} = 'Показать переработку';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'Пользователю разрешено создавать проекты';
     $Self->{Translation}->{'Allow project creation'} = 'Разрешить создание проектов';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = 'Промежутки времени';
     $Self->{Translation}->{'Period Begin'} = 'Начало периода';
     $Self->{Translation}->{'Period End'} = 'Конец периода';
     $Self->{Translation}->{'Days of Vacation'} = 'Дни отпуска';
@@ -162,16 +162,16 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Данные для разных дат введены успешно!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Введенная дата неверна! Заменена на текущую!';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        'Не настроен временной период, или указанная дата находится за пределами определенных временных периодов.';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
-        '';
+        'Пожалуйста, свяжитесь с администратором временного учета, чтобы обновить ваши временные периоды!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Последние выбранные проекты';
     $Self->{Translation}->{'All Projects'} = 'Все проекты';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'ReportingProject: Требуется ProjectID';
     $Self->{Translation}->{'Reporting Project'} = 'Проект составления отчетов';
-    $Self->{Translation}->{'Reporting'} = 'Отчетность';
+    $Self->{Translation}->{'Reporting'} = 'Составление отчетов';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = 'Не удалось обновить настройки пользователя!';
@@ -185,15 +185,12 @@ sub Data {
     $Self->{Translation}->{'Setting'} = 'Параметр';
     $Self->{Translation}->{'User updated!'} = 'Пользователь обновлен!';
     $Self->{Translation}->{'User added!'} = 'Пользователь добавлен!';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Добавить пользователя в учет времени ...';
     $Self->{Translation}->{'New User'} = 'Новый пользователь';
     $Self->{Translation}->{'Period Status'} = 'Статус периода';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'View: Требуется  %s!';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Неполные рабочие дни';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Выберите хотя бы один день!';
@@ -222,7 +219,6 @@ sub Data {
         'Задает проекты для которых требуется занесение замечаний. Если RegExp верно для проекта, вы должны добавить замечания тоже. Для RegExp используйте параметр smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Задает, может ли модуль отчетов генерировать информацию по учету затраченного времени.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Редактировать настройки учета затраченного времени.';
     $Self->{Translation}->{'Edit time record.'} = 'Редактировать запись времени.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Для какого количества прошедших дней вы можете внести данные о времени.';

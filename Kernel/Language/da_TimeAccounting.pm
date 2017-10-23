@@ -192,9 +192,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
 
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
-
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = '';
     $Self->{Translation}->{'Mass Entry'} = '';
@@ -222,7 +219,6 @@ sub Data {
         'Definerer de projekter, for hvilke en bemærkning er påkrævet. Hvis RegExp matcher på projektet, skal du også indføje en bemærkning. RegExp bruger smx parameteret.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '';
     $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Angiver for hvor mange dage, du kan indsætte arbejdsenheder.';

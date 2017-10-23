@@ -123,7 +123,7 @@ sub Data {
     $Self->{Translation}->{'User Settings'} = '';
     $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar horas extra';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'El usuario tiene permitido crear proyectos';
     $Self->{Translation}->{'Allow project creation'} = 'Permitir creación de proyectos';
     $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Periodo de inicio';
@@ -192,9 +192,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Ver: ¡Necesita %s!';
 
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Días laborales incompletos';
-
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = '¡Por favor seleccione al menos un día!';
     $Self->{Translation}->{'Mass Entry'} = 'Registro Masivo';
@@ -222,7 +219,6 @@ sub Data {
         'Define para cuáles proyectos es obligatoria la inserción de comentarios. Si la expresión regular coincide con el proyecto, se tiene que escribir un comentario. La expresión regular usa el parámetro smx.';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Determina si el módulo de estadísticas debe generar información de contabilidad de tiempo.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Editar la configuración de Contabilidad de tiempo.';
     $Self->{Translation}->{'Edit time record.'} = 'Editar registro de tiempo.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Especifica el número máximo de días para registrar horas de trabajo atrasadas (por ejemplo: 10 días de antigüedad).';

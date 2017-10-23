@@ -182,7 +182,7 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'Setting'} = '';
+    $Self->{Translation}->{'Setting'} = 'Inställning';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'Add a user to time accounting...'} = '';
@@ -191,9 +191,6 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
-
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Vänligen välj åtminstone en dag!';
@@ -222,7 +219,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = '';
     $Self->{Translation}->{'Edit time record.'} = '';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = '';

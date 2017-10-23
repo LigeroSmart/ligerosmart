@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:29+0000\n"
-"PO-Revision-Date: 2017-09-25 10:29+0000\n"
+"POT-Creation-Date: 2017-09-29 15:37+0000\n"
+"PO-Revision-Date: 2017-09-29 15:38+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Danish (http://www.transifex.com/otrs/OTRS/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -682,10 +682,6 @@ msgstr "Definerer de projekter, for hvilke en bemærkning er påkrævet. Hvis Re
 msgid ""
 "Determines if the statistics module may generate time accounting "
 "information."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig

@@ -192,9 +192,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Ansicht: Benötige %s!';
 
-    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = 'Unvollständige Arbeitstage';
-
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Bitte wählen Sie mindestens einen Tag!';
     $Self->{Translation}->{'Mass Entry'} = 'Masseneintrag';
@@ -222,7 +219,6 @@ sub Data {
         'Innerhalb dieser Konfigurationsoption kann eine RegExp definiert werden, die festlegt, bei welchen Projekten eine Bemerkung eingetragen werden muss (die RegExp arbeitet mit smx-Parametern).';
     $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} =
         'Bestimmt, ob das Statistik-Modul Informationen zur Zeitabrechnung generieren kann.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit time accounting settings.'} = 'Zeiterfassungs-Einstellungen bearbeiten.';
     $Self->{Translation}->{'Edit time record.'} = 'Zeit-Datensatz bearbeiten.';
     $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z. B. 10 Tage zurückliegend).';
