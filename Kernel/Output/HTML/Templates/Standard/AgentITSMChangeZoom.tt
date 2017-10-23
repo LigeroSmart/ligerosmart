@@ -290,8 +290,8 @@
             </div>
 [% RenderBlockEnd("WorkOrderGraph") %]
 
-            <div class="WidgetBox SpacingTop Expanded">
-                <div class="LightRow Header">
+            <div class="WidgetSimple SpacingTop Expanded">
+                <div class="Header">
                     <div class="WidgetAction Toggle"><a href="#" title="[% Translate("Show or hide the content.") | html %]"><i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i></a></div>
                     <h2>[% Translate("ITSM Change") | html %] - [% Data.ChangeTitle | truncate(70) | html %]</h2>
                 </div>
