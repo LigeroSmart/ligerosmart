@@ -216,7 +216,7 @@
         <Description Translatable="1">Defines the default subject of a note in the additional ITSM field screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">[% Translate("Note") | html %]</Item>
+            <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###Body" Required="0" Valid="1">
@@ -425,7 +425,7 @@
         <Description Translatable="1">Defines the default subject of a note in the decision screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">[% Translate("Decision") | html %]</Item>
+            <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###Body" Required="0" Valid="1">
