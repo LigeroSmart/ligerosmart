@@ -3531,7 +3531,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::HistoryOrder" Required="1" Valid="1">
         <Description Translatable="1">Shows the change history (reverse ordered) in the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewHistory</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeHistory</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="normal">
                 <Item ValueType="Option" Value="reverse" Translatable="1">reverse</Item>
@@ -3541,7 +3541,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChange###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the change overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Array>
                 <Item>requested</Item>
@@ -3559,7 +3559,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChange###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the change overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -3569,14 +3569,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChange###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to access the overview of all changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChange###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the change overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewChangeOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -3604,7 +3604,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChange###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria in the change overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="ChangeNumber">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -3625,21 +3625,21 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeAdd###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to create changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeAdd</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeAdd</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeAdd###RequestedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the requested date should be set by customer.</Description>
-        <Navigation>Frontend::Agent::ViewChangeAdd</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeAdd</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeAdd###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the change add screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewChangeAdd</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeAdd</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -3652,49 +3652,49 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeAddFromTemplate###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to create changes from templates.</Description>
-        <Navigation>Frontend::Agent::ViewChangeAddFromTemplate</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeAddFromTemplate</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeCABTemplate###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to create a template from a changes' CAB.</Description>
-        <Navigation>Frontend::Agent::ViewChangeCABTemplate</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeCABTemplate</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeCondition###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the conditions of changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeCondition</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeCondition</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeConditionEdit###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit the conditions of changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeConditionEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeConditionEdit</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeEdit###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeEdit</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeDelete###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to delete changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeDelete</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeDelete</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeDelete###ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be allowed to delete.</Description>
-        <Navigation>Frontend::Agent::ViewChangeDelete</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeDelete</Navigation>
         <Value>
             <Array>
                 <Item>requested</Item>
@@ -3704,21 +3704,21 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeEdit###RequestedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the requested date should be set by customer.</Description>
-        <Navigation>Frontend::Agent::ViewChangeEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeEdit</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeEdit###ChangeState" Required="1" Valid="1">
         <Description Translatable="1">Defines if the change state can be set in AgentITSMChangeEdit.</Description>
-        <Navigation>Frontend::Agent::ViewChangeEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeEdit</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeEdit###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the change edit screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewChangeEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeEdit</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -3731,7 +3731,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePSA###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the Change PSA overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangePSAOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Array>
                 <Item>approved</Item>
@@ -3740,7 +3740,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePSA###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the change PSA overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangePSAOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -3750,14 +3750,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePSA###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the list of change PSA.</Description>
-        <Navigation>Frontend::Agent::ViewChangePSAOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePSA###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewChangePSAOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -3785,7 +3785,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePSA###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria in the change PSA overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangePSAOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -3806,14 +3806,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeReset###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to reset changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeReset</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeReset</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the Change Schedule overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Array>
                 <Item>approved</Item>
@@ -3822,7 +3822,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the change schedule overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -3832,14 +3832,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the list of Change Schedule.</Description>
-        <Navigation>Frontend::Agent::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSchedule###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -3867,7 +3867,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSchedule###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria in the change schedule overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -3888,28 +3888,28 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeHistory###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the history of a change.</Description>
-        <Navigation>Frontend::Agent::ViewChangeHistory</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeHistory</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeHistoryZoom###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the history zoom of a change.</Description>
-        <Navigation>Frontend::Agent::ViewChangeHistoryZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeHistoryZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeInvolvedPersons###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit the involved persons of a change.</Description>
-        <Navigation>Frontend::Agent::ViewChangeInvolvedPersons</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeInvolvedPersons</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeManager###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the change manager overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeManagerOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Array>
                 <Item>requested</Item>
@@ -3922,7 +3922,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeManager###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the change manager overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeManagerOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -3932,14 +3932,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeManager###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view list of changes where the user is the change manager.</Description>
-        <Navigation>Frontend::Agent::ViewChangeManagerOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeManager###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the change manager overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewChangeManagerOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -3967,7 +3967,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeManager###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria in the change manager overview.</Description>
-        <Navigation>Frontend::Agent::ViewChangeManagerOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="ChangeNumber">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -3988,7 +3988,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the MyCAB overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyCABOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Array>
                 <Item>requested</Item>
@@ -4001,7 +4001,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the MyCAB overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyCABOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -4011,14 +4011,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view list of changes where the user is a CAB member.</Description>
-        <Navigation>Frontend::Agent::ViewMyCABOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewMyCABOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -4046,7 +4046,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyCAB###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria of the changes in the MyCAB overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyCABOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="ChangeNumber">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -4067,7 +4067,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the MyChanges overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyChangesOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Array>
                 <Item>requested</Item>
@@ -4080,7 +4080,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Filter::WorkOrderStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the workorder states that will be used as filters in the MyWorkorders overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyWorkOrdersOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Array>
                 <Item>created</Item>
@@ -4092,7 +4092,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the MyChanges overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyChangesOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -4102,14 +4102,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the list of own changes.</Description>
-        <Navigation>Frontend::Agent::ViewMyChangesOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewMyChangesOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -4137,7 +4137,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyChanges###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria of the changes in the MyChanges overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyChangesOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -4158,7 +4158,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the MyWorkorders overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyWorkOrdersOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -4168,14 +4168,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the list of own workorders.</Description>
-        <Navigation>Frontend::Agent::ViewMyWorkOrdersOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewMyWorkOrdersOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">0</Item>
@@ -4209,7 +4209,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeMyWorkOrders###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria of the changes in the MyWorkorders overview.</Description>
-        <Navigation>Frontend::Agent::ViewMyWorkOrdersOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -4230,7 +4230,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePIR###Filter::WorkOrderStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the workorder states that will be used as filters in the PIR overview.</Description>
-        <Navigation>Frontend::Agent::ViewPIROverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Array>
                 <Item>accepted</Item>
@@ -4243,7 +4243,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePIR###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the PIR overview.</Description>
-        <Navigation>Frontend::Agent::ViewPIROverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -4253,14 +4253,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePIR###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).</Description>
-        <Navigation>Frontend::Agent::ViewPIROverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePIR###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the PIR overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewPIROverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">0</Item>
@@ -4294,7 +4294,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePIR###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria of the changes in the PIR overview.</Description>
-        <Navigation>Frontend::Agent::ViewPIROverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -4315,7 +4315,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePIR###WorkOrderTypes" Required="1" Valid="1">
         <Description Translatable="1">Defines the workorder types that will be used to show the PIR overview.</Description>
-        <Navigation>Frontend::Agent::ViewPIROverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Array>
                 <Item>pir</Item>
@@ -4324,56 +4324,56 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AdminITSMChangeNotification###RichText" Required="0" Valid="1">
         <Description Translatable="1">Uses richtext for viewing and editing ticket notification.</Description>
-        <Navigation>Frontend::Agent::ViewAdminITSMChangeNotification</Navigation>
+        <Navigation>Frontend::Admin::View::ITSMChangeNotification</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AdminITSMChangeNotification###RichTextWidth" Required="0" Valid="1">
         <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
-        <Navigation>Frontend::Agent::ViewAdminITSMChangeNotification</Navigation>
+        <Navigation>Frontend::Admin::View::ITSMChangeNotification</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AdminITSMChangeNotification###RichTextHeight" Required="0" Valid="1">
         <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
-        <Navigation>Frontend::Agent::ViewAdminITSMChangeNotification</Navigation>
+        <Navigation>Frontend::Admin::View::ITSMChangeNotification</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^\d+%?$">320</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePrint###AccountedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if it will be possible to print the accounted time.</Description>
-        <Navigation>Frontend::Agent::ViewChangePrint</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePrint</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePrint###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to print a change.</Description>
-        <Navigation>Frontend::Agent::ViewChangePrint</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePrint</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePrint###PlannedEffort" Required="1" Valid="1">
         <Description Translatable="1">Defines if it will be possible to print the planned effort.</Description>
-        <Navigation>Frontend::Agent::ViewChangePrint</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePrint</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePrint###RequestedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the requested date should be print by customer.</Description>
-        <Navigation>Frontend::Agent::ViewChangePrint</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePrint</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangePrint###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewChangePrint</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangePrint</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4385,14 +4385,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSearch###RequestedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the requested date should be searched by customer.</Description>
-        <Navigation>Frontend::Agent::ViewChangeSearch</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeSearch</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSearch###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the change search screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewChangeSearch</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeSearch</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4404,7 +4404,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSearch###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the change search. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewChangeSearch</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeSearch</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -4432,63 +4432,63 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeTemplate###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to create a template from a change.</Description>
-        <Navigation>Frontend::Agent::ViewChangeTemplate</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplate</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeTimeSlot###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to move changes in time.</Description>
-        <Navigation>Frontend::Agent::ViewChangeTimeSlot</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTimeSlot</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###AccountedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the accounted time should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view changes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###PlannedEffort" Required="1" Valid="1">
         <Description Translatable="1">Defines if the planned effort should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###RequestedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the requested date should be shown by customer.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderState" Required="1" Valid="1">
         <Description Translatable="1">Defines if the workorder state should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderTitle" Required="1" Valid="1">
         <Description Translatable="1">Defines if the workorder title should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###WorkOrderGraph" Required="1" Valid="1">
         <Description Translatable="1">Defines shown graph attributes.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Hash>
                 <Item Key="TimeLineColor">#DC143C</Item>
@@ -4508,7 +4508,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###Tooltip::WorkOrderAttributes" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Hash>
                 <Item Key="WorkOrderTitle">1</Item>
@@ -4530,7 +4530,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeZoom###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the change zoom screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewChangeZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4542,42 +4542,42 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateDelete###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to delete a template.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateDelete</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateDelete</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateEdit###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit a template.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateEdit</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateEditContent###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit the content of a template.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateEditContent</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateEditContent</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateEditContent###DefaultChangeTitle" Required="1" Valid="1">
         <Description Translatable="1">Defines the default change title for a dummy change which is needed to edit a workorder template.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateEditContent</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateEditContent</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">Helper dummy change needed for editing a workorder template</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateEditCAB###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit the content of a template.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateEditCAB</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateEditCAB</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateOverview###Filter::TemplateTypes" Required="1" Valid="1">
         <Description Translatable="1">Defines the template types that will be used as filters in the template overview.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Array>
                 <Item>ITSMChange</Item>
@@ -4588,7 +4588,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateOverview###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the template overview.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -4598,14 +4598,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateOverview###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view overview over all templates.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateOverview###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the template overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="Name">1</Item>
@@ -4623,7 +4623,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMTemplateOverview###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria of the changes in the template overview.</Description>
-        <Navigation>Frontend::Agent::ViewTemplateOverview</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="TemplateID">
                 <Item ValueType="Option" Value="TemplateID">TemplateID</Item>
@@ -4637,7 +4637,7 @@
     </Setting>
      <Setting Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the workorder add screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderAdd</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderAdd</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4650,42 +4650,42 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to add a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderAdd</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderAdd</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMWorkOrderAdd###PlannedEffort" Required="1" Valid="1">
         <Description Translatable="1">Defines if the planned effort should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderAdd</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderAdd</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMWorkOrderAddFromTemplate###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to add a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderAddFromTemplate</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderAddFromTemplate</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderAgent###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to change the workorder agent.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderAgent</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderAgent</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderDelete###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to delete a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderDelete</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderDelete</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
      <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the workorder edit screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderEdit</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4698,56 +4698,56 @@
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to edit a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderEdit</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###PlannedEffort" Required="1" Valid="1">
         <Description Translatable="1">Defines if the planned effort should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderEdit</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###MoveFollowingWorkOrders" Required="1" Valid="1">
         <Description Translatable="1">Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderEdit</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderEdit</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistory###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the history of a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderHistory</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderHistory</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderHistoryZoom###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view the history zoom of a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderHistoryZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderHistoryZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###AccountedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the accounted time should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderReport</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderReport</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###ActualTimeSpan" Required="1" Valid="1">
         <Description Translatable="1">Defines if the actual start and end times should be set.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderReport</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderReport</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the workorder report screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderReport</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderReport</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4760,49 +4760,49 @@
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to write a report for the workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderReport</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderReport</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderTake###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges in order for an agent to take a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderAgent</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderAgent</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderTemplate###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to create a template from a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderTemplate</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderTemplate</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">rw</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###AccountedTime" Required="1" Valid="1">
         <Description Translatable="1">Defines if the accounted time should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###Permission" Required="1" Valid="1">
         <Description Translatable="1">Required privileges to view a workorder.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^(rw|ro)$">ro</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###PlannedEffort" Required="1" Valid="1">
         <Description Translatable="1">Defines if the planned effort should be shown.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderZoom</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the workorder zoom screen of the agent interface.</Description>
-        <Navigation>Frontend::Agent::ViewWorkOrderZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMWorkOrderZoom</Navigation>
         <Value>
             <Hash>
                 <DefaultItem ValueType="Select">
@@ -4814,7 +4814,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the customer change schedule overview.</Description>
-        <Navigation>Frontend::Customer::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Array>
                 <Item>approved</Item>
@@ -4824,7 +4824,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort order in the customer change schedule overview.</Description>
-        <Navigation>Frontend::Customer::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="Up">
                 <Item ValueType="Option" Value="Down" Translatable="1">Down</Item>
@@ -4834,7 +4834,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column.</Description>
-        <Navigation>Frontend::Customer::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -4861,14 +4861,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###ShowOnlyChangesWithAllowedServices" Required="1" Valid="1">
         <Description Translatable="1">Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.</Description>
-        <Navigation>Frontend::Customer::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::CustomerITSMChangeSchedule###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default sort criteria of the changes in the customer change schedule overview.</Description>
-        <Navigation>Frontend::Customer::ViewChangeScheduleOverview</Navigation>
+        <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
                 <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
@@ -5229,7 +5229,7 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeSearch###SearchCSVData" Required="1" Valid="1">
         <Description Translatable="1">Data used to export the search result in CSV format.</Description>
-        <Navigation>Frontend::Agent::ViewChangeSearch</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeSearch</Navigation>
         <Value>
             <Array>
                 <Item>ChangeNumber</Item>
@@ -5245,14 +5245,14 @@
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentHTMLFieldHeightDefault" Required="1" Valid="1">
         <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.</Description>
-        <Navigation>Frontend::Agent::ViewZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^[0-9]{1,4}$">100</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentHTMLFieldHeightMax" Required="1" Valid="1">
         <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.</Description>
-        <Navigation>Frontend::Agent::ViewZoom</Navigation>
+        <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^[0-9]{1,5}$">2500</Item>
         </Value>
