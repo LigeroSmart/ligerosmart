@@ -55,7 +55,6 @@ sub Data {
         'Azt az előzmény típust határozza meg a jegy mester-alárendelt képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni az ügyintézői felületen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Engedélyezi a funkció speciális mester-alárendelt részét.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Engedélyezi azt a funkciót, hogy az alárendelt jegyek a mesterjegyet kövessék egy új mesterhez a speciális mester-alárendelt módban.';

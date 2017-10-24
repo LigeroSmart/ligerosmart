@@ -55,7 +55,6 @@ sub Data {
         'Bestimmt den Historien Typ von Ticket Aktionen im MasterSlave Bildschirm, welcher für die Ticket Historie im Agenten Interface verwendet wird.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Bestimmt den Folgestatus für Tickets, für die im MasterSlave Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         '';

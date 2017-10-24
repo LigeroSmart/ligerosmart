@@ -55,7 +55,6 @@ sub Data {
         'Określa typ historii dla akcji zgłoszenia na ekranie NadrzędnyPodrzędny który zostanie użyty w historii zgłoszenia interfejsu agenta.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Określa następny stan zgłoszenia po dodaniu notatki na ekranie NadrzędnyPodrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Włącza zaawansowaną część funkcjonalności NadrzędnyPodrzędny.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Włącza funkcjonalność trybu zaawansowanego NadrzędnyPodrzędny, w której zgłoszenia podrzędne podążają za zgłoszeniem nadrzędnym do nowego zgłoszenia nadrzędnego.';

@@ -1,13 +1,14 @@
 # 
 # Translators:
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2017
 # Luis Armando Medina <lamedina@gmail.com>, 2016
 # Luis Medina <luis.medina@sacc.com.mx>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 11:23+0000\n"
-"PO-Revision-Date: 2017-09-25 11:24+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-09-29 15:34+0000\n"
+"PO-Revision-Date: 2017-10-23 20:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr "Campo"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
-msgstr ""
+msgstr "Gestionar estas Maestro/Esclavo para %s%s%s"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -29,35 +30,35 @@ msgstr "Nuevo Ticket Maestro"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr "Quitar Ticket Maestro"
+msgstr "Remover estado Ticket Maestro"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr "Quitar Ticket Esclavo"
+msgstr "Remover estado Ticket Esclavo"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of %s%s%s: %s"
-msgstr ""
+msgstr "Esclavo de %s%s%s:%s"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
-msgstr ""
+msgstr "Remover estado Maestro de Tickets"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
-msgstr ""
+msgstr "Remver estado Esclavo de Ticket"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
-msgstr ""
+msgstr "Ticket Maestro"
 
 #. SysConfig
 msgid "All master tickets"
-msgstr ""
+msgstr "Todos los tickets maestros"
 
 #. SysConfig
 msgid "All slave tickets"
-msgstr ""
+msgstr "Todos los tickets esclavos"
 
 #. SysConfig
 msgid ""
@@ -71,7 +72,7 @@ msgstr "Modifica el estado Maestro-Esclavo del ticket."
 
 #. SysConfig
 msgid "Defines dynamic field name for master ticket feature."
-msgstr ""
+msgstr "Define el nombre del campo dinámico para el funcionalidad de ticket maestro."
 
 #. SysConfig
 msgid ""
@@ -118,49 +119,45 @@ msgid ""
 msgstr "Define el siguiente estado después de añadir una nota, en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
-msgstr ""
+msgstr "Habilita la parte avanzada de la funcionalidad MaestroEsclavo."
 
 #. SysConfig
 msgid ""
 "Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Habilita la funcionalidad en la que tickets esclavos siguen al ticket maestro hacia un nuevo maestro en el modo avanzado de MasterSlave"
 
 #. SysConfig
 msgid ""
 "Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Habilita la funcionalidad de cambiar el estado MaestroEsclavo de un ticket en el modo avanzado de MaestroEsclavo."
 
 #. SysConfig
 msgid ""
 "Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr ""
+msgstr "Habilita la funcionalidad de re-enviar artículos de tipo 'forward' de un ticket maestro hacia los clientes de sus ticket esclavos. Por omisión (deshabitado) no re-enviará artículos de tipo 'forward' hacia los tickets esclavos."
 
 #. SysConfig
 msgid ""
 "Enables the feature to keep parent-child link after change of the "
 "MasterSlave state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Habilita la funcionalidad de mantener los vínculos padre-hijo después de cambiar el estado de MaestroEsclavo en el modo avanzado de MaestroEsclavo."
 
 #. SysConfig
 msgid ""
 "Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Habilita la funcionalidad de mantener los vínculos padre-hijo después de remover el estado de MaestroEsclavo  en el modo avanzado de MaestroEsclavo. "
 
 #. SysConfig
 msgid ""
 "Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Habilita la funcionalidad de remover el estado de MaestroEsclavo de un ticket en el modo avanzado de MaestroEsclavo."
 
 #. SysConfig
 msgid ""
@@ -174,11 +171,11 @@ msgstr "Maestro / Esclavo"
 
 #. SysConfig
 msgid "Master Tickets"
-msgstr ""
+msgstr "Tickets Maestros"
 
 #. SysConfig
 msgid "MasterSlave"
-msgstr ""
+msgstr "MaestroEsclavo"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -283,7 +280,7 @@ msgstr "Muestra los campos título en la pantalla Maestro-Esclavo en la vista de
 
 #. SysConfig
 msgid "Slave Tickets"
-msgstr ""
+msgstr "Ticket Esclavos"
 
 #. SysConfig
 msgid ""
@@ -303,4 +300,4 @@ msgstr "Este módulo activa el campo Maestro/Esclavo en una nueva pantalla de ti
 
 #. SysConfig
 msgid "Ticket MasterSlave."
-msgstr ""
+msgstr "Ticket MaestroEsclavo"

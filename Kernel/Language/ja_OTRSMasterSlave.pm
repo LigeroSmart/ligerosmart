@@ -16,16 +16,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminDynamicFieldMasterSlave
-    $Self->{Translation}->{'Field'} = '領域';
+    $Self->{Translation}->{'Field'} = 'フィールド';
 
     # Template: AgentTicketMasterSlave
-    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
+    $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '%s%s%sのマスタ/スレーブステータスを管理する';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
     $Self->{Translation}->{'New Master Ticket'} = '新しいマスターチケット';
     $Self->{Translation}->{'Unset Master Ticket'} = 'マスターチケットを解除する';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'スレーブチケットを解除する';
-    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '%s%s%sのステーブ: %s';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = 'マスターチケットを解除する';
@@ -55,7 +55,6 @@ sub Data {
         '担当者インタフェースのチケット履歴で使用される、チケット・マスター・スレーブ画面アクションに関する履歴タイプを定義します。';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = '';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         '';
@@ -71,9 +70,9 @@ sub Data {
         '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Master / Slave'} = 'マスター/スレーブ';
+    $Self->{Translation}->{'Master / Slave'} = 'マスター / スレーブ';
     $Self->{Translation}->{'Master Tickets'} = 'マスターチケット';
-    $Self->{Translation}->{'MasterSlave'} = '';
+    $Self->{Translation}->{'MasterSlave'} = 'マスター・スレーブ';
     $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = 'MasterSlave モジュールのチケット一括処理機能';
     $Self->{Translation}->{'Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.'} =
         '';
@@ -104,14 +103,14 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '担当者インターフェイスの MasterSlave のチケットズーム画面でタイトルフィールドを表示する。';
-    $Self->{Translation}->{'Slave Tickets'} = '';
+    $Self->{Translation}->{'Slave Tickets'} = 'スレーブチケット';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
         'システムで使用される、異なるメモのタイプを特定します。';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'このモジュールは、新規メール/電話チケットに、マスター/スレーブチケット欄を追加します。';
-    $Self->{Translation}->{'Ticket MasterSlave.'} = '';
+    $Self->{Translation}->{'Ticket MasterSlave.'} = 'マスター・スレーブチケット';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

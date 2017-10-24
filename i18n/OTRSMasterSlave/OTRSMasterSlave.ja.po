@@ -2,12 +2,13 @@
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015-2017
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 11:23+0000\n"
-"PO-Revision-Date: 2017-09-25 11:24+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-09-29 15:34+0000\n"
+"PO-Revision-Date: 2017-10-17 00:41+0000\n"
+"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,11 +18,11 @@ msgstr ""
 
 #. Template: AdminDynamicFieldMasterSlave
 msgid "Field"
-msgstr "領域"
+msgstr "フィールド"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
-msgstr ""
+msgstr "%s%s%sのマスタ/スレーブステータスを管理する"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
@@ -37,7 +38,7 @@ msgstr "スレーブチケットを解除する"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of %s%s%s: %s"
-msgstr ""
+msgstr "%s%s%sのステーブ: %s"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
@@ -118,10 +119,6 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
 msgstr ""
 
@@ -170,7 +167,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr "マスター/スレーブ"
+msgstr "マスター / スレーブ"
 
 #. SysConfig
 msgid "Master Tickets"
@@ -178,7 +175,7 @@ msgstr "マスターチケット"
 
 #. SysConfig
 msgid "MasterSlave"
-msgstr ""
+msgstr "マスター・スレーブ"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
@@ -283,7 +280,7 @@ msgstr "担当者インターフェイスの MasterSlave のチケットズー�
 
 #. SysConfig
 msgid "Slave Tickets"
-msgstr ""
+msgstr "スレーブチケット"
 
 #. SysConfig
 msgid ""
@@ -303,4 +300,4 @@ msgstr "このモジュールは、新規メール/電話チケットに、マ�
 
 #. SysConfig
 msgid "Ticket MasterSlave."
-msgstr ""
+msgstr "マスター・スレーブチケット"

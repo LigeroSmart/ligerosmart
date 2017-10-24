@@ -55,7 +55,6 @@ sub Data {
         'Mendefinisikan jenis sejarah untuk tindakan tiket master slave di layar, yang akan digunakan untuk sejarah tiket di antarmuka agen.';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Mendefinisikan state berikutnya tiket setelah menambahkan catatan, dalam layar tiket Master Slave dari tiket yang diperbesar di antarmuka agen.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Enables the advanced MasterSlave part of the feature.'} = 'Memungkinkan Master slave bagian dari fitur tersebut.';
     $Self->{Translation}->{'Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.'} =
         'Mengaktifkan fitur tiket slave untuk mengikuti tiket master baru dalam modus Master Slave canggih.';
