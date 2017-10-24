@@ -446,7 +446,7 @@ Your OTRS-Team
     </Setting>
     <Setting Name="Survey::Frontend::AgentSurveyOverview###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the survey overview. This option has no effect on the position of the columns.</Description>
-        <Navigation>Frontend::Agent::ViewSurveyOverview</Navigation>
+        <Navigation>Frontend::Agent::View::SurveyOverview</Navigation>
         <Value>
             <Hash>
                 <Item Key="Number">1</Item>
