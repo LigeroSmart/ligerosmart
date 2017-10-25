@@ -6,7 +6,12 @@
         <Value>
             <Hash>
                 <Item Key="TargetDatabaseHost">localhost</Item>
-                <Item Key="TargetDatabaseType">mysql</Item>
+                <Item Key="TargetDatabaseType" ValueType="Select" SelectedID='mysql'>
+                    <Item ValueType="Option" Value="mssql">MS SQL</Item>
+                    <Item ValueType="Option" Value="mysql">MySQL</Item>
+                    <Item ValueType="Option" Value="oracle">Oracle</Item>
+                    <Item ValueType="Option" Value="posgresql">PostgreSQL</Item>
+                </Item>
                 <Item Key="TargetDatabase">target</Item>
                 <Item Key="TargetDatabaseUser">user</Item>
                 <Item Key="TargetDatabasePw" ValueType="Password">password</Item>
