@@ -114,7 +114,7 @@ sub Data {
         'Potrebne dozvole za upotrebu ekrana dodatnih ITSM polja u interfejsu operatera.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Potrebne dozvole za upotrebu ekrana odluke u interfejsu operatera.';
-    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = 'Proračun prioriteta i stanja incidenta servisa';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Podešava servis na ekranu dodatnih ITSM polja u interfejsu operatera (Ticket::Service mora biti aktiviran).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =

@@ -24,16 +24,16 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'チケットをリンクする';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
-    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = '%s%s%sの決定を変更';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '%s%s%sのITSMフィールドを変更';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'レビュー必須';
     $Self->{Translation}->{'Decision Result'} = '決定結果';
     $Self->{Translation}->{'Approved'} = '承認';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = '延期';
+    $Self->{Translation}->{'Pre-approved'} = '事前承認済み';
+    $Self->{Translation}->{'Rejected'} = '拒否';
     $Self->{Translation}->{'Repair Start Time'} = '修理開始時間';
     $Self->{Translation}->{'Recovery Start Time'} = '回復開始時間';
     $Self->{Translation}->{'Decision Date'} = '決定日付';
@@ -153,7 +153,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
         'システムで使用される、異なるメモのタイプを特定します。';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = 'チケットの決定';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

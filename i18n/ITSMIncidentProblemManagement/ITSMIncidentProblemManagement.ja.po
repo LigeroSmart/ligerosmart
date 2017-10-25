@@ -2,12 +2,13 @@
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015-2016
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:28+0000\n"
-"PO-Revision-Date: 2017-09-29 15:29+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-10 13:53+0000\n"
+"PO-Revision-Date: 2017-10-25 02:41+0000\n"
+"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,16 +16,15 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Criticality"
 msgstr "重要度"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Impact"
 msgstr "影響度"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. JS Template: ServiceIncidentState
 msgid "Service Incident State"
 msgstr "サービスインシデント状況"
 
@@ -36,12 +36,12 @@ msgstr "チケットをリンクする"
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change Decision of %s%s%s"
-msgstr ""
+msgstr "%s%s%sの決定を変更"
 
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change ITSM fields of %s%s%s"
-msgstr ""
+msgstr "%s%s%sのITSMフィールドを変更"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -57,15 +57,15 @@ msgstr "承認"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Postponed"
-msgstr ""
+msgstr "延期"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Pre-approved"
-msgstr ""
+msgstr "事前承認済み"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Rejected"
-msgstr ""
+msgstr "拒否"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Repair Start Time"
@@ -98,10 +98,6 @@ msgstr "追加のITSM項目"
 #. SysConfig
 msgid "Additional ITSM ticket fields."
 msgstr "追加の ITSM チケット･フィールド"
-
-#. SysConfig
-msgid "AgentITSMIncidentProblemManagement"
-msgstr ""
 
 #. SysConfig
 msgid ""
@@ -303,6 +299,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Service Incident State and Priority Calculation"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the service in the additional ITSM field screen of the agent interface "
 "(Ticket::Service needs to be activated)."
@@ -413,4 +413,4 @@ msgstr "システムで使用される、異なるメモのタイプを特定し
 
 #. SysConfig
 msgid "Ticket decision."
-msgstr ""
+msgstr "チケットの決定"

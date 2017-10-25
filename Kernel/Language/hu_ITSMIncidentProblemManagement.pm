@@ -114,7 +114,7 @@ sub Data {
         'A szükséges jogosultságok a további ITSM mező képernyőjének használatához az ügyintézői felületen.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'A szükséges jogosultságok a döntési képernyő használatához az ügyintézői felületen.';
-    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = 'Szolgáltatás incidensállapot és prioritás számítás';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Beállítja a szolgáltatást az ügyintézői felület további ITSM mező képernyőjén (a Ticket::Service lehetőségnek bekapcsolva kell lennie).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
