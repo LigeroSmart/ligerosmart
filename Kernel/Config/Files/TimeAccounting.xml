@@ -154,8 +154,6 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-
-
     <ConfigItem Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new projects.</Description>
         <Group>TimeAccounting</Group>

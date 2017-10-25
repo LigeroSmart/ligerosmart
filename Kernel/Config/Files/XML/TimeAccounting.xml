@@ -366,7 +366,6 @@
             </Hash>
         </Value>
     </Setting>
-
     <Setting Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
         <Description Translatable="1">Default name for new projects.</Description>
         <Navigation>Frontend::Agent::View::TimeAccountingSetting</Navigation>
