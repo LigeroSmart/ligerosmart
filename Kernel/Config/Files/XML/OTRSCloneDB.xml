@@ -10,7 +10,7 @@
                     <Item ValueType="Option" Value="mssql">MS SQL</Item>
                     <Item ValueType="Option" Value="mysql">MySQL</Item>
                     <Item ValueType="Option" Value="oracle">Oracle</Item>
-                    <Item ValueType="Option" Value="posgresql">PostgreSQL</Item>
+                    <Item ValueType="Option" Value="postgresql">PostgreSQL</Item>
                 </Item>
                 <Item Key="TargetDatabase">target</Item>
                 <Item Key="TargetDatabaseUser">user</Item>
