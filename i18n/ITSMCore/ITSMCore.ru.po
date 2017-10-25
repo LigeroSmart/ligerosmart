@@ -4,13 +4,13 @@
 # Ilya Ko <mchammer@inbox.ru>, 2017
 # Rasim Kalimullin <neutrino.vm@gmail.com>, 2017
 # Shader <shader@dautkom.lv>, 2016
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-02 10:12+0000\n"
-"PO-Revision-Date: 2017-10-04 08:03+0000\n"
-"Last-Translator: Ilya Ko <mchammer@inbox.ru>\n"
+"POT-Creation-Date: 2017-10-10 13:49+0000\n"
+"PO-Revision-Date: 2017-10-17 07:12+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -348,7 +348,7 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr ""
+msgstr "Задает тип и направление связи для использования при вычислении состояния инцидента. Ключ это имя типа связи (как это задано в LinkObject::Type), а Значение это направление IncidentLinkType на основании которого вычисляется состояние инцидента. Например, если IncidentLinkType установлен в 'Зависит от/Depends on', и Направление - 'Источник', то только связи 'Зависит от' будут использоваться (а не противоположная 'Необходимо для/Required for') для вычисления состояния инцидента. Вы можете добавить другие дополнительные типы связи и направления по своему желанию, например,  'Включает/Includes' с направлением 'Цель/Target'. допускаются все типы связи, заданные параметром LinkObject::Type и направления могут быть 'Источник/Source', 'Цель/Target', или 'Оба/Both'. ВАЖНО: ПОСЛЕ ИЗМЕНЕНИЯ ЗНАЧЕНИЙ ЭТОГО ПАРАМЕТРА НЕОБХОДИМО ВЫПОЛНИТЬ СКРИПТ bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate ДЛЯ ПЕРЕРАСЧЕТА ВСЕХ СОСТОЯНИЙ ИНЦИДЕНТА НА ОСНОВЕ НОВЫХ ЗНАЧЕНИЙ!"
 
 #. SysConfig
 msgid ""

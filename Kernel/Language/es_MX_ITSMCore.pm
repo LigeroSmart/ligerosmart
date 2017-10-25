@@ -42,13 +42,13 @@ sub Data {
     $Self->{Translation}->{'Impact'} = 'Impacto';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
-    $Self->{Translation}->{'No SLAID is given!'} = '';
-    $Self->{Translation}->{'SLAID %s not found in database!'} = '';
-    $Self->{Translation}->{'Calendar Default'} = '';
+    $Self->{Translation}->{'No SLAID is given!'} = '¡No se proporcionó el \'SLAID\'!';
+    $Self->{Translation}->{'SLAID %s not found in database!'} = '¡El \'SLAID\' %s no se encontró en la base de datos!';
+    $Self->{Translation}->{'Calendar Default'} = 'Calendario por omisión';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
-    $Self->{Translation}->{'No ServiceID is given!'} = '';
-    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
+    $Self->{Translation}->{'No ServiceID is given!'} = '¡No se proporcionó el  \'ServiceID\'!';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = '¡El \'ServiceID\' %s no se encontró en la base de datos!';
     $Self->{Translation}->{'Current Incident State'} = 'Estado del Incidente Actual';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
@@ -76,12 +76,12 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Alternative to'} = 'Alternativo a';
-    $Self->{Translation}->{'Both'} = '';
+    $Self->{Translation}->{'Both'} = 'Ambos';
     $Self->{Translation}->{'Connected to'} = 'Conectado a';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Define las Acciones donde el botón de configuraciones esta disponible en el "widget" de objetos vinculados (LinkObject::ViewMode = "complex"). Por favor note que dichas Acciones deben tener registrados los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Define cuales columnas se muestran en el \'widget\' de Servicios vinculados (LinkObject::ViewMode = "complex"). Nota: Solo atributos de Servicio do permitidos para las Columnas por omisión. Configuraciones posibles: 0 = Deshabitado,  1 = Disponible, 2 = Habilitado por omisión.';
     $Self->{Translation}->{'Depends on'} = 'Depende de';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Módulo de Registro en el Fronted para la configuración AdminITSMCIPAllocate en la interfaz del agente.';
@@ -97,10 +97,10 @@ sub Data {
         'Módulo de Registro en el Fronted para el objeto AgentITSMServicePrint en la interfaz del agente.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
         'Módulo de Registro en el Fronted para el objeto AgentITSMServiceZoom en la interfaz del agente.';
-    $Self->{Translation}->{'ITSM SLA Overview.'} = '';
-    $Self->{Translation}->{'ITSM Service Overview.'} = '';
-    $Self->{Translation}->{'Incident State Type'} = '';
-    $Self->{Translation}->{'Incident State Type.'} = '';
+    $Self->{Translation}->{'ITSM SLA Overview.'} = 'Vista general de \'SLA\' de ITSM';
+    $Self->{Translation}->{'ITSM Service Overview.'} = 'Vista general de Servicios de ITSM';
+    $Self->{Translation}->{'Incident State Type'} = 'Tipo de Estado de Incidente';
+    $Self->{Translation}->{'Incident State Type.'} = 'Tipo de Estado de Incidente.';
     $Self->{Translation}->{'Includes'} = 'Incluye';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Administrar matriz de prioridades';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Módulo para mostrar un enlace de regreso en el menú del servicio';
@@ -113,14 +113,14 @@ sub Data {
     $Self->{Translation}->{'Relevant to'} = 'Aplicable a';
     $Self->{Translation}->{'Required for'} = 'Requerido para';
     $Self->{Translation}->{'SLA Overview'} = 'Resumen de SLA';
-    $Self->{Translation}->{'SLA Print.'} = '';
-    $Self->{Translation}->{'SLA Zoom.'} = '';
+    $Self->{Translation}->{'SLA Print.'} = 'Imprimir \'SLA\'.';
+    $Self->{Translation}->{'SLA Zoom.'} = 'Detailed de SLA.';
     $Self->{Translation}->{'Service Overview'} = 'Resumen de Servicio ';
-    $Self->{Translation}->{'Service Print.'} = '';
-    $Self->{Translation}->{'Service Zoom.'} = '';
+    $Self->{Translation}->{'Service Print.'} = 'Imprimir Servicio.';
+    $Self->{Translation}->{'Service Zoom.'} = 'Detalles del Servicio.';
     $Self->{Translation}->{'Service-Area'} = 'Servicio-Área';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
-        '';
+        'Fija el tipo y direccion de los vínculos a ser usados para calcular el estado de incidencia. La llave es el nombre del tipo de vínculo (como está definido en  LinkObject::Type), y el valor es la direccion del \'IncidentLinkType\' que deberá de ser seguido para calcular el estado de incidencia. Por ejemplo si el  \'IncidentLinkType\' está fijado a \'DependsON\' y la direccion es \'Fuente\'. sólo los vínculos \'DependsOn\' serán seguidos (y no por el contrario su opuesto \'RequiredFor\') para calcular el estado de incidencia. Usted puede añadir tantos tipos de vínculos y direcciones como sea necesario, por ejemplo \'Includes\' con la dirección \'Destino\'. Todos los tipos de vínculos definidos en las opciones de  configuración el sistema  LinkObject::Type son posibles y su dirección puede ser \'Fuente\', \'Destino\' o \'Ambos\'. IMPORTANTE: DESPUES DE HACER CAMBIOS A ESTA OPCIÓN DE \'SYSCONFIG\' NECESITARÁ EJECUTAR el COMANDO DE CONSOLA bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate  ¡DE TAL FORMA QUE TODOS LOS ESTADOS DE INCIDENCIA SERÁN RECALCULADOS BASADOS EN LA NUEVA CONFIGURACIÓN!';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Esta configuración define que un objeto \'ITSMChange\' puede ser vinculado con un objeto \'Ticket\' usando el tipo de vínculo \'Normal\'.';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
