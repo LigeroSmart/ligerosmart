@@ -2,12 +2,13 @@
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:57+0000\n"
-"PO-Revision-Date: 2017-09-29 14:58+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-10 14:08+0000\n"
+"PO-Revision-Date: 2017-10-16 02:49+0000\n"
+"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +18,7 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
-msgstr "Import/Export マネージャ"
+msgstr "インポート/エクスポートの管理"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
@@ -81,7 +82,7 @@ msgstr "検索あたりの出力を制限"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "情報の読み込み"
+msgstr "情報をインポート"
 
 #. Template: AdminImportExport
 msgid "Source File"
@@ -89,7 +90,7 @@ msgstr "ソースファイル"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "%sのインポート・サマリー"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -141,7 +142,7 @@ msgstr "エクスポートが出来ません（エラーが発生しました。
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr "テンプレート一覧"
+msgstr "テンプレート・リスト"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
