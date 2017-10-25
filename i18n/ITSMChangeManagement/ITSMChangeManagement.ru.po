@@ -2,13 +2,13 @@
 # Translators:
 # Ilya Ko <mchammer@inbox.ru>, 2017
 # Sergey Stepanov <Stepanov.SA@bashkortostan.ru>, 2016
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2016
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-02 12:08+0000\n"
-"PO-Revision-Date: 2017-10-04 14:51+0000\n"
-"Last-Translator: Ilya Ko <mchammer@inbox.ru>\n"
+"POT-Creation-Date: 2017-10-10 13:59+0000\n"
+"PO-Revision-Date: 2017-10-17 07:06+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1471,7 +1471,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Определить, какие столбцы отображаются в связанном виджете Изменений (LinkObject::ViewMode = \"complex\"). Примечание: Только атрибуты Изменения разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию."
 
 #. SysConfig
 msgid ""
@@ -1479,7 +1479,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
 "allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
 "2 = Enabled by default."
-msgstr ""
+msgstr "Определить, какие столбцы отображаются в связанном виджете Задача (LinkObject::ViewMode = \"complex\"). Примечание: Только атрибуты Задачи разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a change list."

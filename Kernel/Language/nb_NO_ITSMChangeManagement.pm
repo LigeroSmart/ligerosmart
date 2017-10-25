@@ -125,15 +125,15 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = 'Endringer per side';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Workorder Title'} = 'Arbeidsordretittel';
     $Self->{Translation}->{'Change Title'} = 'Endringstittel';
-    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = 'Arbeidsordre saksbehandler';
     $Self->{Translation}->{'Change Builder'} = 'Den som opprettet Endringen';
     $Self->{Translation}->{'Change Manager'} = 'Endringsansvarlig';
     $Self->{Translation}->{'Workorders'} = 'Arbeidsordre';
     $Self->{Translation}->{'Change State'} = 'Endringstilstand';
-    $Self->{Translation}->{'Workorder State'} = '';
-    $Self->{Translation}->{'Workorder Type'} = '';
+    $Self->{Translation}->{'Workorder State'} = 'Arbeidsordretilstand';
+    $Self->{Translation}->{'Workorder Type'} = 'Arbeidsordretype';
     $Self->{Translation}->{'Requested Time'} = 'Forespurt tid';
     $Self->{Translation}->{'Planned Start Time'} = 'Planlagt starttid';
     $Self->{Translation}->{'Planned End Time'} = 'Planlagt sluttid';
@@ -148,10 +148,10 @@ sub Data {
     $Self->{Translation}->{'CAB Agent'} = 'CAB-saksbehandler';
     $Self->{Translation}->{'e.g.'} = 'f.eks.';
     $Self->{Translation}->{'CAB Customer'} = 'CAB-kunde';
-    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
-    $Self->{Translation}->{'ITSM Workorder Report'} = '';
-    $Self->{Translation}->{'ITSM Change Priority'} = '';
-    $Self->{Translation}->{'ITSM Change Impact'} = '';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = 'Arbeidsordreinnstruks';
+    $Self->{Translation}->{'ITSM Workorder Report'} = 'Arbeidsordrerapport';
+    $Self->{Translation}->{'ITSM Change Priority'} = 'Endringsprioritet';
+    $Self->{Translation}->{'ITSM Change Impact'} = 'Endringsomfang';
     $Self->{Translation}->{'Change Category'} = 'Endringskategori';
     $Self->{Translation}->{'(before/after)'} = '(før/etter)';
     $Self->{Translation}->{'(between)'} = '(mellom)';
@@ -169,8 +169,8 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = 'Endringsinfo';
-    $Self->{Translation}->{'Planned Effort'} = '';
-    $Self->{Translation}->{'Accounted Time'} = '';
+    $Self->{Translation}->{'Planned Effort'} = 'Planlagt innsats';
+    $Self->{Translation}->{'Accounted Time'} = 'Benyttet tid';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Initiativtaker(e) til Endring';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Sist endret';

@@ -22,7 +22,7 @@ sub Data {
     $Self->{Translation}->{'Priority allocation'} = '優先度の割り当て';
 
     # Template: AdminITSMChangeNotification
-    $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM 変更管理の通知管理';
+    $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '変更管理の通知管理';
     $Self->{Translation}->{'Add Notification Rule'} = '通知ルールを追加';
     $Self->{Translation}->{'A notification should have a name!'} = '通知には名称が必須です。';
     $Self->{Translation}->{'Name is required.'} = '名称は入力必須です。';
@@ -44,7 +44,7 @@ sub Data {
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = '変更管理項目を追加';
-    $Self->{Translation}->{'ITSM Change'} = 'ITSM Change';
+    $Self->{Translation}->{'ITSM Change'} = '変更管理';
     $Self->{Translation}->{'Justification'} = '正当化';
     $Self->{Translation}->{'Input invalid.'} = '入力は無効です';
     $Self->{Translation}->{'Impact'} = 'インパクト';
@@ -127,14 +127,14 @@ sub Data {
     # Template: AgentITSMChangeOverviewSmall
     $Self->{Translation}->{'Workorder Title'} = '';
     $Self->{Translation}->{'Change Title'} = '変更管理項目名';
-    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = '作業依頼者';
     $Self->{Translation}->{'Change Builder'} = 'ビルダーを変更';
     $Self->{Translation}->{'Change Manager'} = 'マネージャーを変更';
-    $Self->{Translation}->{'Workorders'} = '業務指示';
-    $Self->{Translation}->{'Change State'} = '変更管理項目の状態';
-    $Self->{Translation}->{'Workorder State'} = '';
-    $Self->{Translation}->{'Workorder Type'} = '';
-    $Self->{Translation}->{'Requested Time'} = '';
+    $Self->{Translation}->{'Workorders'} = '作業依頼書';
+    $Self->{Translation}->{'Change State'} = '変更管理のステータス';
+    $Self->{Translation}->{'Workorder State'} = '作業依頼書のステータス';
+    $Self->{Translation}->{'Workorder Type'} = '作業依頼書のタイプ';
+    $Self->{Translation}->{'Requested Time'} = '要求時間';
     $Self->{Translation}->{'Planned Start Time'} = '計画上のスタート時間';
     $Self->{Translation}->{'Planned End Time'} = '計画上の終了時間';
     $Self->{Translation}->{'Actual Start Time'} = '実際のスタート時間';
@@ -145,13 +145,13 @@ sub Data {
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '例: 10*5155 または 105658*';
-    $Self->{Translation}->{'CAB Agent'} = '';
+    $Self->{Translation}->{'CAB Agent'} = 'CAB担当者';
     $Self->{Translation}->{'e.g.'} = '例: ';
-    $Self->{Translation}->{'CAB Customer'} = '';
-    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
-    $Self->{Translation}->{'ITSM Workorder Report'} = '';
-    $Self->{Translation}->{'ITSM Change Priority'} = '';
-    $Self->{Translation}->{'ITSM Change Impact'} = '';
+    $Self->{Translation}->{'CAB Customer'} = 'CAB顧客';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = '変更依頼書の指導';
+    $Self->{Translation}->{'ITSM Workorder Report'} = '変更依頼書のレポート';
+    $Self->{Translation}->{'ITSM Change Priority'} = '変更管理の優先度';
+    $Self->{Translation}->{'ITSM Change Impact'} = '変更管理の重要度';
     $Self->{Translation}->{'Change Category'} = 'カテゴリを変更';
     $Self->{Translation}->{'(before/after)'} = '(以前/以後)';
     $Self->{Translation}->{'(between)'} = '(期間指定)';
@@ -258,7 +258,7 @@ sub Data {
     $Self->{Translation}->{'State Transition Added!'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
-    $Self->{Translation}->{'Overview: ITSM Changes'} = 'ITSM変更管理：概要';
+    $Self->{Translation}->{'Overview: ITSM Changes'} = '一覧: 変更管理';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = 'チケットID %s のチケットは存在しません！';
@@ -338,9 +338,9 @@ sub Data {
         '';
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'unknown change title'} = '';
-    $Self->{Translation}->{'ITSM Workorder'} = '作業オーダー';
+    $Self->{Translation}->{'ITSM Workorder'} = '変更依頼書';
     $Self->{Translation}->{'unknown workorder title'} = '';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM作業オーダーの概要(%s)';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '変更依頼書の一覧(%s)';
     $Self->{Translation}->{'PlannedStartTime'} = '予定開始時刻';
     $Self->{Translation}->{'PlannedEndTime'} = '予定終了日時';
     $Self->{Translation}->{'ActualStartTime'} = '実績開始時刻';
@@ -524,7 +524,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview.'} = '';
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule'} = '変更管理スケジュール';
-    $Self->{Translation}->{'Change Schedule.'} = '';
+    $Self->{Translation}->{'Change Schedule.'} = 'スケジュールを変更';
     $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -547,7 +547,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'リンクオブジェクトウィジェット（LinkObject :: ViewMode = "complex"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = '';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
@@ -761,22 +761,22 @@ sub Data {
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
     $Self->{Translation}->{'History Zoom'} = '';
-    $Self->{Translation}->{'ITSM Change CAB Templates.'} = '';
-    $Self->{Translation}->{'ITSM Change Condition Edit.'} = '';
-    $Self->{Translation}->{'ITSM Change Condition Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
-    $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change notification rules'} = '';
-    $Self->{Translation}->{'ITSM Changes'} = 'ITSM変更管理';
-    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '';
-    $Self->{Translation}->{'ITSM MyChanges Overview.'} = '';
-    $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '';
-    $Self->{Translation}->{'ITSM Template Delete.'} = '';
-    $Self->{Translation}->{'ITSM Template Edit CAB.'} = '';
-    $Self->{Translation}->{'ITSM Template Edit Content.'} = '';
-    $Self->{Translation}->{'ITSM Template Edit.'} = '';
-    $Self->{Translation}->{'ITSM Template Overview.'} = '';
+    $Self->{Translation}->{'ITSM Change CAB Templates.'} = '変更管理のCABテンプレート';
+    $Self->{Translation}->{'ITSM Change Condition Edit.'} = '変更管理の条件修正';
+    $Self->{Translation}->{'ITSM Change Condition Overview.'} = '変更管理の条件一覧';
+    $Self->{Translation}->{'ITSM Change Management Notifications'} = '変更管理の通知';
+    $Self->{Translation}->{'ITSM Change Manager Overview.'} = '変更管理者の一覧';
+    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '変更管理のPIR一覧';
+    $Self->{Translation}->{'ITSM Change notification rules'} = '変更管理の通知ルール';
+    $Self->{Translation}->{'ITSM Changes'} = '変更管理';
+    $Self->{Translation}->{'ITSM MyCAB Overview.'} = '私の変更管理CABの一覧';
+    $Self->{Translation}->{'ITSM MyChanges Overview.'} = '私の変更管理の一覧';
+    $Self->{Translation}->{'ITSM MyWorkorders Overview.'} = '私の変更依頼書の一覧';
+    $Self->{Translation}->{'ITSM Template Delete.'} = '変更依頼書テンプレートの削除';
+    $Self->{Translation}->{'ITSM Template Edit CAB.'} = '変更依頼書のCAB修正';
+    $Self->{Translation}->{'ITSM Template Edit Content.'} = '変更依頼書のコンテンツ修正';
+    $Self->{Translation}->{'ITSM Template Edit.'} = '変更依頼書テンプレートの修正';
+    $Self->{Translation}->{'ITSM Template Overview.'} = '変更依頼書テンプレート一覧';
     $Self->{Translation}->{'ITSM event module that cleans up conditions.'} = '';
     $Self->{Translation}->{'ITSM event module that deletes the cache for a toolbar.'} = '';
     $Self->{Translation}->{'ITSM event module that deletes the history of changes.'} = '';
@@ -789,8 +789,8 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = '';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         '';
-    $Self->{Translation}->{'ITSMChange'} = 'ITSM変更管理';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSM業務指示';
+    $Self->{Translation}->{'ITSMChange'} = '変更管理';
+    $Self->{Translation}->{'ITSMWorkOrder'} = '変更依頼書';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
@@ -829,10 +829,10 @@ sub Data {
         '';
     $Self->{Translation}->{'Print the change.'} = '';
     $Self->{Translation}->{'Print the workorder.'} = '';
-    $Self->{Translation}->{'Projected Service Availability'} = '';
-    $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
+    $Self->{Translation}->{'Projected Service Availability'} = '計画されたサービスの可用性';
+    $Self->{Translation}->{'Projected Service Availability (PSA)'} = '計画されたサービスの可用性(PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
-        '';
+        'プロジェクトのサービス可用性（PSA）を変更。 承認された変更とそのサービスの一覧。';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         '';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = '';
@@ -883,7 +883,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
-    $Self->{Translation}->{'Schedule'} = '';
+    $Self->{Translation}->{'Schedule'} = 'スケジュール';
     $Self->{Translation}->{'Screen'} = '画面';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Search Changes'} = '変更管理項目を検索';

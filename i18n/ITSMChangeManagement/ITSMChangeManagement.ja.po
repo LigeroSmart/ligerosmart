@@ -2,12 +2,13 @@
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015-2016
 # Kentaro Hori <kentaro0919@gmail.com>, 2014-2015
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:59+0000\n"
-"PO-Revision-Date: 2017-09-29 15:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-10 13:59+0000\n"
+"PO-Revision-Date: 2017-10-17 00:48+0000\n"
+"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +30,7 @@ msgstr "優先度の割り当て"
 
 #. Template: AdminITSMChangeNotification
 msgid "ITSM ChangeManagement Notification Management"
-msgstr "ITSM 変更管理の通知管理"
+msgstr "変更管理の通知管理"
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
@@ -101,7 +102,7 @@ msgstr "変更管理項目を追加"
 
 #. Template: AgentITSMChangeAdd
 msgid "ITSM Change"
-msgstr "ITSM Change"
+msgstr "変更管理"
 
 #. Template: AgentITSMChangeAdd
 msgid "Justification"
@@ -345,7 +346,7 @@ msgstr "変更管理項目名"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Agent"
-msgstr ""
+msgstr "作業依頼者"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Builder"
@@ -357,23 +358,23 @@ msgstr "マネージャーを変更"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
-msgstr "業務指示"
+msgstr "作業依頼書"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change State"
-msgstr "変更管理項目の状態"
+msgstr "変更管理のステータス"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder State"
-msgstr ""
+msgstr "作業依頼書のステータス"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Type"
-msgstr ""
+msgstr "作業依頼書のタイプ"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
-msgstr ""
+msgstr "要求時間"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Planned Start Time"
@@ -401,7 +402,7 @@ msgstr "例: 10*5155 または 105658*"
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Agent"
-msgstr ""
+msgstr "CAB担当者"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
@@ -409,23 +410,23 @@ msgstr "例: "
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Customer"
-msgstr ""
+msgstr "CAB顧客"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Instruction"
-msgstr ""
+msgstr "変更依頼書の指導"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Report"
-msgstr ""
+msgstr "変更依頼書のレポート"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Change Priority"
-msgstr ""
+msgstr "変更管理の優先度"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Change Impact"
-msgstr ""
+msgstr "変更管理の重要度"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
@@ -679,7 +680,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
 msgid "Overview: ITSM Changes"
-msgstr "ITSM変更管理：概要"
+msgstr "一覧: 変更管理"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
@@ -851,7 +852,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder"
-msgstr "作業オーダー"
+msgstr "変更依頼書"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
@@ -859,7 +860,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
-msgstr "ITSM作業オーダーの概要(%s)"
+msgstr "変更依頼書の一覧(%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
@@ -1371,7 +1372,7 @@ msgstr "変更管理スケジュール"
 
 #. SysConfig
 msgid "Change Schedule."
-msgstr ""
+msgstr "スケジュールを変更"
 
 #. SysConfig
 msgid "Change Zoom"
@@ -1458,7 +1459,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "リンクオブジェクトウィジェット（LinkObject :: ViewMode = \"complex\"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js"
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
@@ -2101,67 +2102,67 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSM Change CAB Templates."
-msgstr ""
+msgstr "変更管理のCABテンプレート"
 
 #. SysConfig
 msgid "ITSM Change Condition Edit."
-msgstr ""
+msgstr "変更管理の条件修正"
 
 #. SysConfig
 msgid "ITSM Change Condition Overview."
-msgstr ""
+msgstr "変更管理の条件一覧"
 
 #. SysConfig
 msgid "ITSM Change Management Notifications"
-msgstr ""
+msgstr "変更管理の通知"
 
 #. SysConfig
 msgid "ITSM Change Manager Overview."
-msgstr ""
+msgstr "変更管理者の一覧"
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."
-msgstr ""
+msgstr "変更管理のPIR一覧"
 
 #. SysConfig
 msgid "ITSM Change notification rules"
-msgstr ""
+msgstr "変更管理の通知ルール"
 
 #. SysConfig
 msgid "ITSM Changes"
-msgstr "ITSM変更管理"
+msgstr "変更管理"
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
-msgstr ""
+msgstr "私の変更管理CABの一覧"
 
 #. SysConfig
 msgid "ITSM MyChanges Overview."
-msgstr ""
+msgstr "私の変更管理の一覧"
 
 #. SysConfig
 msgid "ITSM MyWorkorders Overview."
-msgstr ""
+msgstr "私の変更依頼書の一覧"
 
 #. SysConfig
 msgid "ITSM Template Delete."
-msgstr ""
+msgstr "変更依頼書テンプレートの削除"
 
 #. SysConfig
 msgid "ITSM Template Edit CAB."
-msgstr ""
+msgstr "変更依頼書のCAB修正"
 
 #. SysConfig
 msgid "ITSM Template Edit Content."
-msgstr ""
+msgstr "変更依頼書のコンテンツ修正"
 
 #. SysConfig
 msgid "ITSM Template Edit."
-msgstr ""
+msgstr "変更依頼書テンプレートの修正"
 
 #. SysConfig
 msgid "ITSM Template Overview."
-msgstr ""
+msgstr "変更依頼書テンプレート一覧"
 
 #. SysConfig
 msgid "ITSM event module that cleans up conditions."
@@ -2205,11 +2206,11 @@ msgstr ""
 
 #. SysConfig
 msgid "ITSMChange"
-msgstr "ITSM変更管理"
+msgstr "変更管理"
 
 #. SysConfig
 msgid "ITSMWorkOrder"
-msgstr "ITSM業務指示"
+msgstr "変更依頼書"
 
 #. SysConfig
 msgid ""
@@ -2346,17 +2347,17 @@ msgstr ""
 
 #. SysConfig
 msgid "Projected Service Availability"
-msgstr ""
+msgstr "計画されたサービスの可用性"
 
 #. SysConfig
 msgid "Projected Service Availability (PSA)"
-msgstr ""
+msgstr "計画されたサービスの可用性(PSA)"
 
 #. SysConfig
 msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
-msgstr ""
+msgstr "プロジェクトのサービス可用性（PSA）を変更。 承認された変更とそのサービスの一覧。"
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2535,7 +2536,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Schedule"
-msgstr ""
+msgstr "スケジュール"
 
 #. SysConfig
 msgid "Screen"

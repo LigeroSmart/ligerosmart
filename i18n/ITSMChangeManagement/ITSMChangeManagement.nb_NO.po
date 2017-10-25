@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:59+0000\n"
-"PO-Revision-Date: 2017-09-29 15:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-10 13:59+0000\n"
+"PO-Revision-Date: 2017-10-20 13:10+0000\n"
+"Last-Translator: Peter Værlien <pvarlien@online.no>\n"
 "Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/otrs/OTRS/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -336,7 +336,7 @@ msgstr "Endringer per side"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Title"
-msgstr ""
+msgstr "Arbeidsordretittel"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Title"
@@ -344,7 +344,7 @@ msgstr "Endringstittel"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Agent"
-msgstr ""
+msgstr "Arbeidsordre saksbehandler"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Builder"
@@ -364,11 +364,11 @@ msgstr "Endringstilstand"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder State"
-msgstr ""
+msgstr "Arbeidsordretilstand"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Type"
-msgstr ""
+msgstr "Arbeidsordretype"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
@@ -412,19 +412,19 @@ msgstr "CAB-kunde"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Instruction"
-msgstr ""
+msgstr "Arbeidsordreinnstruks"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Report"
-msgstr ""
+msgstr "Arbeidsordrerapport"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Change Priority"
-msgstr ""
+msgstr "Endringsprioritet"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Change Impact"
-msgstr ""
+msgstr "Endringsomfang"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
@@ -472,11 +472,11 @@ msgstr "Endringsinfo"
 
 #. Template: AgentITSMChangeZoom
 msgid "Planned Effort"
-msgstr ""
+msgstr "Planlagt innsats"
 
 #. Template: AgentITSMChangeZoom
 msgid "Accounted Time"
-msgstr ""
+msgstr "Benyttet tid"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"

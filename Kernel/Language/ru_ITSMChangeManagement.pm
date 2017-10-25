@@ -550,9 +550,9 @@ sub Data {
         'Задает Действия/Actions когда кнопка настройки доступна в связанном виджете (LinkObject::ViewMode = "complex"). Обратите внимание, что эти Действия/Actions должны иметь зарегистрированные JS или CSS файлы: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Задает индикаторы для каждого состояния задачи.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Определить, какие столбцы отображаются в связанном виджете Изменений (LinkObject::ViewMode = "complex"). Примечание: Только атрибуты Изменения разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию.';
     $Self->{Translation}->{'Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = "complex"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Определить, какие столбцы отображаются в связанном виджете Задача (LinkObject::ViewMode = "complex"). Примечание: Только атрибуты Задачи разрешены для DefaultColumns. Возможные настройки: 0 = Отключено, 1 = Включено, 2 = Включено по умолчанию.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} =
         'Задает модуль просмотра для отображения списка изменений в small формате.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
