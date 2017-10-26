@@ -532,7 +532,7 @@
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::View::TicketDecision</SubGroup>
         <Setting>
-            <TextArea>[% Translate("Reason") | html %]:</TextArea>
+            <TextArea></TextArea>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InvolvedAgent" Required="0" Valid="0">

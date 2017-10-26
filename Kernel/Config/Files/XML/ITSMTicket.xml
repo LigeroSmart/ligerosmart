@@ -432,7 +432,7 @@
         <Description Translatable="1">Defines the default body of a note in the decision screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
-            <Item ValueType="Textarea">[% Translate("Reason") | html %]:</Item>
+            <Item ValueType="Textarea"></Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###InvolvedAgent" Required="0" Valid="0">
