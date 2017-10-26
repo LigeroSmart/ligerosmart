@@ -109,7 +109,7 @@ sub Run {
         );
 
         if ( !$DataTransferResult ) {
-            $Self->Print("Was not possible to complete the data transfer. \n");
+            $Self->Print("System was unable to complete the data transfer. \n");
             return $Self->ExitCodeError();
         }
 
