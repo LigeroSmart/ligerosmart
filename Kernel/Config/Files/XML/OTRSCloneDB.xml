@@ -32,8 +32,8 @@
         <Navigation>Core::OTRSCloneDB</Navigation>
         <Value>
             <Hash>
-                <Item Key="article_plain.body">1</Item>
-                <Item Key="article_attachment.content">1</Item>
+                <Item Key="article_data_mime_plain.body">1</Item>
+                <Item Key="article_data_mime_attachment.content">1</Item>
                 <Item Key="virtual_fs_db.content">1</Item>
                 <Item Key="web_upload_cache.content">1</Item>
                 <Item Key="standard_attachment.content">1</Item>
@@ -47,8 +47,8 @@
         <Navigation>Core::OTRSCloneDB</Navigation>
         <Value>
             <Hash>
-                <Item Key="article.a_body">1</Item>
-                <Item Key="article_attachment.filename">1</Item>
+                <Item Key="article_data_mime.a_body">1</Item>
+                <Item Key="article_data_mime_attachment.filename">1</Item>
             </Hash>
         </Value>
     </Setting>
