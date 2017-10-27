@@ -59,7 +59,7 @@
                 <Item Key="NavBar">Survey</Item>
                 <Item Key="Type">Menu</Item>
                 <Item Key="Block">ItemArea</Item>
-                <Item Key="AccessKey">u</Item>
+                <Item Key="AccessKey"></Item>
                 <Item Key="Prio">8000</Item>
             </Hash>
         </Value>

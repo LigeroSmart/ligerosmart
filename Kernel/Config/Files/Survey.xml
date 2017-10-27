@@ -16,7 +16,7 @@
                     <Block>ItemArea</Block>
                     <Link>Action=AgentSurveyOverview</Link>
                     <NavBar>Survey</NavBar>
-                    <AccessKey>u</AccessKey>
+                    <AccessKey></AccessKey>
                     <Prio>8000</Prio>
                 </NavBar>
                 <NavBar>
