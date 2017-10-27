@@ -440,7 +440,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type">Menu</Item>
                 <Item Key="Block">ItemArea</Item>
-                <Item Key="AccessKey">F</Item>
+                <Item Key="AccessKey">f</Item>
                 <Item Key="Prio">350</Item>
             </Hash>
         </Value>
@@ -467,7 +467,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">X</Item>
+                <Item Key="AccessKey">x</Item>
                 <Item Key="Prio">910</Item>
             </Hash>
         </Value>
@@ -558,7 +558,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type">Submenu</Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">X</Item>
+                <Item Key="AccessKey">x</Item>
                 <Item Key="Prio">710</Item>
             </Hash>
         </Value>
@@ -675,7 +675,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar"></Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">X</Item>
+                <Item Key="AccessKey">x</Item>
                 <Item Key="Prio">400</Item>
             </Hash>
         </Value>
@@ -897,7 +897,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">A</Item>
+                <Item Key="AccessKey">b</Item>
                 <Item Key="Prio">920</Item>
             </Hash>
         </Value>
@@ -998,7 +998,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">L</Item>
+                <Item Key="AccessKey">l</Item>
                 <Item Key="Prio">940</Item>
             </Hash>
         </Value>
@@ -1059,7 +1059,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">C</Item>
+                <Item Key="AccessKey">g</Item>
                 <Item Key="Prio">950</Item>
             </Hash>
         </Value>
@@ -1122,7 +1122,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">f</Item>
+                <Item Key="AccessKey">z</Item>
                 <Item Key="Prio">960</Item>
             </Hash>
         </Value>
@@ -1862,7 +1862,7 @@ Your OTRS Notification Master
                 <Item Key="NavBar">FAQ</Item>
                 <Item Key="Type"></Item>
                 <Item Key="Block"></Item>
-                <Item Key="AccessKey">J</Item>
+                <Item Key="AccessKey">j</Item>
                 <Item Key="Prio">930</Item>
             </Hash>
         </Value>
@@ -2227,7 +2227,7 @@ Your OTRS Notification Master
                 <Item Key="Name" Translatable="1">Add FAQ article</Item>
                 <Item Key="Link">Action=AgentFAQAdd</Item>
                 <Item Key="Action">AgentFAQAdd</Item>
-                <Item Key="AccessKey">n</Item>
+                <Item Key="AccessKey"></Item>
                 <Item Key="CssClass">FAQ</Item>
                 <Item Key="Icon">fa fa-question</Item>
                 <Item Key="Priority">1020090</Item>
