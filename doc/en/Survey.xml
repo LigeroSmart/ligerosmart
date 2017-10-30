@@ -131,164 +131,239 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <title>Configuration</title>
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
+        <title>Daemon::SchedulerCronTaskManager::Task###SurveyRequestsDelete.</title>
+        <para>Navigation: Daemon::SchedulerCronTaskManager::Task.</para>
+        <para>Trigger delete results (including vote data and requests).</para>
+    </section>
+    <section>
         <title>Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend.</title>
-        <para>Group: Survey, Subgroup: Daemon::SchedulerCronTaskManager::Task.</para>
+        <para>Navigation: Daemon::SchedulerCronTaskManager::Task.</para>
         <para>Trigger sending delayed survey requests.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentSurveyAdd.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey add in the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentSurveyEdit.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey edit in the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentSurveyEditQuestions.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey zoom in the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentSurveyOverview.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>All parameters for the Survey object in the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentSurveyStats.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey stats in the agent interface.</para>
     </section>
     <section>
         <title>Frontend::Module###AgentSurveyZoom.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
         <para>Frontend module registration for survey zoom in the agent interface.</para>
     </section>
     <section>
+        <title>Frontend::Navigation###AgentSurveyAdd###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyOverview###1.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyOverview###2.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyAdd###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyEdit###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyEditQuestions###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyOverview###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyStats###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::AgentSurveyZoom###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::Loader.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
+        <title>Loader::Module::PublicSurvey###002-Survey.</title>
+        <para>Navigation: Frontend::Public::ModuleRegistration.</para>
+        <para>Loader module registration for the agent interface.</para>
+    </section>
+    <section>
         <title>PreferencesGroups###SurveyOverviewSmallPageShown.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::Preferences.</para>
+        <para>Navigation: Frontend::Agent::View::Preferences.</para>
         <para>Parameters for the pages (in which the surveys are shown) of the small survey overview.</para>
     </section>
     <section>
         <title>PublicFrontend::Module###PublicSurvey.</title>
-        <para>Group: Survey, Subgroup: Frontend::Public::ModuleRegistration.</para>
+        <para>Navigation: Frontend::Public::ModuleRegistration.</para>
         <para>Frontend module registration for the PublicSurvey object in the public Survey area.</para>
     </section>
     <section>
+        <title>Stats::DynamicObjectRegistration###SurveyList.</title>
+        <para>Navigation: Core::Stats.</para>
+        <para>Determines if the statistics module may generate survey lists.</para>
+    </section>
+    <section>
         <title>Survey::AmountOfSurveysPer30Days.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).</para>
     </section>
     <section>
         <title>Survey::CheckSendConditionCustomerFields.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Defines the columns for the dropdown list for building send conditions (0 =&gt; inactive, 1 =&gt; active).</para>
     </section>
     <section>
         <title>Survey::CheckSendConditionService.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Enable or disable the send condition check for the service.</para>
     </section>
     <section>
         <title>Survey::CheckSendConditionTicketType.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Enable or disable the send condition check for the ticket type.</para>
     </section>
     <section>
+        <title>Survey::DeletePeriod.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting.</para>
+    </section>
+    <section>
         <title>Survey::Frontend::AgentSurveyOverview###ShowColumns.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::ViewSurveyOverview.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyOverview.</para>
         <para>Defines the shown columns in the survey overview. This option has no effect on the position of the columns.</para>
     </section>
     <section>
+        <title>Survey::Frontend::ChangeSurveyStatusGroups.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom.</para>
+        <para>Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.</para>
+    </section>
+    <section>
         <title>Survey::Frontend::HTMLRichTextHeightDefault.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyZoom.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom.</para>
         <para>Defines the default height for Richtext views for SurveyZoom elements.</para>
     </section>
     <section>
         <title>Survey::Frontend::HTMLRichTextHeightMax.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyZoom.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom.</para>
         <para>Defines the maximum height for Richtext views for SurveyZoom elements.</para>
     </section>
     <section>
         <title>Survey::Frontend::MenuModule###000-Back.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
         <para>Shows a link in the menu to go back in the survey zoom view of the agent interface.</para>
     </section>
     <section>
         <title>Survey::Frontend::MenuModule###010-EditGeneralInfo.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
         <para>Shows a link in the menu to edit a survey in its zoom view of the agent interface.</para>
     </section>
     <section>
         <title>Survey::Frontend::MenuModule###020-EditQuestions.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
         <para>Shows a link in the menu to edit survey questions in its zoom view of the agent interface.</para>
     </section>
     <section>
         <title>Survey::Frontend::MenuModule###030-StatsDetails.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::Survey::MenuModule.</para>
+        <para>Navigation: Frontend::Agent::View::SurveyZoom::MenuModule.</para>
         <para>Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.</para>
     </section>
     <section>
         <title>Survey::Frontend::Overview###Small.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyOverview.</para>
+        <para>Navigation: Frontend::Agent::SurveyOverview.</para>
         <para>Defines an overview module to show the small view of a survey list.</para>
     </section>
     <section>
         <title>Survey::Hook.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.</para>
     </section>
     <section>
         <title>Survey::NotificationBody.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Default body for the notification email to customers about new survey.</para>
     </section>
     <section>
         <title>Survey::NotificationRecipientBlacklist.</title>
-        <para>Group: Survey, Subgroup: Core.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Surveys will not be sent to the configured email addresses.</para>
     </section>
     <section>
         <title>Survey::NotificationSender.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Default sender for the notification email to customers about new survey.</para>
     </section>
     <section>
         <title>Survey::NotificationSubject.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Default subject for the notification email to customers about new survey.</para>
     </section>
     <section>
         <title>Survey::SendInHoursAfterClose.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting.</para>
     </section>
     <section>
         <title>Survey::SendNoSurveyRegExp.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>If this regex matches, no customer survey will be sent.</para>
     </section>
     <section>
+        <title>Survey::SendOnlyToRealCustomer.</title>
+        <para>Navigation: Core::Survey.</para>
+        <para>Defines if survey requests will be only send to real customers.</para>
+    </section>
+    <section>
         <title>Survey::SendPeriod.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.</para>
     </section>
     <section>
         <title>Survey::ShowVoteData.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
+        <para>Navigation: Core::Survey.</para>
         <para>Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.</para>
     </section>
     <section>
-        <title>Ticket::EventModulePost###99-SurveySendRequest.</title>
-        <para>Group: Survey, Subgroup: Core::Survey.</para>
-        <para>Ticket event module to send automatically survey email requests to customers if a ticket is closed.</para>
+        <title>SurveyStats::ShowDelete.</title>
+        <para>Navigation: Frontend::Agent::View::SurveyStats.</para>
+        <para>Defines the groups (rw) which can delete survey stats.</para>
     </section>
     <section>
-        <title>SurveyStats::ShowDelete.</title>
-        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyStats.</para>
-        <para>Defines the groups which can delete survey stats.</para>
+        <title>Ticket::EventModulePost###99-SurveySendRequest.</title>
+        <para>Navigation: Core::Event::Survey.</para>
+        <para>Ticket event module to send automatically survey email requests to customers if a ticket is closed.</para>
     </section>
 </chapter>
 
@@ -563,15 +638,14 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             command on the command line:
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey:GetRequestRecipient:RequestsSend
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Survey --test GetRequestRecipient --test RequestsSend
         </screen>
         <para>Selenium unit tests</para>
         <para>
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentSurveyAdd:AgentSurveyEdit:AgentSurveyEditQuestions:AgentSurveyOverview:AgentSurveyStats:
-AgentSurveyZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentSurveyAdd --test AgentSurveyEdit --test AgentSurveyEditQuestions --test AgentSurveyOverview --test AgentSurveyStats --test AgentSurveyZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicSurvey
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SurveyMenu/Generic:SurveyOverview/Small
         </screen>
