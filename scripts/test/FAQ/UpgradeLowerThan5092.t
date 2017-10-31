@@ -257,6 +257,13 @@ my @Settings = (
     'DashboardBackend###0398-FAQ-LastChange',
     'DashboardBackend###0399-FAQ-LastCreate',
     'FAQ::ApprovalGroup',
+    'Frontend::Navigation###AgentFAQExplorer###1',
+    'Frontend::Navigation###AgentFAQExplorer###2',
+    'Frontend::Navigation###AgentFAQAdd###1',
+    'Frontend::Navigation###AgentFAQLanguage###1',
+    'Frontend::Navigation###AgentFAQCategory###1',
+    'Frontend::Navigation###AgentFAQSearch###1',
+    'Frontend::Navigation###AgentFAQJournal###1',
 );
 
 for my $SettingName (@Settings) {

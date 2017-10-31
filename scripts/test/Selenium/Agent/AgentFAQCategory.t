@@ -24,7 +24,7 @@ $Selenium->RunTest(
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users', ],
+            Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
         $Selenium->Login(
