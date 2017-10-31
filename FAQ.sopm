@@ -722,6 +722,10 @@
         All Dynamic Fields created for this package and its data will be deleted permanently.
         <br/>
         <br/>
+        The groups 'faq' and 'faq_admin' that were created during package installation will be deactivated.
+        You can activate these groups again in the admin area.
+        <br/>
+        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroUninstall>
@@ -735,6 +739,10 @@
         <br/>
         <br/>
         Alle dynamischen Felder für dieses Paket erstellt und seine Daten dauerhaft gelöscht werden.
+        <br/>
+        <br/>
+        Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
+        Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -752,6 +760,10 @@
         Todos los Campos Dinámicos creados para este paquete y sus datos serán borrados permanentemente.
         <br/>
         <br/>
+        Los grupos 'faq' y 'faq_admin' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
+        Usted puede activar estos grupos nuevamente en el &aacute;rea de admin.
+        <br/>
+        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroUninstall>
@@ -765,6 +777,10 @@
         <br/>
         <br/>
         A csomaghoz létrehozott összes dinamikus mező és azok adatai véglegesen törölve lesznek.
+        <br/>
+        <br/>
+        A csomagtelepítés során létrehozott „faq” és „faq_admin” csoport ki lesz kapcsolva.
+        Ezeket a csoportokat az adminisztrációs területen tudja ismét bekapcsolni.
         <br/>
         <br/>
         ((enjoy))<br/>

@@ -255,6 +255,21 @@ sub CodeUninstall {
     # remove Dynamic Fields and its values
     $Self->_DynamicFieldsDelete();
 
+    # Deactivate the group 'faq'.
+    $Self->_GroupDeactivate(
+        Name => 'faq',
+    );
+
+    # Deactivate the group 'faq_admin'.
+    $Self->_GroupDeactivate(
+        Name => 'faq_admin',
+    );
+
+    # Deactivate the group 'faq_approval'.
+    $Self->_GroupDeactivate(
+        Name => 'faq_approval',
+    );
+
     # uninstall stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsUninstall(
         FilePrefix => $Self->{FilePrefix},
