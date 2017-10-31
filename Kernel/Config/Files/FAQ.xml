@@ -248,7 +248,7 @@
         <Group>FAQ</Group>
         <SubGroup>Core::FAQ::Approval</SubGroup>
         <Setting>
-            <String>faq_approval</String>
+            <String>users</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalQueue" Required="1" Valid="1">
@@ -440,13 +440,13 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">FAQ Area.</Description>
                 <NavBarName>FAQ</NavBarName>
                 <Title Translatable="1">FAQ</Title>
                 <NavBar>
-                    <GroupRo>faq</GroupRo>
+                    <GroupRo></GroupRo>
                     <Description Translatable="1">FAQ Area</Description>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
@@ -457,7 +457,7 @@ Your OTRS Notification Master
                     <Prio>350</Prio>
                 </NavBar>
                 <NavBar>
-                    <GroupRo>faq</GroupRo>
+                    <GroupRo></GroupRo>
                     <Description Translatable="1">FAQ Explorer</Description>
                     <Name Translatable="1">Explorer</Name>
                     <Link>Action=AgentFAQExplorer</Link>
@@ -758,12 +758,12 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
+                <Group></Group>
                 <Description Translatable="1">FAQ Area.</Description>
                 <NavBarName>FAQ</NavBarName>
                 <Title Translatable="1">FAQ</Title>
                 <NavBar>
-                    <Group>faq</Group>
+                    <Group></Group>
                     <Description Translatable="1">New FAQ Article.</Description>
                     <Name Translatable="1">New</Name>
                     <Link>Action=AgentFAQAdd</Link>
@@ -786,7 +786,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
+                <Group></Group>
                 <Description Translatable="1">FAQ Edit.</Description>
                 <Title Translatable="1">Edit</Title>
                 <NavBarName>FAQ</NavBarName>
@@ -803,12 +803,12 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq_admin</Group>
+                <Group>admin</Group>
                 <Description Translatable="1">FAQ Area.</Description>
                 <Title Translatable="1">FAQ</Title>
                 <NavBarName>FAQ</NavBarName>
                 <NavBar>
-                    <Group>faq_admin</Group>
+                    <Group>admin</Group>
                     <Description Translatable="1">Language Management.</Description>
                     <Name Translatable="1">Language Management</Name>
                     <Link>Action=AgentFAQLanguage</Link>
@@ -830,12 +830,12 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq_admin</Group>
+                <Group>admin</Group>
                 <Description Translatable="1">FAQ Area.</Description>
                 <Title Translatable="1">FAQ</Title>
                 <NavBarName>FAQ</NavBarName>
                 <NavBar>
-                    <Group>faq_admin</Group>
+                    <Group>admin</Group>
                     <Description Translatable="1">Category Management.</Description>
                     <Name Translatable="1">Category Management</Name>
                     <Link>Action=AgentFAQCategory</Link>
@@ -857,13 +857,13 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">FAQ Area.</Description>
                 <Title Translatable="1">FAQ</Title>
                 <NavBarName>FAQ</NavBarName>
                 <NavBar>
-                    <GroupRo>faq</GroupRo>
+                    <GroupRo></GroupRo>
                     <Description Translatable="1">Search FAQ.</Description>
                     <Name Translatable="1">Search</Name>
                     <Link>Action=AgentFAQSearch</Link>
@@ -886,8 +886,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">Search FAQ Small.</Description>
                 <Title Translatable="1">FAQ</Title>
                 <NavBarName>FAQ</NavBarName>
@@ -1065,8 +1065,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">FAQ Area.</Description>
                 <Title Translatable="1">FAQ</Title>
                 <NavBarName>FAQ</NavBarName>
@@ -1090,8 +1090,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">FAQ AJAX Responder for Richtext.</Description>
                 <Title Translatable="1">FAQ AJAX Responder</Title>
             </FrontendModuleReg>
@@ -1278,7 +1278,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
+                <Group></Group>
                 <Description Translatable="1">FAQ Print.</Description>
                 <Title Translatable="1">Print</Title>
                 <NavBarName>FAQ</NavBarName>
@@ -1412,13 +1412,13 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">FAQ Area.</Description>
                 <Title Translatable="1">FAQ</Title>
                 <NavBarName>FAQ</NavBarName>
                 <NavBar>
-                    <GroupRo>faq</GroupRo>
+                    <GroupRo></GroupRo>
                     <Description Translatable="1">FAQ Journal</Description>
                     <Name Translatable="1">Journal</Name>
                     <Link>Action=AgentFAQJournal</Link>
@@ -1509,8 +1509,8 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">FAQ History.</Description>
                 <Title Translatable="1">History</Title>
                 <NavBarName>FAQ</NavBarName>
@@ -1523,7 +1523,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
+                <Group></Group>
                 <Description Translatable="1">FAQ Delete.</Description>
                 <Title Translatable="1">Delete</Title>
                 <NavBarName>FAQ</NavBarName>
@@ -1688,7 +1688,7 @@ Your OTRS Notification Master
                 <Item Key="Description"></Item>
                 <Item Key="Type">LastChange</Item>
                 <Item Key="Block">ContentSmall</Item>
-                <Item Key="Group">faq</Item>
+                <Item Key="Group"></Item>
                 <Item Key="Default">1</Item>
             </Hash>
         </Setting>
@@ -1704,7 +1704,7 @@ Your OTRS Notification Master
                 <Item Key="Description"></Item>
                 <Item Key="Type">LastCreate</Item>
                 <Item Key="Block">ContentSmall</Item>
-                <Item Key="Group">faq</Item>
+                <Item Key="Group"></Item>
                 <Item Key="Default">1</Item>
             </Hash>
         </Setting>

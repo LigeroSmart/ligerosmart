@@ -18,6 +18,8 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
 );
 
+use Kernel::System::VariableCheck qw(IsArrayRefWithData);
+
 =head1 NAME
 
 Kernel::System::LinkObject::FAQ
@@ -146,8 +148,7 @@ sub ObjectPermission {
     return if !$ModuleReg;
 
     # grant access if module permission has no Group or GroupRo defined
-    if ( !$ModuleReg->{GroupRo} && !$ModuleReg->{Group} ) {
-
+    if ( !IsArrayRefWithData( $ModuleReg->{GroupRo} ) && !IsArrayRefWithData( $ModuleReg->{Group} ) ) {
         return 1;
     }
 

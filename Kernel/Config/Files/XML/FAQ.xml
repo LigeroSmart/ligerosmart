@@ -208,7 +208,7 @@
         <Description Translatable="1">Group for the approval of FAQ articles.</Description>
         <Navigation>Core::FAQ::Approval</Navigation>
         <Value>
-            <Item ValueType="String">faq_approval</Item>
+            <Item ValueType="String">users</Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::ApprovalQueue" Required="1" Valid="1">
@@ -385,12 +385,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -425,12 +423,11 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>faq</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">FAQ Area</Item>
@@ -452,12 +449,11 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>faq</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">FAQ Explorer</Item>
@@ -848,7 +844,6 @@ Your OTRS Notification Master
                     </Item>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -883,7 +878,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
@@ -914,7 +909,6 @@ Your OTRS Notification Master
                     </Item>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Edit.</Item>
@@ -954,7 +948,7 @@ Your OTRS Notification Master
                     </Item>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq_admin</Item>
+                            <Item>admin</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -984,7 +978,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq_admin</Item>
+                        <Item>admin</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
@@ -1015,7 +1009,7 @@ Your OTRS Notification Master
                     </Item>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq_admin</Item>
+                            <Item>admin</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -1045,7 +1039,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq_admin</Item>
+                        <Item>admin</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
@@ -1072,12 +1066,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -1107,12 +1099,11 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>faq</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">Search FAQ.</Item>
@@ -1135,12 +1126,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Search FAQ Small.</Item>
@@ -1307,12 +1296,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -1355,12 +1342,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ AJAX Responder for Richtext.</Item>
@@ -1599,7 +1584,6 @@ Your OTRS Notification Master
                     </Item>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Print.</Item>
@@ -1817,12 +1801,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Area.</Item>
@@ -1847,12 +1829,11 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>faq</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>faq</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">FAQ Journal</Item>
@@ -1940,12 +1921,10 @@ Your OTRS Notification Master
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ History.</Item>
@@ -1967,7 +1946,6 @@ Your OTRS Notification Master
                     </Item>
                     <Item Key="Group">
                         <Array>
-                            <Item>faq</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">FAQ Delete.</Item>
@@ -2096,7 +2074,7 @@ Your OTRS Notification Master
                 <Item Key="Description"></Item>
                 <Item Key="Type">LastChange</Item>
                 <Item Key="Block">ContentSmall</Item>
-                <Item Key="Group">faq</Item>
+                <Item Key="Group"></Item>
                 <Item Key="Default">1</Item>
                 <Item Key="Mandatory">0</Item>
             </Hash>
@@ -2112,7 +2090,7 @@ Your OTRS Notification Master
                 <Item Key="Description"></Item>
                 <Item Key="Type">LastCreate</Item>
                 <Item Key="Block">ContentSmall</Item>
-                <Item Key="Group">faq</Item>
+                <Item Key="Group"></Item>
                 <Item Key="Default">1</Item>
                 <Item Key="Mandatory">0</Item>
             </Hash>

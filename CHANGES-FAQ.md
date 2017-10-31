@@ -1,4 +1,5 @@
 #6.0.0.beta2 2017-??-??
+ - 2017-10-31 Changed default group configuration and implemented migration path for existing systems. FAQ specific user groups will no longer be automatically created on new systems.
  - 2017-10-27 Changed access keys for several screens in order to avoid conflicts.
 
 #6.0.0.beta1 2017-11-01

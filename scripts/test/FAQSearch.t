@@ -33,7 +33,7 @@ my $RandomID = $Helper->GetRandomID();
 my @AddedUsers;
 for my $Counter ( 1 .. 4 ) {
     my $TestUserLogin = $Helper->TestUserCreate(
-        Groups => [ 'admin', 'users', 'faq', 'faq_admin', 'faq_approval' ],
+        Groups => [ 'admin', 'users' ],
     );
     my $UserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
         UserLogin => $TestUserLogin,

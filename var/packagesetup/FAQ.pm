@@ -11,6 +11,7 @@ package var::packagesetup::FAQ;
 use strict;
 use warnings;
 
+use List::Util qw();
 use Kernel::Output::Template::Provider;
 use Kernel::System::VariableCheck qw(:all);
 
@@ -23,6 +24,7 @@ our @ObjectDependencies = (
     'Kernel::System::FAQ',
     'Kernel::System::Group',
     'Kernel::System::LinkObject',
+    'Kernel::System::Main',
     'Kernel::System::Log',
     'Kernel::System::Stats',
     'Kernel::System::SysConfig',
@@ -93,28 +95,10 @@ sub CodeInstall {
     # insert the FAQ states
     $Self->_InsertFAQStates();
 
-    # add the group FAQ
-    $Self->_GroupAdd(
-        Name        => 'faq',
-        Description => 'faq database users',
-    );
-
-    # add the group faq_admin
-    $Self->_GroupAdd(
-        Name        => 'faq_admin',
-        Description => 'faq admin users',
-    );
-
-    # add the group faq_approval
-    $Self->_GroupAdd(
-        Name        => 'faq_approval',
-        Description => 'faq approval users',
-    );
-
-    # add the FAQ groups to the category 'Misc'
+    # Add default groups to the category 'Misc'.
     $Self->_CategoryGroupSet(
         Category => 'Misc',
-        Groups   => [ 'faq', 'faq_admin', 'faq_approval' ],
+        Groups   => [ 'admin', 'users' ],
     );
 
     # create additional FAQ languages
@@ -142,24 +126,6 @@ sub CodeReinstall {
 
     # insert the FAQ states
     $Self->_InsertFAQStates();
-
-    # add the group FAQ
-    $Self->_GroupAdd(
-        Name        => 'faq',
-        Description => 'faq database users',
-    );
-
-    # add the group faq_admin
-    $Self->_GroupAdd(
-        Name        => 'faq_admin',
-        Description => 'faq admin users',
-    );
-
-    # add the group faq_approval
-    $Self->_GroupAdd(
-        Name        => 'faq_approval',
-        Description => 'faq approval users',
-    );
 
     # install stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsInstall(
@@ -258,6 +224,23 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
+=head2 CodeUpgradeFromLowerThan_5_0_92()
+
+This function is only executed if the installed module version is smaller than 5.0.92.
+
+    my $Result = $CodeObject->CodeUpgradeFromLowerThan_5_0_92();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_5_0_92 {    ## no critic
+    my ( $Self, %Param ) = @_;
+
+    # Recover the old permissions
+    $Self->_MigratePermissions();
+
+    return 1;
+}
+
 =head2 CodeUninstall()
 
 run the code uninstall part
@@ -271,21 +254,6 @@ sub CodeUninstall {
 
     # remove Dynamic Fields and its values
     $Self->_DynamicFieldsDelete();
-
-    # deactivate the group FAQ
-    $Self->_GroupDeactivate(
-        Name => 'faq',
-    );
-
-    # deactivate the group faq_admin
-    $Self->_GroupDeactivate(
-        Name => 'faq_admin',
-    );
-
-    # deactivate the group faq_approval
-    $Self->_GroupDeactivate(
-        Name => 'faq_approval',
-    );
 
     # uninstall stats
     $Kernel::OM->Get('Kernel::System::Stats')->StatsUninstall(
@@ -634,7 +602,7 @@ Adds the given group permissions to the given category.
 
     my $Result = $CodeObject->_CategoryGroupSet(
         Category => 'Misc',
-        Groups   => [ 'faq', 'faq-admin', 'faq_approval' ],
+        Groups   => [ 'admin', 'users' ],
     );
 
 =cut
@@ -926,6 +894,298 @@ sub _MigrateConfigs {
 sub _SetContentType {
 
     return $Kernel::OM->Get('Kernel::System::FAQ')->FAQContentTypeSet();
+}
+
+sub _GetOTRS5ConfigBackup {
+    my $Config = {};
+
+    my $FileClass = 'Kernel::Config::Backups::ZZZAutoOTRS5';
+    delete $INC{$FileClass};
+
+    if (
+        $Kernel::OM->Get('Kernel::System::Main')->Require(
+            $FileClass,
+            Silent => 1,
+        )
+        )
+    {
+        $FileClass->Load($Config);
+    }
+
+    return $Config;
+}
+
+sub _MigratePermissions {
+    my ( $Self, %Param ) = @_;
+
+    my $OldConfig = $Self->_GetOTRS5ConfigBackup();
+    my $NewConfig = $Kernel::OM->Get('Kernel::Config');
+
+    my $GetConfig = sub {
+        my $Source      = shift;
+        my $SettingName = shift;
+
+        my $Config = $Source;
+        my @Keys = split '###', $SettingName;
+        while ( my $Key = shift @Keys ) {
+            $Config = $Config->{$Key};
+        }
+
+        return $Config;
+    };
+
+    my @NewSettings       = ();
+    my @SettingsToMigrate = (
+        {
+            Name     => 'Frontend::Module###AgentFAQExplorer',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+                NavBar  => [
+                    {
+                        Name    => 'FAQ',
+                        Block   => 'ItemArea',
+                        GroupRo => ['faq']
+                    },
+                    {
+                        Name    => 'Explorer',
+                        Block   => '',
+                        GroupRo => ['faq']
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQLanguage',
+            Defaults => {
+                Group  => ['faq_admin'],
+                NavBar => [
+                    {
+                        Name  => 'Language Management',
+                        Block => '',
+                        Group => ['faq_admin'],
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQEdit',
+            Defaults => {
+                Group => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQAdd',
+            Defaults => {
+                Group  => ['faq'],
+                NavBar => [
+                    {
+                        Name  => 'New',
+                        Block => '',
+                        Group => ['faq'],
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQCategory',
+            Defaults => {
+                Group  => ['faq_admin'],
+                NavBar => [
+                    {
+                        Name  => 'Category Management',
+                        Block => '',
+                        Group => ['faq_admin'],
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQSearch',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+                NavBar  => [
+                    {
+                        Name    => 'Search',
+                        Block   => '',
+                        GroupRo => ['faq'],
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQSearchSmall',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQZoom',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQRichText',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQPrint',
+            Defaults => {
+                Group => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQJournal',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+                NavBar  => [
+                    {
+                        Name    => 'Journal',
+                        Block   => '',
+                        GroupRo => ['faq'],
+                    }
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQHistory',
+            Defaults => {
+                Group   => ['faq'],
+                GroupRo => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentFAQDelete',
+            Defaults => {
+                Group => ['faq'],
+            },
+        },
+
+        {
+            Name     => 'DashboardBackend###0398-FAQ-LastChange',
+            Defaults => {
+                Group => 'faq',
+            },
+        },
+
+        {
+            Name     => 'DashboardBackend###0399-FAQ-LastCreate',
+            Defaults => {
+                Group => 'faq',
+            },
+        },
+
+        {
+            Name     => 'FAQ::ApprovalGroup',
+            Defaults => 'faq_approval',
+        },
+    );
+
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    SETTING:
+    for my $Setting (@SettingsToMigrate) {
+        my $SettingOldConfig = $GetConfig->( $OldConfig, $Setting->{Name}, );
+        my $SettingDefaults = $Setting->{Defaults};
+
+        if ( $Setting->{Name} eq 'FAQ::ApprovalGroup' ) {
+
+            my $EffectiveValue = $SettingOldConfig // $SettingDefaults;
+
+            push @NewSettings, {
+                Name           => $Setting->{Name},
+                EffectiveValue => $EffectiveValue,
+                IsValid        => 1,
+            };
+
+            next SETTING;
+        }
+
+        my @GroupGroupRo = qw( Group GroupRo );
+
+        {
+            my $NewSetting = $GetConfig->( $NewConfig, $Setting->{Name} );
+
+            # Check for GroupGroupRo.
+            for my $Key (@GroupGroupRo) {
+                if ( defined $SettingOldConfig->{$Key} || defined $SettingDefaults->{$Key} ) {
+                    $NewSetting->{$Key} = $SettingOldConfig->{$Key} // $SettingDefaults->{$Key};
+                }
+            }
+
+            push @NewSettings, {
+                Name           => $Setting->{Name},
+                EffectiveValue => $NewSetting,
+                IsValid        => 1,
+            };
+        }
+
+        # Check for NavBar => Navigation.
+        if ( $SettingOldConfig->{NavBar} || $SettingDefaults->{NavBar} ) {
+            my ( undef, $Frontend ) = split '###', $Setting->{Name};
+            my $NewSetting = $GetConfig->( $NewConfig, "Frontend::Navigation###${ Frontend }" );
+
+            for my $Index ( sort keys %{$NewSetting} ) {
+                my $NewItem = $NewSetting->{$Index};
+
+                SOURCE:
+                for my $Source ( ( $SettingOldConfig->{NavBar}, $SettingDefaults->{NavBar} ) ) {
+                    my $OldItem
+                        = List::Util::first { $_->{Name} eq $NewItem->{Name} && $_->{Block} eq $NewItem->{Block} }
+                    @{$Source};
+                    next SOURCE if !$OldItem;
+
+                    for my $Key (@GroupGroupRo) {
+                        if ( defined $OldItem->{$Key} ) {
+                            $NewItem->{$Key} = $OldItem->{$Key};
+                        }
+                    }
+                    last SOURCE;
+                }
+
+                push @NewSettings, {
+                    Name           => "Frontend::Navigation###${ Frontend }###${ Index }",
+                    EffectiveValue => $NewItem,
+                    IsValid        => 1,
+                };
+            }
+        }
+    }
+
+    # Deploy the new settings.
+    my $SettingsDeployed = $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'FAQ - package setup function: _MigratePermissions',
+        Settings => \@NewSettings,
+    );
+    if ( !$SettingsDeployed ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Message  => "Error while deploying the migrated permissions!",
+            Priority => 'error',
+        );
+    }
+
+    return 1;
 }
 
 1;

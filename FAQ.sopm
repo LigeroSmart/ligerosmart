@@ -135,6 +135,7 @@
         <File Permission="660" Location="scripts/test/FAQ.t" />
         <File Permission="660" Location="scripts/test/FAQSearch.t" />
         <File Permission="660" Location="scripts/test/FAQ/RelatedArticle.t" />
+        <File Permission="660" Location="scripts/test/FAQ/UpgradeLowerThan5092.t" />
         <File Permission="660" Location="scripts/test/FAQ/Category/CheckCategoryUserPermission.t" />
         <File Permission="660" Location="scripts/test/GenericInterface/FAQConnector.t" />
         <File Permission="660" Location="scripts/test/sample/FAQ-Test1.doc" />
@@ -520,7 +521,6 @@
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_1();
-
     ]]></CodeUpgrade>
     <CodeUpgrade Type="post" Version="4.0.91"><![CDATA[
 
@@ -528,7 +528,13 @@
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="5.0.92"><![CDATA[
 
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_5_0_92();
     ]]></CodeUpgrade>
     <CodeReinstall Type="post"><![CDATA[
 
@@ -593,9 +599,6 @@
         <strong>NOTICE</strong>
         <br/>
         <br/>
-        In order to grant users access to the faq menu, you need to add them as member to the group 'faq'.
-        <br/>
-        <br/>
         The menu items that were added by this package will be visible after you log-in to the system again.
         <br/>
         <br/>
@@ -612,9 +615,6 @@
     <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
         <br/>
         <strong>HINWEIS</strong>
-        <br/>
-        <br/>
-        Um Benutzern Zugriff auf das FAQ-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'faq' sein.
         <br/>
         <br/>
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
@@ -635,9 +635,6 @@
         <strong>AVISO</strong>
         <br/>
         <br/>
-        Para poder permitir el acceso a los usuarios al men&uacute; de faq, usted necesita agregarlos como miembros del grupo 'faq'.<br/>
-        <br/>
-        <br/>
         Los elementos del menu que fueron agregados por este paquete ser&aacute;n visibles despu&eacute;s de que cierre y abra su sesi&oacute;n de nuevo.
         <br/>
         <br/>
@@ -654,9 +651,6 @@
     <IntroInstall Type="post" Title="Telepítési információk" Lang="hu"><![CDATA[
         <br/>
         <strong>FIGYELMEZTETÉS</strong>
-        <br/>
-        <br/>
-        Annak érdekében, hogy hozzáférést adjon a felhasználók számára a GyIK menühöz, hozzá kell adnia őket az „faq” csoporthoz tagként.
         <br/>
         <br/>
         Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
@@ -728,10 +722,6 @@
         All Dynamic Fields created for this package and its data will be deleted permanently.
         <br/>
         <br/>
-        The groups 'faq' and 'faq_admin' that were created during package installation will be deactivated.
-        You can activate these groups again in the admin area.
-        <br/>
-        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroUninstall>
@@ -745,10 +735,6 @@
         <br/>
         <br/>
         Alle dynamischen Felder für dieses Paket erstellt und seine Daten dauerhaft gelöscht werden.
-        <br/>
-        <br/>
-        Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
-        Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -766,10 +752,6 @@
         Todos los Campos Dinámicos creados para este paquete y sus datos serán borrados permanentemente.
         <br/>
         <br/>
-        Los grupos 'faq' y 'faq_admin' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
-        Usted puede activar estos grupos nuevamente en el &aacute;rea de admin.
-        <br/>
-        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroUninstall>
@@ -783,10 +765,6 @@
         <br/>
         <br/>
         A csomaghoz létrehozott összes dinamikus mező és azok adatai véglegesen törölve lesznek.
-        <br/>
-        <br/>
-        A csomagtelepítés során létrehozott „faq” és „faq_admin” csoport ki lesz kapcsolva.
-        Ezeket a csoportokat az adminisztrációs területen tudja ismét bekapcsolni.
         <br/>
         <br/>
         ((enjoy))<br/>

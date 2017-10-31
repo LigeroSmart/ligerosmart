@@ -1562,7 +1562,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </para>
         <para>
             The related article feature can be enabled for the defined queues under
-            FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled. If the setting is emptry the
+            FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled. If the setting is empty the
             feature is enabled for all queues.
         </para>
         <para>
@@ -1579,11 +1579,10 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 
 <chapter>
     <title>Usage</title>
-    <para>This package adds tree new groups to the system:</para>
+    <para>This package ships with configuration based on default system groups:</para>
     <itemizedlist mark="round">
         <listitem>
-            <para>faq.</para>
-            <para>Users in this group are able to:</para>
+            <para>All users are able to:</para>
             <itemizedlist mark="round">
                 <listitem><para>Use FAQ Explorer.</para></listitem>
                 <listitem>
@@ -1594,7 +1593,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </itemizedlist>
         </listitem>
         <listitem>
-            <para>faq_admin.</para>
+            <para>admin.</para>
             <para>Users in this group are able to:</para>
             <itemizedlist mark="round">
                 <listitem><para>Add, Edit and Delete FAQ Categories.</para></listitem>
@@ -1602,7 +1601,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             </itemizedlist>
         </listitem>
         <listitem>
-            <para>faq_approval.</para>
+            <para>users.</para>
             <para>Users in this group are able to:</para>
             <itemizedlist mark="round">
                 <listitem><para>Approve FAQ Articles.</para></listitem>
@@ -1613,21 +1612,12 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </listitem>
     </itemizedlist>
     <para>
-        Users in "faq_admin" and "faq_approval" groups (or custom approval group) need also to be
-        in the "faq" group to perform the actions. Any change in the users groups will take effect
-        on FAQ after the user logout and login again.
-    </para>
-    <para>
-        Users that are members of the "faq" group will have a new menu called "FAQ" in the
-        navigation bar that is in the top of the screen (after re-login), similar to the "Ticket"
-        menu.
+        All users regardless of their group membership will have a new menu called "FAQ" in the navigation bar that is
+        in the top of the screen (after re-login), similar to the "Ticket" menu.
     </para>
     <section>
         <title>Create A New FAQ Article</title>
         <para>This example shows how to create a new FAQ article.</para>
-        <note>
-            <para>Be sure that the logged user is a member of "faq" group.</para>
-        </note>
         <orderedlist>
             <listitem>
                 <para>
@@ -1673,7 +1663,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <title>Create a New Category</title>
         <para>This example shows how to create a new FAQ category.</para>
         <note>
-            <para>Be sure that the logged user is a member of "faq" and "faq_admin" groups.</para>
+            <para>Be sure that the logged user is a member of "admin" group.</para>
         </note>
         <orderedlist>
             <listitem>
@@ -1817,6 +1807,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test FAQ --test FAQSearch -
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory FAQ
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test GenericInterface/FAQConnector
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Admin/FAQ/Import --test Console/Command/Maint/FAQ/ContentTypeSet
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test UpgradeLowerThan5092
         </screen>
         <para>Selenium unit tests</para>
         <para>
@@ -2026,7 +2017,7 @@ shell> bin/otrs.Console.pl Admin::WebService::List
         </para>
     </section>
     <section>
-        <title>PubliCategoryList</title>
+        <title>PublicCategoryList</title>
         <para>
             For this operation is also not necessary any special parameter, just the simple call for
             requesting the web service with the operation name 'PublicCategoryList' as a response

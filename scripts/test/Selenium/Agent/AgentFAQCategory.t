@@ -24,7 +24,7 @@ $Selenium->RunTest(
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users', 'faq', 'faq_admin' ],
+            Groups => [ 'admin', 'users', ],
         ) || die "Did not get test user";
 
         $Selenium->Login(
@@ -61,7 +61,7 @@ $Selenium->RunTest(
         my $CategoryName = 'Category ' . $Helper->GetRandomID();
         $Selenium->find_element( "#Name", 'css' )->send_keys($CategoryName);
         $Selenium->execute_script(
-            "\$('#PermissionGroups').val(\$('#PermissionGroups option').filter(function () { return \$(this).html() == 'faq'; } ).val() ).trigger('redraw.InputField').trigger('change');"
+            "\$('#PermissionGroups').val(\$('#PermissionGroups option').filter(function () { return \$(this).html() == 'users'; } ).val() ).trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->execute_script("\$('#ValidID').val('1').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Comment", 'css' )->send_keys('Selenium Category');

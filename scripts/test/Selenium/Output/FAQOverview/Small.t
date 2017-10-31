@@ -41,7 +41,7 @@ $Selenium->RunTest(
 
         # set test FAQ category permission
         my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
-            Group => 'faq',
+            Group => 'users',
         );
 
         $FAQObject->SetCategoryGroup(
@@ -68,7 +68,7 @@ $Selenium->RunTest(
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users', 'faq', 'faq_admin' ],
+            Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
         $Selenium->Login(
