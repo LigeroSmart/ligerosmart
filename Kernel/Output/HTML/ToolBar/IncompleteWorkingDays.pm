@@ -11,22 +11,21 @@ package Kernel::Output::HTML::ToolBar::IncompleteWorkingDays;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::Config',
-    'Kernel::System::Group',
-    'Kernel::System::DateTime',
-    'Kernel::System::TimeAccounting',
     'Kernel::Output::HTML::Layout',
+    'Kernel::System::Group',
+    'Kernel::System::TimeAccounting',
 );
 
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
 
-    # get UserID param
     $Self->{UserID} = $Param{UserID} || die "Got no UserID!";
 
     return $Self;
@@ -35,38 +34,54 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # define action, group, label, image and prio
+    # Define action and get its frontend module registration.
     my $Action = 'AgentTimeAccountingEdit';
-    my $Group  = 'time_accounting';
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{$Action};
 
-    # do not show icon if frontend module is not registered
-    return if !$Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{$Action};
+    # Do not show icon if frontend module is not registered.
+    return if !$Config;
 
-    # get group object
-    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+    # Get group names from config.
+    my @GroupNames = @{ $Config->{Group} || [] };
 
-    # get the group id
-    my $GroupID = $GroupObject->GroupLookup(
-        Group => $Group,
-    );
+    # If access is restricted, allow access only if user has appropriate permissions in configured group(s).
+    if (@GroupNames) {
 
-    # deny access, when the group is not found
-    return if !$GroupID;
+        my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
-    # get user groups, where the user has the appropriate privilege
-    my %Groups = $GroupObject->GroupMemberList(
-        UserID => $Self->{UserID},
-        Type   => 'rw',
-        Result => 'HASH',
-    );
+        # Get user groups, where the user has the appropriate permissions.
+        my %GroupList = $GroupObject->GroupMemberList(
+            UserID => $Self->{UserID},
+            Type   => 'rw',
+            Result => 'HASH',
+        );
 
-    # deny access if the agent doesn't have the appropriate type in the appropriate group
-    return if !$Groups{$GroupID};
+        my $Permission = 0;
+
+        GROUP:
+        for my $GroupName (@GroupNames) {
+            next GROUP if !$GroupName;
+
+            # Get the group ID.
+            my $GroupID = $GroupObject->GroupLookup(
+                Group => $GroupName,
+            );
+            next GROUP if !$GroupID;
+
+            # Stop checking if membership in at least one group is found.
+            if ( $GroupList{$GroupID} ) {
+                $Permission = 1;
+                last GROUP;
+            }
+        }
+
+        # Deny access if the agent doesn't have the appropriate permissions.
+        return if !$Permission;
+    }
 
     my $DateTimeObject   = $Kernel::OM->Create('Kernel::System::DateTime');
     my $DateTimeSettings = $DateTimeObject->Get();
 
-    # get time accounting object
     my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
     my %UserCurrentPeriod = $TimeAccountingObject->UserCurrentPeriodGet(
@@ -75,10 +90,10 @@ sub Run {
         Day   => $DateTimeSettings->{Day},
     );
 
-    # deny access, if user has no valid period
+    # Deny access, if user has no valid period.
     return if !$UserCurrentPeriod{ $Self->{UserID} };
 
-    # get the number of incomplete working days
+    # Get the number of incomplete working days.
     my $Count                 = 0;
     my %IncompleteWorkingDays = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
         UserID => $Self->{UserID},
@@ -91,7 +106,7 @@ sub Run {
         next YEARID if !$IncompleteWorkingDays{Incomplete}{$YearID};
         next YEARID if ref $IncompleteWorkingDays{Incomplete}{$YearID} ne 'HASH';
 
-        # extract year
+        # Extract year.
         my %Year = %{ $IncompleteWorkingDays{Incomplete}{$YearID} };
 
         MONTH:
@@ -108,17 +123,16 @@ sub Run {
         }
     }
 
-    # remove current day because it makes no sense to show the current day as incomplete
+    # Remove current day because it makes no sense to show the current day as incomplete.
     if ( $Count > 0 ) {
         $Count--;
     }
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # get ToolBar object parameters
+    # Get toolbar object parameters.
     my $Class = $Param{Config}->{CssClass};
-    my $Text  = 'Incomplete working days';
+    my $Text  = Translatable('Incomplete working days');
     my $URL   = $LayoutObject->{Baselink};
     my $Icon  = $Param{Config}->{Icon};
 
@@ -133,7 +147,7 @@ sub Run {
             Icon        => $Icon,
             Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
-            }
+        },
     );
 
     return %Return;

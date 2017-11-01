@@ -6,8 +6,8 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>time_accounting</Group>
-                <GroupRo>time_accounting</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">Time accounting edit.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title Translatable="1">Edit</Title>
@@ -22,7 +22,7 @@
                     <Block>ItemArea</Block>
                 </NavBar>
                 <NavBar>
-                    <GroupRo>time_accounting</GroupRo>
+                    <GroupRo></GroupRo>
                     <Description Translatable="1">Edit time record.</Description>
                     <Name Translatable="1">Edit</Name>
                     <Link>Action=AgentTimeAccountingEdit</Link>
@@ -48,13 +48,13 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>time_accounting</Group>
-                <GroupRo>time_accounting</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">Time accounting overview.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title Translatable="1">Overview</Title>
                 <NavBar>
-                    <GroupRo>time_accounting</GroupRo>
+                    <GroupRo></GroupRo>
                     <Description Translatable="1">Overview.</Description>
                     <Name Translatable="1">Overview</Name>
                     <Link>Action=AgentTimeAccountingOverview</Link>
@@ -77,13 +77,13 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>time_accounting</Group>
-                <GroupRo>time_accounting</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">Time accounting settings.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title Translatable="1">Settings</Title>
                 <NavBar>
-                    <Group>time_accounting</Group>
+                    <Group></Group>
                     <Description Translatable="1">Edit time accounting settings.</Description>
                     <Name Translatable="1">Settings</Name>
                     <Link>Action=AgentTimeAccountingSetting</Link>
@@ -109,13 +109,13 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>time_accounting</Group>
-                <GroupRo>time_accounting</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">Time accounting reporting.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title Translatable="1">Reporting</Title>
                 <NavBar>
-                    <Group>time_accounting</Group>
+                    <Group></Group>
                     <Description Translatable="1">Project time reporting.</Description>
                     <Name Translatable="1">Reporting</Name>
                     <Link>Action=AgentTimeAccountingReporting</Link>
@@ -139,14 +139,11 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>time_accounting</Group>
-                <GroupRo>time_accounting</GroupRo>
+                <Group></Group>
+                <GroupRo></GroupRo>
                 <Description Translatable="1">Time accounting view.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title Translatable="1">View</Title>
-                <NavBar>
-                    <GroupRo>time_accounting</GroupRo>
-                </NavBar>
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>

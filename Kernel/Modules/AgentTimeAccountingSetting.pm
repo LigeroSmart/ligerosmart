@@ -590,41 +590,10 @@ sub Run {
         );
 
         # if it is not an action about adding a new time period
-        if ( !$NewTimePeriod ) {
-            if ( !$Success ) {
-
-                return $LayoutObject->ErrorScreen(
-                    Message => Translatable('Can\'t insert user data!'),
-                );
-            }
-
-            # get group object
-            my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
-
-            my %Groups = $GroupObject->GroupList( Valid => 1 );
-            my %GroupData = $GroupObject->GroupMemberList(
-                UserID => $NewUserID,
-                Type   => 'ro',
-                Result => 'HASH',
+        if ( !$NewTimePeriod && !$Success ) {
+            return $LayoutObject->ErrorScreen(
+                Message => Translatable('Can\'t insert user data!'),
             );
-            for my $GroupKey ( sort keys %Groups ) {
-                if ( $Groups{$GroupKey} eq 'time_accounting' && !$GroupData{$GroupKey} ) {
-
-                    $GroupObject->GroupMemberAdd(
-                        GID        => $GroupKey,
-                        UID        => $NewUserID,
-                        Permission => {
-                            ro        => 1,
-                            move_into => 0,
-                            create    => 0,
-                            owner     => 0,
-                            priority  => 0,
-                            rw        => 0,
-                        },
-                        UserID => $Self->{UserID},
-                    );
-                }
-            }
         }
 
         my %User = $UserObject->GetUserData(

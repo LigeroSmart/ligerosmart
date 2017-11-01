@@ -50,6 +50,7 @@
         <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/TimeAccounting/Dialog/AjaxLoader.html.tmpl" />
         <File Permission="660" Location="Kernel/System/TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm" />
+        <File Permission="660" Location="scripts/test/TimeAccounting/UpgradeLowerThan5092.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting/UserReportingDateCheck.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting/VacationCheck.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting.t" />
@@ -198,6 +199,13 @@
 
         $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_4_0_91();
     ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="5.0.92"><![CDATA[
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        $Kernel::OM->Get($CodeModule)->CodeUpgradeFromLowerThan_5_0_92();
+    ]]></CodeUpgrade>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
         <br>
@@ -256,9 +264,6 @@
         <b>NOTICE</b>
         <br>
         <br>
-        In order to grant users access to the time accounting module, you need to add them as member to the group 'time_accounting'.
-        <br>
-        <br>
         The menu items that were added by this package will be visible after you log-in to the system again.
         <br>
         <br>
@@ -270,9 +275,6 @@
 
         <br>
         <b>HINWEIS</b>
-        <br>
-        <br>
-        Um Benutzern Zugriff auf die Zeiterfassung zu gewähren, müssen diese Mitglied der neuen Gruppe 'time_accounting' sein.
         <br>
         <br>
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
@@ -288,9 +290,6 @@
         <b>NOTA</b>
         <br>
         <br>
-        Para permitirles a los usuarios el acceso al módulo de contabilidad de tiempo, es necesario añadirlos como miembros del grupo 'time_accounting'.
-        <br>
-        <br>
         Los elementos del menú agregados por este paquete, serán visibles luego de reiniciar sesión en el sistema.
         <br>
         <br>
@@ -302,9 +301,6 @@
 
         <br>
         <b>FIGYELMEZTETÉS</b>
-        <br>
-        <br>
-        Annak érdekében, hogy hozzáférést adjon a felhasználók számára az időelszámolás modulhoz, hozzá kell adnia őket a „time_accounting” csoporthoz tagként.
         <br>
         <br>
         Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.

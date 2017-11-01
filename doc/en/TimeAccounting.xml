@@ -431,21 +431,15 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 <chapter>
     <title>Usage</title>
     <para>
-        This package adds a new group called "time_accouting". Depending on the permission over this
-        group, agents are allowed to execute certain actions, in general having "rw" permission
-        allows agents to use all screens while "ro" permissions only allows access to personal
-        overview (Time Accounting Overview) and working hours registration (Time Accounting Edit)
-        screens.
+        This package ships default configuration without any restrictions for users based on their permissions.
+        Effectively, agents will be allowed to execute most actions and this can be changed in frontend module
+        registration of specific screens by setting Group and GroupRo keys. In general having "rw" permission allows
+        agents to use all screens while "ro" permissions only allows access the personal overview (Time Accounting
+        Overview) and working hours registration (Time Accounting Edit) screens.
     </para>
     <section>
         <title>Create A New Project</title>
         <para>This example shows how to create a new project to register working hours on.</para>
-        <note>
-            <para>
-                For this and following examples a user with "rw" in "time_accouting" group is
-                needed.
-            </para>
-        </note>
         <orderedlist>
             <listitem><para>From Time Accounting menu choose "Settings".</para></listitem>
             <listitem>
@@ -556,12 +550,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Register Your Working Hours</title>
         <para>This example shows how to register the working hours in time accounting.</para>
-        <note>
-            <para>
-                A previously added user to time accounting is needed for this example. This user
-                needs also at least "ro" permissions over "time_accouting" group.
-            </para>
-        </note>
+        <note><para>A previously added user to time accounting is needed for this example.</para></note>
         <orderedlist>
             <listitem><para>Login to OTRS with a proper user.</para></listitem>
             <listitem><para>From Time Accounting menu choose "Edit".</para></listitem>

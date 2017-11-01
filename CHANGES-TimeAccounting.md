@@ -1,4 +1,5 @@
 #6.0.0.beta2 2017-??-??
+ - 2017-11-01 Changed default group configuration and implemented migration path for existing systems. TimeAccounting specific user group will no longer be automatically created on new systems.
 
 #6.0.0.beta1 2017-10-23
  - 2017-10-22 Initial version for OTRS 6.

@@ -13,13 +13,11 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         # use a calendar with the same business hours for every day so that the UT runs correctly
@@ -35,14 +33,9 @@ $Selenium->RunTest(
             Value => \%Week,
         );
 
-        $Helper->ConfigSettingChange(
-            Key   => 'TimeWorkingHours',
-            Value => \%Week,
-        );
-
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users', 'time_accounting' ],
+            Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
         # get test user ID

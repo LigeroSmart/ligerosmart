@@ -1327,26 +1327,56 @@ sub Run {
 sub _FirstUserRedirect {
     my $Self = shift;
 
-    # for initial using, the first agent with rw-right will be redirected
-    # to 'Setting'. Then he can do the initial settings
+    # For initial usage, the first agent with 'rw' rights will be redirected to 'Setting'. Then they can configure
+    #   initial settings for the time accounting feature.
 
-    my %GroupList = $Kernel::OM->Get('Kernel::System::Group')->GroupMemberList(
-        UserID => $Self->{UserID},
-        Type   => 'rw',
-        Result => 'HASH',
-    );
+    # Define action and get its frontend module registration.
+    my $Action = 'AgentTimeAccountingSetting';
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get('Frontend::Module')->{$Action};
 
-    # get layout object
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    # Get group names from config.
+    my @GroupNames = @{ $Config->{Group} || [] };
 
-    for my $GroupKey ( sort keys %GroupList ) {
-        if ( $GroupList{$GroupKey} eq 'time_accounting' ) {
+    my $Permission = 0;
 
-            return $LayoutObject->Redirect(
-                OP => "Action=AgentTimeAccountingSetting",
+    # If access is restricted, allow access only if user has appropriate permissions in configured group(s).
+    if (@GroupNames) {
+
+        my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
+        # Get user groups, where the user has the appropriate permissions.
+        my %Groups = $GroupObject->GroupMemberList(
+            UserID => $Self->{UserID},
+            Type   => 'rw',
+            Result => 'HASH',
+        );
+
+        GROUP:
+        for my $GroupName (@GroupNames) {
+            next GROUP if !$GroupName;
+
+            # Get the group ID.
+            my $GroupID = $GroupObject->GroupLookup(
+                Group => $GroupName,
             );
+            next GROUP if !$GroupID;
+
+            # Stop checking if membership in at least one group is found.
+            if ( $Groups{$GroupID} ) {
+                $Permission = 1;
+                last GROUP;
+            }
         }
     }
+
+    # Otherwise, always allow access.
+    else {
+        $Permission = 1;
+    }
+
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
+    return $LayoutObject->Redirect( OP => "Action=$Action" ) if $Permission;
 
     return $LayoutObject->ErrorScreen(
         Message =>

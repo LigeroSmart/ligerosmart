@@ -52,7 +52,7 @@ $Selenium->RunTest(
 
         # create test user and login
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users', 'time_accounting' ],
+            Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
         # get test user ID

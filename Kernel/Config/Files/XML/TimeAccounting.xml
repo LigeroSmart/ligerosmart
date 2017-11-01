@@ -8,12 +8,10 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Time accounting edit.</Item>
@@ -51,12 +49,10 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>time_accounting</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>time_accounting</Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">Time accounting.</Item>
@@ -78,12 +74,11 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>time_accounting</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>time_accounting</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">Edit time record.</Item>
@@ -106,12 +101,10 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Time accounting overview.</Item>
@@ -142,12 +135,11 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>time_accounting</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>time_accounting</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">Overview.</Item>
@@ -170,12 +162,10 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Time accounting settings.</Item>
@@ -213,12 +203,11 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>time_accounting</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>time_accounting</Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">Edit time accounting settings.</Item>
@@ -241,12 +230,10 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Time accounting reporting.</Item>
@@ -282,12 +269,11 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item>time_accounting</Item>
+                        <Item></Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
                     <Array>
-                        <Item>time_accounting</Item>
                     </Array>
                 </Item>
                 <Item Key="Description" Translatable="1">Project time reporting.</Item>
@@ -310,12 +296,10 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
                         <Array>
-                            <Item>time_accounting</Item>
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Time accounting view.</Item>
@@ -336,33 +320,6 @@
                         <Item>TimeAccounting.Table.css</Item>
                     </Array>
                 </Item>
-            </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Frontend::Navigation###AgentTimeAccountingView###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                        <Item>time_accounting</Item>
-                    </Array>
-                </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>time_accounting</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description"></Item>
-                <Item Key="Name"></Item>
-                <Item Key="Link"></Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar"></Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio"></Item>
             </Hash>
         </Value>
     </Setting>

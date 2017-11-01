@@ -11,12 +11,16 @@ package var::packagesetup::TimeAccounting;
 use strict;
 use warnings;
 
+use List::Util qw();
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
     'Kernel::System::Group',
     'Kernel::System::SysConfig',
     'Kernel::System::Valid',
+    'Kernel::System::Log',
+    'Kernel::System::Main',
 );
 
 =head1 NAME
@@ -70,15 +74,6 @@ run the code install part
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
-    # add the group time_accounting
-    $Self->_GroupAdd(
-        Name        => 'time_accounting',
-        Description => 'Group for all time accounting user.',
-    );
-
-    # delete the group cache to avoid permission problems
-    $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'Group' );
-
     return 1;
 }
 
@@ -93,7 +88,7 @@ run the code uninstall part
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
-    # deactivate the group time_accounting
+    # Deactivate the group 'time_accounting' if exists.
     $Self->_GroupDeactivate(
         Name => 'time_accounting',
     );
@@ -118,103 +113,24 @@ sub CodeUpgradeFromLowerThan_4_0_91 {    ## no critic
     return 1;
 }
 
-=head1 PRIVATE INTERFACE
+=head2 CodeUpgradeFromLowerThan_5_0_92()
 
-=head2 _GroupAdd()
+This function is only executed if the installed module version is smaller than 5.0.92.
 
-add a group
-
-    my $Result = $CodeObject->_GroupAdd(
-        Name        => 'the-group-name',
-        Description => 'The group description.',
-    );
+    my $Result = $CodeObject->CodeUpgradeFromLowerThan_5_0_92();
 
 =cut
 
-sub _GroupAdd {
+sub CodeUpgradeFromLowerThan_5_0_92 {    ## no critic
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for my $Argument (qw(Name Description)) {
-        if ( !$Param{$Argument} ) {
-            Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get valid list
-    my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList(
-        UserID => 1,
-    );
-    my %ValidListReverse = reverse %ValidList;
-
-    # get group object
-    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
-
-    # get list of all groups
-    my %GroupList = $GroupObject->GroupList();
-
-    # reverse the group list for easier lookup
-    my %GroupListReverse = reverse %GroupList;
-
-    # check if group already exists
-    my $GroupID = $GroupListReverse{ $Param{Name} };
-
-    # reactivate the group
-    if ($GroupID) {
-
-        # get current group data
-        my %GroupData = $GroupObject->GroupGet(
-            ID     => $GroupID,
-            UserID => 1,
-        );
-
-        # reactivate group
-        $GroupObject->GroupUpdate(
-            %GroupData,
-            ValidID => $ValidListReverse{valid},
-            UserID  => 1,
-        );
-
-        return 1;
-    }
-
-    # add the group
-    else {
-        return if !$GroupObject->GroupAdd(
-            Name    => $Param{Name},
-            Comment => $Param{Description},
-            ValidID => $ValidListReverse{valid},
-            UserID  => 1,
-        );
-    }
-
-    # lookup the new group id
-    my $NewGroupID = $GroupObject->GroupLookup(
-        Group  => $Param{Name},
-        UserID => 1,
-    );
-
-    # add user root to the group
-    $GroupObject->GroupMemberAdd(
-        GID        => $NewGroupID,
-        UID        => 1,
-        Permission => {
-            ro        => 1,
-            move_into => 1,
-            create    => 1,
-            owner     => 1,
-            priority  => 1,
-            rw        => 1,
-        },
-        UserID => 1,
-    );
+    # Recover the old permissions
+    $Self->_MigratePermissions();
 
     return 1;
 }
+
+=head1 PRIVATE INTERFACE
 
 =head2 _GroupDeactivate()
 
@@ -325,6 +241,235 @@ sub _MigrateConfigs {
         Comments => 'TimeAccounting - package setup function: MigrateConfigs',
         Settings => \@NewSettings
     );
+
+    return 1;
+}
+
+=head2 _GetOTRS5ConfigBackup()
+
+Get the custom configurations made in the previous version, OTRS 5.
+
+    my $Result = $CodeObject->_GetOTRS5ConfigBackup();
+
+=cut
+
+sub _GetOTRS5ConfigBackup {
+    my $Config = {};
+
+    my $FileClass = 'Kernel::Config::Backups::ZZZAutoOTRS5';
+    delete $INC{$FileClass};
+
+    if (
+        $Kernel::OM->Get('Kernel::System::Main')->Require(
+            $FileClass,
+            Silent => 1,
+        )
+        )
+    {
+        $FileClass->Load($Config);
+    }
+
+    return $Config;
+}
+
+=head2 _MigratePermissions()
+
+change permissions to match the old ones before the upgrade.
+
+    my $Result = $CodeObject->_MigratePermissions();
+
+=cut
+
+sub _MigratePermissions {
+    my ( $Self, %Param ) = @_;
+
+    my $OldConfig = $Self->_GetOTRS5ConfigBackup();
+    my $NewConfig = $Kernel::OM->Get('Kernel::Config');
+
+    my $GetConfig = sub {
+        my $Source      = shift;
+        my $SettingName = shift;
+
+        my $Config = $Source;
+        my @Keys = split '###', $SettingName;
+        while ( my $Key = shift @Keys ) {
+            $Config = $Config->{$Key};
+        }
+
+        return $Config;
+    };
+
+    my @NewSettings       = ();
+    my @SettingsToMigrate = (
+        {
+            Name     => 'Frontend::Module###AgentTimeAccountingEdit',
+            Defaults => {
+                Group => [
+                    'time_accounting'
+                ],
+                GroupRo => [
+                    'time_accounting'
+                ],
+                NavBar => [
+                    {
+                        Block   => '',
+                        GroupRo => [
+                            'time_accounting'
+                        ],
+                        Name => 'Edit',
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentTimeAccountingOverview',
+            Defaults => {
+                Group => [
+                    'time_accounting'
+                ],
+                GroupRo => [
+                    'time_accounting'
+                ],
+                NavBar => [
+                    {
+                        Block   => '',
+                        GroupRo => [
+                            'time_accounting'
+                        ],
+                        Name => 'Overview',
+                    }
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentTimeAccountingSetting',
+            Defaults => {
+                Description => 'Time accounting settings.',
+                Group       => [
+                    'time_accounting'
+                ],
+                GroupRo => [
+                    'time_accounting'
+                ],
+                NavBar => [
+                    {
+                        Block => '',
+                        Group => [
+                            'time_accounting'
+                        ],
+                        Name => 'Settings',
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentTimeAccountingReporting',
+            Defaults => {
+                Group => [
+                    'time_accounting'
+                ],
+                GroupRo => [
+                    'time_accounting'
+                ],
+                NavBar => [
+                    {
+                        Block => '',
+                        Group => [
+                            'time_accounting'
+                        ],
+                        Name => 'Reporting',
+                    },
+                ],
+            },
+        },
+
+        {
+            Name     => 'Frontend::Module###AgentTimeAccountingView',
+            Defaults => {
+                Group => [
+                    'time_accounting'
+                ],
+                GroupRo => [
+                    'time_accounting'
+                ],
+            },
+        },
+    );
+
+    my $SysConfigObject = $Kernel::OM->Get('Kernel::System::SysConfig');
+
+    SETTING:
+    for my $Setting (@SettingsToMigrate) {
+        my $SettingOldConfig = $GetConfig->( $OldConfig, $Setting->{Name}, );
+        my $SettingDefaults = $Setting->{Defaults};
+
+        my @GroupGroupRo = qw( Group GroupRo );
+
+        {
+            my $NewSetting = $GetConfig->( $NewConfig, $Setting->{Name} );
+
+            # Check for Group and GroupRo.
+            for my $Key (@GroupGroupRo) {
+                if ( defined $SettingOldConfig->{$Key} || defined $SettingDefaults->{$Key} ) {
+                    $NewSetting->{$Key} = $SettingOldConfig->{$Key} // $SettingDefaults->{$Key};
+                }
+            }
+
+            push @NewSettings, {
+                Name           => $Setting->{Name},
+                EffectiveValue => $NewSetting,
+                IsValid        => 1,
+            };
+        }
+
+        # Check for NavBar => Navigation.
+        if ( $SettingOldConfig->{NavBar} || $SettingDefaults->{NavBar} ) {
+            my ( undef, $Frontend ) = split '###', $Setting->{Name};
+            my $NewSetting = $GetConfig->( $NewConfig, "Frontend::Navigation###${ Frontend }" );
+
+            for my $Index ( sort keys %{$NewSetting} ) {
+                my $NewItem = $NewSetting->{$Index};
+
+                SOURCE:
+                for my $Source ( ( $SettingOldConfig->{NavBar}, $SettingDefaults->{NavBar} ) ) {
+                    my $OldItem
+                        = List::Util::first { $_->{Name} eq $NewItem->{Name} && $_->{Block} eq $NewItem->{Block} }
+                    @{$Source};
+                    next SOURCE if !$OldItem;
+
+                    for my $Key (@GroupGroupRo) {
+                        if ( defined $OldItem->{$Key} ) {
+                            $NewItem->{$Key} = $OldItem->{$Key};
+                        }
+                    }
+                    last SOURCE;
+                }
+
+                push @NewSettings, {
+                    Name           => "Frontend::Navigation###${ Frontend }###${ Index }",
+                    EffectiveValue => $NewItem,
+                    IsValid        => 1,
+                };
+
+            }
+        }
+    }
+
+    # Deploy the new settings.
+    my $SettingsDeployed = $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'FAQ - package setup function: _MigratePermissions',
+        Settings => \@NewSettings,
+    );
+    if ( !$SettingsDeployed ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Message  => 'Error while deploying the migrated permissions!',
+            Priority => 'error',
+        );
+    }
 
     return 1;
 }
