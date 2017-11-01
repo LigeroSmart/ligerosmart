@@ -138,13 +138,18 @@ $Selenium->RunTest(
 
         # refresh screen
         $Selenium->VerifiedRefresh();
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('.MasterAction.Invalid td div:eq(0)').text().trim()",
+        );
 
         # check and delete test created FAQs
         for my $FAQ (@FAQs) {
 
             # check if there is test FAQ on screen
-            $Self->True(
-                index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
+            $Self->Is(
+                $Selenium->find_element( "tr#ItemID_" . $FAQ->{FAQID} . "_.MasterAction td div", 'css' )->get_text(),
+                $FAQ->{FAQTitle},
                 "$FAQ->{FAQTitle} is found",
             );
 
