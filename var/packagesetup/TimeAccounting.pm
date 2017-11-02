@@ -461,7 +461,7 @@ sub _MigratePermissions {
     # Deploy the new settings.
     my $SettingsDeployed = $SysConfigObject->SettingsSet(
         UserID   => 1,
-        Comments => 'FAQ - package setup function: _MigratePermissions',
+        Comments => 'TimeAccounting - package setup function: _MigratePermissions',
         Settings => \@NewSettings,
     );
     if ( !$SettingsDeployed ) {
