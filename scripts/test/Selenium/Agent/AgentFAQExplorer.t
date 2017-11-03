@@ -148,7 +148,7 @@ $Selenium->RunTest(
 
             # check if there is test FAQ on screen
             $Self->Is(
-                $Selenium->find_element( "tr#ItemID_" . $FAQ->{FAQID} . "_.MasterAction td div", 'css' )->get_text(),
+                $Selenium->find_element( "tr#ItemID_" . $FAQ->{ItemID} . "_.MasterAction td div", 'css' )->get_text(),
                 $FAQ->{FAQTitle},
                 "$FAQ->{FAQTitle} is found",
             );
