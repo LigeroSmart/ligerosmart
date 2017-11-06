@@ -15,7 +15,6 @@
     <Filelist>
         <File Permission="660" Location="doc/itsm-change-management-database.dia" />
         <File Permission="660" Location="doc/itsm-change-management-database.png" />
-        <File Permission="660" Location="Kernel/Config/Files/ITSMChangeManagement.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMChangeManagement.xml" />
         <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMChange.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMWorkOrder.pm" />
