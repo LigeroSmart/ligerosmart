@@ -51,9 +51,9 @@
                 </Item>
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
                 <Item Key="Name" Translatable="1">Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Item>
-                <Item Key="Block">System</Item>
-                <Item Key="Description"></Item>
-                <Item Key="IconBig"></Item>
+                <Item Key="Block">Ticket</Item>
+                <Item Key="Description">Manage the criticality - impact - priority matrix.</Item>
+                <Item Key="IconBig">fa-table</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
         </Value>
