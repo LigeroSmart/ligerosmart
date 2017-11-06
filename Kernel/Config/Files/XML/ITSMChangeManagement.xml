@@ -51,9 +51,9 @@
                 </Item>
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
                 <Item Key="Name" Translatable="1">Category &lt;-&gt; Impact &lt;-&gt; Priority</Item>
-                <Item Key="Block">System</Item>
-                <Item Key="Description"></Item>
-                <Item Key="IconBig"></Item>
+                <Item Key="Block">ChangeSettings</Item>
+                <Item Key="Description">Manage the category - impact - priority matrix.</Item>
+                <Item Key="IconBig">fa-table</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
         </Value>
@@ -114,10 +114,10 @@
                     </Array>
                 </Item>
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
-                <Item Key="Name" Translatable="1">ITSM Change Management Notifications</Item>
-                <Item Key="Block">System</Item>
-                <Item Key="Description"></Item>
-                <Item Key="IconBig"></Item>
+                <Item Key="Name" Translatable="1">ITSM Change Notifications</Item>
+                <Item Key="Block">Communication</Item>
+                <Item Key="Description">Create and manage change notifications.</Item>
+                <Item Key="IconBig">fa-bell-o</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
         </Value>
@@ -160,9 +160,9 @@
                 </Item>
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
                 <Item Key="Name" Translatable="1">State Machine</Item>
-                <Item Key="Block">System</Item>
-                <Item Key="Description"></Item>
-                <Item Key="IconBig"></Item>
+                <Item Key="Block">ChangeSettings</Item>
+                <Item Key="Description">Manage ITSM Change Management state machine.</Item>
+                <Item Key="IconBig">fa-cogs</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
         </Value>
@@ -5325,6 +5325,20 @@
                 <Item Key="Module">Kernel::GenericInterface::Event::Handler</Item>
                 <Item Key="Transaction">1</Item>
                 <Item Key="Event"></Item><!-- run on all events -->
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::AdminModuleGroups###200-ITSMChangeManagement" Required="1" Valid="1">
+        <Description Translatable="1">Defines available groups for the admin overview screen.</Description>
+        <Navigation>Frontend::Base::NavBarModule</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="ChangeSettings">
+                    <Hash>
+                        <Item Key="Title" Translatable="1">Change Settings</Item>
+                        <Item Key="Order">9000</Item>
+                    </Hash>
+                </Item>
             </Hash>
         </Value>
     </Setting>
