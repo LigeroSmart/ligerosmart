@@ -14,10 +14,6 @@
     <Filelist>
         <File Permission="660" Location="doc/itsm-core-database.dia" />
         <File Permission="660" Location="doc/itsm-core-database.png" />
-        <File Permission="660" Location="Kernel/Config/Files/FrameworkITSMCore.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/ITSMCore.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/ITSMService.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/TicketITSMService.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/FrameworkITSMCore.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMCore.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMService.xml" />
