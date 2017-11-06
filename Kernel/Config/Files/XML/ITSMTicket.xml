@@ -284,9 +284,14 @@
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
             <Hash>
-                <Item Key="ITSMRepairStartTime">1</Item>
-                <Item Key="ITSMRecoveryStartTime">1</Item>
-                <Item Key="ITSMDueDate">1</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+                <Item Key="ITSMRepairStartTime" SelectedID="1"></Item>
+                <Item Key="ITSMRecoveryStartTime" SelectedID="1"></Item>
+                <Item Key="ITSMDueDate" SelectedID="1"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -493,8 +498,13 @@
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
             <Hash>
-                <Item Key="ITSMDecisionResult">1</Item>
-                <Item Key="ITSMDecisionDate">1</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled and required</Item>
+                </DefaultItem>
+                <Item Key="ITSMDecisionResult" SelectedID="1"></Item>
+                <Item Key="ITSMDecisionDate" SelectedID="1"></Item>
             </Hash>
         </Value>
     </Setting>
