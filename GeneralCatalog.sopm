@@ -15,7 +15,6 @@
         <File Permission="660" Location="doc/general-catalog-database.dia" />
         <File Permission="660" Location="doc/general-catalog-database.png" />
         <File Permission="660" Location="Kernel/Config/Files/XML/GeneralCatalog.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/GeneralCatalog.xml" />
         <File Permission="660" Location="Kernel/Language/bg_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/cs_GeneralCatalog.pm" />
         <File Permission="660" Location="Kernel/Language/da_GeneralCatalog.pm" />
