@@ -15,8 +15,6 @@
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMTicket.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/TicketITSMTicket.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/ITSMTicket.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/TicketITSMTicket.xml" />
         <File Permission="660" Location="Kernel/Language/bg_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/cs_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/da_ITSMIncidentProblemManagement.pm" />
