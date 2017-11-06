@@ -15,7 +15,6 @@
         <File Permission="660" Location="doc/import-export-database.dia" />
         <File Permission="660" Location="doc/import-export-database.png" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ImportExport.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/ImportExport.xml" />
         <File Permission="660" Location="Kernel/Language/cs_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/da_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/de_ImportExport.pm" />
