@@ -2,13 +2,14 @@
 # Translators:
 # David B <link.bigpoint@outlook.com>, 2017
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Fernando Casal <fernando.casal@serviciomovil.com>, 2017
 # Juan Clavero <juanm.clavero@ibsalut.es>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-10-10 13:49+0000\n"
-"PO-Revision-Date: 2017-10-23 03:01+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"PO-Revision-Date: 2017-11-05 22:11+0000\n"
+"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,23 +71,23 @@ msgstr "Impacto"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "No SLAID is given!"
-msgstr ""
+msgstr "¡No se ha facilitado SLAID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "SLAID %s not found in database!"
-msgstr ""
+msgstr "¡SLAID %s no se encontró en la base de datos!"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "Calendar Default"
-msgstr ""
+msgstr "Calendario por defecto"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
-msgstr ""
+msgstr "¡No se ha facilitado el ServiceID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "ServiceID %s not found in database!"
-msgstr ""
+msgstr "ServiceID %s no se encontró en la base de datos!"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "Current Incident State"
@@ -346,7 +347,7 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr ""
+msgstr "Establezca el tipo y la dirección de los enlaces que se usarán para calcular el estado de la incidencia. La clave es el nombre del tipo de enlace (como se define en LinkObject::Type), y el valor es la dirección del IncidentLinkType que se debe seguir para calcular el estado de la incidencia. Por ejemplo, si el IncidentLinkType está fijado en \"Depende de\"  y la dirección es \"Origen\", solo se seguirán los enlaces \"Depende de\" (y no el enlace opuesto \"Requerido para\"), para calcular el estado de la incidencia. Puede agregar más tipos de enlaces y direcciones si lo desea, por ejemplo \"Includes\" con la dirección \"objetivo\". Todos los tipos de enlaces definidos en las opciones de sysconfig LinkObject::Type son posibles y la dirección puede ser \"Origen\", \"Objetivo\" o \"Ambas\". IMPORTANTE: TRAS REALIZAR LOS CAMBIOS EN ESTA OPCIÓN DE SYSCONFIG, NECESITA EJECUTAR EL COMANDO DE CONSOLA bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate PARA QUE TODOS LOS ESTADOS SE RECALCULEN EN BASE A LAS NUEVAS CONFIGURACIONES."
 
 #. SysConfig
 msgid ""
