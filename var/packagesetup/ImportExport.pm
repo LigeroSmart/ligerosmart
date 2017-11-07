@@ -179,8 +179,8 @@ sub _MigrateConfigs {
 
     my @NewSettings;
 
-    # migrate ImportExport config
-    # get setting content for ImportExport config
+    # migrate NavBar modules
+    # get setting content for NavBar modules
     my $Setting = $ConfigObject->Get('Frontend::NavigationModule');
 
     # update module location
