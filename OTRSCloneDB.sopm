@@ -21,7 +21,6 @@
         See also http://mathiasbynens.be/notes/mysql-utf8mb4.
     -->
     <Filelist>
-        <File Permission="660" Location="Kernel/Config/Files/OTRSCloneDB.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCloneDB.xml" />
         <File Permission="660" Location="Kernel/Language/bg_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/es_OTRSCloneDB.pm" />
