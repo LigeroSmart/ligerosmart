@@ -10,7 +10,6 @@
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
     <Description Lang="hu">A „mester/alárendelt jegy” funkciót tartalmazza.</Description>
     <Filelist>
-        <File Permission="660" Location="Kernel/Config/Files/OTRSMasterSlave.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSMasterSlave.xml" />
         <File Permission="660" Location="Kernel/Language/cs_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/de_OTRSMasterSlave.pm" />
