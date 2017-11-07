@@ -3862,8 +3862,8 @@ sub _MigrateConfigs {
 
     my @NewSettings;
 
-    # migrate NavBar menu modules
-    # get setting content for NavBar menu modules
+    # migrate NavBar modules
+    # get setting content for NavBar modules
     my $Setting = $ConfigObject->Get('Frontend::NavigationModule');
 
     NAVBARMODULE:
