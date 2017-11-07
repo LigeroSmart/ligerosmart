@@ -3,13 +3,14 @@
 # Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
 # David B <link.bigpoint@outlook.com>, 2017
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
+# Fernando Casal <fernando.casal@serviciomovil.com>, 2017
 # Iñaki Martínez, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:45+0000\n"
-"PO-Revision-Date: 2017-10-10 13:46+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-10-10 13:46+0000\n"
+"PO-Revision-Date: 2017-11-05 21:58+0000\n"
+"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,7 +52,7 @@ msgstr "Definir el grupo con permisos."
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
+msgstr "Define la ruta URL JS del selector de color"
 
 #. SysConfig
 msgid ""
