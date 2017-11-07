@@ -156,9 +156,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -172,9 +169,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -188,9 +182,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -204,9 +195,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -220,9 +208,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -236,9 +221,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -252,9 +234,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketActionCommon.js</Item>
-                        <Item>Core.Agent.TicketFormDraft.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -268,11 +247,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.CustomerSearch.js</Item>
-                        <Item>Core.Agent.CustomerSearchAutoComplete.js</Item>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketPhone.js</Item>
-                        <Item>Core.Agent.TicketSplit.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
@@ -286,11 +260,6 @@
             <Hash>
                 <Item Key="JavaScript">
                     <Array>
-                        <Item>Core.Agent.CustomerSearch.js</Item>
-                        <Item>Core.Agent.CustomerSearchAutoComplete.js</Item>
-                        <Item>Core.Agent.TicketAction.js</Item>
-                        <Item>Core.Agent.TicketEmail.js</Item>
-                        <Item>Core.Agent.TicketSplit.js</Item>
                         <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>

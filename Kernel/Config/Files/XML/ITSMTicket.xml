@@ -31,6 +31,7 @@
                         <Item>Core.Agent.TicketAction.js</Item>
                         <Item>Core.Agent.TicketActionCommon.js</Item>
                         <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -67,6 +68,7 @@
                         <Item>Core.Agent.TicketAction.js</Item>
                         <Item>Core.Agent.TicketActionCommon.js</Item>
                         <Item>Core.Agent.TicketFormDraft.js</Item>
+                        <Item>ITSM.Agent.ITSMIncidentProblemManagement.js</Item>
                     </Array>
                 </Item>
             </Hash>
