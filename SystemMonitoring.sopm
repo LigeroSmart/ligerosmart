@@ -12,7 +12,6 @@
     <Description Lang="hu">Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Mélyebb integrációt is biztosít a Nagios programmal (nyugtázás zároláskor és ellenőrző parancsfájl).</Description>
     <Filelist>
         <File Permission="660" Location="doc/en/SystemMonitoring.xml" />
-        <File Permission="660" Location="Kernel/Config/Files/SystemMonitoring.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/SystemMonitoring.xml" />
         <File Permission="660" Location="Kernel/Config/NagiosCheck.pm.example" />
         <File Permission="660" Location="Kernel/Language/es_SystemMonitoring.pm" />
