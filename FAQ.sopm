@@ -13,7 +13,6 @@
         <File Permission="770" Location="bin/cgi-bin/faq.pl" />
         <File Permission="770" Location="bin/fcgi-bin/faq.fpl" />
         <File Permission="660" Location="doc/faq-database.png" />
-        <File Permission="660" Location="Kernel/Config/Files/FAQ.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/FAQ.xml" />
         <File Permission="660" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm" />
