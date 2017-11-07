@@ -45,15 +45,15 @@ ITSM.Agent.ChangeManagement.Zoom = (function (TargetNS) {
         });
 
         $('ul.Actions a.AsPopup')
-        .off('click.ITSMChangeMmgtZoom.ActionPopup')
-        .on('click.ITSMChangeMmgtZoom.ActionPopup', function () {
+        .off('click.ITSMChangeManagementZoom.ActionPopup')
+        .on('click.ITSMChangeManagementZoom.ActionPopup', function () {
             Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
             return false;
         });
 
         $('ul.Actions a.HistoryBack')
-        .off('click.ITSMChangeMmgtZoom.HistoryBack')
-        .on('click.ITSMChangeMmgtZoom.HistoryBack', function () {
+        .off('click.ITSMChangeManagementZoom.HistoryBack')
+        .on('click.ITSMChangeManagementZoom.HistoryBack', function () {
             // if we have a referrer we use it, so the previous page will be loaded from the server
             // and if the referer is not the current page (AgentITSMWorkOrderZoom)
             if (document.referrer && !document.referrer.match(/AgentITSMWorkOrderZoom/)) {
