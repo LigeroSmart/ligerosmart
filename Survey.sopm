@@ -12,7 +12,6 @@
     <Description Lang="hu">Egy ügyfélkérdőív eszköz.</Description>
     <Filelist>
         <File Permission="660" Location="doc/survey-database.png" />
-        <File Permission="660" Location="Kernel/Config/Files/Survey.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/Survey.xml" />
         <File Permission="660" Location="Kernel/Language/bg_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/da_Survey.pm" />
