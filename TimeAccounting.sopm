@@ -11,7 +11,6 @@
     <Description Lang="hu">Egy munkaidő nyilvántartás modul.</Description>
     <Filelist>
         <File Permission="660" Location="doc/timeaccounting-database.png" />
-        <File Permission="660" Location="Kernel/Config/Files/TimeAccounting.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/TimeAccounting.xml" />
         <File Permission="660" Location="Kernel/Language/bg_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/de_TimeAccounting.pm" />
