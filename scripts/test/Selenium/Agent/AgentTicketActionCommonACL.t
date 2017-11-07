@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 14357e6b768741f13e0989b2320bd108a45f4b60 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# $origin: otrs - 3458362021c2440d1f97f600be6cd0a6e17f8845 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -485,7 +485,7 @@ EOF
 
         # De-select the dynamic field value for the first field.
         $Selenium->execute_script(
-            "return \$('#DynamicField_Field$RandomID').val('').trigger('redraw.InputField').trigger('change');"
+            "\$('#DynamicField_Field$RandomID').val('').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
@@ -525,7 +525,7 @@ EOF
 
         # Set dynamic field value to non-zero, and wait for AJAX to complete.
         $Selenium->execute_script(
-            "return \$('#DynamicField_Field$RandomID').val('1').trigger('redraw.InputField').trigger('change');"
+            "\$('#DynamicField_Field$RandomID').val('1').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
@@ -536,7 +536,7 @@ EOF
 
         # Close the ticket.
         $Selenium->execute_script(
-            "return \$('#NewStateID').val('2').trigger('redraw.InputField').trigger('change');"
+            "\$('#NewStateID').val('2').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->find_element( '#Subject',        'css' )->send_keys('Close');
         $Selenium->find_element( '#RichText',       'css' )->send_keys('Closing...');
