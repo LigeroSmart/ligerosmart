@@ -169,8 +169,8 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = '変更情報';
-    $Self->{Translation}->{'Planned Effort'} = '';
-    $Self->{Translation}->{'Accounted Time'} = '';
+    $Self->{Translation}->{'Planned Effort'} = '計画的な取り組み';
+    $Self->{Translation}->{'Accounted Time'} = '所要時間';
     $Self->{Translation}->{'Change Initiator(s)'} = 'イニシエータを変更';
     $Self->{Translation}->{'CAB'} = '変更承認者';
     $Self->{Translation}->{'Last changed'} = '最終変更時刻';
@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Change Time'} = '変更日時';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = '%s%sに作業依頼書を追加';
     $Self->{Translation}->{'Instruction'} = '';
     $Self->{Translation}->{'Invalid workorder type.'} = '不正な作業オーダータイプ';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = '';
@@ -380,7 +380,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
     $Self->{Translation}->{'The change can\'t be moved, as it has no workorders.'} = '';
-    $Self->{Translation}->{'Add a workorder first.'} = '';
+    $Self->{Translation}->{'Add a workorder first.'} = '作業依頼書を最初に追加します。';
     $Self->{Translation}->{'Can\'t move a change which already has started!'} = '';
     $Self->{Translation}->{'Please move the individual workorders instead.'} = '';
     $Self->{Translation}->{'The current %s could not be determined.'} = '';
@@ -408,7 +408,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
     $Self->{Translation}->{'You need %s permissions on the change!'} = '';
-    $Self->{Translation}->{'Was not able to add workorder!'} = '';
+    $Self->{Translation}->{'Was not able to add workorder!'} = '作業依頼書を追加できませんでした！';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
     $Self->{Translation}->{'No WorkOrderID is given!'} = '';
@@ -495,12 +495,12 @@ sub Data {
         '';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         '';
-    $Self->{Translation}->{'Add Workorder'} = '作業オーダーを追加';
-    $Self->{Translation}->{'Add Workorder (from Template)'} = '';
+    $Self->{Translation}->{'Add Workorder'} = '作業依頼者を追加';
+    $Self->{Translation}->{'Add Workorder (from Template)'} = '作業依頼者（テンプレートから）を追加';
     $Self->{Translation}->{'Add a change from template.'} = '';
     $Self->{Translation}->{'Add a change.'} = '';
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
-    $Self->{Translation}->{'Add a workorder to the change.'} = '';
+    $Self->{Translation}->{'Add a workorder to the change.'} = '変更の作業依頼書を追加します。';
     $Self->{Translation}->{'Add from template'} = 'テンプレートから追加する';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
     $Self->{Translation}->{'Admin of the state machine.'} = '';
@@ -525,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule'} = '変更管理スケジュール';
     $Self->{Translation}->{'Change Schedule.'} = 'スケジュールを変更';
+    $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = '';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -558,7 +559,7 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
         '';
     $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = '';
-    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = '';
+    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = '計画された作業を印刷できるかどうかを定義します。';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.'} =
         '';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state.'} =
@@ -764,8 +765,8 @@ sub Data {
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = '変更管理のCABテンプレート';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = '変更管理の条件修正';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = '変更管理の条件一覧';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = '変更管理の通知';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '変更管理者の一覧';
+    $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '変更管理のPIR一覧';
     $Self->{Translation}->{'ITSM Change notification rules'} = '変更管理の通知ルール';
     $Self->{Translation}->{'ITSM Changes'} = '変更管理';
@@ -965,8 +966,8 @@ sub Data {
     $Self->{Translation}->{'Types of tickets, where in the ticket zoom view a link to add a change will be displayed.'} =
         '';
     $Self->{Translation}->{'User Search'} = '';
-    $Self->{Translation}->{'Workorder Add (from template).'} = '(テンプレートから)作業オーダーを追加します。';
-    $Self->{Translation}->{'Workorder Add.'} = '作業オーダーを追加します。';
+    $Self->{Translation}->{'Workorder Add (from template).'} = '作業依頼書(テンプレートから)を追加します。';
+    $Self->{Translation}->{'Workorder Add.'} = '作業依頼書を追加します。';
     $Self->{Translation}->{'Workorder Agent.'} = '';
     $Self->{Translation}->{'Workorder Delete.'} = '作業オーダーを削除します。';
     $Self->{Translation}->{'Workorder Edit.'} = '作業オーダーを編集します。';

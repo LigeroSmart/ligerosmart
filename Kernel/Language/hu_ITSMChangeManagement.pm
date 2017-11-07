@@ -525,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Változásnyomtatás.';
     $Self->{Translation}->{'Change Schedule'} = 'Változtatási ütemterv';
     $Self->{Translation}->{'Change Schedule.'} = 'Változtatási ütemterv.';
+    $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = 'Változásnagyítás';
     $Self->{Translation}->{'Change Zoom.'} = 'Változásnagyítás.';
     $Self->{Translation}->{'Change and Workorder Templates'} = 'Változás és munkamegrendelés sablonok';
@@ -764,8 +765,8 @@ sub Data {
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = 'ITSM változás CAB sablonok.';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = 'ITSM változásfeltétel szerkesztés.';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = 'ITSM változásfeltétel áttekintés.';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = 'ITSM változásmenedzsment értesítések';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = 'ITSM változásmenedzser áttekintés.';
+    $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'ITSM változás PIR áttekintés.';
     $Self->{Translation}->{'ITSM Change notification rules'} = 'ITSM változás értesítési szabályok';
     $Self->{Translation}->{'ITSM Changes'} = 'ITSM változások';

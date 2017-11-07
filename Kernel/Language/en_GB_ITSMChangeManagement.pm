@@ -525,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Change Print.';
     $Self->{Translation}->{'Change Schedule'} = 'Change Schedule';
     $Self->{Translation}->{'Change Schedule.'} = 'Change Schedule.';
+    $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = 'Change Zoom.';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -764,8 +765,8 @@ sub Data {
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = 'ITSM Change CAB Templates.';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = 'ITSM Change Condition Edit.';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = 'ITSM Change Condition Overview.';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = 'ITSM Change Management Notifications';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = 'ITSM Change Manager Overview.';
+    $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'ITSM Change PIR Overview.';
     $Self->{Translation}->{'ITSM Change notification rules'} = 'ITSM Change notification rules';
     $Self->{Translation}->{'ITSM Changes'} = 'Changes';

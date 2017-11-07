@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMChangeManagement\n"
-"POT-Creation-Date: 2017-10-25 14:07+0000\n"
+"POT-Creation-Date: 2017-11-07 15:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1343,6 +1343,10 @@ msgid "Change Schedule."
 msgstr ""
 
 #. SysConfig
+msgid "Change Settings"
+msgstr ""
+
+#. SysConfig
 msgid "Change Zoom"
 msgstr ""
 
@@ -1923,11 +1927,11 @@ msgid "ITSM Change Condition Overview."
 msgstr ""
 
 #. SysConfig
-msgid "ITSM Change Management Notifications"
+msgid "ITSM Change Manager Overview."
 msgstr ""
 
 #. SysConfig
-msgid "ITSM Change Manager Overview."
+msgid "ITSM Change Notifications"
 msgstr ""
 
 #. SysConfig

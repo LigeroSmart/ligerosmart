@@ -67,7 +67,7 @@ sub Data {
     $Self->{Translation}->{'Add new condition'} = 'Agregar nueva condición';
 
     # Template: AgentITSMChangeConditionEdit
-    $Self->{Translation}->{'Edit Condition'} = '';
+    $Self->{Translation}->{'Edit Condition'} = 'Editar condición';
     $Self->{Translation}->{'Need a valid name.'} = 'Se requiere un nombre válido';
     $Self->{Translation}->{'A valid name is needed.'} = 'Se requiere un nombre valido.';
     $Self->{Translation}->{'Duplicate name:'} = 'Nombre duplicado:';
@@ -89,7 +89,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = '¿Realmente desea eliminar este Cambio?';
 
     # Template: AgentITSMChangeEdit
-    $Self->{Translation}->{'Edit %s%s'} = '';
+    $Self->{Translation}->{'Edit %s%s'} = 'Editar';
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Histórico de %s%s';
@@ -100,13 +100,13 @@ sub Data {
     $Self->{Translation}->{'Show workorder'} = 'Mostrar Orden de Trabajo';
 
     # Template: AgentITSMChangeHistoryZoom
-    $Self->{Translation}->{'Detailed history information of %s'} = '';
+    $Self->{Translation}->{'Detailed history information of %s'} = 'Información detallada de la historia';
     $Self->{Translation}->{'Modified'} = 'Modificado';
     $Self->{Translation}->{'Old Value'} = 'Valor Antiguo';
     $Self->{Translation}->{'New Value'} = 'Nuevo Valor';
 
     # Template: AgentITSMChangeInvolvedPersons
-    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = '';
+    $Self->{Translation}->{'Edit Involved Persons of %s%s'} = 'Editar personas involucradas de ';
     $Self->{Translation}->{'Involved Persons'} = 'Personas Involucradas';
     $Self->{Translation}->{'ChangeManager'} = 'Administrador de Cambios';
     $Self->{Translation}->{'User invalid.'} = 'El usuario no es válido.';
@@ -125,20 +125,20 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = 'Cambios por página';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'Workorder Title'} = '';
-    $Self->{Translation}->{'Change Title'} = '';
-    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Workorder Title'} = 'Título de la Orden de Trabajo';
+    $Self->{Translation}->{'Change Title'} = 'Cambiar Título';
+    $Self->{Translation}->{'Workorder Agent'} = 'Agente de la Orden de Trabajo';
     $Self->{Translation}->{'Change Builder'} = 'Constructor del Cambio';
     $Self->{Translation}->{'Change Manager'} = 'Administrador del Cambio';
     $Self->{Translation}->{'Workorders'} = 'Orden de Trabajo';
-    $Self->{Translation}->{'Change State'} = '';
-    $Self->{Translation}->{'Workorder State'} = '';
-    $Self->{Translation}->{'Workorder Type'} = '';
+    $Self->{Translation}->{'Change State'} = 'Cambiar Estado';
+    $Self->{Translation}->{'Workorder State'} = 'Estado de la Orden de Trabajo';
+    $Self->{Translation}->{'Workorder Type'} = 'Tipo de Orden de Trabajo';
     $Self->{Translation}->{'Requested Time'} = 'Fecha de Solicitud';
-    $Self->{Translation}->{'Planned Start Time'} = '';
-    $Self->{Translation}->{'Planned End Time'} = '';
-    $Self->{Translation}->{'Actual Start Time'} = '';
-    $Self->{Translation}->{'Actual End Time'} = '';
+    $Self->{Translation}->{'Planned Start Time'} = 'Fecha de inicio planificada';
+    $Self->{Translation}->{'Planned End Time'} = 'Fecha de fin planificada';
+    $Self->{Translation}->{'Actual Start Time'} = 'Fecha actual de inicio';
+    $Self->{Translation}->{'Actual End Time'} = 'Fecha actual de fin';
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Do you really want to reset this change?'} = '¿Realmente desea resetear este Cambio?';
@@ -148,10 +148,10 @@ sub Data {
     $Self->{Translation}->{'CAB Agent'} = 'Agente del CAB';
     $Self->{Translation}->{'e.g.'} = 'ej.';
     $Self->{Translation}->{'CAB Customer'} = 'Cliente del CAB';
-    $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
-    $Self->{Translation}->{'ITSM Workorder Report'} = '';
-    $Self->{Translation}->{'ITSM Change Priority'} = '';
-    $Self->{Translation}->{'ITSM Change Impact'} = '';
+    $Self->{Translation}->{'ITSM Workorder Instruction'} = 'ITSM instrucción de Orden de trabajo';
+    $Self->{Translation}->{'ITSM Workorder Report'} = 'ITSM informe de la Orden de trabajo';
+    $Self->{Translation}->{'ITSM Change Priority'} = 'ITSM Cambio de Prioridad';
+    $Self->{Translation}->{'ITSM Change Impact'} = 'ITSM Cambio de Impacto';
     $Self->{Translation}->{'Change Category'} = 'Categoría de Cambio';
     $Self->{Translation}->{'(before/after)'} = '(antes/después)';
     $Self->{Translation}->{'(between)'} = '(entre)';
@@ -169,8 +169,8 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = 'Información del Cambio';
-    $Self->{Translation}->{'Planned Effort'} = '';
-    $Self->{Translation}->{'Accounted Time'} = '';
+    $Self->{Translation}->{'Planned Effort'} = 'Esfuerzo planeado';
+    $Self->{Translation}->{'Accounted Time'} = 'Tiempo contabilizado';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Iniciador(es) de Cambio(s)';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Último cambio';
@@ -196,14 +196,14 @@ sub Data {
     $Self->{Translation}->{'Do you want to proceed?'} = '¿Desea proceder?';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'Template ID'} = '';
+    $Self->{Translation}->{'Template ID'} = 'Plantilla ID';
     $Self->{Translation}->{'Edit Content'} = 'Editar Contenido';
-    $Self->{Translation}->{'Create by'} = '';
-    $Self->{Translation}->{'Change by'} = '';
-    $Self->{Translation}->{'Change Time'} = '';
+    $Self->{Translation}->{'Create by'} = 'Creado por';
+    $Self->{Translation}->{'Change by'} = 'Cambiado por';
+    $Self->{Translation}->{'Change Time'} = 'Cambiar tiempo';
 
     # Template: AgentITSMWorkOrderAdd
-    $Self->{Translation}->{'Add Workorder to %s%s'} = '';
+    $Self->{Translation}->{'Add Workorder to %s%s'} = 'Añadir Orden de trabajo a %s%s';
     $Self->{Translation}->{'Instruction'} = 'Instrucción';
     $Self->{Translation}->{'Invalid workorder type.'} = 'Tipo de orden de trabajo inválido.';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = '¡La fecha planeada de inicio debe ser anterior a la de finalización!';
@@ -213,7 +213,7 @@ sub Data {
     $Self->{Translation}->{'Select Workorder Template'} = 'Seleccionar Plantilla de Orden de Trabajo';
 
     # Template: AgentITSMWorkOrderAgent
-    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = '';
+    $Self->{Translation}->{'Edit Workorder Agent of %s%s'} = 'Editar Agente de la Orden de trabajo de %s%s';
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = '¿Realmente desea eliminar esta orden de trabajo?';
@@ -222,16 +222,16 @@ sub Data {
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Esta orden de trabajo se usa en la(s) siguiente(s) condicion(es)';
 
     # Template: AgentITSMWorkOrderEdit
-    $Self->{Translation}->{'Edit %s%s-%s'} = '';
+    $Self->{Translation}->{'Edit %s%s-%s'} = 'Editar %s%s-%s';
     $Self->{Translation}->{'Move following workorders accordingly'} = 'Mover las siguientes ordenes de trabajo correspondientemente';
     $Self->{Translation}->{'If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly'} =
         'Si se cambia la hora de finalización prevista de esta orden de trabajo , las horas de inicio planificadas de todas las siguientes órdenes de trabajo se cambiarán en consecuencia';
 
     # Template: AgentITSMWorkOrderHistory
-    $Self->{Translation}->{'History of %s%s-%s'} = '';
+    $Self->{Translation}->{'History of %s%s-%s'} = 'Historial de %s%s-%s';
 
     # Template: AgentITSMWorkOrderReport
-    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = 'Editar informe de %s%s-%s';
     $Self->{Translation}->{'Report'} = 'Reporte';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = '¡La hora de inicio actual debe ser anterior a la de finalización!';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =
@@ -249,13 +249,13 @@ sub Data {
     $Self->{Translation}->{'Workorder Information'} = 'Información de la Orden de Trabajo';
 
     # Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
-    $Self->{Translation}->{'Notification Added!'} = '';
+    $Self->{Translation}->{'Notification Added!'} = '¡Añadida notificación!';
     $Self->{Translation}->{'Unknown notification %s!'} = '¡Notificación desconocida %s!';
     $Self->{Translation}->{'There was an error creating the notification.'} = 'Se produjo un error al crear la notificación.';
 
     # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
-    $Self->{Translation}->{'State Transition Updated!'} = '';
-    $Self->{Translation}->{'State Transition Added!'} = '';
+    $Self->{Translation}->{'State Transition Updated!'} = '¡Estado de transición actualizado!';
+    $Self->{Translation}->{'State Transition Added!'} = '¡Estado de transición añadido!';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = 'Resumen: Cambios ITSM';
@@ -263,59 +263,59 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
     $Self->{Translation}->{'Ticket with TicketID %s does not exist!'} = '¡El Ticket con la ID %s no existe!';
     $Self->{Translation}->{'Missing sysconfig option "ITSMChange::AddChangeLinkTicketTypes"!'} =
-        '';
+        'Falta la opción sysconfig "ITSMChange::AddChangeLinkTicketTypes"!';
     $Self->{Translation}->{'Was not able to add change!'} = 'No se pudo agregar el cambio!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
     $Self->{Translation}->{'Was not able to create change from template!'} = 'No se pudo crear el cambio desde la plantilla!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
-    $Self->{Translation}->{'No ChangeID is given!'} = '';
-    $Self->{Translation}->{'No change found for changeID %s.'} = '';
-    $Self->{Translation}->{'The CAB of change "%s" could not be serialized.'} = '';
+    $Self->{Translation}->{'No ChangeID is given!'} = 'No se ha dado ChangeID';
+    $Self->{Translation}->{'No change found for changeID %s.'} = 'No se encontró cambio paraChangeID %s';
+    $Self->{Translation}->{'The CAB of change "%s" could not be serialized.'} = 'El CAB de cambio "%s" no pudo ser serializado.';
     $Self->{Translation}->{'Could not add the template.'} = 'No se pudo agregar la plantilla.';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
-    $Self->{Translation}->{'Change "%s" not found in database!'} = '';
-    $Self->{Translation}->{'Could not delete ConditionID %s!'} = '';
+    $Self->{Translation}->{'Change "%s" not found in database!'} = '¡Cambio "%s" no se encontró en la base de datos!';
+    $Self->{Translation}->{'Could not delete ConditionID %s!'} = '¡No se pudo borrar la ConditionID %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
     $Self->{Translation}->{'No %s is given!'} = '¡No se indica el %s!';
-    $Self->{Translation}->{'Could not create new condition!'} = '';
-    $Self->{Translation}->{'Could not update ConditionID %s!'} = '';
-    $Self->{Translation}->{'Could not update ExpressionID %s!'} = '';
-    $Self->{Translation}->{'Could not add new Expression!'} = '';
-    $Self->{Translation}->{'Could not update ActionID %s!'} = '';
-    $Self->{Translation}->{'Could not add new Action!'} = '';
-    $Self->{Translation}->{'Could not delete ExpressionID %s!'} = '';
-    $Self->{Translation}->{'Could not delete ActionID %s!'} = '';
-    $Self->{Translation}->{'Error: Unknown field type "%s"!'} = '';
-    $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = '';
+    $Self->{Translation}->{'Could not create new condition!'} = '¡No se pudo crear una nuevo condición!';
+    $Self->{Translation}->{'Could not update ConditionID %s!'} = '¡No se pudo actualizar la ConditionID%s!';
+    $Self->{Translation}->{'Could not update ExpressionID %s!'} = '¡No se pudo actualizar la ExpressionID%s!';
+    $Self->{Translation}->{'Could not add new Expression!'} = '¡No se pudo añadir una nueva expresión!';
+    $Self->{Translation}->{'Could not update ActionID %s!'} = '¡No se pudo actualizar ActionID%s¡';
+    $Self->{Translation}->{'Could not add new Action!'} = '¡No se pudo añadir Nueva Acción!';
+    $Self->{Translation}->{'Could not delete ExpressionID %s!'} = '¡No se pudo borrar ExpressionID%s!';
+    $Self->{Translation}->{'Could not delete ActionID %s!'} = '¡No se pudo borrar ActionID%s!';
+    $Self->{Translation}->{'Error: Unknown field type "%s"!'} = '¡Error: Tipo de campo desconocido "%s"!';
+    $Self->{Translation}->{'ConditionID %s does not belong to the given ChangeID %s!'} = '¡ConditionID %s no pertenece al ChangeID%s facilitado!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
     $Self->{Translation}->{'Change "%s" does not have an allowed change state to be deleted!'} =
-        '';
-    $Self->{Translation}->{'Was not able to delete the changeID %s!'} = '';
+        '¡Cambio "%s" no dispone de un cambio de estado permitido para ser borrado!';
+    $Self->{Translation}->{'Was not able to delete the changeID %s!'} = '¡No fue posible borrar el ChangeID%s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
     $Self->{Translation}->{'Was not able to update Change!'} = 'No se pudo actualizar el Cambio!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = '';
-    $Self->{Translation}->{'Change "%s" not found in the database!'} = '';
-    $Self->{Translation}->{'Unknown type "%s" encountered!'} = '';
+    $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = '¡No se puede mostrar el historial, ya que no se ha facilitado el ChangeID!';
+    $Self->{Translation}->{'Change "%s" not found in the database!'} = '¡Cambio "%s" no se encontró en la base de datos!';
+    $Self->{Translation}->{'Unknown type "%s" encountered!'} = '¡Tipo desconocido "%s" encontrado!';
     $Self->{Translation}->{'Change History'} = 'Historial de cambio';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
-    $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = '';
-    $Self->{Translation}->{'HistoryEntry "%s" not found in database!'} = '';
+    $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = '¡No se puede mostrar el historial del zoom, no se ha facilitado HistoryEntryID!';
+    $Self->{Translation}->{'HistoryEntry "%s" not found in database!'} = '¡Historial de entrada "%s" no se encontró en la base de datos!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
-    $Self->{Translation}->{'Was not able to update Change CAB for Change %s!'} = '';
-    $Self->{Translation}->{'Was not able to update Change %s!'} = '';
+    $Self->{Translation}->{'Was not able to update Change CAB for Change %s!'} = '¡No se pudo actualizar el CAB de Cambio para el Cambio %s!';
+    $Self->{Translation}->{'Was not able to update Change %s!'} = '¡No fue posible actualizar el Cambio %s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
-    $Self->{Translation}->{'Overview: ChangeManager'} = '';
+    $Self->{Translation}->{'Overview: ChangeManager'} = 'Resumen: CambioManager';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
     $Self->{Translation}->{'Overview: My CAB'} = 'Resumen: Mi CAB';
@@ -333,22 +333,22 @@ sub Data {
     $Self->{Translation}->{'Overview: PSA'} = 'Resumen: PSA';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
-    $Self->{Translation}->{'WorkOrder "%s" not found in database!'} = '';
+    $Self->{Translation}->{'WorkOrder "%s" not found in database!'} = '¡Orden de trabajo "%s" no se encontró en la base de datos!';
     $Self->{Translation}->{'Can\'t create output, as the workorder is not attached to a change!'} =
-        '';
-    $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
-    $Self->{Translation}->{'unknown change title'} = '';
+        '¡No se puede crear la salida, ya que la Orden de trabajo no está adjunto a un cambio!';
+    $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '¡No se puede crear la salida, ya que no se ha facilitado el ChangeID!';
+    $Self->{Translation}->{'unknown change title'} = 'Título del cambio desconocido';
     $Self->{Translation}->{'ITSM Workorder'} = 'Orden de Trabajo ITSM';
-    $Self->{Translation}->{'unknown workorder title'} = '';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
+    $Self->{Translation}->{'unknown workorder title'} = 'Título de la Orden de trabajo desconocido';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM Resumen de la orden de trabajo (%s)';
     $Self->{Translation}->{'PlannedStartTime'} = 'Fecha de Inicio Planeado';
     $Self->{Translation}->{'PlannedEndTime'} = 'Fecha de Finalización Planeada';
     $Self->{Translation}->{'ActualStartTime'} = 'Fecha de Inicio Real';
     $Self->{Translation}->{'ActualEndTime'} = 'Fecha de Finalización Real';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
-    $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
-    $Self->{Translation}->{'Was not able to reset Change %s!'} = '';
+    $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '¡No fue posible restablecer la Orden de trabajo %s del cambio %s!';
+    $Self->{Translation}->{'Was not able to reset Change %s!'} = '¡No fue posible restablecer el cambio%s!';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
     $Self->{Translation}->{'Overview: Change Schedule'} = '';
@@ -525,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '';
     $Self->{Translation}->{'Change Schedule'} = 'Cambiar Programación';
     $Self->{Translation}->{'Change Schedule.'} = '';
+    $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = '';
     $Self->{Translation}->{'Change Zoom.'} = 'Ampliación del Cambio.';
     $Self->{Translation}->{'Change and Workorder Templates'} = '';
@@ -764,8 +765,8 @@ sub Data {
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = '';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = '';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = '';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
+    $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
     $Self->{Translation}->{'ITSM Changes'} = 'Cambios';

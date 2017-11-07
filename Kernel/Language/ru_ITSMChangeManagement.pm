@@ -525,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Печать Изменения.';
     $Self->{Translation}->{'Change Schedule'} = 'Планировщик изменений';
     $Self->{Translation}->{'Change Schedule.'} = 'Изменение расписания.';
+    $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = 'Подробный просмотр изменения';
     $Self->{Translation}->{'Change Zoom.'} = 'Подробный просмотр Изменения.';
     $Self->{Translation}->{'Change and Workorder Templates'} = 'Шаблоны изменений и задач';
@@ -764,8 +765,8 @@ sub Data {
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = 'Шаблоны для ITSM CAB.';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = 'Редактирование Условий для Изменений ITSM.';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = 'Обзор Условий для Изменений ITSM.';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = 'Уведомления в ITSM Управление Изменениями';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = 'Обзор Управляющих Изменениями в ITSM ';
+    $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'Обзор ITSM Change PIR';
     $Self->{Translation}->{'ITSM Change notification rules'} = 'Правила Уведомления в Управлении Изменениями';
     $Self->{Translation}->{'ITSM Changes'} = 'Изменения';

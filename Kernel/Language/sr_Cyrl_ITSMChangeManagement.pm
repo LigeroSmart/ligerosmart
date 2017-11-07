@@ -525,6 +525,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = 'Штампа промене.';
     $Self->{Translation}->{'Change Schedule'} = 'Планер промена';
     $Self->{Translation}->{'Change Schedule.'} = 'Планер промена.';
+    $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = 'Детаљи промене.';
     $Self->{Translation}->{'Change Zoom.'} = 'Детаљи промене.';
     $Self->{Translation}->{'Change and Workorder Templates'} = 'Измени шаблоне радног налога';
@@ -764,8 +765,8 @@ sub Data {
     $Self->{Translation}->{'ITSM Change CAB Templates.'} = 'ITSM шаблони промена CAB';
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = 'ITSM уређивање услова промене.';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = 'ITSM преглед услова промене.';
-    $Self->{Translation}->{'ITSM Change Management Notifications'} = 'Обавештења у ITSM управљању променама';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = 'ITSM преглед промена.';
+    $Self->{Translation}->{'ITSM Change Notifications'} = '';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = 'ITSM преглед PIR промена.';
     $Self->{Translation}->{'ITSM Change notification rules'} = 'ITSM правила обавештавања о промени.';
     $Self->{Translation}->{'ITSM Changes'} = 'ITSM промене';

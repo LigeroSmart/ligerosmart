@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-10-10 13:59+0000\n"
-"PO-Revision-Date: 2017-10-17 00:48+0000\n"
+"PO-Revision-Date: 2017-11-06 05:34+0000\n"
 "Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -474,11 +474,11 @@ msgstr "変更情報"
 
 #. Template: AgentITSMChangeZoom
 msgid "Planned Effort"
-msgstr ""
+msgstr "計画的な取り組み"
 
 #. Template: AgentITSMChangeZoom
 msgid "Accounted Time"
-msgstr ""
+msgstr "所要時間"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
@@ -565,7 +565,7 @@ msgstr "変更日時"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to %s%s"
-msgstr ""
+msgstr "%s%sに作業依頼書を追加"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Instruction"
@@ -980,7 +980,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "Add a workorder first."
-msgstr ""
+msgstr "作業依頼書を最初に追加します。"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeTimeSlot.pm
 msgid "Can't move a change which already has started!"
@@ -1044,7 +1044,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAdd.pm
 msgid "Was not able to add workorder!"
-msgstr ""
+msgstr "作業依頼書を追加できませんでした！"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderAgent.pm
 msgid "No WorkOrderID is given!"
@@ -1272,11 +1272,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Add Workorder"
-msgstr "作業オーダーを追加"
+msgstr "作業依頼者を追加"
 
 #. SysConfig
 msgid "Add Workorder (from Template)"
-msgstr ""
+msgstr "作業依頼者（テンプレートから）を追加"
 
 #. SysConfig
 msgid "Add a change from template."
@@ -1292,7 +1292,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Add a workorder to the change."
-msgstr ""
+msgstr "変更の作業依頼書を追加します。"
 
 #. SysConfig
 msgid "Add from template"
@@ -1495,7 +1495,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines if it will be possible to print the planned effort."
-msgstr ""
+msgstr "計画された作業を印刷できるかどうかを定義します。"
 
 #. SysConfig
 msgid ""
@@ -2810,11 +2810,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Workorder Add (from template)."
-msgstr "(テンプレートから)作業オーダーを追加します。"
+msgstr "作業依頼書(テンプレートから)を追加します。"
 
 #. SysConfig
 msgid "Workorder Add."
-msgstr "作業オーダーを追加します。"
+msgstr "作業依頼書を追加します。"
 
 #. SysConfig
 msgid "Workorder Agent."
