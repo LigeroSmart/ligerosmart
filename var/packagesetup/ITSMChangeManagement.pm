@@ -3864,22 +3864,22 @@ sub _MigrateConfigs {
 
     # migrate NavBar menu modules
     # get setting content for NavBar menu modules
-    my $Setting = $ConfigObject->Get('Frontend::Module');
+    my $Setting = $ConfigObject->Get('Frontend::NavigationModule');
 
     NAVBARMODULE:
     for my $ModuleAdmin ( sort keys %{$Setting} ) {
 
         # update module location
-        my $Module = $Setting->{$ModuleAdmin}->{NavBarModule}->{'Module'} // '';
+        my $Module = $Setting->{$ModuleAdmin}->{'Module'} // '';
 
         if ( $Module !~ m{Kernel::Output::HTML::NavBar(\w+)} ) {
             next NAVBARMODULE;
         }
-        $Setting->{$ModuleAdmin}->{NavBarModule}->{'Module'} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
+        $Setting->{$ModuleAdmin}->{'Module'} = "Kernel::Output::HTML::NavBar::ModuleAdmin";
 
         # Build new setting.
         push @NewSettings, {
-            Name           => 'Frontend::Module###' . $ModuleAdmin,
+            Name           => 'Frontend::NavigationModule###' . $ModuleAdmin,
             EffectiveValue => $Setting->{$ModuleAdmin},
         };
     }
