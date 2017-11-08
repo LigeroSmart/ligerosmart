@@ -1,4 +1,6 @@
-#6.0.0.beta2 2017-??-??
+#6.0.1 2017-??-??
+
+#6.0.0.rc1 2017-11-14
  - 2017-11-07 Updated translations, thanks to all translators.
  - 2017-10-27 Removed access key for survey overview screen in order to avoid conflicts.
 
