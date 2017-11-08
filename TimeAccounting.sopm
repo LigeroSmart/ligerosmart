@@ -263,6 +263,9 @@
         <b>NOTICE</b>
         <br>
         <br>
+        In order to grant users access to the time accounting 'settings' and 'reporting' features, you need to add them as 'admin'.
+        <br>
+        <br>
         The menu items that were added by this package will be visible after you log-in to the system again.
         <br>
         <br>

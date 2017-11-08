@@ -162,6 +162,7 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
+                            <Item>admin</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
@@ -203,7 +204,7 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item></Item>
+                        <Item>admin</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
@@ -230,6 +231,7 @@
                 <Hash>
                     <Item Key="Group">
                         <Array>
+                            <Item>admin</Item>
                         </Array>
                     </Item>
                     <Item Key="GroupRo">
@@ -269,7 +271,7 @@
             <Hash>
                 <Item Key="Group">
                     <Array>
-                        <Item></Item>
+                        <Item>admin</Item>
                     </Array>
                 </Item>
                 <Item Key="GroupRo">
