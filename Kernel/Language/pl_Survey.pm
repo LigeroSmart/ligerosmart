@@ -22,10 +22,10 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Treść powiadomienia';
     $Self->{Translation}->{'Ticket Types'} = 'Typy zgłoszeń';
     $Self->{Translation}->{'Internal Description'} = 'Wewnętrzny opis';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Customer conditions'} = 'Warunki klienta';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'Wybierz właściwości klienta aby dodać warunek.';
+    $Self->{Translation}->{'Public survey key'} = 'Klucz ankiety publicznej';
+    $Self->{Translation}->{'Example survey'} = 'Przykładowa ankieta';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Edytuj informacje ogólne';
@@ -59,9 +59,9 @@ sub Data {
     $Self->{Translation}->{'Survey overview options'} = '';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
         '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+    $Self->{Translation}->{'Survey Create Time'} = 'Czas utworzenia ankiety';
+    $Self->{Translation}->{'No restriction'} = 'Bez ograniczeń';
+    $Self->{Translation}->{'Only surveys created between'} = 'Tylko ankiety utworzone między';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Maks. liczba wyświetlanych ankiet na stronę';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,10 +72,10 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Przegląd statystyki';
     $Self->{Translation}->{'Requests Table'} = 'Tabela żądań';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Zaznacz wszystkie żądania';
     $Self->{Translation}->{'Send Time'} = 'Czas wysłania';
     $Self->{Translation}->{'Vote Time'} = 'Czas głosowania';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Zaznacz to żądanie';
     $Self->{Translation}->{'See Details'} = 'Zobacz szczegóły';
     $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Szczegóły statystyki';
@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Wysłane żądania';
     $Self->{Translation}->{'Received surveys'} = 'Otrzymane ankiety';
     $Self->{Translation}->{'Survey Details'} = 'Szczegóły ankiety';
-    $Self->{Translation}->{'Number'} = 'Liczba';
     $Self->{Translation}->{'Ticket Services'} = 'Zgłoszenie Usług';
     $Self->{Translation}->{'Survey Results Graph'} = 'Wykres wyników ankiety';
     $Self->{Translation}->{'No stat results.'} = 'Brak wyników ankiety.';
@@ -186,7 +185,6 @@ sub Data {
         'Definiuje widoczne kolumny w przeglądzie ankiet. Ta opcja nie wpływa na pozycję kolumn.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = 'Edytuj informacje ogólne ankiety.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Edytuj pytania ankiety.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

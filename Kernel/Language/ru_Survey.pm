@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Отправленные запросы';
     $Self->{Translation}->{'Received surveys'} = 'Полученные опросы';
     $Self->{Translation}->{'Survey Details'} = 'Информаия по опросу';
-    $Self->{Translation}->{'Number'} = 'Число';
     $Self->{Translation}->{'Ticket Services'} = 'Сервисы заявок';
     $Self->{Translation}->{'Survey Results Graph'} = 'Результаты опроса в графике';
     $Self->{Translation}->{'No stat results.'} = 'Статистики нет.';
@@ -186,7 +185,6 @@ sub Data {
         'Задает перечень колонок, отображаемых в обзоре Опросов. Этот параметр не влияет на порядок колонок.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = 'Правка вопросов опроса';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

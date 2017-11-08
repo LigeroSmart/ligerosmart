@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Послати захтеви';
     $Self->{Translation}->{'Received surveys'} = 'Примљене анкете';
     $Self->{Translation}->{'Survey Details'} = 'Детаљи анкете';
-    $Self->{Translation}->{'Number'} = 'Број';
     $Self->{Translation}->{'Ticket Services'} = 'Услуге за тикет';
     $Self->{Translation}->{'Survey Results Graph'} = 'Графикон резултата анкете';
     $Self->{Translation}->{'No stat results.'} = 'Нема статистике резултата.';
@@ -186,7 +185,6 @@ sub Data {
         'Дефинише приказане колоне у прегледу анкете. Ова опције нема утицај на позиције колона.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = 'Уреди опште информације о анкети.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Уреди анкетна питања.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

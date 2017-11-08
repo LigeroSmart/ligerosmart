@@ -1,13 +1,14 @@
 # 
 # Translators:
 # Kentaro Hori <kentaro0919@gmail.com>, 2014-2015
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
 # Norihiro Tanaka <noritnk@kcn.ne.jp>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-09-29 15:35+0000\n"
+"PO-Revision-Date: 2017-11-06 06:09+0000\n"
+"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,7 +18,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr "新規調査の作成"
+msgstr "新規アンケートの作成"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
@@ -25,7 +26,7 @@ msgstr "紹介文"
 
 #. Template: AgentSurveyAdd
 msgid "Survey Introduction"
-msgstr "調査の紹介文"
+msgstr "アンケートの紹介文"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -41,19 +42,19 @@ msgstr "内部向け説明"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "お客様の条件"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "条件を追加するには、顧客プロパティを選択して下さい。"
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "公開アンケートキー"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "アンケート例"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -69,7 +70,7 @@ msgstr "あなたの現在地"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
-msgstr "調査質問"
+msgstr "アンケート質問"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
@@ -97,11 +98,11 @@ msgstr "回答が必須の項目です"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "このサーベイ設問の編集が完了したら、画面を閉じてください。"
+msgstr "このアンケートの設問を編集したら、画面を閉じて下さい。"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "このウインドウを閉じて下さい。"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -145,26 +146,26 @@ msgstr "回答:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "アンケートの概要オプション"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "Number、Title、Introduction、Description、NotificationSender、NotificationSubject、NotificationBodyの各属性を検索し、同じ名前の他の属性をオーバーライドします。"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "アンケート作成時間"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "制限なし"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "期間に作成されたアンケートのみ"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -192,7 +193,7 @@ msgstr "回答一覧"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "全てのリクエストを選択して下さい。"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -204,7 +205,7 @@ msgstr "返信日時"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "このリクエストを選択して下さい。"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -212,11 +213,11 @@ msgstr "詳細を確認"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "統計を削除"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
-msgstr "調査統計の詳細"
+msgstr "アンケート統計の詳細"
 
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
@@ -224,15 +225,15 @@ msgstr "統計一覧に戻る"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "前の投票"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "次の投票"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
-msgstr "調査の情報"
+msgstr "アンケートの情報"
 
 #. Template: AgentSurveyZoom
 msgid "Sent requests"
@@ -244,11 +245,7 @@ msgstr "返信数"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
-msgstr "調査の詳細"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "番号"
+msgstr "アンケートの詳細"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -256,7 +253,7 @@ msgstr "チケット・サービス"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
-msgstr "調査結果のグラフ"
+msgstr "アンケート結果のグラフ"
 
 #. Template: AgentSurveyZoom
 msgid "No stat results."
@@ -280,35 +277,35 @@ msgstr "これらは過去に回答されたものです。"
 
 #. Template: PublicSurvey
 msgid "Survey Title"
-msgstr "調査のタイトル"
+msgstr "アンケートのタイトル"
 
 #. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
 msgid "Add New Survey"
-msgstr "新規調査の追加"
+msgstr "新規アンケートの追加"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
-msgstr ""
+msgstr "あなたはこのアンケートの権限がありません！"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "No SurveyID is given!"
-msgstr ""
+msgstr "SurveyIDが指定されていません！"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
-msgstr "調査の編集"
+msgstr "アンケートの編集"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
-msgstr ""
+msgstr "あなたはこのアンケートや質問の権限がありません！"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey, question or answer!"
-msgstr ""
+msgstr "あなたはこのアンケート、質問、または回答の権限がありません！"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Survey Edit Questions"
-msgstr "調査質問の編集"
+msgstr "アンケートの質問を編集"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Yes/No"
@@ -324,7 +321,7 @@ msgstr "チェックボックス (一覧)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "ネット・プロモーター・スコア"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -356,7 +353,7 @@ msgstr "新しい状況"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Survey Description"
-msgstr "調査の説明"
+msgstr "アンケートの説明"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "answered"
@@ -376,45 +373,45 @@ msgstr "調査が完了しました。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
-msgstr ""
+msgstr "アンケートのメッセージ!"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Module not enabled."
-msgstr ""
+msgstr "モジュールが有効になっていません。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "This functionality is not enabled, please contact your administrator."
-msgstr ""
+msgstr "この機能は有効になっていません。管理者に連絡して下さい。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Error!"
-msgstr ""
+msgstr "調査のエラー！"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Invalid survey key."
-msgstr ""
+msgstr "アンケート・キーが無効です。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid ""
 "The inserted survey key is invalid, if you followed a link maybe this is "
 "obsolete or broken."
-msgstr ""
+msgstr "挿入されたアンケート・キーは無効です。リンクをたどった場合、これは時代遅れであるか破損している可能性があります。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote"
-msgstr ""
+msgstr "アンケート投票"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
-msgstr ""
+msgstr "アンケート投票データ"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "You have already answered the survey."
-msgstr "調査に回答済みです。"
+msgstr "アンケートに回答済みです。"
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "アンケート・リスト"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -432,11 +429,11 @@ msgstr "調査モジュール"
 
 #. SysConfig
 msgid "A module to edit survey questions."
-msgstr "調査質問を編集するモジュール"
+msgstr "アンケート質問を編集するモジュール"
 
 #. SysConfig
 msgid "All parameters for the Survey object in the agent interface."
-msgstr "担当者インタフェースにおける調査オブジェクトに対する全てのパラメータ"
+msgstr "担当者インタフェースにおけるアンケート・オブジェクトに対する全てのパラメータ"
 
 #. SysConfig
 msgid ""
@@ -466,11 +463,11 @@ msgstr "調査一覧(S)を表示するための一覧モジュールの定義"
 msgid ""
 "Defines groups which have a permission to change survey status. Array is "
 "empty by default and agents from all groups can change survey status."
-msgstr ""
+msgstr "アンケートのステータスを変更する権限を持つグループを定義します。 アレイはデフォルトでは空で、全てのグループの担当者がアンケートのステータスを変更できます。"
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "アンケートが実際の顧客に送信されるかどうかを定義します。"
 
 #. SysConfig
 msgid ""
@@ -484,13 +481,13 @@ msgid ""
 " of a survey, ( 0 means send immediately after close ). Note: delayed survey"
 " sending is done by the OTRS Daemon, prior activation of "
 "'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr ""
+msgstr "アンケートの送信をトリガーするためにチケットをクローズする時間数を定義します（0はクローズ直後に送信されます）。 注：遅延アンケート送信は、OTRSデーモンによって実行され、事前に 'Daemon :: SchedulerCronTaskManager :: Task ### SurveyRequestsSend'の設定が有効になっています。"
 
 #. SysConfig
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "送信条件を作成するためのドロップダウンリストの列を定義します。（0 =>無効、1 =>有効）"
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -498,11 +495,11 @@ msgstr "調査拡大画面の要素に対してリッチテキストに対する
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "アンケート統計を削除できるグループ（rw）を定義します。"
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
-msgstr ""
+msgstr "SurveyZoom要素のリッチテキストビューの最大高さを定義します。"
 
 #. SysConfig
 msgid ""
@@ -512,19 +509,15 @@ msgstr "調査一覧で表示される列数を定義します。このオプシ
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "統計モジュールが調査リストを生成するかどうかを決定します。"
 
 #. SysConfig
 msgid "Edit survey general information."
-msgstr ""
+msgstr "アンケート一般情報を編集"
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "アンケートの質問を修正"
 
 #. SysConfig
 msgid ""
@@ -582,7 +575,7 @@ msgid ""
 "Results older than the configured amount of days will be deleted. Note: "
 "delete results done by the OTRS Daemon, prior activation of "
 "'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "設定された日数より古い結果は削除されます。 注： 'Task ### SurveyRequestsDelete'設定を有効にする前に、OTRSデーモンによって行われた結果を削除して下さい。"
 
 #. SysConfig
 msgid ""
@@ -614,31 +607,31 @@ msgstr "統計の詳細"
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr "サーベイモジュール追加"
+msgstr "アンケートモジュール追加"
 
 #. SysConfig
 msgid "Survey Edit Module."
-msgstr "統計編集モジュール"
+msgstr "アンケート編集モジュール"
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
-msgstr "調査一覧(S)の表示数"
+msgstr "アンケート一覧(S)の表示数"
 
 #. SysConfig
 msgid "Survey Stats Module."
-msgstr "統計調査モジュール"
+msgstr "アンケート統計モジュール"
 
 #. SysConfig
 msgid "Survey Zoom Module."
-msgstr "調査の拡大モジュール"
+msgstr "アンケート・ズーム・モジュール"
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr ""
+msgstr "アンケートの一覧「小」に関する1ページあたりのアンケートの上限"
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
-msgstr "調査は設定された電子メールアドレスには送信されません。"
+msgstr "アンケートは設定された電子メールアドレスには送信されません。"
 
 #. SysConfig
 msgid ""
@@ -648,7 +641,7 @@ msgstr "例えばSurvey#, MySurvey#などのチケットの識別子です。デ
 
 #. SysConfig
 msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
+msgstr "アンケートのSurveyOverviewSmallPageShownの説明です。"
 
 #. SysConfig
 msgid ""
@@ -658,12 +651,12 @@ msgstr "チケットが完了した際に、顧客に自動的に調査メール
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "（投票データとリクエストを含む）結果を削除する。"
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr "追ってのサーベイ要求を送信するトリガ。"
+msgstr "追ってのアンケート要求を送信するトリガ"
 
 #. SysConfig
 msgid "Zoom into statistics details."
-msgstr ""
+msgstr "統計情報の詳細をズームインする。"

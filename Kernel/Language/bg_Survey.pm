@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Изпратени искания';
     $Self->{Translation}->{'Received surveys'} = 'Получени проучвания';
     $Self->{Translation}->{'Survey Details'} = 'Данни за изследването';
-    $Self->{Translation}->{'Number'} = 'Номер';
     $Self->{Translation}->{'Ticket Services'} = 'Билетни услуги';
     $Self->{Translation}->{'Survey Results Graph'} = 'Графика на резултатите от изследването';
     $Self->{Translation}->{'No stat results.'} = 'Няма статически резултати';
@@ -186,7 +185,6 @@ sub Data {
         'Колоните за показване в общия преглед на изследването. Тази опция няма влияние върху позицията на колоните.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = 'Редактиране на общата информация за проучването.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Редактирайте въпросите на изследването.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

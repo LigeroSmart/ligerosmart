@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Gửi yêu cầu';
     $Self->{Translation}->{'Received surveys'} = 'Nhận khảo sát';
     $Self->{Translation}->{'Survey Details'} = 'Chi tiết khảo sát';
-    $Self->{Translation}->{'Number'} = 'Số';
     $Self->{Translation}->{'Ticket Services'} = 'Dịch vụ phiếu yêu cầu';
     $Self->{Translation}->{'Survey Results Graph'} = 'Đồ thì kết quả khảo sát';
     $Self->{Translation}->{'No stat results.'} = 'Không có kết qủa thống kê.';
@@ -186,7 +185,6 @@ sub Data {
         'Định nghĩa số cột hiển thị trong màn hình tổng quát. Tuỳ chọn này không ảnh hưởng đến vị trí của cột.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

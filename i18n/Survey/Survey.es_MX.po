@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-09-29 15:35+0000\n"
+"PO-Revision-Date: 2017-10-24 02:10+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,19 +42,19 @@ msgstr "Descripción Interna"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Condiciones del cliente"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Por favor elija una propiedad del Cliente para añadir la condición."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Llave púbica de la encuesta"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Ejemplo de encuesta"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -102,7 +102,7 @@ msgstr "Cuando haya terminado de editar su encuesta solo cierre esta pantalla."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Cerrar esta ventana"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -146,26 +146,26 @@ msgstr "Respuesta:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Opciones de la vista general de las encuenstas"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "Busca en los atributos Número, Título, Introducción, Descripción, Remitente de Notification, Asunto de la Notificación, y Cuerpo de la notificación, sobre escribiendo otros atributos con el mismo nombre."
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Fecha de Creación del la Encuesta"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Sin restricciones"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Solo encuestas creadas entre"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -193,7 +193,7 @@ msgstr "Tabla de Solicitudes"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Seleccionar todas las peticiones"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -205,7 +205,7 @@ msgstr "Tiempo de Voto"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Seleccionar esta petición"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -213,7 +213,7 @@ msgstr "Ver Detalles"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Eliminar estadísticas"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -225,11 +225,11 @@ msgstr "regresar a resúmen de estadisticas"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Voto previo"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Siguiente voto"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -246,10 +246,6 @@ msgstr "Solicitudes recibidas"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Detalles de Encuesta"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Número"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -325,7 +321,7 @@ msgstr "Casilla de verificación (lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "Puntaje Promotor Neto"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -415,7 +411,7 @@ msgstr "Usted ya ha contestado esta encuesta."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Lista de Encuestas"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -467,11 +463,11 @@ msgstr "Define una módulo resumen para mostrar la vista pequeña de la lista de
 msgid ""
 "Defines groups which have a permission to change survey status. Array is "
 "empty by default and agents from all groups can change survey status."
-msgstr ""
+msgstr "Define los grupos que tienen permisos para cambiar el estado de las encuestas. La lista esta vacía por omisión y los agentes de todos los grupos pueden cambiar el estado de las encuestas."
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "Define si las peticiones de encuestas serán mandadas solo a los clientes reales."
 
 #. SysConfig
 msgid ""
@@ -485,13 +481,13 @@ msgid ""
 " of a survey, ( 0 means send immediately after close ). Note: delayed survey"
 " sending is done by the OTRS Daemon, prior activation of "
 "'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr ""
+msgstr "Define la cantidad de horas que tiene que tener cerrar un ticket para disparar el envío de una encuesta, (0 significa mandar inmediatamente al cerrar). Nota: el envío retardado es realizado por el \"OTRS Daemon\" una vez activado el ajuste 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'."
 
 #. SysConfig
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "Define las columnas de la lista desplegable para construir las condiciones de envío ( 0 => inactivo, 1 => activo)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -499,7 +495,7 @@ msgstr "Define la altura predefinida para la vista de texto enriquecido para los
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "Define los grupos (rw) que podrán eliminar las estadísticas de las encuestas."
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -513,11 +509,7 @@ msgstr "Define las columnas que se mostrarán en el resumen de encuestas. Esta o
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Determina si el módulo de estadísticas pueda generar listas de encuestas."
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -583,7 +575,7 @@ msgid ""
 "Results older than the configured amount of days will be deleted. Note: "
 "delete results done by the OTRS Daemon, prior activation of "
 "'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "Los resultados más antiguos que la cantidad de días configurados, serán eliminados. Nota: eliminar los resultados es realizado por el \"OTRS Daemon\" previa activación del ajuste 'Task###SurveyRequestsDelete'."
 
 #. SysConfig
 msgid ""
@@ -649,7 +641,7 @@ msgstr "El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defe
 
 #. SysConfig
 msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
+msgstr "Esta es una descripción de \"SurveyOverviewSmallPageShown\" en la Encuesta."
 
 #. SysConfig
 msgid ""
@@ -659,7 +651,7 @@ msgstr "Módulo de evento de ticket que manda correos electrónicos de encuestas
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "Dispara la eliminación de resultados (incluyendo datos de votos y peticiones)."
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

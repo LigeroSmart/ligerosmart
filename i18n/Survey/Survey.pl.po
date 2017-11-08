@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-09-29 15:35+0000\n"
+"PO-Revision-Date: 2017-10-20 09:48+0000\n"
+"Last-Translator: Daniel Lisiecki\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,19 +41,19 @@ msgstr "Wewnętrzny opis"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Warunki klienta"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Wybierz właściwości klienta aby dodać warunek."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Klucz ankiety publicznej"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Przykładowa ankieta"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -156,15 +156,15 @@ msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Czas utworzenia ankiety"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Bez ograniczeń"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Tylko ankiety utworzone między"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -192,7 +192,7 @@ msgstr "Tabela żądań"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Zaznacz wszystkie żądania"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -204,7 +204,7 @@ msgstr "Czas głosowania"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Zaznacz to żądanie"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -245,10 +245,6 @@ msgstr "Otrzymane ankiety"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Szczegóły ankiety"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Liczba"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -512,10 +508,6 @@ msgstr "Definiuje widoczne kolumny w przeglądzie ankiet. Ta opcja nie wpływa n
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
 msgstr ""
 
 #. SysConfig

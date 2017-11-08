@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-07-17 07:31+0000\n"
-"PO-Revision-Date: 2017-07-17 12:35+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2017-09-29 15:35+0000\n"
+"PO-Revision-Date: 2017-09-29 15:36+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,8 +31,28 @@ msgid "Notification Body"
 msgstr "通知正文"
 
 #. Template: AgentSurveyAdd
+msgid "Ticket Types"
+msgstr "工單類型"
+
+#. Template: AgentSurveyAdd
 msgid "Internal Description"
 msgstr "内部描述"
+
+#. Template: AgentSurveyAdd
+msgid "Customer conditions"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Please choose a Customer property to add a condition."
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Public survey key"
+msgstr ""
+
+#. Template: AgentSurveyAdd
+msgid "Example survey"
+msgstr ""
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -41,6 +61,10 @@ msgstr "編輯一般信息"
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
 msgstr "編輯問題"
+
+#. Template: AgentSurveyEditQuestions
+msgid "You are here"
+msgstr "您在此"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -75,12 +99,6 @@ msgid "When you finish to edit the survey questions just close this screen."
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
-msgid ""
-"Do you really want to delete this question? ALL associated data will be "
-"LOST!"
-msgstr ""
-
-#. Template: AgentSurveyEditQuestions
 msgid "Close this window"
 msgstr ""
 
@@ -109,10 +127,6 @@ msgid "No answers saved for this question."
 msgstr ""
 
 #. Template: AgentSurveyEditQuestions
-msgid "Do you really want to delete this answer?"
-msgstr "您確定要刪除此答案？"
-
-#. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
 msgstr ""
 
@@ -127,6 +141,29 @@ msgstr "返回到編輯問題"
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
 msgstr "答："
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey overview options"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid ""
+"Searches in the attributes Number, Title, Introduction, Description, "
+"NotificationSender, NotificationSubject and NotificationBody, overriding "
+"other attributes with the same name."
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Survey Create Time"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "No restriction"
+msgstr ""
+
+#. Template: AgentSurveyOverviewNavBar
+msgid "Only surveys created between"
+msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -153,6 +190,10 @@ msgid "Requests Table"
 msgstr "請求表"
 
 #. Template: AgentSurveyStats
+msgid "Select all requests"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "Send Time"
 msgstr "發送時間"
 
@@ -161,8 +202,16 @@ msgid "Vote Time"
 msgstr "投票時間"
 
 #. Template: AgentSurveyStats
+msgid "Select this request"
+msgstr ""
+
+#. Template: AgentSurveyStats
 msgid "See Details"
 msgstr "查看詳情"
+
+#. Template: AgentSurveyStats
+msgid "Delete stats"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -171,6 +220,14 @@ msgstr "調查統計詳情"
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
 msgstr "返回統計概況"
+
+#. Template: AgentSurveyStats
+msgid "Previous vote"
+msgstr ""
+
+#. Template: AgentSurveyStats
+msgid "Next vote"
+msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -261,6 +318,10 @@ msgid "Checkbox (List)"
 msgstr "複選框（列表）"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
+msgid "Net Promoter Score"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
 msgstr "問題類別"
 
@@ -280,49 +341,9 @@ msgstr "編輯問題"
 msgid "Answer Edit"
 msgstr "編輯回答"
 
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Overview"
-msgstr "統計概況"
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "You have no permission for this survey or stats detail!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
-msgid "Stats Detail"
-msgstr "統計詳情"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! No questions defined."
-msgstr "無法設置新的狀態！還未定義問題。"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Can't set new status! Questions incomplete."
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "Status changed."
-msgstr "狀態已更改。"
-
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "- 沒有選取佇列 -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket type selected -"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- No ticket service selected -"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "- Change Status -"
-msgstr "- 更改狀態 -"
-
-#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-msgid "master"
-msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
@@ -386,6 +407,20 @@ msgstr ""
 msgid "You have already answered the survey."
 msgstr "你已經回答了調查。"
 
+#. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
+msgid "Survey List"
+msgstr ""
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid ""
+"Do you really want to delete this question? ALL associated data will be "
+"LOST!"
+msgstr ""
+
+#. JS File: Survey.Agent.SurveyEditQuestions
+msgid "Do you really want to delete this answer?"
+msgstr "您確定要刪除此答案？"
+
 #. SysConfig
 msgid "A Survey Module."
 msgstr "調查模組"
@@ -429,6 +464,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Defines if survey requests will be only send to real customers."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Defines maximum amount of surveys that get sent to a customer per 30 days. ("
 " 0 means no maximum, all survey requests will be sent)."
@@ -443,7 +482,17 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid ""
+"Defines the columns for the dropdown list for building send conditions (0 =>"
+" inactive, 1 => active)."
+msgstr ""
+
+#. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the groups (rw) which can delete survey stats."
 msgstr ""
 
 #. SysConfig
@@ -454,6 +503,10 @@ msgstr ""
 msgid ""
 "Defines the shown columns in the survey overview. This option has no effect "
 "on the position of the columns."
+msgstr ""
+
+#. SysConfig
+msgid "Determines if the statistics module may generate survey lists."
 msgstr ""
 
 #. SysConfig
@@ -514,6 +567,13 @@ msgstr ""
 #. SysConfig
 msgid "Public Survey."
 msgstr "公開的調查"
+
+#. SysConfig
+msgid ""
+"Results older than the configured amount of days will be deleted. Note: "
+"delete results done by the OTRS Daemon, prior activation of "
+"'Task###SurveyRequestsDelete' setting."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -578,9 +638,17 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
+msgstr ""
+
+#. SysConfig
+msgid "Trigger delete results (including vote data and requests)."
 msgstr ""
 
 #. SysConfig

@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Solicitações enviadas';
     $Self->{Translation}->{'Received surveys'} = 'Solicitações recebidas';
     $Self->{Translation}->{'Survey Details'} = 'Detalhes da Pesquisa';
-    $Self->{Translation}->{'Number'} = 'Número';
     $Self->{Translation}->{'Ticket Services'} = 'Serviço do chamado';
     $Self->{Translation}->{'Survey Results Graph'} = 'Gráficos de Resultados da Pesquisa';
     $Self->{Translation}->{'No stat results.'} = 'Sem resultados de estatísticas.';
@@ -186,7 +185,6 @@ sub Data {
         'Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem efeito sobre a posição das colunas.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = 'Editar informação geral da pesquisa.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Editar as questões da pesquisa.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

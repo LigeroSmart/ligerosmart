@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Envoyé demande';
     $Self->{Translation}->{'Received surveys'} = 'Sondage reçu';
     $Self->{Translation}->{'Survey Details'} = 'Détails sondage';
-    $Self->{Translation}->{'Number'} = 'Nombre';
     $Self->{Translation}->{'Ticket Services'} = 'Service Ticket';
     $Self->{Translation}->{'Survey Results Graph'} = 'Graphique résultat sondage';
     $Self->{Translation}->{'No stat results.'} = 'Pas de statistique sondage.';
@@ -186,7 +185,6 @@ sub Data {
         'Définir les colonnes visible de l’aperçu du sondage. cette option n\'a pas d\'effet sur la position des colonnes.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

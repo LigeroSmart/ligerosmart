@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = '介紹';
     $Self->{Translation}->{'Survey Introduction'} = '調查介紹';
     $Self->{Translation}->{'Notification Body'} = '通知正文';
-    $Self->{Translation}->{'Ticket Types'} = '';
+    $Self->{Translation}->{'Ticket Types'} = '工單類型';
     $Self->{Translation}->{'Internal Description'} = '内部描述';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
@@ -32,7 +32,7 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '編輯問題';
-    $Self->{Translation}->{'You are here'} = '';
+    $Self->{Translation}->{'You are here'} = '您在此';
     $Self->{Translation}->{'Survey Questions'} = '調查問題';
     $Self->{Translation}->{'Add Question'} = '添加問題';
     $Self->{Translation}->{'Type the question'} = '問題類型';
@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '已發送的請求';
     $Self->{Translation}->{'Received surveys'} = '已接收的調查';
     $Self->{Translation}->{'Survey Details'} = '調查詳情';
-    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Ticket Services'} = '工單服務';
     $Self->{Translation}->{'Survey Results Graph'} = '調查結果圖';
     $Self->{Translation}->{'No stat results.'} = '沒有統計結果。';
@@ -186,7 +185,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

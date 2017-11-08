@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = '';
     $Self->{Translation}->{'Survey Introduction'} = '';
     $Self->{Translation}->{'Notification Body'} = '';
-    $Self->{Translation}->{'Ticket Types'} = '';
+    $Self->{Translation}->{'Ticket Types'} = 'Sagstyper';
     $Self->{Translation}->{'Internal Description'} = '';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
@@ -32,7 +32,7 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '';
-    $Self->{Translation}->{'You are here'} = '';
+    $Self->{Translation}->{'You are here'} = 'Du er her';
     $Self->{Translation}->{'Survey Questions'} = '';
     $Self->{Translation}->{'Add Question'} = '';
     $Self->{Translation}->{'Type the question'} = '';
@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '';
     $Self->{Translation}->{'Received surveys'} = '';
     $Self->{Translation}->{'Survey Details'} = '';
-    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = '';
     $Self->{Translation}->{'No stat results.'} = '';
@@ -186,7 +185,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

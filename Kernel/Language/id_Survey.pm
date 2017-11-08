@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Permintaan yang telah dikirim';
     $Self->{Translation}->{'Received surveys'} = 'Survey yang diterima';
     $Self->{Translation}->{'Survey Details'} = 'Rincian survey';
-    $Self->{Translation}->{'Number'} = 'Nomor';
     $Self->{Translation}->{'Ticket Services'} = 'Layanan tiket';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafik hasil survey';
     $Self->{Translation}->{'No stat results.'} = 'Tidak ada hasil stat';
@@ -186,7 +185,6 @@ sub Data {
         'Definisikan kolom yang di tampilkan pada gambaran survey. Pilihan ini tidak memiliki efek pada posisi kolom tersebut.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

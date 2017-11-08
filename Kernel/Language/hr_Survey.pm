@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Uvod';
     $Self->{Translation}->{'Survey Introduction'} = 'Uvod ankete';
     $Self->{Translation}->{'Notification Body'} = 'Zabilježba';
-    $Self->{Translation}->{'Ticket Types'} = '';
+    $Self->{Translation}->{'Ticket Types'} = 'Tipovi kartice';
     $Self->{Translation}->{'Internal Description'} = 'Interni opis';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Poslani zahtjevi';
     $Self->{Translation}->{'Received surveys'} = 'Primljene ankete';
     $Self->{Translation}->{'Survey Details'} = 'Detalji ankete';
-    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Ticket Services'} = '';
     $Self->{Translation}->{'Survey Results Graph'} = 'Rezultati ankete';
     $Self->{Translation}->{'No stat results.'} = 'Nema rezultata. ';
@@ -186,7 +185,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

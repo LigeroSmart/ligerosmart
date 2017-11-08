@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Elküldött kérések';
     $Self->{Translation}->{'Received surveys'} = 'Beérkezett kérdőívek';
     $Self->{Translation}->{'Survey Details'} = 'Kérdőív részletek';
-    $Self->{Translation}->{'Number'} = 'Szám';
     $Self->{Translation}->{'Ticket Services'} = 'Jegyszolgáltatások';
     $Self->{Translation}->{'Survey Results Graph'} = 'Kérdőív eredmények grafikonja';
     $Self->{Translation}->{'No stat results.'} = 'Nincsenek statisztika eredmények.';
@@ -186,7 +185,6 @@ sub Data {
         'Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. Ennek a beállításnak nincs hatása az oszlopok helyzetére.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = 'Kérdőív általános információinak szerkesztése.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Kérdőív kérdések szerkesztése.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = '己发送的请求';
     $Self->{Translation}->{'Received surveys'} = '已接收的调查';
     $Self->{Translation}->{'Survey Details'} = '调查详情';
-    $Self->{Translation}->{'Number'} = '编号';
     $Self->{Translation}->{'Ticket Services'} = '工单服务';
     $Self->{Translation}->{'Survey Results Graph'} = '调查结果图';
     $Self->{Translation}->{'No stat results.'} = '没有统计结果。';
@@ -186,7 +185,6 @@ sub Data {
         '定义调查概览中显示的字段。这个选项不会影响字段的位置。';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '编辑调查一般信息。';
     $Self->{Translation}->{'Edit survey questions.'} = '编辑调查问题。';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

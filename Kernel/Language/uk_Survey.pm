@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Надіслані запити';
     $Self->{Translation}->{'Received surveys'} = 'Отримані опитування';
     $Self->{Translation}->{'Survey Details'} = 'Деталі опитування';
-    $Self->{Translation}->{'Number'} = 'Число';
     $Self->{Translation}->{'Ticket Services'} = 'Сервіси заявкок';
     $Self->{Translation}->{'Survey Results Graph'} = 'Графік результатів опитування';
     $Self->{Translation}->{'No stat results.'} = 'Немає статистики';
@@ -186,7 +185,6 @@ sub Data {
         'Визначає які колонки показувати в перегляді опитування. Не впливає на їх розташування';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

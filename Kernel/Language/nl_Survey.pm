@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Introductie';
     $Self->{Translation}->{'Survey Introduction'} = 'Introductie';
     $Self->{Translation}->{'Notification Body'} = 'Body text';
-    $Self->{Translation}->{'Ticket Types'} = '';
+    $Self->{Translation}->{'Ticket Types'} = 'Ticket typen';
     $Self->{Translation}->{'Internal Description'} = 'Interne omschrijving';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
@@ -32,7 +32,7 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Bewerk vragen';
-    $Self->{Translation}->{'You are here'} = '';
+    $Self->{Translation}->{'You are here'} = 'Hier bent u';
     $Self->{Translation}->{'Survey Questions'} = 'Vragen';
     $Self->{Translation}->{'Add Question'} = 'Vraag toevoegen';
     $Self->{Translation}->{'Type the question'} = 'Vraag';
@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Verstuurde verzoeken';
     $Self->{Translation}->{'Received surveys'} = 'Ontvangen enquêtes';
     $Self->{Translation}->{'Survey Details'} = 'Details enquête';
-    $Self->{Translation}->{'Number'} = '';
     $Self->{Translation}->{'Ticket Services'} = 'Ticket Services';
     $Self->{Translation}->{'Survey Results Graph'} = 'Resultaten (grafiek)';
     $Self->{Translation}->{'No stat results.'} = 'Geen resultaten.';
@@ -186,7 +185,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

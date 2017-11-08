@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'Maombi yaliyotumwa';
     $Self->{Translation}->{'Received surveys'} = 'Tafiti zilizopokelewa';
     $Self->{Translation}->{'Survey Details'} = 'Maelezo ya tafiti';
-    $Self->{Translation}->{'Number'} = 'Namba';
     $Self->{Translation}->{'Ticket Services'} = 'Huduma za tiketi';
     $Self->{Translation}->{'Survey Results Graph'} = 'Grafu ya matokeo ya tafiti';
     $Self->{Translation}->{'No stat results.'} = 'Hakuna matokeo ya takwimu';
@@ -186,7 +185,6 @@ sub Data {
         'Inafafanua safu iliyoonyeshwa kwenye mapitio ya utafiti. Hili chaguo halina athari kwa nafasi ya safu. ';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =

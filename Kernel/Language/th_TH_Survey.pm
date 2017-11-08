@@ -88,7 +88,6 @@ sub Data {
     $Self->{Translation}->{'Sent requests'} = 'ส่งคำร้อง';
     $Self->{Translation}->{'Received surveys'} = 'ได้รับแบบสอบถามแล้ว';
     $Self->{Translation}->{'Survey Details'} = 'เนื้อหาของแบบสอบถาม';
-    $Self->{Translation}->{'Number'} = 'หมายเลข';
     $Self->{Translation}->{'Ticket Services'} = 'การบริการของตั๋ว';
     $Self->{Translation}->{'Survey Results Graph'} = 'กราฟคำตอบของแบบสอบถาม';
     $Self->{Translation}->{'No stat results.'} = 'ไม่มีคำตอบของสถิติ';
@@ -186,7 +185,6 @@ sub Data {
         'กำหนดคอลัมน์ที่จะแสดงในภาพรวมของแบบสอบถามตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'Edit survey general information.'} = '';
     $Self->{Translation}->{'Edit survey questions.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
