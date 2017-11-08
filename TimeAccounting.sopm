@@ -263,7 +263,7 @@
         <b>NOTICE</b>
         <br>
         <br>
-        In order to grant users access to the time accounting 'settings' and 'reporting' features, you need to add them as 'admin'.
+        In order to grant users access to the time accounting 'settings' and 'reporting' features, you need to add them as member to the group 'admin'.
         <br>
         <br>
         The menu items that were added by this package will be visible after you log-in to the system again.
@@ -279,6 +279,9 @@
         <b>HINWEIS</b>
         <br>
         <br>
+        In order to grant users access to the time accounting 'settings' and 'reporting' features, you need to add them as member to the group 'admin'.
+        <br>
+        <br>
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
         <br>
         <br>
@@ -292,6 +295,9 @@
         <b>NOTA</b>
         <br>
         <br>
+        Para permitirles a los usuarios el acceso a las functiones de contabilidad de tiempo 'ajustes' y 'reporteo', es necesario añadirlos como miembros del grupo 'admin'.
+        <br>
+        <br>
         Los elementos del menú agregados por este paquete, serán visibles luego de reiniciar sesión en el sistema.
         <br>
         <br>
@@ -303,6 +309,9 @@
 
         <br>
         <b>FIGYELMEZTETÉS</b>
+        <br>
+        <br>
+        In order to grant users access to the time accounting 'settings' and 'reporting' features, you need to add them as member to the group 'admin'.
         <br>
         <br>
         Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
