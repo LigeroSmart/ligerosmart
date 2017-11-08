@@ -293,8 +293,8 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = '管理类别';
     $Self->{Translation}->{'Category Management.'} = '管理类别。';
     $Self->{Translation}->{'Customer FAQ Print.'} = '客户FAQ打印。';
-    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
-    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '客户FAQ相关的文章';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '客户FAQ相关的文章。';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '客户FAQ详情。';
     $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索';
     $Self->{Translation}->{'Customer FAQ.'} = '客户FAQ。';

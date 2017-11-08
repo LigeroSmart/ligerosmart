@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-16 22:56+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2017-10-17 07:03+0000\n"
+"Last-Translator: Yuri Kolesniov <ynkolesnikov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,11 +39,11 @@ msgstr "Управление категориями FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "Добавить категорию FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "Редактировать категорию FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -149,11 +149,11 @@ msgstr "Управление языками FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "Добавить язык для FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "Изменить язык FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -751,7 +751,7 @@ msgstr "Управление категориями"
 
 #. SysConfig
 msgid "Category Management."
-msgstr ""
+msgstr "Управление категориями."
 
 #. SysConfig
 msgid "Customer FAQ Print."
@@ -759,11 +759,11 @@ msgstr "Печать статьи FAQ клиентом"
 
 #. SysConfig
 msgid "Customer FAQ Related Articles"
-msgstr ""
+msgstr "Часто задаваемые вопросы по клиенту"
 
 #. SysConfig
 msgid "Customer FAQ Related Articles."
-msgstr ""
+msgstr "Часто задаваемые вопросы по клиенту."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
@@ -967,65 +967,65 @@ msgstr "Удалить этот FAQ"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне добавления статьи FAQ в интерфейсе агента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне редактирования статьи FAQ в интерфейсе агента."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне обзора FAQ в интерфейсе клиента."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне обзора FAQ в общедоступном интерфейсе."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне печати FAQ в интерфейсе агента."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне печати FAQ в интерфейсе клиента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне печати FAQ в общедоступном интерфейсе."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне поиска FAQ в интерфейсе агента."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне поиска FAQ в интерфейсе клиента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне поиска FAQ в общедоступном интерфейсе."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне краткого обзора FAQ в интерфейсе агента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне подробного просмотра статьи FAQ в интерфейсе агента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне подробного просмотра статьи FAQ в интерфейсе клиента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
-msgstr ""
+msgstr "Динамические поля, отображаемые в окне подробного просмотра статьи FAQ в общедоступном интерфейсе."
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1073,7 +1073,7 @@ msgstr "Редактировать статью FAQ."
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "История FAQ."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1145,7 +1145,7 @@ msgstr "Управление языками"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "Управление языками."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1273,7 +1273,7 @@ msgstr "Модуль для генерации HTML OpenSearch шаблонов 
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "Новая статья в FAQ."
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
@@ -1377,21 +1377,21 @@ msgstr "Поиск в FAQ"
 
 #. SysConfig
 msgid "Search FAQ Small."
-msgstr ""
+msgstr "Поиск в FAQ сокращенный."
 
 #. SysConfig
 msgid "Search FAQ."
-msgstr ""
+msgstr "Поиск в FAQ."
 
 #. SysConfig
 msgid ""
 "Select how many items should be shown in Journal Overview \"Small\" by "
 "default."
-msgstr ""
+msgstr "Выберите, сколько элементов должно отображаться в обзоре журнала «Краткий» по умолчанию."
 
 #. SysConfig
 msgid "Select how many items should be shown in Overview \"Small\" by default."
-msgstr ""
+msgstr "Выберите, сколько элементов должно отображаться в обзоре «Краткий» по умолчанию."
 
 #. SysConfig
 msgid ""

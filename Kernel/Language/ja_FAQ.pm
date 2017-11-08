@@ -311,7 +311,7 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '公開画面用パラメータのデフォルト値。パラメータ（Action=XXXXXX）は、スクリプトで使用されています。';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'リンクオブジェクトウィジェット（LinkObject :: ViewMode = "complex"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'FAQタイトルが記事の件名に連結するかどうかを定義します';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
@@ -490,10 +490,10 @@ sub Data {
     $Self->{Translation}->{'Public FAQ.'} = '公開FAQ';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '記事承認キュー';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '評価率。キーは、パーセントで指定する必要があります。';
-    $Self->{Translation}->{'S'} = '';
+    $Self->{Translation}->{'S'} = 'S';
     $Self->{Translation}->{'Search FAQ'} = 'FAQを検索';
     $Self->{Translation}->{'Search FAQ Small.'} = '';
-    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Search FAQ.'} = 'FAQの検索';
     $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
         '';
     $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
@@ -554,7 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'ショートカットのためのツールバー・アイテムです。';
     $Self->{Translation}->{'external (customer)'} = '外部 (顧客)';
     $Self->{Translation}->{'internal (agent)'} = '内部 (担当者)';
-    $Self->{Translation}->{'public (public)'} = '';
+    $Self->{Translation}->{'public (public)'} = '公開　(パブリック)';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

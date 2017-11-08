@@ -293,8 +293,8 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Gestión de las Categorías';
     $Self->{Translation}->{'Category Management.'} = 'Gestión de Categorías.';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Imprimir FAQ del cliente.';
-    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
-    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = 'Artículos FAQ Relacionados Para Los Clientes';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = 'Artículos FAQ Relacionados Para Los Clientes.';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Vista detallada de las FAQ del cliente.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Buscar FAQ del cliente.';
     $Self->{Translation}->{'Customer FAQ.'} = 'FAQ del cliente.';
@@ -315,7 +315,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Determina si el título de FAQ debe ser concatenado al asunto del artículo.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Define cuales columnas serán mostradas en el "widget" de FAQ vinculados (LinkObject::ViewMode = "complex"). Nota: Solamente atributos de FAQ y Campos Dinámicos (DynamicField_NombreX) son permitidos para columnas por omisión. Posibles configuraciones: 0 = Deshabitado, 1 = Habilitado, 2 = Habilitado por  omisión.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Define un módulo de vista general para mostrar la vista pequeña de Diario de las FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =

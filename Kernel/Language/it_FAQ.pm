@@ -392,7 +392,7 @@ sub Data {
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
         '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Abilita meccanismo di voto nel modulo FAQ.';
-    $Self->{Translation}->{'Explorer'} = 'Esplora';
+    $Self->{Translation}->{'Explorer'} = 'Esploratore';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';

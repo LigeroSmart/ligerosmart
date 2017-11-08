@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Управление категориями FAQ';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'Добавить категорию FAQ';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'Редактировать категорию FAQ';
     $Self->{Translation}->{'Add category'} = 'Добавить категорию';
     $Self->{Translation}->{'Add Category'} = 'Добавить категорию';
     $Self->{Translation}->{'Edit Category'} = 'Удалить категорию';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Управление языками FAQ';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'Добавить язык для FAQ';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'Изменить язык FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         'Используйте эту функцию при необходимости работы с несколькими языками.';
     $Self->{Translation}->{'Add language'} = 'Добавить язык';
@@ -291,10 +291,10 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS-цвет для результата голосования.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Время для выхода из редактирования FAQ пункта';
     $Self->{Translation}->{'Category Management'} = 'Управление категориями';
-    $Self->{Translation}->{'Category Management.'} = '';
+    $Self->{Translation}->{'Category Management.'} = 'Управление категориями.';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Печать статьи FAQ клиентом';
-    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
-    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = 'Часто задаваемые вопросы по клиенту';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = 'Часто задаваемые вопросы по клиенту.';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Просмотр статьи FAQ клиентом.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Поиск статьи FAQ клиентом.';
     $Self->{Translation}->{'Customer FAQ.'} = 'FAQ для клиентов.';
@@ -360,33 +360,33 @@ sub Data {
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Определение свободных полей элементов FAQ.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Удалить этот FAQ';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне добавления статьи FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне редактирования статьи FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне обзора FAQ в интерфейсе клиента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне обзора FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне печати FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне печати FAQ в интерфейсе клиента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне печати FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне поиска FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне поиска FAQ в интерфейсе клиента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне поиска FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне краткого обзора FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне подробного просмотра статьи FAQ в интерфейсе агента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне подробного просмотра статьи FAQ в интерфейсе клиента.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
-        '';
+        'Динамические поля, отображаемые в окне подробного просмотра статьи FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Edit this FAQ'} = 'Изменить этот FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Разрешить многоязычность в модуле FAQ.';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -399,7 +399,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = 'Область FAQ.';
     $Self->{Translation}->{'FAQ Delete.'} = 'Удалить статью FAQ.';
     $Self->{Translation}->{'FAQ Edit.'} = 'Редактировать статью FAQ.';
-    $Self->{Translation}->{'FAQ History.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = 'История FAQ.';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Количество статей, отображаемых при просмотре Журнала FAQ в "Small" формате';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Количество статей, отображаемых при просмотре Обзора FAQ в "Small" формате';
     $Self->{Translation}->{'FAQ Print.'} = 'Печать статьи FAQ.';
@@ -417,7 +417,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'Интерфейсы, в которых панель быстрого поиска может отображаться.';
     $Self->{Translation}->{'Journal'} = 'Журнал';
     $Self->{Translation}->{'Language Management'} = 'Управление языками';
-    $Self->{Translation}->{'Language Management.'} = '';
+    $Self->{Translation}->{'Language Management.'} = 'Управление языками.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Лимит  для поиска для построения списка контекстных статей FAQ.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Привязать другой объект к этому элементу FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -462,7 +462,7 @@ sub Data {
         'Модуль для генерации HTML OpenSearch шаблонов для быстрого поиска в FAQ в общедоступном интерфейсе.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         'Модуль для генерации HTML OpenSearch шаблонов для быстрого поиска в FAQ.';
-    $Self->{Translation}->{'New FAQ Article.'} = '';
+    $Self->{Translation}->{'New FAQ Article.'} = 'Новая статья в FAQ.';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Новая статья FAQ перед публикацией требует одобрения.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Количество статей, выводимых в FAQ Explorer в интерфейсе клиента.';
@@ -492,12 +492,12 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Оценки для голосования. Ключ должен быть задан в процентах.';
     $Self->{Translation}->{'S'} = 'S';
     $Self->{Translation}->{'Search FAQ'} = 'Поиск в FAQ';
-    $Self->{Translation}->{'Search FAQ Small.'} = '';
-    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Search FAQ Small.'} = 'Поиск в FAQ сокращенный.';
+    $Self->{Translation}->{'Search FAQ.'} = 'Поиск в FAQ.';
     $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
-        '';
+        'Выберите, сколько элементов должно отображаться в обзоре журнала «Краткий» по умолчанию.';
     $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
-        '';
+        'Выберите, сколько элементов должно отображаться в обзоре «Краткий» по умолчанию.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} =
         'Задает высоту (в пикселах) по умолчанию для inline HTML полей в AgentFAQZoom.';
     $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} =

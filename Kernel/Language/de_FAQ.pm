@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ-Kategorien-Verwaltung';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'FAQ-Kategorie hinzufügen';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'FAQ-Kategorie bearbeiten';
     $Self->{Translation}->{'Add category'} = 'Kategorie hinzufügen';
     $Self->{Translation}->{'Add Category'} = 'Kategorie hinzufügen';
     $Self->{Translation}->{'Edit Category'} = 'Kategorie bearbeiten';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ-Sprachen-Verwaltung';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'FAQ-Sprache hinzufügen';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'FAQ-Sprache bearbeiten';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         'Verwenden Sie diese Funktion, wenn Sie mit mehreren Sprachen arbeiten wollen.';
     $Self->{Translation}->{'Add language'} = 'Sprache hinzufügen';

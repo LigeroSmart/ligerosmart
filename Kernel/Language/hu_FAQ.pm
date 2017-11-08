@@ -293,8 +293,8 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Kategóriakezelés';
     $Self->{Translation}->{'Category Management.'} = 'Kategóriakezelés.';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Ügyfél GyIK nyomtatás.';
-    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
-    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = 'Ügyfél GyIK kapcsolódó bejegyzések';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = 'Ügyfél GyIK kapcsolódó bejegyzések.';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Ügyfél GyIK nagyítás.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Ügyfél GyIK keresés.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Ügyfél GyIK.';
