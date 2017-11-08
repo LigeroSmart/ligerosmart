@@ -1,4 +1,6 @@
-#6.0.0.beta2 2017-??-??
+#6.0.1 2017-??-??
+
+#6.0.0.rc1 2017-11-08
  - 2017-10-17 Added support for Icinga2, thanks to Emerson Pinter.
 
 #6.0.0.beta1 2017-11-01
