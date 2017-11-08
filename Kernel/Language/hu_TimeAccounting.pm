@@ -192,6 +192,9 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Nézet: %s szükséges!';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = 'Befejezetlen munkanapok';
+
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Legalább egy napot válasszon ki!';
     $Self->{Translation}->{'Mass Entry'} = 'Tömeges bejegyzés';

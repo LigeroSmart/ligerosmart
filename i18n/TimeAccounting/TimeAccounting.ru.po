@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-23 02:57+0000\n"
-"PO-Revision-Date: 2017-10-23 02:59+0000\n"
+"POT-Creation-Date: 2017-11-08 05:05+0000\n"
+"PO-Revision-Date: 2017-11-08 05:06+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -601,6 +601,10 @@ msgstr "Статус периода"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
 msgstr "View: Требуется  %s!"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr "Неполные рабочие дни"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"

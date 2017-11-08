@@ -1,13 +1,13 @@
 # 
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
-# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
+# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:37+0000\n"
-"PO-Revision-Date: 2017-09-29 15:38+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-11-08 05:05+0000\n"
+"PO-Revision-Date: 2017-11-08 05:06+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

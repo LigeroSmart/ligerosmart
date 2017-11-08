@@ -2,11 +2,13 @@
 # Translators:
 # Daniel Schliemann <daniel.schliemann@googlemail.com>, 2016
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
+# dominikklein <mail@dominik-klein.de>, 2017
 # mainboarder, 2014
 # mainboarder, 2014
-# Martin Gruner <martin.gruner@otrs.com>, 2016
+# Martin Gruner <martin.gruner@otrs.com>, 2016-2017
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
+# Matthias Freitag, 2017
 # Philip Heinrich <philip.heinrich@it-verbund-uelzen.de>, 2017
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
 # Rudy R <rudy.rohde@googlemail.com>, 2015
@@ -15,8 +17,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-23 02:57+0000\n"
-"PO-Revision-Date: 2017-10-23 03:01+0000\n"
+"POT-Creation-Date: 2017-11-08 05:05+0000\n"
+"PO-Revision-Date: 2017-11-08 05:06+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -340,7 +342,7 @@ msgstr "Tätigkeit hinzufügen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for projects, tasks or users"
-msgstr ""
+msgstr "Filter für Projekte, Aufgaben oder Benutzer"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -373,11 +375,11 @@ msgstr "Benutzerliste"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User Settings"
-msgstr ""
+msgstr "Benutzereinstellungen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to see overtimes"
-msgstr ""
+msgstr "Benutzer ist berechtigt Überstunden zu sehen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
@@ -385,7 +387,7 @@ msgstr "Überstunden anzeigen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to create projects"
-msgstr ""
+msgstr "Benutzer ist berechtigt Projekte zu erstellen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
@@ -393,7 +395,7 @@ msgstr "Projekt erstellen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
-msgstr ""
+msgstr "Zeitspannen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -595,7 +597,7 @@ msgstr "Benutzer hinzugefügt!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Add a user to time accounting..."
-msgstr ""
+msgstr "Einen Benutzer zur Zeitabrechnung hinzufügen"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -608,6 +610,10 @@ msgstr "Status des Zeitraums"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
 msgstr "Ansicht: Benötige %s!"
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
+msgstr "Unvollständige Arbeitstage"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"
@@ -787,7 +793,7 @@ msgstr "Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darü
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr "Zeitabrechnung."
+msgstr "Zeitabrechnung"
 
 #. SysConfig
 msgid "Time accounting edit."
@@ -811,7 +817,7 @@ msgstr "Zeitabrechnung Ansicht."
 
 #. SysConfig
 msgid "Time accounting."
-msgstr "Zeitabrechnung."
+msgstr "Zeitabrechnung"
 
 #. SysConfig
 msgid ""

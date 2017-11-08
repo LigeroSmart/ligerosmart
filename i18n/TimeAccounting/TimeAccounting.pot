@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2017-10-23 03:02+0000\n"
+"POT-Creation-Date: 2017-11-08 05:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -580,6 +580,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+msgid "Incomplete working days"
 msgstr ""
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords

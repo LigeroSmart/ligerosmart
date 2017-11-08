@@ -192,6 +192,9 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Visning: Trenger %s!';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = 'Ufullstendige arbeidsdager';
+
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Vennligst velg minst en dag!';
     $Self->{Translation}->{'Mass Entry'} = 'Masseregistrering';

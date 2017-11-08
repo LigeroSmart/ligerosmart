@@ -192,6 +192,9 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'View: Требуется  %s!';
 
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = 'Неполные рабочие дни';
+
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Выберите хотя бы один день!';
     $Self->{Translation}->{'Mass Entry'} = 'Массовый ввод';

@@ -3,13 +3,14 @@
 # Fabrizio Scaletta <fabrizio.scaletta@pharmaidea.com>, 2017
 # Luca Maranzano <liuk@linux.it>, 2014
 # stefanomarty <stefano.ste.martinelli@gmail.com>, 2016
+# stefanomarty <stefano.ste.martinelli@gmail.com>, 2016
 # Vincenzo Reale <vinx.reale@gmail.com>, 2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:37+0000\n"
-"PO-Revision-Date: 2017-09-29 15:38+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-11-08 05:05+0000\n"
+"PO-Revision-Date: 2017-11-08 05:06+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

@@ -111,7 +111,7 @@ sub Data {
         'Ein Projekt mit gleichem Namen existiert bereits. Bitte wählen Sie einen anderen Namen.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Zeitabrechnungseinstellungen bearbeiten';
     $Self->{Translation}->{'Add task'} = 'Tätigkeit hinzufügen';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Filter für Projekte, Aufgaben oder Benutzer';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Zeitfenster können nicht gelöscht werden.';
     $Self->{Translation}->{'Project List'} = 'Projektliste';
     $Self->{Translation}->{'Task List'} = 'Tätigkeitsliste';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Eine Tätigkeit mit gleichem Namen existiert bereits. Bitte wählen Sie einen anderen Namen.';
     $Self->{Translation}->{'User List'} = 'Benutzerliste';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Benutzereinstellungen';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'Benutzer ist berechtigt Überstunden zu sehen';
     $Self->{Translation}->{'Show Overtime'} = 'Überstunden anzeigen';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'Benutzer ist berechtigt Projekte zu erstellen';
     $Self->{Translation}->{'Allow project creation'} = 'Projekt erstellen';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = 'Zeitspannen';
     $Self->{Translation}->{'Period Begin'} = 'Datum Beginn';
     $Self->{Translation}->{'Period End'} = 'Datum Ende';
     $Self->{Translation}->{'Days of Vacation'} = 'Urlaubstage';
@@ -185,12 +185,15 @@ sub Data {
     $Self->{Translation}->{'Setting'} = 'Einstellung';
     $Self->{Translation}->{'User updated!'} = 'Benutzer aktualisiert!';
     $Self->{Translation}->{'User added!'} = 'Benutzer hinzugefügt!';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Einen Benutzer zur Zeitabrechnung hinzufügen';
     $Self->{Translation}->{'New User'} = 'Neuer Benutzer';
     $Self->{Translation}->{'Period Status'} = 'Status des Zeitraums';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Ansicht: Benötige %s!';
+
+    # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
+    $Self->{Translation}->{'Incomplete working days'} = 'Unvollständige Arbeitstage';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Bitte wählen Sie mindestens einen Tag!';
@@ -247,13 +250,13 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Dieses Modul zwingt zur Eingabe von Stunden.';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         'Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.';
-    $Self->{Translation}->{'Time Accounting'} = 'Zeitabrechnung.';
+    $Self->{Translation}->{'Time Accounting'} = 'Zeitabrechnung';
     $Self->{Translation}->{'Time accounting edit.'} = 'Zeitabrechnung Bearbeitung.';
     $Self->{Translation}->{'Time accounting overview.'} = 'Zeitabrechnungsübersicht.';
     $Self->{Translation}->{'Time accounting reporting.'} = 'Zeitabrechnung Berichterstattung.';
     $Self->{Translation}->{'Time accounting settings.'} = 'Zeitabrechnung Einstellungen.';
     $Self->{Translation}->{'Time accounting view.'} = 'Zeitabrechnung Ansicht.';
-    $Self->{Translation}->{'Time accounting.'} = 'Zeitabrechnung.';
+    $Self->{Translation}->{'Time accounting.'} = 'Zeitabrechnung';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} =
         'Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50).';
 
