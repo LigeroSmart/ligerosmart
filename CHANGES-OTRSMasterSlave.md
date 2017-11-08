@@ -1,4 +1,5 @@
 #6.0.0.beta2 2017-??-??
+ - 2017-11-07 Updated translations, thanks to all translators.
 
 #6.0.0.beta1 2017-11-01
  - 2017-10-23 Initial version for OTRS 6.
