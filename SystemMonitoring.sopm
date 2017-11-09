@@ -72,13 +72,6 @@
 
         $Kernel::OM->Get($CodeModule)->CodeUninstall();
     ]]></CodeUninstall>
-    <CodeUninstall Type="post"><![CDATA[
-        # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
-
-        $Kernel::OM->Get($CodeModule)->StatsCleanUp();
-    ]]></CodeUninstall>
-
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
         <br>
