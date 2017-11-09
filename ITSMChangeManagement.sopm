@@ -1879,8 +1879,15 @@
     <CodeUninstall Type="post"><![CDATA[
 
         {
-            # cleanup stats list
+            # cleanup stats list (only stats related to the given stat objects)
             $Kernel::OM->Get('Kernel::System::Stats')->StatsCleanUp(
+                ObjectNames => [
+                    'ITSMChangeManagement',
+                    'ITSMChangeManagementChangesIncidents',
+                    'ITSMChangeManagementChangesPerCIClasses',
+                    'ITSMChangeManagementHistory',
+                    'ITSMChangeManagementRfcRequester',
+                ],
                 UserID => 1,
             );
         }
