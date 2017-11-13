@@ -10,8 +10,8 @@
 use strict;
 use warnings;
 
+use List::Util qw();
 use vars qw($Self);
-
 use var::packagesetup::FAQ;
 
 my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
@@ -204,36 +204,32 @@ for my $Test (@Tests) {
             # Check for navigation permissions.
             my ( undef, $Frontend ) = split '###', $SettingName;
 
-            # First, get all the navigation items.
-            my $NavBar     = $SettingOldConfig->{NavBar} // $SettingOldDefaults->{NavBar};
-            my %Navigation = ();
-            my $Index      = 0;
-            ITEM:
-            for my $Item ( @{$NavBar} ) {
-                $Index += 1;
-                my %NavigationConfig
-                    = $SysConfigObject->SettingGet( Name => "Frontend::Navigation###${ Frontend }###${ Index }" );
-                next ITEM if !%NavigationConfig;
+            # Get the old navigation.
+            my $OldNavigation = $SettingOldConfig->{NavBar} // $SettingOldDefaults->{NavBar};
 
-                my $EffectiveValue = $NavigationConfig{EffectiveValue};
-                my $Key = $EffectiveValue->{Name} . '-' . $EffectiveValue->{Block} || '';
-                $Navigation{$Key} = $EffectiveValue;
-            }
+            # Get the current navigation.
+            my $NewNavigation
+                = $GetConfig->( $Kernel::OM->Get('Kernel::Config'), 'Frontend::Navigation###' . $Frontend );
 
-            # Check permission of the navigation items.
-            for my $Item ( @{$NavBar} ) {
-                my $Key = $Item->{Name} . '-' . $Item->{Block};
-                my $NavigationConfig = $Navigation{$Key} || {};
+            # Check if the permission is the same as the old one.
+            for my $Index ( sort keys %{$NewNavigation} ) {
+                my $NewItems = $NewNavigation->{$Index};
+                for my $NewItem ( @{$NewItems} ) {
+                    my $OldItem
+                        = List::Util::first { $_->{Name} eq $NewItem->{Name} && $_->{Block} eq $NewItem->{Block} }
+                    @{$OldNavigation};
+                    next NEW_ITEM if !$OldItem;
 
-                $CheckGroupGroupRo->(
-                    Expected => $Item,
-                    Result   => $NavigationConfig,
-                    TestName => sprintf(
-                        $Test->{Name} . ' (Navigation %s)',
-                        $Item->{Name},
-                        $Item->{Block} ? '-' . $Item->{Block} : '',
-                    ),
-                );
+                    $CheckGroupGroupRo->(
+                        Expected => $OldItem,
+                        Result   => $NewItem,
+                        TestName => sprintf(
+                            $Test->{Name} . ' (Navigation %s)',
+                            $NewItem->{Name},
+                            $NewItem->{Block} ? '-' . $NewItem->{Block} : '',
+                        ),
+                    );
+                }
             }
         }
     }
@@ -257,13 +253,12 @@ my @Settings = (
     'DashboardBackend###0398-FAQ-LastChange',
     'DashboardBackend###0399-FAQ-LastCreate',
     'FAQ::ApprovalGroup',
-    'Frontend::Navigation###AgentFAQExplorer###1',
-    'Frontend::Navigation###AgentFAQExplorer###2',
-    'Frontend::Navigation###AgentFAQAdd###1',
-    'Frontend::Navigation###AgentFAQLanguage###1',
-    'Frontend::Navigation###AgentFAQCategory###1',
-    'Frontend::Navigation###AgentFAQSearch###1',
-    'Frontend::Navigation###AgentFAQJournal###1',
+    'Frontend::Navigation###AgentFAQExplorer###002-FAQ',
+    'Frontend::Navigation###AgentFAQAdd###002-FAQ',
+    'Frontend::Navigation###AgentFAQLanguage###002-FAQ',
+    'Frontend::Navigation###AgentFAQCategory###002-FAQ',
+    'Frontend::Navigation###AgentFAQSearch###002-FAQ',
+    'Frontend::Navigation###AgentFAQJournal###002-FAQ',
 );
 
 for my $SettingName (@Settings) {
