@@ -42,55 +42,59 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentTimeAccountingEdit###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingEdit###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Time accounting.</Item>
+                        <Item Key="Name" Translatable="1">Time Accounting</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingEdit</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block">ItemArea</Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">6000</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                    </Array>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Edit time record.</Item>
+                        <Item Key="Name" Translatable="1">Edit</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingEdit</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">200</Item>
+                    </Hash>
                 </Item>
-                <Item Key="Description" Translatable="1">Time accounting.</Item>
-                <Item Key="Name" Translatable="1">Time Accounting</Item>
-                <Item Key="Link">Action=AgentTimeAccountingEdit</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">TimeAccounting</Item>
-                <Item Key="Type">Menu</Item>
-                <Item Key="Block">ItemArea</Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">6000</Item>
-            </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Frontend::Navigation###AgentTimeAccountingEdit###2" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
-                </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item></Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Edit time record.</Item>
-                <Item Key="Name" Translatable="1">Edit</Item>
-                <Item Key="Link">Action=AgentTimeAccountingEdit</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">TimeAccounting</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">200</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentTimeAccountingOverview" Required="0" Valid="1">
@@ -128,30 +132,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentTimeAccountingOverview###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingOverview###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item></Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Overview.</Item>
+                        <Item Key="Name" Translatable="1">Overview</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingOverview</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">100</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item></Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Overview.</Item>
-                <Item Key="Name" Translatable="1">Overview</Item>
-                <Item Key="Link">Action=AgentTimeAccountingOverview</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">TimeAccounting</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">100</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentTimeAccountingSetting" Required="0" Valid="1">
@@ -197,30 +209,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentTimeAccountingSetting###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingSetting###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                        <Item>admin</Item>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>admin</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Edit time accounting settings.</Item>
+                        <Item Key="Name" Translatable="1">Settings</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingSetting</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">900</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Edit time accounting settings.</Item>
-                <Item Key="Name" Translatable="1">Settings</Item>
-                <Item Key="Link">Action=AgentTimeAccountingSetting</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">TimeAccounting</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">900</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentTimeAccountingReporting" Required="0" Valid="1">
@@ -264,30 +284,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentTimeAccountingReporting###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingReporting###002-TimeAccounting" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                        <Item>admin</Item>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                                <Item>admin</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Project time reporting.</Item>
+                        <Item Key="Name" Translatable="1">Reporting</Item>
+                        <Item Key="Link">Action=AgentTimeAccountingReporting</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">TimeAccounting</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">500</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Project time reporting.</Item>
-                <Item Key="Name" Translatable="1">Reporting</Item>
-                <Item Key="Link">Action=AgentTimeAccountingReporting</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">TimeAccounting</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">500</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentTimeAccountingView" Required="0" Valid="1">
@@ -323,6 +351,18 @@
                     </Array>
                 </Item>
             </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentTimeAccountingView###002-TimeAccounting" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
