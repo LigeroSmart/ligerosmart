@@ -129,6 +129,18 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Navigation###AgentTicketMasterSlave###004-OTRSMasterSlave" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::MenuModule###480-MasterSlave" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketZoom::MenuModule</Navigation>
@@ -487,7 +499,19 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::BulkModule###010-MasterSlave" Required="0" Valid="1">
+    <Setting Name="Frontend::Navigation###AdminDynamicFieldMasterSlave###004-OTRSMasterSlave" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
+     <Setting Name="Ticket::Frontend::BulkModule###010-MasterSlave" Required="0" Valid="1">
         <Description Translatable="1">MasterSlave module for Ticket Bulk feature.</Description>
         <Navigation>Frontend::Agent::View::TicketBulk::Module</Navigation>
         <Value>
