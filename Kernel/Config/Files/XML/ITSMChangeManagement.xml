@@ -35,6 +35,18 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Navigation###AdminITSMChangeCIPAllocate###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
     <Setting Name="Frontend::NavigationModule###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Admin area navigation for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
@@ -99,6 +111,18 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Navigation###AdminITSMChangeNotification###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
     <Setting Name="Frontend::NavigationModule###AdminITSMChangeNotification" Required="0" Valid="1">
         <Description Translatable="1">Admin area navigation for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
@@ -142,6 +166,18 @@
                     <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AdminITSMStateMachine###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::NavigationModule###AdminITSMStateMachine" Required="0" Valid="1">
@@ -229,56 +265,60 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChange###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChange###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Change area.</Item>
+                        <Item Key="Name" Translatable="1">ITSM Changes</Item>
+                        <Item Key="Link">Action=AgentITSMChange</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block">ItemArea</Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">3400</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change</Item>
-                    </Array>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Change Overview.</Item>
+                        <Item Key="Name" Translatable="1">Overview</Item>
+                        <Item Key="Link">Action=AgentITSMChange</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">100</Item>
+                    </Hash>
                 </Item>
-                <Item Key="Description" Translatable="1">Change area.</Item>
-                <Item Key="Name" Translatable="1">ITSM Changes</Item>
-                <Item Key="Link">Action=AgentITSMChange</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type">Menu</Item>
-                <Item Key="Block">ItemArea</Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">3400</Item>
-            </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChange###2" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
-                </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Change Overview.</Item>
-                <Item Key="Name" Translatable="1">Overview</Item>
-                <Item Key="Link">Action=AgentITSMChange</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">100</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeAdd" Required="0" Valid="1">
@@ -316,30 +356,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChangeAdd###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeAdd###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change-manager</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">New</Item>
+                        <Item Key="Name" Translatable="1">New</Item>
+                        <Item Key="Link">Action=AgentITSMChangeAdd</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">200</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change-manager</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">New</Item>
-                <Item Key="Name" Translatable="1">New</Item>
-                <Item Key="Link">Action=AgentITSMChangeAdd</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">200</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeAddFromTemplate" Required="0" Valid="1">
@@ -365,31 +413,39 @@
             </Item>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChangeAddFromTemplate###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeAddFromTemplate###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change-builder</Item>
+                                <Item>itsm-change-manager</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">New (from template)</Item>
+                        <Item Key="Name" Translatable="1">New (from template)</Item>
+                        <Item Key="Link">Action=AgentITSMChangeAddFromTemplate</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">250</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change-builder</Item>
-                        <Item>itsm-change-manager</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">New (from template)</Item>
-                <Item Key="Name" Translatable="1">New (from template)</Item>
-                <Item Key="Link">Action=AgentITSMChangeAddFromTemplate</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">250</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeCABTemplate" Required="0" Valid="1">
@@ -647,6 +703,18 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeManager###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeMyCAB" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
@@ -680,6 +748,18 @@
                     </Array>
                 </Item>
             </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeMyCAB###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeMyChanges" Required="0" Valid="1">
@@ -718,6 +798,18 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeMyChanges###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeMyWorkOrders" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
@@ -751,6 +843,18 @@
                     </Array>
                 </Item>
             </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeMyWorkOrders###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
@@ -788,30 +892,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChangePIR###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChangePIR###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">PIR (Post Implementation Review)</Item>
+                        <Item Key="Name" Translatable="1">PIR</Item>
+                        <Item Key="Link">Action=AgentITSMChangePIR</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">400</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">PIR (Post Implementation Review)</Item>
-                <Item Key="Name" Translatable="1">PIR</Item>
-                <Item Key="Link">Action=AgentITSMChangePIR</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">400</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangePrint" Required="0" Valid="1">
@@ -871,30 +983,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChangePSA###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChangePSA###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Projected Service Availability (PSA)</Item>
+                        <Item Key="Name" Translatable="1">Projected Service Availability</Item>
+                        <Item Key="Link">Action=AgentITSMChangePSA</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">350</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Projected Service Availability (PSA)</Item>
-                <Item Key="Name" Translatable="1">Projected Service Availability</Item>
-                <Item Key="Link">Action=AgentITSMChangePSA</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">350</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeReset" Required="0" Valid="0">
@@ -941,30 +1061,38 @@
             </Item>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChangeSchedule###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeSchedule###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Change Schedule</Item>
+                        <Item Key="Name" Translatable="1">Schedule</Item>
+                        <Item Key="Link">Action=AgentITSMChangeSchedule</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">300</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Change Schedule</Item>
-                <Item Key="Name" Translatable="1">Schedule</Item>
-                <Item Key="Link">Action=AgentITSMChangeSchedule</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">300</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeSearch" Required="0" Valid="1">
@@ -1002,30 +1130,38 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMChangeSearch###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMChangeSearch###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Search Changes</Item>
+                        <Item Key="Name" Translatable="1">Search</Item>
+                        <Item Key="Link">Action=AgentITSMChangeSearch</Item>
+                        <Item Key="LinkOption">onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">600</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Search Changes</Item>
-                <Item Key="Name" Translatable="1">Search</Item>
-                <Item Key="Link">Action=AgentITSMChangeSearch</Item>
-                <Item Key="LinkOption">onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">600</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMChangeTemplate" Required="0" Valid="1">
@@ -1285,31 +1421,39 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentITSMTemplateOverview###1" Required="0" Valid="1">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="Frontend::Navigation###AgentITSMTemplateOverview###003-ITSMChangeManagement" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                                <Item>itsm-change-builder</Item>
+                                <Item>itsm-change-manager</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Template Overview</Item>
+                        <Item Key="Name" Translatable="1">Templates</Item>
+                        <Item Key="Link">Action=AgentITSMTemplateOverview</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">ITSM Change</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">500</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                        <Item>itsm-change-builder</Item>
-                        <Item>itsm-change-manager</Item>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Template Overview</Item>
-                <Item Key="Name" Translatable="1">Templates</Item>
-                <Item Key="Link">Action=AgentITSMTemplateOverview</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar">ITSM Change</Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">500</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentITSMUserSearch" Required="0" Valid="1">
@@ -1638,29 +1782,37 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="CustomerFrontend::Navigation###CustomerITSMChangeSchedule###1" Required="0" Valid="0">
-        <Description Translatable="1">Main menu for the agent interface.</Description>
+    <Setting Name="CustomerFrontend::Navigation###CustomerITSMChangeSchedule###003-ITSMChangeManagement" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Group">
-                    <Array>
-                    </Array>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Change Schedule</Item>
+                        <Item Key="Name" Translatable="1">Change Schedule</Item>
+                        <Item Key="Link">Action=CustomerITSMChangeSchedule</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar"></Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">450</Item>
+                    </Hash>
                 </Item>
-                <Item Key="GroupRo">
-                    <Array>
-                    </Array>
-                </Item>
-                <Item Key="Description" Translatable="1">Change Schedule</Item>
-                <Item Key="Name" Translatable="1">Change Schedule</Item>
-                <Item Key="Link">Action=CustomerITSMChangeSchedule</Item>
-                <Item Key="LinkOption"></Item>
-                <Item Key="NavBar"></Item>
-                <Item Key="Type"></Item>
-                <Item Key="Block"></Item>
-                <Item Key="AccessKey"></Item>
-                <Item Key="Prio">450</Item>
-            </Hash>
+            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::ToolBarModule###101-ITSMChangeManagement::ChangeManager" Required="0" Valid="1">
