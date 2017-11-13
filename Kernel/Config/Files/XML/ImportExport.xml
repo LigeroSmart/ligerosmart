@@ -40,6 +40,18 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Frontend::Navigation###AdminImportExport###001-ImportExport" Required="0" Valid="0">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+            </Array>
+        </Value>
+    </Setting>
     <Setting Name="Frontend::NavigationModule###AdminImportExport" Required="0" Valid="1">
         <Description Translatable="1">Admin area navigation for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration::AdminOverview</Navigation>
