@@ -165,36 +165,32 @@ for my $Test (@Tests) {
             # Check for navigation permissions.
             my ( undef, $Frontend ) = split '###', $SettingName;
 
-            # First, get all the navigation items.
-            my $NavBar     = $SettingOldConfig->{NavBar} // $SettingOldDefaults->{NavBar};
-            my %Navigation = ();
-            my $Index      = 0;
-            ITEM:
-            for my $Item ( @{$NavBar} ) {
-                $Index += 1;
-                my %NavigationConfig
-                    = $SysConfigObject->SettingGet( Name => "Frontend::Navigation###${ Frontend }###${ Index }" );
-                next ITEM if !%NavigationConfig;
+            # Get the old navigation.
+            my $OldNavigation = $SettingOldConfig->{NavBar} // $SettingOldDefaults->{NavBar};
 
-                my $EffectiveValue = $NavigationConfig{EffectiveValue};
-                my $Key = $EffectiveValue->{Name} . '-' . $EffectiveValue->{Block} || '';
-                $Navigation{$Key} = $EffectiveValue;
-            }
+            # Get the current navigation.
+            my $NewNavigation
+                = $GetConfig->( $Kernel::OM->Get('Kernel::Config'), 'Frontend::Navigation###' . $Frontend );
 
-            # Check permission of the naviagation items.
-            for my $Item ( @{$NavBar} ) {
-                my $Key = $Item->{Name} . '-' . $Item->{Block};
-                my $NavigationConfig = $Navigation{$Key} || {};
+            # Check if the permission is the same as the old one.
+            for my $Index ( sort keys %{$NewNavigation} ) {
+                my $NewItems = $NewNavigation->{$Index};
+                for my $NewItem ( @{$NewItems} ) {
+                    my $OldItem
+                        = List::Util::first { $_->{Name} eq $NewItem->{Name} && $_->{Block} eq $NewItem->{Block} }
+                    @{$OldNavigation};
+                    next NEW_ITEM if !$OldItem;
 
-                $CheckGroupGroupRo->(
-                    Expected => $Item,
-                    Result   => $NavigationConfig,
-                    TestName => sprintf(
-                        $Test->{Name} . ' (Navigation %s)',
-                        $Item->{Name},
-                        $Item->{Block} ? '-' . $Item->{Block} : '',
-                    ),
-                );
+                    $CheckGroupGroupRo->(
+                        Expected => $OldItem,
+                        Result   => $NewItem,
+                        TestName => sprintf(
+                            $Test->{Name} . ' (Navigation %s)',
+                            $NewItem->{Name},
+                            $NewItem->{Block} ? '-' . $NewItem->{Block} : '',
+                        ),
+                    );
+                }
             }
         }
     }
@@ -207,11 +203,10 @@ my @Settings = (
     'Frontend::Module###AgentTimeAccountingSetting',
     'Frontend::Module###AgentTimeAccountingReporting',
     'Frontend::Module###AgentTimeAccountingView',
-    'Frontend::Navigation###AgentTimeAccountingEdit###1',
-    'Frontend::Navigation###AgentTimeAccountingEdit###2',
-    'Frontend::Navigation###AgentTimeAccountingOverview###1',
-    'Frontend::Navigation###AgentTimeAccountingSetting###1',
-    'Frontend::Navigation###AgentTimeAccountingReporting###1',
+    'Frontend::Navigation###AgentTimeAccountingEdit###002-TimeAccounting',
+    'Frontend::Navigation###AgentTimeAccountingOverview###002-TimeAccounting',
+    'Frontend::Navigation###AgentTimeAccountingSetting###002-TimeAccounting',
+    'Frontend::Navigation###AgentTimeAccountingReporting###002-TimeAccounting',
 );
 
 for my $SettingName (@Settings) {

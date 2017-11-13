@@ -431,29 +431,30 @@ sub _MigratePermissions {
             my $NewSetting = $GetConfig->( $NewConfig, "Frontend::Navigation###${ Frontend }" );
 
             for my $Index ( sort keys %{$NewSetting} ) {
-                my $NewItem = $NewSetting->{$Index};
+                my $NewItems = $NewSetting->{$Index};
+                for my $NewItem ( @{$NewItems} ) {
 
-                SOURCE:
-                for my $Source ( ( $SettingOldConfig->{NavBar}, $SettingDefaults->{NavBar} ) ) {
-                    my $OldItem
-                        = List::Util::first { $_->{Name} eq $NewItem->{Name} && $_->{Block} eq $NewItem->{Block} }
-                    @{$Source};
-                    next SOURCE if !$OldItem;
+                    SOURCE:
+                    for my $Source ( ( $SettingOldConfig->{NavBar}, $SettingDefaults->{NavBar} ) ) {
+                        my $OldItem
+                            = List::Util::first { $_->{Name} eq $NewItem->{Name} && $_->{Block} eq $NewItem->{Block} }
+                        @{$Source};
+                        next SOURCE if !$OldItem;
 
-                    for my $Key (@GroupGroupRo) {
-                        if ( defined $OldItem->{$Key} ) {
-                            $NewItem->{$Key} = $OldItem->{$Key};
+                        for my $Key (@GroupGroupRo) {
+                            if ( defined $OldItem->{$Key} ) {
+                                $NewItem->{$Key} = $OldItem->{$Key};
+                            }
                         }
+                        last SOURCE;
                     }
-                    last SOURCE;
                 }
 
                 push @NewSettings, {
                     Name           => "Frontend::Navigation###${ Frontend }###${ Index }",
-                    EffectiveValue => $NewItem,
+                    EffectiveValue => $NewSetting->{$Index},
                     IsValid        => 1,
                 };
-
             }
         }
     }
