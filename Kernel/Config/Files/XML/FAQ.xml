@@ -764,18 +764,6 @@ Your OTRS Notification Master
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="PublicFrontend::Navigation###PublicFAQRSS###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="FAQ::Item::HTML" Required="1" Valid="1">
         <Description Translatable="1">Show FAQ Article with HTML.</Description>
         <Navigation>Core::FAQ::Item</Navigation>
@@ -970,18 +958,6 @@ Your OTRS Notification Master
                     </Array>
                 </Item>
             </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Frontend::Navigation###AgentFAQEdit###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentFAQLanguage" Required="0" Valid="1">
@@ -1418,18 +1394,6 @@ Your OTRS Notification Master
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentFAQZoom###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
    <Setting Name="Frontend::Module###AgentFAQRichText" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
@@ -1449,18 +1413,6 @@ Your OTRS Notification Master
                     <Item Key="NavBarName"></Item>
                 </Hash>
             </Item>
-        </Value>
-    </Setting>
-    <Setting Name="Frontend::Navigation###AgentFAQRichText###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="FAQ::Frontend::MenuModule###000-Back" Required="0" Valid="1">
@@ -1589,18 +1541,6 @@ Your OTRS Notification Master
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="CustomerFrontend::Navigation###CustomerFAQZoom###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="CustomerFrontend::Module###CustomerFAQSearch" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the customer interface.</Description>
         <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
@@ -1721,18 +1661,6 @@ Your OTRS Notification Master
             </Item>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentFAQPrint###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="CustomerFrontend::Module###CustomerFAQPrint" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the customer interface.</Description>
         <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
@@ -1752,18 +1680,6 @@ Your OTRS Notification Master
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
             </Item>
-        </Value>
-    </Setting>
-    <Setting Name="CustomerFrontend::Navigation###CustomerFAQPrint###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="PublicFrontend::Module###PublicFAQSearch" Required="0" Valid="1">
@@ -1911,18 +1827,6 @@ Your OTRS Notification Master
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="PublicFrontend::Navigation###PublicFAQZoom###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="PublicFrontend::Module###PublicFAQ" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the public interface.</Description>
         <Navigation>Frontend::Public::ModuleRegistration</Navigation>
@@ -1944,18 +1848,6 @@ Your OTRS Notification Master
             </Item>
         </Value>
     </Setting>
-    <Setting Name="PublicFrontend::Navigation###PublicFAQ###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="PublicFrontend::Module###PublicFAQPrint" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the public interface.</Description>
         <Navigation>Frontend::Public::ModuleRegistration</Navigation>
@@ -1975,18 +1867,6 @@ Your OTRS Notification Master
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
             </Item>
-        </Value>
-    </Setting>
-    <Setting Name="PublicFrontend::Navigation###PublicFAQPrint###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="Frontend::Module###AgentFAQJournal" Required="0" Valid="1">
@@ -2138,18 +2018,6 @@ Your OTRS Notification Master
             </Item>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentFAQHistory###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="Frontend::Module###AgentFAQDelete" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
@@ -2169,18 +2037,6 @@ Your OTRS Notification Master
                     <Item Key="NavBarName">FAQ</Item>
                 </Hash>
             </Item>
-        </Value>
-    </Setting>
-    <Setting Name="Frontend::Navigation###AgentFAQDelete###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="FAQ::TicketCompose###InsertMethod" Required="1" Valid="1">
@@ -2874,18 +2730,6 @@ Your OTRS Notification Master
                     <Item Key="NavBarName"></Item>
                 </Hash>
             </Item>
-        </Value>
-    </Setting>
-    <Setting Name="CustomerFrontend::Navigation###CustomerFAQRelatedArticles###002-FAQ" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="FAQ::KeywordArticeList::SearchLimit" Required="1" Valid="1">
