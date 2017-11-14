@@ -1,4 +1,6 @@
 #6.0.1 2017-??-??
+
+#6.0.1 2017-11-21
  - 2017-11-14 Fixed upgrade from lower than 4.0.1.
  - 2017-11-14 Updated translations, thanks to all translators.
  - 2017-11-14 Fixed bug#[13311](https://bugs.otrs.org/show_bug.cgi?id=13311) - Can't insert FAQ into new ticket.
