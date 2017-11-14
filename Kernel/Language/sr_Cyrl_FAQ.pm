@@ -293,8 +293,8 @@ sub Data {
     $Self->{Translation}->{'Category Management'} = 'Управљање категоријама';
     $Self->{Translation}->{'Category Management.'} = 'Управљање категоријама.';
     $Self->{Translation}->{'Customer FAQ Print.'} = 'Штампање клијентског FAQ.';
-    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
-    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = 'Сродни FAQ чланци у интерфејсу клијента';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = 'Сродни FAQ чланци у интерфејсу клијента.';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = 'Детаљи клијентског FAQ.';
     $Self->{Translation}->{'Customer FAQ search.'} = 'Претрага клијентског FAQ.';
     $Self->{Translation}->{'Customer FAQ.'} = 'Клијентски FAQ.';
@@ -390,7 +390,7 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'Уреди овај FAQ';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Активирање више језика на FAQ модулу.';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
-        'Активира функцију повезаног чланка за интерфејс клијента.';
+        'Активира функцију сродних чланака за интерфејс клијента.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Активирање механизма за гласање на FAQ модулу.';
     $Self->{Translation}->{'Explorer'} = 'Истраживач';
     $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX одговарач';
@@ -398,7 +398,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area'} = 'FAQ простор';
     $Self->{Translation}->{'FAQ Area.'} = 'FAQ простор.';
     $Self->{Translation}->{'FAQ Delete.'} = 'Обриши FAQ.';
-    $Self->{Translation}->{'FAQ Edit.'} = 'Уреди ЧПП.';
+    $Self->{Translation}->{'FAQ Edit.'} = 'Уреди FAQ.';
     $Self->{Translation}->{'FAQ History.'} = 'Историјат FAQ.';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Ограничење прегледа FAQ дневника "мало"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Ограничење прегледа FAQ "мало"';
@@ -421,7 +421,7 @@ sub Data {
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Ограничење претраге за генерисање листе кључних речи FAQ чланака.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Повежи други објекат са овом ставком FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
-        'Листа имена редова за које је фунција повезаног чланка активирана.';
+        'Листа имена редова за које је фунција сродних чланака активирана.';
     $Self->{Translation}->{'List of state types which can be used in the agent interface.'} =
         'Листа типова стања који се могу користити у интерфејсу оператера.';
     $Self->{Translation}->{'List of state types which can be used in the customer interface.'} =
@@ -443,7 +443,7 @@ sub Data {
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} =
         'Максимални број FAQ чланака који ће бити приказани у резултату претраге у јавном интерфејсу.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface.'} =
-        'Максимална дужина наслова у FAQ чланку који ће бити приказани у ЧПП претраживачу у интерфејсу оператера.';
+        'Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претраживачу у интерфејсу оператера.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface.'} =
         'Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претраживачу у интерфејсу клијента.';
     $Self->{Translation}->{'Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface.'} =
@@ -478,7 +478,7 @@ sub Data {
     $Self->{Translation}->{'Other Settings'} = 'Друга подешавања';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         'Излазни филтер за убацивање JavaScript у CustomerTicketMessage екран.';
-    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = 'Ограничење излаза за повезане FAQ чланке.';
+    $Self->{Translation}->{'Output limit for the related FAQ articles.'} = 'Ограничење броја приказаних сродних FAQ чланака.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} =
         'Параметри страница (на којима су FAQ ставке приказане) на малом приказу прегледа FAQ дневника.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} =
@@ -512,7 +512,7 @@ sub Data {
         'Прикажи "Убаци FAQ текст и везу" / "Убаци цео FAQ и везу дугме у AgentFAQZoomSmall за јавне FAQ артикле.';
     $Self->{Translation}->{'Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.'} =
         'Прикажи "Убаци FAQ текст" / "Убаци цео FAQ" дугме у AgentFAQZoomSmall.';
-    $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Приказ ЧПП чланка као HTML.';
+    $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Приказ FAQ чланка као HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Прикажи путању до FAQ да/не.';
     $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
         'Приказ неиспрвних ставки у резултатима FAQ претраживача у интерфејсу оператера.';
@@ -538,7 +538,7 @@ sub Data {
     $Self->{Translation}->{'Solution'} = 'Решење';
     $Self->{Translation}->{'Symptom'} = 'Симптом';
     $Self->{Translation}->{'Text Only'} = 'Само текст';
-    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = 'Подразумевани језици за повезане FAQ чланке.';
+    $Self->{Translation}->{'The default languages for the related FAQ articles.'} = 'Подразумевани језици за сродне FAQ чланке.';
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Идентификатор за FAQ, нпр. FAQ#, KB#, MyFAQ#. Подразумевано је FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =

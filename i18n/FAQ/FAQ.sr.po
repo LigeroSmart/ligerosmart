@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-16 22:56+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2017-11-08 09:55+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -758,11 +758,11 @@ msgstr "Штампање клијентског FAQ."
 
 #. SysConfig
 msgid "Customer FAQ Related Articles"
-msgstr ""
+msgstr "Сродни FAQ чланци у интерфејсу клијента"
 
 #. SysConfig
 msgid "Customer FAQ Related Articles."
-msgstr ""
+msgstr "Сродни FAQ чланци у интерфејсу клијента."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
@@ -1036,7 +1036,7 @@ msgstr "Активирање више језика на FAQ модулу."
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
-msgstr "Активира функцију повезаног чланка за интерфејс клијента."
+msgstr "Активира функцију сродних чланака за интерфејс клијента."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
@@ -1068,7 +1068,7 @@ msgstr "Обриши FAQ."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr "Уреди ЧПП."
+msgstr "Уреди FAQ."
 
 #. SysConfig
 msgid "FAQ History."
@@ -1156,7 +1156,7 @@ msgstr "Повежи други објекат са овом ставком FAQ"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
-msgstr "Листа имена редова за које је фунција повезаног чланка активирана."
+msgstr "Листа имена редова за које је фунција сродних чланака активирана."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1216,7 +1216,7 @@ msgstr "Максимални број FAQ чланака који ће бити 
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у ЧПП претраживачу у интерфејсу оператера."
+msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претраживачу у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -1324,7 +1324,7 @@ msgstr "Излазни филтер за убацивање JavaScript у Custom
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
-msgstr "Ограничење излаза за повезане FAQ чланке."
+msgstr "Ограничење броја приказаних сродних FAQ чланака."
 
 #. SysConfig
 msgid ""
@@ -1432,7 +1432,7 @@ msgstr "Прикажи \"Убаци FAQ текст\" / \"Убаци цео FAQ\"
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr "Приказ ЧПП чланка као HTML."
+msgstr "Приказ FAQ чланка као HTML."
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
@@ -1518,7 +1518,7 @@ msgstr "Само текст"
 
 #. SysConfig
 msgid "The default languages for the related FAQ articles."
-msgstr "Подразумевани језици за повезане FAQ чланке."
+msgstr "Подразумевани језици за сродне FAQ чланке."
 
 #. SysConfig
 msgid "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
