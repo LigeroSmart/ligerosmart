@@ -37,7 +37,7 @@ sub Data {
     $Self->{Translation}->{'Add Question'} = '質問の追加';
     $Self->{Translation}->{'Type the question'} = '質問の入力';
     $Self->{Translation}->{'Answer required'} = '回答必須です';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'この調査に対する質問が保存されていません。';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'このアンケートに対する質問が保存されていません。';
     $Self->{Translation}->{'Question'} = '質問';
     $Self->{Translation}->{'Answer Required'} = '回答が必須の項目です';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
@@ -93,7 +93,7 @@ sub Data {
     $Self->{Translation}->{'No stat results.'} = '統計結果がありません。';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = '調査';
+    $Self->{Translation}->{'Survey'} = 'アンケート';
     $Self->{Translation}->{'Please answer these questions'} = 'これらの質問に回答してください。';
     $Self->{Translation}->{'Show my answers'} = '過去の回答を表示';
     $Self->{Translation}->{'These are your answers'} = 'これらは過去に回答されたものです。';
@@ -130,7 +130,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
     $Self->{Translation}->{'Thank you for your feedback.'} = 'フィードバックいただきありがとうございました。';
-    $Self->{Translation}->{'The survey is finished.'} = '調査が完了しました。';
+    $Self->{Translation}->{'The survey is finished.'} = 'アンケートが完了しました。';
     $Self->{Translation}->{'Survey Message!'} = 'アンケートのメッセージ!';
     $Self->{Translation}->{'Module not enabled.'} = 'モジュールが有効になっていません。';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -152,20 +152,20 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this answer?'} = '本当にこの答えを削除してもいいですか？';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = '調査モジュール';
+    $Self->{Translation}->{'A Survey Module.'} = 'アンケート・モジュール';
     $Self->{Translation}->{'A module to edit survey questions.'} = 'アンケート質問を編集するモジュール';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
         '担当者インタフェースにおけるアンケート・オブジェクトに対する全てのパラメータ';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
-        '調査メールを送信した後、同じ顧客に新しい調査要求が送信されない日数。';
+        'アンケートメールを送信した後、同じ顧客に新しい調査要求が送信されない日数。';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
-        '新しい調査について顧客に通知するメールの本文のデフォルト';
+        '新しいアンケートについて顧客に通知するメールの本文のデフォルト';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
-        '新しい調査をについて顧客に通知するメールの送信者のデフォルト';
+        '新しいアンケートをについて顧客に通知するメールの送信者のデフォルト';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
-        '新しい調査をについて顧客に通知するメールの件名のデフォルト';
+        '新しいアンケートをについて顧客に通知するメールの件名のデフォルト';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
-        '調査一覧(S)を表示するための一覧モジュールの定義';
+        'アンケート一覧(S)を表示するための一覧モジュールの定義';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         'アンケートのステータスを変更する権限を持つグループを定義します。 アレイはデフォルトでは空で、全てのグループの担当者がアンケートのステータスを変更できます。';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
@@ -182,7 +182,7 @@ sub Data {
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'SurveyZoom要素のリッチテキストビューの最大高さを定義します。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
-        '調査一覧で表示される列数を定義します。このオプションは列の位置には作用しません。';
+        'アンケート一覧で表示される列数を定義します。このオプションは列の位置には作用しません。';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
         '統計モジュールが調査リストを生成するかどうかを決定します。';
     $Self->{Translation}->{'Edit survey general information.'} = 'アンケート一般情報を編集';
@@ -204,7 +204,7 @@ sub Data {
         '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'この正規表現にマッチする場合、調査は顧客に送信されません。';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
-        '調査一覧 (Small) の (調査が表示される) ページに対するパラメータ';
+        'アンケート一覧 (Small) の (アンケートが表示される) ページに対するパラメータ';
     $Self->{Translation}->{'Public Survey.'} = '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンドモジュール登録です。';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
         '設定された日数より古い結果は削除されます。 注： \'Task ### SurveyRequestsDelete\'設定を有効にする前に、OTRSデーモンによって行われた結果を削除して下さい。';

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-09-29 15:35+0000\n"
-"PO-Revision-Date: 2017-11-06 06:09+0000\n"
+"PO-Revision-Date: 2017-11-14 12:39+0000\n"
 "Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -86,7 +86,7 @@ msgstr "回答必須です"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
-msgstr "この調査に対する質問が保存されていません。"
+msgstr "このアンケートに対する質問が保存されていません。"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
@@ -261,7 +261,7 @@ msgstr "統計結果がありません。"
 
 #. Template: PublicSurvey
 msgid "Survey"
-msgstr "調査"
+msgstr "アンケート"
 
 #. Template: PublicSurvey
 msgid "Please answer these questions"
@@ -369,7 +369,7 @@ msgstr "フィードバックいただきありがとうございました。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "The survey is finished."
-msgstr "調査が完了しました。"
+msgstr "アンケートが完了しました。"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -425,7 +425,7 @@ msgstr "本当にこの答えを削除してもいいですか？"
 
 #. SysConfig
 msgid "A Survey Module."
-msgstr "調査モジュール"
+msgstr "アンケート・モジュール"
 
 #. SysConfig
 msgid "A module to edit survey questions."
@@ -439,25 +439,25 @@ msgstr "担当者インタフェースにおけるアンケート・オブジェ
 msgid ""
 "Amount of days after sending a survey mail in which no new survey requests "
 "are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "調査メールを送信した後、同じ顧客に新しい調査要求が送信されない日数。"
+msgstr "アンケートメールを送信した後、同じ顧客に新しい調査要求が送信されない日数。"
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "新しい調査について顧客に通知するメールの本文のデフォルト"
+msgstr "新しいアンケートについて顧客に通知するメールの本文のデフォルト"
 
 #. SysConfig
 msgid ""
 "Default sender for the notification email to customers about new survey."
-msgstr "新しい調査をについて顧客に通知するメールの送信者のデフォルト"
+msgstr "新しいアンケートをについて顧客に通知するメールの送信者のデフォルト"
 
 #. SysConfig
 msgid ""
 "Default subject for the notification email to customers about new survey."
-msgstr "新しい調査をについて顧客に通知するメールの件名のデフォルト"
+msgstr "新しいアンケートをについて顧客に通知するメールの件名のデフォルト"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "調査一覧(S)を表示するための一覧モジュールの定義"
+msgstr "アンケート一覧(S)を表示するための一覧モジュールの定義"
 
 #. SysConfig
 msgid ""
@@ -505,7 +505,7 @@ msgstr "SurveyZoom要素のリッチテキストビューの最大高さを定�
 msgid ""
 "Defines the shown columns in the survey overview. This option has no effect "
 "on the position of the columns."
-msgstr "調査一覧で表示される列数を定義します。このオプションは列の位置には作用しません。"
+msgstr "アンケート一覧で表示される列数を定義します。このオプションは列の位置には作用しません。"
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -564,7 +564,7 @@ msgstr "この正規表現にマッチする場合、調査は顧客に送信さ
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
-msgstr "調査一覧 (Small) の (調査が表示される) ページに対するパラメータ"
+msgstr "アンケート一覧 (Small) の (アンケートが表示される) ページに対するパラメータ"
 
 #. SysConfig
 msgid "Public Survey."
