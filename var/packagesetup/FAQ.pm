@@ -751,6 +751,8 @@ sub _MigrateDTLInSysConfig {
     my $Setting = $ConfigObject->Get('FAQ::Frontend::MenuModule');
     return if !$Setting;
 
+    my @NewSettings;
+
     MENUMODULE:
     for my $MenuModule ( sort keys %{$Setting} ) {
 
@@ -777,13 +779,19 @@ sub _MigrateDTLInSysConfig {
             }
         }
 
-        my $Success = $SysConfigObject->SettingUpdate(
-            Name           => 'FAQ::Frontend::MenuModule',
+        push @NewSettings, {
+            Name           => "FAQ::Frontend::MenuModule###$MenuModule",
+            EffectiveValue => $Setting->{$MenuModule},
             IsValid        => 1,
-            EffectiveValue => $Setting,
-            UserID         => 1,
-        );
+            },
     }
+
+    my $Success = $SysConfigObject->SettingsSet(
+        UserID   => 1,
+        Comments => 'Deploy FAQ menu module.',
+        Settings => \@NewSettings,
+    );
+
     return 1;
 }
 
