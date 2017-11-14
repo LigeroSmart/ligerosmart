@@ -98,7 +98,7 @@ FAQ.Agent.FAQZoom = (function (TargetNS) {
         });
 
         // Create events for AgentFAQZoomSmall screen.
-        if (Core.Config.Get('AgentFAQZoomSmall') === '1') {
+        if (parseInt(Core.Config.Get('AgentFAQZoomSmall'), 10) === 1) {
 
             $('#Cancel').on('click', function () {
                 parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));

@@ -237,7 +237,7 @@ sub Run {
         if ( $FieldConfig->{Caption} && $TicketComposeConfig->{ShowFieldNames} ) {
 
             # Translate the caption to the language of the FAQ item.
-            my $TranslatedCaption = $FAQLanguageObject->Get( $FieldConfig->{Caption} );
+            my $TranslatedCaption = $FAQLanguageObject->Translate( $FieldConfig->{Caption} );
 
             if ($TranslatedCaption) {
                 $FieldContent = '<h2>' . $TranslatedCaption . ':</h2>' . $FieldContent;
