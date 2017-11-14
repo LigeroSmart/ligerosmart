@@ -353,18 +353,6 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AgentSurveyEditQuestions###002-Survey" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
-        </Value>
-    </Setting>
     <Setting Name="PublicFrontend::Module###PublicSurvey" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the PublicSurvey object in the public Survey area.</Description>
         <Navigation>Frontend::Public::ModuleRegistration</Navigation>
@@ -397,18 +385,6 @@
                     </Array>
                 </Item>
             </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="PublicFrontend::Navigation###PublicSurvey###002-Survey" Required="0" Valid="0">
-        <Description Translatable="1">Main menu item registration.</Description>
-        <Navigation>Frontend::Public::ModuleRegistration</Navigation>
-        <Value>
-            <Array>
-                <DefaultItem ValueType="FrontendNavigation">
-                    <Hash>
-                    </Hash>
-                </DefaultItem>
-            </Array>
         </Value>
     </Setting>
     <Setting Name="Survey::ShowVoteData" Required="0" Valid="0">
