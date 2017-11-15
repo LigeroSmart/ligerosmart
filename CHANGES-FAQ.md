@@ -1,4 +1,5 @@
-#6.0.1 2017-??-??
+#6.0.2 2017-??-??
+ - 2017-11-14 Updated documentation (Config chapter).
 
 #6.0.1 2017-11-21
  - 2017-11-14 Fixed upgrade from lower than 4.0.1.

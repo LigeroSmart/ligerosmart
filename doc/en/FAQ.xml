@@ -397,19 +397,14 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Frontend module registration for the customer interface.</para>
         </section>
         <section>
-            <title>CustomerFrontend::Navigation###CustomerFAQExplorer###1.</title>
+            <title>CustomerFrontend::Navigation###CustomerFAQExplorer###002-FAQ.</title>
             <para>Navigation: Frontend::Customer::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>CustomerFrontend::Navigation###CustomerFAQExplorer###2.</title>
+            <title>CustomerFrontend::Navigation###CustomerFAQSearch###002-FAQ.</title>
             <para>Navigation: Frontend::Customer::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
-        </section>
-        <section>
-            <title>CustomerFrontend::Navigation###CustomerFAQSearch###1.</title>
-            <para>Navigation: Frontend::Customer::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
             <title>DashboardBackend###0398-FAQ-LastChange.</title>
@@ -1192,39 +1187,39 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQAdd###1.</title>
+            <title>Frontend::Navigation###AgentFAQAdd###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQCategory###1.</title>
+            <title>Frontend::Navigation###AgentFAQCategory###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQExplorer###1.</title>
+            <title>Frontend::Navigation###AgentFAQExplorer###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQExplorer###2.</title>
+            <title>Frontend::Navigation###AgentFAQJournal###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQJournal###1.</title>
+            <title>Frontend::Navigation###AgentFAQLanguage###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQLanguage###1.</title>
+            <title>Frontend::Navigation###AgentFAQSearch###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>Frontend::Navigation###AgentFAQSearch###1.</title>
+            <title>Frontend::Navigation###AgentFAQSearchSmall###002-FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
             <title>Frontend::Output::FilterElementPost###FAQ.</title>
@@ -1442,14 +1437,14 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Frontend module registration for the public interface.</para>
         </section>
         <section>
-            <title>PublicFrontend::Navigation###PublicFAQExplorer###1.</title>
+            <title>PublicFrontend::Navigation###PublicFAQExplorer###002-FAQ.</title>
             <para>Navigation: Frontend::Public::ModuleRegistration.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
         <section>
-            <title>PublicFrontend::Navigation###PublicFAQSearch###1.</title>
+            <title>PublicFrontend::Navigation###PublicFAQSearch###002-FAQ.</title>
             <para>Navigation: Frontend::Public::ModuleRegistration.</para>
-            <para>Main menu for the agent interface.</para>
+            <para>Main menu item registration.</para>
         </section>
     </section>
     <section>
