@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-10-10 13:59+0000\n"
-"PO-Revision-Date: 2017-11-06 05:34+0000\n"
+"PO-Revision-Date: 2017-11-14 12:23+0000\n"
 "Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "名称は入力必須です。"
 
 #. Template: AdminITSMStateMachine
 msgid "Admin State Machine"
-msgstr "マシンの管理状況"
+msgstr "ステートマシンの管理"
 
 #. Template: AdminITSMStateMachine
 msgid "Select a catalog class!"
@@ -58,7 +58,7 @@ msgstr "カタログクラスの選択は必須です。"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a state transition"
-msgstr "状態遷移を追加"
+msgstr "ステータス遷移を追加"
 
 #. Template: AdminITSMStateMachine
 msgid "Catalog Class"
@@ -74,7 +74,7 @@ msgstr "ステータスの概要："
 
 #. Template: AdminITSMStateMachine
 msgid "Delete this state transition"
-msgstr "この状態遷移を削除する"
+msgstr "このステータス遷移を削除"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a new state transition for"
@@ -82,11 +82,11 @@ msgstr "新しいステータスを追加："
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a state!"
-msgstr "状態を選択してください。"
+msgstr "ステータスを選択して下さい。"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a next state!"
-msgstr "新しい状態を選択してください。"
+msgstr "新しいステータスを選択して下さい。"
 
 #. Template: AdminITSMStateMachine
 msgid "Edit a state transition for"
@@ -94,7 +94,7 @@ msgstr "ステータスの編集："
 
 #. Template: AdminITSMStateMachine
 msgid "Do you really want to delete the state transition"
-msgstr "本当に状態遷移を削除しますか？"
+msgstr "本当にステータス遷移を削除しますか？"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
@@ -222,7 +222,7 @@ msgstr "アクションの削除"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Actions found."
-msgstr ""
+msgstr "アクションは見つかりませんでした。"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new action"
@@ -234,11 +234,11 @@ msgstr "本当にこの変更管理項目を削除しますか。"
 
 #. Template: AgentITSMChangeEdit
 msgid "Edit %s%s"
-msgstr ""
+msgstr "%s%sを修正"
 
 #. Template: AgentITSMChangeHistory
 msgid "History of %s%s"
-msgstr ""
+msgstr "%s%sの履歴"
 
 #. Template: AgentITSMChangeHistory
 msgid "History Content"
@@ -454,7 +454,7 @@ msgstr "テンプレート名は入力必須です。"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Reset States"
-msgstr "状態をリセット"
+msgstr "ステータスをリセット"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Overwrite original template"
@@ -541,11 +541,11 @@ msgstr ""
 
 #. Template: AgentITSMTemplateEditContent
 msgid "Do you want to proceed?"
-msgstr ""
+msgstr "続行しますか？"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Template ID"
-msgstr ""
+msgstr "Template ID"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
@@ -553,11 +553,11 @@ msgstr "内容を編集"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Create by"
-msgstr ""
+msgstr "作成者"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change by"
-msgstr ""
+msgstr "変更者"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change Time"
@@ -672,11 +672,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Updated!"
-msgstr ""
+msgstr "ステータス遷移が更新されました！"
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Added!"
-msgstr ""
+msgstr "ステータス遷移が追加されました！"
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
 msgid "Overview: ITSM Changes"
@@ -904,7 +904,7 @@ msgstr "作業オーダー"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "ChangeState"
-msgstr "変更管理項目の状況"
+msgstr "変更管理のステータス"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -948,7 +948,7 @@ msgstr "作成者"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder State"
-msgstr "作業オーダーの状態"
+msgstr "作業依頼書のステータス"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Type"
@@ -1304,7 +1304,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the state machine."
-msgstr ""
+msgstr "ステートマシンの管理"
 
 #. SysConfig
 msgid ""
@@ -2744,7 +2744,7 @@ msgstr ""
 
 #. SysConfig
 msgid "State Machine"
-msgstr "状態管理"
+msgstr "ステートマシーン"
 
 #. SysConfig
 msgid ""

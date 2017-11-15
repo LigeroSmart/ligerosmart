@@ -28,19 +28,19 @@ sub Data {
     $Self->{Translation}->{'Name is required.'} = '名称は入力必須です。';
 
     # Template: AdminITSMStateMachine
-    $Self->{Translation}->{'Admin State Machine'} = 'マシンの管理状況';
+    $Self->{Translation}->{'Admin State Machine'} = 'ステートマシンの管理';
     $Self->{Translation}->{'Select a catalog class!'} = 'カタログクラスの選択は必須です。';
     $Self->{Translation}->{'A catalog class is required!'} = 'カタログクラスの選択は必須です。';
-    $Self->{Translation}->{'Add a state transition'} = '状態遷移を追加';
+    $Self->{Translation}->{'Add a state transition'} = 'ステータス遷移を追加';
     $Self->{Translation}->{'Catalog Class'} = 'カタログ・クラス';
     $Self->{Translation}->{'Object Name'} = 'オブジェクト名';
     $Self->{Translation}->{'Overview over state transitions for'} = 'ステータスの概要：';
-    $Self->{Translation}->{'Delete this state transition'} = 'この状態遷移を削除する';
+    $Self->{Translation}->{'Delete this state transition'} = 'このステータス遷移を削除';
     $Self->{Translation}->{'Add a new state transition for'} = '新しいステータスを追加：';
-    $Self->{Translation}->{'Please select a state!'} = '状態を選択してください。';
-    $Self->{Translation}->{'Please select a next state!'} = '新しい状態を選択してください。';
+    $Self->{Translation}->{'Please select a state!'} = 'ステータスを選択して下さい。';
+    $Self->{Translation}->{'Please select a next state!'} = '新しいステータスを選択して下さい。';
     $Self->{Translation}->{'Edit a state transition for'} = 'ステータスの編集：';
-    $Self->{Translation}->{'Do you really want to delete the state transition'} = '本当に状態遷移を削除しますか？';
+    $Self->{Translation}->{'Do you really want to delete the state transition'} = '本当にステータス遷移を削除しますか？';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = '変更管理項目を追加';
@@ -82,17 +82,17 @@ sub Data {
     $Self->{Translation}->{'No Expressions found.'} = '期限が未設定です。';
     $Self->{Translation}->{'Add new expression'} = '新しい期限の追加';
     $Self->{Translation}->{'Delete Action'} = 'アクションの削除';
-    $Self->{Translation}->{'No Actions found.'} = '';
+    $Self->{Translation}->{'No Actions found.'} = 'アクションは見つかりませんでした。';
     $Self->{Translation}->{'Add new action'} = '新しいアクションの追加';
 
     # Template: AgentITSMChangeDelete
     $Self->{Translation}->{'Do you really want to delete this change?'} = '本当にこの変更管理項目を削除しますか。';
 
     # Template: AgentITSMChangeEdit
-    $Self->{Translation}->{'Edit %s%s'} = '';
+    $Self->{Translation}->{'Edit %s%s'} = '%s%sを修正';
 
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'History of %s%s'} = '';
+    $Self->{Translation}->{'History of %s%s'} = '%s%sの履歴';
     $Self->{Translation}->{'History Content'} = '履歴内容';
     $Self->{Translation}->{'Workorder'} = '作業オーダー';
     $Self->{Translation}->{'Createtime'} = '作成日時';
@@ -160,7 +160,7 @@ sub Data {
     $Self->{Translation}->{'Save Change as Template'} = '変更をテンプレートとして保存する';
     $Self->{Translation}->{'A template should have a name!'} = '「テンプレート名」は必須項目です。';
     $Self->{Translation}->{'The template name is required.'} = 'テンプレート名は入力必須です。';
-    $Self->{Translation}->{'Reset States'} = '状態をリセット';
+    $Self->{Translation}->{'Reset States'} = 'ステータスをリセット';
     $Self->{Translation}->{'Overwrite original template'} = '';
     $Self->{Translation}->{'Delete original change'} = '';
 
@@ -193,13 +193,13 @@ sub Data {
         '';
     $Self->{Translation}->{'The temporary change and new workorder will be deleted automatically after the workorder has been saved as template.'} =
         '';
-    $Self->{Translation}->{'Do you want to proceed?'} = '';
+    $Self->{Translation}->{'Do you want to proceed?'} = '続行しますか？';
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'Template ID'} = '';
+    $Self->{Translation}->{'Template ID'} = 'Template ID';
     $Self->{Translation}->{'Edit Content'} = '内容を編集';
-    $Self->{Translation}->{'Create by'} = '';
-    $Self->{Translation}->{'Change by'} = '';
+    $Self->{Translation}->{'Create by'} = '作成者';
+    $Self->{Translation}->{'Change by'} = '変更者';
     $Self->{Translation}->{'Change Time'} = '変更日時';
 
     # Template: AgentITSMWorkOrderAdd
@@ -254,8 +254,8 @@ sub Data {
     $Self->{Translation}->{'There was an error creating the notification.'} = '';
 
     # Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
-    $Self->{Translation}->{'State Transition Updated!'} = '';
-    $Self->{Translation}->{'State Transition Added!'} = '';
+    $Self->{Translation}->{'State Transition Updated!'} = 'ステータス遷移が更新されました！';
+    $Self->{Translation}->{'State Transition Added!'} = 'ステータス遷移が追加されました！';
 
     # Perl Module: Kernel/Modules/AgentITSMChange.pm
     $Self->{Translation}->{'Overview: ITSM Changes'} = '一覧: 変更管理';
@@ -357,7 +357,7 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = '変更管理項目の検索';
     $Self->{Translation}->{'ChangeTitle'} = '変更管理項目名';
     $Self->{Translation}->{'WorkOrders'} = '作業オーダー';
-    $Self->{Translation}->{'ChangeState'} = '変更管理項目の状況';
+    $Self->{Translation}->{'ChangeState'} = '変更管理のステータス';
     $Self->{Translation}->{'Change Search Result'} = '変更管理項目の検索結果';
     $Self->{Translation}->{'Change Number'} = '変更管理項目番号';
     $Self->{Translation}->{'Work Order Title'} = '作業オーダー名';
@@ -368,7 +368,7 @@ sub Data {
     $Self->{Translation}->{'Change Priority'} = '変更管理項目の優先度';
     $Self->{Translation}->{'Change Impact'} = '変更管理項目の影響度';
     $Self->{Translation}->{'Created By'} = '作成者';
-    $Self->{Translation}->{'WorkOrder State'} = '作業オーダーの状態';
+    $Self->{Translation}->{'WorkOrder State'} = '作業依頼書のステータス';
     $Self->{Translation}->{'WorkOrder Type'} = '作業オーダータイプ';
     $Self->{Translation}->{'WorkOrder Agent'} = '作業オーダーの担当者';
     $Self->{Translation}->{'before'} = '';
@@ -503,7 +503,7 @@ sub Data {
     $Self->{Translation}->{'Add a workorder to the change.'} = '変更の作業依頼書を追加します。';
     $Self->{Translation}->{'Add from template'} = 'テンプレートから追加する';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
-    $Self->{Translation}->{'Admin of the state machine.'} = '';
+    $Self->{Translation}->{'Admin of the state machine.'} = 'ステートマシンの管理';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
         '';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} =
@@ -948,7 +948,7 @@ sub Data {
         '担当者インタフェースの変更管理ズーム・ビューで、変更内容をリセットするためのリンクをメニューに表示します。';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         '';
-    $Self->{Translation}->{'State Machine'} = '状態管理';
+    $Self->{Translation}->{'State Machine'} = 'ステートマシーン';
     $Self->{Translation}->{'Stores change and workorder ids and their corresponding template id, while a user is editing a template.'} =
         '';
     $Self->{Translation}->{'Take Workorder'} = 'ワークオーダーを受け取る';
