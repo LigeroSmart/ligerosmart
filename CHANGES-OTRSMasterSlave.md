@@ -1,4 +1,5 @@
 #6.0.1 2017-??-??
+ - 2017-11-14 Updated documentation (Config chapter).
  - 2017-11-14 Updated translations, thanks to all translators.
 
 #6.0.0.rc1 2017-11-14

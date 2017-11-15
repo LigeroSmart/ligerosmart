@@ -267,6 +267,16 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
+        <title>Frontend::Navigation###AdminDynamicFieldMasterSlave###004-OTRSMasterSlave.</title>
+        <para>Navigation: Frontend::Admin::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentTicketMasterSlave###004-OTRSMasterSlave.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
         <title>Loader::Module::AdminDynamicFieldMasterSlave###004-OTRSMasterSlave.</title>
         <para>Navigation: Frontend::Admin::ModuleRegistration::Loader.</para>
         <para>Loader module registration for the agent interface.</para>
