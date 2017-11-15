@@ -171,19 +171,29 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Frontend module registration for survey zoom in the agent interface.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentSurveyAdd###1.</title>
+        <title>Frontend::Navigation###AgentSurveyAdd###002-Survey.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentSurveyOverview###1.</title>
+        <title>Frontend::Navigation###AgentSurveyEdit###002-Survey.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentSurveyOverview###2.</title>
+        <title>Frontend::Navigation###AgentSurveyOverview###002-Survey.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyStats###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
+    </section>
+    <section>
+        <title>Frontend::Navigation###AgentSurveyZoom###002-Survey.</title>
+        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
         <title>Loader::Module::AgentSurveyAdd###002-Survey.</title>
