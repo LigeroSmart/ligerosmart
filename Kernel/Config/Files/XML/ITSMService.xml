@@ -287,7 +287,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMService::Frontend::MenuModule###000-Back" Required="0" Valid="1">
-        <Description Translatable="1">Module to show back link in service menu.</Description>
+        <Description Translatable="1">Module to show the Back menu item in service menu.</Description>
         <Navigation>Frontend::Agent::ITSMService::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -301,7 +301,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMService::Frontend::MenuModule###100-Print" Required="0" Valid="1">
-        <Description Translatable="1">Module to show print link in service menu.</Description>
+        <Description Translatable="1">Module to show the Print menu item in service menu.</Description>
         <Navigation>Frontend::Agent::ITSMService::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -314,7 +314,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMService::Frontend::MenuModule###200-Link" Required="0" Valid="1">
-        <Description Translatable="1">Module to show the link link in service menu.</Description>
+        <Description Translatable="1">Module to show the Link menu item in service menu.</Description>
         <Navigation>Frontend::Agent::ITSMService::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -328,7 +328,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMSLA::Frontend::MenuModule###000-Back" Required="0" Valid="1">
-        <Description Translatable="1">Module to show back link in sla menu.</Description>
+        <Description Translatable="1">Module to show the Back menu item in SLA menu.</Description>
         <Navigation>Frontend::Agent::ITSMSLA::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -342,7 +342,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMSLA::Frontend::MenuModule###100-Print" Required="0" Valid="1">
-        <Description Translatable="1">Module to show print link in sla menu.</Description>
+        <Description Translatable="1">Module to show the Print menu item in SLA menu.</Description>
         <Navigation>Frontend::Agent::ITSMSLA::MenuModule</Navigation>
         <Value>
             <Hash>
