@@ -17,10 +17,10 @@ sub Data {
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
-        'Você realmente quer remover o apontamento de tempo deste dia ?';
+        'Você realmente deseja remover o apontamento de tempo deste dia ?';
 
     # Template: AgentTimeAccountingEdit
-    $Self->{Translation}->{'Edit Time Record'} = 'Editar esse registro';
+    $Self->{Translation}->{'Edit Time Record'} = 'Editar registro de tempo';
     $Self->{Translation}->{'Go to settings'} = 'Ir para configurações';
     $Self->{Translation}->{'Date Navigation'} = 'Navegação de datas';
     $Self->{Translation}->{'Days without entries'} = 'Dias sem apontamentos';

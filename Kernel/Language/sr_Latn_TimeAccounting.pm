@@ -193,7 +193,7 @@ sub Data {
     $Self->{Translation}->{'View: Need %s!'} = 'Prikaz: neophodan %s!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
+    $Self->{Translation}->{'Incomplete working days'} = 'Nepotpuni radni dani';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
     $Self->{Translation}->{'Please choose at least one day!'} = 'Molimo vas izaberite bar jedan dan!';
