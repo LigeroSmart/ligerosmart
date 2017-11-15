@@ -229,34 +229,29 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Frontend module registration for the agent interface.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentTimeAccountingEdit###1.</title>
+        <title>Frontend::Navigation###AgentTimeAccountingEdit###002-TimeAccounting.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentTimeAccountingEdit###2.</title>
+        <title>Frontend::Navigation###AgentTimeAccountingOverview###002-TimeAccounting.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentTimeAccountingOverview###1.</title>
+        <title>Frontend::Navigation###AgentTimeAccountingReporting###002-TimeAccounting.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentTimeAccountingReporting###1.</title>
+        <title>Frontend::Navigation###AgentTimeAccountingSetting###002-TimeAccounting.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
-        <title>Frontend::Navigation###AgentTimeAccountingSetting###1.</title>
+        <title>Frontend::Navigation###AgentTimeAccountingView###002-TimeAccounting.</title>
         <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
-    </section>
-    <section>
-        <title>Frontend::Navigation###AgentTimeAccountingView###1.</title>
-        <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu.</para>
-        <para>Main menu for the agent interface.</para>
+        <para>Main menu item registration.</para>
     </section>
     <section>
         <title>Frontend::NotifyModule###888-TimeAccounting.</title>
