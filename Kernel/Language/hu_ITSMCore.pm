@@ -84,19 +84,19 @@ sub Data {
         'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt szolgáltatások felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak szolgáltatás attribútumok engedélyezettek az alapértelmezett oszlopoknál. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
     $Self->{Translation}->{'Depends on'} = 'Ettől függ';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
-        'Előtétprogram modul regisztráció az adminisztrációs területen lévő AdminITSMCIPAllocate beállításhoz.';
+        'Előtétprogram modul regisztráció az adminisztrációs területen lévő kritikusság ↔ hatás ↔ prioritás lefoglalás beállításhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
-        'Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMSLA objektumhoz.';
+        'Előtétprogram modul regisztráció az ügyintézői felületen lévő SLA objektumhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} =
-        'Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMSLAPrint objektumhoz.';
+        'Előtétprogram modul regisztráció az ügyintézői felületen lévő SLA nyomtatás objektumhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} =
-        'Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMSLAZoom objektumhoz.';
+        'Előtétprogram modul regisztráció az ügyintézői felületen lévő SLA nagyítás objektumhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} =
-        'Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMService objektumhoz.';
+        'Előtétprogram modul regisztráció az ügyintézői felületen lévő szolgáltatás objektumhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} =
-        'Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMServicePrint objektumhoz.';
+        'Előtétprogram modul regisztráció az ügyintézői felületen lévő szolgáltatás nyomtatás objektumhoz.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} =
-        'Előtétprogram modul regisztráció az ügyintézői felületen lévő AgentITSMServiceZoom objektumhoz.';
+        'Előtétprogram modul regisztráció az ügyintézői felületen lévő szolgáltatás nagyítás objektumhoz.';
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA áttekintés.';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM szolgáltatás áttekintés.';
     $Self->{Translation}->{'Incident State Type'} = 'Incidensállapot típus';
