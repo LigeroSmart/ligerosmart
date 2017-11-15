@@ -197,127 +197,127 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
         <title>Icinga2::Acknowledge::Author.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement author.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::Comment.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement comment.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::Enabled.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement enabled?</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::FreeField::Host.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Name of the Dynamic Field for Host.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::FreeField::Service.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Name of the Dynamic Field for Service.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::HTTP::Password.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>The HTTP acknowledge password.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::HTTP::URL.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga API URL .</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::HTTP::User.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>The HTTP acknowledge user.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::Notify.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement notify.</para>
     </section>
     <section>
         <title>Icinga2::Acknowledge::Sticky.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Icinga2.</para>
+        <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement sticky.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::FreeField::Host.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Name of the Dynamic Field for Host.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::FreeField::Service.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Name of the Dynamic Field for Service.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::HTTP::Password.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>The HTTP acknowledge password.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::HTTP::URL.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>The HTTP acknowledge URL.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::HTTP::User.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>The HTTP acknowledge user.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::NamedPipe::CMD.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Named pipe acknowledge command.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::NamedPipe::Host.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Named pipe acknowledge format for host.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::NamedPipe::Service.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Named pipe acknowledge format for service.</para>
     </section>
     <section>
         <title>Nagios::Acknowledge::Type.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring::Nagios.</para>
+        <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Define Nagios acknowledge type.</para>
     </section>
     <section>
         <title>PostMaster::PreFilterModule###00-SystemMonitoring.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
+        <para>Navigation: Core::Email::PostMaster.</para>
         <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</para>
     </section>
     <section>
         <title>PostMaster::PreFilterModule###1-SystemMonitoring.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::PostMaster.</para>
+        <para>Navigation: Core::Email::PostMaster.</para>
         <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</para>
     </section>
     <section>
         <title>SystemMonitoring::LinkTicketWithCI.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring.</para>
+        <para>Navigation: Core::SystemMonitoring.</para>
         <para>Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</para>
     </section>
     <section>
         <title>SystemMonitoring::SetIncidentState.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::SystemMonitoring.</para>
+        <para>Navigation: Core::SystemMonitoring.</para>
         <para>Set the incident state of a CI automatically when a system monitoring email arrives.</para>
     </section>
     <section>
         <title>Ticket::EventModulePost###9-Icinga2Acknowledge.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::Event::Icinga2.</para>
+        <para>Navigation: Core::Event::Icinga2.</para>
         <para>Ticket event module to send an acknowledge to Icinga2.</para>
     </section>
     <section>
         <title>Ticket::EventModulePost###9-NagiosAcknowledge.</title>
-        <para>Group: SystemMonitoring, Subgroup: Core::Event::Nagios.</para>
+        <para>Navigation: Core::Event::Nagios.</para>
         <para>Ticket event module to send an acknowledge to Nagios.</para>
     </section>
 </chapter>
