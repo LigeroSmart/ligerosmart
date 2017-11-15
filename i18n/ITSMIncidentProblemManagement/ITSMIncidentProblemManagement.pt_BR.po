@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:28+0000\n"
-"PO-Revision-Date: 2017-09-29 15:29+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-11-15 13:04+0000\n"
+"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,16 +17,15 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Criticality"
 msgstr "Criticalidade"
 
-#. Template: AgentTicketOverviewPreview
+#. Template: AgentTicketOverviewMedium
 msgid "Impact"
 msgstr "Impacto"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. JS Template: ServiceIncidentState
 msgid "Service Incident State"
 msgstr "Estado de Incidente do Serviço"
 
@@ -100,10 +99,6 @@ msgstr "Campos adicionais ITSM"
 #. SysConfig
 msgid "Additional ITSM ticket fields."
 msgstr "Campos adicionais de Ticket ITSM"
-
-#. SysConfig
-msgid "AgentITSMIncidentProblemManagement"
-msgstr ""
 
 #. SysConfig
 msgid ""
@@ -305,6 +300,10 @@ msgid ""
 msgstr "Permissões necessárias para usar a tela de decisão na interface de atendente."
 
 #. SysConfig
+msgid "Service Incident State and Priority Calculation"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the service in the additional ITSM field screen of the agent interface "
 "(Ticket::Service needs to be activated)."
@@ -315,6 +314,12 @@ msgid ""
 "Sets the service in the decision screen of the agent interface "
 "(Ticket::Service needs to be activated)."
 msgstr "Define o serviço na tela de decisão da interface de atendente (Chamado::Serviço precisa estar ativado)."
+
+#. SysConfig
+msgid ""
+"Sets the service in the ticket priority screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -348,6 +353,12 @@ msgid ""
 "Sets the ticket type in the decision screen of the agent interface "
 "(Ticket::Type needs to be activated)."
 msgstr "Define o tipo de chamado na tela de decisão da interface de atendente (Chamado::Tipo precisa estar ativado)."
+
+#. SysConfig
+msgid ""
+"Sets the ticket type in the ticket priority screen of a zoomed ticket in the"
+" agent interface (Ticket::Type needs to be activated)."
+msgstr ""
 
 #. SysConfig
 msgid ""

@@ -119,6 +119,8 @@ sub Data {
         'เซตการบริการในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์(ตั๋ว::ต้องมีการเปิดใช้งานการบริการ)';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'เซตการบริการในหน้าจอการตัดสินใจในอินเตอร์เฟซของเอเย่นต์(ตั๋ว::ต้องมีการเปิดใช้งานการบริการ)';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        '';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'เซตเจ้าของตั๋วในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'เซตประเภทของตั๋วในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์(ตั๋ว::ต้องมีการเปิดใช้งานการบริการ)';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'เซตประเภทของตั๋วในหน้าจอการตัดสินใจในอินเตอร์เฟซของเอเย่นต์(ตั๋ว::ต้องมีการเปิดใช้งานการบริการ)';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'แสดงลิงค์ในเมนูเพื่อเปลี่ยนแปลงการตัดสินใจของตั๋วในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

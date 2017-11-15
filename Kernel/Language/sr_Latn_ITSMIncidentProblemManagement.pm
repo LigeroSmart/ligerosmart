@@ -119,6 +119,8 @@ sub Data {
         'Podešava servis na ekranu dodatnih ITSM polja u interfejsu operatera (Ticket::Service mora biti aktiviran).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Podešava servis na ekranu odluke u interfejsu operatera (Ticket::Service mora biti aktiviran).';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        '';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Određuje vlasnika tiketa na ekranu dodatnih ITSM polja u interfejsu operatera.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'Podešava tip tiketa na ekranu dodatnih ITSM polja u interfejsu operatera (Ticket::Type mora biti aktiviran).';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Podešava tip tiketa na ekranu odluke u interfejsu operatera (Ticket::Type mora biti aktiviran).';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'U meniju prikazuje vezu za promenu odluke tiketa na detaljnom prikazu u interfejsu operatera.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

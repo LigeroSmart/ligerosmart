@@ -119,6 +119,8 @@ sub Data {
         'Tentukan layanan di layar bidang ITSM tambahan pada antarmuka agen (Ticket::Service perlu di aktifkan).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Tentukan layanan di layar keputusan pada antarmuka agen (Ticket::Service perlu di aktifkan).';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        'Set layanan di layar prioritas tiket dari tiket yang diperbesar di antarmuka agen (Ticket :: Layanan harus diaktifkan).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Tentukan pemilik tiket di layar bidang ITSM tambahan pada antarmuka agen.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'Tentukan tipe tiket di layar bidang ITSM tambahan pada antarmuka agen (Ticket::Type perlu di aktifkan).';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Tentukan tipe tiket di layar keputusan pada antarmuka agen (Ticket::Type perlu di aktifkan).';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        'Menetapkan jenis tiket di layar prioritas tiket dari tiket yang diperbesar di antarmuka agen (Ticket :: Type harus diaktifkan).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Tunjukan tautan di menu untukmengubah keputusan sebuah tiket pada tampilan pembesaran pada antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

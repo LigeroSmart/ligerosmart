@@ -119,6 +119,8 @@ sub Data {
         'Set perkhidmatan dalam skrin bidang ITSM tambahan bagi antara muka ejen (Tiket::Perkhidmatan perlu diaktifkan).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Set perkhidmatan dalam skrin keputusan bagi antara muka ejen (Tiket::Perkhidmatan perlu diaktifkan).';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        'Tetapkan perkhidmatan dalam skrin keutamaan tiket dari tiket dizum dalam paparan ejen (Ticket::Service perlu diaktifkan).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Set pemilik tiket dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'Menetapkan jenis tiket dalam skrin bidang ITSM tambahan bagi antara muka ejen (Tiket::Jenis perlu diaktifkan).';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Menetapkan jenis tiket dalam skrin keputusan bagi antara muka ejen (Tiket::Jenis perlu diaktifkan).';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        'Tetapkan jenis tiket dalam skrin keutamaan tiket dari tiket dizum dalam paparan ejen (Ticket::Type perlu diaktifkan).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Menunjukkan pautan dalam menu untuk mengubah keputusan tiket dalam pandangan zum antara muka ejen.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

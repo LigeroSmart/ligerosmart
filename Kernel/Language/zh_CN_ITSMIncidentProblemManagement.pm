@@ -119,6 +119,8 @@ sub Data {
         '设置服务人员界面工单额外的ITSM字段窗口的服务（工单::服务需要被激活）。';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         '设置服务人员界面工单决定窗口的服务（工单::服务需要被激活）。';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        '设置服务人员界面工单优先级屏幕的服务（需要激活工单::服务）。';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         '设置服务人员界面工单额外的ITSM字段窗口的工单所有者。';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         '设置服务人员界面工单额外的ITSM字段窗口的工单类型（工单::类型需要被激活）。';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         '设置服务人员界面工单决定窗口的工单类型（工单::类型需要被激活）。';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        '设置服务人员界面工单优先级屏幕的工单类型（需要激活工单::类型）。';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         '服务人员界面工单详情视图，在菜单中显示一个变更工单决定的链接。';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

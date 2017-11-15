@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-02 10:54+0000\n"
-"PO-Revision-Date: 2017-10-05 17:02+0000\n"
-"Last-Translator: 汇民 王 <whuim@qq.com>\n"
+"POT-Creation-Date: 2017-11-15 13:04+0000\n"
+"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -315,6 +315,12 @@ msgstr "设置服务人员界面工单决定窗口的服务（工单::服务需�
 
 #. SysConfig
 msgid ""
+"Sets the service in the ticket priority screen of a zoomed ticket in the "
+"agent interface (Ticket::Service needs to be activated)."
+msgstr "设置服务人员界面工单优先级屏幕的服务（需要激活工单::服务）。"
+
+#. SysConfig
+msgid ""
 "Sets the ticket owner in the additional ITSM field screen of the agent "
 "interface."
 msgstr "设置服务人员界面工单额外的ITSM字段窗口的工单所有者。"
@@ -345,6 +351,12 @@ msgid ""
 "Sets the ticket type in the decision screen of the agent interface "
 "(Ticket::Type needs to be activated)."
 msgstr "设置服务人员界面工单决定窗口的工单类型（工单::类型需要被激活）。"
+
+#. SysConfig
+msgid ""
+"Sets the ticket type in the ticket priority screen of a zoomed ticket in the"
+" agent interface (Ticket::Type needs to be activated)."
+msgstr "设置服务人员界面工单优先级屏幕的工单类型（需要激活工单::类型）。"
 
 #. SysConfig
 msgid ""

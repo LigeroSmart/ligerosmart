@@ -119,6 +119,8 @@ sub Data {
         'Establece o servizo na pantalla de campo ITSM adicional da interface de axente (Ticket::Servizo debe ser activado).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Establece o servizo na pantalla de decisión da interface de axente (Ticket::Servizo debe ser activado).';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        'Establece o servizo na pantalla prioridade de ticketdun ticket zoom na interface de axente (Ticket::Service necesita ser activado).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Establece o propietario de ticket na pantalla campo ITSM adicional da interface de axente.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'Establece o tipo de ticket na pantalla campo ITSM adicional da interface de axente (Ticket::Tipo ten que ser activado).';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Establece o tipo de ticket na pantalla de decisión da interface de axente (Ticket::Tipo ten que ser activado).';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        'Establece o tipo de ticket na pantalla prioridade de ticket dun ticket zoom na interface de axente (Ticket::Type necesita estar activo).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Mostra un enlace no menu para cambiar a decisión dun ticket na súa vista zoom da interface de axente.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

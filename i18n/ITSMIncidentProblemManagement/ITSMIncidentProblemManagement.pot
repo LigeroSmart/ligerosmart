@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2017-10-25 14:02+0000\n"
+"POT-Creation-Date: 2017-11-15 13:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,6 +243,10 @@ msgid "Sets the service in the decision screen of the agent interface (Ticket::S
 msgstr ""
 
 #. SysConfig
+msgid "Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+
+#. SysConfig
 msgid "Sets the ticket owner in the additional ITSM field screen of the agent interface."
 msgstr ""
 
@@ -264,6 +268,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
 msgstr ""
 
 #. SysConfig

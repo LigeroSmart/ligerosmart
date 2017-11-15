@@ -119,6 +119,8 @@ sub Data {
         'Позволяет задать Сервис на экране Дополнительные ITSM поля в интерфейсе агента (Ticket::Service должен быть активирован).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Позволяет задать Сервис на экране Решение в интерфейсе агента (Ticket::Service должен быть активирован).';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        'Задает Сервис при изменении приоритета заявки в интерфейсе агента. (Ticket::Service должен быть включен).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Позволяет задать Владельца заявки на экране Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'Позволяет задать Тип заявки на экране Дополнительные ITSM поля в интерфейсе агента (Ticket::Type должен быть активирован).';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Позволяет задать Тип заявки на экране Решение в интерфейсе агента (Ticket::Type должен быть активирован).';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        'Задает Тип заявки при изменении приоритета заявки в интерфейсе агента. (Ticket::Type должен быть активирован).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Показывает ссылку на пункт меню для изменения Решения по заявке в окне подробного просмотра (TicketZoom) в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

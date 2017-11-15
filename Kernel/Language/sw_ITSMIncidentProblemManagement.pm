@@ -119,6 +119,8 @@ sub Data {
         'Inawekwa katika huduma katika skrini ya uga wa ITSM uliiongezwa katika kioelesura cha wakala (Tiketi:: Huduma inahitaji kuamilishwa).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Inaweka huduma katika skrini ya maamuzi ya kioleusura cha wakala (Tiketi:: Huduma inahitaji kuamilishwa).';
+    $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
+        'Inaweka huduma katika skrini ya kipaumbele cha tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala. (Tiketi:: Aina inahitaji kuamilishwa).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Inaweka mmiliki wa tiketi katika skrini ya uga wa ITSM iliyoongezwa ya kiolesura cha wakala.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -131,6 +133,8 @@ sub Data {
         'Inaweka aina ya tiketi katika skrini ya uga wa ITSM ulioongezwa katika kiolesura cha wakala (Tiketi::Aina inayohitaji kuamilishwa).';
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Inaweka aina ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala (Tiketi:: Aina inayohitaji kuamilishwa ).';
+    $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
+        'Inaweka aina ya tiketi katika skrini ya kipaumbele cha tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala (Tiketi:: aina inahitaji kuamilishwa).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Inaonyesha kiungo katika menyu cha kubadilisha maamuzi ya tiketi katika mandhari yake iliyokuzwa ya kiolesura cha wakala.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =
