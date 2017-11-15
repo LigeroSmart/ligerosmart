@@ -10,6 +10,9 @@
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
     <h1>[% Translate("General Catalog Management") | html %]</h1>
 
+    [% USE ItemsTitle = String(Translate("Items in Class")) %]
+    [% USE EditTitle  = String(Translate("Edit Item")) %]
+
     [% BreadcrumbPath = [
             {
                 Name => Translate('General Catalog Management'),
@@ -20,7 +23,7 @@
         IF Data.Class && Data.Class == 'NEW';
 
             BreadcrumbPath.push({
-                Name => 'Add Class',
+                Name => Translate('Add Class'),
             });
 
         ELSIF Data.Class;
@@ -28,13 +31,13 @@
             ClassURI = Data.Class;
 
             BreadcrumbPath.push({
-                Name => 'Items in ' _ Data.Class,
+                Name => ItemsTitle.append( ': ', Data.Class ),
                 Link => 'AdminGeneralCatalog;Subaction=ItemList;Class=' _ ClassURI,
             });
 
             IF Data.Subaction && Data.Subaction == 'ItemEdit';
                 BreadcrumbPath.push({
-                    Name => Data.ItemEdit ? 'Edit Item: ' _ Data.ItemName : 'Add Item',
+                    Name => Data.ItemEdit ? EditTitle.append( ': ', Data.ItemName ) : Translate('Add Item'),
                 });
 
             END;
