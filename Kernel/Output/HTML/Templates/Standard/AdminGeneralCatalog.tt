@@ -10,7 +10,7 @@
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
     <h1>[% Translate("General Catalog Management") | html %]</h1>
 
-    [%- BreadcrumbPath = [
+    [% BreadcrumbPath = [
             {
                 Name => Translate('General Catalog Management'),
                 Link => 'AdminGeneralCatalog',
@@ -25,7 +25,7 @@
 
         ELSIF Data.Class;
 
-            ClassURI = Data.Class | uri;
+            ClassURI = Data.Class;
 
             BreadcrumbPath.push({
                 Name => 'Items in ' _ Data.Class,
