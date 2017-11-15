@@ -44,7 +44,7 @@
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary" id="submitEditTemplate" accesskey="g" type="submit" name="EditTemplate" value="[% Translate("Save") | html %]">[% Translate("Save") | html %]</button>
+            <button class="CallForAction Primary" id="submitEditTemplate" accesskey="g" type="submit" name="EditTemplate" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
         </div>
     </div>
 </form>
