@@ -139,16 +139,6 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <title>Configuration</title>
     <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
     <section>
-        <title>CloneDB::TargetDBSettings.</title>
-        <para>Navigation: Core::OTRSCloneDB.</para>
-        <para>Settings for connecting with the target database.</para>
-    </section>
-    <section>
-        <title>CloneDB::SkipTables.</title>
-        <para>Navigation: Core::OTRSCloneDB.</para>
-        <para>List of tables should be skipped, perhaps internal DB tables. Please use lowercase.</para>
-    </section>
-    <section>
         <title>CloneDB::BlobColumns.</title>
         <para>Navigation: Core::OTRSCloneDB.</para>
         <para>This setting specifies which table columns contain blob data as these need special treatment.</para>
@@ -156,14 +146,25 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>CloneDB::CheckEncodingColumns.</title>
         <para>Navigation: Core::OTRSCloneDB.</para>
-        <para>Specifies which columns should be checked for valid UTF8 source data.</para>
+        <para>Specifies which columns should be checked for valid UTF-8 source data.</para>
     </section>
     <section>
         <title>CloneDB::LogFile.</title>
         <para>Navigation: Core::OTRSCloneDB.</para>
-        <para>Log file for replacement of malformed utf8 data values.</para>
+        <para>Log file for replacement of malformed UTF-8 data values.</para>
+    </section>
+    <section>
+        <title>CloneDB::SkipTables.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>List of tables should be skipped, perhaps internal DB tables. Please use lowercase.</para>
+    </section>
+    <section>
+        <title>CloneDB::TargetDBSettings.</title>
+        <para>Navigation: Core::OTRSCloneDB.</para>
+        <para>Settings for connecting with the target database.</para>
     </section>
 </chapter>
+
 
 <!-- ******** -->
 <!-- 6. Usage -->
