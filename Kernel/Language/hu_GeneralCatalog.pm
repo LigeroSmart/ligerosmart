@@ -26,7 +26,9 @@ sub Data {
     $Self->{Translation}->{'Edit Catalog Item'} = 'Katalóguselem szerkesztése';
 
     # SysConfig
+    $Self->{Translation}->{'Comment 2'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Az általános katalógus létrehozása és kezelése.';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
     $Self->{Translation}->{'Define the group with permissions.'} = 'A jogosultságokkal rendelkező csoport meghatározása.';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Meghatározza a JS színválasztó útvonalának URL-ét.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =

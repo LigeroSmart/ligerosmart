@@ -26,7 +26,9 @@ sub Data {
     $Self->{Translation}->{'Edit Catalog Item'} = 'Modifica elemento di catalogo';
 
     # SysConfig
+    $Self->{Translation}->{'Comment 2'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crea e gestisci il Catalogo Generale';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
     $Self->{Translation}->{'Define the group with permissions.'} = 'Specifica il gruppo con permessi.';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Specifica il percorso dell\'URL del selettore di colori JS.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =

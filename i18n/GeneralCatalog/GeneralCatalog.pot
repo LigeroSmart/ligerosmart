@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2017-11-07 15:20+0000\n"
+"POT-Creation-Date: 2017-11-15 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,15 @@ msgid "Edit Catalog Item"
 msgstr ""
 
 #. SysConfig
+msgid "Comment 2"
+msgstr ""
+
+#. SysConfig
 msgid "Create and manage the General Catalog."
+msgstr ""
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
 msgstr ""
 
 #. SysConfig
