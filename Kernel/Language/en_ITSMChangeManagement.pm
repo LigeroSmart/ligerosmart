@@ -169,9 +169,9 @@ sub Data {
     $Self->{Translation}->{'successful'} = 'Successful';
 
     # Template: AdminITSMChangeCIPAllocate
-    $Self->{Translation}->{'Category <-> Impact <-> Priority'} = '';
+    $Self->{Translation}->{'Category ↔ Impact ↔ Priority'} = '';
     $Self->{Translation}->{'Note'} = '';
-    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} = '';
+    $Self->{Translation}->{'Manage the priority result of combinating Category ↔ Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
     $Self->{Translation}->{'Submit'} = '';
 
@@ -506,8 +506,8 @@ sub Data {
     $Self->{Translation}->{'Agent interface notification module to see the number of watched tickets.'} = '';
     $Self->{Translation}->{'Agent interface notification module to see the number of work orders.'} = '';
     $Self->{Translation}->{'Agents'} = '';
-    $Self->{Translation}->{'Agents <-> Groups'} = '';
-    $Self->{Translation}->{'Agents <-> Roles'} = '';
+    $Self->{Translation}->{'Agents ↔ Groups'} = '';
+    $Self->{Translation}->{'Agents ↔ Roles'} = '';
     $Self->{Translation}->{'Allows adding notes in the close ticket screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the ticket free text screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the ticket note screen of the agent interface.'} = '';
@@ -544,9 +544,9 @@ sub Data {
     $Self->{Translation}->{'Article free text options shown in the ticket priority screen of a zoomed ticket in the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the ticket responsible screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Attachments'} = '';
-    $Self->{Translation}->{'Attachments <-> Responses'} = '';
+    $Self->{Translation}->{'Attachments ↔ Responses'} = '';
     $Self->{Translation}->{'Auto Responses'} = '';
-    $Self->{Translation}->{'Auto Responses <-> Queues'} = '';
+    $Self->{Translation}->{'Auto Responses ↔ Queues'} = '';
     $Self->{Translation}->{'Automated line break in text messages after x number of chars.'} = '';
     $Self->{Translation}->{'Automatically lock and set owner to current Agent after selecting for an Bulk Action.'} = '';
     $Self->{Translation}->{'Automatically sets the owner of a ticket as the responsible for it (if ticket responsible feature is enabled).'} = '';
@@ -609,8 +609,8 @@ sub Data {
     $Self->{Translation}->{'Customer Companies'} = '';
     $Self->{Translation}->{'Customer item (icon) which shows the open tickets of this customer as info block.'} = '';
     $Self->{Translation}->{'Customers'} = '';
-    $Self->{Translation}->{'Customers <-> Groups'} = '';
-    $Self->{Translation}->{'Customers <-> Services'} = '';
+    $Self->{Translation}->{'Customers ↔ Groups'} = '';
+    $Self->{Translation}->{'Customers ↔ Services'} = '';
     $Self->{Translation}->{'Dashboard'} = '';
     $Self->{Translation}->{'Data used to export the search result in CSV format.'} = '';
     $Self->{Translation}->{'Debugs the translation set. If this is set to "Yes" all strings (text) without translations are written to STDERR. This can be helpful when you are creating a new translation file. Otherwise, this option should remain set to "No".'} = '';
@@ -1953,10 +1953,10 @@ sub Data {
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '';
     $Self->{Translation}->{'Resets and unlocks the owner of a ticket if it was moved to another queue.'} = '';
     $Self->{Translation}->{'Responses'} = '';
-    $Self->{Translation}->{'Responses <-> Queues'} = '';
+    $Self->{Translation}->{'Responses ↔ Queues'} = '';
     $Self->{Translation}->{'Restores a ticket from the archive (only if the event is a state change, from closed to any open available state).'} = '';
     $Self->{Translation}->{'Roles'} = '';
-    $Self->{Translation}->{'Roles <-> Groups'} = '';
+    $Self->{Translation}->{'Roles ↔ Groups'} = '';
     $Self->{Translation}->{'Runs an initial wildcard search of the existing customer users when accessing the AdminCustomerUser module.'} = '';
     $Self->{Translation}->{'Runs the system in "Demo" mode. If set to "Yes", agents can change preferences, such as selection of language and theme via the agent web interface. These changes are only valid for the current session. It will not be possible for agents to change their passwords.'} = '';
     $Self->{Translation}->{'S/MIME Certificate'} = '';

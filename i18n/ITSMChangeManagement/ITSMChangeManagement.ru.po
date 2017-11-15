@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Ilya Ko <mchammer@inbox.ru>, 2017
 # Sergey Stepanov <Stepanov.SA@bashkortostan.ru>, 2016
@@ -17,12 +17,12 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "Категория <-> Влияние <-> Приоритет"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "Категория ↔ Влияние ↔ Приоритет"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Управление приоритетом на основе комбинации Категория <-> Влияние"
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "Управление приоритетом на основе комбинации Категория ↔ Влияние"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"

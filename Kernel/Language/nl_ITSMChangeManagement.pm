@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMChangeCIPAllocate
-    $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Categorie <-> Impact <-> Prioriteit';
-    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
-        'Beheer de prioriteit op basis van de Categorie <-> Impact combinatie.';
+    $Self->{Translation}->{'Category ↔ Impact ↔ Priority'} = 'Categorie ↔ Impact ↔ Prioriteit';
+    $Self->{Translation}->{'Manage the priority result of combinating Category ↔ Impact.'} =
+        'Beheer de prioriteit op basis van de Categorie ↔ Impact combinatie.';
     $Self->{Translation}->{'Priority allocation'} = 'Prioriteit-toewijzing';
 
     # Template: AdminITSMChangeNotification

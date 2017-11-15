@@ -16,7 +16,7 @@
                         </Array>
                     </Item>
                     <Item Key="Description" Translatable="1">Admin of the CIP matrix.</Item>
-                    <Item Key="Title" Translatable="1">Category &lt;-&gt; Impact &lt;-&gt; Priority</Item>
+                    <Item Key="Title" Translatable="1">Category ↔ Impact ↔ Priority</Item>
                     <Item Key="NavBarName">Admin</Item>
                 </Hash>
             </Item>
@@ -62,7 +62,7 @@
                     </Array>
                 </Item>
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
-                <Item Key="Name" Translatable="1">Category &lt;-&gt; Impact &lt;-&gt; Priority</Item>
+                <Item Key="Name" Translatable="1">Category ↔ Impact ↔ Priority</Item>
                 <Item Key="Block">ChangeSettings</Item>
                 <Item Key="Description">Manage the category - impact - priority matrix.</Item>
                 <Item Key="IconBig">fa-table</Item>

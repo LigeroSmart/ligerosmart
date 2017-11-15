@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Ann Li <dn.annli@gmail.com>, 2016
 msgid ""
@@ -15,12 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "類别 <-> 影響 <-> 優先級"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "類别 ↔ 影響 ↔ 優先級"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "\"類别 <-> 影響\"之間的組合決定優先级。"
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "\"類别 ↔ 影響\"之間的組合決定優先级。"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"

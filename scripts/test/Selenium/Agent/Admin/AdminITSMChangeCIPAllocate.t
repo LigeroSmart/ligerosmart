@@ -58,7 +58,7 @@ $Selenium->RunTest(
             push @ImpactIDs, $ImpactDataRef->{ItemID};
         }
 
-        # check for Category <-> Impact fields
+        # check for Category ↔ Impact fields
         for my $Impact (@ImpactIDs) {
             for my $Category (@CategoryIDs) {
                 my $Element = $Selenium->find_element( "#PriorityID$Impact-$Category", 'css' );

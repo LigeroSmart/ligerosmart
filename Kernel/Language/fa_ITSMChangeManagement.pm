@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMChangeCIPAllocate
-    $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'طبقه <-> اثر <-> الویت';
-    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} =
-        'مدیریت الویت ناشی از ترکیب طبقه <-> اثر';
+    $Self->{Translation}->{'Category ↔ Impact ↔ Priority'} = 'طبقه ↔ اثر ↔ الویت';
+    $Self->{Translation}->{'Manage the priority result of combinating Category ↔ Impact.'} =
+        'مدیریت الویت ناشی از ترکیب طبقه ↔ اثر';
     $Self->{Translation}->{'Priority allocation'} = 'تخصیص الویت';
 
     # Template: AdminITSMChangeNotification
@@ -502,7 +502,7 @@ sub Data {
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
     $Self->{Translation}->{'Add from template'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت <-> اثر <-> الویت';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت ↔ اثر ↔ الویت';
     $Self->{Translation}->{'Admin of the state machine.'} = 'مدیر ماشین وضعیت';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
         'ماژول اعلان واسط کارشناس برای نمایش تعداد هیئت‌های مشاور تغییرات';

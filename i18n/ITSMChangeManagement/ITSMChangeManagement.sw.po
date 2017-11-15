@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Macbethana Wilfred <mwi@nrd.no>, 2014
 # nilsleideck <nils.leideck@leidex.net>, 2014
@@ -17,12 +17,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "Kategoria<-> Athari<-> Kipaumbele"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "Kategoria↔ Athari↔ Kipaumbele"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Simamia matokeo ya kipaumbele cha Kategoria zinazochanganywa <-> Athari."
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "Simamia matokeo ya kipaumbele cha Kategoria zinazochanganywa ↔ Athari."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"

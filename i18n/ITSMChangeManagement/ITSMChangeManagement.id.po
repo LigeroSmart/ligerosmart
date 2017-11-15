@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Farhan Rinaldi Gunawan <farhan.rg@gmail.com>, 2015
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
@@ -17,12 +17,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "Kategori <-> Dampak <-> Prioritas"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "Kategori ↔ Dampak ↔ Prioritas"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Mengelola hasil prioritas kombinasi Kategori <-> Dampak."
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "Mengelola hasil prioritas kombinasi Kategori ↔ Dampak."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"

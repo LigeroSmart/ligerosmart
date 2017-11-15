@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -14,12 +14,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "طبقه <-> اثر <-> الویت"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "طبقه ↔ اثر ↔ الویت"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "مدیریت الویت ناشی از ترکیب طبقه <-> اثر"
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "مدیریت الویت ناشی از ترکیب طبقه ↔ اثر"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -1297,7 +1297,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Admin of the CIP matrix."
-msgstr "مدیر ماتریس اهمیت <-> اثر <-> الویت"
+msgstr "مدیر ماتریس اهمیت ↔ اثر ↔ الویت"
 
 #. SysConfig
 msgid "Admin of the state machine."

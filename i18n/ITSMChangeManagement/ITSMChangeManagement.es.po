@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
 # Arturo Mondelo <arturo.mondelo@hotmail.es>, 2015
@@ -20,12 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "Categoría <-> Impacto <-> Prioridad"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "Categoría ↔ Impacto ↔ Prioridad"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Administrar la prioridad resultante al combinar Categoría <-> Impacto."
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "Administrar la prioridad resultante al combinar Categoría ↔ Impacto."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"

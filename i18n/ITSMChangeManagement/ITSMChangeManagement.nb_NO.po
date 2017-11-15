@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Peter Værlien <pvarlien@online.no>, 2017
 msgid ""
@@ -15,12 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
-msgstr "Kategori <-> Omfang <-> Prioritet"
+msgid "Category ↔ Impact ↔ Priority"
+msgstr "Kategori ↔ Omfang ↔ Prioritet"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
-msgstr "Sett opp valg av prioritet basert på Kategori <-> Omfang"
+msgid "Manage the priority result of combinating Category ↔ Impact."
+msgstr "Sett opp valg av prioritet basert på Kategori ↔ Omfang"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"

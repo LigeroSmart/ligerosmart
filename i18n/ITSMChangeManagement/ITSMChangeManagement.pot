@@ -11,11 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Category <-> Impact <-> Priority"
+msgid "Category ↔ Impact ↔ Priority"
 msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
-msgid "Manage the priority result of combinating Category <-> Impact."
+msgid "Manage the priority result of combinating Category ↔ Impact."
 msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
