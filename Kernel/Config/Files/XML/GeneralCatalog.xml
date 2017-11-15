@@ -83,8 +83,8 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::GeneralCatalogPreferences::Generic</Item>
-                <Item Key="Label">Comment2</Item>
-                <Item Key="Desc">Define the general catalog comment 2.</Item>
+                <Item Key="Label" Translatable="1">Comment 2</Item>
+                <Item Key="Desc" Translatable="1">Define the general catalog comment 2.</Item>
                 <Item Key="Block">TextArea</Item>
                 <Item Key="Cols">50</Item>
                 <Item Key="Rows">5</Item>
