@@ -20,6 +20,10 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = '目录管理';
+    $Self->{Translation}->{'Items in Class'} = '';
+    $Self->{Translation}->{'Edit Item'} = '';
+    $Self->{Translation}->{'Add Class'} = '';
+    $Self->{Translation}->{'Add Item'} = '';
     $Self->{Translation}->{'Add Catalog Item'} = '添加目录项目';
     $Self->{Translation}->{'Add Catalog Class'} = '添加新目录类';
     $Self->{Translation}->{'Catalog Class'} = '目录类';

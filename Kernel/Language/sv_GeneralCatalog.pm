@@ -20,6 +20,10 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Hantera grundkatalog';
+    $Self->{Translation}->{'Items in Class'} = '';
+    $Self->{Translation}->{'Edit Item'} = '';
+    $Self->{Translation}->{'Add Class'} = '';
+    $Self->{Translation}->{'Add Item'} = '';
     $Self->{Translation}->{'Add Catalog Item'} = 'Lägg till katalogpost';
     $Self->{Translation}->{'Add Catalog Class'} = 'Lägg till klass i katalog';
     $Self->{Translation}->{'Catalog Class'} = 'Katalogklass';
