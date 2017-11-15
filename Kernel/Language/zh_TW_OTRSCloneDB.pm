@@ -16,7 +16,6 @@ sub Data {
     my $Self = shift;
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
         '列表內的資料表應該略過，可能是內部DB的資料表。請使用小寫。';
     $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = '用於替換格式錯誤的UTF-8資料的Log文件。';

@@ -16,7 +16,6 @@ sub Data {
     my $Self = shift;
 
     # SysConfig
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
         'Azon táblák listája, amelyeket ki kell hagyni. Valószínűleg belső adatbázistáblák. Használjon kisbetűs neveket.';
     $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'Naplófájl a helytelenül formázott UTF-8 adatértékek helyettesítéséhez.';
