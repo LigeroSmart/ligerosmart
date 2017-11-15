@@ -23,7 +23,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>Total number of all tickets ever created per Ticket-Type and Service.</Title>
+<Title>Total number of all tickets ever created per Ticket-Type and Service</Title>
 <UseAsValueSeries Element="ServiceIDs" Fixed="1">
 </UseAsValueSeries>
 <UseAsXvalue Element="TypeIDs" Fixed="1">

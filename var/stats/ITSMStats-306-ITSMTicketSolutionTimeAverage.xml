@@ -23,7 +23,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>0</SumCol>
 <SumRow>0</SumRow>
-<Title>Monthly overview of the average solution time per Service in the last month.</Title>
+<Title>Monthly overview of the average solution time per Service in the last month</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>

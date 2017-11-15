@@ -22,7 +22,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>Number of config items created in a specific time period per Class and State.</Title>
+<Title>Number of config items created in a specific time period per Class and State</Title>
 <UseAsRestriction Element="CreateTime" TimeRelativeCount="1" TimeRelativeUnit="Month" TimeScaleCount="1">
 <SelectedValues>Day</SelectedValues>
 </UseAsRestriction>

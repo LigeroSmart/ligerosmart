@@ -24,7 +24,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>Monthly overview of first level solution rate per Priority in the last month.</Title>
+<Title>Monthly overview of first level solution rate per Priority in the last month</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>

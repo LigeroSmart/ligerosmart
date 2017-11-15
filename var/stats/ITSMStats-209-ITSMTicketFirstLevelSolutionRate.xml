@@ -24,7 +24,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>First level solution rate for all tickets created in a specific time period per Ticket-Type and Service.</Title>
+<Title>First level solution rate for all tickets created in a specific time period per Ticket-Type and Service</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>

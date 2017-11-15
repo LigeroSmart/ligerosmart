@@ -23,7 +23,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>First level solution rate for all tickets ever created per Ticket-Type and Queue.</Title>
+<Title>First level solution rate for all tickets ever created per Ticket-Type and Queue</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>

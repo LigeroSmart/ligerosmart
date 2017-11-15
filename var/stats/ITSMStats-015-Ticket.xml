@@ -22,7 +22,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>1</SumCol>
 <SumRow>1</SumRow>
-<Title>Number of currently open tickets per Ticket-Type and Queue.</Title>
+<Title>Number of currently open tickets per Ticket-Type and Queue</Title>
 <UseAsRestriction Element="StateTypeIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 </UseAsRestriction>

@@ -23,7 +23,7 @@ Restrictions:
 <StatType>dynamic</StatType>
 <SumCol>0</SumCol>
 <SumRow>0</SumRow>
-<Title>Average solution time of tickets created in the last month per Ticket-Type and Service.</Title>
+<Title>Average solution time of tickets created in the last month per Ticket-Type and Service</Title>
 <UseAsRestriction Element="StateIDs" Fixed="1">
 <SelectedValues>2</SelectedValues>
 <SelectedValues>10</SelectedValues>
