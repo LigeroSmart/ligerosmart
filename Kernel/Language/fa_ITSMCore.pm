@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'اهمیت <-> اثر <-> اولویت';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'مدیریت الویت ناشی از ترکیب اهمیت <-> اثر';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'اهمیت ↔ اثر ↔ اولویت';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'مدیریت الویت ناشی از ترکیب اهمیت ↔ اثر';
     $Self->{Translation}->{'Priority allocation'} = 'تخصیص الویت';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Includes'} = 'مشتمل است بر';
     $Self->{Translation}->{'Manage priority matrix.'} = 'مدیریت ماتریس الویت';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی سرویس';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی SLA';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی سرویس';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی SLA';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی SLA';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی سرویس';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی SLA';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی سرویس';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'پارامترهایی برای وضعیت‌های رخداد در نمای تنظیمات شخصی';
     $Self->{Translation}->{'Part of'} = 'بخشی از';
     $Self->{Translation}->{'Relevant to'} = 'مرتبط با';

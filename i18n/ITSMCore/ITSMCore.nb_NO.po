@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Lars Åge Kamfjord <lars-transifex@kamfjord.org>, 2014
 # Peter Værlien <pvarlien@online.no>, 2017
@@ -16,12 +16,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "Kritikalitet <-> Omfang <-> Prioritet"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Kritikalitet ↔ Omfang ↔ Prioritet"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "Administrer prioritetsresultat ved å kombinere Kritikalitet <-> Omfang"
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "Administrer prioritetsresultat ved å kombinere Kritikalitet ↔ Omfang"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"

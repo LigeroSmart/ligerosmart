@@ -16,8 +16,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Umuhimu <-> Madhara <-> Kipaumbele';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Umuhimu ↔ Madhara ↔ Kipaumbele';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
         'Simamia matokeo ya kipaumbele ya kuunganisha Umuhimu ';
     $Self->{Translation}->{'Priority allocation'} = 'Kuweka kipaumbele';
 
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Includes'} = 'Inahusisha';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Simamia matriki ya kipaumbele.';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya huduma.';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya sla.';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya huduma.';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya sla.';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma.';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya sla.';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya huduma.';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma.';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya sla.';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya huduma.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Vigezo ya hali ya matukio katika mandhari ya mapendeleo.';
     $Self->{Translation}->{'Part of'} = 'Sehemu ya';
     $Self->{Translation}->{'Relevant to'} = 'Husiana na';

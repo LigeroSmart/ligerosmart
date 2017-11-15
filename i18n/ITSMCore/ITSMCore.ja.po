@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
@@ -17,12 +17,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "重要度 <-> 影響度 <-> 優先度"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "重要度 ↔ 影響度 ↔ 優先度"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "重要度<->影響度を結びつけた際の優先度結果を管理する"
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "重要度↔影響度を結びつけた際の優先度結果を管理する"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"

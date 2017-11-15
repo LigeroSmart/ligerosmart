@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMCore\n"
-"POT-Creation-Date: 2017-11-15 13:02+0000\n"
+"POT-Creation-Date: 2017-11-15 15:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,11 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
+msgid "Criticality ↔ Impact ↔ Priority"
 msgstr ""
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
 msgstr ""
 
 #. Template: AdminITSMCIPAllocate
@@ -239,23 +239,23 @@ msgid "Manage priority matrix."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in service menu."
+msgid "Module to show the Back menu item in SLA menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
+msgid "Module to show the Back menu item in service menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in service menu."
+msgid "Module to show the Link menu item in service menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
+msgid "Module to show the Print menu item in SLA menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
+msgid "Module to show the Print menu item in service menu."
 msgstr ""
 
 #. SysConfig

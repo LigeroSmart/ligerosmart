@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Criticité <-> Impact <-> Priorité';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'Gestion de la priorité par combinaison Criticité <-> Impact';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Criticité ↔ Impact ↔ Priorité';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'Gestion de la priorité par combinaison Criticité ↔ Impact';
     $Self->{Translation}->{'Priority allocation'} = 'Attribution de priorité';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Includes'} = 'Inclus';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Gestion de la matrice de priorité';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = '';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = '';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = '';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Paramètres des états d\'incident dans la vue des préférences.';
     $Self->{Translation}->{'Part of'} = 'Part de';
     $Self->{Translation}->{'Relevant to'} = 'Correspond à';

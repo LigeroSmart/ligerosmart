@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
@@ -15,12 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "Kritikusság <-> Hatás <-> Prioritás"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Kritikusság ↔ Hatás ↔ Prioritás"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "A Kritikusság <-> Hatás összetétel prioritás eredményének kezelése."
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "A Kritikusság ↔ Hatás összetétel prioritás eredményének kezelése."
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"

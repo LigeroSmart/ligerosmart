@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -14,11 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "Критичност<->Влияние<->Приотитет"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Критичност↔Влияние↔Приотитет"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
 msgstr ""
 
 #. Template: AdminITSMCIPAllocate

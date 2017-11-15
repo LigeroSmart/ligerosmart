@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikusság <-> Hatás <-> Prioritás';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'A Kritikusság <-> Hatás összetétel prioritás eredményének kezelése.';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Kritikusság ↔ Hatás ↔ Prioritás';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'A Kritikusság ↔ Hatás összetétel prioritás eredményének kezelése.';
     $Self->{Translation}->{'Priority allocation'} = 'Prioritás lefoglalás';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'Incidensállapot típus.';
     $Self->{Translation}->{'Includes'} = 'Tartalmazza';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Prioritásmátrix kezelése.';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Egy modul visszamutató hivatkozás megjelenítéséhez a szolgáltatás menüben.';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Egy modul visszamutató hivatkozás megjelenítéséhez az SLA menüben.';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Egy modul nyomtatási hivatkozás megjelenítéséhez a szolgáltatás menüben.';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Egy modul nyomtatási hivatkozás megjelenítéséhez az SLA menüben.';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Egy modul a hivatkozás megjelenítéséhez a szolgáltatás menüben.';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Egy modul visszamutató hivatkozás megjelenítéséhez az SLA menüben.';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Egy modul visszamutató hivatkozás megjelenítéséhez a szolgáltatás menüben.';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Egy modul a hivatkozás megjelenítéséhez a szolgáltatás menüben.';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Egy modul nyomtatási hivatkozás megjelenítéséhez az SLA menüben.';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Egy modul nyomtatási hivatkozás megjelenítéséhez a szolgáltatás menüben.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Paraméterek az incidensállapotokhoz a beállítások nézetben.';
     $Self->{Translation}->{'Part of'} = 'Része ennek';
     $Self->{Translation}->{'Relevant to'} = 'Releváns ezzel';

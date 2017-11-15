@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Критичность <-> Влияние <-> Приоритет';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'Изменение таблицы расчета приоритета в зависимости от комбинации Критичность <-> Влияние.';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Критичность ↔ Влияние ↔ Приоритет';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'Изменение таблицы расчета приоритета в зависимости от комбинации Критичность ↔ Влияние.';
     $Self->{Translation}->{'Priority allocation'} = 'Назначение приоритета';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'Тип состояния инцидента';
     $Self->{Translation}->{'Includes'} = 'Включает';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Управление матрицей приоритетов';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Показать кнопку "назад" в меню Сервис';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Показать кнопку "назад" в меню SLA';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Показать кнопку "Печать" в меню Сервис';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Показать кнопку "Печать" в меню SLA';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Показать кнопку Связать/Link в меню Сервис';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Показать кнопку "назад" в меню SLA';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Показать кнопку "назад" в меню Сервис';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Показать кнопку Связать/Link в меню Сервис';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Показать кнопку "Печать" в меню SLA';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Показать кнопку "Печать" в меню Сервис';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Параметры для состояния инцидента в preference view.';
     $Self->{Translation}->{'Part of'} = 'Часть от';
     $Self->{Translation}->{'Relevant to'} = 'Относится к';

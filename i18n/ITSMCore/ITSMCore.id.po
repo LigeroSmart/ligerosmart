@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2016
@@ -17,12 +17,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "Kritikalitas<->Dampak<->Prioritas"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Kritikalitas↔Dampak↔Prioritas"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "Mengelola hasil memprioritaskan kombinasi Kritikalitas <-> Dampak"
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "Mengelola hasil memprioritaskan kombinasi Kritikalitas ↔ Dampak"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"

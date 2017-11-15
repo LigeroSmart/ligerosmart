@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'วิกฤต<-> ผลกระทบ <-> เรียงลำดับความสำคัญ';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'การจัดการจัดลำดับความสำคัญของผลการผสมผสานวิกฤต<-> ผลกระทบ';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'วิกฤต↔ ผลกระทบ ↔ เรียงลำดับความสำคัญ';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'การจัดการจัดลำดับความสำคัญของผลการผสมผสานวิกฤต↔ ผลกระทบ';
     $Self->{Translation}->{'Priority allocation'} = 'การจัดสรรลำดับความสำคัญ';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Includes'} = 'รวมถึง';
     $Self->{Translation}->{'Manage priority matrix.'} = 'การจัดการลำดับความสำคัญของเมทริกซ์';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'โมดูลที่จะแสดงลิงค์การกลับในเมนูการบริการ';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'โมดูลที่จะแสดงลิงค์การกลับในเมนู SLA';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'โมดูลที่จะแสดงลิงค์การพิมพ์ในเมนูการบริการ';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'โมดูลที่จะแสดงลิงค์การพิมพ์ในเมนูSLA';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'โมดูลที่จะแสดงลิงค์ที่เชื่อมต่อในเมนูการบริการ';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'โมดูลที่จะแสดงลิงค์การกลับในเมนู SLA';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'โมดูลที่จะแสดงลิงค์การกลับในเมนูการบริการ';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'โมดูลที่จะแสดงลิงค์ที่เชื่อมต่อในเมนูการบริการ';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'โมดูลที่จะแสดงลิงค์การพิมพ์ในเมนูSLA';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'โมดูลที่จะแสดงลิงค์การพิมพ์ในเมนูการบริการ';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'พารามิเตอร์สำหรับสถานภาพของเหตการณ์ในมุมมองการตั้งค่า';
     $Self->{Translation}->{'Part of'} = 'ส่วนหนึ่งของ';
     $Self->{Translation}->{'Relevant to'} = 'เกี่ยวข้องกับ';

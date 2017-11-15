@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
 # นัจ-ณวัสน์ เอกสิรินิธิพล <nawhath.aek@hotmail.com>, 2017
@@ -16,12 +16,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "วิกฤต<-> ผลกระทบ <-> เรียงลำดับความสำคัญ"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "วิกฤต↔ ผลกระทบ ↔ เรียงลำดับความสำคัญ"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "การจัดการจัดลำดับความสำคัญของผลการผสมผสานวิกฤต<-> ผลกระทบ"
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "การจัดการจัดลำดับความสำคัญของผลการผสมผสานวิกฤต↔ ผลกระทบ"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"

@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = '重要度 <-> 影響度 <-> 優先度';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        '重要度<->影響度を結びつけた際の優先度結果を管理する';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = '重要度 ↔ 影響度 ↔ 優先度';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        '重要度↔影響度を結びつけた際の優先度結果を管理する';
     $Self->{Translation}->{'Priority allocation'} = '優先順位の割り当て';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'インシデント状態のタイプ';
     $Self->{Translation}->{'Includes'} = '含む：';
     $Self->{Translation}->{'Manage priority matrix.'} = '優先度の関連性を管理';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'サービスメニューでバックリンクを表示するためのモジュール';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'SLAメニューでバックリンクを表示するためのモジュール';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'サービスメニューで印刷を表示するためのモジュール';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'SLAメニューで印刷を表示するためのモジュール';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'サービスメニューで「リンク」リンクを表示するためのモジュール';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'SLAメニューでバックリンクを表示するためのモジュール';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'サービスメニューでバックリンクを表示するためのモジュール';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'サービスメニューで「リンク」リンクを表示するためのモジュール';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'SLAメニューで印刷を表示するためのモジュール';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'サービスメニューで印刷を表示するためのモジュール';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '設定ビューでのインシデントステータスのパラメーター';
     $Self->{Translation}->{'Part of'} = '一部：';
     $Self->{Translation}->{'Relevant to'} = '関連項目：';

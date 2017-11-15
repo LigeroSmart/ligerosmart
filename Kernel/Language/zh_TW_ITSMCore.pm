@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = '重要 <-> 影響 <-> 優先級';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        '"重要 <-> 影響"之間的組合決定優先級';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = '重要 ↔ 影響 ↔ 優先級';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        '"重要 ↔ 影響"之間的組合決定優先級';
     $Self->{Translation}->{'Priority allocation'} = '優先級分配';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Includes'} = '包括';
     $Self->{Translation}->{'Manage priority matrix.'} = '管理優先級矩陣';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = '';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = '';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = '';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
     $Self->{Translation}->{'Part of'} = '屬於';
     $Self->{Translation}->{'Relevant to'} = '相關';

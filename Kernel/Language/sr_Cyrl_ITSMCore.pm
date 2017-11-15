@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Значај  <-> Утицај <-> Приоритет';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'Управљање резултатом приоритета комбиновањем Значај <-> Утицај.';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Значај  ↔ Утицај ↔ Приоритет';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'Управљање резултатом приоритета комбиновањем Значај ↔ Утицај.';
     $Self->{Translation}->{'Priority allocation'} = 'Расподела приоритета';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'Тип стања инцидента.';
     $Self->{Translation}->{'Includes'} = 'Укључује';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Уредити матрицу приоритета';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Модул за приказ везе за враћање у сервисном менију.';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Модул за приказ везе за враћање у SLA менију.';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Модул за приказ везе за штампу у сервисном менију.';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Модул за приказ везе за штампу у SLA менију.';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Модул за приказ везе у сервисном менију.';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Модул за приказ везе за враћање у SLA менију.';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Модул за приказ везе за враћање у сервисном менију.';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Модул за приказ везе у сервисном менију.';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Модул за приказ везе за штампу у SLA менију.';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Модул за приказ везе за штампу у сервисном менију.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Параметри за инцидентне статусе у приказу подешавања.';
     $Self->{Translation}->{'Part of'} = 'Саставни део';
     $Self->{Translation}->{'Relevant to'} = 'У зависности';

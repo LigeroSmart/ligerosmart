@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Macbethana Wilfred <mwi@nrd.no>, 2014
 msgid ""
@@ -15,11 +15,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "Umuhimu <-> Madhara <-> Kipaumbele"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Umuhimu ↔ Madhara ↔ Kipaumbele"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
 msgstr "Simamia matokeo ya kipaumbele ya kuunganisha Umuhimu "
 
 #. Template: AdminITSMCIPAllocate

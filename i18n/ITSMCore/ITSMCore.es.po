@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # David B <link.bigpoint@outlook.com>, 2017
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
@@ -18,12 +18,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Criticality <-> Impact <-> Priority"
-msgstr "Urgencia <-> Impacto <-> Prioridad"
+msgid "Criticality ↔ Impact ↔ Priority"
+msgstr "Urgencia ↔ Impacto ↔ Prioridad"
 
 #. Template: AdminITSMCIPAllocate
-msgid "Manage the priority result of combinating Criticality <-> Impact."
-msgstr "Administrar la prioridad resultante al combinar Urgencia <-> Impacto."
+msgid "Manage the priority result of combinating Criticality ↔ Impact."
+msgstr "Administrar la prioridad resultante al combinar Urgencia ↔ Impacto."
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"

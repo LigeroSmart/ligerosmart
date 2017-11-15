@@ -39,7 +39,7 @@ $Selenium->RunTest(
         # navigate to AdminITSMCIPAllocate screen
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminITSMCIPAllocate");
 
-        # check for Criticality <-> Impact fields
+        # check for Criticality ↔ Impact fields
         my @Priority = (qw(1verylow 2low 3normal 4high 5veryhigh));
         for my $Impact (@Priority) {
             for my $Criticality (@Priority) {

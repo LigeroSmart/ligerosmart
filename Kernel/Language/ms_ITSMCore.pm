@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikal <-> Kesan <-> Keutamaan';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} =
-        'Menguruskan hasil keutamaan kritikal gabungan <-> Kesan.';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Kritikal ↔ Kesan ↔ Keutamaan';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
+        'Menguruskan hasil keutamaan kritikal gabungan ↔ Kesan.';
     $Self->{Translation}->{'Priority allocation'} = 'Berikan keutamaan';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'Jenis Keadaan Kejadian.';
     $Self->{Translation}->{'Includes'} = 'Termasuk';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Mengurus matriks keutamaan.';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Modul untuk menunjukkan kembali pautan dalam menu perkhidmatan.';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Modul untuk menunjukkan kembali pautan dalam menu SLA.';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Modul untuk menunjukkan pautan cetak dalam menu perkhidmatan.';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Modul untuk menunjukkan pautan cetak dalam menu SLA.';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan.';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Modul untuk menunjukkan kembali pautan dalam menu SLA.';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Modul untuk menunjukkan kembali pautan dalam menu perkhidmatan.';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Modul untuk menunjukkan pautan pautan dalam menu perkhidmatan.';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Modul untuk menunjukkan pautan cetak dalam menu SLA.';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Modul untuk menunjukkan pautan cetak dalam menu perkhidmatan.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parameter untuk keadaan insiden memandangkan keutamaan.';
     $Self->{Translation}->{'Part of'} = 'Sebahagian daripada';
     $Self->{Translation}->{'Relevant to'} = 'Berkaitan kepada';
