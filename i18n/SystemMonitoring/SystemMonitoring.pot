@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-09-29 15:36+0000\n"
+"POT-Creation-Date: 2017-11-14 23:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,30 @@ msgstr ""
 
 #. SysConfig
 msgid "HTTP"
+msgstr ""
+
+#. SysConfig
+msgid "Icinga API URL ."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement author."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement comment."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement enabled?"
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement notify."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement sticky."
 msgstr ""
 
 #. SysConfig
@@ -64,6 +88,10 @@ msgstr ""
 
 #. SysConfig
 msgid "The HTTP acknowledge user."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket event module to send an acknowledge to Icinga2."
 msgstr ""
 
 #. SysConfig

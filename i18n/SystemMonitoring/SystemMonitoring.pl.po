@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-09-25 09:49+0000\n"
+"POT-Creation-Date: 2017-11-14 23:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Daniel Lisiecki <lisiecki.daniel@gmail.com>, 2017\n"
 "Language-Team: Polish (https://www.transifex.com/otrs/teams/23435/pl/)\n"
@@ -34,12 +34,32 @@ msgid "Define Nagios acknowledge type."
 msgstr "Określ typ potwierdzenia Nagiosa."
 
 #. SysConfig
-msgid "Dutch"
+msgid "HTTP"
+msgstr "HTTP"
+
+#. SysConfig
+msgid "Icinga API URL ."
 msgstr ""
 
 #. SysConfig
-msgid "HTTP"
-msgstr "HTTP"
+msgid "Icinga2 acknowledgement author."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement comment."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement enabled?"
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement notify."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement sticky."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -88,6 +108,10 @@ msgstr "Hasło HTTP dla potwierdzeń."
 #. SysConfig
 msgid "The HTTP acknowledge user."
 msgstr "Użytkownik HTTP dla potwierdzeń."
+
+#. SysConfig
+msgid "Ticket event module to send an acknowledge to Icinga2."
+msgstr ""
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."

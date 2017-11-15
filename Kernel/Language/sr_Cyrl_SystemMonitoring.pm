@@ -21,8 +21,13 @@ sub Data {
     $Self->{Translation}->{'Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.'} =
         'Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер треба да буде пуштен ПРЕ PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Одређује „Nagios” тип потврде.';
-    $Self->{Translation}->{'Dutch'} = '';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
+    $Self->{Translation}->{'Icinga API URL .'} = '';
+    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
+    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
+    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';
+    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = '';
+    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = '';
     $Self->{Translation}->{'Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.'} =
         'Повежи већ отворени тикет инцидента са погођеном конфигурационом ставком. Ово је једино могуће када стигне следећи имејл од системског надзора.';
     $Self->{Translation}->{'Name of the Dynamic Field for Host.'} = 'Назив динамичког поља за хост.';
@@ -35,6 +40,7 @@ sub Data {
     $Self->{Translation}->{'The HTTP acknowledge URL.'} = 'Адреса HTTP потврде.';
     $Self->{Translation}->{'The HTTP acknowledge password.'} = 'Лозинка HTTP потврде.';
     $Self->{Translation}->{'The HTTP acknowledge user.'} = 'Корисник HTTP потврде.';
+    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = '';
     $Self->{Translation}->{'Ticket event module to send an acknowledge to Nagios.'} = 'Модул догађаја тикета за слање потврде за „Nagios”.';
     $Self->{Translation}->{'pipe'} = 'канал';
 

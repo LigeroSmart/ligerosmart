@@ -1,12 +1,12 @@
 # Translators:
 # Милорад Јовановић <j.milorad@gmail.com>, 2016
-# Dusan Vuckovic <dusan@dvuckovic.com>, 2017
+# Dusan Vuckovic <dusan@dvuckovic.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-09-25 09:49+0000\n"
+"POT-Creation-Date: 2017-11-14 23:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Dusan Vuckovic <dusan@dvuckovic.com>, 2017\n"
+"Last-Translator: Dusan Vuckovic <dusan@dvuckovic.com>, 2016\n"
 "Language-Team: Serbian (https://www.transifex.com/otrs/teams/23435/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,15 +32,35 @@ msgstr ""
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr "Одређује „Nagios” тип потврде."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Одређује Nagios тип потврде."
 
 #. SysConfig
 msgid "HTTP"
 msgstr "HTTP"
+
+#. SysConfig
+msgid "Icinga API URL ."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement author."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement comment."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement enabled?"
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement notify."
+msgstr ""
+
+#. SysConfig
+msgid "Icinga2 acknowledgement sticky."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -52,7 +72,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
-msgstr "Назив динамичког поља за хост."
+msgstr "Назив динамичког поља за сервер."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Service."
@@ -91,8 +111,12 @@ msgid "The HTTP acknowledge user."
 msgstr "Корисник HTTP потврде."
 
 #. SysConfig
+msgid "Ticket event module to send an acknowledge to Icinga2."
+msgstr ""
+
+#. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
-msgstr "Модул догађаја тикета за слање потврде за „Nagios”."
+msgstr "Модул догађаја тикета за слање потврде за Nagios."
 
 #. SysConfig
 msgid "pipe"
