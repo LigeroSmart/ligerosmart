@@ -16,6 +16,7 @@ our @ObjectDependencies = (
     'Kernel::System::Group',
     'Kernel::System::Log',
     'Kernel::System::Service',
+    'Kernel::Language',
 );
 
 =head1 NAME
@@ -215,10 +216,12 @@ sub ObjectDescriptionGet {
         }
     }
 
+    my $ServiceStrg = $Kernel::OM->Get('Kernel::Language')->Translate('Service');
+
     # create description
     my %Description = (
-        Normal => 'Service',
-        Long   => 'Service',
+        Normal => $ServiceStrg,
+        Long   => $ServiceStrg,
     );
 
     return %Description if $Param{Mode} && $Param{Mode} eq 'Temporary';
@@ -234,8 +237,8 @@ sub ObjectDescriptionGet {
 
     # create description
     %Description = (
-        Normal => "Service '$Service{NameShort}'",
-        Long   => "Service '$Service{Name}'",
+        Normal => $ServiceStrg . " '$Service{NameShort}'",
+        Long   => $ServiceStrg . " '$Service{Name}'",
     );
 
     return %Description;
