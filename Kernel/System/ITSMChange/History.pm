@@ -11,6 +11,8 @@ package Kernel::System::ITSMChange::History;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::Cache',
@@ -1101,6 +1103,80 @@ sub HistoryTypeList {
     );
 
     return \@HistoryTypes;
+}
+
+=head2 HistoryStringsList()
+
+Returns a hash of all translatable history strings.
+
+=cut
+
+sub HistoryStringsList {
+    my ( $Self, %Param ) = @_;
+
+    # Define translatable history strings.
+    my %HistoryStrings = (
+        'ChangeHistory::ActionAdd'                                          => Translatable('%s: %s'),
+        'ChangeHistory::ActionAddID'                                        => Translatable('New Action (ID=%s)'),
+        'ChangeHistory::ActionDelete'                                       => Translatable('Action (ID=%s) deleted'),
+        'ChangeHistory::ActionDeleteAll'                                    => Translatable('All Actions of Condition (ID=%s) deleted'),
+        'ChangeHistory::ActionExecute'                                      => Translatable('Action (ID=%s) executed: %s'),
+        'ChangeHistory::ActionUpdate'                                       => Translatable('%s (Action ID=%s): (new=%s, old=%s)'),
+        'ChangeHistory::ChangeActualEndTimeReached'                         => Translatable('Change (ID=%s) reached actual end time.'),
+        'ChangeHistory::ChangeActualStartTimeReached'                       => Translatable('Change (ID=%s) reached actual start time.'),
+        'ChangeHistory::ChangeAdd'                                          => Translatable('New Change (ID=%s)'),
+        'ChangeHistory::ChangeAttachmentAdd'                                => Translatable('New Attachment: %s'),
+        'ChangeHistory::ChangeAttachmentDelete'                             => Translatable('Deleted Attachment %s'),
+        'ChangeHistory::ChangeCABDelete'                                    => Translatable('CAB Deleted %s'),
+        'ChangeHistory::ChangeCABUpdate'                                    => Translatable('%s: (new=%s, old=%s)'),
+        'ChangeHistory::ChangeLinkAdd'                                      => Translatable('Link to %s (ID=%s) added'),
+        'ChangeHistory::ChangeLinkDelete'                                   => Translatable('Link to %s (ID=%s) deleted'),
+        'ChangeHistory::ChangeNotificationSent'                             => Translatable('Notification sent to %s (Event: %s)'),
+        'ChangeHistory::ChangePlannedEndTimeReached'                        => Translatable('Change (ID=%s) reached planned end time.'),
+        'ChangeHistory::ChangePlannedStartTimeReached'                      => Translatable('Change (ID=%s) reached planned start time.'),
+        'ChangeHistory::ChangeRequestedTimeReached'                         => Translatable('Change (ID=%s) reached requested time.'),
+        'ChangeHistory::ChangeUpdate'                                       => Translatable('%s: (new=%s, old=%s)'),
+        'ChangeHistory::ConditionAdd'                                       => Translatable('%s: %s'),
+        'ChangeHistory::ConditionAddID'                                     => Translatable('New Condition (ID=%s)'),
+        'ChangeHistory::ConditionDelete'                                    => Translatable('Condition (ID=%s) deleted'),
+        'ChangeHistory::ConditionDeleteAll'                                 => Translatable('All Conditions of Change (ID=%s) deleted'),
+        'ChangeHistory::ConditionUpdate'                                    => Translatable('%s (Condition ID=%s): (new=%s, old=%s)'),
+        'ChangeHistory::ExpressionAdd'                                      => Translatable('%s: %s'),
+        'ChangeHistory::ExpressionAddID'                                    => Translatable('New Expression (ID=%s)'),
+        'ChangeHistory::ExpressionDelete'                                   => Translatable('Expression (ID=%s) deleted'),
+        'ChangeHistory::ExpressionDeleteAll'                                => Translatable('All Expressions of Condition (ID=%s) deleted'),
+        'ChangeHistory::ExpressionUpdate'                                   => Translatable('%s (Expression ID=%s): (new=%s, old=%s)'),
+        'WorkOrderHistory::WorkOrderActualEndTimeReached'                   => Translatable('Workorder (ID=%s) reached actual end time.'),
+        'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'    => Translatable('Workorder (ID=%s) reached actual end time.'),
+        'WorkOrderHistory::WorkOrderActualStartTimeReached'                 => Translatable('Workorder (ID=%s) reached actual start time.'),
+        'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'  => Translatable('Workorder (ID=%s) reached actual start time.'),
+        'WorkOrderHistory::WorkOrderAdd'                                    => Translatable('New Workorder (ID=%s)'),
+        'WorkOrderHistory::WorkOrderAddWithWorkOrderID'                     => Translatable('New Workorder (ID=%s)'),
+        'WorkOrderHistory::WorkOrderAttachmentAdd'                          => Translatable('New Attachment for WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'           => Translatable('(ID=%s) New Attachment for WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderAttachmentDelete'                       => Translatable('Deleted Attachment from WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'        => Translatable('(ID=%s) Deleted Attachment from WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderReportAttachmentAdd'                    => Translatable('New Report Attachment for WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderReportAttachmentAddWithWorkOrderID'     => Translatable('(ID=%s) New Report Attachment for WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderReportAttachmentDelete'                 => Translatable('Deleted Report Attachment from WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderReportAttachmentDeleteWithWorkOrderID'  => Translatable('(ID=%s) Deleted Report Attachment from WorkOrder: %s'),
+        'WorkOrderHistory::WorkOrderDelete'                                 => Translatable('Workorder (ID=%s) deleted'),
+        'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'                  => Translatable('Workorder (ID=%s) deleted'),
+        'WorkOrderHistory::WorkOrderLinkAdd'                                => Translatable('Link to %s (ID=%s) added'),
+        'WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID'                 => Translatable('(ID=%s) Link to %s (ID=%s) added'),
+        'WorkOrderHistory::WorkOrderLinkDelete'                             => Translatable('Link to %s (ID=%s) deleted'),
+        'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'              => Translatable('(ID=%s) Link to %s (ID=%s) deleted'),
+        'WorkOrderHistory::WorkOrderNotificationSent'                       => Translatable('Notification sent to %s (Event: %s)'),
+        'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'        => Translatable('(ID=%s) Notification sent to %s (Event: %s)'),
+        'WorkOrderHistory::WorkOrderPlannedEndTimeReached'                  => Translatable('Workorder (ID=%s) reached planned end time.'),
+        'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'   => Translatable('Workorder (ID=%s) reached planned end time.'),
+        'WorkOrderHistory::WorkOrderPlannedStartTimeReached'                => Translatable('Workorder (ID=%s) reached planned start time.'),
+        'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID' => Translatable('Workorder (ID=%s) reached planned start time.'),
+        'WorkOrderHistory::WorkOrderUpdate'                                 => Translatable('%s: (new=%s, old=%s)'),
+        'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'                  => Translatable('(ID=%s) %s: (new=%s, old=%s)'),
+    );
+
+    return %HistoryStrings;
 }
 
 1;

@@ -45,8 +45,9 @@ sub Run {
     }
 
     # get needed objects
-    my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
+    my $ChangeObject  = $Kernel::OM->Get('Kernel::System::ITSMChange');
+    my $HistoryObject = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
 
     # get config of frontend module
     $Self->{Config} = $ConfigObject->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -87,7 +88,7 @@ sub Run {
     my %WorkOrderIDLookup = map { $_ => 1 } @{ $Change->{WorkOrderIDs} };
 
     # get history entries
-    my $HistoryEntriesRef = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->ChangeHistoryGet(
+    my $HistoryEntriesRef = $HistoryObject->ChangeHistoryGet(
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     ) || [];
@@ -122,6 +123,9 @@ sub Run {
     # max length of strings
     my $MaxLength = 30;
 
+    # Get translatable history strings.
+    my %HistoryStrings = $HistoryObject->HistoryStringsList();
+
     # create table
     my $Counter = 1;
     HISTORYENTRY:
@@ -155,7 +159,7 @@ sub Run {
             # set default values for some keys
             for my $ContentNewOrOld (qw(ContentNew ContentOld)) {
                 if ( !defined $HistoryEntry->{$ContentNewOrOld} ) {
-                    $HistoryEntry->{$ContentNewOrOld} = '-';
+                    $HistoryEntry->{$ContentNewOrOld} = '';
                 }
                 else {
 
@@ -260,8 +264,7 @@ sub Run {
                                 }
 
                                 # lookup the attribute name
-                                $Value = $Cache->{AttributeList}
-                                    ->{ $HistoryEntry->{$ContentNewOrOld} };
+                                $Value = $Cache->{AttributeList}->{ $HistoryEntry->{$ContentNewOrOld} };
                             }
                             elsif ( $Type eq 'Operator' ) {
 
@@ -294,7 +297,7 @@ sub Run {
                                 $TranslatedValue, $HistoryEntry->{$ContentNewOrOld};
                         }
                         else {
-                            $HistoryEntry->{$ContentNewOrOld} = '-';
+                            $HistoryEntry->{$ContentNewOrOld} = '';
                         }
 
                         # The content has changed, so change the displayed fieldname as well
@@ -308,7 +311,7 @@ sub Run {
                     }
                     elsif ( $HistoryEntry->{Fieldname} eq 'CABAgents' ) {
 
-                        # ContentNew and ContentOld contain a '%%' seperated list of user ids
+                        # ContentNew and ContentOld contain a '%%' separated list of user ids
                         # look up the login names from the user ids and
                         # format it as a comma separated list
                         my @UserIDs = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
@@ -348,10 +351,10 @@ sub Run {
 
             # trim strings to a max length of $MaxLength
             my $ContentNew = $HTMLUtilsObject->ToAscii(
-                String => $HistoryEntry->{ContentNew} || '-',
+                String => $HistoryEntry->{ContentNew} || '',
             );
             my $ContentOld = $HTMLUtilsObject->ToAscii(
-                String => $HistoryEntry->{ContentOld} || '-',
+                String => $HistoryEntry->{ContentOld} || '',
             );
 
             # show [...] for too long strings
@@ -425,7 +428,7 @@ sub Run {
 
             # show 'nice' output with variable substitution
             $Data{Content} = $LayoutObject->{LanguageObject}->Translate(
-                $HistoryItemType . 'History::' . $HistoryEntryType,
+                $HistoryStrings{ $HistoryItemType . 'History::' . $HistoryEntryType },
                 @Values,
             );
 

@@ -426,7 +426,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no WorkOrderID is given!'} = '';
     $Self->{Translation}->{'WorkOrder "%s" not found in the database!'} = '';
-    $Self->{Translation}->{'WorkOrderHistory::'} = '';
     $Self->{Translation}->{'WorkOrder History'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
@@ -453,6 +452,53 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Meine Arbeitsaufträge';
+
+    # Perl Module: Kernel/System/ITSMChange/History.pm
+    $Self->{Translation}->{'%s: %s'} = '';
+    $Self->{Translation}->{'New Action (ID=%s)'} = '';
+    $Self->{Translation}->{'Action (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'All Actions of Condition (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'Action (ID=%s) executed: %s'} = '';
+    $Self->{Translation}->{'%s (Action ID=%s): (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached actual end time.'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached actual start time.'} = '';
+    $Self->{Translation}->{'New Change (ID=%s)'} = '';
+    $Self->{Translation}->{'New Attachment: %s'} = '';
+    $Self->{Translation}->{'Deleted Attachment %s'} = '';
+    $Self->{Translation}->{'CAB Deleted %s'} = '';
+    $Self->{Translation}->{'%s: (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'Link to %s (ID=%s) added'} = '';
+    $Self->{Translation}->{'Link to %s (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'Notification sent to %s (Event: %s)'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached planned end time.'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached planned start time.'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached requested time.'} = '';
+    $Self->{Translation}->{'New Condition (ID=%s)'} = '';
+    $Self->{Translation}->{'Condition (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'All Conditions of Change (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'%s (Condition ID=%s): (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'New Expression (ID=%s)'} = '';
+    $Self->{Translation}->{'Expression (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'All Expressions of Condition (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'%s (Expression ID=%s): (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached actual end time.'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached actual start time.'} = '';
+    $Self->{Translation}->{'New Workorder (ID=%s)'} = '';
+    $Self->{Translation}->{'New Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) New Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'Deleted Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) Deleted Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'New Report Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) New Report Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'Deleted Report Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) Deleted Report Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) added'} = '';
+    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'(ID=%s) Notification sent to %s (Event: %s)'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached planned end time.'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
+    $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'Requested';

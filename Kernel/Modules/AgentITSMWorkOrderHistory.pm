@@ -45,8 +45,9 @@ sub Run {
     }
 
     # get needed objects
-    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
     my $ConfigObject    = $Kernel::OM->Get('Kernel::Config');
+    my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
+    my $HistoryObject   = $Kernel::OM->Get('Kernel::System::ITSMChange::History');
 
     # get config of frontend module
     $Self->{Config} = $ConfigObject->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
@@ -99,7 +100,7 @@ sub Run {
     }
 
     # get history entries
-    my $HistoryEntriesRef = $Kernel::OM->Get('Kernel::System::ITSMChange::History')->WorkOrderHistoryGet(
+    my $HistoryEntriesRef = $HistoryObject->WorkOrderHistoryGet(
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     ) || [];
@@ -112,6 +113,9 @@ sub Run {
 
     # max length of strings
     my $MaxLength = 30;
+
+    # Get translatable history strings.
+    my %HistoryStrings = $HistoryObject->HistoryStringsList();
 
     # create table
     my $Counter = 1;
@@ -131,7 +135,7 @@ sub Run {
             # set default values for some keys
             for my $ContentNewOrOld (qw(ContentNew ContentOld)) {
                 if ( !defined $HistoryEntry->{$ContentNewOrOld} ) {
-                    $HistoryEntry->{$ContentNewOrOld} = '-';
+                    $HistoryEntry->{$ContentNewOrOld} = '';
                 }
                 else {
 
@@ -140,8 +144,7 @@ sub Run {
                         my ($Type) = $HistoryEntry->{Fieldname} =~ m{
                             \A          # string start
                             (           # start capture of $Type
-                                WorkOrderState | WorkOrderType
-                                | WorkOrderAgent
+                                WorkOrderState | WorkOrderType | WorkOrderAgent
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
                         }xms
@@ -187,7 +190,7 @@ sub Run {
                                 $TranslatedValue, $HistoryEntry->{$ContentNewOrOld};
                         }
                         else {
-                            $HistoryEntry->{$ContentNewOrOld} = '-';
+                            $HistoryEntry->{$ContentNewOrOld} = '';
                         }
 
                         # The content has changed, so change the displayed fieldname as well
@@ -209,10 +212,10 @@ sub Run {
 
             # trim strings to a max length of $MaxLength
             my $ContentNew = $HTMLUtilsObject->ToAscii(
-                String => $HistoryEntry->{ContentNew} || '-',
+                String => $HistoryEntry->{ContentNew} || '',
             );
             my $ContentOld = $HTMLUtilsObject->ToAscii(
-                String => $HistoryEntry->{ContentOld} || '-',
+                String => $HistoryEntry->{ContentOld} || '',
             );
 
             # show [...] for too long strings
@@ -242,7 +245,7 @@ sub Run {
             # sample input:
             # ChangeHistory::ChangeLinkAdd", "Ticket", "1
             $Data{Content} = $LayoutObject->{LanguageObject}->Translate(
-                'WorkOrderHistory::' . $Data{HistoryType},
+                $HistoryStrings{ 'WorkOrderHistory::' . $Data{HistoryType} },
                 @Values,
             );
 

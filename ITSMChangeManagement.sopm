@@ -19,9 +19,6 @@
         <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMChange.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMWorkOrder.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/en_CA_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/en_GB_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/en_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/es_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ITSMChangeManagement.pm" />

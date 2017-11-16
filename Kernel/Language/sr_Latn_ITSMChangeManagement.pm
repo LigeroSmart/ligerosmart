@@ -93,7 +93,7 @@ sub Data {
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Istorijat od %s%s';
-    $Self->{Translation}->{'History Content'} = 'Sadržaj istorijata';
+    $Self->{Translation}->{'History Content'} = 'Sadržaj istorije';
     $Self->{Translation}->{'Workorder'} = 'Radni nalog';
     $Self->{Translation}->{'Createtime'} = 'Vreme kreiranja';
     $Self->{Translation}->{'Show details'} = 'Prikaži detalje';
@@ -426,7 +426,6 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no WorkOrderID is given!'} = 'Ne može se prikazati istorijat jer nije dat WorkOrderID!';
     $Self->{Translation}->{'WorkOrder "%s" not found in the database!'} = 'Radni nalog "%s" nije nađen u bazi podataka!';
-    $Self->{Translation}->{'WorkOrderHistory::'} = 'WorkOrderHistory::';
     $Self->{Translation}->{'WorkOrder History'} = 'Istorijat radnog naloga';
 
     # Perl Module: Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm
@@ -453,6 +452,53 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
     $Self->{Translation}->{'My Work Orders'} = 'Moji radni nalozi';
+
+    # Perl Module: Kernel/System/ITSMChange/History.pm
+    $Self->{Translation}->{'%s: %s'} = '';
+    $Self->{Translation}->{'New Action (ID=%s)'} = '';
+    $Self->{Translation}->{'Action (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'All Actions of Condition (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'Action (ID=%s) executed: %s'} = '';
+    $Self->{Translation}->{'%s (Action ID=%s): (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached actual end time.'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached actual start time.'} = '';
+    $Self->{Translation}->{'New Change (ID=%s)'} = '';
+    $Self->{Translation}->{'New Attachment: %s'} = '';
+    $Self->{Translation}->{'Deleted Attachment %s'} = '';
+    $Self->{Translation}->{'CAB Deleted %s'} = '';
+    $Self->{Translation}->{'%s: (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'Link to %s (ID=%s) added'} = '';
+    $Self->{Translation}->{'Link to %s (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'Notification sent to %s (Event: %s)'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached planned end time.'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached planned start time.'} = '';
+    $Self->{Translation}->{'Change (ID=%s) reached requested time.'} = '';
+    $Self->{Translation}->{'New Condition (ID=%s)'} = '';
+    $Self->{Translation}->{'Condition (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'All Conditions of Change (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'%s (Condition ID=%s): (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'New Expression (ID=%s)'} = '';
+    $Self->{Translation}->{'Expression (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'All Expressions of Condition (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'%s (Expression ID=%s): (new=%s, old=%s)'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached actual end time.'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached actual start time.'} = '';
+    $Self->{Translation}->{'New Workorder (ID=%s)'} = '';
+    $Self->{Translation}->{'New Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) New Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'Deleted Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) Deleted Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'New Report Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) New Report Attachment for WorkOrder: %s'} = '';
+    $Self->{Translation}->{'Deleted Report Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'(ID=%s) Deleted Report Attachment from WorkOrder: %s'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) added'} = '';
+    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'(ID=%s) Notification sent to %s (Event: %s)'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached planned end time.'} = '';
+    $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
+    $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'zahtevano';
@@ -548,7 +594,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Podrazumeveni tip radnog naloga. Ovaj unos mora da postoji u klasi opšteg kataloga \'ITSM::ChangeManagement::WorkOrder::Type\'.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        'Definiše Akcije gde je dugme postavki dostupno u povezanom grafičkom elementu objekta (LinkObject::ViewMode = "complex"). Molimo da imate na umu da ove Akcije moraju da budu registrovane u sledećim JS i CSS datotekama: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js i Core.Agent.LinkObject.js.';
+        'Definiše akcije gde je dugme postavki dostupno u povezanom grafičkom elementu objekta (LinkObject::ViewMode = "complex"). Molimo da imate na umu da ove Akcije moraju da budu registrovane u sledećim JS i CSS datotekama: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js i Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Definiše signale za svaki status radnog naloga.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Definiše koje kolone su prikazane u povezanom grafičkom elementu promena (LinkObject::ViewMode = "complex"). Napomena: Samo atributi promene su dozvoljeni za podrazumevane kolone. Moguće postavke: 0 = onemogućeno, 1 = dostupno, 2 = podrazumevano aktivirano.';
