@@ -148,8 +148,8 @@ sub Run {
         SelectedID => $GetParam{ValidID}
             || $Template->{ValidID}
             || ( $ValidObject->ValidIDsGet() )[0],
-        Sort       => 'NumericKey',
-        Class      => 'Modernize',
+        Sort  => 'NumericKey',
+        Class => 'Modernize',
     );
 
     # start template output
