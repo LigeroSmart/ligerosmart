@@ -153,6 +153,13 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###QueueMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if queue must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###Owner" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket owner in the additional ITSM field screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
@@ -174,8 +181,22 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###ResponsibleMandatory" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Sets if ticket responsible must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###State" Required="0" Valid="1">
         <Description Translatable="1">If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if state must be selected by the agent.</Description>
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
@@ -186,10 +207,10 @@
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
             <Array>
-                <Item>open</Item>
-                <Item>closed</Item>
-                <Item>pending reminder</Item>
-                <Item>pending auto</Item>
+                <Item Translatable="1">open</Item>
+                <Item Translatable="1">closed</Item>
+                <Item Translatable="1">pending reminder</Item>
+                <Item Translatable="1">pending auto</Item>
             </Array>
         </Value>
     </Setting>
@@ -197,7 +218,7 @@
         <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">open</Item>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">open</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###Note" Required="0" Valid="1">
@@ -242,22 +263,11 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleTypeDefault" Required="0" Valid="1">
-        <Description Translatable="1">Defines the default type of the note in the additional ITSM field screen of the agent interface.</Description>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###IsVisibleForCustomerDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines if the note in the ticket note screen of the agent interface is visible for the customer by default.</Description>
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">note-internal</Item>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleTypes" Required="0" Valid="1">
-        <Description Translatable="1">Specifies the different note types that will be used in the system.</Description>
-        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="note-internal">1</Item>
-                <Item Key="note-external">1</Item>
-                <Item Key="note-report">0</Item>
-            </Hash>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###Priority" Required="0" Valid="0">
@@ -271,7 +281,7 @@
         <Description Translatable="1">Defines the default ticket priority in the additional ITSM field screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">3 normal</Item>
+            <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###Title" Required="0" Valid="1">
@@ -279,6 +289,27 @@
         <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###FormDraft" Required="0" Valid="1">
+        <Description Translatable="1">Allows to save current work as draft in the ticket note screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryType" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history type for the additional ITSM field screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">AddNote</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryComment" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">%%FreeText</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField" Required="0" Valid="1">
@@ -295,20 +326,6 @@
                 <Item Key="ITSMRecoveryStartTime" SelectedID="1"></Item>
                 <Item Key="ITSMDueDate" SelectedID="1"></Item>
             </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryType" Required="0" Valid="1">
-        <Description Translatable="1">Defines the history type for the additional ITSM field screen action, which gets used for ticket history.</Description>
-        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex="">AddNote</Item>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryComment" Required="0" Valid="1">
-        <Description Translatable="1">Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.</Description>
-        <Navigation>Frontend::Agent::View::TicketAddtlITSMField</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex="">%%FreeText</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###ShowIncidentState" Required="1" Valid="1">
@@ -367,6 +384,13 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###QueueMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if queue must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###Owner" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket owner in the decision screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
@@ -388,8 +412,22 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketDecision###State" Required="0" Valid="1">
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###ResponsibleMandatory" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Sets if ticket responsible must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###State" Required="0" Valid="1">
         <Description Translatable="1">If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if state must be selected by the agent.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
@@ -400,10 +438,10 @@
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
             <Array>
-                <Item>open</Item>
-                <Item>closed</Item>
-                <Item>pending reminder</Item>
-                <Item>pending auto</Item>
+                <Item Translatable="1">open</Item>
+                <Item Translatable="1">closed</Item>
+                <Item Translatable="1">pending reminder</Item>
+                <Item Translatable="1">pending auto</Item>
             </Array>
         </Value>
     </Setting>
@@ -411,7 +449,7 @@
         <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">open</Item>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">open</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###Note" Required="0" Valid="1">
@@ -456,22 +494,11 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketDecision###ArticleTypeDefault" Required="0" Valid="1">
-        <Description Translatable="1">Defines the default type of the note in the decision screen of the agent interface.</Description>
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###IsVisibleForCustomerDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines if the note in the ticket note screen of the agent interface is visible for the customer by default.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">note-internal</Item>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketDecision###ArticleTypes" Required="0" Valid="1">
-        <Description Translatable="1">Specifies the different note types that will be used in the system.</Description>
-        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="note-internal">1</Item>
-                <Item Key="note-external">1</Item>
-                <Item Key="note-report">0</Item>
-            </Hash>
+            <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###Priority" Required="0" Valid="0">
@@ -485,7 +512,7 @@
         <Description Translatable="1">Defines the default ticket priority in the decision screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">3 normal</Item>
+            <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###Title" Required="0" Valid="1">
@@ -493,6 +520,27 @@
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###FormDraft" Required="0" Valid="1">
+        <Description Translatable="1">Allows to save current work as draft in the ticket note screen of the agent interface.</Description>
+        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">1</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###HistoryType" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history type for the decision screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">AddNote</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###HistoryComment" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history comment for the decision screen action, which gets used for ticket history.</Description>
+        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="">%%Note</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###DynamicField" Required="0" Valid="1">
@@ -508,20 +556,6 @@
                 <Item Key="ITSMDecisionResult" SelectedID="1"></Item>
                 <Item Key="ITSMDecisionDate" SelectedID="1"></Item>
             </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketDecision###HistoryType" Required="0" Valid="1">
-        <Description Translatable="1">Defines the history type for the decision screen action, which gets used for ticket history.</Description>
-        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex="">AddNote</Item>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketDecision###HistoryComment" Required="0" Valid="1">
-        <Description Translatable="1">Defines the history comment for the decision screen action, which gets used for ticket history.</Description>
-        <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
-        <Value>
-            <Item ValueType="String" ValueRegex="">%%Note</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketDecision###ShowIncidentState" Required="1" Valid="1">
