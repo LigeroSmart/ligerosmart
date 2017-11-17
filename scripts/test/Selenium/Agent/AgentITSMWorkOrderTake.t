@@ -122,7 +122,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # check for take work order history message
-        my $ExpectedTakeWorkOrderMessage = "Workorder Agent: New: $TestUserLogin";
+        my $ExpectedTakeWorkOrderMessage = "WorkOrderAgent: (new=$TestUserLogin";
 
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedTakeWorkOrderMessage ) > -1,

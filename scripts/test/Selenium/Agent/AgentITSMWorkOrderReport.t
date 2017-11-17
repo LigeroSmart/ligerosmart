@@ -88,7 +88,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
         # get work order states
-        my @WorkOrderStates = ( 'Accepted', 'Ready', 'In Progress', 'closed' );
+        my @WorkOrderStates = ( 'accepted', 'ready', 'in progress', 'closed' );
 
         for my $WorkOrderState (@WorkOrderStates) {
 
@@ -143,7 +143,7 @@ $Selenium->RunTest(
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
             # verify report change
-            my $ReportUpdateMessage = "Workorder State: New: $WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID})";
+            my $ReportUpdateMessage = "WorkOrderState: (new=$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID}), old=";
             $Self->True(
                 index( $Selenium->get_page_source(), $ReportUpdateMessage ) > -1,
                 "$ReportUpdateMessage is found",
