@@ -83,15 +83,15 @@ $Selenium->RunTest(
         );
         $Self->True(
             index(
-                $Selenium->get_page_source(), "Description: New: Test Description &lt;- Old: -"
+                $Selenium->get_page_source(), "Description: (new=Test Description, old=)"
                 ) > -1,
-            "Description: New: Test Description <- Old: is found",
+            "Description: (new=Test Description, old=) is found",
         );
         $Self->True(
             index(
-                $Selenium->get_page_source(), "Justification: New: Test Justification &lt;- Old: -"
+                $Selenium->get_page_source(), "Justification: (new=Test Justification, old=)"
                 ) > -1,
-            "Justification: New: Test Justification <- Old:- found",
+            "Justification: (new=Test Justification, old=) found",
         );
 
         # delete test created change
