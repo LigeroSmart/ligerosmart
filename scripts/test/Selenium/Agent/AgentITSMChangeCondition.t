@@ -182,12 +182,12 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         $Selenium->WaitFor(
-            JavaScript => 'return typeof($) == "function" && $(".Value:contains(\'Pending PIR\')").length'
+            JavaScript => 'return typeof($) == "function" && $(".Value:contains(\'pending pir\')").length'
         );
 
         # Check test change state.
         $Self->True(
-            $Selenium->execute_script('return $(".Value:contains(\'Pending PIR\')").length === 1'),
+            $Selenium->execute_script('return $(".Value:contains(\'pending pir\')").length === 1'),
             "Pending PIR state is found",
         );
 
@@ -231,12 +231,12 @@ $Selenium->RunTest(
         );
 
         $Selenium->WaitFor(
-            JavaScript => 'return $(".Value:contains(\'Successful\')").length'
+            JavaScript => 'return $(".Value:contains(\'successful\')").length'
         );
 
         # Check for expected change state to verify test condition.
         $Self->True(
-            $Selenium->execute_script('return $(".Value:contains(\'Successful\')").length === 1'),
+            $Selenium->execute_script('return $(".Value:contains(\'successful\')").length === 1'),
             "Successful state is found",
         );
 
