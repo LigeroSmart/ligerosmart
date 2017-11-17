@@ -101,20 +101,20 @@ $Selenium->RunTest(
             "New Workorder (ID=$WorkOrderID) is found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Instruction: New: $WorkOrderInstruction &lt;- Old: -" ) > -1,
-            "Instruction: New: $WorkOrderInstruction &lt;- Old: is found",
+            index( $Selenium->get_page_source(), "Instruction: (new=$WorkOrderInstruction, old=)" ) > -1,
+            "Instruction: (new=$WorkOrderInstruction, old=) is found",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Planned Effort: New: 10 &lt;- Old: 0.00" ) > -1,
-            "Planned Effort: New: 10 &lt;- Old: 0.00 is found",
+            index( $Selenium->get_page_source(), "PlannedEffort: (new=10, old=0.00)" ) > -1,
+            "PlannedEffort: (new=10, old=0.00) is found",
         );
 
         # cut off the workorder title after 30 characters and add [...]
         my $WorkOrderTitleTruncated = substr( $WorkOrderTitleRandom, 0, 30 ) . '[...]';
 
         $Self->True(
-            index( $Selenium->get_page_source(), "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: -" ) > -1,
-            "Workorder Title: New: $WorkOrderTitleTruncated &lt;- Old: is found",
+            index( $Selenium->get_page_source(), "WorkOrderTitle: (new=$WorkOrderTitleTruncated, old=)" ) > -1,
+            "WorkOrderTitle: (new=$WorkOrderTitleTruncated, old=) is found",
         );
 
         # delete test created work order

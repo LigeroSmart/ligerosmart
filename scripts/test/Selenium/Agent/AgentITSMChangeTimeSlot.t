@@ -121,8 +121,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # verify move time slot change
-        my $ExpectedStartMessage = "(ID=$WorkOrderID) Planned Start: New: 2009-10-12 00:00:01 &lt;- Old: -";
-        my $ExpectedEndMessage   = "(ID=$WorkOrderID) Planned End: New: 2009-10-15 15:00:00 &lt;- Old: -";
+        my $ExpectedStartMessage = "(ID=$WorkOrderID) PlannedStartTime: (new=2009-10-12 00:00:01, old=)";
+        my $ExpectedEndMessage   = "(ID=$WorkOrderID) PlannedEndTime: (new=2009-10-15 15:00:00, old=)";
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedStartMessage ) > -1,
             "$ExpectedStartMessage is found",

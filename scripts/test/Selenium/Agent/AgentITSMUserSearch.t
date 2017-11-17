@@ -105,7 +105,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
         # check manager change
-        my $ExpectedManagerMessage = "Change Manager: New: $TestUserLogin";
+        my $ExpectedManagerMessage = "ChangeManager: (new=$TestUserLogin";
 
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedManagerMessage ) > -1,
