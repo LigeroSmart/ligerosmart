@@ -196,15 +196,15 @@ $Selenium->RunTest(
 
         # Check history log to verify change involved persons.
         $Self->True(
-            index( $Selenium->get_page_source(), "CAB Agents: New: $TestUserCAB &lt;- Old: -" ) > -1,
+            index( $Selenium->get_page_source(), "CABAgents: (new=$TestUserCAB" ) > -1,
             "Change in agent CAB - success",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "CAB Customers: New: $TestCustomer &lt;- Old: -" ) > -1,
+            index( $Selenium->get_page_source(), "CABCustomers: (new=$TestCustomer" ) > -1,
             "Change in customer CAB - success",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "Change Manager: New: $TestUserLogin" ) > -1,
+            index( $Selenium->get_page_source(), "ChangeManager: (new=$TestUserLogin" ) > -1,
             "Change in manager - success",
         );
 
