@@ -143,7 +143,8 @@ $Selenium->RunTest(
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
             # verify report change
-            my $ReportUpdateMessage = "WorkOrderState: (new=$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID}), old=";
+            my $ReportUpdateMessage
+                = "WorkOrderState: (new=$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID}), old=";
             $Self->True(
                 index( $Selenium->get_page_source(), $ReportUpdateMessage ) > -1,
                 "$ReportUpdateMessage is found",
