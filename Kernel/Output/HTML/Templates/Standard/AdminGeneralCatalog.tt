@@ -195,21 +195,33 @@
                         <div class="Clear"></div>
 [% RenderBlockEnd("InputKey") %]
 [% RenderBlockStart("Input") %]
-                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %]:<br/><em>([% Translate(Data.Desc) | html %])</em></label>
+                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %]:<br/>
+                        [% IF (Data.Desc) %]
+                            <em>([% Translate(Data.Desc) | html %])</em>
+                        [% END %]
+                        </label>
                         <div class="Field">
                             <input type="text" name="[% Data.Name | html %]" id="[% Data.Name | html %]" value="[% Data.SelectedID | html %]" class="W50pc"/>
                         </div>
                         <div class="Clear"></div>
 [% RenderBlockEnd("Input") %]
 [% RenderBlockStart("TextArea") %]
-                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %]:<br/><em>([% Translate(Data.Desc) | html %])</em></label>
+                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %]:<br/>
+                        [% IF (Data.Desc) %]
+                            <em>([% Translate(Data.Desc) | html %])</em>
+                        [% END %]
+                        </label>
                         <div class="Field">
                             <textarea name="[% Data.Name | html %]" id="[% Data.Name | html %]" rows="[% Data.Rows | html %]" cols="[% Data.Cols | html %]">[% Data.SelectedID | html %]</textarea>
                         </div>
                         <div class="Clear"></div>
 [% RenderBlockEnd("TextArea") %]
 [% RenderBlockStart("Option") %]
-                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %] [% Translate(Data.Key) | html %]:<br/><em>([% Translate(Data.Desc) | html %])</em></label>
+                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %] [% Translate(Data.Key) | html %]:<br/>
+                        [% IF (Data.Desc) %]
+                            <em>([% Translate(Data.Desc) | html %])</em>
+                        [% END %]
+                        </label>
                         <div class="Field">
                             [% Data.Option %]
                         </div>
@@ -231,7 +243,11 @@
                         <div class="Clear"></div>
 [% RenderBlockEnd("Password") %]
 [% RenderBlockStart("ColorPicker") %]
-                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %]:<br/><em>([% Translate(Data.Desc) | html %])</em></label>
+                        <label for="[% Data.Name | html %]">[% Translate(Data.Label) | html %]:<br/>
+                        [% IF (Data.Desc) %]
+                            <em>([% Translate(Data.Desc) | html %])</em>
+                        [% END %]
+                        </label>
                         <div class="Field">
                             <input type="text" name="[% Data.Name | html %]" id="[% Data.Name | html %]" value="[% Data.SelectedID | html %]" class="W50pc JSColorPicker {pickerBorderColor:'#BBB #BBB #BBB #BBB', pickerInsetColor:'#BBB #BBB #BBB #BBB'}"/>
                         </div>
