@@ -33,10 +33,9 @@ ITSM.GeneralCatalog = ITSM.GeneralCatalog || {};
         jscolor.dir = Core.Config.Get('GeneralCatalog::Frontend::JSColorPickerPath');
         jscolor.bindClass = 'JSColorPicker';
         jscolor.install();
-
     };
 
-    Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
+    Core.Init.RegisterNamespace(TargetNS, 'JS_LOADED');
 
     return TargetNS;
 }(ITSM.GeneralCatalog.JSColorPicker || {}));
