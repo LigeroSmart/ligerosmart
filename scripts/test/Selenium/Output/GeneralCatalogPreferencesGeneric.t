@@ -47,7 +47,7 @@ $Selenium->RunTest(
                 Desc    => 'Define the group with permissions.',
                 Block   => 'Permission',
                 Class   => 'ITSM::ConfigItem::Class',
-                PrefKey => 'Permissions',
+                PrefKey => 'Permission',
             },
         );
 
