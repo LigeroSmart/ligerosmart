@@ -17,7 +17,7 @@
 <StatType>dynamic</StatType>
 <SumCol>0</SumCol>
 <SumRow>0</SumRow>
-<Title>Relation Tickets (by types) &lt;-&gt; Changes</Title>
+<Title>Relation Tickets (by types) ↔ Changes</Title>
 <UseAsValueSeries Element="Object">
 <SelectedValues>Changes</SelectedValues>
 <SelectedValues>Incident</SelectedValues>
