@@ -18,7 +18,7 @@ sub Data {
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = '紧急度 ↔ 影响 ↔ 优先级';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
-        '"紧急度 ↔ 影响"之间的组合决定优先级';
+        '管理"紧急度 ↔ 影响"组合的优先级结果。';
     $Self->{Translation}->{'Priority allocation'} = '优先级分配';
 
     # Template: AdminSLA
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '故障状态类型。';
     $Self->{Translation}->{'Includes'} = '包括';
     $Self->{Translation}->{'Manage priority matrix.'} = '管理优先级矩阵。';
-    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'SLA菜单中显示后退链接的模块。';
-    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = '服务菜单中显示后退链接的模块。';
-    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '服务菜单中显示当前链接的链接的模块。';
-    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'SLA菜单中显示打印链接的模块。';
-    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = '服务菜单中显示打印链接的模块。';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'SLA菜单中显示“后退”菜单项的模块。';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = '服务菜单中显示“后退”菜单项的模块。';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '服务菜单中显示“链接”菜单项的模块。';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'SLA菜单中显示“打印”菜单项的模块。';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = '服务菜单中显示“打印”菜单项的模块。';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '选项视图中用于表示故障状态的参数。';
     $Self->{Translation}->{'Part of'} = '属于';
     $Self->{Translation}->{'Relevant to'} = '关联';

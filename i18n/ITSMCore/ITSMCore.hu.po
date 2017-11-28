@@ -1,11 +1,11 @@
-#
+# 
 # Translators:
 # Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:49+0000\n"
-"PO-Revision-Date: 2017-11-09 00:32+0000\n"
+"POT-Creation-Date: 2017-11-15 15:06+0000\n"
+"PO-Revision-Date: 2017-11-15 21:11+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -266,24 +266,24 @@ msgid "Manage priority matrix."
 msgstr "Prioritásmátrix kezelése."
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "Egy modul visszamutató hivatkozás megjelenítéséhez a szolgáltatás menüben."
+msgid "Module to show the Back menu item in SLA menu."
+msgstr "Egy modul a Vissza menüpont megjelenítéséhez az SLA menüben."
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "Egy modul visszamutató hivatkozás megjelenítéséhez az SLA menüben."
+msgid "Module to show the Back menu item in service menu."
+msgstr "Egy modul a Vissza menüpont megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "Egy modul nyomtatási hivatkozás megjelenítéséhez a szolgáltatás menüben."
+msgid "Module to show the Link menu item in service menu."
+msgstr "Egy modul az Összekapcsolás menüpont megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "Egy modul nyomtatási hivatkozás megjelenítéséhez az SLA menüben."
+msgid "Module to show the Print menu item in SLA menu."
+msgstr "Egy modul a Nyomtatás menüpont megjelenítéséhez az SLA menüben."
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "Egy modul a hivatkozás megjelenítéséhez a szolgáltatás menüben."
+msgid "Module to show the Print menu item in service menu."
+msgstr "Egy modul a Nyomtatás menüpont megjelenítéséhez a szolgáltatás menüben."
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."

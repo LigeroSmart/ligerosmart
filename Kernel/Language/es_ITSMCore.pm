@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Urgencia ↔ Impacto ↔ Prioridad';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Criticidad ↔ Impacto ↔ Prioridad';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
-        'Administrar la prioridad resultante al combinar Urgencia ↔ Impacto.';
+        'Gestiona la prioridad resultado de la combinación de Criticidad ↔ Impacto';
     $Self->{Translation}->{'Priority allocation'} = 'Asignar prioridad';
 
     # Template: AdminSLA
@@ -82,7 +82,7 @@ sub Data {
         'Definir acciones donde está disponible un botón de configuración en el widget de objetos vinculados (LinkObject::ViewMode = "complex"). Tenga en cuenta que estas acciones deben haber registrado los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Defina qué columnas se muestran en el widget de servicios vinculados (LinkObject::ViewMode = "complex"). Nota: Sólo se permiten atributos de servicio para columnas predeterminadas. Ajustes posibles: 0 = Desactivado, 1 = Disponible, 2 = Activado de forma predeterminada.';
-    $Self->{Translation}->{'Depends on'} = 'Depende en';
+    $Self->{Translation}->{'Depends on'} = 'Depende de';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} =
         'Registro del módulo frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} =
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'Tipo de Estado de Incidente.';
     $Self->{Translation}->{'Includes'} = 'Incluye';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Administrar la matríz de prioridades.';
-    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Módulo para mostrar un enlace de regreso en el menú de SLA';
-    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Módulo para mostrar un enlace de regreso en el menú del servicio';
-    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Módulo para mostrar el enlace en el menú de servicio.';
-    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Módulo para mostrar un enlace de impresión en el menú de SLA.';
-    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Módulo para mostrar un enlace de impresión en el menú de servicio.';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Módulo para mostrar el elemento de menú Volver en el menú SLA';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Módulo para mostrar el elemento de menú Volver en menú servicio.';
+    $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Módulo para mostrar el enlace al menú elemento en menú servicio.';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Módulo para mostrar el elemento de menú Imprimir en el menú SLA.';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Módulo para mostrar el elemento de menún Imprimir en el menú servicio.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parámetros para los estados de los incidentes en la vista de preferencias.';
     $Self->{Translation}->{'Part of'} = 'Parte de';
     $Self->{Translation}->{'Relevant to'} = 'Relevante a';

@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 # Dusan Vuckovic, 2017
 # Jaroslav Balaz <balazj315@gmail.com>, 2014-2015
@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:04+0000\n"
-"PO-Revision-Date: 2017-09-29 15:06+0000\n"
+"POT-Creation-Date: 2017-11-15 15:06+0000\n"
+"PO-Revision-Date: 2017-11-23 15:12+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "Значај  ↔ Утицај ↔ Приоритет"
+msgstr "Значај ↔ утицај ↔ приоритет"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "Управљање резултатом приоритета комбиновањем Значај ↔ Утицај."
+msgstr "Управљање резултатом приоритета комбиновањем значај ↔ утицај."
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -268,24 +268,24 @@ msgid "Manage priority matrix."
 msgstr "Уредити матрицу приоритета"
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "Модул за приказ везе за враћање у сервисном менију."
-
-#. SysConfig
-msgid "Module to show back link in sla menu."
+msgid "Module to show the Back menu item in SLA menu."
 msgstr "Модул за приказ везе за враћање у SLA менију."
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "Модул за приказ везе за штампу у сервисном менију."
+msgid "Module to show the Back menu item in service menu."
+msgstr "Модул за приказ везе за враћање у сервисном менију."
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
+msgid "Module to show the Link menu item in service menu."
+msgstr "Модул за приказ везе у сервисном менију."
+
+#. SysConfig
+msgid "Module to show the Print menu item in SLA menu."
 msgstr "Модул за приказ везе за штампу у SLA менију."
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "Модул за приказ везе у сервисном менију."
+msgid "Module to show the Print menu item in service menu."
+msgstr "Модул за приказ везе за штампу у сервисном менију."
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."

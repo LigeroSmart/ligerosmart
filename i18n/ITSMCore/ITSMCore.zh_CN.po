@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 # Jerry Du <jerry.du@athub.com>, 2016
 # 张梦 <adoeh@sina.com>, 2014
@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:04+0000\n"
-"PO-Revision-Date: 2017-09-29 15:06+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-11-15 15:06+0000\n"
+"PO-Revision-Date: 2017-11-16 01:54+0000\n"
+"Last-Translator: 汇民 王 <whuim@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgstr "紧急度 ↔ 影响 ↔ 优先级"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "\"紧急度 ↔ 影响\"之间的组合决定优先级"
+msgstr "管理\"紧急度 ↔ 影响\"组合的优先级结果。"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -269,24 +269,24 @@ msgid "Manage priority matrix."
 msgstr "管理优先级矩阵。"
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "服务菜单中显示后退链接的模块。"
+msgid "Module to show the Back menu item in SLA menu."
+msgstr "SLA菜单中显示“后退”菜单项的模块。"
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "SLA菜单中显示后退链接的模块。"
+msgid "Module to show the Back menu item in service menu."
+msgstr "服务菜单中显示“后退”菜单项的模块。"
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "服务菜单中显示打印链接的模块。"
+msgid "Module to show the Link menu item in service menu."
+msgstr "服务菜单中显示“链接”菜单项的模块。"
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "SLA菜单中显示打印链接的模块。"
+msgid "Module to show the Print menu item in SLA menu."
+msgstr "SLA菜单中显示“打印”菜单项的模块。"
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "服务菜单中显示当前链接的链接的模块。"
+msgid "Module to show the Print menu item in service menu."
+msgstr "服务菜单中显示“打印”菜单项的模块。"
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."

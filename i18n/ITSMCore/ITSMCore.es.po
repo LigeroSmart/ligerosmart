@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 # David B <link.bigpoint@outlook.com>, 2017
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:49+0000\n"
-"PO-Revision-Date: 2017-11-05 22:11+0000\n"
+"POT-Creation-Date: 2017-11-15 15:06+0000\n"
+"PO-Revision-Date: 2017-11-16 08:34+0000\n"
 "Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "Urgencia ↔ Impacto ↔ Prioridad"
+msgstr "Criticidad ↔ Impacto ↔ Prioridad"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "Administrar la prioridad resultante al combinar Urgencia ↔ Impacto."
+msgstr "Gestiona la prioridad resultado de la combinación de Criticidad ↔ Impacto"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -200,7 +200,7 @@ msgstr "Defina qué columnas se muestran en el widget de servicios vinculados (L
 
 #. SysConfig
 msgid "Depends on"
-msgstr "Depende en"
+msgstr "Depende de"
 
 #. SysConfig
 msgid ""
@@ -269,24 +269,24 @@ msgid "Manage priority matrix."
 msgstr "Administrar la matríz de prioridades."
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "Módulo para mostar un vínculo para regresar en el menú de servicio."
+msgid "Module to show the Back menu item in SLA menu."
+msgstr "Módulo para mostrar el elemento de menú Volver en el menú SLA"
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "Módulo para mostar un vínculo para regresar en el menú de SLA."
+msgid "Module to show the Back menu item in service menu."
+msgstr "Módulo para mostrar el elemento de menú Volver en menú servicio."
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "Módulo para mostar un vínculo para imprimir en el menú de servicio."
+msgid "Module to show the Link menu item in service menu."
+msgstr "Módulo para mostrar el enlace al menú elemento en menú servicio."
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "Módulo para mostar un vínculo para imprimir en el menú de SLA."
+msgid "Module to show the Print menu item in SLA menu."
+msgstr "Módulo para mostrar el elemento de menú Imprimir en el menú SLA."
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "Módulo para mostar el vínculo \"Vincular\" en el menú de servicio."
+msgid "Module to show the Print menu item in service menu."
+msgstr "Módulo para mostrar el elemento de menún Imprimir en el menú servicio."
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
