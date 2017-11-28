@@ -76,10 +76,6 @@ sub Data {
         'Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya uga wa ITSM uliiongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya maamuzi ya kiolesura cha wakala.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Inafafanua aina ya chaguo msingi ya kidokezo katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Inaelezea aina ya chaguo msingi ya kidokezo katika skrini ya maamuzi ya kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Inaelezea maoni ya historia kwa ajili ya kitendo cha skrini ya uga wa ITSM ulioongezwa, ambacho kinatumika kwa ajili ya historia ya tiketi.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa kiwango cha ufumbuzi cha ngazi ya kwanza ya tiketi ya ITSM.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa ufumbuzi wa tiketi ya ITSM';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya maamuzi ya kiolesura cha wakala.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         'Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha wakala.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Inabainisha aina za vidokezo mbalimbali ambavyo vitatumika katika mfumo.';
     $Self->{Translation}->{'Ticket decision.'} = '';
 
 

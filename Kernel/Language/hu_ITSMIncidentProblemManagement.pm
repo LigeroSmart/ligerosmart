@@ -76,10 +76,6 @@ sub Data {
         'Meghatározza az alapértelmezett jegy prioritást az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Meghatározza az alapértelmezett jegyprioritást az ügyintézői felület döntési képernyőjén.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Meghatározza a jegyzet alapértelmezett típusát az ügyintézői felület további ITSM mező képernyőjén.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Meghatározza a jegyzet alapértelmezett típusát az ügyintézői felület döntési képernyőjén.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Azt az előzmény megjegyzést határozza meg a további ITSM mező képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'Engedélyezi a statisztikák modult az ITSM jegy első szintű megoldási arányának átlagával kapcsolatos statisztikák előállításához.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Engedélyezi a statisztikák modult az ITSM jegy megoldásának átlagával kapcsolatos statisztikák előállításához.';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület döntési képernyőjén.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         'Megjeleníti a címmezőket az ügyintézői felület további ITSM mező képernyőjén.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Megjeleníti a címmezőket az ügyintézői felület döntési képernyőjén.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Megadja a különböző jegyzettípusokat, amelyek a rendszeren használva lesznek.';
     $Self->{Translation}->{'Ticket decision.'} = 'Jegydöntés.';
 
 

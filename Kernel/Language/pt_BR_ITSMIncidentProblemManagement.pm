@@ -76,10 +76,6 @@ sub Data {
         'Define a prioridade padrão de chamado na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Define a prioridade padrão de chamado na tela de decisão da interface de atendente.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Define o tipo padrão de uma nota na tela de campos adicionais ITSM da interface de atendente.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Define o tipo padrão de uma nota na tela de decisão da interface de atendente.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Define o comentário de histórico para a ação de campos adicionais ITSM, que é usado no histórico do chamado.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de chamados ITSM no primeiro nível de solução.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de chamados ITSM no primeiro nível de solução.';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'Se uma nota é adicionada por um atendente, define o estado de um chamado na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Se uma nota é adicionada por um atendente, define o estado de um chamado na tela de decisão da interface dd atendente.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         'Mostra os campos de título na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Mostra os campos de título na tela de decisão da interface de atendente.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
     $Self->{Translation}->{'Ticket decision.'} = 'Decisão de Chamado.';
 
 

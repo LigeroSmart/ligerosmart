@@ -76,10 +76,6 @@ sub Data {
         'กำหนดลำดับความสำคัญเริ่มต้นของตั๋วในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'กำหนดลำดับความสำคัญเริ่มต้นของตั๋วในหน้าจอการตัดสินใจในอินเตอร์เฟซของเอเย่นต์';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'กำหนดประเภทเริ่มต้นของโน้ตในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'กำหนดประเภทเริ่มต้นของโน้ตในหน้าจอการตัดสินใจในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'กำหนดประวัติการแสดงความเห็นสำหรับการกระทำในหน้าจอฟิลด์เพิ่มเติมของ ITSM ซึ่งทำให้เกิดความคุ้นเคยในประวัติของตั๋ว';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'เปิดใช้งานสถานภาพของโมดูลเพื่อสร้างสถิติเกี่ยวกับค่าเฉลี่ยการแก้ปัญหาขั้นแรกของตั๋ว ITSM ';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'เปิดใช้งานสถานภาพของโมดูลเพื่อสร้างสถิติเกี่ยวกับค่าเฉลี่ยของการแก้ปัญหาตั๋ว ITSM ';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'เซตสถานภาพของตั๋วในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์หากเอเย่นต์ได้เพิ่มโน้ต';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'เซตสถานภาพของตั๋วในหน้าจอการตัดสินใจนอินเตอร์เฟซของเอเย่นต์หากเอเย่นต์ได้เพิ่มโน้ต';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         'แสดงหัวข้อฟิลด์ในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'แสดงหัวข้อฟิลด์ในหน้าจอการตัดสิดใจในอินเตอร์เฟซของเอเย่นต์';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
     $Self->{Translation}->{'Ticket decision.'} = '';
 
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"PO-Revision-Date: 2017-11-15 14:59+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -423,7 +423,7 @@ msgstr "Zeigt den Ticket-Titel in der Entscheidungs-Oberfläche für Tickets im 
 
 #. SysConfig
 msgid "Specifies the different note types that will be used in the system."
-msgstr ""
+msgstr "Gibt die verschiedenen Notiztypen an, die im System verwendet werden."
 
 #. SysConfig
 msgid "Ticket decision."

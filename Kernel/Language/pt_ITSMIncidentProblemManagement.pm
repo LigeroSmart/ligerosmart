@@ -76,10 +76,6 @@ sub Data {
         'Define a Prioridade por omissão de ticket no formulário de campos adicionais ITSM da interface de agente.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Define a Prioridade por omissão de ticket no formulário de decisão da interface de agente.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Define o tipo por omissão de uma nota no formulário de campos adicionais ITSM da interface de agente.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Define o tipo por omissão de uma nota no formulário de decisão da interface de agente.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Define o comentário de histórico para a ação de campos adicionais ITSM, utilizado no histórico do ticket.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de tickets ITSM no primeiro nível de solução.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de tickets ITSM no primeiro nível de solução.';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'Se uma nota é adicionada por um agente, define o estado do ticket no formulário de campos adicionais ITSM da interface de agente.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Se uma nota é adicionada por um agente, define o estado do ticket no formulário de decisão da interface de agente.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -114,13 +108,13 @@ sub Data {
         'Permissões necessárias para utilizar o formulário de campos adicionais ITSM do agente.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Permissões necessárias para utilizar o formulário de decisão do agente.';
-    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = 'Estado de Incidente de Serviço e Cálculo de Prioridade';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Define o serviço adicional ao formulário de campos adicionais ITSM de interface do agente (ticket::Serviço necessita de estar ativo).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Define o serviço do formulário de decisão do agente (ticket::Serviço necessita de estar ativo).';
     $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
-        '';
+        'Define o serviço no ecran de prioridade do ticket, no detalhe de ticket no interface de agente (Ticket::Service necessita de ser ativado).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Define o proprietário do ticket do formulário de campos adicionais ITSM do agente.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -134,7 +128,7 @@ sub Data {
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Define o tipo de ticket do formulário de decisão do agente (ticket::Tipo necessita de estar ativo).';
     $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
-        '';
+        'Define o tipo de ticket no ecran de prioridade de ticket do detalhe de um ticket no interface de agente (Ticket::Type necessita de ser ativado).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Mostra um link no menu para alterar a decisão de um ticket na vista de detalhes do agente.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =
@@ -155,8 +149,6 @@ sub Data {
         'Mostra os campos de título no formulário de campos adicionais ITSM do agente.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Mostra os campos de título no formulário de decisão do agente.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Especifica os diferentes tipos de notas que serão utilizados no sistema.';
     $Self->{Translation}->{'Ticket decision.'} = 'Decisão de ticket.';
 
 

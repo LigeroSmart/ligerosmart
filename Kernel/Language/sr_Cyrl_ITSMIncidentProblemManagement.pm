@@ -76,10 +76,6 @@ sub Data {
         'Одређује подразумевани приоритет тикета, на екрану додатних ITSM поља у интерфејсу оператера.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Одређује подразумевани приоритет тикета на екрану одлуке у интерфејсу оператера.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Одређује подразумевани тип напомене, на екрану додатних ITSM поља у интерфејсу оператера.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Одређује подразумевани тип напомене на екрану одлуке у интерфејсу оператера.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Одређује коментар за историјат за акцију на екрану додатних ITSM поља које ће се користити за историјат тикета.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'Активира статистички модул за генерисање статистике о просеку решавања ITSM тикета на првом нивоу.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Активира статистички модул за генерисање статистике о просеку решавања ITSM тикета.';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'Ако је оператер додао напомену, подешава статус тикета на екрану додатних ITSM поља у интерфејсу оператера.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Ако је оператер додао напомену, подешава статус тикета на екрану одлуке у интерфејсу оператера.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         'Приказује поља наслова на екрану додатних ITSM поља у интерфејсу оператера.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Приказује поља наслова на екрану одлуке у интерфејсу оператера.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Одређује различите типове напомена који ће се користити у систему.';
     $Self->{Translation}->{'Ticket decision.'} = 'Одлука тикета.';
 
 

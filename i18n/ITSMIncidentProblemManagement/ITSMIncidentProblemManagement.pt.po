@@ -1,13 +1,14 @@
 # 
 # Translators:
+# Joao Ferro <fmthard@gmail.com>, 2017
 # José Anjos <jose.anjos@regiaodeaveiro.pt>, 2017
 # Paulo Rafael <paulo.rafael@isjd.pt>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-11-27 00:53+0000\n"
+"Last-Translator: Joao Ferro <fmthard@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -299,7 +300,7 @@ msgstr "Permissões necessárias para utilizar o formulário de decisão do agen
 
 #. SysConfig
 msgid "Service Incident State and Priority Calculation"
-msgstr ""
+msgstr "Estado de Incidente de Serviço e Cálculo de Prioridade"
 
 #. SysConfig
 msgid ""
@@ -317,7 +318,7 @@ msgstr "Define o serviço do formulário de decisão do agente (ticket::Serviço
 msgid ""
 "Sets the service in the ticket priority screen of a zoomed ticket in the "
 "agent interface (Ticket::Service needs to be activated)."
-msgstr ""
+msgstr "Define o serviço no ecran de prioridade do ticket, no detalhe de ticket no interface de agente (Ticket::Service necessita de ser ativado)."
 
 #. SysConfig
 msgid ""
@@ -356,7 +357,7 @@ msgstr "Define o tipo de ticket do formulário de decisão do agente (ticket::Ti
 msgid ""
 "Sets the ticket type in the ticket priority screen of a zoomed ticket in the"
 " agent interface (Ticket::Type needs to be activated)."
-msgstr ""
+msgstr "Define o tipo de ticket no ecran de prioridade de ticket do detalhe de um ticket no interface de agente (Ticket::Type necessita de ser ativado)."
 
 #. SysConfig
 msgid ""

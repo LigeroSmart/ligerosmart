@@ -76,10 +76,6 @@ sub Data {
         'Mentakrifkan keutamaan tiket default di skrin medan ITSM tambahan antara muka ejen.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Mentakrifkan keutamaan tiket default di skrin keputusan antara muka agen.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Menentukan jenis default nota di skrin medan ITSM tambahan antara muka ejen.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Mentakrifkan jenis default nota dalam skrin keputusan antara muka agen.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Menentukan komen sejarah untuk medan skrin tindakan ITSM tambahan,  yang dapat digunakan untuk sejarah tiket.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         'Membolehkan modul statistik untuk menjana statistik tentang purata tiket ITSM peringkat pertama kadar penyelesaian.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Membolehkan modul statistik untuk menjana statistik tentang purata penyelesaian tiket ITSM.';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        'Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin keputusan bagi antara muka ejen.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         'Menunjukkan bidang tajuk dalam skrin bidang ITSM tambahan bagi antara muka ejen.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Menunjukkan bidang tajuk dalam skrin keputusan bagi antara muka ejen.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Tentukan jenis nota berbeza yang akan digunakan dalam sistem.';
     $Self->{Translation}->{'Ticket decision.'} = 'keputusan tiket';
 
 

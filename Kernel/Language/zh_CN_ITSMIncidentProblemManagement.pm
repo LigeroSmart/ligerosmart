@@ -76,10 +76,6 @@ sub Data {
         '定义服务人员界面在工单额外的ITSM字段窗口默认的工单优先级。';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         '定义服务人员界面在工单决定窗口默认的工单优先级。';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        '定义服务人员界面在工单额外的ITSM字段窗口默认的备注类型。';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        '定义服务人员界面在工单决定窗口默认的备注类型。';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         '定义工单额外的ITSM字段窗口操作的历史注释，用于工单历史。';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -102,8 +98,6 @@ sub Data {
         '使统计模块能够生成ITSM工单一线平均解决率的统计数据。';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         '使统计模块能够生成ITSM工单平均解决率的统计数据。';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
-        '在服务人员界面额外的ITSM字段窗口，如果服务人员添加了一个备注，设置工单的状态。';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         '在服务人员界面工单决定窗口，如果服务人员添加了一个备注，设置工单的状态。';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
@@ -155,8 +149,6 @@ sub Data {
         '在服务人员界面工单额外的ITSM字段窗口显示工单标题字段。';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '在服务人员界面工单决定窗口显示工单标题字段。';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '指定将在系统中使用的不同备注类型。';
     $Self->{Translation}->{'Ticket decision.'} = '工单决定。';
 
 

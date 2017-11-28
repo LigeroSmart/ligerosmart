@@ -24,16 +24,16 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Połącz zgłoszenie';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = 'Zmień decyzję %s%s%s';
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Wymagany przegląd';
     $Self->{Translation}->{'Decision Result'} = 'Rezultat decyzji';
     $Self->{Translation}->{'Approved'} = 'Zatwierdzone';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = 'Odłożone';
+    $Self->{Translation}->{'Pre-approved'} = 'Wstępnie zatwierdzone';
+    $Self->{Translation}->{'Rejected'} = 'Odrzucone';
     $Self->{Translation}->{'Repair Start Time'} = 'Czas rozpoczęcia naprawy';
     $Self->{Translation}->{'Recovery Start Time'} = 'Czas rozpoczęcia odzyskiwania';
     $Self->{Translation}->{'Decision Date'} = 'Data decyzji';
@@ -76,10 +76,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        '';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        '';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         '';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -101,8 +97,6 @@ sub Data {
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
-        '';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         '';
@@ -155,8 +149,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Wskazuje różne rodzaje notatek które będą używane w systemie.';
     $Self->{Translation}->{'Ticket decision.'} = '';
 
 

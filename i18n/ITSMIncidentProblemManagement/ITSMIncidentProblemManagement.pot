@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2017-11-28 11:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,14 +155,6 @@ msgid "Defines the default ticket priority in the decision screen of the agent i
 msgstr ""
 
 #. SysConfig
-msgid "Defines the default type of the note in the additional ITSM field screen of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default type of the note in the decision screen of the agent interface."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the history comment for the additional ITSM field screen action, which gets used for ticket history."
 msgstr ""
 
@@ -204,10 +196,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Enables the stats module to generate statistics about the average of ITSM ticket solution."
-msgstr ""
-
-#. SysConfig
-msgid "If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -312,10 +300,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
 msgstr ""
 
 #. SysConfig

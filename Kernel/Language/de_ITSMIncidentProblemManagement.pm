@@ -76,10 +76,6 @@ sub Data {
         'Definiert die Standard-Priorität in der zusätzliche ITSM Felder-Oberfläche im Agenten-Interface.';
     $Self->{Translation}->{'Defines the default ticket priority in the decision screen of the agent interface.'} =
         'Definiert die Standard-Priorität in der Entscheidungs-Oberfläche im Agenten-Interface.';
-    $Self->{Translation}->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} =
-        'Definiert den Standard-Typ einer Notiz in der zusätzliche ITSM Felder-Oberfläche im Agenten-Interface.';
-    $Self->{Translation}->{'Defines the default type of the note in the decision screen of the agent interface.'} =
-        'Definiert den Standard-Typ einer Notiz in der Entscheidungs-Oberfläche im Agenten-Interface.';
     $Self->{Translation}->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} =
         'Steuert den Historien-Kommentar für die Aktionen in der Oberfläche zusätzliche ITSM-Felder im Agentenbereich.';
     $Self->{Translation}->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} =
@@ -101,8 +97,6 @@ sub Data {
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
-        '';
-    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         '';
@@ -155,8 +149,6 @@ sub Data {
         'Zeigt den Ticket-Titel in der zusätzliche ITSM-Felder-Oberfläche für Tickets im Agentenbereich.';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         'Zeigt den Ticket-Titel in der Entscheidungs-Oberfläche für Tickets im Agentenbereich.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
     $Self->{Translation}->{'Ticket decision.'} = '';
 
 
