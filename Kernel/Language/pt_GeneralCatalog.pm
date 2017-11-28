@@ -20,21 +20,21 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Gestão do Catálogo Geral';
-    $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
-    $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
+    $Self->{Translation}->{'Items in Class'} = 'Items na Classe';
+    $Self->{Translation}->{'Edit Item'} = 'Editar Item';
+    $Self->{Translation}->{'Add Class'} = 'Adicionar Classe';
+    $Self->{Translation}->{'Add Item'} = 'Adicionar Item';
     $Self->{Translation}->{'Add Catalog Item'} = 'Adicionar Item ao Catálogo';
     $Self->{Translation}->{'Add Catalog Class'} = 'Adicionar Classe ao Catálogo';
     $Self->{Translation}->{'Catalog Class'} = 'Classe do Catálogo';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Editar Item do Catálogo';
 
     # SysConfig
-    $Self->{Translation}->{'Comment 2'} = '';
+    $Self->{Translation}->{'Comment 2'} = 'Comentário 2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Criar e gerir o Catálogo Geral.';
-    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = '';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Definir o Catálogo Geral comentário 2.';
+    $Self->{Translation}->{'Define the group with permissions.'} = 'Definir o grupo com permissões.';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Definir o URL para o caminho do JS Color Picker';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Módulo de registo da interface para a configuração AdminGeneralCatalog na área administrativa.';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo Geral';

@@ -27,14 +27,14 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Añadir artículo del catálogo';
     $Self->{Translation}->{'Add Catalog Class'} = 'Añadir clase del catálogo';
     $Self->{Translation}->{'Catalog Class'} = 'Catálogo de clases';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Editar artículo del catálogo';
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crear y administrar el Catálogo General';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = '';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Define the group with permissions.'} = 'Define el grupo con permisos.';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Define la URL para el Selector de Color JS. ';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Registro del módulo de Frontend para la administración del catálogo general en el área de administración';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo General';

@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Создание и управление Общим каталогом';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
     $Self->{Translation}->{'Define the group with permissions.'} = 'Определите группу с разрешениями.';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Задает путь URL JS Color Picker.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Module registration для конфигурации AdminGeneralCatalog в панели администратора.';
     $Self->{Translation}->{'General Catalog'} = 'Общий каталог';

@@ -20,19 +20,19 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = '目录管理';
-    $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
-    $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
+    $Self->{Translation}->{'Items in Class'} = '以下条目属于类：';
+    $Self->{Translation}->{'Edit Item'} = '编辑条目';
+    $Self->{Translation}->{'Add Class'} = '添加类';
+    $Self->{Translation}->{'Add Item'} = '添加条目';
     $Self->{Translation}->{'Add Catalog Item'} = '添加目录项目';
     $Self->{Translation}->{'Add Catalog Class'} = '添加新目录类';
     $Self->{Translation}->{'Catalog Class'} = '目录类';
     $Self->{Translation}->{'Edit Catalog Item'} = '编辑目录项目';
 
     # SysConfig
-    $Self->{Translation}->{'Comment 2'} = '';
+    $Self->{Translation}->{'Comment 2'} = '注释2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录';
-    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = '定义通用目录注释2。';
     $Self->{Translation}->{'Define the group with permissions.'} = '定义有权限的组。';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '定义JS颜色选择器的路径URL。';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =

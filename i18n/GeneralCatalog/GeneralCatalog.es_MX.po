@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2017
 # Ivan Miron <ivan.miron@gmail.com>, 2015
 # Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:45+0000\n"
-"PO-Revision-Date: 2017-10-10 13:46+0000\n"
+"POT-Creation-Date: 2017-11-15 14:08+0000\n"
+"PO-Revision-Date: 2017-11-15 14:08+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +25,22 @@ msgid "General Catalog Management"
 msgstr "Administración del Catálogo General"
 
 #. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
 msgstr "Añadir artículo del catálogo"
 
@@ -37,6 +54,10 @@ msgstr "Catálogo de clases"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
+msgstr "Editar artículo del catálogo"
+
+#. SysConfig
+msgid "Comment 2"
 msgstr ""
 
 #. SysConfig
@@ -44,12 +65,16 @@ msgid "Create and manage the General Catalog."
 msgstr "Crear y administrar el Catálogo General"
 
 #. SysConfig
-msgid "Define the group with permissions."
+msgid "Define the general catalog comment 2."
 msgstr ""
 
 #. SysConfig
+msgid "Define the group with permissions."
+msgstr "Define el grupo con permisos."
+
+#. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
+msgstr "Define la URL para el Selector de Color JS. "
 
 #. SysConfig
 msgid ""

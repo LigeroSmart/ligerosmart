@@ -3,12 +3,12 @@
 # Anatoly A <aaksinenko@gmail.com>, 2017
 # Ilya Ko <mchammer@inbox.ru>, 2017
 # Rasim Kalimullin <neutrino.vm@gmail.com>, 2017
-# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015
+# Yuri Kolesniov <ynkolesnikov@gmail.com>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:45+0000\n"
-"PO-Revision-Date: 2017-10-10 13:46+0000\n"
+"POT-Creation-Date: 2017-11-15 14:08+0000\n"
+"PO-Revision-Date: 2017-11-15 14:08+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,22 @@ msgstr "Функциональность"
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
 msgstr "Управление Общим каталогом"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -42,8 +58,16 @@ msgid "Edit Catalog Item"
 msgstr "Правка элемента каталога"
 
 #. SysConfig
+msgid "Comment 2"
+msgstr ""
+
+#. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Создание и управление Общим каталогом"
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr ""
 
 #. SysConfig
 msgid "Define the group with permissions."
@@ -51,7 +75,7 @@ msgstr "Определите группу с разрешениями."
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
+msgstr "Задает путь URL JS Color Picker."
 
 #. SysConfig
 msgid ""

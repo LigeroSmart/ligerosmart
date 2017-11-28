@@ -2,11 +2,12 @@
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016
 # Kentaro Hori <kentaro0919@gmail.com>, 2014
+# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:45+0000\n"
-"PO-Revision-Date: 2017-10-10 13:46+0000\n"
+"POT-Creation-Date: 2017-11-15 14:08+0000\n"
+"PO-Revision-Date: 2017-11-15 14:08+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +22,23 @@ msgstr "機能性"
 
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
-msgstr "一般カタログ管理"
+msgstr "ジェネラル・カタログ管理"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -37,19 +54,27 @@ msgstr "カタログクラス"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
+msgstr "カタログ・アイテムを修正"
+
+#. SysConfig
+msgid "Comment 2"
 msgstr ""
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "一般カタログの作成と管理"
+msgstr "ジャネラル・カタログの作成と管理"
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr ""
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr ""
+msgstr "権限を持つグループを定義します。"
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
+msgstr "URL JS カラーピッカーのパスを定義します。"
 
 #. SysConfig
 msgid ""
@@ -59,15 +84,15 @@ msgstr "管理エリアでのAdminGeneralCatalogのフロントエンドモジ�
 
 #. SysConfig
 msgid "General Catalog"
-msgstr "一般カタログ"
+msgstr "ジェネラル・カタログ"
 
 #. SysConfig
 msgid ""
 "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "一般カタログ属性のコメント例 2　の設定値"
+msgstr "ジェネラル・カタログ属性のコメント例 2　の設定値"
 
 #. SysConfig
 msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
-msgstr "一般カタログ属性のパーミッショングループ　の設定値"
+msgstr "ジェネラル・カタログ属性の権限グループ　の設定値"

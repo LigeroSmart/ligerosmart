@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:45+0000\n"
-"PO-Revision-Date: 2017-10-10 13:46+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2017-11-15 14:08+0000\n"
+"PO-Revision-Date: 2017-11-23 15:13+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +23,22 @@ msgstr "Функционалност"
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
 msgstr "Управљање Општим каталогом"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr "Ставке у класи"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Уреди ставку"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr "Додај класу"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Додај ставку"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -41,12 +57,20 @@ msgid "Edit Catalog Item"
 msgstr "Уреди ставку каталога"
 
 #. SysConfig
+msgid "Comment 2"
+msgstr "Коментар 2"
+
+#. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "Креирање и управљање Општим каталогом."
+msgstr "Креирање и управљање општим каталогом."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr "Дефинише коментар 2 у општем каталогу."
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr "Дефинише групе са дозволама."
+msgstr "Дефинише групу са дозволама."
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
@@ -56,7 +80,7 @@ msgstr "Дефинише URL путању за JS Color Picker."
 msgid ""
 "Frontend module registration for the AdminGeneralCatalog configuration in "
 "the admin area."
-msgstr "Регистрација \"Frontend\" модула за конфигурацију Администрације општег каталога у простору администратора."
+msgstr "Регистрација приступног модула за AdminGeneralCatalog у интерфејсу администратора."
 
 #. SysConfig
 msgid "General Catalog"

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:45+0000\n"
-"PO-Revision-Date: 2017-10-10 13:46+0000\n"
+"POT-Creation-Date: 2017-11-15 14:08+0000\n"
+"PO-Revision-Date: 2017-11-15 14:08+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Croatian (http://www.transifex.com/otrs/OTRS/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,22 @@ msgstr "Funcionalnost"
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
 msgstr "Opće postavke Kataloga"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -40,8 +56,16 @@ msgid "Edit Catalog Item"
 msgstr ""
 
 #. SysConfig
+msgid "Comment 2"
+msgstr ""
+
+#. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Napravi i podesi Opći katalog."
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr ""
 
 #. SysConfig
 msgid "Define the group with permissions."

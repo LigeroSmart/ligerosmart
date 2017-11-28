@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:46+0000\n"
-"PO-Revision-Date: 2017-11-05 21:58+0000\n"
+"POT-Creation-Date: 2017-11-15 14:08+0000\n"
+"PO-Revision-Date: 2017-11-16 08:30+0000\n"
 "Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,22 @@ msgstr "Funcionalidad"
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
 msgstr "Gestión del Catálogo General"
+
+#. Template: AdminGeneralCatalog
+msgid "Items in Class"
+msgstr "Items en Clase"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Editar elemento"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Class"
+msgstr "Añadir Clase"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Añadir elemento"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -43,8 +59,16 @@ msgid "Edit Catalog Item"
 msgstr "Editar Elemento del Catálogo"
 
 #. SysConfig
+msgid "Comment 2"
+msgstr "Comentario 2"
+
+#. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Crea y gestiona el Catálogo General"
+
+#. SysConfig
+msgid "Define the general catalog comment 2."
+msgstr "Definir el comentario 2 del catálogo general."
 
 #. SysConfig
 msgid "Define the group with permissions."

@@ -27,11 +27,11 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Tilføj katalog post';
     $Self->{Translation}->{'Add Catalog Class'} = 'Tilføj Katalog klasse';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog Klasse';
-    $Self->{Translation}->{'Edit Catalog Item'} = '';
+    $Self->{Translation}->{'Edit Catalog Item'} = 'Rediger enhed i kataloget';
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = '';
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Opret og håndter standard kataloget';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
     $Self->{Translation}->{'Define the group with permissions.'} = '';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
