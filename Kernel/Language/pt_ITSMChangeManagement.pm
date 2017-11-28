@@ -40,11 +40,11 @@ sub Data {
     $Self->{Translation}->{'Please select a state!'} = 'Por favor selecione um estado!';
     $Self->{Translation}->{'Please select a next state!'} = 'Por favor, escolha o próximo estado!';
     $Self->{Translation}->{'Edit a state transition for'} = 'Editar uma transição de estado para';
-    $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Você quer mesmo Apagar esta transição de estado?';
+    $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Você quer mesmo apagar esta transição de estado?';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Adicionar Alteração';
-    $Self->{Translation}->{'ITSM Change'} = 'Alteração';
+    $Self->{Translation}->{'ITSM Change'} = 'Alteração ITSM';
     $Self->{Translation}->{'Justification'} = 'Justificação';
     $Self->{Translation}->{'Input invalid.'} = 'Entrada inválida.';
     $Self->{Translation}->{'Impact'} = 'Impacto';
@@ -58,7 +58,7 @@ sub Data {
 
     # Template: AgentITSMChangeCABTemplate
     $Self->{Translation}->{'Save Change CAB as template'} = 'Guardar CAB da Alteração como modelo';
-    $Self->{Translation}->{'go to involved persons screen'} = 'ir para o ecrãn "Pessoas Envolvidas"';
+    $Self->{Translation}->{'go to involved persons screen'} = 'ir para o ecrã "Pessoas Envolvidas"';
     $Self->{Translation}->{'Invalid Name'} = 'Nome inválido';
 
     # Template: AgentITSMChangeCondition

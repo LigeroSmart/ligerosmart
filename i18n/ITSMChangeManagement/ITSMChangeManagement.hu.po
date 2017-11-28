@@ -1,12 +1,12 @@
-#
+# 
 # Translators:
 # Balázs Úr <urbalazs@gmail.com>, 2014-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:59+0000\n"
-"PO-Revision-Date: 2017-09-29 15:00+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-11-16 14:26+0000\n"
+"PO-Revision-Date: 2017-11-21 09:42+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1077,10 +1077,6 @@ msgid "WorkOrder \"%s\" not found in the database!"
 msgstr "A(z) „%s” munkamegrendelés nem található az adatbázisban!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
-msgid "WorkOrderHistory::"
-msgstr "WorkOrderHistory::"
-
-#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrder History"
 msgstr "Munkamegrendelés-előzmények"
 
@@ -1127,6 +1123,186 @@ msgstr "Saját változások"
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr "Saját munkamegrendelések"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Action (ID=%s)"
+msgstr "Új művelet (azonosító = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) deleted"
+msgstr "Művelet (azonosító = %s) törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Actions of Condition (ID=%s) deleted"
+msgstr "A feltétel (azonosító = %s) összes művelete törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) executed: %s"
+msgstr "Művelet (azonosító = %s) végrehajtva: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Action ID=%s): (new=%s, old=%s)"
+msgstr "%s (művelet-azonosító = %s): (új = %s, régi = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual end time."
+msgstr "A változás (azonosító = %s) elérte a tényleges befejezési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual start time."
+msgstr "A változás (azonosító = %s) elérte a tényleges kezdési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Change (ID=%s)"
+msgstr "Új változás (azonosító = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment: %s"
+msgstr "Új melléklet: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment %s"
+msgstr "Melléklet törölve: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "CAB Deleted %s"
+msgstr "CAB törölve: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: (new=%s, old=%s)"
+msgstr "%s: (új = %s, régi = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) added"
+msgstr "Kapcsolat ehhez: %s (azonosító = %s) hozzáadva"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) deleted"
+msgstr "Kapcsolat ehhez: %s (azonosító = %s) törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Notification sent to %s (Event: %s)"
+msgstr "Értesítés elküldve ide: %s (esemény: %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned end time."
+msgstr "A változás (azonosító = %s) elérte a tervezett befejezési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned start time."
+msgstr "A változás (azonosító = %s) elérte a tervezett kezdési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached requested time."
+msgstr "A változás (azonosító = %s) elérte a kért időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Condition (ID=%s)"
+msgstr "Új feltétel (azonosító = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Condition (ID=%s) deleted"
+msgstr "Feltétel (azonosító = %s) törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Conditions of Change (ID=%s) deleted"
+msgstr "A változás (azonosító = %s) összes feltétele törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Condition ID=%s): (new=%s, old=%s)"
+msgstr "%s (feltétel-azonosító = %s): (új = %s, régi = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Expression (ID=%s)"
+msgstr "Új kifejezés (azonosító = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Expression (ID=%s) deleted"
+msgstr "Kifejezés (azonosító = %s) törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Expressions of Condition (ID=%s) deleted"
+msgstr "A feltétel (azonosító = %s) összes kifejezése törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Expression ID=%s): (new=%s, old=%s)"
+msgstr "%s (kifejezés-azonosító = %s): (új = %s, régi = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual end time."
+msgstr "A munkamegrendelés (azonosító = %s) elérte a tényleges befejezési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual start time."
+msgstr "A munkamegrendelés (azonosító = %s) elérte a tényleges kezdési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Workorder (ID=%s)"
+msgstr "Új munkamegrendelés (azonosító = %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment for WorkOrder: %s"
+msgstr "Új melléklet a munkamegrendeléshez: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Attachment for WorkOrder: %s"
+msgstr "(azonosító = %s) Új melléklet a munkamegrendeléshez: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment from WorkOrder: %s"
+msgstr "Melléklet törölve a munkamegrendelésből: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Attachment from WorkOrder: %s"
+msgstr "(azonosító = %s) Melléklet törölve a munkamegrendelésből: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Report Attachment for WorkOrder: %s"
+msgstr "Új jelentésmelléklet a munkamegrendeléshez: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Report Attachment for WorkOrder: %s"
+msgstr "(azonosító = %s) Új jelentésmelléklet a munkamegrendeléshez: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Report Attachment from WorkOrder: %s"
+msgstr "Jelentésmelléklet törölve a munkamegrendelésből: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
+msgstr "(azonosító = %s) Jelentésmelléklet törölve a munkamegrendelésből: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) deleted"
+msgstr "Munkamegrendelés (azonosító = %s) törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) added"
+msgstr "(azonosító = %s) Kapcsolat ehhez: %s (azonosító = %s) hozzáadva"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) deleted"
+msgstr "(azonosító = %s) Kapcsolat ehhez: %s (azonosító = %s) törölve"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Notification sent to %s (Event: %s)"
+msgstr "(azonosító = %s) Értesítés elküldve ide: %s (esemény: %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned end time."
+msgstr "A munkamegrendelés (azonosító = %s) elérte a tervezett befejezési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned start time."
+msgstr "A munkamegrendelés (azonosító = %s) elérte a tervezett kezdési időt."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) %s: (new=%s, old=%s)"
+msgstr "(azonosító = %s) %s: (új = %s, régi = %s)"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
@@ -1371,6 +1547,10 @@ msgstr "Változtatási ütemterv"
 #. SysConfig
 msgid "Change Schedule."
 msgstr "Változtatási ütemterv."
+
+#. SysConfig
+msgid "Change Settings"
+msgstr "Változtatási beállítások"
 
 #. SysConfig
 msgid "Change Zoom"
@@ -2111,12 +2291,12 @@ msgid "ITSM Change Condition Overview."
 msgstr "ITSM változásfeltétel áttekintés."
 
 #. SysConfig
-msgid "ITSM Change Management Notifications"
-msgstr "ITSM változásmenedzsment értesítések"
-
-#. SysConfig
 msgid "ITSM Change Manager Overview."
 msgstr "ITSM változásmenedzser áttekintés."
+
+#. SysConfig
+msgid "ITSM Change Notifications"
+msgstr "ITSM változás értesítések"
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."

@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 # Dusan Vuckovic, 2016-2017
 # Jaroslav Balaz <balazj315@gmail.com>, 2017
@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:59+0000\n"
-"PO-Revision-Date: 2017-09-29 15:00+0000\n"
+"POT-Creation-Date: 2017-11-16 14:26+0000\n"
+"PO-Revision-Date: 2017-11-23 15:14+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -1079,10 +1079,6 @@ msgid "WorkOrder \"%s\" not found in the database!"
 msgstr "Радни налог \"%s\" није нађен у бази података!"
 
 #. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
-msgid "WorkOrderHistory::"
-msgstr "WorkOrderHistory::"
-
-#. Perl Module: Kernel/Modules/AgentITSMWorkOrderHistory.pm
 msgid "WorkOrder History"
 msgstr "Историјат радног налога"
 
@@ -1129,6 +1125,186 @@ msgstr "Моје промене"
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr "Моји радни налози"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Action (ID=%s)"
+msgstr "Нова акција (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) deleted"
+msgstr "Обрисана акција (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Actions of Condition (ID=%s) deleted"
+msgstr "Обрисане све акције услова (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Action (ID=%s) executed: %s"
+msgstr "Извршена акција (ID=%s): %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Action ID=%s): (new=%s, old=%s)"
+msgstr "%s (акција ID=%s): (ново=%s, старо=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual end time."
+msgstr "Промена (ID=%s) је достигла стварно време завршетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached actual start time."
+msgstr "Промена (ID=%s) је достигла стварно време почетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Change (ID=%s)"
+msgstr "Нова промена (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment: %s"
+msgstr "Нов прилог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment %s"
+msgstr "Обрисан прилог %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "CAB Deleted %s"
+msgstr "Обрисан CAB %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s: (new=%s, old=%s)"
+msgstr "%s: (ново=%s, старо=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) added"
+msgstr "Повезано са %s (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Link to %s (ID=%s) deleted"
+msgstr "Обрисана веза са %s (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Notification sent to %s (Event: %s)"
+msgstr "Послато обавештење %s (догађај: %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned end time."
+msgstr "Промена (ID=%s) је достигла планирано време завршетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached planned start time."
+msgstr "Промена (ID=%s) је достигла планирано време почетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Change (ID=%s) reached requested time."
+msgstr "Промена (ID=%s) је достигла тражено време."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Condition (ID=%s)"
+msgstr "Нов услов (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Condition (ID=%s) deleted"
+msgstr "Обрисан услов (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Conditions of Change (ID=%s) deleted"
+msgstr "Обрисани сви услови промене (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Condition ID=%s): (new=%s, old=%s)"
+msgstr "%s (услов ID=%s): (ново=%s, старо=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Expression (ID=%s)"
+msgstr "Нов израз (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Expression (ID=%s) deleted"
+msgstr "Обрисан израз (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "All Expressions of Condition (ID=%s) deleted"
+msgstr "Обрисани сви изрази услова (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "%s (Expression ID=%s): (new=%s, old=%s)"
+msgstr "%s (израз ID=%s): (ново=%s, старо=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual end time."
+msgstr "Радни налог (ID=%s) је достигао стварно време завршетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached actual start time."
+msgstr "Радни налог (ID=%s) је достигао стварно време почетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Workorder (ID=%s)"
+msgstr "Нови радни налог (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Attachment for WorkOrder: %s"
+msgstr "Нов прилог за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Attachment for WorkOrder: %s"
+msgstr "(ID=%s) Нов прилог за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Attachment from WorkOrder: %s"
+msgstr "Обрисан прилог за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Attachment from WorkOrder: %s"
+msgstr "(ID=%s) Обрисан прилог за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "New Report Attachment for WorkOrder: %s"
+msgstr "Нов прилог извештаја за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) New Report Attachment for WorkOrder: %s"
+msgstr "(ID=%s) Нов прилог извештаја за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Deleted Report Attachment from WorkOrder: %s"
+msgstr "Обрисан прилог извештаја за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
+msgstr "(ID=%s) Обрисан прилог извештаја за радни налог: %s"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) deleted"
+msgstr "Обрисан радни налог (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) added"
+msgstr "(ID=%s) Повезано са %s (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Link to %s (ID=%s) deleted"
+msgstr "(ID=%s) Обрисана веза са %s (ID=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) Notification sent to %s (Event: %s)"
+msgstr "(ID=%s) Послато обавештење %s (догађај: %s)"
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned end time."
+msgstr "Радни налог (ID=%s) је достигао планирано време завршетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "Workorder (ID=%s) reached planned start time."
+msgstr "Радни налог (ID=%s) је достигао планирано време почетка."
+
+#. Perl Module: Kernel/System/ITSMChange/History.pm
+msgid "(ID=%s) %s: (new=%s, old=%s)"
+msgstr "(ID=%s) %s: (ново=%s, старо=%s)"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
@@ -1373,6 +1549,10 @@ msgstr "Планер промена"
 #. SysConfig
 msgid "Change Schedule."
 msgstr "Планер промена."
+
+#. SysConfig
+msgid "Change Settings"
+msgstr "Промени подешавања"
 
 #. SysConfig
 msgid "Change Zoom"
@@ -2113,12 +2293,12 @@ msgid "ITSM Change Condition Overview."
 msgstr "ITSM преглед услова промене."
 
 #. SysConfig
-msgid "ITSM Change Management Notifications"
-msgstr "Обавештења у ITSM управљању променама"
-
-#. SysConfig
 msgid "ITSM Change Manager Overview."
 msgstr "ITSM преглед промена."
+
+#. SysConfig
+msgid "ITSM Change Notifications"
+msgstr "Обавештења o ITSM променама"
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."

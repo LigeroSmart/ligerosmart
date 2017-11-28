@@ -571,7 +571,7 @@ sub Data {
     $Self->{Translation}->{'Change Print.'} = '打印变更。';
     $Self->{Translation}->{'Change Schedule'} = '变更计划';
     $Self->{Translation}->{'Change Schedule.'} = '变更计划表。';
-    $Self->{Translation}->{'Change Settings'} = '';
+    $Self->{Translation}->{'Change Settings'} = '变更设置';
     $Self->{Translation}->{'Change Zoom'} = '变更详情';
     $Self->{Translation}->{'Change Zoom.'} = '变更详情。';
     $Self->{Translation}->{'Change and Workorder Templates'} = '变更和工作指令模板';
@@ -812,7 +812,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = '变更条件编辑。';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = '变更条件概览。';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '变更经理概览。';
-    $Self->{Translation}->{'ITSM Change Notifications'} = '';
+    $Self->{Translation}->{'ITSM Change Notifications'} = 'ITSM变更通知';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '变更PIR（实施后审查）概览。';
     $Self->{Translation}->{'ITSM Change notification rules'} = '变更通知规则';
     $Self->{Translation}->{'ITSM Changes'} = '变更';

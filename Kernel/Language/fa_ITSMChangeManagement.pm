@@ -548,7 +548,7 @@ sub Data {
     $Self->{Translation}->{'Add a workorder (from template) to the change.'} = '';
     $Self->{Translation}->{'Add a workorder to the change.'} = '';
     $Self->{Translation}->{'Add from template'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت ↔ اثر ↔ الویت';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'مدیر ماتریس اهمیت <-> اثر <-> الویت';
     $Self->{Translation}->{'Admin of the state machine.'} = 'مدیر ماشین وضعیت';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} =
         'ماژول اعلان واسط کارشناس برای نمایش تعداد هیئت‌های مشاور تغییرات';

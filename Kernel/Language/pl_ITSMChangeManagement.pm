@@ -18,7 +18,7 @@ sub Data {
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category ↔ Impact ↔ Priority'} = 'Kategoria ↔ Wpływ ↔ Priorytet';
     $Self->{Translation}->{'Manage the priority result of combinating Category ↔ Impact.'} =
-        'Zarządzanie priorytetem dla kombinacji Kategoria ↔ Wpływ.';
+        'Zarządzaj priorytetami będącymi wynikiem kombinacji Kategoria ↔ Wpływ.';
     $Self->{Translation}->{'Priority allocation'} = 'Alokacja priorytetu';
 
     # Template: AdminITSMChangeNotification
@@ -467,8 +467,8 @@ sub Data {
     $Self->{Translation}->{'Deleted Attachment %s'} = '';
     $Self->{Translation}->{'CAB Deleted %s'} = '';
     $Self->{Translation}->{'%s: (new=%s, old=%s)'} = '';
-    $Self->{Translation}->{'Link to %s (ID=%s) added'} = '';
-    $Self->{Translation}->{'Link to %s (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'Link to %s (ID=%s) added'} = 'Dodano link do %s(ID=%s)';
+    $Self->{Translation}->{'Link to %s (ID=%s) deleted'} = 'Usunięto link do %s(ID=%s)';
     $Self->{Translation}->{'Notification sent to %s (Event: %s)'} = '';
     $Self->{Translation}->{'Change (ID=%s) reached planned end time.'} = '';
     $Self->{Translation}->{'Change (ID=%s) reached planned start time.'} = '';
@@ -493,8 +493,8 @@ sub Data {
     $Self->{Translation}->{'Deleted Report Attachment from WorkOrder: %s'} = '';
     $Self->{Translation}->{'(ID=%s) Deleted Report Attachment from WorkOrder: %s'} = '';
     $Self->{Translation}->{'Workorder (ID=%s) deleted'} = '';
-    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) added'} = '';
-    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) deleted'} = '';
+    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) added'} = '(ID=%s) Dodano link do %s(ID=%s)';
+    $Self->{Translation}->{'(ID=%s) Link to %s (ID=%s) deleted'} = '(ID=%s) Usunięto link do %s(ID=%s)';
     $Self->{Translation}->{'(ID=%s) Notification sent to %s (Event: %s)'} = '';
     $Self->{Translation}->{'Workorder (ID=%s) reached planned end time.'} = '';
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
