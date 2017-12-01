@@ -1,4 +1,5 @@
 #6.0.2 2017-??-??
+ - 2017-12-01 Improved wording, thanks to Balázs Úr.
 
 #6.0.1 2017-11-21
  - 2017-11-14 Updated documentation (Config chapter).
