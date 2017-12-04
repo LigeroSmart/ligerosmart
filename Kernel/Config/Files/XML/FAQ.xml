@@ -194,7 +194,11 @@
         <Description Translatable="1">Default state for FAQ entry.</Description>
         <Navigation>Core::FAQ</Navigation>
         <Value>
-            <Item ValueType="String">internal (agent)</Item>
+            <Item ValueType="Select" SelectedID="internal (agent)">
+                <Item ValueType="Option" Value="internal (agent)" Translatable="1">internal (agent)</Item>
+                <Item ValueType="Option" Value="external (customer)" Translatable="1">external (customer)</Item>
+                <Item ValueType="Option" Value="public (all)" Translatable="1">public (all)</Item>
+            </Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::ApprovalRequired" Required="1" Valid="1">
