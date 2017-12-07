@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 3458362021c2440d1f97f600be6cd0a6e17f8845 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# $origin: otrs - 39803d324d82dc4e10803c9300f619c07e3cadf3 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -442,6 +442,54 @@ EOF
         $Self->False(
             $Selenium->execute_script("return \$('#NewQueueID option[value=\"$JunkQueue{QueueID}\"]').length > 0"),
             "Junk queue is not available in selection after ACL trigger"
+        );
+
+        # Turn off priority and try again. Please see bug#13312 for more information.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Ticket::Frontend::AgentTicketNote###Priority',
+            Value => 0,
+        );
+
+        # Close the new note popup.
+        $Selenium->find_element( '.CancelClosePopup', 'css' )->click();
+
+        $Selenium->WaitFor( WindowCount => 1 );
+        $Selenium->switch_to_window( $Handles->[0] );
+
+        # Click on 'Note' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketNote;TicketID=$TicketID' )]")
+            ->VerifiedClick();
+
+        $Selenium->WaitFor( WindowCount => 2 );
+        $Handles = $Selenium->get_window_handles();
+        $Selenium->switch_to_window( $Handles->[1] );
+
+        # Wait until page has loaded.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ServiceID").length' );
+
+        # Check for entries in the service selection, there should be only one.
+        $Self->Is(
+            $Selenium->execute_script(
+                "return \$('#ServiceID option:not([value=\"\"])').length"
+            ),
+            1,
+            'There is only one entry in the service selection'
+        );
+
+        # Set test service and trigger AJAX refresh.
+        $Selenium->execute_script(
+            "\$('#ServiceID option:not([value=\"\"])').attr('selected', true).trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
+
+        # Check for restricted entries in the SLA selection, there should be only one.
+        $Self->Is(
+            $Selenium->execute_script(
+                "return \$('#SLAID option:not([value=\"\"])').length"
+            ),
+            1,
+            'There is only one entry in the SLA selection'
         );
 
         # Close the new note popup.

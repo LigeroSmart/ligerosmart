@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 456f55453c1d20d854bd0d6cbd81feb852cba128 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - b3d55006f299a010245909ecd6daa1c344b3295f - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -372,6 +372,7 @@ sub Run {
         my %Article;
         my %CustomerData;
         my $ArticleFrom = '';
+        my %SplitTicketData;
         if ( $GetParam{ArticleID} ) {
 
             my $Access = $TicketObject->TicketPermission(
@@ -388,7 +389,7 @@ sub Run {
             }
 
             # Get information from original ticket (SplitTicket).
-            my %SplitTicketData = $TicketObject->TicketGet(
+            %SplitTicketData = $TicketObject->TicketGet(
                 TicketID      => $Self->{TicketID},
                 DynamicFields => 1,
                 UserID        => $Self->{UserID},
@@ -448,7 +449,6 @@ sub Run {
                 if ( !defined $QueueLookup{ $Article{To} } && defined $SystemAddressLookup{$SystemAddressEmail} ) {
                     $ArticleFrom = $Article{To};
                 }
-
             }
 
             # body preparation for plain text processing
@@ -838,8 +838,7 @@ sub Run {
             From         => $Article{From},
             Subject      => $Subject,
             Body         => $Body,
-            CustomerID   => $Article{CustomerID},
-            CustomerUser => $Article{CustomerUserID},
+            CustomerID   => $SplitTicketData{CustomerID},
             CustomerData => \%CustomerData,
             Attachments  => \@Attachments,
             LinkTicketID => $GetParam{LinkTicketID} || '',
