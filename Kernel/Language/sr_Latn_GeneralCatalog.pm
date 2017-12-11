@@ -20,23 +20,23 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Upravljanje Opštim katalogom';
-    $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
-    $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
+    $Self->{Translation}->{'Items in Class'} = 'Stavke u klasi';
+    $Self->{Translation}->{'Edit Item'} = 'Uredi stavku';
+    $Self->{Translation}->{'Add Class'} = 'Dodaj klasu';
+    $Self->{Translation}->{'Add Item'} = 'Dodaj stavku';
     $Self->{Translation}->{'Add Catalog Item'} = 'Dodavanje stavke u katalog';
     $Self->{Translation}->{'Add Catalog Class'} = 'Dodavanje klase u katalog';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog klasa';
     $Self->{Translation}->{'Edit Catalog Item'} = 'Uredi stavku kataloga';
 
     # SysConfig
-    $Self->{Translation}->{'Comment 2'} = '';
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Kreiranje i upravljanje Opštim katalogom.';
-    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = 'Definiše grupe sa dozvolama.';
+    $Self->{Translation}->{'Comment 2'} = 'Komentar 2';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Kreiranje i upravljanje opštim katalogom.';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Definiše komentar 2 u opštem katalogu.';
+    $Self->{Translation}->{'Define the group with permissions.'} = 'Definiše grupu sa dozvolama.';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Definiše URL putanju za JS Color Picker.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
-        'Registracija "Frontend" modula za konfiguraciju Administracije opšteg kataloga u prostoru administratora.';
+        'Registracija pristupnog modula za AdminGeneralCatalog u interfejsu administratora.';
     $Self->{Translation}->{'General Catalog'} = 'Opšti katalog';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} =
         'Parametri za primer komentara 2 atributa opšteg kataloga.';

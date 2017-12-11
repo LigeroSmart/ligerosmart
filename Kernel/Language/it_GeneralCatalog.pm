@@ -20,19 +20,19 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Gestione del Catalogo Generale';
-    $Self->{Translation}->{'Items in Class'} = '';
-    $Self->{Translation}->{'Edit Item'} = '';
-    $Self->{Translation}->{'Add Class'} = '';
-    $Self->{Translation}->{'Add Item'} = '';
+    $Self->{Translation}->{'Items in Class'} = 'Elementi nella Classe';
+    $Self->{Translation}->{'Edit Item'} = 'Modifica Elemento';
+    $Self->{Translation}->{'Add Class'} = 'Aggiungi Classe';
+    $Self->{Translation}->{'Add Item'} = 'Aggiungi Elemento';
     $Self->{Translation}->{'Add Catalog Item'} = 'Aggiungi Elemento al Catalogo';
     $Self->{Translation}->{'Add Catalog Class'} = 'Aggiungi Classe al Catalogo';
     $Self->{Translation}->{'Catalog Class'} = 'Classe di Catalogo';
     $Self->{Translation}->{'Edit Catalog Item'} = 'Modifica elemento di catalogo';
 
     # SysConfig
-    $Self->{Translation}->{'Comment 2'} = '';
+    $Self->{Translation}->{'Comment 2'} = 'Commento 2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Crea e gestisci il Catalogo Generale';
-    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Definisci il commento 2 del catalogo generale';
     $Self->{Translation}->{'Define the group with permissions.'} = 'Specifica il gruppo con permessi.';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Specifica il percorso dell\'URL del selettore di colori JS.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
