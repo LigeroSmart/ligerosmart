@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-16 14:26+0000\n"
-"PO-Revision-Date: 2017-11-21 09:42+0000\n"
+"PO-Revision-Date: 2017-12-10 12:55+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -1776,7 +1776,7 @@ msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként les
 msgid ""
 "Defines the change states that will be used as filters in the change manager"
 " overview."
-msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változáskezelő áttekintőjében."
+msgstr "Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változásmenedzser áttekintőjében."
 
 #. SysConfig
 msgid ""
@@ -1928,7 +1928,7 @@ msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „El
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejetési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
 
 #. SysConfig
 msgid ""

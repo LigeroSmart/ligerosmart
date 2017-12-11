@@ -89,7 +89,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = 'Vil du virkelig slette denne endringen?';
 
     # Template: AgentITSMChangeEdit
-    $Self->{Translation}->{'Edit %s%s'} = '';
+    $Self->{Translation}->{'Edit %s%s'} = 'Endre %s%s';
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Historikken på %s%s';
@@ -193,7 +193,7 @@ sub Data {
         '';
     $Self->{Translation}->{'The temporary change and new workorder will be deleted automatically after the workorder has been saved as template.'} =
         '';
-    $Self->{Translation}->{'Do you want to proceed?'} = '';
+    $Self->{Translation}->{'Do you want to proceed?'} = 'Ønsker du å fortsette?';
 
     # Template: AgentITSMTemplateOverviewSmall
     $Self->{Translation}->{'Template ID'} = '';
@@ -231,7 +231,7 @@ sub Data {
     $Self->{Translation}->{'History of %s%s-%s'} = '';
 
     # Template: AgentITSMWorkOrderReport
-    $Self->{Translation}->{'Edit Report of %s%s-%s'} = '';
+    $Self->{Translation}->{'Edit Report of %s%s-%s'} = 'Endre rapport for %s%s-%s';
     $Self->{Translation}->{'Report'} = 'Rapport';
     $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'Faktisk starttid må være før faktisk sluttid';
     $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} =

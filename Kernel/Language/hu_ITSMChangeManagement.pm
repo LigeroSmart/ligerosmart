@@ -637,7 +637,7 @@ sub Data {
     $Self->{Translation}->{'Defines the change states that will be used as filters in the MyChanges overview.'} =
         'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a saját változások áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change manager overview.'} =
-        'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változáskezelő áttekintőjében.';
+        'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változásmenedzser áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change overview.'} =
         'Meghatározza azokat a változásállapotokat, amelyek szűrőkként lesznek használva a változás áttekintőjében.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the customer change schedule overview.'} =
@@ -690,7 +690,7 @@ sub Data {
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
         'Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „Elszámolt idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejetési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
+        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
         'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
