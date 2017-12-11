@@ -142,9 +142,9 @@ sub Data {
     $Self->{Translation}->{'Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows the ticket priority options in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者Webインターフェイスの追加ITSMフィールド画面にチケットの優先度オプションを表示します。';
     $Self->{Translation}->{'Shows the ticket priority options in the decision screen of the agent interface.'} =
-        '';
+        '担当者Webインターフェイスの決定画面にチケット優先度オプションを表示します。';
     $Self->{Translation}->{'Shows the title fields in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
