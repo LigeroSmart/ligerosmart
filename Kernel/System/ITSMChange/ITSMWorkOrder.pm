@@ -3134,7 +3134,6 @@ sub _CheckWorkOrderParams {
     OPTION:
     for my $Option (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
 
-
         next OPTION if !$Param{$Option};
 
         if ( $Param{$Option} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
