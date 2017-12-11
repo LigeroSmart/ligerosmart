@@ -199,11 +199,8 @@ sub Run {
                 $GetParam{MoveTimeMinute};
 
             # sanity check of the assembled timestamp
-            $NewTime = $Kernel::OM->Create(
-                'Kernel::System::DateTime',
-                ObjectParams => {
-                    String => $PlannedTime,
-                },
+            $NewTime = $Self->_TimeStamp2Epoch(
+                TimeStamp => $PlannedTime,
             );
 
             if ( !$NewTime ) {
@@ -354,6 +351,22 @@ sub Run {
     $Output .= $LayoutObject->Footer();
 
     return $Output;
+}
+
+sub _TimeStamp2Epoch {
+    my ( $Self, %Param, ) = @_;
+
+    my $TimeStamp      = $Param{TimeStamp};
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => $TimeStamp,
+        },
+    );
+
+    return if !$DateTimeObject;
+
+    return $DateTimeObject->ToEpoch();
 }
 
 1;

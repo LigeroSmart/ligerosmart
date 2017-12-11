@@ -3133,9 +3133,17 @@ sub _CheckWorkOrderParams {
     # check time formats
     OPTION:
     for my $Option (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+
+
         next OPTION if !$Param{$Option};
 
-        return if $Param{$Option} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms;
+        if ( $Param{$Option} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Wrong time format for $Option: '$Param{$Option}'!",
+            );
+            return;
+        }
     }
 
     # check workorder agent

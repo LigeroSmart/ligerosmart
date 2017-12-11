@@ -314,8 +314,10 @@ sub _WorkOrderAdd {
         }
     }
 
+
     # move time slot for workorder if neccessary
     my $Difference = $Param{TimeDifference};
+
     if ( $Difference || $Param{NewTimeInEpoche} ) {
 
         # calc new values for start and end time
@@ -335,7 +337,7 @@ sub _WorkOrderAdd {
                             'Kernel::System::DateTime',
                             ObjectParams => {
                                 String => $Data{PlannedStartTime},
-                                }
+                            },
                         )->ToEpoch();
 
                         # calculate the old planned end time into epoch seconds
@@ -343,7 +345,7 @@ sub _WorkOrderAdd {
                             'Kernel::System::DateTime',
                             ObjectParams => {
                                 String => $Data{PlannedEndTime},
-                                }
+                            },
                         )->ToEpoch();
 
                         # the time length of the workorder in seconds
@@ -373,6 +375,14 @@ sub _WorkOrderAdd {
         ChangeID     => $Param{ChangeID},
         UserID       => $Param{UserID},
     );
+
+    if ( !$WorkOrderID ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Could not create Workorder from Template!",
+        );
+        return;
+    }
 
     # we need a mapping "old id" to "new id" for the conditions
     my $OldIDs2NewIDs = {
@@ -463,7 +473,7 @@ sub _MoveTime {
         'Kernel::System::DateTime',
         ObjectParams => {
             String => $Param{CurrentTime},
-            }
+        },
     )->ToEpoch();
 
     # get planned time as timestamp
@@ -471,7 +481,7 @@ sub _MoveTime {
         'Kernel::System::DateTime',
         ObjectParams => {
             Epoch => $CurrentSystemTime + $Param{Difference},
-            }
+        },
     )->ToString();
 
     return $NewTime;

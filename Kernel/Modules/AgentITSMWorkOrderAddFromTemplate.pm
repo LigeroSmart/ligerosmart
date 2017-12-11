@@ -317,8 +317,9 @@ sub _TimeStamp2Epoch {
         },
     );
 
-    return $DateTimeObject->ToEpoch() if $DateTimeObject;
-    return;
+    return if !$DateTimeObject;
+
+    return $DateTimeObject->ToEpoch();
 }
 
 1;
