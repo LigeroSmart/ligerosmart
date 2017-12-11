@@ -12,7 +12,7 @@ use strict;
 use warnings;
 
 use Kernel::System::DateTime;
-use Kernel::System::VariableCheck qw( IsHashRefWithData );
+use Kernel::System::VariableCheck qw( :all );
 
 our @ObjectDependencies = (
     'Kernel::Config',
@@ -2308,6 +2308,21 @@ sub DayOfWeekToName {
         return;
     }
 
+    if ( !IsPositiveInteger( $Param{Number} ) ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Number must be a positive integer!",
+        );
+        return;
+    }
+    if ( $Param{Number} > 7 ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Number must not be grater than 7!",
+        );
+        return;
+    }
+
     my @DayNames = (
         'Monday',
         'Tuesday',
@@ -2318,7 +2333,7 @@ sub DayOfWeekToName {
         'Sunday'
     );
 
-    return $DayNames[ $Param{Number} ];
+    return $DayNames[ $Param{Number} - 1 ];
 }
 
 =head2 Date2SystemTime()

@@ -1,4 +1,5 @@
 #6.0.2 2017-??-??
+ - 2017-12-11 Fixed bug#[13415](https://bugs.otrs.org/show_bug.cgi?id=13415) - Incomplete days widget has wrong day of week names.
 
 #6.0.1 2017-11-21
  - 2017-11-14 Updated documentation (Configuration chapter).

@@ -49,6 +49,7 @@
         <File Permission="660" Location="Kernel/Output/JavaScript/Templates/Standard/Agent/TimeAccounting/Dialog/AjaxLoader.html.tmpl" />
         <File Permission="660" Location="Kernel/System/TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm" />
+        <File Permission="660" Location="scripts/test/TimeAccounting/DayOfWeekToName.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting/UpgradeLowerThan5092.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting/UserReportingDateCheck.t" />
         <File Permission="660" Location="scripts/test/TimeAccounting/VacationCheck.t" />
