@@ -314,10 +314,8 @@ sub _WorkOrderAdd {
         }
     }
 
-
     # move time slot for workorder if neccessary
     my $Difference = $Param{TimeDifference};
-
     if ( $Difference || $Param{NewTimeInEpoche} ) {
 
         # calc new values for start and end time
