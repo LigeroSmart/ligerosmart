@@ -6,12 +6,13 @@
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # David B <link.bigpoint@outlook.com>, 2017
+# Fernando Casal <fernando.casal@serviciomovil.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-11-08 05:06+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2017-11-15 13:31+0000\n"
+"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,7 +335,7 @@ msgstr "Agregar tarea"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for projects, tasks or users"
-msgstr ""
+msgstr "Filtro para proyectos, tareas o usuarios."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
@@ -367,11 +368,11 @@ msgstr "Lista de Usuarios"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User Settings"
-msgstr ""
+msgstr "Ajustes de usuario"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to see overtimes"
-msgstr ""
+msgstr "El usuario puede ver horas extras"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
@@ -387,7 +388,7 @@ msgstr "Permitir creación de proyectos"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
-msgstr ""
+msgstr "Lapso de tiempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -515,13 +516,13 @@ msgstr "¡La fecha introducida no era válida! La fecha se cambió a hoy."
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
 "time periods."
-msgstr ""
+msgstr "Sin período de tiempo configurado, o la fecha especificada está fuera de los períodos de tiempo definidos."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
 "Please contact the time accounting administrator to update your time "
 "periods!"
-msgstr ""
+msgstr "¡Por favor, póngase en contacto con el administrador de contabilidad de tiempo para actualizar sus períodos de tiempo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -533,7 +534,7 @@ msgstr "Todos los Proyectos"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "ReportingProject: necesita ProjectID"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
@@ -589,7 +590,7 @@ msgstr "¡Usuario añadido!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Add a user to time accounting..."
-msgstr ""
+msgstr "Añadir un usuario a la contabilidad del tiempo..."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -719,14 +720,14 @@ msgid ""
 "If enabled, the filter for the previous projects can be used instead two "
 "list of projects (last and all ones). It could be used only if "
 "TimeAccounting::EnableAutoCompletion is enabled."
-msgstr ""
+msgstr "Si está habilitado, el filtro para los proyectos anteriores puede usarse en lugar de dos listas de proyectos (último y todos). Se podría usar solo si  imeAccounting::EnableAutoCompletion está habilitado."
 
 #. SysConfig
 msgid ""
 "If enabled, the filter for the previous projects is active by default if "
 "there are the previous projects. It could be used only if "
 "EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
-msgstr ""
+msgstr "Si está habilitado, el filtro para los proyectos previos está activo por defecto si existen proyectos previos. Se podría usar solo si EnableAutoCompletion y TimeAccounting::UseFilter está habilitado."
 
 #. SysConfig
 msgid ""

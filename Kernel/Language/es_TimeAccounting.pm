@@ -111,7 +111,7 @@ sub Data {
         'Ya existe un proyecto con este nombre. Por favor, elija uno diferente.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Modificar la Configuración de la Contabilidad de Tiempo';
     $Self->{Translation}->{'Add task'} = 'Agregar tarea';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Filtro para proyectos, tareas o usuarios.';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Los períodos de tiempo no se pueden borrar.';
     $Self->{Translation}->{'Project List'} = 'Lista de Proyectos';
     $Self->{Translation}->{'Task List'} = 'Lista de Tareas';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Ya existe una tarea con este nombre. Por favor, elija uno diferente.';
     $Self->{Translation}->{'User List'} = 'Lista de Usuarios';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Ajustes de usuario';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'El usuario puede ver horas extras';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar horas extra';
     $Self->{Translation}->{'User is allowed to create projects'} = 'El usuario tiene permitido crear proyectos';
     $Self->{Translation}->{'Allow project creation'} = 'Permitir creación de proyectos';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = 'Lapso de tiempo';
     $Self->{Translation}->{'Period Begin'} = 'Periodo de inicio';
     $Self->{Translation}->{'Period End'} = 'Periodo de finalización';
     $Self->{Translation}->{'Days of Vacation'} = 'Días de Vacaciones';
@@ -162,14 +162,14 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '¡Se han insertado satisfactoriamente entradas para varias fechas!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '¡La fecha introducida no era válida! La fecha se cambió a hoy.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        'Sin período de tiempo configurado, o la fecha especificada está fuera de los períodos de tiempo definidos.';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
-        '';
+        '¡Por favor, póngase en contacto con el administrador de contabilidad de tiempo para actualizar sus períodos de tiempo!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Últimos Proyectos seleccionados';
     $Self->{Translation}->{'All Projects'} = 'Todos los Proyectos';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
-    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
+    $Self->{Translation}->{'ReportingProject: Need ProjectID'} = 'ReportingProject: necesita ProjectID';
     $Self->{Translation}->{'Reporting Project'} = 'Proyecto de Reportes';
     $Self->{Translation}->{'Reporting'} = 'Reportes';
 
@@ -185,7 +185,7 @@ sub Data {
     $Self->{Translation}->{'Setting'} = 'Ajuste';
     $Self->{Translation}->{'User updated!'} = '¡Usuario actualizado!';
     $Self->{Translation}->{'User added!'} = '¡Usuario añadido!';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Añadir un usuario a la contabilidad del tiempo...';
     $Self->{Translation}->{'New User'} = 'Nuevo Usuario';
     $Self->{Translation}->{'Period Status'} = 'Estado del período';
 
@@ -230,9 +230,9 @@ sub Data {
     $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields.'} =
         'Si se habilita, los elementos desplegables en la pantalla de edición se cambiaran a mordernos campos de autocompletado.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled.'} =
-        '';
+        'Si está habilitado, el filtro para los proyectos anteriores puede usarse en lugar de dos listas de proyectos (último y todos). Se podría usar solo si  imeAccounting::EnableAutoCompletion está habilitado.';
     $Self->{Translation}->{'If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled.'} =
-        '';
+        'Si está habilitado, el filtro para los proyectos previos está activo por defecto si existen proyectos previos. Se podría usar solo si EnableAutoCompletion y TimeAccounting::UseFilter está habilitado.';
     $Self->{Translation}->{'If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.'} =
         'Si se habilita, se le permitirá al usuario registrar "vacaciones", "ausencia por enfermedad", "ausencia por haber trabajado horas extra" en múltiples fechas al mismo tiempo.';
     $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} =

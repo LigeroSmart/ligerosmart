@@ -2,6 +2,7 @@
 # Translators:
 # Fabrizio Scaletta <fabrizio.scaletta@pharmaidea.com>, 2017
 # Luca Maranzano <liuk@linux.it>, 2014
+# Sergio Giganti <s.giganti@eaisoftware.it>, 2017
 # stefanomarty <stefano.ste.martinelli@gmail.com>, 2016
 # stefanomarty <stefano.ste.martinelli@gmail.com>, 2016
 # Vincenzo Reale <vinx.reale@gmail.com>, 2015,2017
@@ -9,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-11-08 05:06+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2017-12-12 10:07+0000\n"
+"Last-Translator: Sergio Giganti <s.giganti@eaisoftware.it>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -358,7 +359,7 @@ msgstr "Modificare la configurazione dei compiti"
 #. Template: AgentTimeAccountingSetting
 msgid ""
 "There is already a task with this name. Please, choose a different one."
-msgstr "Esiste già un compito con questo nome. Scegliere un nome diverso."
+msgstr "Esiste già un task con questo nome. Scegliere un nome diverso."
 
 #. Template: AgentTimeAccountingSetting
 msgid "User List"
@@ -378,15 +379,15 @@ msgstr "Mostrare straordinari"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to create projects"
-msgstr ""
+msgstr "L'Utente può creare progetti"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
-msgstr "Cosentire la creazione del progetto"
+msgstr "Consentire la creazione del progetto"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
-msgstr ""
+msgstr "Intervalli di tempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
@@ -466,7 +467,7 @@ msgstr "Nessun dato trovato per questo giorno."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
-msgstr ""
+msgstr "Non puoi inserire le unità lavorative!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
@@ -474,11 +475,11 @@ msgstr "Ultimi progetti"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
-msgstr ""
+msgstr "Non puoi salvare le impostazioni, perchè un giorno ha solo 24 ore!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't delete Working Units!"
-msgstr ""
+msgstr "Non puoi cancellare le unità lavorative!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
@@ -520,7 +521,7 @@ msgstr ""
 msgid ""
 "Please contact the time accounting administrator to update your time "
 "periods!"
-msgstr ""
+msgstr "Per favore, contattare l'amministrazione della contabilizzazione temporale per aggiornare i tuoi intervalli di tempo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
@@ -532,11 +533,11 @@ msgstr "Tutti i progetti"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
-msgstr ""
+msgstr "RapportoProgetto: ProjectID necessario"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting Project"
-msgstr ""
+msgstr "Compilando il rapporto del progetto"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
@@ -560,7 +561,7 @@ msgstr "Attività aggiunta!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Task updated!"
-msgstr ""
+msgstr "Attività aggiornata!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "The UserID is not valid!"
@@ -568,11 +569,11 @@ msgstr "Lo UserID non è valido!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Can't insert user data!"
-msgstr ""
+msgstr "Non puoi inserire i dati dell'utente!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to add time period!"
-msgstr ""
+msgstr "Non sei abilitato ad inserire i periodi di tempo!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Setting"
@@ -588,7 +589,7 @@ msgstr "Utente inserito!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Add a user to time accounting..."
-msgstr ""
+msgstr "Aggiungi un utente per la contabilizzazione temporale"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -600,7 +601,7 @@ msgstr "Stato di periodo"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
-msgstr ""
+msgstr "Vista: %s richiesto!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -691,11 +692,11 @@ msgstr "Determina se il modulo statistiche può generare informazioni di rendico
 
 #. SysConfig
 msgid "Edit time accounting settings."
-msgstr ""
+msgstr "Modifica le impostazioni della rendicontazione temporale."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr ""
+msgstr "Modifica registro orario"
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -747,11 +748,11 @@ msgstr "Numero massimo di giorni lavorativi che non hanno voci di unità di lavo
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "Vista Globale."
 
 #. SysConfig
 msgid "Project time reporting."
-msgstr ""
+msgstr "Rapporto del tempo di progetto."
 
 #. SysConfig
 msgid ""
