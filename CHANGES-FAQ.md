@@ -1,4 +1,5 @@
 #6.0.2 2017-??-??
+ - 2017-12-12 Fixed bug#[12063](https://bugs.otrs.org/show_bug.cgi?id=12063) - Some characters overflow in titles.
  - 2017-12-04 Improved display of 'FAQ::Default::State' setting.
  - 2017-11-14 Updated documentation (Config chapter).
 
