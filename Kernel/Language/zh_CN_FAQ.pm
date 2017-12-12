@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '快捷键的工具栏条目。';
     $Self->{Translation}->{'external (customer)'} = '外部(用户)';
     $Self->{Translation}->{'internal (agent)'} = '内部(服务人员)';
+    $Self->{Translation}->{'public (all)'} = '公开(内外)';
     $Self->{Translation}->{'public (public)'} = '公开（公开）';
 
 

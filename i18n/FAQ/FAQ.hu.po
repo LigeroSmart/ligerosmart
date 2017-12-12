@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-17 05:00+0000\n"
+"POT-Creation-Date: 2017-12-12 23:14+0000\n"
+"PO-Revision-Date: 2017-12-12 23:16+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -930,7 +930,7 @@ msgid ""
 " to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
 " the plugin is enabled by default or if the user needs to enable it "
 "manually."
-msgstr "Meghatározza a vezérlőpult háttérprogram paramétereit. A „Limit” határozza meg az alapértelmezetten megjelenített bejegyzések számát. A „Group” használható a hozzáférés korlátozásához a bővítményre (például Group: admin;csoport1;csoport2;). A „Default” jelzi, ha a bővítmény alapértelmezetten engedélyezve van, vagy ha a felhasználónak kézzel kell engedélyeznie azt."
+msgstr "Meghatározza a vezérlőpult háttérprogram paramétereit. A „Limit” határozza meg az alapértelmezetten megjelenített bejegyzések számát. A „Group” használható a hozzáférés korlátozásához a bővítményre (például Group: admin;csoport1;csoport2;). A „Default” jelzi, hogy a bővítmény alapértelmezetten engedélyezve van, vagy hogy a felhasználónak kézzel kell engedélyeznie azt."
 
 #. SysConfig
 msgid ""
@@ -1565,6 +1565,10 @@ msgstr "külső (ügyfél)"
 #. SysConfig
 msgid "internal (agent)"
 msgstr "belső (ügyintéző)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "nyilvános (összes)"
 
 #. SysConfig
 msgid "public (public)"

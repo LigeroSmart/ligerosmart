@@ -137,7 +137,7 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = 'Keine FAQ-Artikel gefunden.';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'Das kann hilfreich sei';
     $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
     $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
 
@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Werkzeugleisteneintrag für den Schnellzugriff.';
     $Self->{Translation}->{'external (customer)'} = 'extern (Kunde)';
     $Self->{Translation}->{'internal (agent)'} = 'intern (Agent)';
+    $Self->{Translation}->{'public (all)'} = 'öffentlich (Alle)';
     $Self->{Translation}->{'public (public)'} = 'öffentlich (öffentlich)';
 
 

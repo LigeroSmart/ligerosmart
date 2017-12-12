@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-17 00:51+0000\n"
+"POT-Creation-Date: 2017-12-12 23:14+0000\n"
+"PO-Revision-Date: 2017-12-12 23:16+0000\n"
 "Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1568,6 +1568,10 @@ msgstr "外部 (顧客)"
 #. SysConfig
 msgid "internal (agent)"
 msgstr "内部 (担当者)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "公開 (全員)"
 
 #. SysConfig
 msgid "public (public)"

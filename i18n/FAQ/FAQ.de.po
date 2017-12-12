@@ -2,6 +2,7 @@
 # Translators:
 # Antonius Klockenkämper, 2017
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
+# Harald Eisenmenger <harald.eisenmenger@otrs.com>, 2017
 # Jonas Kohls <Jonas.kohls@outlook.de>, 2016
 # eliasp <mail@eliasprobst.eu>, 2015
 # Mainboarder, 2014
@@ -15,9 +16,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-26 12:18+0000\n"
-"Last-Translator: Matthias Freitag\n"
+"POT-Creation-Date: 2017-12-12 23:14+0000\n"
+"PO-Revision-Date: 2017-12-12 23:16+0000\n"
+"Last-Translator: Harald Eisenmenger <harald.eisenmenger@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -371,7 +372,7 @@ msgstr "Keine FAQ-Artikel gefunden."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Das kann hilfreich sei"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
@@ -1576,6 +1577,10 @@ msgstr "extern (Kunde)"
 #. SysConfig
 msgid "internal (agent)"
 msgstr "intern (Agent)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "öffentlich (Alle)"
 
 #. SysConfig
 msgid "public (public)"

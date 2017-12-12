@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"POT-Creation-Date: 2017-12-12 23:14+0000\n"
+"PO-Revision-Date: 2017-12-12 23:16+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -1566,6 +1566,10 @@ msgstr "luaran (pelanggan)"
 #. SysConfig
 msgid "internal (agent)"
 msgstr "dalaman (ejen)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "Umum (Semua)"
 
 #. SysConfig
 msgid "public (public)"

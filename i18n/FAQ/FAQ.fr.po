@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"POT-Creation-Date: 2017-12-12 23:14+0000\n"
+"PO-Revision-Date: 2017-12-12 23:16+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -1572,6 +1572,10 @@ msgstr "externe (client)"
 #. SysConfig
 msgid "internal (agent)"
 msgstr "interne (opérateur)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "public (tous)"
 
 #. SysConfig
 msgid "public (public)"

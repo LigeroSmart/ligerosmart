@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Item Toolbar untuk jalan pintas.';
     $Self->{Translation}->{'external (customer)'} = 'luaran (pelanggan)';
     $Self->{Translation}->{'internal (agent)'} = 'dalaman (ejen)';
+    $Self->{Translation}->{'public (all)'} = 'Umum (Semua)';
     $Self->{Translation}->{'public (public)'} = 'awam (awam)';
 
 

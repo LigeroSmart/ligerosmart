@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Описание ярлыка(иконки) для навигационной панели.';
     $Self->{Translation}->{'external (customer)'} = 'открытое (клиентам)';
     $Self->{Translation}->{'internal (agent)'} = 'служебное (агентам)';
+    $Self->{Translation}->{'public (all)'} = 'общедоступное (всем)';
     $Self->{Translation}->{'public (public)'} = 'общедоступный (публичный)';
 
 

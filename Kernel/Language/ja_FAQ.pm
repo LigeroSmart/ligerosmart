@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'ショートカットのためのツールバー・アイテムです。';
     $Self->{Translation}->{'external (customer)'} = '外部 (顧客)';
     $Self->{Translation}->{'internal (agent)'} = '内部 (担当者)';
+    $Self->{Translation}->{'public (all)'} = '公開 (全員)';
     $Self->{Translation}->{'public (public)'} = '公開　(パブリック)';
 
 

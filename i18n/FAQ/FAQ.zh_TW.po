@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-16 22:56+0000\n"
-"PO-Revision-Date: 2017-10-16 22:56+0000\n"
+"POT-Creation-Date: 2017-12-12 23:14+0000\n"
+"PO-Revision-Date: 2017-12-12 23:16+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -1566,6 +1566,10 @@ msgstr "外部 (客戶)"
 #. SysConfig
 msgid "internal (agent)"
 msgstr "內部 (服務員)"
+
+#. SysConfig
+msgid "public (all)"
+msgstr "公開  (全部)"
 
 #. SysConfig
 msgid "public (public)"

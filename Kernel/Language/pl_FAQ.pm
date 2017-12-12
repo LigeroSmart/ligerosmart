@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Zarządzanie kategoriami FAQ';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'Dodaj kategorię FAQ';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'Edytuj kategorię FAQ';
     $Self->{Translation}->{'Add category'} = 'Dodaj kategorię';
     $Self->{Translation}->{'Add Category'} = 'Dodaj kategorię';
     $Self->{Translation}->{'Edit Category'} = 'Edytuj kategorię';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Zarządzanie językami FAQ';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'Dodaj język FAQ';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'Edytuj język FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         'Użyj tej funkcji jeśli chcesz pracować z wieloma językami.';
     $Self->{Translation}->{'Add language'} = 'Dodaj język';
@@ -84,8 +84,8 @@ sub Data {
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Słowo kluczowe';
-    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '';
+    $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Głosuj (np.: równe 10 lub więcej niż 60)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Oceń (np.: równe 25% lub więcej niż 75%)';
     $Self->{Translation}->{'Approved'} = 'Zatwierdzone';
     $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ Czas tworzenia zgłoszenia (przed/po)';
@@ -100,14 +100,14 @@ sub Data {
     $Self->{Translation}->{'FAQ Search'} = 'Wyszukiwanie FAQ';
     $Self->{Translation}->{'Profile Selection'} = 'Wybór profilu';
     $Self->{Translation}->{'Vote'} = 'Głosuj';
-    $Self->{Translation}->{'No vote settings'} = '';
+    $Self->{Translation}->{'No vote settings'} = 'Brak ustawień głosowania';
     $Self->{Translation}->{'Specific votes'} = '';
-    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = '';
+    $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'np.: równe 10 lub więcej niż 60';
     $Self->{Translation}->{'Rate'} = 'Oceń';
     $Self->{Translation}->{'No rate settings'} = '';
     $Self->{Translation}->{'Specific rate'} = '';
-    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = '';
-    $Self->{Translation}->{'FAQ Article Create Time'} = '';
+    $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'np.: równe 25% lub więcej niż 75%';
+    $Self->{Translation}->{'FAQ Article Create Time'} = 'Czas utworzenia artykułu FAQ';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ Czas zmiany zgłoszenia';
 
     # Template: AgentFAQZoom
@@ -126,7 +126,7 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'pomocne';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Add FAQ title to article subject'} = '';
+    $Self->{Translation}->{'Add FAQ title to article subject'} = 'Dodaj tytuł FAQ jako temat wiadomości';
     $Self->{Translation}->{'Insert FAQ Text'} = 'Wstaw tekst FAQ';
     $Self->{Translation}->{'Insert Full FAQ'} = '';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Wstaw odnośnik FAQ';
@@ -137,9 +137,9 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = 'Nie znaleziono artykułów FAQ.';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'To może być przydatne';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'Nie znaleziono zasobów pomocy dla podanego tematu i treści';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Wpisz obok temat lub treść zgłoszenia aby przeszukać zasoby pomocy.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Wyszukiwanie pełnotekstowe w artykułach FAQ (np. "Naj*pszy" lub "Kowalsk*")';
@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Pozycja paska narzędziowego dla skrótu.';
     $Self->{Translation}->{'external (customer)'} = 'zewnętrzne (klienci)';
     $Self->{Translation}->{'internal (agent)'} = 'wewnętrzne (agenci)';
+    $Self->{Translation}->{'public (all)'} = 'publiczne (wszyscy)';
     $Self->{Translation}->{'public (public)'} = '';
 
 

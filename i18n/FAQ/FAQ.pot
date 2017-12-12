@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2017-11-14 16:20+0000\n"
+"POT-Creation-Date: 2017-12-12 23:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1416,6 +1416,10 @@ msgstr ""
 
 #. SysConfig
 msgid "internal (agent)"
+msgstr ""
+
+#. SysConfig
+msgid "public (all)"
 msgstr ""
 
 #. SysConfig

@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Kipengele cha mwambaa zana kwa ajili ya mkato.';
     $Self->{Translation}->{'external (customer)'} = 'nje (mteja)';
     $Self->{Translation}->{'internal (agent)'} = 'ndani (wakala)';
+    $Self->{Translation}->{'public (all)'} = 'Umma (wote)';
     $Self->{Translation}->{'public (public)'} = '';
 
 

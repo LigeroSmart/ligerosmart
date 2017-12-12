@@ -554,6 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Ставка алатне линије за скраћеницу.';
     $Self->{Translation}->{'external (customer)'} = 'екстерно (клијент)';
     $Self->{Translation}->{'internal (agent)'} = 'интерно (оператер)';
+    $Self->{Translation}->{'public (all)'} = 'јавно (све)';
     $Self->{Translation}->{'public (public)'} = 'јавно (јавно)';
 
 
