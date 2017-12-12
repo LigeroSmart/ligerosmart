@@ -22,10 +22,10 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Cuerpo de Notificación';
     $Self->{Translation}->{'Ticket Types'} = 'Tipos de Tickets';
     $Self->{Translation}->{'Internal Description'} = 'Descripción Interna';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Customer conditions'} = 'Condiciones del cliente';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'Ellija una propiedad del cliente para agregar una condición.';
+    $Self->{Translation}->{'Public survey key'} = 'Clave de encuesta pública';
+    $Self->{Translation}->{'Example survey'} = 'Encuesta de ejemplo';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Editar información General';
@@ -56,12 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Respuesta:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Opciones de resumen de encuesta';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
-        '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+        'Busca en los atributos: Número, Título, Introducción, Descripción, NotificationSender, NotificationSubject y NotificationBody, anulando otros atributos con el mismo nombre.';
+    $Self->{Translation}->{'Survey Create Time'} = 'Fecha creación de la encuesta';
+    $Self->{Translation}->{'No restriction'} = 'Sin restricción';
+    $Self->{Translation}->{'Only surveys created between'} = 'Solo encuestas creadas entre';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Encuestas mostradas por página';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,16 +72,16 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Resumen de Estadísticas de';
     $Self->{Translation}->{'Requests Table'} = 'Tabla de Solicitudes';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Seleccionar todas las solicitudes';
     $Self->{Translation}->{'Send Time'} = 'Tiempo de Envío';
     $Self->{Translation}->{'Vote Time'} = 'Tiempo de Voto';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Seleccionar esta solicitud';
     $Self->{Translation}->{'See Details'} = 'Ver Detalles';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = 'Borrar estadísticas';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detalles de Estadisticas de Encuesta';
     $Self->{Translation}->{'go back to stats overview'} = 'regresar a resúmen de estadisticas';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = 'Voto anterior';
+    $Self->{Translation}->{'Next vote'} = 'Voto próximo';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Información de Encuesta';
@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Si/No';
     $Self->{Translation}->{'Radio (List)'} = 'Opción (lista) ';
     $Self->{Translation}->{'Checkbox (List)'} = 'Casilla de verificación (lista)';
-    $Self->{Translation}->{'Net Promoter Score'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = 'Puntuación Net Promoter';
     $Self->{Translation}->{'Question Type'} = 'Tipo de Pregunta';
     $Self->{Translation}->{'Complete'} = 'Completa';
     $Self->{Translation}->{'Incomplete'} = 'Incompleta';
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = 'Usted ya ha contestado esta encuesta.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = 'Lista de encuestas';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
@@ -169,22 +169,22 @@ sub Data {
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         'Define los grupos que tienen permiso para cambiar el estado de la encuesta. La matriz está vacía por defecto y los agentes de todos los grupos pueden cambiar el estado de la encuesta.';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
-        '';
+        'Define si las solicitudes de encuesta solo se enviarán a clientes reales.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Define la cantidad máxima de encuestas que se mandarán a un cliente cada 30 días. ( 0 significa que no hay un máximo, todas las encuestas serán enviadas).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Define la cantidad en horas en que se debe cerrar un ticket para activar el envío de una encuesta, (0 significa enviar inmediatamente después del cierre). Nota: el envío tardío de la encuesta es realizado por Daemon OTRS, previa activación de \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
-        '';
+        'Define las columnas para la lista desplegable para crear condiciones  de envío (0 => inactivo, 1 => activo).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Define la altura predefinida para la vista de texto enriquecido para los elementos de la pantall de detalle de estadisticas.';
-    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = 'Define los grupos (rw) que pueden eliminar las estadísticas de la encuesta.';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'Define la altura máxima para las vistas de texto enriquecido para los elementos de zoom de encuesta.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Define las columnas que se mostrarán en el resumen de encuestas. Esta opción no tienen ningún efecto en la posición de las columnas.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
-        '';
+        'Determina si el módulo de estadísticas puede generar listas de encuestas.';
     $Self->{Translation}->{'Edit survey general information.'} = 'Editar información general de la encuesta.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Editar preguntas de la encuesta.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -207,7 +207,7 @@ sub Data {
         'Parametros para las páginas (en que las encuestas son mostradas) de la vista de resumen pequeña.';
     $Self->{Translation}->{'Public Survey.'} = 'Encuesta Pública.';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        '';
+        'Los resultados anteriores a la cantidad configurada de días serán eliminados. Nota: elimine los resultados realizados por Daemon OTRS, antes de la activación de la configuración \'Task###SurveyRequestsDelete\'.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Muestra un vínculo en el menú de edición de una encuesta en su vista de detalle en la interface del agente.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -227,10 +227,10 @@ sub Data {
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#.';
     $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
+        'Esta es una descripción para SurveyOverviewSmallPageShown en la encuesta.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de ticket que manda correos electrónicos de encuestas hacia los clientes si un ticket es cerrado.';
-    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = 'Desencadenar resultados de eliminación (incluidos datos y solicitudes de voto).';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Desencadenar el envío de solicitudes de encuesta con retraso.';
     $Self->{Translation}->{'Zoom into statistics details.'} = 'Ir a los detalles de la Estadística.';
 

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-09-29 15:35+0000\n"
+"PO-Revision-Date: 2017-11-15 21:22+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,19 +40,19 @@ msgstr "Belső leírás"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Ügyfél feltételek"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Válasszon egy ügyféltulajdonságot egy feltételhez való hozzáadáshoz."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Nyilvános kérdőívkulcs"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Példa kérdőív"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -144,26 +144,26 @@ msgstr "Válasz:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Kérdőív áttekintő lehetőségek"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "A szám, cím, bevezetés, leírás, értesítés küldője, értesítés tárgya és értesítés törzse attribútumokban keres, felülbírálva az ugyanilyen nevű egyéb attribútumokat."
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Kérdőív létrehozási ideje"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Nincs megkötés"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Csak ezek között létrehozott kérdőívek"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -191,7 +191,7 @@ msgstr "Kérések táblázat"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Az összes kérés kijelölése"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -203,7 +203,7 @@ msgstr "Szavazás ideje"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Ezen kérés kijelölése"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -211,7 +211,7 @@ msgstr "Részletek megtekintése"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Statisztikák törlése"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -223,11 +223,11 @@ msgstr "vissza a statisztikák áttekintőjéhez"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Előző szavazat"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Következő szavazat"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -244,10 +244,6 @@ msgstr "Beérkezett kérdőívek"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Kérdőív részletek"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Szám"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -323,7 +319,7 @@ msgstr "Jelölőnégyzet (lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "Nettó támogató pontszám"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -413,7 +409,7 @@ msgstr "Már kitöltötte a kérdőívet."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Kérdőívlista"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -469,7 +465,7 @@ msgstr "Meghatározza azokat a csoportokat, amelyeknek jogosultsága van a kérd
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "Meghatározza, hogy a kérdőív kérések csak valódi ügyfeleknek legyenek kiküldve."
 
 #. SysConfig
 msgid ""
@@ -489,7 +485,7 @@ msgstr "Meghatározza azt a mennyiséget órában, amíg a jegyet le kell zárni
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "Meghatározza az oszlopokat a legördülő listánál a küldési feltételek összeállításához (0 => inaktív, 1 => aktív)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -497,7 +493,7 @@ msgstr "Meghatározza a Rich Text nézetek alapértelmezett magasságát a kérd
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "Meghatározza azokat a csoportokat (írás, olvasás), amelyek törölhetik a kérdőív statisztikákat."
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -511,11 +507,7 @@ msgstr "Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. E
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Meghatározza, hogy a statisztika modul előállíthat-e kérdőívlistákat."
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -581,7 +573,7 @@ msgid ""
 "Results older than the configured amount of days will be deleted. Note: "
 "delete results done by the OTRS Daemon, prior activation of "
 "'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "A beállított napok számánál régebbi eredmények törlésre kerülnek. Megjegyzés: az eredmények törlését az OTRS démon végzi el a „Task###SurveyRequestsDelete” beállítás aktiválása előtt."
 
 #. SysConfig
 msgid ""
@@ -647,7 +639,7 @@ msgstr "Egy kérdőív azonosítója, például Survey#, MySurvey#. Az alapérte
 
 #. SysConfig
 msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
+msgstr "Ez egy leírás a kérdőív áttekintőjének kis oldalmegjelenítéshez a kérdőíven."
 
 #. SysConfig
 msgid ""
@@ -657,7 +649,7 @@ msgstr "Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhe
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "Törlési eredmények aktiválása (beleértve a szavazati adatokat és kéréseket)."
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

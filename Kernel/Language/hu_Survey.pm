@@ -22,10 +22,10 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Értesítés törzse';
     $Self->{Translation}->{'Ticket Types'} = 'Jegytípusok';
     $Self->{Translation}->{'Internal Description'} = 'Belső leírás';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Customer conditions'} = 'Ügyfél feltételek';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'Válasszon egy ügyféltulajdonságot egy feltételhez való hozzáadáshoz.';
+    $Self->{Translation}->{'Public survey key'} = 'Nyilvános kérdőívkulcs';
+    $Self->{Translation}->{'Example survey'} = 'Példa kérdőív';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Általános információk szerkesztése';
@@ -56,12 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Válasz:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Kérdőív áttekintő lehetőségek';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
-        '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+        'A szám, cím, bevezetés, leírás, értesítés küldője, értesítés tárgya és értesítés törzse attribútumokban keres, felülbírálva az ugyanilyen nevű egyéb attribútumokat.';
+    $Self->{Translation}->{'Survey Create Time'} = 'Kérdőív létrehozási ideje';
+    $Self->{Translation}->{'No restriction'} = 'Nincs megkötés';
+    $Self->{Translation}->{'Only surveys created between'} = 'Csak ezek között létrehozott kérdőívek';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Oldalanként megjelenített legtöbb kérdőív';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,16 +72,16 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'A következő statisztikáinak áttekintése';
     $Self->{Translation}->{'Requests Table'} = 'Kérések táblázat';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Az összes kérés kijelölése';
     $Self->{Translation}->{'Send Time'} = 'Küldés ideje';
     $Self->{Translation}->{'Vote Time'} = 'Szavazás ideje';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Ezen kérés kijelölése';
     $Self->{Translation}->{'See Details'} = 'Részletek megtekintése';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = 'Statisztikák törlése';
     $Self->{Translation}->{'Survey Stat Details'} = 'Kérdőív statisztika részletek';
     $Self->{Translation}->{'go back to stats overview'} = 'vissza a statisztikák áttekintőjéhez';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = 'Előző szavazat';
+    $Self->{Translation}->{'Next vote'} = 'Következő szavazat';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Kérdőív információk';
@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Igen/Nem';
     $Self->{Translation}->{'Radio (List)'} = 'Választógomb (lista)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Jelölőnégyzet (lista)';
-    $Self->{Translation}->{'Net Promoter Score'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = 'Nettó támogató pontszám';
     $Self->{Translation}->{'Question Type'} = 'Kérdés típusa';
     $Self->{Translation}->{'Complete'} = 'Kész';
     $Self->{Translation}->{'Incomplete'} = 'Befejezetlen';
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = 'Már kitöltötte a kérdőívet.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = 'Kérdőívlista';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
@@ -169,22 +169,22 @@ sub Data {
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         'Meghatározza azokat a csoportokat, amelyeknek jogosultsága van a kérdőív állapotának megváltoztatására. Alapértelmezetten a tömb üres, és az ügyintézők az összes csoportból megváltoztathatják a kérdőív állapotát.';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
-        '';
+        'Meghatározza, hogy a kérdőív kérések csak valódi ügyfeleknek legyenek kiküldve.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Meghatározza a kérdőívek legnagyobb mennyiségét, amelyet 30 naponta elküldhetnek egy ügyfélnek (a 0 azt jelenti, hogy nincs maximum, minden kérdőív kérés elküldésre kerül).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Meghatározza azt a mennyiséget órában, amíg a jegyet le kell zárni, hogy aktiválja a kérdőív kiküldését (a 0 jelentése, hogy azonnal küldje a lezárás után). Megjegyzés: a késleltetett kérdőív kiküldését az OTRS démon végzi el a „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” beállítás előzetes bekapcsolása után.';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
-        '';
+        'Meghatározza az oszlopokat a legördülő listánál a küldési feltételek összeállításához (0 => inaktív, 1 => aktív).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Meghatározza a Rich Text nézetek alapértelmezett magasságát a kérdőív nagyítás elemeknél.';
-    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = 'Meghatározza azokat a csoportokat (írás, olvasás), amelyek törölhetik a kérdőív statisztikákat.';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'Meghatározza a Rich Text nézetek legnagyobb magasságát a kérdőív nagyítás elemeknél.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. Ennek a beállításnak nincs hatása az oszlopok helyzetére.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
-        '';
+        'Meghatározza, hogy a statisztika modul előállíthat-e kérdőívlistákat.';
     $Self->{Translation}->{'Edit survey general information.'} = 'Kérdőív általános információinak szerkesztése.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Kérdőív kérdések szerkesztése.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -207,7 +207,7 @@ sub Data {
         'Paraméterek a kis kérdőív áttekintő oldalaihoz (amelyekben a kérdőívek megjelennek).';
     $Self->{Translation}->{'Public Survey.'} = 'Nyilvános kérdőív.';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        '';
+        'A beállított napok számánál régebbi eredmények törlésre kerülnek. Megjegyzés: az eredmények törlését az OTRS démon végzi el a „Task###SurveyRequestsDelete” beállítás aktiválása előtt.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy kérdőív szerkesztéséhez az ügyintézői felületen az elem nagyítási nézetében.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -227,10 +227,10 @@ sub Data {
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Egy kérdőív azonosítója, például Survey#, MySurvey#. Az alapértelmezett: Survey#.';
     $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
+        'Ez egy leírás a kérdőív áttekintőjének kis oldalmegjelenítéshez a kérdőíven.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhez az ügyfeleknek, ha egy jegy le van zárva.';
-    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = 'Törlési eredmények aktiválása (beleértve a szavazati adatokat és kéréseket).';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Késleltetett kérdőívkérések küldésének aktiválása.';
     $Self->{Translation}->{'Zoom into statistics details.'} = 'Nagyítás a statisztikák részleteibe.';
 

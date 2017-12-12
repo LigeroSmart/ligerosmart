@@ -56,7 +56,7 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Odpowiedz:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Opcje przeglądu ankiety';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
         '';
     $Self->{Translation}->{'Survey Create Time'} = 'Czas utworzenia ankiety';
@@ -77,11 +77,11 @@ sub Data {
     $Self->{Translation}->{'Vote Time'} = 'Czas głosowania';
     $Self->{Translation}->{'Select this request'} = 'Zaznacz to żądanie';
     $Self->{Translation}->{'See Details'} = 'Zobacz szczegóły';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = 'Usuń statystyki';
     $Self->{Translation}->{'Survey Stat Details'} = 'Szczegóły statystyki';
     $Self->{Translation}->{'go back to stats overview'} = 'Wstecz do przeglądu statystyki';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = 'Poprzedni głos';
+    $Self->{Translation}->{'Next vote'} = 'Następny głos';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informacje o ankiecie';
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = 'Już odpowiedziałeś na tę ankietę.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = 'Lista ankiet';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =

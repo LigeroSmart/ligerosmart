@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-09-29 15:35+0000\n"
-"PO-Revision-Date: 2017-10-20 09:48+0000\n"
+"PO-Revision-Date: 2017-11-23 08:04+0000\n"
 "Last-Translator: Daniel Lisiecki\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "Odpowiedz:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Opcje przeglądu ankiety"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
@@ -212,7 +212,7 @@ msgstr "Zobacz szczegóły"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Usuń statystyki"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -224,11 +224,11 @@ msgstr "Wstecz do przeglądu statystyki"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Poprzedni głos"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Następny głos"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -410,7 +410,7 @@ msgstr "Już odpowiedziałeś na tę ankietę."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Lista ankiet"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
