@@ -2673,7 +2673,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::State::Signal" Required="1" Valid="1">
-        <Description Translatable="1">Defines the signals for each ITSMChange state.</Description>
+        <Description Translatable="1">Defines the signals for each ITSM change state.</Description>
         <Navigation>Core::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2705,7 +2705,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Attribute::CompareValue::FieldType" Required="1" Valid="1">
-        <Description Translatable="1">Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
+        <Description Translatable="1">Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
         <Navigation>Core::ITSMCondition::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2728,7 +2728,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Object::Attribute" Required="1" Valid="1">
-        <Description Translatable="1">Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2751,7 +2751,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeStateID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2771,7 +2771,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeTitle" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2791,7 +2791,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###CategoryID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2811,7 +2811,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ImpactID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2831,7 +2831,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###PriorityID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2851,7 +2851,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeManagerID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2871,7 +2871,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeBuilderID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2891,7 +2891,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###RequestedTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2911,7 +2911,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2931,7 +2931,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2951,7 +2951,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2971,7 +2971,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -2991,7 +2991,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3011,7 +3011,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###AccountedTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3031,7 +3031,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Expression::Attribute::Operator###DynamicField" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3051,7 +3051,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Object::Attribute" Required="1" Valid="1">
-        <Description Translatable="1">Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3074,7 +3074,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeStateID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3084,7 +3084,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeTitle" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3093,7 +3093,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###CategoryID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3102,7 +3102,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ImpactID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3111,7 +3111,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###PriorityID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3120,7 +3120,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeManagerID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3129,7 +3129,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeBuilderID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3138,7 +3138,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###RequestedTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3147,7 +3147,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3156,7 +3156,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3165,7 +3165,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3174,7 +3174,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3183,7 +3183,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3192,7 +3192,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###AccountedTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3201,7 +3201,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Mapping::Action::Attribute::Operator###DynamicField" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMChange</Navigation>
         <Value>
             <Hash>
@@ -3210,7 +3210,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Attribute::CompareValue::FieldType" Required="1" Valid="1">
-        <Description Translatable="1">Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
+        <Description Translatable="1">Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
         <Navigation>Core::ITSMCondition::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3230,7 +3230,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Object::Attribute" Required="1" Valid="1">
-        <Description Translatable="1">Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3250,7 +3250,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderNumber" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3270,7 +3270,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderStateID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3290,7 +3290,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderTypeID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3310,7 +3310,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderTitle" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3330,7 +3330,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderAgentID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3350,7 +3350,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3370,7 +3370,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3390,7 +3390,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3410,7 +3410,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3430,7 +3430,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3450,7 +3450,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###AccountedTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3470,7 +3470,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###DynamicField" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Expression::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3490,7 +3490,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Object::Attribute" Required="1" Valid="1">
-        <Description Translatable="1">Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3510,7 +3510,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderNumber" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3519,7 +3519,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderStateID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3529,7 +3529,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderTypeID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3538,7 +3538,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderTitle" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3547,7 +3547,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderAgentID" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3556,7 +3556,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3565,7 +3565,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3574,7 +3574,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3583,7 +3583,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3592,7 +3592,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3601,7 +3601,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###AccountedTime" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3610,7 +3610,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###DynamicField" Required="1" Valid="1">
-        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.</Description>
+        <Description Translatable="1">Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.</Description>
         <Navigation>Core::ITSMCondition::Action::ITSMWorkOrder</Navigation>
         <Value>
             <Hash>
@@ -3759,19 +3759,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="ChangeNumber">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -3862,7 +3862,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentITSMChangeEdit###ChangeState" Required="1" Valid="1">
-        <Description Translatable="1">Defines if the change state can be set in AgentITSMChangeEdit.</Description>
+        <Description Translatable="1">Defines if the change state can be set in the change edit screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::ITSMChangeEdit</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
@@ -3940,19 +3940,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4022,19 +4022,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4122,19 +4122,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="ChangeNumber">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4201,19 +4201,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="ChangeNumber">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4292,19 +4292,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4364,19 +4364,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4449,19 +4449,19 @@
         <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4778,12 +4778,12 @@
         <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="TemplateID">
-                <Item ValueType="Option" Value="TemplateID">TemplateID</Item>
-                <Item ValueType="Option" Value="Name">Name</Item>
-                <Item ValueType="Option" Value="TemplateTypeID">TemplateTypeID</Item>
-                <Item ValueType="Option" Value="ValidID">ValidID</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
-                <Item ValueType="Option" Value="ChangeTime">ChangeTime</Item>
+                <Item ValueType="Option" Value="TemplateID" Translatable="1">Template</Item>
+                <Item ValueType="Option" Value="Name" Translatable="1">Name</Item>
+                <Item ValueType="Option" Value="TemplateTypeID" Translatable="1">Template type</Item>
+                <Item ValueType="Option" Value="ValidID" Translatable="1">Validity</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
+                <Item ValueType="Option" Value="ChangeTime" Translatable="1">Change time</Item>
             </Item>
         </Value>
     </Setting>
@@ -4863,7 +4863,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderEdit###MoveFollowingWorkOrders" Required="1" Valid="1">
-        <Description Translatable="1">Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.</Description>
+        <Description Translatable="1">Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.</Description>
         <Navigation>Frontend::Agent::View::ITSMWorkOrderEdit</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
@@ -5023,19 +5023,19 @@
         <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Item ValueType="Select" SelectedID="PlannedStartTime">
-                <Item ValueType="Option" Value="ChangeNumber">ChangeNumber</Item>
-                <Item ValueType="Option" Value="ChangeTitle">ChangeTitle</Item>
-                <Item ValueType="Option" Value="ChangeStateID">ChangeState</Item>
-                <Item ValueType="Option" Value="CategoryID">Category</Item>
-                <Item ValueType="Option" Value="ImpactID">Impact</Item>
-                <Item ValueType="Option" Value="PriorityID">Priority</Item>
-                <Item ValueType="Option" Value="RequestedTime">RequestedTime</Item>
-                <Item ValueType="Option" Value="PlannedStartTime">PlannedStartTime</Item>
-                <Item ValueType="Option" Value="PlannedEndTime">PlannedEndTime</Item>
-                <Item ValueType="Option" Value="ActualStartTime">ActualStartTime</Item>
-                <Item ValueType="Option" Value="ActualEndTime">ActualEndTime</Item>
-                <Item ValueType="Option" Value="Priority">Priority</Item>
-                <Item ValueType="Option" Value="CreateTime">CreateTime</Item>
+                <Item ValueType="Option" Value="ChangeNumber" Translatable="1">Change number</Item>
+                <Item ValueType="Option" Value="ChangeTitle" Translatable="1">Change title</Item>
+                <Item ValueType="Option" Value="ChangeStateID" Translatable="1">Change state</Item>
+                <Item ValueType="Option" Value="CategoryID" Translatable="1">Category</Item>
+                <Item ValueType="Option" Value="ImpactID" Translatable="1">Impact</Item>
+                <Item ValueType="Option" Value="PriorityID" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="RequestedTime" Translatable="1">Requested time</Item>
+                <Item ValueType="Option" Value="PlannedStartTime" Translatable="1">Planned start time</Item>
+                <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
+                <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
+                <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
+                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
+                <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
     </Setting>
@@ -5396,14 +5396,14 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentHTMLFieldHeightDefault" Required="1" Valid="1">
-        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.</Description>
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^[0-9]{1,4}$">100</Item>
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::AgentHTMLFieldHeightMax" Required="1" Valid="1">
-        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.</Description>
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::ITSMChangeZoom</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^[0-9]{1,5}$">2500</Item>
