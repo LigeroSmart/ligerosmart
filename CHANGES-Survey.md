@@ -1,4 +1,6 @@
-#6.0.2 2017-??-??
+#6.0.3 20??-??-??
+
+#6.0.2 2017-12-19
  - 2017-12-12 Updated translations, thanks to all translators.
  - 2017-11-14 Updated documentation (Configuration chapter).
 
