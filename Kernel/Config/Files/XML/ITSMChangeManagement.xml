@@ -3770,7 +3770,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -3951,7 +3950,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -4033,7 +4031,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -4133,7 +4130,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -4212,7 +4208,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -4303,7 +4298,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -4375,7 +4369,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -4460,7 +4453,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
@@ -5034,7 +5026,6 @@
                 <Item ValueType="Option" Value="PlannedEndTime" Translatable="1">Planned end time</Item>
                 <Item ValueType="Option" Value="ActualStartTime" Translatable="1">Actual start time</Item>
                 <Item ValueType="Option" Value="ActualEndTime" Translatable="1">Actual end time</Item>
-                <Item ValueType="Option" Value="Priority" Translatable="1">Priority</Item>
                 <Item ValueType="Option" Value="CreateTime" Translatable="1">Create time</Item>
             </Item>
         </Value>
