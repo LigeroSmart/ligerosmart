@@ -541,6 +541,8 @@ sub Data {
         'Azon ügyintézők listája, akik jogosultsággal rendelkeznek a munkamegrendelések felvételéhez. A kulcs a bejelentkezési név. A tartalom 0 vagy 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Azon munkamegrendelés-állapotok listája, amelyeknél egy munkamegrendelés tényleges kezdési ideje be lesz állítva, ha az üres ennél a pontnál.';
+    $Self->{Translation}->{'Actual end time'} = '';
+    $Self->{Translation}->{'Actual start time'} = '';
     $Self->{Translation}->{'Add Workorder'} = 'Munkamegrendelés hozzáadása';
     $Self->{Translation}->{'Add Workorder (from Template)'} = 'Munkamegrendelés hozzáadása (sablonból)';
     $Self->{Translation}->{'Add a change from template.'} = 'Egy változás hozzáadása sablonból.';
@@ -579,7 +581,11 @@ sub Data {
     $Self->{Translation}->{'Change area.'} = 'Változásterület.';
     $Self->{Translation}->{'Change involved persons of the change.'} = 'A változás résztvevő személyeinek módosítása.';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = 'Oldalankénti változás korlát a „kis” változás áttekintőnél.';
+    $Self->{Translation}->{'Change number'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Az ügyintézői felület változás keresési háttérprogram útválasztója.';
+    $Self->{Translation}->{'Change state'} = '';
+    $Self->{Translation}->{'Change time'} = '';
+    $Self->{Translation}->{'Change title'} = '';
     $Self->{Translation}->{'Condition Edit'} = 'Feltétel szerkesztés';
     $Self->{Translation}->{'Condition Overview'} = 'Feltétel áttekintés';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
@@ -614,8 +620,8 @@ sub Data {
     $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Meghatározza, hogy a tényleges kezdési és befejezési időket be kell-e állítani.';
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
         'Meghatározza, hogy a változáskeresés és a munkamegrendelés-keresés funkciók használhatják-e a tükör adatbázist.';
-    $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        'Meghatározza, hogy a változás állapota beállítható-e az AgentITSMChangeEdit beállításban.';
+    $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Meghatározza, hogy a tervezett ráfordítást meg kell-e jeleníteni.';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Meghatározza, hogy a kért dátumot ügyfél szerint kell-e kinyomtatni.';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
@@ -679,54 +685,54 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Meghatározza az alapértelmezett rendezési sorrendet a sablon áttekintőjében.';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Meghatározza egy változás kategóriájának alapértelmezett értékét.';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Meghatározza egy változás hatásának alapértelmezett értékét.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az AgentITSMChangeConditionEdit osztályban használt változás attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az AgentITSMChangeConditionEdit osztályban használt munkamegrendelés attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a változásobjektumoknál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a munkamegrendelés objektumoknál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „Elszámolt idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kategória-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásösszeállító-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásmenedzser-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásállapot-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változáscím” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Dinamikus mező” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Hatásazonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett ráfordítás” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Prioritás-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kért idő” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés ügyintéző-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-szám” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelésállapot-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-cím” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendeléstípus-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban.';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         'Meghatározza (években) azt az időszakot, amelyben a kezdési és befejezési idők kiválaszthatók.';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
@@ -753,7 +759,7 @@ sub Data {
         'Meghatározza a megjelenített oszlopokat az ügyfél változtatási ütemterv áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'Meghatározza a megjelenített oszlopokat a sablon áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére.';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Meghatározza a szignálokat minden egyes ITSMChange állapothoz.';
+    $Self->{Translation}->{'Defines the signals for each ITSM change state.'} = '';
     $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
         'Meghatározza azokat a sablontípusokat, amelyek szűrőkként lesznek használva a sablon áttekintőjében.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
@@ -872,6 +878,8 @@ sub Data {
         'Paraméterek a kis változás áttekintő oldalaihoz (amelyekben a változások megjelennek).';
     $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
         'Végrehajtja a beállított műveletet minden eseménynél (mint egy meghívó) minden egyes beállított webszolgáltatáshoz.';
+    $Self->{Translation}->{'Planned end time'} = '';
+    $Self->{Translation}->{'Planned start time'} = '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen.';
     $Self->{Translation}->{'Print the change.'} = 'A változás nyomtatása.';
@@ -880,6 +888,7 @@ sub Data {
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Tervezett szolgáltatáselérhetőség (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         'A változás tervezett szolgáltatáselérhetősége (PSA). A jóváhagyott változások és azok szolgáltatásainak áttekintése.';
+    $Self->{Translation}->{'Requested time'} = '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         'A szükséges jogosultságok annak érdekében, hogy egy ügyintéző felvehessen egy munkamegrendelést.';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'A szükséges jogosultságok az összes változás áttekintőjének hozzáféréséhez.';
@@ -938,18 +947,18 @@ sub Data {
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Kiválasztja a változásszám előállító modult. Az „AutoIncrement” növeli a változásszámot, ahol a rendszer-azonosítót és a számlálót a RendszerID.számláló formátummal használja (például 100118, 100119). A „Date” értékkel a változásszámokat az aktuális dátum és a számláló fogja előállítani. A formátum így néz ki: Év.Hónap.Nap.számláló (például 2010062400001, 2010062400002). A „DateChecksum” használatával a számláló ellenőrzőösszegként lesz hozzáfűzve a dátum és a rendszer-azonosító szövegéhez. Az ellenőrzőösszeg naponta fog átfordulni. A formátum így néz ki: Év.Hónap.Nap.RendszerID.Számláló.EllÖsszeg (például 2010062410000017, 2010062410000026).';
     $Self->{Translation}->{'Set the agent for the workorder.'} = 'Az ügyintéző beállítása a munkamegrendeléshez.';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen.';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen.';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Beállítja a legkisebb változásszámláló méretet (ha „AutoIncrement” lett kiválasztva ITSM változás::Számelőállítóként) Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni.';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
         'Beállítja a legkisebb változásszámláló méretet, ha „AutoIncrement” lett kiválasztva változásszám-előállítóként. Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Beállítja az állapotgépet a változásoknál.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Beállítja az állapotgépet a munkamegrendeléseknél.';
-    $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        'Egy jelölőnégyzetet jelenít meg az AgentITSMWorkOrderEdit képernyőn, amely azt határozza meg, hogy a következő munkamegrendeléseket is át kell-e helyezni, ha egy munkamegrendelés módosult és a tervezett befejezési idő megváltozott.';
+    $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi a munkamegrendelés ügyintézőjének megváltoztatását az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
@@ -1001,6 +1010,7 @@ sub Data {
     $Self->{Translation}->{'Take Workorder.'} = 'Munkamegrendelés felvétele.';
     $Self->{Translation}->{'Take the workorder.'} = 'A munkamegrendelés felvétele.';
     $Self->{Translation}->{'Template Overview'} = 'Sablon áttekintő';
+    $Self->{Translation}->{'Template type'} = '';
     $Self->{Translation}->{'Template.'} = 'Sablon.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Egy változás azonosítója, például Change#, MyChange#. Az alapértelmezett: Change#.';

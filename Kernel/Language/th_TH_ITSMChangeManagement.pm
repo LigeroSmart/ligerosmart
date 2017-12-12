@@ -541,6 +541,8 @@ sub Data {
         'รายชื่อของเอเย่นต์ที่ได้รับอนุญาตให้ใช้ใบสั่งงาน คีย์สำคัญคือชื่อล๊อกอิน เนื้อหาเป็น 0 หรือ 1';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'รายการสถานภาพของใบสั่งงานที่ ActualStartTime ของ workorder จะถูกตั้งค่าถ้าหากจุดนี้เป็นที่ว่างเปล่า';
+    $Self->{Translation}->{'Actual end time'} = '';
+    $Self->{Translation}->{'Actual start time'} = '';
     $Self->{Translation}->{'Add Workorder'} = 'เพิ่มใบสั่งงาน';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = '';
@@ -579,7 +581,11 @@ sub Data {
     $Self->{Translation}->{'Change area.'} = '';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
+    $Self->{Translation}->{'Change number'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'เปลี่ยนการค้นหา  backend router ของอินเตอร์เฟซเอเย่นต์';
+    $Self->{Translation}->{'Change state'} = '';
+    $Self->{Translation}->{'Change time'} = '';
+    $Self->{Translation}->{'Change title'} = '';
     $Self->{Translation}->{'Condition Edit'} = 'แก้ไขเงื่อนไข';
     $Self->{Translation}->{'Condition Overview'} = '';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
@@ -614,8 +620,8 @@ sub Data {
     $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'กำหนดถ้าหาก the actual start time และ the end time จะต้องบันทึก';
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
         'กำหนดหากการค้นหาการเปลี่ยนแปลงและฟังก์ชั่นการค้นหา workorder สามารถใช้ฐานข้อมูลสะท้อนกลับ';
-    $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        'กำหนดถ้าหาก the change state สามารถบันทึกใน AgentITSMChangeEdit.';
+    $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'กำหนดค่าถ้าหาก the planned effort จะต้องแสดง';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'กำหนดค่าถ้าหากลูกค้าต้องการพิมพ์ the requested date ';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
@@ -679,54 +685,54 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมรูปแบบ';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'กำหนดประเภทเริ่มต้นสำหรับประเภทของการเปลี่ยนแปลง';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'กำหนดประเภทเริ่มต้นสำหรับผลกระทบของการเปลี่ยนแปลง';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'กำหนดชนิดของฟิลด์ของช่องข้อมูล CompareValue สำหรับแอตทริบิวต์การเปลี่ยนแปลงที่จะใช้ใน AgentITSMChangeConditionEdit ค่าที่ถูกต้องคือการเลือก ข้อความและวันที่ ถ้าไม่ได้กำหนดชนิด ฟิลด์จะไม่ถูกแสดง';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'กำหนดชนิดของฟิลด์ของช่องข้อมูล CompareValue สำหรับแอตทริบิวต์ใบสั่งงานที่จะใช้ใน AgentITSMChangeConditionEdit ค่าที่ถูกต้องคือการเลือก ข้อความและวันที่ ถ้าไม่ได้กำหนดชนิด ฟิลด์จะไม่ถูกแสดง';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        'กำหนดคุณลักษณะของออบเจคที่สามารถเลือกได้สำหรับออบเจคการเปลี่ยนแปลงใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        'กำหนดคุณลักษณะของออบเจคที่สามารถเลือกได้สำหรับออบเจคใบสั่งงานใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ AccountedTime ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ActualEndTime ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ActualStartTime ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ CategoryID  ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeBuilderID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeManagerID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeStateID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeTitle ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ DynamicField ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ImpactID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PlannedEffort ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PlannedEndTime ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PlannedStartTime ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PriorityID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ RequestedTime ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderAgentID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderNumberใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderStateID ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderTitle ใน AgentITSMChangeConditionEdit';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        'กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderTypeID ใน AgentITSMChangeConditionEdit';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         'กำหนดระยะเวลา (ในปีที่ผ่านมา) ซึ่งวันเริ่มต้นและวันสิ้นสุดสามารถเลือกได้';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
@@ -753,7 +759,7 @@ sub Data {
         'กำหนดคอลัมน์ที่จะแสดงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'กำหนดคอลัมน์ที่จะแสดงในภาพรวมรูแปบบ ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'กำหนดสัญญาณสำหรับแต่ละสถานภาพของITSMChange';
+    $Self->{Translation}->{'Defines the signals for each ITSM change state.'} = '';
     $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
         'กำหนดประเภทแม่แบบที่จะนำมาใช้เป็นตัวกรองในภาพรวมแม่แบบ';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
@@ -872,6 +878,8 @@ sub Data {
         'พารามิเตอร์สำหรับแต่ละหน้า(ซึ่งการเปลี่ยนแปลงจะแสดง) ของภาพรวมการเปลี่ยนแปลงขนาดเล็ก';
     $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
         '';
+    $Self->{Translation}->{'Planned end time'} = '';
+    $Self->{Translation}->{'Planned start time'} = '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'แสดงการเชื่อมโยงในเมนูที่จะแสดงให้คนที่เกี่ยวข้องในการเปลี่ยนแปลงในมุมมองการซูมของการเปลี่ยนแปลงดังกล่าวของอินเตอร์เฟสเอเย่นต์';
     $Self->{Translation}->{'Print the change.'} = '';
@@ -880,6 +888,7 @@ sub Data {
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = '';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         '';
+    $Self->{Translation}->{'Requested time'} = '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         'สิทธิพิเศษที่จำเป็นต้องใช้เพื่อให้เอเย่นต์ที่จะรับใบสั่งงาน';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'สิทธิพิเศษที่จำเป็นในการเข้าถึงภาพรวมของการเปลี่ยนแปลงทั้งหมด';
@@ -938,18 +947,18 @@ sub Data {
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'เลือกโมดูลตัวสร้างหมายเลขการเปลี่ยนแปลง "AutoIncrement" เพิ่มจำนวนการเปลี่ยนแปลง SystemID และตัวนับจะใช้กับ SystemID รูปแบบตัวนับ (เช่น 100118, 100119) กับ "วันที่" ซึ่งหมายเลขการเปลี่ยนแปลงจะถูกสร้างขึ้นโดยวันที่ปัจจุบันและตัวนับ; รูปแบบนี้มีลักษณะเช่น Year.Month.Day.counter เช่น 2010062400001, 2010062400002. กับ "DateChecksum" ตัวนับจะถูกผนวกเป็นการตรวจสอบไปยังสตริงวันบวกด้วย SystemID ที่การตรวจสอบจะมีการหมุนในแต่ละวัน รูปแบบนี้มีลักษณะเช่นYear.Month.Day.SystemID.Counter.CheckSum เช่น 2010062410000017, 2010062410000026';
     $Self->{Translation}->{'Set the agent for the workorder.'} = '';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'ตั้งค่าความสูงเริ่มต้น (พิกเซล) ของฟิลด์ HTML อินไลน์ใน AgentITSMChangeZoom และ AgentITSMWorkOrderZoom';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'ตั้งค่าความสูงเริ่มต้น (พิกเซล) ของฟิลด์ HTML อินไลน์ใน AgentITSMChangeZoom และ AgentITSMWorkOrderZoom';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'ตั้งค่าขนาดตัวนับการเปลี่ยนแปลงน้อยที่สุด (ถ้า "AutoIncrement" ได้รับเลือกเป็น ITSMChange :: NumberGenerator) ค่าเริ่มต้นคือ 5 ซึ่งหมายความว่าตัวนับเริ่มต้นจาก 10000';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
         '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'ตั้งค่าเครื่องของสถานะสำหรับการเปลี่ยนแปลง';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'ตั้งค่าเครื่องของสถานะสำหรับใบสั่งงาน';
-    $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        'แสดงช่องทำเครื่องหมายในหน้าจอ AgentITSMWorkOrderEdit ที่กำหนดถ้าหากใบสั่งงานต่อไปนี้ควรจะถูกย้าย ถ้าใบสั่งงานมีการแก้ไขและเวลาสิ้นสุดที่วางแผนไว้มีการเปลี่ยนแปลง';
+    $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
@@ -1002,6 +1011,7 @@ sub Data {
     $Self->{Translation}->{'Take Workorder.'} = '';
     $Self->{Translation}->{'Take the workorder.'} = '';
     $Self->{Translation}->{'Template Overview'} = 'มุมมองแม่แบบ';
+    $Self->{Translation}->{'Template type'} = '';
     $Self->{Translation}->{'Template.'} = '';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'ตัวบ่งชี้สำหรับการเปลี่ยนแปลง เช่น การเปลี่ยนแปลง#  การเปลี่ยนแปลงของฉัน# ค่าเริ่มต้นคือ การเปลี่ยนแปลง#';

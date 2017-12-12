@@ -541,6 +541,8 @@ sub Data {
         'Sebuah daftar agen yang memiliki izin untuk menerima perintah kerja. Key adalah nama login. Konten adalah 0 atau 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Daftar status perintah kerja di mana sebenarnya Start Time dari workorder akan ditetapkan apakah itu kosong pada saat ini.';
+    $Self->{Translation}->{'Actual end time'} = '';
+    $Self->{Translation}->{'Actual start time'} = '';
     $Self->{Translation}->{'Add Workorder'} = 'Tambahkan Work Order';
     $Self->{Translation}->{'Add Workorder (from Template)'} = '';
     $Self->{Translation}->{'Add a change from template.'} = 'Tambah perubahan dari template';
@@ -579,7 +581,11 @@ sub Data {
     $Self->{Translation}->{'Change area.'} = 'Mengubah area';
     $Self->{Translation}->{'Change involved persons of the change.'} = '';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = '';
+    $Self->{Translation}->{'Change number'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Ubah pencarian backend router dari interface agen.';
+    $Self->{Translation}->{'Change state'} = '';
+    $Self->{Translation}->{'Change time'} = '';
+    $Self->{Translation}->{'Change title'} = '';
     $Self->{Translation}->{'Condition Edit'} = 'Edit kondisi';
     $Self->{Translation}->{'Condition Overview'} = 'Kondisi keseluruhan';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
@@ -614,8 +620,8 @@ sub Data {
     $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Mendifinisikan waktu mulai dan waktu berakhir harus bisa diatur';
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
         'Mendifinisikan jika perubahan pencarian dan fungsi pencarian perintah kerja bisa menggunakan DB';
-    $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        'Mendefinisikan jika perubahan dapat diatur dalam AgentITSMChangeEdit.';
+    $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Mendefinisikan jika upaya yang direncanakan harus ditampilkan.';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Mendefinisikan jika tanggal yang diminta harus dicetak oleh pelanggan.';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
@@ -679,54 +685,54 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Mendefinisikan urutan standar semacam di template';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Mendefinisikan nilai default untuk kategori perubahan.';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Mendefinisikan nilai default untuk dampak perubahan.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Mendefinisikan jenis bidang bidang Nilai Bandingkan untuk atribut perubahan digunakan dalam AgentITSMChangeConditionEdit. Nilai yang valid dipilih, Teks dan Tanggal. Jika tipe tidak didefinisikan, lapangan tidak akan ditampilkan.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Mendefinisikan jenis bidang bidang Nilai Bandingkan untuk atribut perintah kerja yang digunakan dalam AgentITSMChangeConditionEdit. Nilai yang valid yang Dipilih, Teks dan Tanggal. Jika tipe tidak didefinisikan, lapangan tidak akan ditampilkan.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan atribut objek yang dipilih untuk perubahan objyek AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan atribut objek yang dipilih untuk perintah kerja benda di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk AccountedTime atribut di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk ActualEndTime atribut di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Kategori ID di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut ChangeBuilderID di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Perubahan ManagerId di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk ChangeStateID atribut di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Perubahan Judul di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Bidang Dinamis di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut berdampak di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Direncanakan Upaya AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk PlannedEndTime atribut di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Direncanakan Start Time di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk ID atribut Prioritas di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk RequestedTime atribut di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut WorkOrderAgentID di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut WorkOrderNumber di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut WorkOrderStateID di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut WorkOrderTitle di AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        'Mendefinisikan operator yang dipilih untuk atribut Work Order TypeID di AgentITSMChangeConditionEdit.';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         'Mendefinisikan periode (tahun), di mana waktu mulai dan bisa dipilih.';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
@@ -753,7 +759,7 @@ sub Data {
         'Mendefinisikan acara kolom di pelanggan jadwal perubahan. Pilihan ini tidak berpengaruh pada posisi kolom.';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'Mendefinisikan acara kolom di template. Pilihan ini tidak berpengaruh pada posisi kolom.';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Mendefinisikan sinyal untuk setiap ITSMChange state.';
+    $Self->{Translation}->{'Defines the signals for each ITSM change state.'} = '';
     $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
         'Mendefinisikan jenis template yang akan digunakan sebagai filter dalam template';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
@@ -872,6 +878,8 @@ sub Data {
         'Parameter untuk halaman (di mana perubahan akan ditampilkan) dari gambaran perubahan kecil.';
     $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
         'Melakukan tindakan dikonfigurasi untuk setiap acara (sebagai Invoker) untuk setiap Layanan Web dikonfigurasi.';
+    $Self->{Translation}->{'Planned end time'} = '';
+    $Self->{Translation}->{'Planned start time'} = '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'Menyajikan link dalam menu untuk menunjukkan orang-orang yang terlibat dalam perubahan, dalam tampilan zoom perubahan tersebut dalam antarmuka agen.';
     $Self->{Translation}->{'Print the change.'} = '';
@@ -880,6 +888,7 @@ sub Data {
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Proyeksi Layanan Ketersediaan (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         'Proyeksi Layanan Ketersediaan (PSA) perubahan. Ikhtisar perubahan disetujui dan layanan mereka.';
+    $Self->{Translation}->{'Requested time'} = '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         'hak diperlukan agar agen untuk mengambil perintah kerja.';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'hak yang diperlukan untuk mengakses gambaran dari semua perubahan.';
@@ -938,18 +947,18 @@ sub Data {
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Memilih modul jumlah perubahan pembangkit. "AutoIncrement" increment jumlah perubahan, SystemID dan meja yang digunakan dengan format yang SystemID.counter (Misalnya 100.118, 100.119). Dengan "Tanggal", angka perubahan akan dihasilkan oleh tanggal dan counter; format ini tampak seperti Year.Month.Day.counter, misalnya 2010062400001, 2010062400002. Dengan "DateChecksum", counter akan ditambahkan sebagai checksum untuk string dari tanggal ditambah SystemID. checksum akan diputar setiap hari. Format ini terlihat seperti Year.Month.Day.SystemID.Counter.CheckSum, misalnya 2010062410000017, 2010062410000026.';
     $Self->{Translation}->{'Set the agent for the workorder.'} = '';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'Mengatur tinggi default (dalam piksel) bidang HTML inline di AgentITSMChangeZoom dan AgentITSMWorkOrderZoom.';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'Mengatur ketinggian maksimum (dalam piksel) bidang HTML inline di AgentITSMChangeZoom dan AgentITSMWorkOrderZoom.';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Menetapkan minimal ukuran perubahan counter (jika "auto_increment" terpilih sebagai Perubahan ITSM :: Number Generator). Default adalah 5, ini berarti konter dimulai dari 10000.';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
         '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Set up mesin untuk perubahan.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Set up mesin untuk perintah kerja.';
-    $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        'Menunjukkan kotak centang di layar AgentITSMWorkOrderEdit yang mendefinisikan jika perintah kerja berikut juga harus pindah jika workorder ini dimodifikasi dan waktu akhir yang direncanakan telah berubah.';
+    $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
         'Menunjukkan link dalam menu yang memungkinkan mengubah agen perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
@@ -1001,6 +1010,7 @@ sub Data {
     $Self->{Translation}->{'Take Workorder.'} = 'Mengambil perintah kerja';
     $Self->{Translation}->{'Take the workorder.'} = '';
     $Self->{Translation}->{'Template Overview'} = 'Ikhtisar Template';
+    $Self->{Translation}->{'Template type'} = '';
     $Self->{Translation}->{'Template.'} = 'Template';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Pengenal untuk perubahan, misalnya. Ganti #,  perubahan saya#. default Berubah #.';

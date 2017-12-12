@@ -541,6 +541,8 @@ sub Data {
         'Листа оператера који имају дозволу преузимања радних налога. Кључ је корисничко име. Садржај је 0 или 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Листа статуса радног налога, при којима ће актуелно време почетка радног налога, бити постављено ако је празно у овом моменту. ';
+    $Self->{Translation}->{'Actual end time'} = '';
+    $Self->{Translation}->{'Actual start time'} = '';
     $Self->{Translation}->{'Add Workorder'} = 'Додај радни налог';
     $Self->{Translation}->{'Add Workorder (from Template)'} = 'Додај радни налог (од шаблона)';
     $Self->{Translation}->{'Add a change from template.'} = 'Додај промену из шаблона.';
@@ -579,7 +581,11 @@ sub Data {
     $Self->{Translation}->{'Change area.'} = 'Простор промене.';
     $Self->{Translation}->{'Change involved persons of the change.'} = 'Измени особе укључене у ову промену.';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = 'Ограничење броја промена по страници за преглед малог формата.';
+    $Self->{Translation}->{'Change number'} = '';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Позадински модул претраге за промене у интерфејсу оператера';
+    $Self->{Translation}->{'Change state'} = '';
+    $Self->{Translation}->{'Change time'} = '';
+    $Self->{Translation}->{'Change title'} = '';
     $Self->{Translation}->{'Condition Edit'} = 'Уреди услов';
     $Self->{Translation}->{'Condition Overview'} = 'Преглед услова';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
@@ -614,8 +620,8 @@ sub Data {
     $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Дефинише да ли актуелна времена почетка и завршетка треба да се подесе.';
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
         'Одређује да ли функције претраге промена и претраге радних налога могу да користе пресликану базу података.';
-    $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} =
-        'Одређује да ли статус промене може да се подеси у AgentITSMChangeEdit.';
+    $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Одређује да ли планирани напор треба да буде приказан.';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Дефинише да ли клијент треба да штампа тражени датум.';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
@@ -679,54 +685,54 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Дефинише подразумевани редослед у прегледу шаблона.';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Дефинише подразумевану вредност за категорију промене.';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Дефинише подразумевану вредност за утицај промене.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Дефинише тип поља за CompareValue атрибуте промена у AgentITSMChangeConditionEdit. Исправне вредности су Selection, Text и Date. Уколико тип није дефинисан, поље неће бити приказано.';
-    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
-        'Дефинише тип поља за CompareValue атрибуте радних налога у AgentITSMChangeConditionEdit. Исправне вредности су Selection, Text и Date. Уколико тип није дефинисан, поље неће бити приказано.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in AgentITSMChangeConditionEdit.'} =
-        'Одређује које атрибуте објекта је могуће изабрати за објекат промене у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in AgentITSMChangeConditionEdit.'} =
-        'Одређује које атрибуте објекта је могуће изабрати за објекат радног налога у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут AccountedTime у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ActualEndTime у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ActualStartTime у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут CategoryID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ChangeBuilderID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ChangeManagerID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ChangeStateID у „gentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ChangeTitle у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут DynamicField у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут ImpactID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут PlannedEffort у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут PlannedEndTime у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут PlannedStartTime у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут PriorityID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут RequestedTime у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут WorkOrderAgentID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут WorkOrderNumber у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут WorkOrderStateID у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут WorkOrderTitle у AgentITSMChangeConditionEdit.';
-    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.'} =
-        'Одређује које операторе је могуће изабрати за атрибут WorkOrderTypeID у AgentITSMChangeConditionEdit.';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
         'Одређује период (у годинама), унутар ког је могуће изабрати времена почетка и завршетка.';
     $Self->{Translation}->{'Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc.'} =
@@ -753,7 +759,7 @@ sub Data {
         'Одређује приказане колоне у прегледу клијентског планера промена. Ова опције нема утицај на позиције колона.';
     $Self->{Translation}->{'Defines the shown columns in the template overview. This option has no effect on the position of the column.'} =
         'Одређује приказане колоне у прегледу шаблона. Ова опције нема утицај на позиције колона.';
-    $Self->{Translation}->{'Defines the signals for each ITSMChange state.'} = 'Одређује сигнале за сваки статус ITSM промене.';
+    $Self->{Translation}->{'Defines the signals for each ITSM change state.'} = '';
     $Self->{Translation}->{'Defines the template types that will be used as filters in the template overview.'} =
         'Одређује типове шаблона који ће бити кориштени као филтери у прегледу шаблона.';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
@@ -872,6 +878,8 @@ sub Data {
         'Параметри страница (на којима су промене видљиве) смањеног прегледа тикета.';
     $Self->{Translation}->{'Performs the configured action for each event (as an Invoker) for each configured Webservice.'} =
         'Извршава подешену акцију за сваки догађај (као позивалац) за сваки конфигурисан веб сервис.';
+    $Self->{Translation}->{'Planned end time'} = '';
+    $Self->{Translation}->{'Planned start time'} = '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
         'У менију приказује везу која омогућава приказ особа укључених у промену  на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Print the change.'} = 'Одштампај промену.';
@@ -880,6 +888,7 @@ sub Data {
     $Self->{Translation}->{'Projected Service Availability (PSA)'} = 'Пројектована доступност сервиса (PSA)';
     $Self->{Translation}->{'Projected Service Availability (PSA) of changes. Overview of approved changes and their services.'} =
         'Пројектована доступност сервиса (PSA) промена. Преглед одобрених промена и љихових сервиса.';
+    $Self->{Translation}->{'Requested time'} = '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} =
         'Потребна права за додавање редоследа рада.';
     $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Потребна права за приступ прегледу свих промена.';
@@ -938,18 +947,18 @@ sub Data {
     $Self->{Translation}->{'Selects the change number generator module. "AutoIncrement" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With "Date", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "DateChecksum", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026.'} =
         'Бира модул за генерисање броја промена. "AutoIncrement" увећава број промена, SystemID и бројач се користе у SystemID.бројач формату (нпр. 100118, 100119). Са "Date" бројеви промена ће бити генерисани преко тренутног датума и бројача. Формат ће изгледати као година.месец.дан.бројач (нпр. 2010062400001, 2010062400002). Са "DateChecksum" бројач ће бити додат као контролни збир низу сачињеном од датума и SystemID. Контролни збир ће се смењивати на дневном нивоу. Формат изгледа овако: година.месец.дан.SystemID.бројач.контролни_збир, нпр. 2010062410000017, 2002070110101535.';
     $Self->{Translation}->{'Set the agent for the workorder.'} = 'Одреди оператера за радни налог.';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'Дефинише подразумевану висину реда (у пикселима) HTML поља у AgentITSMChangeZoom и AgentITSMWorkOrderZoom.';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentITSMChangeZoom and AgentITSMWorkOrderZoom.'} =
-        'Дефинише максималну висину реда (у пикселима) HTML поља у AgentITSMChangeZoom и AgentITSMWorkOrderZoom.';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Подешава минималну величину бројача промена (ако је изабран "AutoIncrement" за ITSMChange::NumberGenerator). Подразумевано је 5, што значи да бројач почиње од 10000.';
     $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
         'Дефинише минималну величину бројача промена уколико је изабран "AutoIncrement" као ChangeNumberGenerator. Подразумевано је 5, што значи да бројач почиње од 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Подеси машину стања за промене.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Подеси машину стања за радне налоге.';
-    $Self->{Translation}->{'Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
-        'Приказује поље за потврду у екрану AgentITSMWorkOrderEdit које дефинише да ли ће следећи радни налози такође бити премештени уколико је радни налог измењен и планирано време завршетка промењено.';
+    $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
         'У менију приказује везу која омогућава измену оператера за радни налог, на детаљном приказу тог налога у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
@@ -1001,6 +1010,7 @@ sub Data {
     $Self->{Translation}->{'Take Workorder.'} = 'Преузми радни налог.';
     $Self->{Translation}->{'Take the workorder.'} = 'Преузми радни налог.';
     $Self->{Translation}->{'Template Overview'} = 'Преглед шаблона';
+    $Self->{Translation}->{'Template type'} = '';
     $Self->{Translation}->{'Template.'} = 'Шаблон.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Идентификатор за промену, нпр. Change#, MyChange#. Подразумевано је Change#.';
