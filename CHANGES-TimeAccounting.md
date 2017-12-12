@@ -1,4 +1,6 @@
-#6.0.2 2017-??-??
+#6.0.3 20??-??-??
+
+#6.0.2 2017-12-19
  - 2017-12-12 Updated translations, thanks to all translators.
  - 2017-12-11 Improved display of DefaultUserDateStart and DefaultUserDateEnd settings.
  - 2017-12-11 Fixed bug#[13415](https://bugs.otrs.org/show_bug.cgi?id=13415) - Incomplete days widget has wrong day of week names.
