@@ -101,8 +101,8 @@ sub Data {
         'Na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta, pokazuje listę wszystkich możliwych agentów (wszystkich agentów z uprawnieniami do notatek w kolejce/zgłoszeniu), w celu określenia kto powinien być poinformowany o tej notatce.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Pokazuje opcje priorytetu zgłoszenia na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Pokazuje pola tytułowe w oknie Nadrzędny/Podrzędny przybliżonego zgłoszenia w interfejsie agenta.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Zgłoszenia podrzędne';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Określa różne rodzaje typów wiadomości i w jaki sposób właściwa nazwa ze zgłoszenia nadrzędnego zostanie zastąpiona w zgłoszeniu podrzędnym.';

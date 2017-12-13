@@ -101,8 +101,8 @@ sub Data {
         'Показывает список всех доступных агентов (всех агентов с правами note для очереди/заявки), чтобы задать кого нужно информировать об этой заметке на экране MasterSlave заявки в интерфейсе агента. ';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Дает возможность изменить приоритет на экране MasterSlave заявки в интерфейсе агента. ';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Дает возможность изменить тему заявки на экране MasterSlave заявки в интерфейсе агента. ';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Ведомые заявки';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Задает различные типы сообщений/заметок для случая замены реального имени из главной заявки в таким же в подчиненной.';

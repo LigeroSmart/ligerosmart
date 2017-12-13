@@ -101,8 +101,8 @@ sub Data {
         'Megjeleníti az összes lehetséges ügyintéző (a várólistán vagy jegyen jegyzet jogosultsággal rendelkező összes ügyintéző) listáját egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen annak meghatározásához, hogy kit kell tájékoztatni erről a jegyzetről.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Megjeleníti a jegy prioritási lehetőségeket egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Megjeleníti a címmezőket egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Alárendelt jegyek';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';

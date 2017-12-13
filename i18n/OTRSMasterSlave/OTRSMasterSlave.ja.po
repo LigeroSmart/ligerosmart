@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:34+0000\n"
-"PO-Revision-Date: 2017-10-17 00:41+0000\n"
-"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
+"POT-Creation-Date: 2017-12-13 01:14+0000\n"
+"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -274,9 +274,9 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows the title fields in the ticket MasterSlave screen of a zoomed ticket "
-"in the agent interface."
-msgstr "担当者インターフェイスの MasterSlave のチケットズーム画面でタイトルフィールドを表示する。"
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
+" the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Slave Tickets"

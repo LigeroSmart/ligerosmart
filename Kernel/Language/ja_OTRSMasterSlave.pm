@@ -101,8 +101,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '担当者インターフェイスの MasterSlave のチケットズーム画面でタイトルフィールドを表示する。';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'スレーブチケット';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '';

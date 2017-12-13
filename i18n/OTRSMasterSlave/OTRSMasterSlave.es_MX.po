@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:34+0000\n"
-"PO-Revision-Date: 2017-10-23 20:28+0000\n"
+"POT-Creation-Date: 2017-12-13 01:14+0000\n"
+"PO-Revision-Date: 2017-12-13 01:16+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -274,9 +274,9 @@ msgstr "Muestra las opciones de prioridad de ticket en la pantalla Maestro-Escla
 
 #. SysConfig
 msgid ""
-"Shows the title fields in the ticket MasterSlave screen of a zoomed ticket "
-"in the agent interface."
-msgstr "Muestra los campos título en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
+" the agent interface."
+msgstr " Muestra el campo de título en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
 msgid "Slave Tickets"

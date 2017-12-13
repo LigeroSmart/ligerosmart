@@ -2,6 +2,7 @@
 # Translators:
 # Carlos Javier García Cárdenas <carlos.garcia@otrs.com>, 2014
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
+# Martin Gruner <martin.gruner@otrs.com>, 2017
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
 # Nikolai Townsend <info@bandanh.com>, 2016
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
@@ -9,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 11:23+0000\n"
-"PO-Revision-Date: 2017-09-25 11:24+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-12-13 01:14+0000\n"
+"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,57 +26,57 @@ msgstr "Feld"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
-msgstr ""
+msgstr "Master/Slave-Status verwalten für %s%s%s"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr "Neues Master Ticket"
+msgstr "Neues Master-Ticket"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr "Aufheben des Master Tickets"
+msgstr "Aufheben des Master-Tickets"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr "Aufheben des Slave Tickets"
+msgstr "Aufheben des Slave-Tickets"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of %s%s%s: %s"
-msgstr ""
+msgstr "Slave von %s%s%s: %s"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
-msgstr "Aufheben der Master Tickets"
+msgstr "Aufheben der Master-Tickets"
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
-msgstr "Aufheben der Slave Tickets"
+msgstr "Aufheben der Slave-Tickets"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
-msgstr ""
+msgstr "Master-Ticket"
 
 #. SysConfig
 msgid "All master tickets"
-msgstr "Alle Master Tickets"
+msgstr "Alle Master-Tickets"
 
 #. SysConfig
 msgid "All slave tickets"
-msgstr "Alle Slave Tickets"
+msgstr "Alle Slave-Tickets"
 
 #. SysConfig
 msgid ""
 "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
 "the agent interface."
-msgstr "Erlaubt das hinzufügen von Notizen in der MasterSlave Ansicht des Agenten-Interface."
+msgstr "Erlaubt das hinzufügen von Notizen in der MasterSlave-Ansicht eines aufgerufenen Tickets in der Agenten-Oberfläche."
 
 #. SysConfig
 msgid "Change the MasterSlave state of the ticket."
-msgstr "Den MasterSlave Status des Tickets ändern."
+msgstr "Den MasterSlave-Status des Tickets ändern."
 
 #. SysConfig
 msgid "Defines dynamic field name for master ticket feature."
-msgstr ""
+msgstr "Dynamisches Feld für das Master-Ticket-Feature definieren."
 
 #. SysConfig
 msgid ""
@@ -89,13 +90,13 @@ msgstr "Bestimmt, ob dieser Screen im Agenten-Interface das Sperren des Tickets 
 msgid ""
 "Defines the default next state of a ticket after adding a note, in the "
 "ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Bestimmt den Folgestatus für Tickets, für die im MasterSlave Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde."
+msgstr "Bestimmt den Folgestatus für Tickets, für die im MasterSlave-Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde."
 
 #. SysConfig
 msgid ""
 "Defines the default ticket priority in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
-msgstr "Bestimmt die standardmäßige Ticket Priorität für Tickets im MasterSlave Bildschirm des Agenten-Interface."
+msgstr "Bestimmt die standardmäßige Ticket-Priorität für Tickets im MasterSlave-Bildschirm des Agenten-Interface."
 
 #. SysConfig
 msgid ""
@@ -107,70 +108,66 @@ msgstr "Bestimmt den standardmäßigen Typ einer Notiz für Tickets im MasterSla
 msgid ""
 "Defines the history comment for the ticket MasterSlave screen action, which "
 "gets used for ticket history in the agent interface."
-msgstr "Bestimmt den Historien Kommentar von Ticket Aktionen im MasterSlave Bildschirm, welcher für die Ticket Historie im Agenten Interface verwendet wird."
+msgstr "Bestimmt den Historien-Kommentar von Ticket-Aktionen im MasterSlave-Bildschirm, welcher für die Ticket-Historie im Agenten-Interface verwendet wird."
 
 #. SysConfig
 msgid ""
 "Defines the history type for the ticket MasterSlave screen action, which "
 "gets used for ticket history in the agent interface."
-msgstr "Bestimmt den Historien Typ von Ticket Aktionen im MasterSlave Bildschirm, welcher für die Ticket Historie im Agenten Interface verwendet wird."
+msgstr "Bestimmt den Historien-Typ von Ticket-Aktionen im MasterSlave-Bildschirm, welcher für die Ticket-Historie im Agenten-Interface verwendet wird."
 
 #. SysConfig
 msgid ""
 "Defines the next state of a ticket after adding a note, in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Bestimmt den Folgestatus für Tickets, für die im MasterSlave Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Bestimmt den Folgestatus für Tickets, für die im MasterSlave-Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde."
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
-msgstr ""
+msgstr "Das erweiterte Verhalten des MasterSlave-Features aktivieren."
 
 #. SysConfig
 msgid ""
 "Enables the feature that slave tickets follow the master ticket to a new "
 "master in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert die Funktionalität, dass Slave-Tickets dem Master-Ticket im erweiterten MasterSlave-Verhalten zum neuen Master folgen."
 
 #. SysConfig
 msgid ""
 "Enables the feature to change the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert die Funktionalität zum Ändern des MasterSlave-Status eines Tickets im erweiterten MasterSlave-Modus."
 
 #. SysConfig
 msgid ""
 "Enables the feature to forward articles from type 'forward' of a master "
 "ticket to the customers of the slave tickets. By default (disabled) it will "
 "not forward articles from type 'forward' to the slave tickets."
-msgstr ""
+msgstr "Aktiviert die Funktion zum Weiterleiten von Artikeln des Typs 'Weiterleiten' zu den Kunden des Slave-Tickets. Standardmäßig (deaktiviert) werden keine Artikel des Typs 'Weiterleiten' an die Slave-Tickets weitergeleitet."
 
 #. SysConfig
 msgid ""
 "Enables the feature to keep parent-child link after change of the "
 "MasterSlave state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert im die Funktion, im erweiterten MasterSlave-Verhalten eine Eltern-Kind-Beziehung nach dem Ändern des MasterSlave-Status zu behalten."
 
 #. SysConfig
 msgid ""
 "Enables the feature to keep parent-child link after unset of the MasterSlave"
 " state in the advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert im die Funktion, im erweiterten MasterSlave-Verhalten eine Eltern-Kind-Beziehung nach dem Auflösen des MasterSlave-Status zu behalten."
 
 #. SysConfig
 msgid ""
 "Enables the feature to unset the MasterSlave state of a ticket in the "
 "advanced MasterSlave mode."
-msgstr ""
+msgstr "Aktiviert die Funktion zum Aufheben des MasterSlave-Status eines Tickets im erweiterten MasterSlave-Verhalten."
 
 #. SysConfig
 msgid ""
 "If a note is added by an agent, sets the state of the ticket in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Ermöglicht das Ändern des TIcket Status, beim Hinzufügen einer Notiz innerhalb des MasterSlave Bildschirms."
+msgstr "Ermöglicht das Ändern des TIcket-Status beim Hinzufügen einer Notiz innerhalb des MasterSlave-Bildschirms."
 
 #. SysConfig
 msgid "Master / Slave"
@@ -178,15 +175,15 @@ msgstr "Master / Slave"
 
 #. SysConfig
 msgid "Master Tickets"
-msgstr ""
+msgstr "Master-Tickets"
 
 #. SysConfig
 msgid "MasterSlave"
-msgstr ""
+msgstr "MasterSlave"
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
-msgstr "MasterSlave Modul für die Funktion von Sammelaktionen"
+msgstr "MasterSlave-Modul für Ticket-Sammelaktionen."
 
 #. SysConfig
 msgid ""
@@ -210,25 +207,25 @@ msgstr "Einstellung der Übersichtsseitenparameter für Slave Tickets in der Age
 
 #. SysConfig
 msgid "Registration of the ticket event module."
-msgstr "Registrierung des Ticket Event Moduls."
+msgstr "Registrierung des Ticket-Event-Moduls."
 
 #. SysConfig
 msgid ""
 "Required permissions to use the ticket MasterSlave screen of a zoomed ticket"
 " in the agent interface."
-msgstr "Benötigte Berechtigungen um den MasterSlave Dialog im Zoom Ticket Dialog des Agenteninterface anzeigen zu lassen."
+msgstr "Benötigte Berechtigungen für die Anzeige des MasterSlave-Dialogs im Ticket-Zoom-Dialog des Agenteninterface."
 
 #. SysConfig
 msgid ""
 "Sets the default body text for notes added in the ticket MasterSlave screen "
 "of a zoomed ticket in the agent interface."
-msgstr "Bestimmt den standardmäßigen Body Text einer Notiz für Tickets im MasterSlave Bildschirm des Agenten-Interface."
+msgstr "Bestimmt den standardmäßigen Text einer Notiz für Tickets im MasterSlave-Bildschirm des Agenten-Interface."
 
 #. SysConfig
 msgid ""
 "Sets the default subject for notes added in the ticket MasterSlave screen of"
 " a zoomed ticket in the agent interface."
-msgstr "Bestimmt den standardmäßigen Betreff einer Notiz für Tickets im MasterSlave Bildschirm des Agenten-Interface."
+msgstr "Bestimmt den standardmäßigen Betreff einer Notiz für Tickets im MasterSlave-Bildschirm des Agenten-Interface."
 
 #. SysConfig
 msgid ""
@@ -240,71 +237,71 @@ msgstr "Bestimmt den verantwortlichen Agenten eines Tickets im MasterSlave Bilds
 msgid ""
 "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the "
 "agent interface (Ticket::Service needs to be activated)."
-msgstr "Bestimmt den Service eines Tickets im MasterSlave Bildschirm des Agenten-Interface für ein aufgerufenes Ticket (Ticket::Service muss aktiviert sein)."
+msgstr "Bestimmt den Service eines Tickets im MasterSlave-Bildschirm des Agenten-Interface für ein aufgerufenes Ticket (Ticket::Service muss aktiviert sein)."
 
 #. SysConfig
 msgid ""
 "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr "Bestimmt den Besitzer eines Tickets im MasterSlave Bildschirm des Agenten-Interface für ein aufgerufenes Ticket."
+msgstr "Bestimmt den Besitzer eines Tickets im MasterSlave-Bildschirm des Agenten-Interface für ein aufgerufenes Ticket."
 
 #. SysConfig
 msgid ""
 "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in "
 "the agent interface (Ticket::Type needs to be activated)."
-msgstr "Bestimmt den Ticket Typ eines Tickets im MasterSlave Bildschirm des Agenten-Interface für ein aufgerufenes Ticket (Ticket::Type muss aktiviert sein)."
+msgstr "Bestimmt den Ticket-Typ eines Tickets im MasterSlave-Bildschirm des Agenten-Interface für ein aufgerufenes Ticket (Ticket::Type muss aktiviert sein)."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to change the MasterSlave status of a ticket in the"
 " ticket zoom view of the agent interface."
-msgstr "Zeigt einen Link im Menü um den MasterSlave Status eines Tickets im Ticket Zoom Interface des Agenten an."
+msgstr "Zeigt einen Link zum Ändern des MasterSlave-Status eines Tickets im Menü der Ticket-Zoom-Ansicht des Agenten an."
 
 #. SysConfig
 msgid ""
 "Shows a list of all the involved agents on this ticket, in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Zeigt eine Liste aller involvierten Agenten für das gewählte Ticket im MasterSlave Bildschirm des Agenten-Interface an."
+msgstr "Zeigt eine Liste aller involvierten Agenten für das gewählte Ticket im MasterSlave-Bildschirm des Agenten-Interface an."
 
 #. SysConfig
 msgid ""
 "Shows a list of all the possible agents (all agents with note permissions on"
 " the queue/ticket) to determine who should be informed about this note, in "
 "the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Zeigt eine Liste aller möglichen Agenten (alle Agenten mit Notiz Berechtigung auf der Queue/dem Ticket) für das gewählte Ticket im MasterSlave Bildschirm des Agenten-Interface an."
+msgstr "Zeigt eine Liste aller möglichen Agenten (alle Agenten mit Notiz Berechtigung auf der Queue/dem Ticket) für das gewählte Ticket im MasterSlave-Bildschirm des Agenten-Interface an."
 
 #. SysConfig
 msgid ""
 "Shows the ticket priority options in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
-msgstr "Zeigt die Priorität eines Tickets im MasterSlave Bildschirm des Agenten-Interface für ein aufgerufenes Ticket."
+msgstr "Zeigt die Priorität eines Tickets im MasterSlave-Bildschirm des Agenten-Interface für ein aufgerufenes Ticket an."
 
 #. SysConfig
 msgid ""
-"Shows the title fields in the ticket MasterSlave screen of a zoomed ticket "
-"in the agent interface."
-msgstr "Zeigt die Titel-Felder in der MasterSlave-Oberfläche eines aufgerufenen Tickets im Agenten-Interface."
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
+" the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Slave Tickets"
-msgstr ""
+msgstr "Slave-Tickets"
 
 #. SysConfig
 msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
-msgstr "Definiert die verschiedene Artikeltypen in denen der reale Name des Master-TIckets mit denen des Slave-Tickets ersetzt wird."
+msgstr "Definiert die verschiedene Artikeltypen in denen der reale Name des Master-Tickets mit denen des Slave-Tickets ersetzt wird."
 
 #. SysConfig
 msgid "Specifies the different note types that will be used in the system."
-msgstr ""
+msgstr "Gibt die verschiedenen Notiztypen an, die im System verwendet werden."
 
 #. SysConfig
 msgid ""
 "This module activates Master/Slave field in new email and phone ticket "
 "screens."
-msgstr "Dieses Modul aktiviert das Master/Slave Feld in der Anzeige für ein neues Email- oder Telefon-Ticket."
+msgstr "Dieses Modul aktiviert das Master/Slave-Feld in der Anzeige für ein neues Email- oder Telefon-Ticket."
 
 #. SysConfig
 msgid "Ticket MasterSlave."
-msgstr ""
+msgstr "Ticket MasterSlave."

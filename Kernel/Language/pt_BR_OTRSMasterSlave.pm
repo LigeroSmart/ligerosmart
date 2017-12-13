@@ -101,8 +101,8 @@ sub Data {
         'Exibe uma lista de todos os agentes possíveis (todos os agentes com permissão de nota na fila/ticket) para determinar quem deve ser informado sobre esta nota, na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Exibe as opções de prioridade de ticket na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Exibe o campo de título na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Chamados Escravos';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Especifica os diferentes tipos de artigo onde o nome real do ticket Master será substituído com o nome do ticket escravo.';

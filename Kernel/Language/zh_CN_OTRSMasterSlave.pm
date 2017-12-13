@@ -101,8 +101,8 @@ sub Data {
         '在服务人员界面主从工单详情窗口，显示这个工单所有可能的服务人员（需要具有这个队列或工单的备注权限）列表，用于确定谁将收到关于这个备注的通知。';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '在服务人员界面主从工单详情窗口是否显示工单优先级的选项。';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '在服务人员界面主从工单详情窗口显示工单标题字段。';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = '从工单';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '指定使用从工单的客户真实姓名替换主工单的真空姓名的信件类型。';

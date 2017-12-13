@@ -101,8 +101,8 @@ sub Data {
         'แสดงรายชื่อเอเย่นต์ที่เป็นไปได้ทั้งหมด (เอเย่นต์ทั้งหมดที่ได้รับโน้ตอนุญาติในคิว/ตั๋ว) เพื่อกำหนดว่าใครควรรายงานเกี่ยวกับโน้ตนี้ในในหน้าจอตั๋วMasterSlave ของตั๋วซูมในอินเตอร์เฟซของเอเย่นต์';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'แสดงตัวเลือกลำดับความสำคัญของตั๋วในหน้าจอตั๋ว MasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'แสดงฟิลด์ชื่อเรื่องในหน้าจอตั๋ว MasterSlave ของตั๋วซูมในอินเตอร์เฟซเอเย่นต์';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'ระบุประเภทบทความที่แตกต่างกันซึ่งชื่อจริงจากตั๋วมาสเตอร์จะถูกแทนที่ด้วยหนึ่งในตั๋วSlave';

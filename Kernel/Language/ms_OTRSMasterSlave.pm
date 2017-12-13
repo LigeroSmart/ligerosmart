@@ -101,8 +101,8 @@ sub Data {
         'Memaparkan senarai semua kemungkinan ejen (semua ejen dengan kebenaran nota mengenai barisan/tiket) untuk menentukan siapa yang perlu diberitahu tentang nota ini, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Menunjukkan pilihan keutamaan tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Menunjukkan bidang tajuk dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Menentukan jenis artikel yang berbeza di mana nama sebenar dari tiket Master akan digantikan dengan yang dalam tiket Slave.';

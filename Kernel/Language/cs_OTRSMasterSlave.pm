@@ -101,7 +101,7 @@ sub Data {
         'Zobrazuje seznam možných agentů (všichni agenti mohoucí přidat poznámku k frontě/tiketu), aby bylo možno určit, kdo bude o poznámce informován - v zobrazení Nadřízeného/Podřízeného zazoomovaného tiketu v agentském prostředí. ';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
     $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =

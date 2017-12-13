@@ -101,8 +101,8 @@ sub Data {
         'Prikazuje listu svih mogućih operatera (svi operateri sa dozvolom za napomenu za red/tiket) radi utvrđivanja ko treba da bude informisan o ovoj napomeni, na Glavni/Zavisni ekranu tiketa na detaljnom prikazu tiketa u interfejsu operatera.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Prikazuje opcije prioriteta tiketa na Glavni/Zavisni ekranu tiketa na detaljnom prikazu tiketa u interfejsu operatera.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Prikazuje naslovna polja na Glavni/Zavisni ekranu tiketa na detaljnom prikazu tiketa u interfejsu operatera.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Zavisni tiketi';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Navodi razne tipove članaka gde će stvarno ime sa glavnog tiketa biti zamenjeno sa jednim na zavisnom tiketu.';

@@ -101,8 +101,8 @@ sub Data {
         'Inaonyesha orodha ya wakala wote wanaoweza (mawakala wote wenye kidokezo cha ruhusa ya tiketi/foleni) kutambua nani ataarifiwe kuhusu kidokezo hiki, katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura chwa wakala.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Inaonyesha machaguo ya kipaumbele ya tiketi katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Inaonyesha kichwa cha habari katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Inabainisha aina mbalimbali za makala ambazo majina yake ya ukweli kutoka tiketi kuu yatabadilishwa na mojawapo katika tiketi tumwa.';

@@ -101,8 +101,8 @@ sub Data {
         'Menunjukkan daftar semua agen yang mungkin (semua agen dengan izin catatan di antrian / tiket) untuk menentukan siapa yang harus diberitahu tentang catatan ini, di layar MasterSlave tiket dari tiket yang diperbesar di antarmuka agen.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Menunjukkan pilihan prioritas tiket di tiket Guru layar Slave dari tiket yang diperbesar di antarmuka agen.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Menunjukkan bidang judul dalam layar tiket Master Slave dari tiket yang diperbesar di antarmuka agen.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Tiket slave';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Menentukan jenis artikel yang berbeda di mana nama asli dari master tiket akan diganti dengan satu tiket Slave.';

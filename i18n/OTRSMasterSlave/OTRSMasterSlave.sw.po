@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 11:23+0000\n"
-"PO-Revision-Date: 2017-09-25 11:24+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-12-13 01:14+0000\n"
+"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,10 +116,6 @@ msgid ""
 "Defines the next state of a ticket after adding a note, in the ticket "
 "MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Fafanua hali inayofuata ya tiketi baada ya kuongeza kidokezo, katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
@@ -277,9 +273,9 @@ msgstr "Inaonyesha machaguo ya kipaumbele ya tiketi katika skrini ya tiketi mkuu
 
 #. SysConfig
 msgid ""
-"Shows the title fields in the ticket MasterSlave screen of a zoomed ticket "
-"in the agent interface."
-msgstr "Inaonyesha kichwa cha habari katika skrini ya tiketi mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala."
+"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
+" the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Slave Tickets"

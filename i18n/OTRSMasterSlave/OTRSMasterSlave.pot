@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2017-11-15 01:03+0000\n"
+"POT-Creation-Date: 2017-12-13 01:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,7 +199,7 @@ msgid "Shows the ticket priority options in the ticket MasterSlave screen of a z
 msgstr ""
 
 #. SysConfig
-msgid "Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgid "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr ""
 
 #. SysConfig

@@ -1,4 +1,5 @@
 #6.0.2 2017-??-??
+ - 2017-12-12 Updated translations, thanks to all translators.
  - 2017-12-12 Updated framework files to OTRS 6.0.3.
  - 2017-12-01 Improved wording, thanks to Balázs Úr.
 

@@ -61,13 +61,13 @@ sub Data {
     $Self->{Translation}->{'Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
         'Activa la función que cambie el estado Maestro-Esclavo de un ticket en el modo Maestro-Esclavo avanzado.';
     $Self->{Translation}->{'Enables the feature to forward articles from type \'forward\' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type \'forward\' to the slave tickets.'} =
-        '';
+        'Habilita la característica para reenviar artículos desde el tipo \'reenviar\' de un ticket maestro a los clientes de los tickets esclavos. Por defecto (deshabilitado) no reenviará artículos del tipo \'reenviar\' a los tickets esclavos.';
     $Self->{Translation}->{'Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Permite que la característica para mantener el enlace padre-hijo después del cambio de estado MaestroEsclavo en el modo avanzado MaestroEsclavo.';
     $Self->{Translation}->{'Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode.'} =
-        '';
+        'Habilita la característica para mantener el enlace padre-hijo después de desactivar el estado MaestroEsclavo en el avanzado de MaestroEsclavo.';
     $Self->{Translation}->{'Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.'} =
-        '';
+        'Habilita la característica para desactivar el estado de MaestroEsclado de un ticket en el modo avanzado de MaestroEsclavo.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Si una nota es añadida por un agente, fija el estado del ticket en en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente.';
     $Self->{Translation}->{'Master / Slave'} = 'Maestro / Esclavo';
@@ -101,13 +101,13 @@ sub Data {
         'Muestra una lista de todos los posibles agentes (todos los agentes con permisos "nota" en la fila/ticket) para determinar quién deberá ser informado acerca de esta nota, en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente.';
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Muestra las opciones de prioridad de ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente.';
-    $Self->{Translation}->{'Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Muestra los campos título en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente.';
+    $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Slave Tickets'} = 'Tickets esclavo';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Especificar los diferentes tipos de artículos donde el verdadero nombre del tickey maestro será reemplazado con el del ticket esclavo.';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
+        'Especifica los diferentes tipos de notas que se usarán en el sistema.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Este módulo activa el campo Maestro-Esclavo en la pantalla de un nuevo ticket de email o de teléfono.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Ticket Maestro-Esclavo.';
