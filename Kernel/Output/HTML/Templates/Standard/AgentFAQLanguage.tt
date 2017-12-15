@@ -37,10 +37,9 @@
             </div>
             <div class="Content ActionList">
                 <form action="[% Env("CGIHandle") %]" method="post">
-                    <input type="hidden" name="Action" value="AdminSysConfig"/>
-                    <input type="hidden" name="Subaction" value="Edit"/>
-                    <input type="hidden" name="SysConfigGroup" value="FAQ"/>
-                    <input type="hidden" name="SysConfigSubGroup" value="Core"/>
+                    <input type="hidden" name="Action" value="AdminSystemConfiguration"/>
+                    <input type="hidden" name="Subaction" value="View"/>
+                    <input type="hidden" name="Setting" value="FAQ::MultiLanguage "/>
                     <h3>[% Translate("This feature is disabled!") | html %]</h3>
                     <fieldset>
                         <p class="FieldExplanation">
