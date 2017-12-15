@@ -55,6 +55,7 @@
         <File Permission="660" Location="Kernel/Modules/AgentFAQJournal.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentFAQLanguage.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentFAQPrint.pm" />
+        <File Permission="660" Location="Kernel/Modules/AgentFAQRelatedArticles.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentFAQRichText.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentFAQSearch.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentFAQSearchSmall.pm" />
@@ -81,7 +82,7 @@
         <File Permission="660" Location="Kernel/Output/HTML/Layout/FAQ.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/LinkObject/FAQ.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/FAQ.pm" />
-        <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/FAQRelatedArticles.pm" />
+        <File Permission="660" Location="Kernel/Output/HTML/FilterElementPost/FAQCustomerRelatedArticles.pm" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQAdd.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardFAQOverview.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQCategory.tt" />
@@ -100,6 +101,7 @@
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQSearchSmall.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoom.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQZoomSmall.tt" />
+        <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/AgentFAQRelatedArticles.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQExplorer.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQRelatedArticles.tt" />
         <File Permission="660" Location="Kernel/Output/HTML/Templates/Standard/CustomerFAQSearch.tt" />
@@ -134,6 +136,7 @@
         <File Permission="660" Location="scripts/test/FAQ.t" />
         <File Permission="660" Location="scripts/test/FAQSearch.t" />
         <File Permission="660" Location="scripts/test/FAQ/RelatedArticle.t" />
+        <File Permission="660" Location="scripts/test/FAQ/Category/AgentCategorySearch.t" />
         <File Permission="660" Location="scripts/test/FAQ/UpgradeLowerThan5092.t" />
         <File Permission="660" Location="scripts/test/FAQ/Category/CheckCategoryUserPermission.t" />
         <File Permission="660" Location="scripts/test/GenericInterface/FAQConnector.t" />
@@ -154,6 +157,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQPrint.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQSearch.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentFAQZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/FAQ/RelatedArticles.t" />
         <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQExplorer.t" />
         <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQPrint.t" />
         <File Permission="660" Location="scripts/test/Selenium/Customer/CustomerFAQSearch.t" />
@@ -175,6 +179,7 @@
         <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.FAQ.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.FAQZoom.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.RelatedArticles.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Agent.TicketCompose.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/FAQ.Customer.FAQZoom.js" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Default.css" />

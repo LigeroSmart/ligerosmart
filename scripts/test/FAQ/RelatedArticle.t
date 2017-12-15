@@ -32,6 +32,13 @@ $ConfigObject->Set(
     Value => 0,
 );
 
+my $TestUserLogin = $Helper->TestUserCreate(
+    Groups => [ 'users', ],
+);
+my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+    UserLogin => $TestUserLogin,
+);
+
 # create some customer users
 my @CustomerUsers;
 for ( 0 .. 1 ) {
@@ -47,7 +54,7 @@ my %StateList = $FAQObject->StateList(
 my %ReverseStateList = reverse %StateList;
 
 # Call this function at the beginning, to check if the cache cleanup works correctly after new article was created.
-$FAQObject->FAQKeywordCustomerArticleList(
+$FAQObject->FAQKeywordArticleList(
     CustomerUser => $CustomerUsers[0],
     UserID       => 1,
 );
@@ -110,6 +117,28 @@ my @FAQItems = (
         ContentType => 'text/html',
         UserID      => 1,
     },
+    {
+        Title       => 'Some Text Internal',
+        CategoryID  => 1,
+        StateID     => $ReverseStateList{'internal (agent)'},                                               # 'internal'
+        LanguageID  => 2,                                                                                   # 'en'
+        Keywords    => "ticket$RandomNumber KeyWord$RandomNumber iTsm$RandomNumber internal$RandomNumber",
+        Field1      => 'Problem...',
+        Field2      => 'Solution...',
+        ContentType => 'text/html',
+        UserID      => 1,
+    },
+    {
+        Title       => 'Some Text Internal',
+        CategoryID  => 1,
+        StateID     => $ReverseStateList{'internal (agent)'},                                               # 'internal'
+        LanguageID  => 1,                                                                                   # 'en'
+        Keywords    => "faq$RandomNumber",
+        Field1      => 'Problem...',
+        Field2      => 'Solution...',
+        ContentType => 'text/html',
+        UserID      => 1,
+    },
 );
 
 # Create some faq items for the test.
@@ -130,18 +159,19 @@ for my $FAQItem (@FAQItems) {
     push @FAQItemIDs, $FAQItemID;
 }
 
-# Define some test for the function 'FAQKeywordCustomerArticleList'.
+# Define some test for the function 'FAQKeywordArticleList'.
 my @Tests = (
     {
-        Description                   => 'Test does not contain all necessary data for FAQKeywordCustomerArticleList',
-        Fails                         => 1,
-        FAQKeywordCustomerArticleList => {},
-        ReferenceData                 => {},
+        Description           => 'Test does not contain all necessary data for FAQKeywordArticleList',
+        Fails                 => 1,
+        FAQKeywordArticleList => {},
+        ReferenceData         => {},
     },
     {
-        Description                   => 'Test with a customer user for FAQKeywordCustomerArticleList',
-        FAQKeywordCustomerArticleList => {
+        Description           => 'Test with a customer user for FAQKeywordArticleList',
+        FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
+            UserID       => 1,
         },
         ReferenceData => {
             "$RandomNumber.$RandomNumber" => [
@@ -174,10 +204,11 @@ my @Tests = (
         },
     },
     {
-        Description => "Test with a customer user, but only with language 'en' for FAQKeywordCustomerArticleList",
-        FAQKeywordCustomerArticleList => {
+        Description           => "Test with a customer user, but only with language 'en' for FAQKeywordArticleList",
+        FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => ['en'],
+            UserID       => 1,
         },
         ReferenceData => {
             "example$RandomNumber" => [
@@ -204,10 +235,11 @@ my @Tests = (
         },
     },
     {
-        Description => "Test with a customer user, but only with language 'de' for FAQKeywordCustomerArticleList",
-        FAQKeywordCustomerArticleList => {
+        Description           => "Test with a customer user, but only with language 'de' for FAQKeywordArticleList",
+        FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => ['de'],
+            UserID       => 1,
         },
         ReferenceData => {
             "faq$RandomNumber" => [
@@ -222,10 +254,11 @@ my @Tests = (
         },
     },
     {
-        Description => "Test with a customer user with language 'en' and 'de' for FAQKeywordCustomerArticleList",
-        FAQKeywordCustomerArticleList => {
+        Description           => "Test with a customer user with language 'en' and 'de' for FAQKeywordArticleList",
+        FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => [ 'en', 'de' ],
+            UserID       => 1,
         },
         ReferenceData => {
             "example$RandomNumber" => [
@@ -250,6 +283,116 @@ my @Tests = (
                 $FAQItemIDs[3],
             ],
             "ticket$RandomNumber" => [
+                $FAQItemIDs[0],
+            ],
+        },
+    },
+    {
+        Description           => "Test with a test user, but only with language 'en' for FAQKeywordArticleList",
+        FAQKeywordArticleList => {
+            Languages => ['en'],
+            UserID    => $TestUserID,
+        },
+        ReferenceData => {
+            "$RandomNumber.$RandomNumber" => [
+                $FAQItemIDs[0],
+            ],
+            "example$RandomNumber" => [
+                $FAQItemIDs[0],
+            ],
+            "faq$RandomNumber" => [
+                $FAQItemIDs[6],
+                $FAQItemIDs[3],
+                $FAQItemIDs[1],
+            ],
+            "itsm$RandomNumber" => [
+                $FAQItemIDs[4],
+                $FAQItemIDs[0],
+            ],
+            "keyword$RandomNumber" => [
+                $FAQItemIDs[4],
+                $FAQItemIDs[3],
+                $FAQItemIDs[1],
+                $FAQItemIDs[0],
+            ],
+            "public$RandomNumber" => [
+                $FAQItemIDs[3],
+            ],
+            "internal$RandomNumber" => [
+                $FAQItemIDs[4],
+            ],
+            "ticket$RandomNumber" => [
+                $FAQItemIDs[4],
+                $FAQItemIDs[0],
+            ],
+        },
+    },
+    {
+        Description           => "Test with a test user, but only with language 'de' for FAQKeywordArticleList",
+        FAQKeywordArticleList => {
+            Languages => ['de'],
+            UserID    => $TestUserID,
+        },
+        ReferenceData => {
+            "faq$RandomNumber" => [
+                $FAQItemIDs[2],
+            ],
+            "itsm$RandomNumber" => [
+                $FAQItemIDs[5],
+                $FAQItemIDs[2],
+            ],
+            "keyword$RandomNumber" => [
+                $FAQItemIDs[5],
+                $FAQItemIDs[2],
+            ],
+            "internal$RandomNumber" => [
+                $FAQItemIDs[5],
+            ],
+            "ticket$RandomNumber" => [
+                $FAQItemIDs[5],
+            ],
+        },
+    },
+    {
+        Description           => "Test with a test user with language 'en' and 'de' for FAQKeywordArticleList",
+        FAQKeywordArticleList => {
+            Languages => [ 'en', 'de' ],
+            UserID    => 1,
+        },
+        ReferenceData => {
+            "example$RandomNumber" => [
+                $FAQItemIDs[0],
+            ],
+            "faq$RandomNumber" => [
+                $FAQItemIDs[6],
+                $FAQItemIDs[3],
+                $FAQItemIDs[2],
+                $FAQItemIDs[1],
+            ],
+            "itsm$RandomNumber" => [
+                $FAQItemIDs[5],
+                $FAQItemIDs[4],
+                $FAQItemIDs[2],
+                $FAQItemIDs[0],
+            ],
+            "keyword$RandomNumber" => [
+                $FAQItemIDs[5],
+                $FAQItemIDs[4],
+                $FAQItemIDs[3],
+                $FAQItemIDs[2],
+                $FAQItemIDs[1],
+                $FAQItemIDs[0],
+            ],
+            "public$RandomNumber" => [
+                $FAQItemIDs[3],
+            ],
+            "internal$RandomNumber" => [
+                $FAQItemIDs[5],
+                $FAQItemIDs[4],
+            ],
+            "ticket$RandomNumber" => [
+                $FAQItemIDs[5],
+                $FAQItemIDs[4],
                 $FAQItemIDs[0],
             ],
         },
@@ -262,12 +405,12 @@ my $TestCount = 1;
 TEST:
 for my $Test (@Tests) {
 
-    # check FAQKeywordCustomerArticleList attribute
-    if ( !$Test->{FAQKeywordCustomerArticleList} || ref $Test->{FAQKeywordCustomerArticleList} ne 'HASH' ) {
+    # check FAQKeywordArticleList attribute
+    if ( !$Test->{FAQKeywordArticleList} || ref $Test->{FAQKeywordArticleList} ne 'HASH' ) {
 
         $Self->True(
             0,
-            "Test $TestCount: No FAQKeywordCustomerArticleList found for this test.",
+            "Test $TestCount: No FAQKeywordArticleList found for this test.",
         );
 
         next TEST;
@@ -281,15 +424,14 @@ for my $Test (@Tests) {
         );
     }
 
-    my %FAQKeywordCustomerArticleList = $FAQObject->FAQKeywordCustomerArticleList(
-        %{ $Test->{FAQKeywordCustomerArticleList} },
-        UserID => 1,
+    my %FAQKeywordArticleList = $FAQObject->FAQKeywordArticleList(
+        %{ $Test->{FAQKeywordArticleList} },
     );
 
     if ( $Test->{Fails} ) {
         $Self->False(
-            %FAQKeywordCustomerArticleList ? 1 : 0,
-            "Test $TestCount: FAQKeywordCustomerArticleList() - should fail.",
+            %FAQKeywordArticleList ? 1 : 0,
+            "Test $TestCount: FAQKeywordArticleList() - should fail.",
         );
     }
     else {
@@ -297,9 +439,9 @@ for my $Test (@Tests) {
         for my $Keyword ( sort keys %{ $Test->{ReferenceData} } ) {
 
             $Self->IsDeeply(
-                $FAQKeywordCustomerArticleList{$Keyword} || [],
+                $FAQKeywordArticleList{$Keyword} || [],
                 $Test->{ReferenceData}->{$Keyword},
-                "Test $TestCount: FAQKeywordCustomerArticleList() - $Keyword - test the result",
+                "Test $TestCount: FAQKeywordArticleList() - $Keyword - test the result",
             );
         }
     }
@@ -312,7 +454,7 @@ continue {
 my @LanguageIDs;
 
 LANGUAGENAME:
-for my $LanguageName ( @{ $Tests[-1]->{FAQKeywordCustomerArticleList}->{Languages} } ) {
+for my $LanguageName ( @{ $Tests[-1]->{FAQKeywordArticleList}->{Languages} } ) {
     my $LanguageID = $FAQObject->LanguageLookup(
         Name => $LanguageName,
     );
@@ -321,30 +463,35 @@ for my $LanguageName ( @{ $Tests[-1]->{FAQKeywordCustomerArticleList}->{Language
     push @LanguageIDs, $LanguageID;
 }
 
-my $CustomerCategoryIDs = $FAQObject->CustomerCategorySearch(
-    CustomerUser => $Tests[-1]->{FAQKeywordCustomerArticleList}->{CustomerUser},
-    Mode         => 'Customer',
-    UserID       => 1,
+my $CategoryIDs = $FAQObject->AgentCategorySearch(
+    GetSubCategories => 1,
+    UserID           => $TestUserID,
 );
 
 my $CacheKey = 'FAQKeywordArticleList';
 
 if (@LanguageIDs) {
-    $CacheKey .= '::Language' . join '::', @LanguageIDs;
+    $CacheKey .= '::Language' . join '::', sort @LanguageIDs;
 }
-$CacheKey .= '::CategoryIDs' . join '::', @{$CustomerCategoryIDs};
+$CacheKey .= '::CategoryIDs' . join '::', sort @{$CategoryIDs};
+$CacheKey .= '::Interface::internal';
 
-my $LastFAQKeywordCustomerArticleListCache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
+my $LastFAQKeywordArticleListCache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
     Type => 'FAQKeywordArticleList',
     Key  => $CacheKey,
+);
+
+$Self->True(
+    1,
+    "Test $TestCount: Test the cache for last function call",
 );
 
 for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
 
     $Self->IsDeeply(
-        $LastFAQKeywordCustomerArticleListCache->{$Keyword} || [],
+        $LastFAQKeywordArticleListCache->{$Keyword} || [],
         $Tests[-1]->{ReferenceData}->{$Keyword},
-        "Test $TestCount: Cache - FAQKeywordCustomerArticleList() - $Keyword - test the result",
+        "Test $TestCount: Cache - FAQKeywordArticleList() - $Keyword - test the result",
     );
 }
 
@@ -359,6 +506,7 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
         },
         ReferenceData => {},
     },
+
     {
         Description                => 'Test with a keyword in the subject for RelatedCustomerArticleList',
         RelatedCustomerArticleList => {
@@ -486,20 +634,167 @@ for my $Keyword ( sort keys %{ $Tests[-1]->{ReferenceData} } ) {
             $FAQItemIDs[3],
         ],
     },
+
+    {
+        Description             => 'Test with a keyword in the subject for RelatedAgentArticleList (for agent)',
+        RelatedAgentArticleList => {
+            Subject => "itsm$RandomNumber",
+            Body    => "$RandomNumber",
+            UserID  => $TestUserID,
+        },
+        ReferenceData => [
+            $FAQItemIDs[5],
+            $FAQItemIDs[4],
+            $FAQItemIDs[2],
+            $FAQItemIDs[0],
+        ],
+    },
+
+    # E.g.
+    # Given Keyword from text (with counter):
+    #   - itsm (3)
+    #   - ticket (1)
+    #   - keyword (1)
+    # Result (FAQArticleID => Calculated Quantifier and ordering by change time and create time):
+    #   - FAQArticle 1 => 5
+    #   - FAQArticle 2 => 4
+    #   - FAQArticle 4 => 1
+    #   - FAQArticle 3 => 1
+    {
+        Description             => 'Test with some keywords in the subject and body for RelatedAgentArticleList',
+        RelatedAgentArticleList => {
+            Subject => "itsm$RandomNumber",
+            Body    => "itsm$RandomNumber, ticket$RandomNumber keyword$RandomNumber ITSM$RandomNumber.",
+            UserID  => $TestUserID,
+        },
+        ReferenceData => [
+            $FAQItemIDs[5],
+            $FAQItemIDs[4],
+            $FAQItemIDs[0],
+            $FAQItemIDs[2],
+            $FAQItemIDs[3],
+            $FAQItemIDs[1],
+        ],
+    },
+
+    # E.g.
+    # Given Keyword from text (with counter):
+    #   - itsm (3)
+    #   - ticket (1)
+    #   - keyword (1)
+    # Result (FAQArticleID => Calculated Quantifier and ordering by change time and create time):
+    #   - FAQArticle 1 => 5
+    #   - FAQArticle 2 => 4
+    #   - FAQArticle 4 => 1
+    #   - FAQArticle 3 => 1
+    {
+        Description =>
+            'Test with some html keywords in the subject and body (with html and link) for RelatedAgentArticleList',
+        RelatedAgentArticleList => {
+            Subject => "itsm$RandomNumber",
+            Body =>
+                "$RandomNumber itsm$RandomNumber ticket$RandomNumber <br />keyword$RandomNumber ITSM$RandomNumber. [1] https://faq.com/",
+            UserID => $TestUserID,
+        },
+        ReferenceData => [
+            $FAQItemIDs[5],
+            $FAQItemIDs[4],
+            $FAQItemIDs[0],
+            $FAQItemIDs[2],
+            $FAQItemIDs[3],
+            $FAQItemIDs[1],
+        ],
+    },
+
+    # E.g.
+    # Given Keyword from text (with counter):
+    #   - itsm (3)
+    #   - ticket (1)
+    #   - keyword (1)
+    # Result (FAQArticleID => Calculated Quantifier and ordering by change time and create time):
+    #   - FAQArticle 2 => 1
+    {
+        Description             => "Test only for the language 'de' for RelatedAgentArticleList",
+        RelatedAgentArticleList => {
+            Subject   => "FAQ$RandomNumber.",
+            Body      => "$RandomNumber",
+            Languages => ['de'],
+            UserID    => $TestUserID,
+        },
+        ReferenceData => [
+            $FAQItemIDs[2],
+        ],
+    },
+
+    # E.g.
+    # Given Keyword from text (with counter):
+    #   - itsm (3)
+    #   - ticket (1)
+    #   - keyword (1)
+    # Result (FAQArticleID => Calculated Quantifier and ordering by change time and create time):
+    #   - FAQArticle 1 => 5
+    #   - FAQArticle 2 => 4
+    {
+        Description => 'Test with some keywords in the subject and body and a limit for RelatedAgentArticleList',
+        RelatedAgentArticleList => {
+            Subject => "itsm$RandomNumber",
+            Body    => "itsm$RandomNumber; ticket$RandomNumber keyword$RandomNumber ITSM$RandomNumber.",
+            Limit   => 2,
+            UserID  => $TestUserID,
+        },
+        ReferenceData => [
+            $FAQItemIDs[5],
+            $FAQItemIDs[4],
+        ],
+    },
+
+    # E.g.
+    # Given Keyword from text (with counter):
+    #   - RandomNumner.RandomNumer (2)
+    #   - faq (1)
+    # Result (FAQArticleID => Calculated Quantifier and ordering by change time and create time):
+    #   - FAQArticle 1 => 2
+    #   - FAQArticle 7 => 1
+    {
+        Description => 'Test with some keywords in the subject and body and a limit for RelatedAgentArticleList',
+        RelatedAgentArticleList => {
+            Subject => "$RandomNumber",
+            Body    => "$RandomNumber.$RandomNumber faq$RandomNumber $RandomNumber.$RandomNumber.",
+            Limit   => 2,
+            UserID  => $TestUserID,
+        },
+        ReferenceData => [
+            $FAQItemIDs[0],
+            $FAQItemIDs[6],
+        ],
+    },
 );
 
 TEST:
 for my $Test (@Tests) {
 
     # check RelatedCustomerArticleList attribute
-    if ( !$Test->{RelatedCustomerArticleList} || ref $Test->{RelatedCustomerArticleList} ne 'HASH' ) {
+    if (
+        ( !$Test->{RelatedCustomerArticleList} || ref $Test->{RelatedCustomerArticleList} ne 'HASH' )
+        && ( !$Test->{RelatedAgentArticleList} || ref $Test->{RelatedAgentArticleList} ne 'HASH' )
+        )
+    {
 
         $Self->True(
             0,
-            "Test $TestCount: No RelatedCustomerArticleList found for this test.",
+            "Test $TestCount: No RelatedAgentArticleList or RelatedCustomerArticleList found for this test.",
         );
 
         next TEST;
+    }
+
+    my $RelatedArticleFunction;
+
+    if ( $Test->{RelatedCustomerArticleList} ) {
+        $RelatedArticleFunction = 'RelatedCustomerArticleList';
+    }
+    else {
+        $RelatedArticleFunction = 'RelatedAgentArticleList';
     }
 
     # print test case description
@@ -510,24 +805,34 @@ for my $Test (@Tests) {
         );
     }
 
-    my @RelatedCustomerArticleList = $FAQObject->RelatedCustomerArticleList(
-        %{ $Test->{RelatedCustomerArticleList} },
-    );
+    my @RelatedArticleList;
+
+    if ( $Test->{RelatedCustomerArticleList} ) {
+
+        @RelatedArticleList = $FAQObject->$RelatedArticleFunction(
+            %{ $Test->{RelatedCustomerArticleList} },
+        );
+    }
+    else {
+        @RelatedArticleList = $FAQObject->$RelatedArticleFunction(
+            %{ $Test->{RelatedAgentArticleList} },
+        );
+    }
 
     if ( $Test->{Fails} ) {
         $Self->False(
-            @RelatedCustomerArticleList ? 1 : 0,
-            "Test $TestCount: RelatedCustomerArticleList() - should fail.",
+            @RelatedArticleList ? 1 : 0,
+            "Test $TestCount: $RelatedArticleFunction() - should fail.",
         );
     }
     else {
 
-        my @RelatedFAQArticleIDs = map { $_->{ItemID} } @RelatedCustomerArticleList;
+        my @RelatedFAQArticleIDs = map { $_->{ItemID} } @RelatedArticleList;
 
         $Self->IsDeeply(
             \@RelatedFAQArticleIDs,
             $Test->{ReferenceData},
-            "Test $TestCount: RelatedCustomerArticleList() - test the result",
+            "Test $TestCount: $RelatedArticleFunction() - test the result",
         );
     }
 }

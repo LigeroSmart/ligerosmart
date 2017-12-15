@@ -127,7 +127,7 @@
         </para>
     </section>
     <section>
-        <title>This might be helpful (customer ticket creation)</title>
+        <title>This might be helpful (agent and customer ticket creation)</title>
         <para>
             An additional widget for the customer ticket creation providing you helpful faq
             article related for the insert subject and text.
@@ -422,6 +422,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>DynamicField object registration.</para>
         </section>
         <section>
+            <title>FAQ::Agent::RelatedArticles::Enabled.</title>
+            <para>Navigation: Core::FAQ::RelatedArticles.</para>
+            <para>Enable the related article feature for the customer frontend.</para>
+        </section>
+        <section>
             <title>FAQ::Agent::StateTypes.</title>
             <para>Navigation: Frontend::Agent.</para>
             <para>List of state types which can be used in the agent interface.</para>
@@ -473,7 +478,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Customer::RelatedArticles::Enabled.</title>
-            <para>Navigation: Core::FAQ.</para>
+            <para>Navigation: Core::FAQ::RelatedArticles.</para>
             <para>Enable the related article feature for the customer frontend.</para>
         </section>
         <section>
@@ -652,6 +657,26 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Dynamic fields shown in the FAQ print screen of the agent interface.</para>
         </section>
         <section>
+            <title>FAQ::Frontend::AgentFAQRelatedArticles###DefaultLanguages.</title>
+            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
+            <para>The default languages for the related FAQ articles.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQRelatedArticles###QueuesEnabled.</title>
+            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
+            <para>List of queue names for which the related article feature is enabled.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQRelatedArticles###ShowLimit.</title>
+            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
+            <para>Output limit for the related FAQ articles.</para>
+        </section>
+        <section>
+            <title>FAQ::Frontend::AgentFAQRelatedArticles###VoteStarsVisible.</title>
+            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
+            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactivate the output).</para>
+        </section>
+        <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch.</title>
             <para>Navigation: Frontend::Agent::View::FAQSearch.</para>
             <para>Defines the default shown FAQ search attribute for FAQ search screen.</para>
@@ -823,23 +848,23 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages.</title>
-            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>Navigation: Frontend::Customer::FAQRelatedArticles.</para>
             <para>The default languages for the related FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled.</title>
-            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>Navigation: Frontend::Customer::FAQRelatedArticles.</para>
             <para>List of queue names for which the related article feature is enabled.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit.</title>
-            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
+            <para>Navigation: Frontend::Customer::FAQRelatedArticles.</para>
             <para>Output limit for the related FAQ articles.</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible.</title>
-            <para>Navigation: Frontend::Customer::View::TicketMessage.</para>
-            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output).</para>
+            <para>Navigation: Frontend::Customer::FAQRelatedArticles.</para>
+            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactivate the output).</para>
         </section>
         <section>
             <title>FAQ::Frontend::CustomerFAQSearch###DynamicField.</title>
@@ -1058,7 +1083,7 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </section>
         <section>
             <title>FAQ::KeywordArticeList::SearchLimit.</title>
-            <para>Navigation: Core::FAQ.</para>
+            <para>Navigation: Core::FAQ::RelatedArticles.</para>
             <para>Limit for the search to build the keyword FAQ article list.</para>
         </section>
         <section>
@@ -1167,6 +1192,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Frontend module registration for the agent interface.</para>
         </section>
         <section>
+            <title>Frontend::Module###AgentFAQRelatedArticles.</title>
+            <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
+            <para>Frontend module registration for the agent interface.</para>
+        </section>
+        <section>
             <title>Frontend::Module###AgentFAQRichText.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration.</para>
             <para>Frontend module registration for the agent interface.</para>
@@ -1227,7 +1257,12 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>Defines where the 'Insert FAQ' link will be displayed.</para>
         </section>
         <section>
-            <title>Frontend::Output::FilterElementPost###OutputFilterPostFAQRelatedArticles.</title>
+            <title>Frontend::Output::FilterElementPost###OutputFilterPostFAQAgentRelatedArticles.</title>
+            <para>Navigation: Frontend::Base::OutputFilter.</para>
+            <para>Output filter to add Java-script to CustomerTicketMessage screen.</para>
+        </section>
+        <section>
+            <title>Frontend::Output::FilterElementPost###OutputFilterPostFAQCustomerRelatedArticles.</title>
             <para>Navigation: Frontend::Base::OutputFilter.</para>
             <para>Output filter to add Java-script to CustomerTicketMessage screen.</para>
         </section>
@@ -1240,6 +1275,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <title>Frontend::Search###FAQ.</title>
             <para>Navigation: Frontend::Agent::ModuleRegistration::MainMenu::Search.</para>
             <para>FAQ search backend router of the agent interface.</para>
+        </section>
+        <section>
+            <title>Frontend::Template::GenerateBlockHooks###100-FAQ-FAQAgentRelatedArticles.</title>
+            <para>Navigation: Frontend::Base::OutputFilter.</para>
+            <para>Generate HTML comment hooks for the specified blocks so that filters can use them.</para>
         </section>
         <section>
             <title>Frontend::ToolBarModule###90-FAQ::AgentFAQAdd.</title>
@@ -1551,18 +1591,20 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Related article function</title>
         <para>
-            The OTRS FAQ has an related article feature for the customer ticket creation. The feature
-            is activated by default, but the functionality can be deactivated by setting the option
-            FAQ::Customer::RelatedArticles::Enabled to 'No'.
+            The OTRS FAQ package has an related article feature for the agent and customer ticket
+            creation. The feature is activated by default, but the functionality can be deactivated
+            by with the following settings: 'FAQ::Agent::RelatedArticles::Enabled' and/or 'FAQ::Customer::RelatedArticles::Enabled'.
         </para>
         <para>
             The related article feature can be enabled for the defined queues under
-            FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled. If the setting is empty the
+            'FAQ::Frontend::AgentFAQRelatedArticles###QueuesEnabled' and/or
+            'FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled'. If the settings are empty the
             feature is enabled for all queues.
         </para>
         <para>
-            The output for the rating in the related article list can be configured with t
-            FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible. Only the rating greater then
+            The output for the rating in the related article list can be configured with the settings:
+            'FAQ::Frontend::AgentFAQRelatedArticles###VoteStarsVisible' and/or
+            'FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible'. Only the rating greater then
             the configured value will be visible in the list.
         </para>
     </section>
@@ -1685,13 +1727,13 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         </orderedlist>
     </section>
     <section>
-        <title>This might be helpful (during the customer ticket creation)</title>
+        <title>Related Articles (This might be helpful during the customer ticket creation)</title>
         <para>
             With the FAQ package a new widget in the customer ticket creation will be visible. The widget should help the customer to get
             directly a helpful solution without a ticket creation. The user must type a subject or text to get a list of helpful resources.
             <mediaobject>
                 <imageobject>
-                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Initial.jpg" format="JPG"/>
+                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Customer-Initial.jpg" format="JPG"/>
                 </imageobject>
             </mediaobject>
         </para>
@@ -1700,15 +1742,31 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             FAQ article with the default language or the user language).
             <mediaobject>
                 <imageobject>
-                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Result.jpg" format="JPG"/>
+                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Customer-Result.jpg" format="JPG"/>
                 </imageobject>
             </mediaobject>
         </para>
     </section>
     <section>
-        <title>Collection/Sorting for the helpful article</title>
+        <title>Related Articles (This might be helpful during the agent ticket creation)</title>
         <para>
-            For the helpful FAQ article collection the insert content in the subject and text will be used. After every
+            With the FAQ package a new widget in the agent ticket phone and email creation will be visible. The widget should help the agent to get
+            directly a helpful solution for the current situation. The agent must type a subject or text to get a list of helpful resources.
+        </para>
+        <para>
+            For the output of the helpful article list all internal, external and public FAQ article will be considered (but only
+            FAQ article with the default language or the user language).
+            <mediaobject>
+                <imageobject>
+                    <imagedata scalefit="1" width="100%" contentdepth="100%" fileref="screenshots/ThisMightBeHelpful-Agent-Result.jpg" format="JPG"/>
+                </imageobject>
+            </mediaobject>
+        </para>
+    </section>
+    <section>
+        <title>Collection/Sorting for the related (helpful) articles</title>
+        <para>
+            For the related FAQ article collection the insert content in the subject and text will be used. After every
             whitespace (for the subject only after 10 characters or if already some text in the text field exists) a check in
             the background collect possible new helpful FAQ article for the list.
             The keywords (every single word) from the insert subject and text will be compared with all keywords from the
@@ -1738,11 +1796,11 @@ Result for the collection (FAQArticleID => Calculated Quantifier):
             ]]>
         </screen>
         <para>
-            If two article have the same keyword quantifier the last change time and create time will also
+            If two articles have the same keyword quantifier the last change time and create time will also
             be used for the sorting.
         </para>
         <para>
-            To provide good helpful FAQ article for the customer ticket creation, you need good maintained keywords
+            To provide good helpful FAQ article for the ticket creation, you need good maintained keywords
             in the FAQ articles.
         </para>
     </section>
@@ -1809,7 +1867,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test UpgradeLowerThan5092
             To run the Selenium unit tests, make sure you have a complete Selenium environment setup in your Kernel/Config.pm file and a running a WebDriver.
         </para>
         <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer --test AgentFAQLanguage --test AgentFAQLinkObject --test AgentFAQPrint --test AgentFAQSearch:AgentFAQZoom
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentFAQExplorer --test AgentFAQLanguage --test AgentFAQLinkObject --test AgentFAQPrint --test AgentFAQSearch --test AgentFAQZoom --test Agent/FAQ/RelatedArticles
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test CustomerFAQExplorer --test CustomerFAQPrint --test CustomerFAQSearch --test CustomerFAQZoom --test Customer/FAQ/RelatedArticles
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test PublicFAQExplorer --test PublicFAQPrint --test PublicFAQRSS --test PublicFAQSearch --test PublicFAQZoom
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Dashboard/FAQ --test FAQJournalOverview/Small --test FAQMenu/Generic --test FAQOverview/Small --test HeaderMeta/AgentFAQSearch --test HeaderMeta/CustomerFAQSearch --test HeaderMeta/PublicFAQSearch --test LinkObject/FAQ

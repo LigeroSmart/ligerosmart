@@ -29,16 +29,97 @@ All related faq article functions.
 
 =head1 PUBLIC INTERFACE
 
-=head2 RelatedArticleList()
+=head2 RelatedAgentArticleList()
 
 Get the related faq article list for the given subject and body.
 
-    my @RelatedArticleList = $FAQObject->RelatedArticleList(
+    my @RelatedAgentArticleList = $FAQObject->RelatedAgentArticleList(
         Subject   => 'Title Example',
         Body      => 'Text Example',  # possible with html tags (will be removed for the search)
         Languages =>[ 'en' ],         # optional
         Limit     => 10,              # optional
         UserID    => 1,
+    );
+
+Returns
+
+    my @RelatedAgentArticleList = (
+        {
+            ItemID       => 123,
+            Title        => 'FAQ Title',
+            CategoryName => 'Misc',
+            Created      => '2014-10-10 10:10:00',
+        },
+        {
+            ItemID       => 123,
+            Title        => 'FAQ Title',
+            CategoryName => 'Misc',
+            Created      => '2014-10-10 10:10:00',
+        },
+    );
+
+=cut
+
+sub RelatedAgentArticleList {
+    my ( $Self, %Param ) = @_;
+
+    return $Self->_RelatedArticleList(%Param);
+}
+
+=head2 RelatedCustomerArticleList()
+
+Get the related faq article list for the given subject and body.
+
+    my @RelatedCustomerArticleList = $FAQObject->RelatedCustomerArticleList(
+        Subject   => 'Title Example',
+        Body      => 'Text Example',  # possible with html tags (will be removed for the search)
+        Languages =>[ 'en' ],         # optional
+        Limit     => 10,              # optional
+        UserID    => 1,
+    );
+
+Returns
+
+    my @RelatedCustomerArticleList = (
+        {
+            ItemID       => 123,
+            Title        => 'FAQ Title',
+            CategoryName => 'Misc',
+            Created      => '2014-10-10 10:10:00',
+        },
+        {
+            ItemID       => 123,
+            Title        => 'FAQ Title',
+            CategoryName => 'Misc',
+            Created      => '2014-10-10 10:10:00',
+        },
+    );
+
+=cut
+
+sub RelatedCustomerArticleList {
+    my ( $Self, %Param ) = @_;
+
+    return $Self->_RelatedArticleList(
+        %Param,
+        CustomerUser => $Param{UserID},
+        UserID       => 1,
+    );
+}
+
+=head1 PRIVATE FUNCTIONS
+
+=head2 _RelatedArticleList()
+
+Get the related faq article list for the given subject and body.
+
+    my @RelatedArticleList = $FAQObject->_RelatedArticleList(
+        Subject      => 'Title Example',
+        Body         => 'Text Example',  # possible with html tags (will be removed for the search)
+        Languages    =>[ 'en' ],         # optional
+        Limit        => 10,              # optional
+        CustomerUser => 'joe'            # optional
+        UserID       => 1,
     );
 
 Returns
@@ -60,60 +141,115 @@ Returns
 
 =cut
 
-sub RelatedCustomerArticleList {
+sub _RelatedArticleList {
     my ( $Self, %Param ) = @_;
 
-    for my $Needed (qw(UserID)) {
-        if ( !$Param{$Needed} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Needed!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
-    # Get ASCII content form the given body, to have no html tags for the check.
-    $Param{Body} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
-        String => $Param{Body},
-    );
+    my @Content;
 
-    return if !$Param{Subject} && !$Param{Body};
-
-    # To save the keywords and the counter for the different keywords.
-    my %ContentKeywords;
-
-    # Strip not wanted stuff from the given subject and body.
+    FIELD:
     for my $Field (qw(Subject Body)) {
 
-        $Param{$Field} ||= '';
-
-        # Remove the links from the content.
-        $Param{$Field} = $Self->_RemoveLinksFromContent(
-            Content => $Param{$Field},
-        );
-
-        # Split the text in word and save the word as the given keywords (separator is a whitespace).
-        $Param{$Field} =~ s{[\.\,\;\:](\s|\s? \Z )}{ }xmsg;
-        my @FieldKeywords = ( $Param{$Field} =~ m{ [\w\x{0980}-\x{09FF}\-]+\.?[\w\x{0980}-\x{09FF}\-]* }xmsg );
-
-        KEYWORD:
-        for my $Keyword (@FieldKeywords) {
-
-            # Save the keywords always as lower case.
-            $Keyword = lc $Keyword;
-
-            # Increase the keyword counter from the text content, to increase the relevance for this keyword.
-            $ContentKeywords{$Keyword}++;
+        # Get ASCII content form the given body, to have no html tags for the check.
+        if ( $Field eq 'Body' ) {
+            $Param{$Field} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                String => $Param{$Field},
+            );
         }
+
+        next FIELD if !$Param{$Field};
+
+        push @Content, $Param{$Field};
     }
 
-    # Get the keyword article list for the given languages.
-    my %FAQKeywordArticleList = $Self->FAQKeywordCustomerArticleList(
-        CustomerUser => $Param{UserID},
-        Languages    => $Param{Languages},
-        UserID       => 1,
+    return if !@Content;
+
+    # To save the keywords and the counter for the different keywords.
+    my %ContentKeywords = $Self->_BuildKeywordCounterFromContent(
+        Content => \@Content
     );
+
+    return if !%ContentKeywords;
+
+    # Get the keyword article list for the given languages.
+    my %FAQKeywordArticleList = $Self->FAQKeywordArticleList(%Param);
+
+    return if !%FAQKeywordArticleList;
+
+    return $Self->_BuildRelatedFAQArticleList(
+        ContentKeywords    => \%ContentKeywords,
+        KeywordArticleList => \%FAQKeywordArticleList,
+        Limit              => $Param{Limit},
+        UserID             => $Param{UserID},
+    );
+}
+
+=head2 _BuildRelatedFAQArticleList()
+
+Build the related faq article list from the given content keywords and article keyword relation.
+
+    my @RelatedArticleList = $FAQObject->_BuildRelatedFAQArticleList(
+        ContentKeywords => {
+            example => 1,
+            test    => 3,
+            faq     => 6,
+        },
+        KeywordArticleList => {
+            'ExampleKeyword' => [
+                12,
+                13,
+            ],
+            'TestKeyword' => [
+                876,
+            ],
+        },
+        Limit  => 10, # optional
+        UserID => 1,
+    );
+
+Returns
+
+    my @RelatedArticleList = (
+        {
+            ItemID       => 123,
+            Title        => 'FAQ Title',
+            CategoryName => 'Misc',
+            Created      => '2014-10-10 10:10:00',
+        },
+        {
+            ItemID       => 123,
+            Title        => 'FAQ Title',
+            CategoryName => 'Misc',
+            Created      => '2014-10-10 10:10:00',
+        },
+    );
+
+=cut
+
+sub _BuildRelatedFAQArticleList {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{UserID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+
+    return if !IsHashRefWithData( $Param{ContentKeywords} );
+    return if !IsHashRefWithData( $Param{KeywordArticleList} );
+
+    # Save given parameters in own variables for better usage.
+    my %ContentKeywords    = %{ $Param{ContentKeywords} };
+    my %KeywordArticleList = %{ $Param{KeywordArticleList} };
 
     # Build the related faq articles and save a quantifier for the different articles with the relevance
     #   from the keyword, which is related to the faq article.
@@ -134,10 +270,10 @@ sub RelatedCustomerArticleList {
     CONTENTKEYWORD:
     for my $ContentKeyword ( sort keys %ContentKeywords ) {
 
-        next CONTENTKEYWORD if !IsArrayRefWithData( $FAQKeywordArticleList{$ContentKeyword} );
+        next CONTENTKEYWORD if !IsArrayRefWithData( $KeywordArticleList{$ContentKeyword} );
 
         FAQARTICLEID:
-        for my $FAQArticleID ( @{ $FAQKeywordArticleList{$ContentKeyword} } ) {
+        for my $FAQArticleID ( @{ $KeywordArticleList{$ContentKeyword} } ) {
 
             if ( !$LookupRelatedFAQArticles{$FAQArticleID} ) {
 
@@ -185,7 +321,59 @@ sub RelatedCustomerArticleList {
     return @RelatedFAQArticleList;
 }
 
-=head1 PRIVATE FUNCTIONS
+=head2 _BuildKeywordCounterFromContent()
+
+Build the keywords for the given content.
+
+    my $Content = $FAQObject->_BuildKeywordCounterFromContent(
+        Content => 'Some Text with a link. More text. [1] https://otrs.com/',
+    );
+
+Returns
+
+    %ContentKeywords = (
+        example => 1,
+        test    => 3,
+        faq     => 6,
+        ...
+    );
+
+=cut
+
+sub _BuildKeywordCounterFromContent {
+    my ( $Self, %Param ) = @_;
+
+    return if !IsArrayRefWithData( $Param{Content} );
+
+    my %ContentKeywords;
+
+    # Strip not wanted stuff from the given subject and body.
+    for my $Content ( @{ $Param{Content} } ) {
+
+        $Content ||= '';
+
+        # Remove the links from the content.
+        $Content = $Self->_RemoveLinksFromContent(
+            Content => $Content,
+        );
+
+        # Split the text in word and save the word as the given keywords (separator is a whitespace).
+        $Content =~ s{[\.\,\;\:](\s|\s? \Z )}{ }xmsg;
+        my @FieldKeywords = ( $Content =~ m{ [\w\x{0980}-\x{09FF}\-]+\.?[\w\x{0980}-\x{09FF}\-]* }xmsg );
+
+        KEYWORD:
+        for my $Keyword (@FieldKeywords) {
+
+            # Save the keywords always as lower case.
+            $Keyword = lc $Keyword;
+
+            # Increase the keyword counter from the text content, to increase the relevance for this keyword.
+            $ContentKeywords{$Keyword}++;
+        }
+    }
+
+    return %ContentKeywords;
+}
 
 =head2 _RemoveLinksFromContent()
 

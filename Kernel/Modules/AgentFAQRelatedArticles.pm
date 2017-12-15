@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Modules::CustomerFAQRelatedArticles;
+package Kernel::Modules::AgentFAQRelatedArticles;
 
 use strict;
 use warnings;
@@ -26,6 +26,8 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $Config = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}");
+
     my $JSON = '';
 
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
@@ -36,7 +38,6 @@ sub Run {
     my @RelatedFAQArticleList;
     my $RelatedFAQArticleFoundNothing;
 
-    my $Config       = $Kernel::OM->Get('Kernel::Config')->Get("FAQ::Frontend::$Self->{Action}");
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     if ( $Subject || $Body ) {
@@ -50,7 +51,7 @@ sub Run {
             push @{$RelatedArticleLanguages}, $LayoutObject->{UserLanguage};
         }
 
-        @RelatedFAQArticleList = $Kernel::OM->Get('Kernel::System::FAQ')->RelatedCustomerArticleList(
+        @RelatedFAQArticleList = $Kernel::OM->Get('Kernel::System::FAQ')->RelatedAgentArticleList(
             Subject   => $Subject,
             Body      => $Body,
             Languages => $RelatedArticleLanguages,
@@ -63,26 +64,31 @@ sub Run {
         }
     }
 
-    # Generate the html for the widget.
-    my $CustomerRelatedFAQArticlesHTMLString = $LayoutObject->Output(
-        TemplateFile => 'CustomerFAQRelatedArticles',
-        Data         => {
-            RelatedFAQArticleList         => \@RelatedFAQArticleList,
-            RelatedFAQArticleFoundNothing => $RelatedFAQArticleFoundNothing,
-            VoteStarsVisible              => $Config->{VoteStarsVisible},
-        },
-    );
+    if (@RelatedFAQArticleList) {
 
-    $JSON = $LayoutObject->JSONEncode(
-        Data => {
-            CustomerRelatedFAQArticlesHTMLString => $CustomerRelatedFAQArticlesHTMLString,
-        },
-    );
+        # Generate the html for the widget.
+        my $AgentRelatedFAQArticlesHTMLString = $LayoutObject->Output(
+            TemplateFile => 'AgentFAQRelatedArticles',
+            Data         => {
+                RelatedFAQArticleList         => \@RelatedFAQArticleList,
+                RelatedFAQArticleFoundNothing => $RelatedFAQArticleFoundNothing,
+                VoteStarsVisible              => $Config->{VoteStarsVisible},
+            },
+        );
 
-    # build empty JSON output if JSON is empty
-    if ( !$JSON ) {
         $JSON = $LayoutObject->JSONEncode(
-            Data => {},
+            Data => {
+                AgentRelatedFAQArticlesHTMLString => $AgentRelatedFAQArticlesHTMLString,
+                Success                           => 1,
+            },
+        );
+    }
+    else {
+
+        $JSON = $LayoutObject->JSONEncode(
+            Data => {
+                Success => 0,
+            },
         );
     }
 

@@ -1652,21 +1652,21 @@ sub KeywordList {
     return %Data;
 }
 
-=head2 FAQKeywordCustomerArticleList()
+=head2 FAQKeywordArticleList()
 
 Get a keyword and related faq articles lookup list (optional only for the given languages).
-At the moment only for the interface 'external' (to use only approved article) and the
-customer state types (maybe improve this later).
+You can build a list for a agent or customer. If you give only a UserID the result is for
+the given UserID, with a additional CustomerUser the list is only for the given CustomerUser.
 
-    my %FAQKeywordCustomerArticleList = $FAQObject->FAQKeywordCustomerArticleList(
-        CustomerUser => 'tt',
-        Languages    => [ 'en', 'de' ], # optional
+    my %FAQKeywordArticleList = $FAQObject->FAQKeywordArticleList(
         UserID       => 1,
+        CustomerUser => 'tt',           # optional (with this the result is only customer faq article)
+        Languages    => [ 'en', 'de' ], # optional
     );
 
 Returns
 
-    my %FAQKeywordCustomerArticleList = (
+    my %FAQKeywordArticleList = (
         'ExampleKeyword' => [
             12,
             13,
@@ -1678,17 +1678,15 @@ Returns
 
 =cut
 
-sub FAQKeywordCustomerArticleList {
+sub FAQKeywordArticleList {
     my ( $Self, %Param ) = @_;
 
-    for my $Argument (qw(CustomerUser UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Kernel::OM->Get('Kernel::System::Log')->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
     }
 
     my @LanguageIDs;
@@ -1705,28 +1703,51 @@ sub FAQKeywordCustomerArticleList {
         push @LanguageIDs, $LanguageID;
     }
 
-    my $CustomerCategoryIDs = $Self->CustomerCategorySearch(
-        CustomerUser => $Param{CustomerUser},
-        Mode         => 'Customer',
-        UserID       => $Param{UserID},
-    );
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    return if !IsArrayRefWithData($CustomerCategoryIDs);
+    my $Interface;
+    my $StateTypes;
+    my $CategoryIDs;
+
+    if ( $Param{CustomerUser} ) {
+
+        $Interface = 'external';
+
+        $StateTypes = $ConfigObject->Get('FAQ::Customer::StateTypes');
+
+        $CategoryIDs = $Self->CustomerCategorySearch(
+            CustomerUser => $Param{CustomerUser},
+            Mode         => 'Customer',
+            UserID       => $Param{UserID},
+        );
+    }
+    else {
+
+        $Interface = 'internal';
+
+        $StateTypes = $ConfigObject->Get('FAQ::Agent::StateTypes');
+
+        $CategoryIDs = $Self->AgentCategorySearch(
+            GetSubCategories => 1,
+            UserID           => $Param{UserID},
+        );
+    }
+
+    return if !IsArrayRefWithData($CategoryIDs);
 
     my $CacheKey = 'FAQKeywordArticleList';
 
     if (@LanguageIDs) {
-        $CacheKey .= '::Language' . join '::', @LanguageIDs;
+        $CacheKey .= '::Language' . join '::', sort @LanguageIDs;
     }
-    $CacheKey .= '::CategoryIDs' . join '::', @{$CustomerCategoryIDs};
+    $CacheKey .= '::CategoryIDs' . join '::', sort @{$CategoryIDs};
+    $CacheKey .= '::Interface::' . $Interface;
 
     my $Cache = $Kernel::OM->Get('Kernel::System::Cache')->Get(
         Type => 'FAQKeywordArticleList',
         Key  => $CacheKey,
     );
     return %{$Cache} if $Cache;
-
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     my %FAQSearchParameter;
 
@@ -1737,7 +1758,7 @@ sub FAQKeywordCustomerArticleList {
     );
 
     $FAQSearchParameter{States} = $Self->StateTypeList(
-        Types  => $ConfigObject->Get('FAQ::Customer::StateTypes'),
+        Types  => $StateTypes,
         UserID => $Param{UserID},
     );
 
@@ -1750,7 +1771,7 @@ sub FAQKeywordCustomerArticleList {
     # Get the relevant FAQ article for the current customer user.
     my @FAQArticleIDs = $Self->FAQSearch(
         %FAQSearchParameter,
-        CategoryIDs      => $CustomerCategoryIDs,
+        CategoryIDs      => $CategoryIDs,
         OrderBy          => ['FAQID'],
         OrderByDirection => ['Down'],
         Limit            => $SearchLimit,

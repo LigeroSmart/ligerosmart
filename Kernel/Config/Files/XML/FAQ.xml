@@ -2127,15 +2127,18 @@ Your OTRS Notification Master
             </Array>
         </Value>
     </Setting>
-    <Setting Name="Loader::Customer::CommonCSS###200-FAQ" Required="1" Valid="1">
-        <Description Translatable="1">List of CSS files to always be loaded for the customer interface.</Description>
-        <Navigation>Frontend::Base::Loader</Navigation>
+    <Setting Name="Loader::Module::CustomerTicketMessage###003-FAQ" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::Loader</Navigation>
         <Value>
-            <Array>
-                <!-- Both can be moved in OTRS 6 to the CustomerTicketMessage frontend -->
-                <Item>FAQ.RelatedArticles.css</Item>
-                <Item>FAQ.Customer.Default.css</Item>
-            </Array>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>FAQ.RelatedArticles.css</Item>
+                        <Item>FAQ.Customer.Default.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
         </Value>
     </Setting>
     <Setting Name="FAQ::Voting" Required="1" Valid="1">
@@ -2696,17 +2699,17 @@ Your OTRS Notification Master
     </Setting>
     <Setting Name="FAQ::Customer::RelatedArticles::Enabled" Required="1" Valid="1">
         <Description Translatable="1">Enable the related article feature for the customer frontend.</Description>
-        <Navigation>Core::FAQ</Navigation>
+        <Navigation>Core::FAQ::RelatedArticles</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterPostFAQRelatedArticles" Required="0" Valid="1">
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterPostFAQCustomerRelatedArticles" Required="0" Valid="1">
         <Description Translatable="1">Output filter to add Java-script to CustomerTicketMessage screen.</Description>
         <Navigation>Frontend::Base::OutputFilter</Navigation>
         <Value>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQRelatedArticles</Item>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::FAQCustomerRelatedArticles</Item>
                 <Item Key="Templates">
                     <Hash>
                         <Item Key="CustomerTicketMessage">1</Item>
@@ -2738,14 +2741,14 @@ Your OTRS Notification Master
     </Setting>
     <Setting Name="FAQ::KeywordArticeList::SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Limit for the search to build the keyword FAQ article list.</Description>
-        <Navigation>Core::FAQ</Navigation>
+        <Navigation>Core::FAQ::RelatedArticles</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^\d+$">5000</Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled" Required="0" Valid="0">
         <Description Translatable="1">List of queue names for which the related article feature is enabled.</Description>
-        <Navigation>Frontend::Customer::View::TicketMessage</Navigation>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
         <Value>
             <Array>
                 <Item>Raw</Item>
@@ -2754,7 +2757,7 @@ Your OTRS Notification Master
     </Setting>
     <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###DefaultLanguages" Required="0" Valid="1">
         <Description Translatable="1">The default languages for the related FAQ articles.</Description>
-        <Navigation>Frontend::Customer::View::TicketMessage</Navigation>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
         <Value>
             <Array>
                 <Item>en</Item>
@@ -2763,14 +2766,14 @@ Your OTRS Notification Master
     </Setting>
     <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###ShowLimit" Required="1" Valid="1">
         <Description Translatable="1">Output limit for the related FAQ articles.</Description>
-        <Navigation>Frontend::Customer::View::TicketMessage</Navigation>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^\d+$">10</Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible" Required="0" Valid="1">
-        <Description Translatable="1">Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactive the output).</Description>
-        <Navigation>Frontend::Customer::View::TicketMessage</Navigation>
+        <Description Translatable="1">Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactivate the output).</Description>
+        <Navigation>Frontend::Customer::FAQRelatedArticles</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^\d+$">4</Item>
         </Value>

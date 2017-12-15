@@ -6,7 +6,7 @@
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::FilterElementPost::FAQRelatedArticles;
+package Kernel::Output::HTML::FilterElementPost::FAQCustomerRelatedArticles;
 
 use strict;
 use warnings;
@@ -46,7 +46,7 @@ sub Run {
     return if ref $OutputFilterPostConfigs ne 'HASH';
 
     # Extract the output filter config.
-    my $OutputFilterConfig = $OutputFilterPostConfigs->{OutputFilterPostFAQRelatedArticles};
+    my $OutputFilterConfig = $OutputFilterPostConfigs->{OutputFilterPostFAQCustomerRelatedArticles};
 
     return if !$OutputFilterConfig;
     return if ref $OutputFilterConfig ne 'HASH';
@@ -103,7 +103,8 @@ sub Run {
     my $QueuesEnabledStrg = '';
     if ( IsArrayRefWithData($QueuesEnabled) ) {
 
-  # Don't show the functionality, if the queue selection is disabled and the default queue is not in the enabled queues.
+        # Don't show the functionality, if the queue selection is disabled
+        #   and the default queue is not in the enabled queues.
         if ( !$FrontendCustomerTicketMessageConfig->{Queue} ) {
             my %LookupQuquesEnabled = map { $_ => 1 } @{$QueuesEnabled};
 

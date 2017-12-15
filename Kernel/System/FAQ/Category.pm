@@ -1038,8 +1038,9 @@ sub CategoryUpdate {
 get the category search as array ref
 
     my $CategoryIDArrayRef = $FAQObject->AgentCategorySearch(
-        ParentID => 3,   # (optional, default 0)
-        UserID   => 1,
+        ParentID         => 3,  # (optional, default 0)
+        GetSubCategories => 1,  # (optional, default 0)
+        UserID           => 1,
     );
 
 Returns:
@@ -1064,9 +1065,8 @@ sub AgentCategorySearch {
     }
 
     # set default parent id
-    if ( !defined $Param{ParentID} ) {
-        $Param{ParentID} = 0;
-    }
+    my $ParentID = $Param{ParentID} ? $Param{ParentID} : 0;
+
     my $Categories = $Self->GetUserCategories(
         Type   => 'ro',
         UserID => $Param{UserID},
@@ -1074,8 +1074,28 @@ sub AgentCategorySearch {
 
     return [] if !IsHashRefWithData($Categories);
 
-    my %Category = %{ $Categories->{ $Param{ParentID} } };
+    my %Category = %{ $Categories->{$ParentID} };
     my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
+
+    return \@CategoryIDs if !$Param{GetSubCategories};
+
+    # Check if some IDs have a subcategory and add this also to the list.
+    for my $CategoryID (@CategoryIDs) {
+
+        # get all subcategory ids for this category
+        my $SubCategoryIDs = $Self->CategorySubCategoryIDList(
+            ParentID => $CategoryID,
+            Mode     => 'Agent',
+            UserID   => $Param{UserID},
+        );
+
+        # Add the sub categories to the category ids.
+        push @CategoryIDs, @{$SubCategoryIDs};
+    }
+
+    # Remove any duplicate IDs from the lest
+    my %Seen;
+    @CategoryIDs = grep { !$Seen{$_}++ } @CategoryIDs;
 
     return \@CategoryIDs;
 }
@@ -1179,7 +1199,6 @@ sub CustomerCategorySearch {
         for my $ID (@IDs) {
             next ID if !$Articles{$ID};
             push @AllowedCategoryIDs, $ID;
-            last ID if defined $Param{ParentID};
         }
     }
 
@@ -1929,6 +1948,7 @@ sub _UserCategories {
                 last GROUPID;
             }
         }
+
         $UserCategories{$ParentID} = \%SubCategories;
     }
 

@@ -78,5 +78,38 @@ fieldset.TableSmall > div.FAQDivider {
     color: #CCC;
 }
 
+#FAQRelatedArticles table {
+    clear: none;
+    width: 100%;
+    max-width: 622px;
+    line-height: 13px;
 }
 
+#FAQRelatedArticles table .FAQVotes {
+    padding: 0 3px;
+    width: 70px;
+}
+
+#FAQRelatedArticles table .FAQVotes i {
+    margin-right: 0px;
+}
+
+#FAQRelatedArticles table .FAQCategorie {
+    width: 25%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#FAQRelatedArticles table .FAQTitle {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#FAQRelatedArticles table .FAQDate {
+    width: 65px;
+    overflow: hidden;
+}
+
+}
