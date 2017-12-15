@@ -11,6 +11,8 @@ package Kernel::Output::HTML::FilterElementPost::FAQ;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
@@ -38,15 +40,37 @@ sub Run {
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-    # check permission
-    my $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
-        UserID    => $LayoutObject->{EnvRef}->{UserID},
-        GroupName => 'faq',
-        Type      => 'ro',
-    );
-    return if !$HasPermission;
-
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $Config = $ConfigObject->Get('Frontend::Module')->{AgentFAQExplorer};
+
+    my $GroupsRo = $Config->{GroupRo} || [];
+
+    my $HasPermission = 1;
+
+    # check permission
+    if ( IsArrayRefWithData($GroupsRo) ) {
+
+        $HasPermission = 0;
+
+        # check read only groups
+        ROGROUP:
+        for my $RoGroup ( @{$GroupsRo} ) {
+
+            $HasPermission = $Kernel::OM->Get('Kernel::System::Group')->PermissionCheck(
+                UserID    => $LayoutObject->{EnvRef}->{UserID},
+                GroupName => $RoGroup,
+                Type      => 'ro',
+            );
+
+            next ROGROUP if !$HasPermission;
+            next ROGROUP if $HasPermission != 1;
+
+            last ROGROUP;
+        }
+    }
+
+    return if !$HasPermission;
 
     # get allowed template names
     my $ValidTemplates = $ConfigObject->Get('Frontend::Output::FilterElementPost')->{FAQ}->{Templates};

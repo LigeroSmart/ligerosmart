@@ -1,4 +1,5 @@
 #6.0.3 20??-??-??
+- 2017-12-15 Fixed bug#[13421](https://bugs.otrs.org/show_bug.cgi?id=13421) - FAQ link for ticket compose does not show for new default groups.
 - 2017-12-15 Added related FAQ articles for agents feature (required output filter is moved to OTRSBusiness package).
 
 #6.0.2 2017-12-19
