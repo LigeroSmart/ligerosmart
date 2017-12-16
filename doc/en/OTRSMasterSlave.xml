@@ -377,6 +377,11 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>
     </section>
     <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###MasterSlaveMandatory.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Sets if Master / Slave field must be selected by the agent.</para>
+    </section>
+    <section>
         <title>Ticket::Frontend::AgentTicketMasterSlave###Note.</title>
         <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
         <para>Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</para>

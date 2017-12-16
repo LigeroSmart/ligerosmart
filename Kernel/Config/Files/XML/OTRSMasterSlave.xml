@@ -333,6 +333,13 @@
             <Item ValueType="String" ValueRegex="">%%MasterSlave</Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###MasterSlaveMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if Master / Slave field must be selected by the agent.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="Checkbox">0</Item>
+        </Value>
+    </Setting>
     <Setting Name="DashboardBackend###0900-TicketMaster" Required="0" Valid="1">
         <Description Translatable="1">Parameters for the dashboard backend of the master tickets overview of the agent interface. "Limit" is the number of entries shown by default. "Group" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). "Default" determines if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTLLocal" is the cache time in minutes for the plugin.</Description>
         <Navigation>Frontend::Agent::View::Dashboard</Navigation>

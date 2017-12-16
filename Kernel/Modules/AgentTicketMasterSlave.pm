@@ -359,7 +359,8 @@ sub Run {
 # OTRSMasterSlave
 # ---
         if ($MasterSlaveAdvancedEnabled) {
-            $Config->{DynamicField}->{$MasterSlaveDynamicField} = 1;
+            my $Display = $Config->{MasterSlaveMandatory} ? 2 : 1;
+            $Config->{DynamicField}->{$MasterSlaveDynamicField} = $Display;
         }
 # ---
     }

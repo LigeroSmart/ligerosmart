@@ -1,4 +1,5 @@
 #6.0.3 20??-??-??
+ - 2017-12-15 Fixed bug#[8957](https://bugs.otrs.org/show_bug.cgi?id=8957) - MasterTicket field in MasterSlave action can't be set as mandatory.
  - 2017-12-15 Fixed bug#[13306](https://bugs.otrs.org/show_bug.cgi?id=13306) - internal mail is sent to customer.
 
 #6.0.2 2017-12-19
