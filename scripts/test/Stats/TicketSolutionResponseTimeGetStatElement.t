@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 1eaca34257782c0f91d05e3eea1331d27c081a07 - scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t
+# $origin: otrs - ef6ef0c60c526114e615801eae43d2315620e9ef - scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@ $Helper->ConfigSettingChange(
 
 # Disable default Vacation days.
 $Helper->ConfigSettingChange(
-    Key   => 'TimeVacationDays',
+    Key   => 'TimeVacationDays::Calendar1',
     Value => {},
 );
 

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 2507dc88a3350adc362580b4fd57b368b7265c7f - scripts/test/Ticket.t
+# $origin: otrs - 4f07794a958e58d24ae6076c9aa28b6afa146501 - scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2255,10 +2255,160 @@ for my $SearchParam (qw(ArticleCreateTime TicketCreateTime TicketPendingTime)) {
     }
 }
 
+# Create enviroment for testing Escalation ORDER BY modification from the bug#13458.
+# Create Queues with different Escalation times.
+my @QueueConfig = (
+    {
+        # First created Queue does not have Update time set, value is 0 for created ticket.
+        Name              => 'Queue' . $Helper->GetRandomID(),
+        FirstResponseTime => 50,
+        SolutionTime      => 60,
+    },
+    {
+        # Second created Queue does not have First response time set, value is 0 for created ticket.
+        Name         => 'Queue' . $Helper->GetRandomID(),
+        UpdateTime   => 70,
+        SolutionTime => 80,
+    },
+    {
+        # Third created Queue does not have Solution time set, value is 0 for created ticket.
+        Name              => 'Queue' . $Helper->GetRandomID(),
+        FirstResponseTime => 60,
+        UpdateTime        => 30,
+    },
+);
+
+my @QueueIDs;
+for my $QueueCreate (@QueueConfig) {
+    my $QueueID = $QueueObject->QueueAdd(
+        ValidID         => 1,
+        GroupID         => 1,
+        FollowUpID      => 1,
+        SystemAddressID => 1,
+        SalutationID    => 1,
+        SignatureID     => 1,
+        Comment         => 'Some comment',
+        UserID          => 1,
+        %{$QueueCreate},
+    );
+    push @QueueIDs, $QueueID;
+}
+
+# Create Tickets.
+my @TestTicketIDs;
+for my $QueueID (@QueueIDs) {
+    my $TicketID = $TicketObject->TicketCreate(
+        Title        => 'Some Ticket Title',
+        QueueID      => $QueueID,
+        Lock         => 'unlock',
+        Priority     => '3 normal',
+        State        => 'new',
+        CustomerID   => '123465',
+        CustomerUser => 'bugtest@otrs.com',
+        OwnerID      => 1,
+        UserID       => 1,
+    );
+    push @TestTicketIDs, $TicketID;
+
+    my $ArticleID = $ArticleBackendObject->ArticleCreate(
+        TicketID             => $TicketID,
+        IsVisibleForCustomer => 0,
+        SenderType           => 'agent',
+        From                 => 'Agent Some Agent Some Agent <email@example.com>',
+        To                   => 'Customer A <customer-a@example.com>',
+        Cc                   => 'Customer B <customer-b@example.com>',
+        ReplyTo              => 'Customer B <customer-b@example.com>',
+        Subject              => 'some short description',
+        Body                 => 'the message text Perl modules provide a range of',
+        ContentType          => 'text/plain; charset=ISO-8859-15',
+        HistoryType          => 'AddNote',
+        HistoryComment       => 'Some free text!',
+        UserID               => 1,
+        NoAgentNotify        => 1,
+    );
+
+    my $TicketEscalationIndexBuild = $TicketObject->TicketEscalationIndexBuild(
+        TicketID => $TicketID,
+        UserID   => 1,
+    );
+
+    # Wait 1 second to have escalations.
+    $Helper->FixedTimeAddSeconds(1);
+
+    # Renew objects because of transaction.
+    $Kernel::OM->ObjectsDiscard(
+        Objects => [
+            'Kernel::System::Ticket',
+            'Kernel::System::Ticket::Article',
+            'Kernel::System::Ticket::Article::Backend::Internal',
+        ],
+    );
+    $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+}
+
+# Create TicketSearch by Escalations scenarios.
+my @Tests = (
+    {
+        Config => {
+            OrderBy => 'Up',
+            SortBy  => 'EscalationResponseTime',
+        },
+        ExpectedResult => [ $TestTicketIDs[0], $TestTicketIDs[2], $TestTicketIDs[1] ],
+    },
+    {
+        Config => {
+            OrderBy => 'Down',
+            SortBy  => 'EscalationResponseTime',
+        },
+        ExpectedResult => [ $TestTicketIDs[2], $TestTicketIDs[0], $TestTicketIDs[1] ],
+    },
+    {
+        Config => {
+            OrderBy => 'Up',
+            SortBy  => 'EscalationUpdateTime',
+        },
+        ExpectedResult => [ $TestTicketIDs[2], $TestTicketIDs[1], $TestTicketIDs[0] ],
+    },
+    {
+        Config => {
+            OrderBy => 'Down',
+            SortBy  => 'EscalationUpdateTime',
+        },
+        ExpectedResult => [ $TestTicketIDs[1], $TestTicketIDs[2], $TestTicketIDs[0] ],
+    },
+    {
+        Config => {
+            OrderBy => 'Up',
+            SortBy  => 'EscalationSolutionTime',
+        },
+        ExpectedResult => [ $TestTicketIDs[0], $TestTicketIDs[1], $TestTicketIDs[2] ],
+    },
+    {
+        Config => {
+            OrderBy => 'Down',
+            SortBy  => 'EscalationSolutionTime',
+        },
+        ExpectedResult => [ $TestTicketIDs[1], $TestTicketIDs[0], $TestTicketIDs[2] ],
+    },
+);
+for my $Test (@Tests) {
+    my @Tickets = $TicketObject->TicketSearch(
+        Result            => 'ARRAY',
+        CustomerUserLogin => 'bugtest@otrs.com',
+        UserID            => 1,
+        %{ $Test->{Config} },
+    );
+    $Self->IsDeeply(
+        $Test->{ExpectedResult},
+        \@Tickets,
+        "TicketSearch() - SortBy $Test->{Config}{SortBy} - OrderBy $Test->{Config}{OrderBy}"
+    );
+}
+
 # cleanup is done by RestoreDatabase but we need to delete the tickets to cleanup the filesystem too
 my @DeleteTicketList = $TicketObject->TicketSearch(
     Result            => 'ARRAY',
-    CustomerUserLogin => 'unittest@otrs.com',
+    CustomerUserLogin => [ 'unittest@otrs.com', 'bugtest@otrs.com' ],
     UserID            => 1,
 );
 for my $TicketID (@DeleteTicketList) {
