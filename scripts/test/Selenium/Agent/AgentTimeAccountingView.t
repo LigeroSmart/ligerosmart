@@ -45,9 +45,10 @@ $Selenium->RunTest(
             Value => \%Week,
         );
 
+        # Disable default Vacation days.
         $Helper->ConfigSettingChange(
-            Key   => 'TimeWorkingHours',
-            Value => \%Week,
+            Key   => 'TimeVacationDays',
+            Value => {},
         );
 
         # create test user and login
