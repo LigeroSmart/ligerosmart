@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - eb9ea3629b55931e2a046b6d0e87137d39a24c72 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
+# $origin: otrs - 070e6fa4e795b26ee6d5233be251c366a9c9d356 - Kernel/Output/HTML/Templates/Standard/AgentTicketOverviewPreview.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -254,7 +254,7 @@
                                     <span class="Subject">[% Data.ArticleFields.Subject.Value | truncate(70) | html %]</span>
                                 [% END %]
                                 </span>
-                                <span class="DateTime">[% Data.Created | Localize("TimeShort") %]</span>
+                                <span class="DateTime">[% Data.ChangeTime | Localize("TimeShort") %]</span>
                                 <span class="Clear"></span>
                             </a>
                         </h3>
