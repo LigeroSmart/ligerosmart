@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - f407d4862a60a1654b6374beab45b0d01b8e9896 - Kernel/Modules/AdminSLA.pm
 # --

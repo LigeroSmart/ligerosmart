@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - 342d1f157aaba3a325cc3d684888dc1943ef925c - scripts/test/Selenium/Output/TicketZoom/TicketInformation.t
 # --

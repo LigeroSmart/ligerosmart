@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2017 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
 # $origin: otrs - ef6ef0c60c526114e615801eae43d2315620e9ef - scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t
 # --
