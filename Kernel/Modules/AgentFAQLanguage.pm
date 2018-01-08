@@ -152,18 +152,7 @@ sub Run {
             return $LayoutObject->ErrorScreen();
         }
 
-        # Show overview.
-        $Self->_Overview();
-        $Output .= $LayoutObject->Notify(
-            Info => Translatable('FAQ language updated!'),
-        );
-        $Output .= $LayoutObject->Output(
-            TemplateFile => 'AgentFAQLanguage',
-            Data         => \%Param,
-        );
-        $Output .= $LayoutObject->Footer();
-
-        return $Output;
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Notification=Update" );
     }
 
     # ------------------------------------------------------------ #
@@ -251,21 +240,7 @@ sub Run {
             return $LayoutObject->ErrorScreen();
         }
 
-        # Show overview.
-        $Output .= $LayoutObject->Notify(
-            Info => Translatable('FAQ language added!'),
-        );
-        $Self->_Overview();
-        $Output .= $LayoutObject->Output(
-            TemplateFile => 'AgentFAQLanguage',
-            Data         => {
-                %Param,
-            },
-        );
-
-        $Output .= $LayoutObject->Footer();
-
-        return $Output;
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Notification=Add" );
     }
 
     # ------------------------------------------------------------ #
@@ -422,6 +397,15 @@ sub Run {
 
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
+
+        my $Notification = $ParamObject->GetParam( Param => 'Notification' ) || '';
+        my %NotificationText = (
+            Update => Translatable('FAQ language updated!'),
+            Add    => Translatable('FAQ language added!'),
+        );
+        if ($Notification && $NotificationText{$Notification} ) {
+            $Output .= $LayoutObject->Notify( Info => $NotificationText{$Notification} );
+        }
 
         $Self->_Overview();
         $Output .= $LayoutObject->Output(

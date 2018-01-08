@@ -175,19 +175,7 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # Show notification.
-        $Output .= $LayoutObject->Notify(
-            Info => Translatable('FAQ category updated!'),
-        );
-
-        $Self->_Overview();
-        $Output .= $LayoutObject->Output(
-            TemplateFile => 'AgentFAQCategory',
-            Data         => \%Param,
-        );
-        $Output .= $LayoutObject->Footer();
-
-        return $Output;
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Notification=Update" );
     }
 
     # ------------------------------------------------------------ #
@@ -299,20 +287,7 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # Show notification.
-        $Output .= $LayoutObject->Notify(
-            Info => Translatable('FAQ category added!'),
-        );
-
-        # Show overview.
-        $Self->_Overview();
-        $Output .= $LayoutObject->Output(
-            TemplateFile => 'AgentFAQCategory',
-            Data         => \%Param,
-        );
-        $Output .= $LayoutObject->Footer();
-
-        return $Output;
+        return $LayoutObject->Redirect( OP => "Action=$Self->{Action};Notification=Add" );
     }
 
     # ------------------------------------------------------------ #
@@ -516,6 +491,15 @@ sub Run {
 
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
+
+        my $Notification = $ParamObject->GetParam( Param => 'Notification' ) || '';
+        my %NotificationText = (
+            Update => Translatable('FAQ category updated!'),
+            Add    => Translatable('FAQ category added!'),
+        );
+        if ($Notification && $NotificationText{$Notification} ) {
+            $Output .= $LayoutObject->Notify( Info => $NotificationText{$Notification} );
+        }
 
         $Self->_Overview();
         $Output .= $LayoutObject->Output(
