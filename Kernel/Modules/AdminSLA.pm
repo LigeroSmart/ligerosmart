@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - f407d4862a60a1654b6374beab45b0d01b8e9896 - Kernel/Modules/AdminSLA.pm
+# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/Modules/AdminSLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

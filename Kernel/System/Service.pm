@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 0d146e924d345eb8905134c986a4263104c71bbc - Kernel/System/Service.pm
+# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/System/Service.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
