@@ -256,7 +256,7 @@
         <Description Translatable="1">Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">[% Translate("MasterSlave") | html %]!</Item>
+            <Item ValueType="String" ValueRegex=""></Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Body" Required="0" Valid="1">
