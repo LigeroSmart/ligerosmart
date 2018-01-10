@@ -432,6 +432,16 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
         <para>Sets if ticket responsible must be selected by the agent.</para>
     </section>
     <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###RichTextHeight.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+    </section>
+    <section>
+        <title>Ticket::Frontend::AgentTicketMasterSlave###RichTextWidth.</title>
+        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
+        <para>Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</para>
+    </section>
+    <section>
         <title>Ticket::Frontend::AgentTicketMasterSlave###Service.</title>
         <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
         <para>Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).</para>

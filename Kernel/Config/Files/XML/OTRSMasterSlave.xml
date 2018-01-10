@@ -266,6 +266,20 @@
             <Item ValueType="Textarea"></Item>
         </Value>
     </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###RichTextWidth" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Defines the width for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">620</Item>
+        </Value>
+    </Setting>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###RichTextHeight" UserPreferencesGroup="Advanced" UserModificationPossible="1" Required="0" Valid="1">
+        <Description Translatable="1">Defines the height for the rich text editor component for this screen. Enter number (pixels) or percent value (relative).</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Item ValueType="String" ValueRegex="^\d+%?$">100</Item>
+        </Value>
+    </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent" Required="0" Valid="0">
         <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
