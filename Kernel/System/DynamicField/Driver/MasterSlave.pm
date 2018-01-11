@@ -190,6 +190,81 @@ sub EditFieldValueValidate {
     return $Result;
 }
 
+sub DisplayValueRender {
+    my ( $Self, %Param ) = @_;
+
+    # set HTMLOutput as default if not specified
+    if ( !defined $Param{HTMLOutput} ) {
+        $Param{HTMLOutput} = 1;
+    }
+
+    # get raw Value strings from field value
+    my $Value = defined $Param{Value} ? $Param{Value} : '';
+
+    # get real value
+    if ( $Param{DynamicFieldConfig}->{Config}->{PossibleValues}->{$Value} ) {
+
+        # get readable value
+        $Value = $Param{DynamicFieldConfig}->{Config}->{PossibleValues}->{$Value};
+    }
+
+    if ( $Value eq 'Master' ) {
+        $Value = $Param{LayoutObject}->{LanguageObject}->Translate('Master');
+    }
+    elsif ( $Value =~ m{SlaveOf:(\d+)}msx ) {
+
+        my $TicketNumber = $1;
+        if ($TicketNumber) {
+            my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
+            my $TicketHook        = $ConfigObject->Get('Ticket::Hook');
+            my $TicketHookDivider = $ConfigObject->Get('Ticket::HookDivider');
+            $Value = $Param{LayoutObject}->{LanguageObject}->Translate(
+                'Slave of %s%s%s',
+                $TicketHook,
+                $TicketHookDivider,
+                $TicketNumber,
+            );
+        }
+    }
+
+    # set title as value after update and before limit
+    my $Title = $Value;
+
+    # HTMLOutput transformations
+    if ( $Param{HTMLOutput} ) {
+        $Value = $Param{LayoutObject}->Ascii2Html(
+            Text => $Value,
+            Max  => $Param{ValueMaxChars} || '',
+        );
+
+        $Title = $Param{LayoutObject}->Ascii2Html(
+            Text => $Title,
+            Max  => $Param{TitleMaxChars} || '',
+        );
+    }
+    else {
+        if ( $Param{ValueMaxChars} && length($Value) > $Param{ValueMaxChars} ) {
+            $Value = substr( $Value, 0, $Param{ValueMaxChars} ) . '...';
+        }
+        if ( $Param{TitleMaxChars} && length($Title) > $Param{TitleMaxChars} ) {
+            $Title = substr( $Title, 0, $Param{TitleMaxChars} ) . '...';
+        }
+    }
+
+    # set field link from config
+    my $Link        = $Param{DynamicFieldConfig}->{Config}->{Link}        || '';
+    my $LinkPreview = $Param{DynamicFieldConfig}->{Config}->{LinkPreview} || '';
+
+    my $Data = {
+        Value       => $Value,
+        Title       => $Title,
+        Link        => $Link,
+        LinkPreview => $LinkPreview,
+    };
+
+    return $Data;
+}
+
 sub PossibleValuesGet {
     my ( $Self, %Param ) = @_;
 
