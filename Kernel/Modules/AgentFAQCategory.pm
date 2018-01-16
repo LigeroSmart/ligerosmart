@@ -497,7 +497,7 @@ sub Run {
             Update => Translatable('FAQ category updated!'),
             Add    => Translatable('FAQ category added!'),
         );
-        if ($Notification && $NotificationText{$Notification} ) {
+        if ( $Notification && $NotificationText{$Notification} ) {
             $Output .= $LayoutObject->Notify( Info => $NotificationText{$Notification} );
         }
 

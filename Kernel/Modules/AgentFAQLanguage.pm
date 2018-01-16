@@ -403,7 +403,7 @@ sub Run {
             Update => Translatable('FAQ language updated!'),
             Add    => Translatable('FAQ language added!'),
         );
-        if ($Notification && $NotificationText{$Notification} ) {
+        if ( $Notification && $NotificationText{$Notification} ) {
             $Output .= $LayoutObject->Notify( Info => $NotificationText{$Notification} );
         }
 
