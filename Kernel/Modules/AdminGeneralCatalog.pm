@@ -8,7 +8,6 @@
 
 package Kernel::Modules::AdminGeneralCatalog;
 
-
 use strict;
 use warnings;
 
