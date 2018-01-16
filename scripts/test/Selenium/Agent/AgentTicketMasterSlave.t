@@ -147,6 +147,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
+        $Selenium->find_element( "#Subject",        'css' )->send_keys('Selenium Master Ticket');
         $Selenium->find_element( "#RichText",       'css' )->send_keys('Selenium Master Ticket');
         $Selenium->find_element( "#submitRichText", 'css' )->click();
 
@@ -206,6 +207,7 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('SlaveOf:$TicketNumbers[0]').trigger('redraw.InputField').trigger('change');"
         );
+        $Selenium->find_element( "#Subject",        'css' )->send_keys('Selenium Slave Ticket');
         $Selenium->find_element( "#RichText",       'css' )->send_keys('Selenium Slave Ticket');
         $Selenium->find_element( "#submitRichText", 'css' )->click();
 
