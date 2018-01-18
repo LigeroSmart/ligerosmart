@@ -13,16 +13,14 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -33,21 +31,20 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQCategory
+        # Navigate to AgentFAQCategory.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQCategory");
 
-        # check AgentFAQCategory screen
+        # Check AgentFAQCategory screen.
         $Selenium->find_element( "table",             'css' );
         $Selenium->find_element( "table thead tr th", 'css' );
         $Selenium->find_element( "table tbody tr td", 'css' );
 
-        # click on 'Add category'
+        # Click on 'Add category'.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQCategory;Subaction=Add' )]")->VerifiedClick();
 
-        # check page
+        # Check page.
         for my $ID (
             qw(Name ParentID PermissionGroups ValidID Comment)
             )
@@ -57,7 +54,7 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # create test category
+        # Create test category.
         my $CategoryName = 'Category ' . $Helper->GetRandomID();
         $Selenium->find_element( "#Name", 'css' )->send_keys($CategoryName);
         $Selenium->execute_script(
@@ -67,16 +64,15 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Comment", 'css' )->send_keys('Selenium Category');
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        # verify test category is created
+        # Verify test category is created.
         $Self->True(
             index( $Selenium->get_page_source(), $CategoryName ) > -1,
             "$CategoryName is found",
         );
 
-        # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # get test created category ID
+        # Get test created category ID.
         my $Category = $DBObject->Quote($CategoryName);
         $DBObject->Prepare(
             SQL  => "SELECT id FROM faq_category WHERE name = ?",
@@ -87,21 +83,20 @@ $Selenium->RunTest(
             $CategoryID = $Row[0];
         }
 
-        # click on delete icon
-        $Selenium->find_element( "#DeleteCategoryID$CategoryID", 'css' )->VerifiedClick();
+        # Click on delete icon.
+        $Selenium->find_element( "#DeleteCategoryID$CategoryID", 'css' )->click();
         $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
-        $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
 
-        # wait until delete dialog has closed
-        $Selenium->WaitFor( JavaScript => "return !\$('#DialogButton1').length" );
+        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return !\$('.Dialog.Modal').length" );
 
-        # verify test created category is deleted
+        # Verify test created category is deleted.
         $Self->True(
             index( $Selenium->get_page_source(), $CategoryName ) == -1,
             "$CategoryName is not found",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );
