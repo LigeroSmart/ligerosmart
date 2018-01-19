@@ -12,34 +12,29 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper               = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+        my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
+        my $WorkOrderObject      = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # get general catalog object
-        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -53,10 +48,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get work order object
-        my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
-
-        # create test work order
+        # Create test work order.
         my $WorkOrderTitleRandom = 'Selenium Work Order ' . $Helper->GetRandomID();
         my $WorkOrderID          = $WorkOrderObject->WorkOrderAdd(
             ChangeID       => $ChangeID,
@@ -70,7 +62,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         ) || die "Did not get test user";
@@ -81,18 +73,17 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMWorkOrderZoom for test created work order
+        # Navigate to AgentITSMWorkOrderZoom for test created work order.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
-        # get work order states
+        # Get work order states.
         my @WorkOrderStates = ( 'accepted', 'ready', 'in progress', 'closed' );
 
         for my $WorkOrderState (@WorkOrderStates) {
 
-            # click on 'Report' and switch window
+            # Click on 'Report' and switch window.
             $Selenium->find_element(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID')]"
             )->click();
@@ -101,48 +92,49 @@ $Selenium->RunTest(
             my $Handles = $Selenium->get_window_handles();
             $Selenium->switch_to_window( $Handles->[1] );
 
-            # wait until page has loaded, if necessary
+            # Wait until page has loaded, if necessary.
             $Selenium->WaitFor(
                 JavaScript => 'return typeof($) === "function" && $("#SubmitWorkOrderEditReport").length;'
             );
 
-            # get work order state data
+            # Get work order state data.
             my $ItemGetState          = lc $WorkOrderState;
             my $WorkOrderStateDataRef = $GeneralCatalogObject->ItemGet(
                 Class => 'ITSM::ChangeManagement::WorkOrder::State',
                 Name  => $ItemGetState,
             );
 
-            # input text in report and select next work order state
+            # Input text in report and select next work order state.
             $Selenium->find_element( "#RichText", 'css' )->clear();
             $Selenium->find_element( "#RichText", 'css' )->send_keys("$WorkOrderState");
             $Selenium->execute_script(
                 "\$('#WorkOrderStateID').val('$WorkOrderStateDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
             );
 
-            # submit and switch back window
+            # Submit and switch back window.
             $Selenium->find_element( "#SubmitWorkOrderEditReport", 'css' )->click();
 
             $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
 
-            sleep(1);
+            $Selenium->WaitFor(
+                JavaScript =>
+                    "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID\"]').length"
+            );
 
-            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
-
-            # click on 'History' and switch window
+            # Click on 'History' and switch window.
             $Selenium->find_element(
                 "//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]"
-            )->VerifiedClick();
+            )->click();
 
             $Selenium->WaitFor( WindowCount => 2 );
             $Handles = $Selenium->get_window_handles();
             $Selenium->switch_to_window( $Handles->[1] );
 
-            # wait until page has loaded, if necessary
+            # Wait until page has loaded, if necessary.
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
-            # verify report change
+            # Verify report change.
             my $ReportUpdateMessage
                 = "WorkOrderState: (new=$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID}), old=";
             $Self->True(
@@ -150,18 +142,16 @@ $Selenium->RunTest(
                 "$ReportUpdateMessage is found",
             );
 
-            # close history pop up and switch window
+            # Close history pop up and switch window.
             $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
 
             $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
 
-            sleep(1);
-
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
         }
 
-        # delete test created work order
+        # Delete test created work order.
         my $Success = $WorkOrderObject->WorkOrderDelete(
             WorkOrderID => $WorkOrderID,
             UserID      => 1,
@@ -171,7 +161,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is deleted",
         );
 
-        # delete test created change
+        # Delete test created change.
         $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -181,7 +171,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
