@@ -13,35 +13,25 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # create test user and login
+        # Create test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
-        $Selenium->Login(
-            Type     => 'Agent',
-            User     => $TestUserLogin,
-            Password => $TestUserLogin,
-        );
-
-        # get test user ID
+        # Get test user ID.
         my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserLogin => $TestUserLogin,
         );
 
-        # get FAQ object
-        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
-
-        # create test FAQ
+        # Create test FAQ.
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
         my $ItemID   = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
@@ -58,41 +48,47 @@ $Selenium->RunTest(
             "FAQ is created - ID $ItemID",
         );
 
-        # get script alias
+        # Login as test user.
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin,
+            Password => $TestUserLogin,
+        );
+
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQZoom screen of created test FAQ
+        # Navigate to AgentFAQZoom screen of created test FAQ.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID;Nav=");
 
-        # verify its right screen
+        # Verify its right screen.
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
             "$FAQTitle is found",
         );
 
-        # click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$ItemID' )]")->VerifiedClick();
+        # Click on 'History' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQHistory;ItemID=$ItemID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
             JavaScript =>
                 'return typeof($) === "function" && $(".WidgetSimple").length;'
         );
 
-        # verify history message
+        # Verify history message.
         $Self->True(
             index( $Selenium->get_page_source(), "$TestUserLogin ($TestUserLogin $TestUserLogin)" ) > -1,
             "History entry is found",
         );
 
-        # close 'History' pop-up window
+        # Close 'History' pop-up window.
         $Selenium->close();
 
-        # delete test created FAQ
+        # Delete test created FAQ.
         my $Success = $FAQObject->FAQDelete(
             ItemID => $ItemID,
             UserID => 1,
@@ -102,7 +98,7 @@ $Selenium->RunTest(
             "FAQ item is deleted - $ItemID",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );
