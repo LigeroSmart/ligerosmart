@@ -13,41 +13,40 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        # enable the advanced MasterSlave
+        # Enable the advanced MasterSlave.
         $Helper->ConfigSettingChange(
             Key   => 'MasterSlave::AdvancedEnabled',
             Value => 1,
         );
 
-        # enable change the MasterSlave state of a ticket
+        # Enable change the MasterSlave state of a ticket.
         $Helper->ConfigSettingChange(
             Key   => 'MasterSlave::UpdateMasterSlave',
             Value => 1,
         );
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # do not send emails
+        # Do not send emails.
         $Helper->ConfigSettingChange(
             Key   => 'SendmailModule',
             Value => 'Kernel::System::Email::Test',
         );
 
         # Make sure InvovedAgent and InformAgent are disabled, otherwise it uses part of the visible
-        # screen making the submit button not visible and then not click-able
+        # Screen making the submit button not visible and then not click-able.
         $Helper->ConfigSettingChange(
             Key   => 'Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent',
             Value => 0,
@@ -57,26 +56,17 @@ $Selenium->RunTest(
             Value => 0,
         );
 
-        # create test user and login
+        # Create test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
-        $Selenium->Login(
-            Type     => 'Agent',
-            User     => $TestUserLogin,
-            Password => $TestUserLogin,
-        );
-
-        # get test user ID
+        # Get test user ID.
         my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserLogin => $TestUserLogin,
         );
 
-        # get ticket object
-        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-        # create two test tickets
+        # Create two test tickets.
         my @TicketIDs;
         my @TicketNumbers;
         for my $TicketCreate ( 1 .. 2 ) {
@@ -103,27 +93,33 @@ $Selenium->RunTest(
             push @TicketNumbers, $TicketNumber;
         }
 
-        # get script alias
+        # Login as test user.
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin,
+            Password => $TestUserLogin,
+        );
+
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to ticket zoom page of first created test ticket
+        # Navigate to ticket zoom page of first created test ticket.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[0]");
 
-        # click on MasterSlave and switch window
+        # Click on MasterSlave and switch window.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketMasterSlave;TicketID=$TicketIDs[0]' )]")
-            ->VerifiedClick();
+            ->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
             JavaScript =>
                 'return typeof($) === "function" && $(".WidgetSimple").length;'
         );
 
-        # open collapsed widgets, if necessary
+        # Open collapsed widgets, if necessary.
         $Selenium->execute_script(
             "\$('.WidgetSimple.Collapsed .WidgetAction > a').trigger('click');"
         );
@@ -133,7 +129,7 @@ $Selenium->RunTest(
                 'return typeof($) === "function" && $(".WidgetSimple.Expanded").length;'
         );
 
-        # check page
+        # Check page.
         for my $ID (
             qw(DynamicField_MasterSlave Subject RichText FileUpload IsVisibleForCustomer submitRichText)
             )
@@ -143,7 +139,7 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # set first test ticket as master ticket
+        # Set first test ticket as master ticket.
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
@@ -151,55 +147,54 @@ $Selenium->RunTest(
         $Selenium->find_element( "#RichText",       'css' )->send_keys('Selenium Master Ticket');
         $Selenium->find_element( "#submitRichText", 'css' )->click();
 
-        # switch window back to agent ticket zoom view of the first created test ticket
+        # Switch window back to agent ticket zoom view of the first created test ticket.
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # expand Miscellaneous dropdown menu
+        # Expand Miscellaneous dropdown menu.
         $Selenium->WaitFor(
             JavaScript =>
                 'return typeof($) === "function" && $("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
         );
 
-        # click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketHistory;TicketID=$TicketIDs[0]' )]")
-            ->VerifiedClick();
+        # Click on 'History' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketHistory;TicketID=$TicketIDs[0]' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
             JavaScript =>
                 'return typeof($) === "function" && $(".WidgetSimple").length;'
         );
 
-        # verify dynamic field master ticket update
+        # Verify dynamic field master ticket update.
         $Self->True(
             index( $Selenium->get_page_source(), 'Changed dynamic field MasterSlave from "" to "Master".' ) > -1,
             "Master dynamic field update value - found",
         );
 
-        # close history window
+        # Close history window.
         $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
 
-        # switch window back to agent ticket zoom view of the first created test ticket
+        # Switch window back to agent ticket zoom view of the first created test ticket.
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # navigate to ticket zoom page of second created test ticket
+        # Navigate to ticket zoom page of second created test ticket.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
 
-        # click on MasterSlave and switch window
+        # Click on MasterSlave and switch window.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketMasterSlave;TicketID=$TicketIDs[1]' )]")
-            ->VerifiedClick();
+            ->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until form has loaded, if necessary
+        # Wait until form has loaded, if necessary.
         $Selenium->WaitFor(
             JavaScript => "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length"
         );
@@ -214,27 +209,26 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
         $Selenium->WaitFor( WindowCount => 1 );
 
-        # expand Miscellaneous dropdown menu
+        # Expand Miscellaneous dropdown menu.
         $Selenium->WaitFor(
             JavaScript =>
                 'return typeof($) === "function" && $("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
         );
 
-        # click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketHistory;TicketID=$TicketIDs[1]' )]")
-            ->VerifiedClick();
+        # Click on 'History' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketHistory;TicketID=$TicketIDs[1]' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
             JavaScript =>
                 'return typeof($) === "function" && $(".WidgetSimple").length;'
         );
 
-        # verify dynamic field slave ticket update
+        # Verify dynamic field slave ticket update.
         $Self->True(
             index(
                 $Selenium->get_page_source(),
@@ -243,14 +237,14 @@ $Selenium->RunTest(
             "Slave dynamic field update value - found",
         );
 
-        # close history window
+        # Close history window.
         $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
 
-        # switch window back to agent ticket zoom view of the first created test ticket
+        # Switch window back to agent ticket zoom view of the first created test ticket.
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # delete created test tickets
+        # Delete created test tickets.
         for my $TicketID (@TicketIDs) {
             my $Success = $TicketObject->TicketDelete(
                 TicketID => $TicketID,
@@ -262,7 +256,7 @@ $Selenium->RunTest(
             );
         }
 
-        # make sure the cache is correct.
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
             Type => 'Ticket',
         );
