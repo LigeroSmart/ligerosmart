@@ -18,7 +18,8 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # Set link object view mode to simple.
         $Helper->ConfigSettingChange(
@@ -34,23 +35,15 @@ $Selenium->RunTest(
             Value => '50',
         );
 
-        # Create test user and login.
+        # Create test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
-
-        $Selenium->Login(
-            Type     => 'Agent',
-            User     => $TestUserLogin,
-            Password => $TestUserLogin,
-        );
 
         # Get test user ID.
         my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserLogin => $TestUserLogin,
         );
-
-        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # Create test FAQ items.
         my @ItemIDs;
@@ -90,13 +83,20 @@ $Selenium->RunTest(
             push @FAQNumbers, $FAQNumber;
         }
 
+        # Login as test user.
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin,
+            Password => $TestUserLogin,
+        );
+
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # Navigate to zoom view of created test FAQ item.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
         # Click on 'Link'.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->click();
 
         # Switch to link object window.
         $Selenium->WaitFor( WindowCount => 2 );
@@ -109,7 +109,11 @@ $Selenium->RunTest(
         $Selenium->find_element( '#SubmitSearch', 'css' )->VerifiedClick();
 
         # Link created test FAQ items.
-        $Selenium->find_element("//input[\@value='$ItemIDs[1]'][\@type='checkbox']")->VerifiedClick();
+        $Selenium->find_element("//input[\@value='$ItemIDs[1]'][\@type='checkbox']")->click();
+        $Selenium->WaitFor(
+            JavaScript => "return \$('input[value=$ItemIDs[1]][type=checkbox]:checked').length"
+        );
+
         $Selenium->execute_script(
             "\$('#TypeIdentifier').val('ParentChild::Target').trigger('redraw.InputField').trigger('change');"
         );
@@ -236,7 +240,7 @@ $Selenium->RunTest(
         );
 
         # Check if column settings button is available in the Linked FAQ widget.
-        $Selenium->find_element( 'a#linkobject-FAQ-toggle', 'css' )->VerifiedClick();
+        $Selenium->find_element( 'a#linkobject-FAQ-toggle', 'css' )->click();
 
         # Wait for the complete widget to be fully slided in all the way down to the submit button.
         $Selenium->WaitFor(
@@ -276,7 +280,7 @@ $Selenium->RunTest(
             );
 
             # Save new columns.
-            $Selenium->find_element( '#linkobject-FAQ_submit', 'css' )->VerifiedClick();
+            $Selenium->find_element( '#linkobject-FAQ_submit', 'css' )->click();
 
             # Wait for AJAX.
             $Selenium->WaitFor(
@@ -324,19 +328,19 @@ $Selenium->RunTest(
         }
 
         # Click on 'Link'.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->click();
 
         # Switch to link object window.
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a[href=\'#ManageLinks\']").length' );
 
         # Click on 'go to link delete screen'.
-        $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->click();
+        $Selenium->WaitFor( JavaScript => 'return $("div[data-id=ManageLinks].Active").length' );
 
         # Check for long FAQ title in LinkDelete screen.
-
         # This one is displayed on hover.
         $Self->True(
             index( $Selenium->get_page_source(), "title=\"$LongFAQTitle\"" ) > -1,
@@ -350,6 +354,8 @@ $Selenium->RunTest(
         );
 
         $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
+        $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length' );
+
         $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
         $Selenium->close();
 
@@ -359,7 +365,7 @@ $Selenium->RunTest(
         # Switch to 1st window.
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # delete created test tickets
+        # Delete created test tickets.
         for my $ItemID (@ItemIDs) {
             $Success = $FAQObject->FAQDelete(
                 ItemID => $ItemID,
