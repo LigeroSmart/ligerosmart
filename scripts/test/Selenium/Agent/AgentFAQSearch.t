@@ -13,16 +13,12 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # get FAQ object
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         my $CategoryID = $FAQObject->CategoryAdd(
@@ -50,11 +46,9 @@ $Selenium->RunTest(
 
         my @FAQSearch;
 
-        # create test FAQs
+        # Create test FAQs.
         for my $Title (qw( FAQSearch FAQChangeSearch )) {
             for ( 1 .. 5 ) {
-
-                # add test FAQ
                 my $FAQTitle = $Title . $Helper->GetRandomID();
                 my $ItemID   = $FAQObject->FAQAdd(
                     Title       => $FAQTitle,
@@ -79,10 +73,9 @@ $Selenium->RunTest(
 
                 push @FAQSearch, \%FAQ;
             }
-
         }
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -93,16 +86,15 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQSearch form
+        # Navigate to AgentFAQSearch form.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQSearch");
 
-        # wait until form has loaded, if necessary
+        # Wait until form has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
-        # check ticket search page
+        # Check ticket search page.
         for my $ID (
             qw(SearchProfile SearchProfileNew Attribute ResultForm SearchFormSubmit)
             )
@@ -112,7 +104,7 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # add search filter by title and run it
+        # Add search filter by title and run it.
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "Title", 'name' )->send_keys('FAQ*');
         $Selenium->execute_script(
@@ -123,39 +115,39 @@ $Selenium->RunTest(
         );
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
-        # check AgentFAQSearch result screen
+        # Check AgentFAQSearch result screen.
         $Selenium->find_element( "table",             'css' );
         $Selenium->find_element( "table thead tr th", 'css' );
         $Selenium->find_element( "table tbody tr td", 'css' );
 
-        # check test FAQs searched by 'FAQ*'
-        # all FAQs will be in a search result
+        # Check test FAQs searched by 'FAQ*'.
+        # All FAQs will be in a search result.
         for my $FAQ (@FAQSearch) {
 
-            # check if there is test FAQ on screen
+            # Check if there is test FAQ on screen.
             $Self->True(
                 index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
                 "$FAQ->{FAQTitle} - found",
             );
         }
 
-        # check 'Change search options' screen
-        $Selenium->find_element( "#FAQSearch", 'css' )->VerifiedClick();
+        # Check 'Change search options' screen.
+        $Selenium->find_element( "#FAQSearch", 'css' )->click();
 
-        # wait until form has loaded, if necessary
+        # Wait until form has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         $Selenium->find_element( "Title",             'name' )->clear();
         $Selenium->find_element( "Title",             'name' )->send_keys('FAQChangeSearch*');
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
-        # check test FAQs searched by 'FAQChangeSearch*'
-        # delete test FAQs after checking
+        # Check test FAQs searched by 'FAQChangeSearch*'.
+        # Delete test FAQs after checking.
         for my $FAQ (@FAQSearch) {
 
             if ( $FAQ->{Type} eq 'FAQChangeSearch' ) {
 
-                # check if there is test FAQChangeSearch* on screen
+                # Check if there is test FAQChangeSearch* on screen.
                 $Self->True(
                     index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
                     "$FAQ->{FAQTitle} is found",
@@ -163,7 +155,7 @@ $Selenium->RunTest(
             }
             else {
 
-                # check if there is no test FAQSearch* on screen
+                # Check if there is no test FAQSearch* on screen.
                 $Self->True(
                     index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) == -1,
                     "$FAQ->{FAQTitle} is not found",
@@ -181,24 +173,24 @@ $Selenium->RunTest(
 
         }
 
-        # check 'Change search options' button again
-        $Selenium->find_element( "#FAQSearch", 'css' )->VerifiedClick();
+        # Check 'Change search options' button again.
+        $Selenium->find_element( "#FAQSearch", 'css' )->click();
 
-        # wait until form has loaded, if necessary
+        # Wait until form has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
 
         $Selenium->find_element( "Title",             'name' )->clear();
         $Selenium->find_element( "Title",             'name' )->send_keys('FAQChangeSearch*');
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
-        # check no data message
+        # Check no data message.
         $Selenium->find_element( "#EmptyMessageSmall", 'css' );
         $Self->True(
             index( $Selenium->get_page_source(), 'No FAQ data found.' ) > -1,
             "No FAQ data found.",
         );
 
-        # delete test category
+        # Delete test category.
         my $Success = $FAQObject->CategoryDelete(
             CategoryID => $CategoryID,
             UserID     => 1,
@@ -209,7 +201,7 @@ $Selenium->RunTest(
             "FAQ category is deleted - ID $CategoryID",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );
