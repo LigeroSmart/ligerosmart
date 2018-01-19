@@ -14,16 +14,17 @@ use utf8;
 use vars (qw($Self));
 use Kernel::System::VariableCheck qw(IsArrayRefWithData);
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
+        my $DBObject     = $Kernel::OM->Get('Kernel::System::DB');
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        # do not really send emails
+        # Do not really send emails.
         $Helper->ConfigSettingChange(
             Key   => 'SendmailModule',
             Value => 'Kernel::System::Email::DoNotSendEmail',
@@ -35,28 +36,25 @@ $Selenium->RunTest(
             Value => 0,
         );
 
-        # set send period to always send survey
+        # Set send period to always send survey.
         $Helper->ConfigSettingChange(
             Key   => 'Survey::SendPeriod',
             Value => 0,
         );
 
-        # set no send condition check in normal tests
+        # Set no send condition check in normal tests.
         $Helper->ConfigSettingChange(
             Key   => 'Survey::CheckSendConditionTicketType',
             Value => 0,
         );
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # get survey object
-        my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
-
-        # create test survey
+        # Create test survey.
         my $SurveryIntroduction    = 'Survey Introduction',
             my $SurveryDescription = 'Survey Description',
             my $SurveyTitle        = 'Survey ' . $Helper->GetRandomID();
@@ -75,7 +73,7 @@ $Selenium->RunTest(
             "Survey ID $SurveyID is created",
         );
 
-        # get question data
+        # Get question data.
         my @QuestionData = (
             {
                 Type => 'YesNo',
@@ -97,10 +95,7 @@ $Selenium->RunTest(
             },
         );
 
-        # get DB object
-        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
-
-        # add question and answers to test survey
+        # Add question and answers to test survey.
         my @QuestionNames;
         my @QuestionIDs;
         my @AnswerNames;
@@ -115,7 +110,7 @@ $Selenium->RunTest(
                 Type           => $Questions->{Type},
             );
 
-            # get test question ID
+            # Get test question ID.
             my $QuestionQuoted = $DBObject->Quote($QuestionName);
             $DBObject->Prepare(
                 SQL  => "SELECT id FROM survey_question WHERE question = ?",
@@ -127,7 +122,7 @@ $Selenium->RunTest(
             }
             push @QuestionIDs, $QuestionID;
 
-            # add answer for radio and check-box questions
+            # Add answer for radio and check-box questions.
             if (
                 $Questions->{Type} eq 'Radio'
                 || $Questions->{Type} eq 'Checkbox'
@@ -144,7 +139,7 @@ $Selenium->RunTest(
                         AnswerRequired => 1,
                     );
 
-                    # get test answer ID
+                    # Get test answer ID.
                     my $AnswerQuoted = $DBObject->Quote($Answers);
                     $DBObject->Prepare(
                         SQL  => "SELECT id FROM survey_answer WHERE answer = ? AND question_id = ?",
@@ -161,7 +156,7 @@ $Selenium->RunTest(
             push @QuestionNames, $QuestionName;
         }
 
-        # set test survey on master status
+        # Set test survey on master status.
         my $StatusSet = $SurveyObject->SurveyStatusSet(
             SurveyID  => $SurveyID,
             NewStatus => 'Master'
@@ -171,10 +166,7 @@ $Selenium->RunTest(
             "Survey master status is set",
         );
 
-        # get ticket object
-        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-        # create test ticket
+        # Create test ticket.
         my $TicketNumber = $TicketObject->TicketCreateNumber();
         my $TicketID     = $TicketObject->TicketCreate(
             TN           => $TicketNumber,
@@ -197,7 +189,7 @@ $Selenium->RunTest(
             ChannelName => 'Internal',
         );
 
-        # add article to test created ticket
+        # Add article to test created ticket.
         my $ArticleID = $ArticleInternalBackendObject->ArticleCreate(
             TicketID             => $TicketID,
             IsVisibleForCustomer => 0,
@@ -219,7 +211,7 @@ $Selenium->RunTest(
             "Article ID $ArticleID is created",
         );
 
-        # send survey request
+        # Send survey request.
         my $Request = $SurveyObject->RequestSend(
             TicketID => $TicketID,
         );
@@ -228,7 +220,7 @@ $Selenium->RunTest(
             "Survey request is sent",
         );
 
-        # get public survey key from test survey request
+        # Get public survey key from test survey request.
         $DBObject->Prepare(
             SQL  => "SELECT public_survey_key FROM survey_request WHERE survey_id = ?",
             Bind => [ \$SurveyID ],
@@ -238,13 +230,12 @@ $Selenium->RunTest(
             $PublicSurveyKey = $Row[0];
         }
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to PublicSurvey of created test survey
+        # Navigate to PublicSurvey of created test survey.
         $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
 
-        # get test data
+        # Get test data.
         my @Test = (
             {
                 Name  => 'Title',
@@ -269,7 +260,7 @@ $Selenium->RunTest(
 
         );
 
-        # check test survey values
+        # Check test survey values.
         for my $CheckValue (@Test) {
             if ( IsArrayRefWithData( $CheckValue->{Value} ) ) {
                 for ( @{ $CheckValue->{Value} } ) {
@@ -287,7 +278,7 @@ $Selenium->RunTest(
             }
         }
 
-        # get vote data
+        # Get vote data.
         my @VoteData = (
             {
                 ID    => "1$QuestionIDs[0]Yes",
@@ -312,20 +303,24 @@ $Selenium->RunTest(
             },
         );
 
-        # fill in survey questions
+        # Fill in survey questions.
         for my $SurveyVote (@VoteData) {
             if ( $SurveyVote->{Answer} ) {
                 $Selenium->find_element( "#RichText$SurveyVote->{ID}", 'css' )->send_keys( $SurveyVote->{Answer} );
             }
             else {
-                $Selenium->find_element("//input[\@id='PublicSurveyVote$SurveyVote->{ID}']")->VerifiedClick();
+                $Selenium->find_element("//input[\@id='PublicSurveyVote$SurveyVote->{ID}']")->click();
+                $Selenium->WaitFor(
+                    JavaScript =>
+                        "return typeof(\$) === 'function' && \$('#PublicSurveyVote$SurveyVote->{ID}:checked').length"
+                );
             }
         }
 
-        # submit vote
+        # Submit vote.
         $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->VerifiedClick();
 
-        # verify post vote messages
+        # Verify post vote messages.
         my $PostVote = [ "Survey Information", "Thank you for your feedback.", "The survey is finished." ];
         for my $PostVoteMessage ( @{$PostVote} ) {
             $Self->True(
@@ -334,7 +329,7 @@ $Selenium->RunTest(
             );
         }
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -345,23 +340,24 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # navigate to AgentSurveyZoom of created test survey
+        # Navigate to AgentSurveyZoom of created test survey.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
-        # click on 'Stats Details' and switch window
-        $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->VerifiedClick();
+        # Click on 'Stats Details' and switch window.
+        $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".SeeDetails").length' );
 
-        # click to see details of stats
-        $Selenium->find_element( ".SeeDetails", 'css' )->VerifiedClick();
+        # Click to see details of stats.
+        $Selenium->find_element( ".SeeDetails", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return \$('.TableLike').length" );
 
-        # verify vote details
+        # Verify vote details.
         for my $VoteDetails (@VoteData) {
             $Self->True(
                 index( $Selenium->get_page_source(), $VoteDetails->{Check} ) > -1,
@@ -369,7 +365,7 @@ $Selenium->RunTest(
             );
         }
 
-        # get clean-up data
+        # Get clean-up data.
         my @CleanData = (
             {
                 Name  => 'Queues',
@@ -411,7 +407,7 @@ $Selenium->RunTest(
 
         my $Success;
 
-        # delete test data from DB
+        # Delete test data from DB.
         for my $Delete (@CleanData) {
             if ( IsArrayRefWithData( $Delete->{ID} ) ) {
 
@@ -439,7 +435,7 @@ $Selenium->RunTest(
             }
         }
 
-        # delete test ticket
+        # Delete test ticket.
         $Success = $TicketObject->TicketDelete(
             TicketID => $TicketID,
             UserID   => 1,
