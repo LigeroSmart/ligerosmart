@@ -18,7 +18,7 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
         # Create test user.
