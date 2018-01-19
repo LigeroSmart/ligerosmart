@@ -13,23 +13,22 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # get test params
+        # Get test params.
         my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
         my %Test     = (
             Stored => {
@@ -60,10 +59,7 @@ $Selenium->RunTest(
             },
         );
 
-        # get FAQ object
-        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
-
-        # create test FAQ
+        # Create test FAQ.
         my $ItemID = $FAQObject->FAQAdd(
             %{ $Test{Stored} },
             UserID => 1,
@@ -74,7 +70,7 @@ $Selenium->RunTest(
             "FAQ is created - ID $ItemID",
         );
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -85,29 +81,28 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQZoom of created test FAQ
+        # Navigate to AgentFAQZoom of created test FAQ.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID;Nav=");
 
-        # verify its right screen
+        # Verify its right screen.
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
             "$FAQTitle is found",
         );
 
-        # click on 'Edit' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->VerifiedClick();
+        # Click on 'Edit' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (first time).";
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
-        # verify stored values
+        # Verify stored values.
         for my $Stored ( sort keys %{ $Test{Stored} } ) {
             if ( $Stored ne 'ContentType' ) {
                 $Self->Is(
@@ -118,7 +113,7 @@ $Selenium->RunTest(
             }
         }
 
-        # edit test FAQ
+        # Edit test FAQ.
         $Selenium->find_element( "#Title", 'css' )->send_keys(' Edit');
         $Selenium->execute_script("\$('#StateID').val('2').trigger('redraw.InputField').trigger('change');");
         $Selenium->execute_script("\$('#LanguageID').val('2').trigger('redraw.InputField').trigger('change');");
@@ -129,28 +124,28 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Field6",   'css' )->send_keys(' Edit');
         $Selenium->execute_script("\$('#ValidID').val('2').trigger('redraw.InputField').trigger('change');");
 
-        # submit and switch back window
-        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
+        # Submit and switch back window.
+        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
         $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # wait for reload to kick in
-        sleep 1;
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=$ItemID\"]').length"
+        );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQBody").length' );
-
-        # click on 'Edit' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->VerifiedClick();
+        # Click on 'Edit' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (second time).";
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
-        # verify edited values
+        # Verify edited values.
         for my $Edited ( sort keys %{ $Test{Edited} } ) {
             if ( $Edited ne 'ContentType' ) {
                 $Self->Is(
@@ -161,10 +156,10 @@ $Selenium->RunTest(
             }
         }
 
-        # close 'Edit' pop-up window
+        # Close 'Edit' pop-up window.
         $Selenium->close();
 
-        # delete test created FAQ
+        # Delete test created FAQ.
         my $Success = $FAQObject->FAQDelete(
             ItemID => $ItemID,
             UserID => 1,
@@ -174,7 +169,7 @@ $Selenium->RunTest(
             "FAQ item is deleted - ID $ItemID",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );
