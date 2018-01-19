@@ -12,7 +12,6 @@ use utf8;
 
 use vars (qw($Self));
 
-# Get Selenium object.
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
@@ -68,7 +67,6 @@ $Selenium->RunTest(
             UserLogin => $TestCABUser,
         );
 
-        # Get script alias.
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # Navigate to AgentITSMChangeZoom of created test change.
@@ -123,7 +121,8 @@ $Selenium->RunTest(
         # Check client side validation.
         my $Element = $Selenium->find_element( "#TemplateName", 'css' );
         $Element->send_keys("");
-        $Selenium->find_element( "#SubmitAddTemplate", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#SubmitAddTemplate", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName.Error").length' );
 
         $Self->Is(
             $Selenium->execute_script(
@@ -207,7 +206,6 @@ $Selenium->RunTest(
         # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
-
 );
 
 1;
