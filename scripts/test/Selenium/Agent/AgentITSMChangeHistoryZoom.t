@@ -12,25 +12,21 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'pending pir',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change, we need a long description and justification to show the history details
+        # Create test change, we need a long description and justification to show the history details.
         my $ChangeTitleRandom = 'ITSMChange ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle => $ChangeTitleRandom,
@@ -46,7 +42,7 @@ $Selenium->RunTest(
             "Change in Pending PIR state is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-builder', 'itsm-change-manager' ]
         ) || die "Did not get test user";
@@ -57,28 +53,26 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMChangeZoom of created test change
+        # Navigate to AgentITSMChangeZoom of created test change.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
-        # click on 'Edit' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]")
-            ->VerifiedClick();
+        # Click on 'Edit' and switch screens.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
 
-        # click on history show details to check AgentITSMChangeHistoryZoom screen
+        # Click on history show details to check AgentITSMChangeHistoryZoom screen.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistoryZoom;HistoryEntryID=' )]")
             ->VerifiedClick();
 
-        # check AgentITSMChangeHistoryZoom values
+        # Check AgentITSMChangeHistoryZoom values.
         $Self->True(
             index( $Selenium->get_page_source(), "Detailed history information of ChangeUpdate" ) > -1,
             "Detailed history information of ChangeUpdate is found",
@@ -88,7 +82,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is found",
         );
 
-        # delete test created change
+        # Delete test created change.
         my $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -98,7 +92,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
