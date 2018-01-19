@@ -168,7 +168,12 @@ $Selenium->RunTest(
                 $Selenium->VerifiedGet("${ScriptAlias}public.pl?Action=PublicSurvey;PublicSurveyKey=$PublicSurveyKey");
 
                 # Select 'Yes' as an answer.
-                $Selenium->find_element("//input[\@value='Yes'][\@type='radio']")->VerifiedClick();
+                $Selenium->find_element("//input[\@value='Yes'][\@type='radio']")->click();
+                $Selenium->WaitFor(
+                    JavaScript =>
+                        "return typeof(\$) === 'function' && \$('input[value=Yes][type=radio]:checked').length"
+                );
+
                 $Selenium->find_element("//button[\@value='Finish'][\@type='submit']")->VerifiedClick();
             }
 
@@ -205,17 +210,11 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
         # Click on survey 'Stats Details' and switch window.
-        $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#Menu030-StatsDetails", 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until popup is completely loaded.
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
-        );
 
         # Wait until details are present.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".SeeDetails").length' );
@@ -234,7 +233,8 @@ $Selenium->RunTest(
         }
 
         # Click to see details of survey.
-        $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[2]' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[2]' )]")->click();
+        $Selenium->WaitFor( JavaScript => "return \$('.Header h1:contains($TicketNumbers[2])').length" );
 
         # Verify question values.
         $Self->True(
@@ -259,7 +259,8 @@ $Selenium->RunTest(
         );
 
         # Click on the 'Next Vote' link.
-        $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[1]' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[1]' )]")->click();
+        $Selenium->WaitFor( JavaScript => "return \$('.Header h1:contains($TicketNumbers[1])').length" );
 
         # Check if ticket number is correct, and links to 'Previous Vote' and 'Next Vote' exist.
         $Self->True(
@@ -277,7 +278,8 @@ $Selenium->RunTest(
         );
 
         # Go to next vote.
-        $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[0]' )]")->VerifiedClick();
+        $Selenium->find_element("//a[contains(\@href, 'TicketNumber=$TicketNumbers[0]' )]")->click();
+        $Selenium->WaitFor( JavaScript => "return \$('.Header h1:contains($TicketNumbers[0])').length" );
 
         # Check if ticket number is correct, 'Previous Vote' exists and 'Next Vote' does not exist.
         $Self->True(
