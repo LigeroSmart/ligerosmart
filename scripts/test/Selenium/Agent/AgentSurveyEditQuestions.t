@@ -13,16 +13,14 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # create test survey
+        # Create test survey.
         my $SurveyTitle = 'Survey ' . $Helper->GetRandomID();
         my $SurveyID    = $Kernel::OM->Get('Kernel::System::Survey')->SurveyAdd(
             UserID              => 1,
@@ -39,7 +37,7 @@ $Selenium->RunTest(
             "Survey ID $SurveyID is created",
         );
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -50,23 +48,22 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentSurveyZoom of created test survey
+        # Navigate to AgentSurveyZoom of created test survey.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
-        # click on 'Edit Questions' and switch screen
-        $Selenium->find_element( "#Menu020-EditQuestions", 'css' )->VerifiedClick();
+        # Click on 'Edit Questions' and switch screen.
+        $Selenium->find_element( "#Menu020-EditQuestions", 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#AnswerRequired").length' );
 
-        # check page
+        # Check page.
         for my $ID (
             qw(Question Type AnswerRequired)
             )
@@ -76,7 +73,7 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # get test params
+        # Get test params.
         my @Test = (
             {
                 Name => 'YesNoQuestion',
@@ -106,18 +103,18 @@ $Selenium->RunTest(
             },
         );
 
-        # create test questions
+        # Create test questions.
         my $Success;
         for my $Questions (@Test) {
 
-            # add question
+            # Add question.
             $Selenium->find_element( "#Question", 'css' )->send_keys( $Questions->{Name} );
             $Selenium->execute_script(
                 "\$('#Type').val('$Questions->{Type}').trigger('redraw.InputField').trigger('change');"
             );
             $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-            # add answers for radio, check-box and NPS questions
+            # Add answers for radio, check-box and NPS questions.
             if (
                 $Questions->{Name} eq 'RadioQuestion'
                 || $Questions->{Name} eq 'CheckboxQuestion'
@@ -125,13 +122,13 @@ $Selenium->RunTest(
                 )
             {
 
-                # verify question is in incomplete state
+                # Verify question is in incomplete state.
                 $Self->True(
                     index( $Selenium->get_text("//div[\@class='Content']"), 'Incomplete' ) > -1,
                     "$Questions->{Name} is incomplete",
                 );
 
-                # click on test created question
+                # Click on test created question.
                 $Selenium->find_element( $Questions->{Name}, 'link_text' )->VerifiedClick();
 
                 $Selenium->find_element( "#Answer", 'css' )->send_keys( $Questions->{Answer1} );
@@ -140,32 +137,23 @@ $Selenium->RunTest(
                 $Selenium->find_element( "#Answer", 'css' )->send_keys( $Questions->{Answer2} );
                 $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-                # return back to add question screen
+                # Return back to add question screen.
                 $Selenium->find_element("//button[\@value='Go back'][\@type='submit']")->VerifiedClick();
 
             }
 
-            # verify question is in complete state
+            # Verify question is in complete state.
             $Self->True(
                 index( $Selenium->get_text("//div[\@class='Content']"), 'Complete' ) > -1,
                 "$Questions->{Name} is completed",
             );
 
-            # click on delete icon
-            my $CheckConfirmJS = <<"JAVASCRIPT";
-(function () {
-    var lastConfirm = undefined;
-    window.confirm = function (message) {
-        lastConfirm = message;
-        return true;
-    };
-}());
-JAVASCRIPT
-            $Selenium->execute_script($CheckConfirmJS);
+            # Delete test question.
+            $Selenium->find_element( ".QuestionDelete", 'css' )->click();
+            $Selenium->WaitFor( AlertPresent => 1 );
+            $Selenium->accept_alert();
 
-            # delete test question
-            $Selenium->find_element( ".QuestionDelete", 'css' )->VerifiedClick();
-            $Selenium->WaitFor( JavaScript => 'return $(".Dialog:visible").length === 0;' );
+            $Selenium->VerifiedRefresh();
 
             $Self->True(
                 index( $Selenium->get_page_source(), $Questions->{Name} ) == -1,
@@ -174,10 +162,9 @@ JAVASCRIPT
 
         }
 
-        # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # clean-up test created survey queue
+        # Clean-up test created survey queue.
         $Success = $DBObject->Do(
             SQL  => "DELETE FROM survey_queue WHERE survey_id = ?",
             Bind => [ \$SurveyID ],
@@ -187,7 +174,7 @@ JAVASCRIPT
             "Survey-Queue for $SurveyTitle is deleted",
         );
 
-        # delete test created survey
+        # Delete test created survey.
         $Success = $DBObject->Do(
             SQL  => "DELETE FROM survey WHERE id = ?",
             Bind => [ \$SurveyID ],
