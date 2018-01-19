@@ -13,20 +13,15 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # get FAQ object
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # create test FAQ
-        # test params
+        # Create test FAQ.
         my $FAQTitle    = 'FAQ ' . $Helper->GetRandomID();
         my $FAQSymptom  = 'Selenium Symptom';
         my $FAQProblem  = 'Selenium Problem';
@@ -51,7 +46,7 @@ $Selenium->RunTest(
             "FAQ is created - ID $ItemID",
         );
 
-        # create and login test customer
+        # Create and login test customer.
         my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate() || die "Did not get test user";
 
         $Selenium->Login(
@@ -60,19 +55,18 @@ $Selenium->RunTest(
             Password => $TestCustomerUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to CustomerFAQZoom screen of created test FAQ
+        # Navigate to CustomerFAQZoom screen of created test FAQ.
         $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQZoom;ItemID=$ItemID");
 
-        # check page
+        # Check page.
         $Self->True(
             index( $Selenium->get_page_source(), 'FAQ Information' ) > -1,
             "FAQ data is found on screen - FAQ Information",
         );
 
-        # verify test FAQ is created
+        # Verify test FAQ is created.
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
             "$FAQTitle is found",
@@ -95,13 +89,16 @@ $Selenium->RunTest(
 
         my $Handles = $Selenium->get_window_handles();
 
-        # check test created FAQ values
+        # Check test created FAQ values.
         for my $Test (@Tests) {
 
-            # switch to FAQ symptom iframe and verify its values
-            $Selenium->switch_to_frame( $Test->{Iframe} );
+            # Switch to FAQ symptom iframe and verify its values.
+            $Selenium->SwitchToFrame(
+                FrameSelector => '#' . $Test->{Iframe},
+                WaitForLoad   => 0,
+            );
 
-            # wait to switch on iframe
+            # Wait to switch on iframe.
             sleep 2;
 
             $Self->True(
@@ -124,12 +121,14 @@ $Selenium->RunTest(
             "FAQ default vote value is found",
         );
 
-        # vote 5 stars for FAQ
+        # Vote 5 stars for FAQ.
         my $VoteElement = $Selenium->find_element( "#RateButton100", 'css' );
-        $Selenium->find_child_element( $VoteElement, ".RateButton", 'css' )->VerifiedClick();
+        $Selenium->find_child_element( $VoteElement, ".RateButton", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return \$('.RateButton.RateChecked').length === 5" );
+
         $Selenium->find_element("//button[\@id='RateSubmitButton'][\@type='submit']")->VerifiedClick();
 
-        # check vote message
+        # Check vote message.
         $Self->True(
             index( $Selenium->get_page_source(), 'Thanks for your vote!' ) > -1,
             "FAQ vote message is found",
@@ -139,7 +138,7 @@ $Selenium->RunTest(
             "FAQ vote value is found",
         );
 
-        # delete test created FAQ
+        # Delete test created FAQ.
         my $Success = $FAQObject->FAQDelete(
             ItemID => $ItemID,
             UserID => 1,
@@ -149,10 +148,9 @@ $Selenium->RunTest(
             "FAQ is deleted - ID $ItemID",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
-
 );
 
 1;
