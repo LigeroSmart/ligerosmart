@@ -12,7 +12,6 @@ use utf8;
 
 use vars (qw($Self));
 
-# Get Selenium object.
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
@@ -22,16 +21,10 @@ $Selenium->RunTest(
         my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
         my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-        # Create and login as test user.
+        # Create test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         ) || die "Did not get test builder user";
-
-        $Selenium->Login(
-            Type     => 'Agent',
-            User     => $TestUserLogin,
-            Password => $TestUserLogin,
-        );
 
         # Get test user ID.
         my $TestUserID = $UserObject->UserLookup(
@@ -71,7 +64,13 @@ $Selenium->RunTest(
         # Create test customer user.
         my $TestCustomer = $Helper->TestCustomerUserCreate();
 
-        # Get script alias.
+        # Login as test user.
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin,
+            Password => $TestUserLogin,
+        );
+
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
         # Navigate to AgentITSMChangeZoom screen.
@@ -109,7 +108,9 @@ $Selenium->RunTest(
 
         # Check client validation.
         $Selenium->find_element( "#ChangeManager", 'css' )->clear();
-        $Selenium->find_element( "#SubmitButton",  'css' )->VerifiedClick();
+        $Selenium->find_element( "#SubmitButton",  'css' )->click();
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager.Error").length' );
+
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#ChangeManager').hasClass('Error')"
@@ -180,7 +181,10 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMChangeHistory;ChangeID=$ChangeID\"]').length"
+        );
 
         # Click on 'History'.
         $Selenium->find_element(
