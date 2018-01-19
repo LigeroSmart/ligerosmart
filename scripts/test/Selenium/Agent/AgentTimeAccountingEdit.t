@@ -13,16 +13,15 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper               = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
 
-        # use a calendar with the same business hours for every day so that the UT runs correctly
+        # Use a calendar with the same business hours for every day so that the UT runs correctly
         # on every day of the week and outside usual business hours.
         my %Week;
         my @Days = qw(Sun Mon Tue Wed Thu Fri Sat);
@@ -40,27 +39,24 @@ $Selenium->RunTest(
             Value => {},
         );
 
-        # disable MassEntry features
+        # Disable MassEntry features.
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'TimeAccounting::AllowMassEntryForUser',
             Value => 0,
         );
 
-        # create test user and login
+        # Create test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
 
-        # get test user ID
+        # Get test user ID.
         my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserLogin => $TestUserLogin,
         );
 
-        # get time accounting object
-        my $TimeAccountingObject = $Kernel::OM->Get('Kernel::System::TimeAccounting');
-
-        # insert test user into account setting
+        # Insert test user into account setting.
         $TimeAccountingObject->UserSettingsInsert(
             UserID => $TestUserID,
             Period => '1',
@@ -73,7 +69,7 @@ $Selenium->RunTest(
         my $MonthCurrent = $DateTimeSettings->{Month};
         my $DayCurrent   = $DateTimeSettings->{Day};
 
-        # update user time account setting
+        # Update user time account setting.
         $TimeAccountingObject->UserSettingsUpdate(
             UserID        => $TestUserID,
             Description   => 'Selenium test accounting user',
@@ -91,7 +87,7 @@ $Selenium->RunTest(
             },
         );
 
-        # create test project
+        # Create test project.
         my $ProjectTitle = 'Project ' . $Helper->GetRandomID();
         my $ProjectID    = $TimeAccountingObject->ProjectSettingsInsert(
             Project            => $ProjectTitle,
@@ -99,7 +95,7 @@ $Selenium->RunTest(
             ProjectStatus      => 1,
         );
 
-        # create test action
+        # Create test action.
         my $ActionTitle = 'Action ' . $Helper->GetRandomID();
         $TimeAccountingObject->ActionSettingsInsert(
             Action       => $ActionTitle,
@@ -110,23 +106,26 @@ $Selenium->RunTest(
         );
         my $ActionID = $ActionData{ID};
 
-        # log in test user
+        # Login as test user.
         $Selenium->Login(
             Type     => 'Agent',
             User     => $TestUserLogin,
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentTimeAccountingEdit
+        # Navigate to AgentTimeAccountingEdit.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingEdit");
 
-        # add additional row
-        $Selenium->find_element("//button[\@id='MoreInputFields'][\@type='button']")->VerifiedClick();
+        # Add additional row.
+        my $RecordsNumber = $Selenium->execute_script('return parseInt($("#RecordsNumber").val(), 10)');
+        $Selenium->find_element("//button[\@id='MoreInputFields'][\@type='button']")->click();
 
-        # check time accounting edit field IDs, first and added row
+        my $NextRecordsNumber = $RecordsNumber + 1;
+        $Selenium->WaitFor( JavaScript => "return \$('#RecordsNumber').val() == $NextRecordsNumber" );
+
+        # Check time accounting edit field IDs, first and added row.
         for my $Row ( 1, 9 ) {
             for my $EditFieldID (
                 qw(ProjectID ActionID Remark StartTime EndTime Period)
@@ -146,7 +145,7 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # edit time accounting for test created user
+        # Edit time accounting for test created user.
         $Selenium->execute_script(
             "\$('#ProjectID1').val('$ProjectID').trigger('redraw.InputField').trigger('change');"
         );
@@ -155,27 +154,26 @@ $Selenium->RunTest(
         $Selenium->find_element( "#StartTime1", 'css' )->send_keys('10:00');
         $Selenium->find_element( "#EndTime1",   'css' )->send_keys( '16:00', "\t" );
 
-        # submit work accounting edit time record
+        # Submit work accounting edit time record.
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        # verify that period calculate correct time
+        # Verify that period calculate correct time.
         $Self->Is(
             $Selenium->find_element( "#Period1", 'css' )->get_value(),
             '6.00',
             "Period time correctly calculated",
         );
 
-        # verify submit message
+        # Verify submit message.
         my $SubmitMessage = 'Successful insert!';
         $Self->True(
             index( $Selenium->get_page_source(), $SubmitMessage ) > -1,
             "$SubmitMessage is found",
         );
 
-        # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # get DB clean-up data
+        # Get DB clean-up data.
         my @DBCleanData = (
             {
                 Quoted  => $ProjectTitle,
@@ -211,7 +209,7 @@ $Selenium->RunTest(
             },
         );
 
-        # clean system from test created data
+        # Clean system from test created data.
         for my $Delete (@DBCleanData) {
             if ( $Delete->{Quoted} ) {
                 $Delete->{Bind} = $DBObject->Quote( $Delete->{Quoted} );
