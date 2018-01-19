@@ -13,19 +13,15 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # get FAQ object
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -36,30 +32,29 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQLanguage screen of created test FAQ
+        # Navigate to AgentFAQLanguage screen of created test FAQ.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQLanguage");
 
-        # check add button
+        # Check add button.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQLanguage;Subaction=Add' )]");
 
-        # check AgentFAQLanguage screen
+        # Check AgentFAQLanguage screen.
         $Selenium->find_element( "table",             'css' );
         $Selenium->find_element( "table thead tr th", 'css' );
         $Selenium->find_element( "table tbody tr td", 'css' );
 
-        # check English language - 'en'
+        # Check English language - 'en'.
         $Selenium->find_element( 'en', 'link_text' );
 
-        # check German Language - 'de'
+        # Check German Language - 'de'.
         $Selenium->find_element( 'de', 'link_text' );
 
-        # add test language - Spanish (es)
+        # Add test language - Spanish (es).
         my $FAQLanguage = 'es';
 
-        # check if there is 'es - Language' has been added before
+        # Check if there is 'es - Language' has been added before.
         my $Exists = $FAQObject->LanguageDuplicateCheck(
             Name   => $FAQLanguage,
             UserID => 1,
@@ -69,19 +64,13 @@ $Selenium->RunTest(
 
         if ($Exists) {
             $Selenium->find_element( "#Name", 'css' )->send_keys($FAQLanguage);
+            $Selenium->find_element("//button[\@type='submit']")->click();
+            $Selenium->WaitFor( JavaScript => 'return $(".Dialog.Modal.Alert").length && $("#Name.Error").length' );
 
-            # close Error dialog block
-            my $CheckConfirmJS = <<"JAVASCRIPT";
-(function () {
-    var lastConfirm = undefined;
-    window.confirm = function (message) {
-        return true;
-    };
-}());
-JAVASCRIPT
-            $Selenium->execute_script($CheckConfirmJS);
+            # Close alert dialog.
+            $Selenium->find_element( "#DialogButton1", 'css' )->click();
+            $Selenium->WaitFor( JavaScript => 'return !$(".Dialog.Modal.Alert").length' );
 
-            $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
             $Self->Is(
                 $Selenium->execute_script(
                     "return \$('#Name').hasClass('ServerError')"
@@ -90,7 +79,7 @@ JAVASCRIPT
                 'This language already exists!',
             );
 
-            # go back on Language overview screen
+            # Go back on Language overview screen.
             $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQLanguage");
 
         }
@@ -101,18 +90,18 @@ JAVASCRIPT
 
         $Selenium->WaitFor( JavaScript => 'return $(".DataTable").length' );
 
-        # get ID for test language
+        # Get ID for test language.
         my $LanguageID = $FAQObject->LanguageLookup(
             Name => $FAQLanguage,
         );
 
-        # verify test FAQ has been created
+        # Verify test FAQ has been created.
         $Self->True(
             index( $Selenium->get_page_source(), "AgentFAQLanguage;Subaction=Change;LanguageID=$LanguageID" ) > -1,
             "Test language is created - $FAQLanguage",
         );
 
-        # check added 'test' language
+        # Check added 'test' language.
         $Selenium->find_element( "$FAQLanguage", 'link_text' )->VerifiedClick();
 
         $Self->Is(
@@ -121,35 +110,35 @@ JAVASCRIPT
             "Stored language name $FAQLanguage - found",
         );
 
-        # go back on Language overview screen
+        # Go back on Language overview screen.
         $Selenium->find_element( 'Cancel', 'link_text' )->VerifiedClick();
 
-        # if case test language was created in the test, delete it
+        # If test language was created in the test, delete it.
         if ( !$Exists ) {
 
-            # delete 'test' language
-            $Selenium->find_element( "#DeleteLanguageID$LanguageID", 'css' )->VerifiedClick();
-
+            # Delete 'test' language.
+            $Selenium->find_element( "#DeleteLanguageID$LanguageID", 'css' )->click();
             $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
 
-            # verify delete message
+            # Verify delete message.
             $Self->True(
                 index( $Selenium->get_page_source(), 'Do you really want to delete this language?' ) > -1,
                 "Delete message - found",
             );
 
-            # execute delete
-            $Selenium->find_element( "#DialogButton1", 'css' )->VerifiedClick();
+            # Execute delete.
+            $Selenium->find_element( "#DialogButton1", 'css' )->click();
+            $Selenium->WaitFor( JavaScript => 'return !$(".Dialog.Modal").length' );
 
-            # verify test FAQ has been deleted
+            $Selenium->VerifiedRefresh();
+
+            # Verify test FAQ has been deleted.
             $Self->True(
                 index( $Selenium->get_page_source(), "AgentFAQLanguage;Subaction=Change;LanguageID=$LanguageID" ) == -1,
                 "Test language is deleted - $FAQLanguage",
             );
         }
-
     }
-
 );
 
 1;
