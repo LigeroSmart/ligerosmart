@@ -14,36 +14,20 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # disable check email address
+        # Disable check email address.
         $Helper->ConfigSettingChange(
             Key   => 'CheckEmailAddresses',
             Value => 0
         );
 
-        # create test user and login
-        my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => ['admin'],
-        ) || die "Did not get test user";
-
-        $Selenium->Login(
-            Type     => 'Agent',
-            User     => $TestUserLogin,
-            Password => $TestUserLogin,
-        );
-
-        # get script alias
-        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
-
-        # create test CustomerUser
+        # Create test CustomerUser.
         my $CustomerUserName = "CustomerUser" . $Helper->GetRandomID();
         my $CustomerUserID   = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
             UserFirstname  => $CustomerUserName,
@@ -59,7 +43,7 @@ $Selenium->RunTest(
             "CustomerUserAdd - $CustomerUserID",
         );
 
-        # create test Service
+        # Create test Service.
         my $ServiceName = 'SomeService' . $Helper->GetRandomID();
         my $ServiceID   = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
             Name    => $ServiceName,
@@ -78,22 +62,35 @@ $Selenium->RunTest(
             "ServiceAdd - $ServiceID",
         );
 
-        # navigate AdminCustomerUserService screen
+        # Create test user and login.
+        my $TestUserLogin = $Helper->TestUserCreate(
+            Groups => ['admin'],
+        ) || die "Did not get test user";
+
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin,
+            Password => $TestUserLogin,
+        );
+
+        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
+
+        # Navigate AdminCustomerUserService screen.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminCustomerUserService");
 
-        # check overview AdminCustomerUserService
+        # Check overview AdminCustomerUserService.
         $Selenium->find_element( "#FilterServices",     'css' );
         $Selenium->find_element( "#CustomerUserSearch", 'css' );
         $Selenium->find_element( "#Customers",          'css' );
         $Selenium->find_element( "#Service",            'css' );
 
-        # check breadcrumb on Overview screen
+        # Check breadcrumb on Overview screen.
         $Self->True(
             $Selenium->find_element( '.BreadCrumb', 'css' ),
             "Breadcrumb is found on Overview screen.",
         );
 
-        # test search filter for CustomerUser
+        # Test search filter for CustomerUser.
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->send_keys($CustomerUserName);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
@@ -104,7 +101,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
 
-        # filter for service. It is auto complete, submit is not necessary
+        # Filter for service. It is auto complete, submit is not necessary.
         $Selenium->find_element( "#FilterServices", 'css' )->send_keys($ServiceName);
         $Self->True(
             $Selenium->find_element( "$ServiceName", 'link_text' )->is_displayed(),
@@ -112,10 +109,10 @@ $Selenium->RunTest(
         );
         $Selenium->find_element( "#FilterServices", 'css' )->clear();
 
-        # allocate test service to test customer user
+        # Allocate test service to test customer user.
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
 
-        # check breadcrumb on allocate screen
+        # Check breadcrumb on allocate screen.
         my $Count = 1;
         my $IsLinkedBreadcrumbText;
         for my $BreadcrumbText (
@@ -135,10 +132,13 @@ $Selenium->RunTest(
             $Count++;
         }
 
-        $Selenium->find_element("//input[\@value='$ServiceID']")->VerifiedClick();
+        $Selenium->find_element("//input[\@value='$ServiceID']")->click();
+        $Selenium->WaitFor(
+            JavaScript => "return \$('input[value=$ServiceID]:checked').length"
+        );
         $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
-        # check test customer user allocation to test service
+        # Check test customer user allocation to test service.
         $Selenium->find_element( $ServiceName, 'link_text' )->VerifiedClick();
 
         $Self->Is(
@@ -147,11 +147,14 @@ $Selenium->RunTest(
             "Service $ServiceName is active for CustomerUser $CustomerUserName",
         );
 
-        # remove test customer user allocations from test service
-        $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->VerifiedClick();
+        # Remove test customer user allocations from test service.
+        $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->click();
+        $Selenium->WaitFor(
+            JavaScript => "return \$('input[value=$CustomerUserName]:checked').length == 0"
+        );
         $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
-        # check if there is any test service allocation towards test customer user
+        # Check if there is any test service allocation towards test customer user.
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
 
         $Self->Is(
@@ -160,10 +163,9 @@ $Selenium->RunTest(
             "Service $ServiceName is not active for CustomerUser $CustomerUserName",
         );
 
-        # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # delete created test customer user
+        # Delete created test customer user.
         if ($ServiceID) {
             my $Success = $DBObject->Do(
                 SQL => "DELETE FROM service_customer_user WHERE service_id = $ServiceID",
@@ -195,14 +197,13 @@ $Selenium->RunTest(
             );
         }
 
-        # make sure the cache is correct.
+        my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+
+        # Make sure the cache is correct.
         for my $Cache (qw( CustomerUser Service )) {
-            $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
-                Type => $Cache,
-            );
+            $CacheObject->CleanUp( Type => $Cache );
         }
     }
-
 );
 
 1;
