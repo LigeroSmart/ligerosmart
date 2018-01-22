@@ -13,16 +13,14 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -33,21 +31,20 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # create another test user
+        # Create another test user.
         my $TestUser = $Helper->TestUserCreate();
 
-        # get test user ID
+        # Get test user ID.
         my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
             UserLogin => $TestUser,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentTimeAccountingSetting
+        # Navigate to AgentTimeAccountingSetting.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingSetting");
 
-        # check time account setting page IDs
+        # Check time account setting page IDs.
         for my $SettingPage (
             qw(
             NewUserID
@@ -64,20 +61,20 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # check add project and add task
+        # Check add project and add task.
         for my $SettingAdd ( 'Add', 'Add task', ) {
             my $Element = $Selenium->find_element("//button[\@value='$SettingAdd'][\@type='submit']");
             $Element->is_enabled();
             $Element->is_displayed();
         }
 
-        # for check 'new user' input autocomplete
+        # For check 'new user' input autocomplete.
         $Selenium->find_element( 'input[id="NewUserID_Search"]', 'css' );
 
-        # click on 'Add project'
+        # Click on 'Add project'.
         $Selenium->find_element("//button[\@value='Add'][\@type='submit']")->VerifiedClick();
 
-        # check project page IDs
+        # Check project page IDs.
         for my $ProjectPageID (qw(Project ProjectDescription ProjectStatus))
         {
             my $Element = $Selenium->find_element( "#$ProjectPageID", 'css' );
@@ -85,14 +82,14 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # create test project
+        # Create test project.
         my $ProjectTitle       = 'Project ' . $Helper->GetRandomID();
         my $ProjectDescription = 'Selenium test project';
         $Selenium->find_element( "#Project",            'css' )->send_keys($ProjectTitle);
         $Selenium->find_element( "#ProjectDescription", 'css' )->send_keys($ProjectDescription);
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        # verify created test project
+        # Verify created test project.
         for my $ProjectVerify ( $ProjectTitle, $ProjectDescription ) {
             $Self->True(
                 index( $Selenium->get_page_source(), $ProjectVerify ) > -1,
@@ -100,22 +97,22 @@ $Selenium->RunTest(
             );
         }
 
-        # click on 'Add task'
+        # Click on 'Add task'.
         $Selenium->find_element("//button[\@value='Add task'][\@type='submit']")->VerifiedClick();
 
-        # check task page IDs
+        # Check task page IDs.
         for my $TaskPageID (qw(Task TaskStatus)) {
             my $Element = $Selenium->find_element( "#$TaskPageID", 'css' );
             $Element->is_enabled();
             $Element->is_displayed();
         }
 
-        # create test task
+        # Create test task.
         my $ActionTitle = 'Task ' . $Helper->GetRandomID();
         $Selenium->find_element( "#Task", 'css' )->send_keys($ActionTitle);
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        # verify created test task
+        # Verify created test task.
         $Self->True(
             index( $Selenium->get_page_source(), $ActionTitle ) > -1,
             "$ActionTitle is found",
@@ -130,7 +127,7 @@ $Selenium->RunTest(
             JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
         );
 
-        # check edit user page
+        # Check edit user page.
         for my $EditUserPageID (
             qw(Description ShowOvertime CreateProject Calendar DateStart-1 DateEnd-1 LeaveDays-1
             WeeklyHours-1 Overtime-1 PeriodStatus-1)
@@ -141,10 +138,10 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # click 'Add time period'
+        # Click 'Add time period'.
         $Selenium->find_element("//button[\@value='Add time period'][\@type='submit']")->VerifiedClick();
 
-        # check for new added time period fields
+        # Check for new added time period fields.
         for my $NewTimePeriodID (qw(DateStart-2 DateEnd-2 LeaveDays-2 WeeklyHours-2 Overtime-2 PeriodStatus-2))
         {
             my $Element = $Selenium->find_element( "#$NewTimePeriodID", 'css' );
@@ -152,15 +149,20 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # edit user setting
+        # Edit user setting.
         my $UserDescription = 'Selenium test user setting';
-        $Selenium->find_element( "#Description",   'css' )->clear();
-        $Selenium->find_element( "#Description",   'css' )->send_keys($UserDescription);
-        $Selenium->find_element( "#ShowOvertime",  'css' )->VerifiedClick();
-        $Selenium->find_element( "#CreateProject", 'css' )->VerifiedClick();
+        $Selenium->find_element( "#Description", 'css' )->clear();
+        $Selenium->find_element( "#Description", 'css' )->send_keys($UserDescription);
+
+        $Selenium->find_element( "#ShowOvertime", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return \$('#ShowOvertime:checked').length" );
+
+        $Selenium->find_element( "#CreateProject", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return \$('#CreateProject:checked').length" );
+
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        # verify test user setting
+        # Verify test user setting.
         my $SettingUser = "$TestUser $TestUser ($TestUser)";
         for my $SettingUserVerify ( $SettingUser, $UserDescription ) {
             $Self->True(
@@ -169,10 +171,9 @@ $Selenium->RunTest(
             );
         }
 
-        # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # get DB clean-up data
+        # Get DB clean-up data.
         my @DBCleanData = (
             {
                 Quoted  => $ProjectTitle,
@@ -202,7 +203,7 @@ $Selenium->RunTest(
             },
         );
 
-        # clean system from test created data
+        # Clean system from test created data.
         for my $Delete (@DBCleanData) {
             if ( $Delete->{Quoted} ) {
                 $Delete->{Bind} = $DBObject->Quote( $Delete->{Quoted} );
