@@ -104,10 +104,6 @@ $Selenium->RunTest(
             );
         }
 
-        # Check "Go to overview" button.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentStatistics;Subaction=Overview\' )]")
-            ->VerifiedClick();
-
         my @Tests = (
             {
                 Title            => 'Statistic DynamicMatrix' . $Helper->GetRandomID(),
@@ -320,14 +316,6 @@ $Selenium->RunTest(
             # Save and finish test statistics.
             $Selenium->find_element( "#SaveAndFinish", 'css' )->VerifiedClick();
 
-            my $CheckConfirmJS = <<"JAVASCRIPT";
-(function () {
-    window.confirm = function (message) {
-        return true;
-    };
-}());
-JAVASCRIPT
-
             # Sort decreasing by StatsID.
             $Selenium->VerifiedGet(
                 "${ScriptAlias}index.pl?Action=AgentStatistics;Subaction=Overview;Direction=DESC;OrderBy=ID;StartHit=1"
@@ -348,12 +336,13 @@ JAVASCRIPT
                 "Test statistic is created - $StatsData->{Title} "
             );
 
-            $Selenium->execute_script($CheckConfirmJS);
-
             # Delete created test statistics.
             $Selenium->find_element(
                 "//a[contains(\@href, \'Action=AgentStatistics;Subaction=DeleteAction;StatID=$StatsIDLast\' )]"
-            )->VerifiedClick();
+            )->click();
+
+            $Selenium->WaitFor( AlertPresent => 1 );
+            $Selenium->accept_alert();
 
             $Self->True(
                 index( $Selenium->get_page_source(), "Action=AgentStatistics;Subaction=Edit;StatID=$StatsIDLast" )
