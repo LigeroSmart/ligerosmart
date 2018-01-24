@@ -153,8 +153,6 @@ $Selenium->RunTest(
             $Selenium->WaitFor( AlertPresent => 1 );
             $Selenium->accept_alert();
 
-            $Selenium->VerifiedRefresh();
-
             $Self->True(
                 index( $Selenium->get_page_source(), $Questions->{Name} ) == -1,
                 "$Questions->{Name} is deleted",
