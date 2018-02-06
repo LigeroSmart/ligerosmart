@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         '';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Si cette expression régulière est vérifiée, aucune enquête Client ne sera envoyée.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
     $Self->{Translation}->{'Public Survey.'} = 'Enquête publique';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Les enquête ne seront pas envoyées aux adresses email configurées.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'L\'identifiant pour une enquête. par ex. Survey#, MySurvey#. par défaut : Survey#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

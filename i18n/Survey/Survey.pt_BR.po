@@ -4,15 +4,16 @@
 # Felipe Braga <fbobraga@gmail.com>, 2015
 # Glauber Caires <glaubercaires@gmail.com>, 2016
 # José Ribeiro <joserribeiro26@gmail.com>, 2014
+# Marcello Kera <marcellokera@yahoo.com.br>, 2017
 # MBaeta <matheus.baeta@otrs.com>, 2017
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014,2016
 # Ronaldo Richieri <ronaldo@complemento.net.br>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +59,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Exemplo de pesquisa"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -106,7 +107,7 @@ msgstr "Quando você terminar de editar as questões da pesquisa, apenas feche a
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Fechar esta janela"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -165,7 +166,7 @@ msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Sem restrições"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
@@ -250,10 +251,6 @@ msgstr "Solicitações recebidas"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Detalhes da Pesquisa"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Número"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -520,10 +517,6 @@ msgid "Determines if the statistics module may generate survey lists."
 msgstr ""
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Edit survey general information."
 msgstr "Editar informação geral da pesquisa."
 
@@ -571,6 +564,10 @@ msgstr "Registro de módulo de interface para o objeto PublicSurvey na área de 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
 msgstr "Se esta regex for encontrada, nenhuma pesquisa será enviado para o cliente"
+
+#. SysConfig
+msgid "Limit."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -650,10 +647,6 @@ msgid ""
 "The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
 "Survey#."
 msgstr "O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#."
-
-#. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
 
 #. SysConfig
 msgid ""

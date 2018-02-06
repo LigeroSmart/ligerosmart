@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,19 +41,19 @@ msgstr "内部描述"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "客户条件"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "请选择一个客户属性以添加条件。"
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "公共调查密钥"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "调查示例"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -145,26 +145,26 @@ msgstr "回答："
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "调查概览选项"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "在编号、标题、简介、描述、通知发件人、通知标题和通知正文属性中搜索，覆盖其他具有相同名称的属性。"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "调查创建时间"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "没有限制"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "仅在此期间创建的调查："
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -192,7 +192,7 @@ msgstr "请求表"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "选择所有请求"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -204,7 +204,7 @@ msgstr "投票时间"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "选择这个请求"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -212,7 +212,7 @@ msgstr "查看详情"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "删除统计资料"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -224,11 +224,11 @@ msgstr "返回统计概况"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "上一个投票"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "下一个投票"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -245,10 +245,6 @@ msgstr "已接收的调查"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "调查详情"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "编号"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -324,7 +320,7 @@ msgstr "复选框（列表）"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "净推荐值"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -414,7 +410,7 @@ msgstr "你已经回答了这个调查。"
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "调查列表"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -470,7 +466,7 @@ msgstr "定义有权更改调查状态的组。 默认情况下，数组为空�
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "定义调查请求是否只发送给真实客户。"
 
 #. SysConfig
 msgid ""
@@ -490,7 +486,7 @@ msgstr "定义一个工单关闭后触发发送一个调查的小时数（ 0 代
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "定义建立发送条件的下拉列表的列（0 => 不激活，1 => 激活）。"
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -498,7 +494,7 @@ msgstr "调查详情窗口富文本查看的默认高度。"
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "定义可以删除统计数据的组（rw）。"
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -512,11 +508,7 @@ msgstr "定义调查概览中显示的字段。这个选项不会影响字段的
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "确定统计模块是否可以生成调查列表。"
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -568,6 +560,10 @@ msgid "If this regex matches, no customer survey will be sent."
 msgstr "如果匹配这个正则表达式，不会给客户发送调查。"
 
 #. SysConfig
+msgid "Limit."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
@@ -582,7 +578,7 @@ msgid ""
 "Results older than the configured amount of days will be deleted. Note: "
 "delete results done by the OTRS Daemon, prior activation of "
 "'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "超过配置的天数的调查结果将被删除。 注意：删除调查结果由先前激活的 'Task###SurveyRequestsDelete' 设置的OTRS守护程序完成。"
 
 #. SysConfig
 msgid ""
@@ -647,10 +643,6 @@ msgid ""
 msgstr "调查的标识符，例如：Survey#、MySurvey#。默认为Survey#。"
 
 #. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
-
-#. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
@@ -658,7 +650,7 @@ msgstr "如果一个工单已关闭就自动发送调查请求邮件给客户的
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "触发删除调查结果（包括投票数据和请求）。"
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

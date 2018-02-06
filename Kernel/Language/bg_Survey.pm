@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Регистрация на модул Frontend за обекта на общественото проучване в публичния район на проучването.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Ако този регекс съвпада, няма да бъде изпратено проучване на клиентите.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметри на страниците (в които са показани проучванията) на общия преглед на изследването.';
     $Self->{Translation}->{'Public Survey.'} = 'Публично проучване.';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Проучванията няма да бъдат изпратени до конфигурираните имейл адреси.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Идентификаторът за проучване, напр. Проучване #, MySurvey #. По подразбиране е "Проучване #".';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модул за събитие на билети за автоматично изпращане на заявки за електронна поща до клиентите, ако билетът е затворен.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

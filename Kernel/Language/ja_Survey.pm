@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'この正規表現にマッチする場合、調査は顧客に送信されません。';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'アンケート一覧 (Small) の (アンケートが表示される) ページに対するパラメータ';
     $Self->{Translation}->{'Public Survey.'} = '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンドモジュール登録です。';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'アンケートは設定された電子メールアドレスには送信されません。';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '例えばSurvey#, MySurvey#などのチケットの識別子です。デフォルトはSurvey#です。';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        'アンケートのSurveyOverviewSmallPageShownの説明です。';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'チケットが完了した際に、顧客に自動的に調査メールを送信するチケットイベントモジュール。';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '（投票データとリクエストを含む）結果を削除する。';

@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Rexistro módulo frontend para obxecto EnquisaPublica na área Enquisa pública.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Se a expresión regular coincide, non enviaráse enquisa ao cliente.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parámetros para as páxinas (nas cales as enquisas son mostradas) da vista xeral pequena da enquisa.';
     $Self->{Translation}->{'Public Survey.'} = 'Enquisa pública.';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Enquisas non serán enviadas aos enderezos de correo electrónico configurados.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'O identificador para unha enquisa, ex. Enquisa#, MiñaEnquisa#, Por defecto é Enquisa#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo evento ticket para enviar automaticamente peticións de enquisa de correo electrónico se un ticket é pechado.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

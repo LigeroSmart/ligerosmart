@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Pendaftaran modul frontend  untuk objek PublicSurvey di area survey.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Jika regex ini cocok, maka tidak ada survey pelanggan yang akan di kirim.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parameter untuk halaman (dimana survey tersebut di tampilkan) gambaran kecil survey.';
     $Self->{Translation}->{'Public Survey.'} = 'Survey umum';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Survey tidak akan di kirim kepada alamat email yang telah di konfigurasi';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Pengidentifikasi untuk survey, misalnya Survey#, MySurvey#. Secara defaultnya Survey#';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Modul tiket peristiwa untuk secara otomatis mengirimkan permintaan email survey kepada pelanggan jika tiket telah ditutup.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

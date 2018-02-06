@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,19 +42,19 @@ msgstr "Интерни опис"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Услови клијента"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Молимо изаберите атрибут клијента за додавање услова."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Јавни кључ анкете"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Пример анкете"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -146,26 +146,26 @@ msgstr "Одговор:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Подешавања прегледа анкете"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "Претраге у атрибутима Number, Title, Introduction, Description, NotificationSender, NotificationSubject и NotificationBody, редефиниу друге атрибуте са истим именом."
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Време креирања анкете"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Без ограничења"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Само анкете креиране између"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -193,7 +193,7 @@ msgstr "Табела захтева"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Изабери све захтеве"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -205,7 +205,7 @@ msgstr "Време гласања"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Изабери овај захтев"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -213,7 +213,7 @@ msgstr "Види детаље"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Обриши статистике"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -225,11 +225,11 @@ msgstr "иди назад на преглед статистике"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Претходни глас"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Следећи глас"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -246,10 +246,6 @@ msgstr "Примљене анкете"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Детаљи анкете"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Број"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -325,7 +321,7 @@ msgstr "Поље за потврду (Листа)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "Оцена промотера"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -415,7 +411,7 @@ msgstr "Већ сте одговорили на анкету."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Листа анкета"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -471,7 +467,7 @@ msgstr "Одређује групе које имају дозволу да ме
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "Дефинише да ли ће захтеви за анкете бити послати само правим клијентима."
 
 #. SysConfig
 msgid ""
@@ -491,7 +487,7 @@ msgstr "Дефинише број сати од затварања тикета 
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "Дефинише колоне за листу приликом прављења услова захтева (0 => искључено, 1 => укључено)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -499,7 +495,7 @@ msgstr "Дефинише подразумевану висину оквира з
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "Дефинише групе (rw) које могу да бришу статистике анкета."
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -513,11 +509,7 @@ msgstr "Дефинише приказане колоне у прегледу а�
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Одређује да ли модул статистика може генерисати листе анкета."
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -569,6 +561,10 @@ msgid "If this regex matches, no customer survey will be sent."
 msgstr "Ако се овај израз поклапа, анкета неће бити послата кориснику."
 
 #. SysConfig
+msgid "Limit."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
@@ -583,7 +579,7 @@ msgid ""
 "Results older than the configured amount of days will be deleted. Note: "
 "delete results done by the OTRS Daemon, prior activation of "
 "'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "Резултати старији од подешеног броја дана ће бити обрисани. Напомена: резултате брише OTRS системски сервис, по активацији подешавања 'Task###SurveyRequestsDelete'."
 
 #. SysConfig
 msgid ""
@@ -635,7 +631,7 @@ msgstr "Модул за детаљни приказ анкете."
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr "Ограничење анкете по страни за преглед - „мало”"
+msgstr "Ограничење анкете по страни за преглед малог формата."
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -645,11 +641,7 @@ msgstr "Анкета неће бити послата на подешену им
 msgid ""
 "The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
 "Survey#."
-msgstr "Идентификатор за анкету, нпр Survey#, MySurvey#. Подразумевано је Survey#."
-
-#. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
+msgstr "Идентификатор за анкету, нпр. Survey#, MySurvey#. Подразумевано је Survey#."
 
 #. SysConfig
 msgid ""
@@ -659,7 +651,7 @@ msgstr "Модул догађаја на тикету за аутоматско 
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "Окида брисање резултата (укључујући податке примљених гласова и послатих захтева)."
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:35+0000\n"
-"PO-Revision-Date: 2017-11-14 12:39+0000\n"
-"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -561,6 +561,10 @@ msgid "If this regex matches, no customer survey will be sent."
 msgstr "この正規表現にマッチする場合、調査は顧客に送信されません。"
 
 #. SysConfig
+msgid "Limit."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
@@ -638,10 +642,6 @@ msgid ""
 "The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
 "Survey#."
 msgstr "例えばSurvey#, MySurvey#などのチケットの識別子です。デフォルトはSurvey#です。"
-
-#. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr "アンケートのSurveyOverviewSmallPageShownの説明です。"
 
 #. SysConfig
 msgid ""

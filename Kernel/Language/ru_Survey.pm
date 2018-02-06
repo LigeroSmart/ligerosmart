@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Frontend module registration для объекта Публичного опроса в разделе публичных опросов.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Если это регулярное выражение верно, опрос клиенту не посылается.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметры страницы (на которой отображаются опросы) при обзоре опросов в small формате.';
     $Self->{Translation}->{'Public Survey.'} = 'Общедоступный опрос.';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Опросы не будут отправляться на указанные почтовые адреса.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Обозначение для идентификации опроса, например, Опрос№, Survey#, MySurvey#. По умолчанию Survey#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Модуль управления событием для заявки, автоматически отправляющий письмо клиенту с опросом, при закрытии заявки.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'การลงทะเบียนโมดูล Frontend สำหรับออบเจกค์แบบสอบถามทั่วไปในพื้นที่สำรวจสาธารณะ';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'ถ้าหาก regex ตรงกัน จะไม่มีการส่งแบบสอบถามให้ลูกค้า';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'พารามิเตอร์สำหรับเพจ (ซึ่งจะแสดงแบบสอบถาม) ของภาพรวมแบบสอบถามขนาดเล็ก';
     $Self->{Translation}->{'Public Survey.'} = 'แบบสอบถามสาธารณะ';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'จะไม่มีการส่งแบบสอบถามที่อีเมลที่ถูกกำหนดค่า';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'ตัวบ่งชี้สำหรับแบบสอบถาม, ตัวอย่างเช่น แบบสอบถาม# แบบสอบถามของฉัน#. ค่าเริ่มต้นคือแบบสอบถาม#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'โมดูลตั๋วกิจกรรมที่จะส่งอีเมลแบบสอบถามของการร้องขออัตโนมัติให้ลูกค้าในกรณีที่ตั๋วถูกปิด';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

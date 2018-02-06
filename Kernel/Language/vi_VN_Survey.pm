@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Đăng ký mô-đun cho đối tượng khảo sát công cộng trong giao diện khảo sát công cộng.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Nếu điều kiện tìm phù hợp, không có khảo sát khách hàng nào được gửi.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Tham số cho trang (mà hiển thị khảo sát) của danh sách khảo sát tổng quát.';
     $Self->{Translation}->{'Public Survey.'} = 'Khảo sát công cộng.';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Khảo sát sẽ không được gửi đến địa chỉ email đã thiết lập.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Định danh cho khảo sát, ví dụ: Khảo sát#, Khảo sát của tôi#. Ngầm định là Khảo sát#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Mô-đun bắt sự kiện của phiếu yêu cầu để gửi email yêu cầu tự động đến khách hàng nếu phiếu yêu cầu được đóng.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

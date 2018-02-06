@@ -22,10 +22,10 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = '通知正文';
     $Self->{Translation}->{'Ticket Types'} = '工单类型';
     $Self->{Translation}->{'Internal Description'} = '内部描述';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Customer conditions'} = '客户条件';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '请选择一个客户属性以添加条件。';
+    $Self->{Translation}->{'Public survey key'} = '公共调查密钥';
+    $Self->{Translation}->{'Example survey'} = '调查示例';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = '编辑一般信息';
@@ -56,12 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = '回答：';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = '调查概览选项';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
-        '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+        '在编号、标题、简介、描述、通知发件人、通知标题和通知正文属性中搜索，覆盖其他具有相同名称的属性。';
+    $Self->{Translation}->{'Survey Create Time'} = '调查创建时间';
+    $Self->{Translation}->{'No restriction'} = '没有限制';
+    $Self->{Translation}->{'Only surveys created between'} = '仅在此期间创建的调查：';
     $Self->{Translation}->{'Max. shown surveys per page'} = '每页显示调查的最大数';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,16 +72,16 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = '统计概况';
     $Self->{Translation}->{'Requests Table'} = '请求表';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = '选择所有请求';
     $Self->{Translation}->{'Send Time'} = '发送时间';
     $Self->{Translation}->{'Vote Time'} = '投票时间';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = '选择这个请求';
     $Self->{Translation}->{'See Details'} = '查看详情';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = '删除统计资料';
     $Self->{Translation}->{'Survey Stat Details'} = '调查统计详情';
     $Self->{Translation}->{'go back to stats overview'} = '返回统计概况';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = '上一个投票';
+    $Self->{Translation}->{'Next vote'} = '下一个投票';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = '调查信息';
@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = '是/否';
     $Self->{Translation}->{'Radio (List)'} = '单选（列表）';
     $Self->{Translation}->{'Checkbox (List)'} = '复选框（列表）';
-    $Self->{Translation}->{'Net Promoter Score'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = '净推荐值';
     $Self->{Translation}->{'Question Type'} = '问题类型';
     $Self->{Translation}->{'Complete'} = '完整';
     $Self->{Translation}->{'Incomplete'} = '不完整';
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = '你已经回答了这个调查。';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = '调查列表';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
@@ -169,22 +169,22 @@ sub Data {
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         '定义有权更改调查状态的组。 默认情况下，数组为空，所有组的服务器人员都可以更改调查状态。';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
-        '';
+        '定义调查请求是否只发送给真实客户。';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         '定义每30天发送给一个客户的最大调查数（ 0 代表没有最大数限制，将发送所有的调查请求）。';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         '定义一个工单关闭后触发发送一个调查的小时数（ 0 代表在工单关闭后立即发送调查请求）。注意：延迟发送的调查由OTRS守护程序（即先前激活的设置\'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\'）完成。';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
-        '';
+        '定义建立发送条件的下拉列表的列（0 => 不激活，1 => 激活）。';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         '调查详情窗口富文本查看的默认高度。';
-    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '定义可以删除统计数据的组（rw）。';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         '定义调查详情窗口富文本查看视图的默认高度。';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         '定义调查概览中显示的字段。这个选项不会影响字段的位置。';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
-        '';
+        '确定统计模块是否可以生成调查列表。';
     $Self->{Translation}->{'Edit survey general information.'} = '编辑调查一般信息。';
     $Self->{Translation}->{'Edit survey questions.'} = '编辑调查问题。';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -203,11 +203,12 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         '服务人员界面公共调查的前端模块注册。';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '如果匹配这个正则表达式，不会给客户发送调查。';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '调查概览简洁模式显示调查的页面参数。';
     $Self->{Translation}->{'Public Survey.'} = '公共调查。';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        '';
+        '超过配置的天数的调查结果将被删除。 注意：删除调查结果由先前激活的 \'Task###SurveyRequestsDelete\' 设置的OTRS守护程序完成。';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         '在服务人员界面调查详情窗口，在菜单中显示一个编辑调查的链接。';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -226,11 +227,9 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '调查不会发送给配置的邮件地址。';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         '调查的标识符，例如：Survey#、MySurvey#。默认为Survey#。';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         '如果一个工单已关闭就自动发送调查请求邮件给客户的工单事件模块。';
-    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '触发删除调查结果（包括投票数据和请求）。';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = '触发器发送延迟的调查请求。';
     $Self->{Translation}->{'Zoom into statistics details.'} = '进入调查统计详情。';
 

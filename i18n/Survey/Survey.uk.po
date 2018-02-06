@@ -1,13 +1,14 @@
 # 
 # Translators:
 # Alexander Korsikov <korsikov@rbcgrp.com>, 2015
+# Alexander Korsikov <korsikov@rbcgrp.com>, 2015
 # Vira Motorko <ato4ka@i.ua>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/otrs/OTRS/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,19 +42,19 @@ msgstr "Внутрішній опис"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Умови клієнта"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Будь ласка виберіть коректно клієнта щоб додати умову"
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Публічний ключ опитування"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Приклад опитування"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -61,7 +62,7 @@ msgstr "Редагувати загальну інформацію"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr "Редагуати запитання"
+msgstr "Редагувати запитання"
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
@@ -101,7 +102,7 @@ msgstr "Слід закрити це вікно після завершення 
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Закрити це вікно"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -145,26 +146,26 @@ msgstr "Відповідь"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Опція перегляду опитування"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "Пошук по атрибутах (різні)"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Час створення опитування"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Без обмеження"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Тільки опитування створені між"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -192,7 +193,7 @@ msgstr "Таблиця запитів"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Вибрати всі запити"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -204,7 +205,7 @@ msgstr "Час голосування"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Виберіть цей запит"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -212,7 +213,7 @@ msgstr "Переглянути деталі"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Видалити статистику"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -224,15 +225,15 @@ msgstr "повернутись до перегляду статистики"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Попередня оцінка"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Наступна оцінка"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
-msgstr "Інфориація опитування"
+msgstr "Інформація опитування"
 
 #. Template: AgentSurveyZoom
 msgid "Sent requests"
@@ -247,12 +248,8 @@ msgid "Survey Details"
 msgstr "Деталі опитування"
 
 #. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Число"
-
-#. Template: AgentSurveyZoom
 msgid "Ticket Services"
-msgstr "Сервіси заявкок"
+msgstr "Сервіси заявок"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
@@ -276,7 +273,7 @@ msgstr "Показати мої відповіді"
 
 #. Template: PublicSurvey
 msgid "These are your answers"
-msgstr "Вані відповілі"
+msgstr "Ваші відповілі"
 
 #. Template: PublicSurvey
 msgid "Survey Title"
@@ -316,7 +313,7 @@ msgstr "Так/Ні"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Radio (List)"
-msgstr "Рідіо (список)"
+msgstr "Радіо (список)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Checkbox (List)"
@@ -324,7 +321,7 @@ msgstr "Прапорці (список)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "Показник оцінки"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -360,7 +357,7 @@ msgstr "Опис опитування"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "answered"
-msgstr "відполи"
+msgstr "відповіли"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "not answered"
@@ -414,7 +411,7 @@ msgstr "Ви вже відповіли на всі запитання в опи�
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Перелік опитувань"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -466,11 +463,11 @@ msgstr "Визначає модуль перегляду, щоб показат�
 msgid ""
 "Defines groups which have a permission to change survey status. Array is "
 "empty by default and agents from all groups can change survey status."
-msgstr ""
+msgstr "Визначає групи які мають повноваження змінити стан опитування. Масив по замовчуванню є пустий і агенти з усіх груп можуть змінити статус опитування"
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "Визначає чи запитання опитування повинні бути надіслані клієнтам"
 
 #. SysConfig
 msgid ""
@@ -490,7 +487,7 @@ msgstr "Визначає значення затримки надсилання 
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "Визначає колонки для випадаючого списку для побудови умов (0/1 - неактивний/активний)"
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -498,7 +495,7 @@ msgstr "Визначає висоту Richtext views за замовчуванн
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "Задає групи (читання/запису) які можуть видалити статистику опитування"
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -512,19 +509,15 @@ msgstr "Визначає які колонки показувати в пере�
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
-
-#. SysConfig
-msgid "Dutch"
-msgstr ""
+msgstr "Визначає чи модуль статистики може генерувати листи опитування"
 
 #. SysConfig
 msgid "Edit survey general information."
-msgstr ""
+msgstr "Редагувати загальну інформацію опитування"
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "Редагувати запитання опитування"
 
 #. SysConfig
 msgid ""
@@ -568,6 +561,10 @@ msgid "If this regex matches, no customer survey will be sent."
 msgstr "Якщо регулярний вираз визначає, жодне опитування клієнту не буде відправлено"
 
 #. SysConfig
+msgid "Limit."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
@@ -582,7 +579,7 @@ msgid ""
 "Results older than the configured amount of days will be deleted. Note: "
 "delete results done by the OTRS Daemon, prior activation of "
 "'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "Результати, старші ніж визначена кількість днів будуть видалені. Замітка: налаштовується OTRS Daemon Task###SurveyRequestsDelete"
 
 #. SysConfig
 msgid ""
@@ -634,7 +631,7 @@ msgstr "Збільшити модуль опитування"
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr ""
+msgstr "Ліміт опитувань на сторінку для перегляду в режимі Small"
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -647,10 +644,6 @@ msgid ""
 msgstr "Ідетифікатор опитування. По замовчуванню Опитування#"
 
 #. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
-
-#. SysConfig
 msgid ""
 "Ticket event module to send automatically survey email requests to customers"
 " if a ticket is closed."
@@ -658,7 +651,7 @@ msgstr "Подія заявки, для автоматичної відправ�
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "Тригери видалення результатів (включаючи оцінки і запити)"
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
@@ -666,4 +659,4 @@ msgstr "Тригер відправки відкладених запитів о
 
 #. SysConfig
 msgid "Zoom into statistics details."
-msgstr ""
+msgstr "Перейти в деталі статистики"

@@ -2,7 +2,7 @@
 # Translators:
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
-# David B <link.bigpoint@outlook.com>, 2017
+# David B <link.bigpoint@outlook.com>, 2017-2018
 # Fernando Casal <fernando.casal@serviciomovil.com>, 2017
 # Iñaki Martínez, 2017
 # juanman <juanma@gnutn.org.ar>, 2016-2017
@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:35+0000\n"
-"PO-Revision-Date: 2017-11-15 13:42+0000\n"
-"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr "Crear Nueva Encuesta"
+msgstr "Crear nueva encuesta"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
@@ -70,7 +70,7 @@ msgstr "Editar Preguntas"
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
-msgstr "Usted está aquí."
+msgstr "Usted está aquí"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -293,7 +293,7 @@ msgstr "¡No tiene permiso para esta encuesta!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "No SurveyID is given!"
-msgstr "¡No se da ninguna identificación de la encuesta!"
+msgstr "¡No se da ninguna ID de la encuesta!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
@@ -565,6 +565,10 @@ msgid "If this regex matches, no customer survey will be sent."
 msgstr "Si esta expresión regular concuerda, no se enviará ninguna encuesta al cliente."
 
 #. SysConfig
+msgid "Limit."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Parameters for the pages (in which the surveys are shown) of the small "
 "survey overview."
@@ -642,10 +646,6 @@ msgid ""
 "The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
 "Survey#."
 msgstr "El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#."
-
-#. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr "Esta es una descripción para SurveyOverviewSmallPageShown en la encuesta."
 
 #. SysConfig
 msgid ""

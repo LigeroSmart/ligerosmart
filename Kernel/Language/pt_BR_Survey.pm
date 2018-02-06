@@ -25,7 +25,7 @@ sub Data {
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
     $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Example survey'} = 'Exemplo de pesquisa';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Editar Informações Gerais';
@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = 'Resposta Requerida';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'Quando você terminar de editar as questões da pesquisa, apenas feche a tela.';
-    $Self->{Translation}->{'Close this window'} = '';
+    $Self->{Translation}->{'Close this window'} = 'Fechar esta janela';
     $Self->{Translation}->{'Edit Question'} = 'Editar Pergunta';
     $Self->{Translation}->{'go back to questions'} = 'voltar às perguntas';
     $Self->{Translation}->{'Question:'} = 'Questão:';
@@ -60,7 +60,7 @@ sub Data {
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
         '';
     $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'No restriction'} = 'Sem restrições';
     $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Qtd. máx. de pesquisas exibidas por página';
 
@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Registro de módulo de interface para o objeto PublicSurvey na área de pesquisa pública.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Se esta regex for encontrada, nenhuma pesquisa será enviado para o cliente';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parâmetros para as páginas (nas quais as pesquisas são mostradas) da visão geral de pesquisa pequena.';
     $Self->{Translation}->{'Public Survey.'} = 'Pesquisa Pública';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'As pesquisas não será enviadas para os endereços de e-mail configurados.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de chamado para enviar requisições de pesquisa via e-mail automaticamente para clientes se um chamado for fechado.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

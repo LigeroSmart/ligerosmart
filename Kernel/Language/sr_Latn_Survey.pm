@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Registracija "Frontend" modula za javne anketne objekte ankete u prostoru javnih anketa.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Ako se ovaj izraz poklapa, anketa neće biti poslata korisniku.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parametri stranica (na kojima su ankete vidljive) na malom prikazu pregleda anketa.';
     $Self->{Translation}->{'Public Survey.'} = 'Javna anketa.';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Anketa neće biti poslata na podešenu imejl adresu.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Identifikator za anketu, npr Survey#, MySurvey#. Podrazumevano je Survey#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Modul događaja na tiketu za automatsko slanje imejla o istraživanju korisnicima ako je tiket zatvoren.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';

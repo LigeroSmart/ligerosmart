@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-25 10:40+0000\n"
-"PO-Revision-Date: 2017-09-25 10:40+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-02-06 16:28+0000\n"
+"PO-Revision-Date: 2018-02-06 16:28+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -246,10 +246,6 @@ msgstr "Полученные опросы"
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
 msgstr "Информаия по опросу"
-
-#. Template: AgentSurveyZoom
-msgid "Number"
-msgstr "Число"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -516,10 +512,6 @@ msgid "Determines if the statistics module may generate survey lists."
 msgstr ""
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
 msgid "Edit survey general information."
 msgstr ""
 
@@ -567,6 +559,10 @@ msgstr "Frontend module registration для объекта Публичного 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
 msgstr "Если это регулярное выражение верно, опрос клиенту не посылается."
+
+#. SysConfig
+msgid "Limit."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -646,10 +642,6 @@ msgid ""
 "The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
 "Survey#."
 msgstr "Обозначение для идентификации опроса, например, Опрос№, Survey#, MySurvey#. По умолчанию Survey#."
-
-#. SysConfig
-msgid "This is a description for SurveyOverviewSmallPageShown on Survey."
-msgstr ""
 
 #. SysConfig
 msgid ""

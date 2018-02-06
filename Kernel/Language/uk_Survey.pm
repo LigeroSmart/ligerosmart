@@ -22,16 +22,16 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Тіло інформування';
     $Self->{Translation}->{'Ticket Types'} = 'Типи заявок';
     $Self->{Translation}->{'Internal Description'} = 'Внутрішній опис';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Customer conditions'} = 'Умови клієнта';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'Будь ласка виберіть коректно клієнта щоб додати умову';
+    $Self->{Translation}->{'Public survey key'} = 'Публічний ключ опитування';
+    $Self->{Translation}->{'Example survey'} = 'Приклад опитування';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Редагувати загальну інформацію';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Edit Questions'} = 'Редагуати запитання';
+    $Self->{Translation}->{'Edit Questions'} = 'Редагувати запитання';
     $Self->{Translation}->{'You are here'} = 'Ви тут';
     $Self->{Translation}->{'Survey Questions'} = 'Запитання опитування';
     $Self->{Translation}->{'Add Question'} = 'Додати запитання';
@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Answer Required'} = 'Необхідна відповідь';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
         'Слід закрити це вікно після завершення опитування';
-    $Self->{Translation}->{'Close this window'} = '';
+    $Self->{Translation}->{'Close this window'} = 'Закрити це вікно';
     $Self->{Translation}->{'Edit Question'} = 'Редагувати запитання';
     $Self->{Translation}->{'go back to questions'} = 'повернутись до запитань';
     $Self->{Translation}->{'Question:'} = 'Запитання';
@@ -56,12 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Відповідь';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Опція перегляду опитування';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
-        '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+        'Пошук по атрибутах (різні)';
+    $Self->{Translation}->{'Survey Create Time'} = 'Час створення опитування';
+    $Self->{Translation}->{'No restriction'} = 'Без обмеження';
+    $Self->{Translation}->{'Only surveys created between'} = 'Тільки опитування створені між';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Максимальна кількість опитувань на сторінку';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,23 +72,23 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Огляд статистики';
     $Self->{Translation}->{'Requests Table'} = 'Таблиця запитів';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Вибрати всі запити';
     $Self->{Translation}->{'Send Time'} = 'Час надсилання';
     $Self->{Translation}->{'Vote Time'} = 'Час голосування';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Виберіть цей запит';
     $Self->{Translation}->{'See Details'} = 'Переглянути деталі';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = 'Видалити статистику';
     $Self->{Translation}->{'Survey Stat Details'} = 'Деталі статистики опитуванння';
     $Self->{Translation}->{'go back to stats overview'} = 'повернутись до перегляду статистики';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = 'Попередня оцінка';
+    $Self->{Translation}->{'Next vote'} = 'Наступна оцінка';
 
     # Template: AgentSurveyZoom
-    $Self->{Translation}->{'Survey Information'} = 'Інфориація опитування';
+    $Self->{Translation}->{'Survey Information'} = 'Інформація опитування';
     $Self->{Translation}->{'Sent requests'} = 'Надіслані запити';
     $Self->{Translation}->{'Received surveys'} = 'Отримані опитування';
     $Self->{Translation}->{'Survey Details'} = 'Деталі опитування';
-    $Self->{Translation}->{'Ticket Services'} = 'Сервіси заявкок';
+    $Self->{Translation}->{'Ticket Services'} = 'Сервіси заявок';
     $Self->{Translation}->{'Survey Results Graph'} = 'Графік результатів опитування';
     $Self->{Translation}->{'No stat results.'} = 'Немає статистики';
 
@@ -96,7 +96,7 @@ sub Data {
     $Self->{Translation}->{'Survey'} = 'Опитування';
     $Self->{Translation}->{'Please answer these questions'} = 'Будь ласка, дайте відповідь на наступні запитання';
     $Self->{Translation}->{'Show my answers'} = 'Показати мої відповіді';
-    $Self->{Translation}->{'These are your answers'} = 'Вані відповілі';
+    $Self->{Translation}->{'These are your answers'} = 'Ваші відповілі';
     $Self->{Translation}->{'Survey Title'} = 'Заголовок опитування';
 
     # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
@@ -112,9 +112,9 @@ sub Data {
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = 'Ви не маєте повноважень на це опитування, запитання чи відповідь';
     $Self->{Translation}->{'Survey Edit Questions'} = 'Редагувати запитання опитування';
     $Self->{Translation}->{'Yes/No'} = 'Так/Ні';
-    $Self->{Translation}->{'Radio (List)'} = 'Рідіо (список)';
+    $Self->{Translation}->{'Radio (List)'} = 'Радіо (список)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Прапорці (список)';
-    $Self->{Translation}->{'Net Promoter Score'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = 'Показник оцінки';
     $Self->{Translation}->{'Question Type'} = 'Тип запитання';
     $Self->{Translation}->{'Complete'} = 'Завершено';
     $Self->{Translation}->{'Incomplete'} = 'Не завершено';
@@ -125,7 +125,7 @@ sub Data {
     $Self->{Translation}->{'- No queue selected -'} = '- Не вибрано чергу -';
     $Self->{Translation}->{'New Status'} = 'Новий статус';
     $Self->{Translation}->{'Survey Description'} = 'Опис опитування';
-    $Self->{Translation}->{'answered'} = 'відполи';
+    $Self->{Translation}->{'answered'} = 'відповіли';
     $Self->{Translation}->{'not answered'} = 'не відповіли';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = 'Ви вже відповіли на всі запитання в опитуванні';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = 'Перелік опитувань';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
@@ -167,26 +167,26 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Визначає модуль перегляду, щоб показати короткий огляд списку з опитуваннями';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
-        '';
+        'Визначає групи які мають повноваження змінити стан опитування. Масив по замовчуванню є пустий і агенти з усіх груп можуть змінити статус опитування';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
-        '';
+        'Визначає чи запитання опитування повинні бути надіслані клієнтам';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Визначає таксимальне значення кількості опитувань, що можуть бути наіслані користувачу протягом 30 днів (0-всі)';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Визначає значення затримки надсилання опитування після закриття заявки в годинах (0-одразу)';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
-        '';
+        'Визначає колонки для випадаючого списку для побудови умов (0/1 - неактивний/активний)';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Визначає висоту Richtext views за замовчуванням для збільшених елементів опитування';
-    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = 'Задає групи (читання/запису) які можуть видалити статистику опитування';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'Визначає макс. висоту Richtext views для збільшених елементів опитування';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Визначає які колонки показувати в перегляді опитування. Не впливає на їх розташування';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
-        '';
-    $Self->{Translation}->{'Edit survey general information.'} = '';
-    $Self->{Translation}->{'Edit survey questions.'} = '';
+        'Визначає чи модуль статистики може генерувати листи опитування';
+    $Self->{Translation}->{'Edit survey general information.'} = 'Редагувати загальну інформацію опитування';
+    $Self->{Translation}->{'Edit survey questions.'} = 'Редагувати запитання опитування';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
         'Ввімкнути/вимкнути відображення дати голосування в публічному інтерфейсі(показується клієнту при повторній спробі пройти опитування)';
     $Self->{Translation}->{'Enable or disable the send condition check for the service.'} = 'Ввімкнути/вимкнути перевірку умови відправки для сервісу';
@@ -203,11 +203,12 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Frontend модуль реєстрації, що додає Публічне опитування в публічний інтерфейс';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Якщо регулярний вираз визначає, жодне опитування клієнту не буде відправлено';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметри сторінки (в яких показуються опитування) в короткому представленні';
     $Self->{Translation}->{'Public Survey.'} = 'Публічне опитування';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        '';
+        'Результати, старші ніж визначена кількість днів будуть видалені. Замітка: налаштовується OTRS Daemon Task###SurveyRequestsDelete';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Показує лінк в меню для редагування опитування в розширеному перегляді агента';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -222,17 +223,15 @@ sub Data {
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ліміт перегляду опитувань Коротко';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Статистика модулю опитування';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Збільшити модуль опитування';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = '';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Ліміт опитувань на сторінку для перегляду в режимі Small';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Опитування не будуть надсилатись на вказані email';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Ідетифікатор опитування. По замовчуванню Опитування#';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Подія заявки, для автоматичної відправки опитування клієнту якщо заявка закрита';
-    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = 'Тригери видалення результатів (включаючи оцінки і запити)';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Тригер відправки відкладених запитів опитування';
-    $Self->{Translation}->{'Zoom into statistics details.'} = '';
+    $Self->{Translation}->{'Zoom into statistics details.'} = 'Перейти в деталі статистики';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

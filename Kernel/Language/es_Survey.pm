@@ -16,7 +16,7 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurveyAdd
-    $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
+    $Self->{Translation}->{'Create New Survey'} = 'Crear nueva encuesta';
     $Self->{Translation}->{'Introduction'} = 'Introducción';
     $Self->{Translation}->{'Survey Introduction'} = 'Introducción de la Encuesta';
     $Self->{Translation}->{'Notification Body'} = 'Cuerpo de Notificación';
@@ -32,7 +32,7 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Editar Preguntas';
-    $Self->{Translation}->{'You are here'} = 'Usted está aquí.';
+    $Self->{Translation}->{'You are here'} = 'Usted está aquí';
     $Self->{Translation}->{'Survey Questions'} = 'Preguntas de la Encuesta';
     $Self->{Translation}->{'Add Question'} = 'Agregar Pregunta';
     $Self->{Translation}->{'Type the question'} = 'Escriba la pregunta';
@@ -104,7 +104,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '¡No tiene permiso para esta encuesta!';
-    $Self->{Translation}->{'No SurveyID is given!'} = '¡No se da ninguna identificación de la encuesta!';
+    $Self->{Translation}->{'No SurveyID is given!'} = '¡No se da ninguna ID de la encuesta!';
     $Self->{Translation}->{'Survey Edit'} = 'Editar Encuesta';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
@@ -203,6 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Registro de módulo frontend PublicSurvey en la interface pública.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Si esta expresión regular concuerda, no se enviará ninguna encuesta al cliente.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parametros para las páginas (en que las encuestas son mostradas) de la vista de resumen pequeña.';
     $Self->{Translation}->{'Public Survey.'} = 'Encuesta Pública.';
@@ -226,8 +227,6 @@ sub Data {
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Las encuestas no de mandarán a las direcciones de correo electrónico aquí configuradas.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'El identificador para una encuesta, ejemplo Survey#, MySurvey#. Por defecto es Survey#.';
-    $Self->{Translation}->{'This is a description for SurveyOverviewSmallPageShown on Survey.'} =
-        'Esta es una descripción para SurveyOverviewSmallPageShown en la encuesta.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de ticket que manda correos electrónicos de encuestas hacia los clientes si un ticket es cerrado.';
     $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = 'Desencadenar resultados de eliminación (incluidos datos y solicitudes de voto).';
