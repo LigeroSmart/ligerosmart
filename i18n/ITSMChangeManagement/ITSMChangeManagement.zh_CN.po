@@ -1,12 +1,12 @@
 # 
 # Translators:
 # 汇民 王 <whuim@163.com>, 2017
-# 汇民 王 <whuim@qq.com>, 2017
+# 汇民 王 <whuim@qq.com>, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-16 14:26+0000\n"
-"PO-Revision-Date: 2017-11-16 14:27+0000\n"
+"POT-Creation-Date: 2018-02-06 19:47+0000\n"
+"PO-Revision-Date: 2018-02-06 19:48+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category ↔ Impact ↔ Priority"
-msgstr ""
+msgstr "风险类别 ↔ 影响 ↔ 优先级"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category ↔ Impact."
-msgstr ""
+msgstr "管理\"风险类别 ↔ 影响\"组合决定的优先级结果。"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -1127,183 +1127,183 @@ msgstr "我的工作指令"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "%s: %s"
-msgstr ""
+msgstr "%s: %s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Action (ID=%s)"
-msgstr ""
+msgstr "新建操作（ID=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Action (ID=%s) deleted"
-msgstr ""
+msgstr "操作（ID=%s）已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "All Actions of Condition (ID=%s) deleted"
-msgstr ""
+msgstr "条件（ID=%s）的所有操作已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Action (ID=%s) executed: %s"
-msgstr ""
+msgstr "操作（ID=%s）已执行：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "%s (Action ID=%s): (new=%s, old=%s)"
-msgstr ""
+msgstr "%s（操作ID=%s）：（新=%s，旧=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Change (ID=%s) reached actual end time."
-msgstr ""
+msgstr "变更（ID=%s）已到达实际结束时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Change (ID=%s) reached actual start time."
-msgstr ""
+msgstr "变更（ID=%s）已到达实际开始时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Change (ID=%s)"
-msgstr ""
+msgstr "新建变更（ID=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Attachment: %s"
-msgstr ""
+msgstr "新的附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Deleted Attachment %s"
-msgstr ""
+msgstr "已删除的附件%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "CAB Deleted %s"
-msgstr ""
+msgstr "CAB删除的%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "%s: (new=%s, old=%s)"
-msgstr ""
+msgstr "%s：（新=%s，旧=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Link to %s (ID=%s) added"
-msgstr ""
+msgstr "到%s的链接（ID=%s）已添加"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Link to %s (ID=%s) deleted"
-msgstr ""
+msgstr "到%s的链接（ID=%s）已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Notification sent to %s (Event: %s)"
-msgstr ""
+msgstr "通知已发送给 %s（事件：%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Change (ID=%s) reached planned end time."
-msgstr ""
+msgstr "变更（ID=%s）已到达计划结束时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Change (ID=%s) reached planned start time."
-msgstr ""
+msgstr "变更（ID=%s）已到达计划开始时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Change (ID=%s) reached requested time."
-msgstr ""
+msgstr "变更（ID=%s）已到达请求的时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Condition (ID=%s)"
-msgstr ""
+msgstr "新建条件（ID=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Condition (ID=%s) deleted"
-msgstr ""
+msgstr "条件（ID=%s）已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "All Conditions of Change (ID=%s) deleted"
-msgstr ""
+msgstr "变更（ID=%s）的所有条件已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "%s (Condition ID=%s): (new=%s, old=%s)"
-msgstr ""
+msgstr "%s（条件ID=%s）：（新=%s，旧=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Expression (ID=%s)"
-msgstr ""
+msgstr "新建表达式（ID=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Expression (ID=%s) deleted"
-msgstr ""
+msgstr "表达式（ID=%s）已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "All Expressions of Condition (ID=%s) deleted"
-msgstr ""
+msgstr "条件（ID=%s）的所有表达式已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "%s (Expression ID=%s): (new=%s, old=%s)"
-msgstr ""
+msgstr "%s（操表达式ID=%s）：（新=%s，旧=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Workorder (ID=%s) reached actual end time."
-msgstr ""
+msgstr "工作指令（ID=%s）已到达实际结束时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Workorder (ID=%s) reached actual start time."
-msgstr ""
+msgstr "工作指令（ID=%s）已到达实际开始时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Workorder (ID=%s)"
-msgstr ""
+msgstr "新建工作指令（ID=%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Attachment for WorkOrder: %s"
-msgstr ""
+msgstr "工作指令新增附件：%s "
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) New Attachment for WorkOrder: %s"
-msgstr ""
+msgstr "（ID=%s）工作指令新增附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Deleted Attachment from WorkOrder: %s"
-msgstr ""
+msgstr "工作指令已删除的附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) Deleted Attachment from WorkOrder: %s"
-msgstr ""
+msgstr "（ID=%s）工作指令已删除附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "New Report Attachment for WorkOrder: %s"
-msgstr ""
+msgstr "工作指令新增报告附件：%s "
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) New Report Attachment for WorkOrder: %s"
-msgstr ""
+msgstr "（ID=%s）工作指令新增报告附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Deleted Report Attachment from WorkOrder: %s"
-msgstr ""
+msgstr "工作指令已删除的报告附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) Deleted Report Attachment from WorkOrder: %s"
-msgstr ""
+msgstr "（ID=%s）工作指令已删除的报告附件：%s"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Workorder (ID=%s) deleted"
-msgstr ""
+msgstr "工作指令（ID=%s）已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) Link to %s (ID=%s) added"
-msgstr ""
+msgstr "（ID=%s）到%s的链接（ID=%s）已添加"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) Link to %s (ID=%s) deleted"
-msgstr ""
+msgstr "（ID=%s）到%s的链接（ID=%s）已删除"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) Notification sent to %s (Event: %s)"
-msgstr ""
+msgstr "（ID=%s）通知已发送给 %s（事件：%s）"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Workorder (ID=%s) reached planned end time."
-msgstr ""
+msgstr "工作指令（ID=%s）已到达计划结束时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "Workorder (ID=%s) reached planned start time."
-msgstr ""
+msgstr "工作指令（ID=%s）已到达计划开始时间。"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) %s: (new=%s, old=%s)"
-msgstr ""
+msgstr "（ID=%s）%s：（新=%s，旧=%s）"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
@@ -1446,6 +1446,14 @@ msgid ""
 msgstr "工作指令状态列表，工作指令的ActualStartTime（实际开始时间）将被设置（如果这时候还没有设置的话）。"
 
 #. SysConfig
+msgid "Actual end time"
+msgstr "实际结束时间"
+
+#. SysConfig
+msgid "Actual start time"
+msgstr "实际开始时间"
+
+#. SysConfig
 msgid "Add Workorder"
 msgstr "添加工作指令"
 
@@ -1582,8 +1590,24 @@ msgid "Change limit per page for Change Overview \"Small\"."
 msgstr "变更概览简洁模式每页变更数限制。"
 
 #. SysConfig
+msgid "Change number"
+msgstr "变更编号"
+
+#. SysConfig
 msgid "Change search backend router of the agent interface."
 msgstr "服务人员界面变更搜索后端路由"
+
+#. SysConfig
+msgid "Change state"
+msgstr "变更状态"
+
+#. SysConfig
+msgid "Change time"
+msgstr "变更时间"
+
+#. SysConfig
+msgid "Change title"
+msgstr "变更标题"
 
 #. SysConfig
 msgid "Condition Edit"
@@ -1624,6 +1648,10 @@ msgstr "从这个工单创建变更。"
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
 msgstr "创建和管理ITSM变更管理通知。"
+
+#. SysConfig
+msgid "Create and manage change notifications."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1703,8 +1731,10 @@ msgid ""
 msgstr "定义变更搜索和工作指令搜索功能是否能够使用镜像数据库。"
 
 #. SysConfig
-msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "定义在编辑变更时是否能够设置变更状态。"
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr "定义服务人员界面在变更编辑屏幕能否设置变更状态。"
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -1896,148 +1926,150 @@ msgstr "定义一个变更影响的默认值。"
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
-"AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
-"a type is not defined, the field will not be shown."
-msgstr "定义变更属性比较值字段（用于AgentITSMChangeConditionEdit条件编辑）的类型，有效值是：Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被显示出来。"
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr "定义服务人员界面变更条件编辑屏幕变更属性比较值字段的类型，有效值是：Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被显示出来。"
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
-"in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
-"If a type is not defined, the field will not be shown."
-msgstr "定义工作指令属性比较值字段（用于AgentITSMChangeConditionEdit变更条件编辑）的类型，有效值是：Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被显示出来。"
+"in the change condition edit screen of the agent interface. Valid values are"
+" Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr "定义服务人员界面工作指令条件编辑屏幕变更属性比较值字段的类型，有效值是：Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被显示出来。"
 
 #. SysConfig
 msgid ""
-"Defines the object attributes that are selectable for change objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的变更对象的属性。"
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中变更对象可选择的对象属性。"
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的工作指令对象的属性。"
+"the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面工作指令条件编辑屏幕中工作指令对象可选择的对象属性。"
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 AccountedTime（记帐时间）运算符。"
+" the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中占用时间属性可选择的运算符。"
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ActualEndTime（实际结束时间）运算符。"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ActualStartTime（实际开始时间）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 CategoryID（风险类别ID）运算符。"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ChangeBuilderID（变更创建人ID）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ChangeManagerID（变更经理ID）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
-" AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ChangeStateID（变更状态ID）运算符。"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ChangeTitle（变更标题）运算符。"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 DynamicField（动态字段）运算符。"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 ImpactID（影响ID）运算符。"
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
-" AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 PlannedEffort（计划工作量）运算符。"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 PlannedEndTime（计划结束时间）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
-" in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 PlannedStartTime（计划开始时间）运算符。"
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
-"AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 PriorityID（优先级ID）运算符。"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 RequestedTime（请求时间）运算符。"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 WorkOrderAgentID（工作指令服务人员ID）运算符。"
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 WorkOrderNumber（工作指令编号）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 WorkOrderStateID（工作指令状态ID）运算符。"
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 WorkOrderTitle（工作指令标题）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in AgentITSMChangeConditionEdit."
-msgstr "定义在AgentITSMChangeConditionEdit（变更条件编辑）时可选择的 WorkOrderTypeID（工作指令类型ID）运算符。"
+"in the change condition edit screen of the agent interface."
+msgstr "定义服务人员界面变更条件编辑屏幕中工作指令类型ID属性可选择的运算符。"
 
 #. SysConfig
 msgid ""
@@ -2119,8 +2151,8 @@ msgid ""
 msgstr "定义在模板概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid "Defines the signals for each ITSMChange state."
-msgstr "定义变更状态的标志信号。"
+msgid "Defines the signals for each ITSM change state."
+msgstr "定义每个变更状态的标志信号。"
 
 #. SysConfig
 msgid ""
@@ -2414,6 +2446,14 @@ msgid "Lookup of agents, used for autocompletion."
 msgstr "查找服务人员，用于自动补齐功能。"
 
 #. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2511,6 +2551,14 @@ msgid ""
 msgstr "为每个配置的WEB服务的每个事件执行配置好的操作（以调用程序角色）。"
 
 #. SysConfig
+msgid "Planned end time"
+msgstr "计划结束时间"
+
+#. SysConfig
+msgid "Planned start time"
+msgstr "计划开始时间"
+
+#. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
@@ -2537,6 +2585,10 @@ msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
 msgstr "变更的计划服务可用性（PSA）。已批准的变更和它们的服务的概览。"
+
+#. SysConfig
+msgid "Requested time"
+msgstr "请求时间"
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2752,15 +2804,15 @@ msgstr "为工作指令指派服务人员。"
 
 #. SysConfig
 msgid ""
-"Set the default height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "在“AgentITSMChangeZoom（变更详情窗口）”和“AgentITSMWorkOrderZoom（工作指令详情窗口）”中，设置内置HTML字段的默认高度（单位：像素）。"
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr "设置服务人员界面变更详情屏幕和工作指令详情屏幕中内联HTML字段的默认高度（单位：像素）。"
 
 #. SysConfig
 msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "在“AgentITSMChangeZoom（变更详情窗口）”和“AgentITSMWorkOrderZoom（工作指令详情窗口）”中，设置内置HTML字段的最大高度（单位：像素）。"
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr "设置服务人员界面变更详情屏幕和工作指令详情屏幕中内联HTML字段的最大高度（单位：像素）。"
 
 #. SysConfig
 msgid ""
@@ -2786,10 +2838,10 @@ msgstr "设置工作指令的状态模式转换。"
 
 #. SysConfig
 msgid ""
-"Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
-"the following workorders should also be moved if a workorder is modified and"
-" the planned end time has changed."
-msgstr "在编辑工作指令窗口显示一个复选框，定义如果一个工作指令被修改且计划结束时间被修改时是否后面的工作指令也跟着被移动时间。"
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
+msgstr "在服务人员界面编辑工作指令屏幕显示一个复选框，用于确定当一个工作指令被修改且计划结束时间变更时，是否将后面的工作指令也随之移动时间。"
 
 #. SysConfig
 msgid ""
@@ -2946,6 +2998,10 @@ msgstr "接手这个工作指令。"
 #. SysConfig
 msgid "Template Overview"
 msgstr "模板概览"
+
+#. SysConfig
+msgid "Template type"
+msgstr "模板类型"
 
 #. SysConfig
 msgid "Template."

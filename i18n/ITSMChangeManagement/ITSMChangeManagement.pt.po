@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-16 14:26+0000\n"
-"PO-Revision-Date: 2017-11-27 00:50+0000\n"
-"Last-Translator: Joao Ferro <fmthard@gmail.com>\n"
+"POT-Creation-Date: 2018-02-06 19:47+0000\n"
+"PO-Revision-Date: 2018-02-06 19:48+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1445,6 +1445,14 @@ msgid ""
 msgstr "Lista de estados de Ordem de Serviço, em que a hora de início real de uma Ordem de Serviço será definida se estiver vazia."
 
 #. SysConfig
+msgid "Actual end time"
+msgstr ""
+
+#. SysConfig
+msgid "Actual start time"
+msgstr ""
+
+#. SysConfig
 msgid "Add Workorder"
 msgstr "Adicionar Ordem"
 
@@ -1581,8 +1589,24 @@ msgid "Change limit per page for Change Overview \"Small\"."
 msgstr ""
 
 #. SysConfig
+msgid "Change number"
+msgstr ""
+
+#. SysConfig
 msgid "Change search backend router of the agent interface."
 msgstr "Alterar pesquisa apoiada do router do agente de interface"
+
+#. SysConfig
+msgid "Change state"
+msgstr ""
+
+#. SysConfig
+msgid "Change time"
+msgstr ""
+
+#. SysConfig
+msgid "Change title"
+msgstr ""
 
 #. SysConfig
 msgid "Condition Edit"
@@ -1622,6 +1646,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage change notifications."
 msgstr ""
 
 #. SysConfig
@@ -1702,8 +1730,10 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "Define se o estado de Alteração pode ser definida em agenteITSMEditarAlteração."
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -1895,148 +1925,150 @@ msgstr "Define o valor por omissão para o Impacto de uma alteração."
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
-"AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
-"a type is not defined, the field will not be shown."
-msgstr "Define o tipo de campo para comparar os campos de valor para o agente de Alteração, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido."
-
-#. SysConfig
-msgid ""
-"Defines the field type of CompareValue fields for workorder attributes used "
-"in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
-"If a type is not defined, the field will not be shown."
-msgstr "Define o tipo de campo para comparar os campos de valor para a Ordem de Serviço, atributos em ITSM Editar Condição de Alteração. Os valores válidos são de Seleção, texto e data. Se nenhum tipo for definido, o campo não é exibido."
-
-#. SysConfig
-msgid ""
-"Defines the object attributes that are selectable for change objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "Define os atributos de objeto que são selecionáveis para objetos de Alteração em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the object attributes that are selectable for workorder objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "Define os atributos de objeto que são selecionáveis para objetos de ordem de serviço em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute AccountedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Tempo Contabilizados em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ActualEndTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora de fim real em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ActualStartTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora de início real em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute CategoryID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Categoria ID em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar Construtor ID em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeManagerID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar gestor ID em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeStateID in"
-" AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar Estado ID em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeTitle in "
-"AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Alterar Título ID em Editar a Condição de Alteração do ITSM."
-
-#. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute DynamicField in "
-"AgentITSMChangeConditionEdit."
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Impacto ID em Editar a Condição de Alteração do ITSM."
+"Defines the field type of CompareValue fields for workorder attributes used "
+"in the change condition edit screen of the agent interface. Valid values are"
+" Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the object attributes that are selectable for workorder objects in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute AccountedTime in"
+" the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ActualEndTime in"
+" the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ActualStartTime "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute CategoryID in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeBuilderID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeManagerID "
+"in the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeStateID in"
+" the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeTitle in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute DynamicField in "
+"the change condition edit screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
-" AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Esforço planeado em Editar a Condição de Alteração do ITSM."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora Final Planejada em Editar a Condição de Alteração do ITSM."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
-" in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Hora Ínicio Planejada em Editar a Condição de Alteração do ITSM."
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Prioridade ID em Editar a Condição de Alteração do ITSM."
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Tempo Requerido em Editar a Condição de Alteração do ITSM."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Ordem de Serviço agente ID em Editar a Condição de Alteração do ITSM."
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Número Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Estado ID Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Título Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Define os operadores que são selecionáveis para o atributo Tipo ID Ordem de Serviço em Editar a Condição de Alteração do ITSM."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2118,8 +2150,8 @@ msgid ""
 msgstr "Define as colunas visualizadas na vista geral do modelo. Esta opção não tem efeito sobre a posição da coluna."
 
 #. SysConfig
-msgid "Defines the signals for each ITSMChange state."
-msgstr "Define os sinais para cada estado Alteração ITSM."
+msgid "Defines the signals for each ITSM change state."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2413,6 +2445,14 @@ msgid "Lookup of agents, used for autocompletion."
 msgstr ""
 
 #. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2510,6 +2550,14 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Planned end time"
+msgstr ""
+
+#. SysConfig
+msgid "Planned start time"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
@@ -2535,6 +2583,10 @@ msgstr ""
 msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
+msgstr ""
+
+#. SysConfig
+msgid "Requested time"
 msgstr ""
 
 #. SysConfig
@@ -2751,14 +2803,14 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Set the default height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2785,9 +2837,9 @@ msgstr "Configura a máquina de estado para as ordens de serviço."
 
 #. SysConfig
 msgid ""
-"Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
-"the following workorders should also be moved if a workorder is modified and"
-" the planned end time has changed."
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
 msgstr ""
 
 #. SysConfig
@@ -2945,6 +2997,10 @@ msgstr ""
 #. SysConfig
 msgid "Template Overview"
 msgstr "Cista de Modelos"
+
+#. SysConfig
+msgid "Template type"
+msgstr ""
 
 #. SysConfig
 msgid "Template."

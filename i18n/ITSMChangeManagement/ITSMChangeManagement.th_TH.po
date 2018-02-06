@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-16 14:26+0000\n"
-"PO-Revision-Date: 2017-11-16 14:27+0000\n"
+"POT-Creation-Date: 2018-02-06 19:47+0000\n"
+"PO-Revision-Date: 2018-02-06 19:48+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
@@ -1445,6 +1445,14 @@ msgid ""
 msgstr "รายการสถานภาพของใบสั่งงานที่ ActualStartTime ของ workorder จะถูกตั้งค่าถ้าหากจุดนี้เป็นที่ว่างเปล่า"
 
 #. SysConfig
+msgid "Actual end time"
+msgstr ""
+
+#. SysConfig
+msgid "Actual start time"
+msgstr ""
+
+#. SysConfig
 msgid "Add Workorder"
 msgstr "เพิ่มใบสั่งงาน"
 
@@ -1581,8 +1589,24 @@ msgid "Change limit per page for Change Overview \"Small\"."
 msgstr ""
 
 #. SysConfig
+msgid "Change number"
+msgstr ""
+
+#. SysConfig
 msgid "Change search backend router of the agent interface."
 msgstr "เปลี่ยนการค้นหา  backend router ของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid "Change state"
+msgstr ""
+
+#. SysConfig
+msgid "Change time"
+msgstr ""
+
+#. SysConfig
+msgid "Change title"
+msgstr ""
 
 #. SysConfig
 msgid "Condition Edit"
@@ -1622,6 +1646,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
+msgstr ""
+
+#. SysConfig
+msgid "Create and manage change notifications."
 msgstr ""
 
 #. SysConfig
@@ -1702,8 +1730,10 @@ msgid ""
 msgstr "กำหนดหากการค้นหาการเปลี่ยนแปลงและฟังก์ชั่นการค้นหา workorder สามารถใช้ฐานข้อมูลสะท้อนกลับ"
 
 #. SysConfig
-msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "กำหนดถ้าหาก the change state สามารถบันทึกใน AgentITSMChangeEdit."
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -1895,148 +1925,150 @@ msgstr "กำหนดประเภทเริ่มต้นสำหรั
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
-"AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
-"a type is not defined, the field will not be shown."
-msgstr "กำหนดชนิดของฟิลด์ของช่องข้อมูล CompareValue สำหรับแอตทริบิวต์การเปลี่ยนแปลงที่จะใช้ใน AgentITSMChangeConditionEdit ค่าที่ถูกต้องคือการเลือก ข้อความและวันที่ ถ้าไม่ได้กำหนดชนิด ฟิลด์จะไม่ถูกแสดง"
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
-"in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
-"If a type is not defined, the field will not be shown."
-msgstr "กำหนดชนิดของฟิลด์ของช่องข้อมูล CompareValue สำหรับแอตทริบิวต์ใบสั่งงานที่จะใช้ใน AgentITSMChangeConditionEdit ค่าที่ถูกต้องคือการเลือก ข้อความและวันที่ ถ้าไม่ได้กำหนดชนิด ฟิลด์จะไม่ถูกแสดง"
+"in the change condition edit screen of the agent interface. Valid values are"
+" Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the object attributes that are selectable for change objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดคุณลักษณะของออบเจคที่สามารถเลือกได้สำหรับออบเจคการเปลี่ยนแปลงใน AgentITSMChangeConditionEdit"
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดคุณลักษณะของออบเจคที่สามารถเลือกได้สำหรับออบเจคใบสั่งงานใน AgentITSMChangeConditionEdit"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ AccountedTime ใน AgentITSMChangeConditionEdit"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ActualEndTime ใน AgentITSMChangeConditionEdit"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ActualStartTime ใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ CategoryID  ใน AgentITSMChangeConditionEdit"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeBuilderID ใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeManagerID ใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
-" AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeStateID ใน AgentITSMChangeConditionEdit"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ChangeTitle ใน AgentITSMChangeConditionEdit"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ DynamicField ใน AgentITSMChangeConditionEdit"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ ImpactID ใน AgentITSMChangeConditionEdit"
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
-" AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PlannedEffort ใน AgentITSMChangeConditionEdit"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PlannedEndTime ใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
-" in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PlannedStartTime ใน AgentITSMChangeConditionEdit"
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
-"AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ PriorityID ใน AgentITSMChangeConditionEdit"
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ RequestedTime ใน AgentITSMChangeConditionEdit"
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderAgentID ใน AgentITSMChangeConditionEdit"
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderNumberใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderStateID ใน AgentITSMChangeConditionEdit"
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderTitle ใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in AgentITSMChangeConditionEdit."
-msgstr "กำหนดตัวดำเนินการที่สามารถเลือกได้สำหรับแอตทริบิวต์ WorkOrderTypeID ใน AgentITSMChangeConditionEdit"
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2118,8 +2150,8 @@ msgid ""
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมรูแปบบ ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the signals for each ITSMChange state."
-msgstr "กำหนดสัญญาณสำหรับแต่ละสถานภาพของITSMChange"
+msgid "Defines the signals for each ITSM change state."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2413,6 +2445,14 @@ msgid "Lookup of agents, used for autocompletion."
 msgstr ""
 
 #. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2510,6 +2550,14 @@ msgid ""
 msgstr ""
 
 #. SysConfig
+msgid "Planned end time"
+msgstr ""
+
+#. SysConfig
+msgid "Planned start time"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
@@ -2535,6 +2583,10 @@ msgstr ""
 msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
+msgstr ""
+
+#. SysConfig
+msgid "Requested time"
 msgstr ""
 
 #. SysConfig
@@ -2751,15 +2803,15 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Set the default height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "ตั้งค่าความสูงเริ่มต้น (พิกเซล) ของฟิลด์ HTML อินไลน์ใน AgentITSMChangeZoom และ AgentITSMWorkOrderZoom"
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "ตั้งค่าความสูงเริ่มต้น (พิกเซล) ของฟิลด์ HTML อินไลน์ใน AgentITSMChangeZoom และ AgentITSMWorkOrderZoom"
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2785,10 +2837,10 @@ msgstr "ตั้งค่าเครื่องของสถานะสำ
 
 #. SysConfig
 msgid ""
-"Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
-"the following workorders should also be moved if a workorder is modified and"
-" the planned end time has changed."
-msgstr "แสดงช่องทำเครื่องหมายในหน้าจอ AgentITSMWorkOrderEdit ที่กำหนดถ้าหากใบสั่งงานต่อไปนี้ควรจะถูกย้าย ถ้าใบสั่งงานมีการแก้ไขและเวลาสิ้นสุดที่วางแผนไว้มีการเปลี่ยนแปลง"
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2945,6 +2997,10 @@ msgstr ""
 #. SysConfig
 msgid "Template Overview"
 msgstr "มุมมองแม่แบบ"
+
+#. SysConfig
+msgid "Template type"
+msgstr ""
 
 #. SysConfig
 msgid "Template."

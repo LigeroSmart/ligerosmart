@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-16 14:26+0000\n"
-"PO-Revision-Date: 2017-11-16 14:27+0000\n"
+"POT-Creation-Date: 2018-02-06 19:47+0000\n"
+"PO-Revision-Date: 2018-02-06 19:48+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -1447,6 +1447,14 @@ msgid ""
 msgstr "Daftar status perintah kerja di mana sebenarnya Start Time dari workorder akan ditetapkan apakah itu kosong pada saat ini."
 
 #. SysConfig
+msgid "Actual end time"
+msgstr ""
+
+#. SysConfig
+msgid "Actual start time"
+msgstr ""
+
+#. SysConfig
 msgid "Add Workorder"
 msgstr "Tambahkan Work Order"
 
@@ -1583,8 +1591,24 @@ msgid "Change limit per page for Change Overview \"Small\"."
 msgstr ""
 
 #. SysConfig
+msgid "Change number"
+msgstr ""
+
+#. SysConfig
 msgid "Change search backend router of the agent interface."
 msgstr "Ubah pencarian backend router dari interface agen."
+
+#. SysConfig
+msgid "Change state"
+msgstr ""
+
+#. SysConfig
+msgid "Change time"
+msgstr ""
+
+#. SysConfig
+msgid "Change title"
+msgstr ""
 
 #. SysConfig
 msgid "Condition Edit"
@@ -1625,6 +1649,10 @@ msgstr ""
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
 msgstr "membuat dan mengelola pemberitahuan ITSM Manajemen Perubahan."
+
+#. SysConfig
+msgid "Create and manage change notifications."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1704,8 +1732,10 @@ msgid ""
 msgstr "Mendifinisikan jika perubahan pencarian dan fungsi pencarian perintah kerja bisa menggunakan DB"
 
 #. SysConfig
-msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "Mendefinisikan jika perubahan dapat diatur dalam AgentITSMChangeEdit."
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -1897,148 +1927,150 @@ msgstr "Mendefinisikan nilai default untuk dampak perubahan."
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
-"AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
-"a type is not defined, the field will not be shown."
-msgstr "Mendefinisikan jenis bidang bidang Nilai Bandingkan untuk atribut perubahan digunakan dalam AgentITSMChangeConditionEdit. Nilai yang valid dipilih, Teks dan Tanggal. Jika tipe tidak didefinisikan, lapangan tidak akan ditampilkan."
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
-"in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
-"If a type is not defined, the field will not be shown."
-msgstr "Mendefinisikan jenis bidang bidang Nilai Bandingkan untuk atribut perintah kerja yang digunakan dalam AgentITSMChangeConditionEdit. Nilai yang valid yang Dipilih, Teks dan Tanggal. Jika tipe tidak didefinisikan, lapangan tidak akan ditampilkan."
+"in the change condition edit screen of the agent interface. Valid values are"
+" Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the object attributes that are selectable for change objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan atribut objek yang dipilih untuk perubahan objyek AgentITSMChangeConditionEdit."
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan atribut objek yang dipilih untuk perintah kerja benda di AgentITSMChangeConditionEdit."
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk AccountedTime atribut di AgentITSMChangeConditionEdit."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk ActualEndTime atribut di AgentITSMChangeConditionEdit."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Kategori ID di AgentITSMChangeConditionEdit."
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut ChangeBuilderID di AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Perubahan ManagerId di AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
-" AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk ChangeStateID atribut di AgentITSMChangeConditionEdit."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Perubahan Judul di AgentITSMChangeConditionEdit."
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Bidang Dinamis di AgentITSMChangeConditionEdit."
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut berdampak di AgentITSMChangeConditionEdit."
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
-" AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Direncanakan Upaya AgentITSMChangeConditionEdit."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk PlannedEndTime atribut di AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
-" in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Direncanakan Start Time di AgentITSMChangeConditionEdit."
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk ID atribut Prioritas di AgentITSMChangeConditionEdit."
+"the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk RequestedTime atribut di AgentITSMChangeConditionEdit."
+" the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderAgentID di AgentITSMChangeConditionEdit."
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderNumber di AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderStateID di AgentITSMChangeConditionEdit."
+" in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut WorkOrderTitle di AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Mendefinisikan operator yang dipilih untuk atribut Work Order TypeID di AgentITSMChangeConditionEdit."
+"in the change condition edit screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2120,8 +2152,8 @@ msgid ""
 msgstr "Mendefinisikan acara kolom di template. Pilihan ini tidak berpengaruh pada posisi kolom."
 
 #. SysConfig
-msgid "Defines the signals for each ITSMChange state."
-msgstr "Mendefinisikan sinyal untuk setiap ITSMChange state."
+msgid "Defines the signals for each ITSM change state."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2415,6 +2447,14 @@ msgid "Lookup of agents, used for autocompletion."
 msgstr "Lookup agen, yang digunakan untuk melengkapi."
 
 #. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2512,6 +2552,14 @@ msgid ""
 msgstr "Melakukan tindakan dikonfigurasi untuk setiap acara (sebagai Invoker) untuk setiap Layanan Web dikonfigurasi."
 
 #. SysConfig
+msgid "Planned end time"
+msgstr ""
+
+#. SysConfig
+msgid "Planned start time"
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
@@ -2538,6 +2586,10 @@ msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
 msgstr "Proyeksi Layanan Ketersediaan (PSA) perubahan. Ikhtisar perubahan disetujui dan layanan mereka."
+
+#. SysConfig
+msgid "Requested time"
+msgstr ""
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2753,15 +2805,15 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Set the default height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "Mengatur tinggi default (dalam piksel) bidang HTML inline di AgentITSMChangeZoom dan AgentITSMWorkOrderZoom."
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "Mengatur ketinggian maksimum (dalam piksel) bidang HTML inline di AgentITSMChangeZoom dan AgentITSMWorkOrderZoom."
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2787,10 +2839,10 @@ msgstr "Set up mesin untuk perintah kerja."
 
 #. SysConfig
 msgid ""
-"Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
-"the following workorders should also be moved if a workorder is modified and"
-" the planned end time has changed."
-msgstr "Menunjukkan kotak centang di layar AgentITSMWorkOrderEdit yang mendefinisikan jika perintah kerja berikut juga harus pindah jika workorder ini dimodifikasi dan waktu akhir yang direncanakan telah berubah."
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -2947,6 +2999,10 @@ msgstr ""
 #. SysConfig
 msgid "Template Overview"
 msgstr "Ikhtisar Template"
+
+#. SysConfig
+msgid "Template type"
+msgstr ""
 
 #. SysConfig
 msgid "Template."

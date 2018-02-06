@@ -597,6 +597,7 @@ sub Data {
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Создать изменение (из шаблона) из этой заявки';
     $Self->{Translation}->{'Create a change from this ticket.'} = 'Создать изменение из этой заявки';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'Создание и управление уведомлениями в ITSM Управление Изменениями.';
+    $Self->{Translation}->{'Create and manage change notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Тип задачи по умолчанию. Он должен быть описан в качестве класса в Общем каталоге в ITSM::ChangeManagement::WorkOrder::Type';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
@@ -850,6 +851,8 @@ sub Data {
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Связать другой объект с задачей';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Список членов CAB для автозавершения.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Список агентов для автозавершения.';
+    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
+    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Модуль, проверяющий, что WorkOrderAdd или WorkOrderAddFromTemplate должны быть разрешены.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Модуль проверки члено CAB.';

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMChangeManagement\n"
-"POT-Creation-Date: 2017-12-12 11:07+0000\n"
+"POT-Creation-Date: 2018-02-06 19:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1615,6 +1615,10 @@ msgid "Create and manage ITSM Change Management notifications."
 msgstr ""
 
 #. SysConfig
+msgid "Create and manage change notifications."
+msgstr ""
+
+#. SysConfig
 msgid "Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'."
 msgstr ""
 
@@ -2244,6 +2248,14 @@ msgstr ""
 
 #. SysConfig
 msgid "Lookup of agents, used for autocompletion."
+msgstr ""
+
+#. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
 msgstr ""
 
 #. SysConfig

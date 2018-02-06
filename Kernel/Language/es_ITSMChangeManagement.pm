@@ -89,7 +89,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this change?'} = '¿Realmente desea eliminar este Cambio?';
 
     # Template: AgentITSMChangeEdit
-    $Self->{Translation}->{'Edit %s%s'} = 'Editar';
+    $Self->{Translation}->{'Edit %s%s'} = 'Editar %s%s';
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of %s%s'} = 'Histórico de %s%s';
@@ -463,7 +463,7 @@ sub Data {
     $Self->{Translation}->{'Change (ID=%s) reached actual end time.'} = 'Cambio (ID=%s) alcanzó la hora de finalización real.';
     $Self->{Translation}->{'Change (ID=%s) reached actual start time.'} = 'El cambio (ID=%s) alcanzó la hora de inicio real.';
     $Self->{Translation}->{'New Change (ID=%s)'} = 'Nuevo Cambio (ID=%s)';
-    $Self->{Translation}->{'New Attachment: %s'} = 'Nuevo adjunto: %s';
+    $Self->{Translation}->{'New Attachment: %s'} = 'Nuevo archivo adjunto: %s';
     $Self->{Translation}->{'Deleted Attachment %s'} = 'Adjunto borrado %s';
     $Self->{Translation}->{'CAB Deleted %s'} = 'CAB borrado %s';
     $Self->{Translation}->{'%s: (new=%s, old=%s)'} = '%s:(nuevo=%s, viejo=%s)';
@@ -541,8 +541,8 @@ sub Data {
         'Una lista de los agentes que tienen permiso para tomar órdenes de trabajo. Key es un nombre de inicio de sesión. Content puede ser 0 ó 1.';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} =
         'Una lista de estados para las órdenes de trabajo, misma que será asignada a ActualStartTime, si para este punto seguía vacío.';
-    $Self->{Translation}->{'Actual end time'} = '';
-    $Self->{Translation}->{'Actual start time'} = '';
+    $Self->{Translation}->{'Actual end time'} = 'Hora de finalización actual';
+    $Self->{Translation}->{'Actual start time'} = 'Hora de inicio actual';
     $Self->{Translation}->{'Add Workorder'} = 'Agregar Orden de Trabajo';
     $Self->{Translation}->{'Add Workorder (from Template)'} = 'Añadir Orden de trabajo (desde Plantilla)';
     $Self->{Translation}->{'Add a change from template.'} = 'Agregar un cambio desde una plantilla.';
@@ -581,11 +581,11 @@ sub Data {
     $Self->{Translation}->{'Change area.'} = 'Cambiar area.';
     $Self->{Translation}->{'Change involved persons of the change.'} = 'El cambio involucró a las personas del cambio.';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small".'} = 'Límite de cambio por página para Cambio Descripción general "Pequeño".';
-    $Self->{Translation}->{'Change number'} = '';
+    $Self->{Translation}->{'Change number'} = 'Cambiar numero';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Cambie el enrutador del backend de búsqueda de la interfaz de agente.';
-    $Self->{Translation}->{'Change state'} = '';
-    $Self->{Translation}->{'Change time'} = '';
-    $Self->{Translation}->{'Change title'} = '';
+    $Self->{Translation}->{'Change state'} = 'Cambiar estado';
+    $Self->{Translation}->{'Change time'} = 'Cambiar hora';
+    $Self->{Translation}->{'Change title'} = 'Cambiar título';
     $Self->{Translation}->{'Condition Edit'} = 'Editar Condición';
     $Self->{Translation}->{'Condition Overview'} = 'Resumen de la condición';
     $Self->{Translation}->{'Configure which screen should be shown after a new workorder has been created.'} =
@@ -597,6 +597,7 @@ sub Data {
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Crear un cambio (desde Plantilla) desde este ticket.';
     $Self->{Translation}->{'Create a change from this ticket.'} = 'Crear un cambio desde este ticket.';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'Crear y gestionar notificaciones de Gestión del Cambio ITSM.';
+    $Self->{Translation}->{'Create and manage change notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Tipo default para las órdenes de trabajo. Este registro debe existir en la clase \'ITSM::ChangeManagement::WorkOrder::Type\' del catálogo general.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
@@ -850,6 +851,8 @@ sub Data {
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Enlazar otro objecto a la orden de trabajo.';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Búsqueda de miembros de CAB para autocompletar.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Búsqueda de agentes, usada para autocompletar.';
+    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
+    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Módulo para verificar si WorkOrderAdd o WorkOrderAddFromTemplate se deben permitir.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Módulo para verificar los miembros del CAB.';
@@ -1010,7 +1013,7 @@ sub Data {
     $Self->{Translation}->{'Take Workorder.'} = 'Coger Orden de trabajo.';
     $Self->{Translation}->{'Take the workorder.'} = 'Coger la orden de trabajo.';
     $Self->{Translation}->{'Template Overview'} = 'Resumen de Plantillas';
-    $Self->{Translation}->{'Template type'} = '';
+    $Self->{Translation}->{'Template type'} = 'Tipo de plantilla';
     $Self->{Translation}->{'Template.'} = 'Plantilla.';
     $Self->{Translation}->{'The identifier for a change, e.g. Change#, MyChange#. The default is Change#.'} =
         'Identificador de un cambio, por ejemplo: Cambio#, MiCambio#. El default es Change#.';

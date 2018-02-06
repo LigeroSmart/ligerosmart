@@ -597,6 +597,7 @@ sub Data {
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
+    $Self->{Translation}->{'Create and manage change notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Chaguo-msingi la aina ya oda ya kazi. Hili ingizo lazima liwepo katika tabaka la katalogi la ujumla \'ITSM::UsimamiziMabadiliko::Oda ya Kazi::Aina\' .';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
@@ -850,6 +851,8 @@ sub Data {
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
+    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
+    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Moduli ya kukagua kama OngezaOdaYaKazi au OngezaOdaYaKaziKutokaKwenyeKiolezo iruhusiwe.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Moduli ya kukagua washiriki wa CAB.';

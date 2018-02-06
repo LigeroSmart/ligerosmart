@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2017
+# Balázs Úr <urbalazs@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-16 14:26+0000\n"
-"PO-Revision-Date: 2017-12-10 12:55+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-02-06 19:47+0000\n"
+"PO-Revision-Date: 2018-02-06 19:48+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1445,6 +1445,14 @@ msgid ""
 msgstr "Azon munkamegrendelés-állapotok listája, amelyeknél egy munkamegrendelés tényleges kezdési ideje be lesz állítva, ha az üres ennél a pontnál."
 
 #. SysConfig
+msgid "Actual end time"
+msgstr "Tényleges befejezési idő"
+
+#. SysConfig
+msgid "Actual start time"
+msgstr "Tényleges kezdési idő"
+
+#. SysConfig
 msgid "Add Workorder"
 msgstr "Munkamegrendelés hozzáadása"
 
@@ -1550,7 +1558,7 @@ msgstr "Változtatási ütemterv."
 
 #. SysConfig
 msgid "Change Settings"
-msgstr "Változtatási beállítások"
+msgstr "Változás beállítások"
 
 #. SysConfig
 msgid "Change Zoom"
@@ -1581,8 +1589,24 @@ msgid "Change limit per page for Change Overview \"Small\"."
 msgstr "Oldalankénti változás korlát a „kis” változás áttekintőnél."
 
 #. SysConfig
+msgid "Change number"
+msgstr "Változásszám"
+
+#. SysConfig
 msgid "Change search backend router of the agent interface."
 msgstr "Az ügyintézői felület változás keresési háttérprogram útválasztója."
+
+#. SysConfig
+msgid "Change state"
+msgstr "Változásállapot"
+
+#. SysConfig
+msgid "Change time"
+msgstr "Változás ideje"
+
+#. SysConfig
+msgid "Change title"
+msgstr "Változáscím"
 
 #. SysConfig
 msgid "Condition Edit"
@@ -1623,6 +1647,10 @@ msgstr "Változás létrehozása ebből a jegyből."
 #. SysConfig
 msgid "Create and manage ITSM Change Management notifications."
 msgstr "ITSM változásmenedzsment értesítések létrehozása és kezelése."
+
+#. SysConfig
+msgid "Create and manage change notifications."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1702,8 +1730,10 @@ msgid ""
 msgstr "Meghatározza, hogy a változáskeresés és a munkamegrendelés-keresés funkciók használhatják-e a tükör adatbázist."
 
 #. SysConfig
-msgid "Defines if the change state can be set in AgentITSMChangeEdit."
-msgstr "Meghatározza, hogy a változás állapota beállítható-e az AgentITSMChangeEdit beállításban."
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
+msgstr "Meghatározza, hogy a változás állapota beállítható-e az ügyintézői felület változás szerkesztéseképernyőjén."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -1895,148 +1925,150 @@ msgstr "Meghatározza egy változás hatásának alapértelmezett értékét."
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for change attributes used in "
-"AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If "
-"a type is not defined, the field will not be shown."
-msgstr "Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az AgentITSMChangeConditionEdit osztályban használt változás attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható."
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr "Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az ügyintézői felület változás feltételének szerkesztése képernyőjén használt változás attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható."
 
 #. SysConfig
 msgid ""
 "Defines the field type of CompareValue fields for workorder attributes used "
-"in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. "
-"If a type is not defined, the field will not be shown."
-msgstr "Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az AgentITSMChangeConditionEdit osztályban használt munkamegrendelés attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható."
+"in the change condition edit screen of the agent interface. Valid values are"
+" Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
+msgstr "Meghatározza az „Összehasonlítás érték” mezők mezőtípusát az ügyintézői felület változás feltételének szerkesztése képernyőjén használt munkamegrendelés attribútumainál. Az érvényes értékek: Selection, Text és Date. Ha a típus nincs meghatározva, akkor a mező nem lesz látható."
 
 #. SysConfig
 msgid ""
-"Defines the object attributes that are selectable for change objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a változásobjektumoknál az AgentITSMChangeConditionEdit osztályban."
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a változásobjektumoknál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the object attributes that are selectable for workorder objects in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a munkamegrendelés objektumoknál az AgentITSMChangeConditionEdit osztályban."
+"the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az objektumattribútumokat, amelyek kiválaszthatók a munkamegrendelés objektumoknál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute AccountedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „Elszámolt idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „Elszámolt idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejetési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ActualStartTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges kezdési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute CategoryID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kategória-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kategóriaazonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásösszeállító-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásösszeállító-azonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeManagerID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásmenedzser-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásmenedzser-azonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeStateID in"
-" AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásállapot-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változásállapot-azonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute ChangeTitle in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változáscím” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Változáscím” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute DynamicField in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Dinamikus mező” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Dinamikus mező” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Hatásazonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Hatásazonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEffort in"
-" AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett ráfordítás” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett ráfordítás” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedEndTime "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett befejezési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett befejezési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PlannedStartTime"
-" in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett kezdési idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tervezett kezdési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute PriorityID in "
-"AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Prioritás-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Prioritásazonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute RequestedTime in"
-" AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kért idő” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Kért idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés ügyintéző-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelésügyintéző-azonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-szám” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-szám” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelésállapot-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+" in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelésállapot-azonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-cím” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendelés-cím” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
 "Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in AgentITSMChangeConditionEdit."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendeléstípus-azonosító” attribútumnál az AgentITSMChangeConditionEdit osztályban."
+"in the change condition edit screen of the agent interface."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Munkamegrendeléstípus-azonosító” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
@@ -2118,8 +2150,8 @@ msgid ""
 msgstr "Meghatározza a megjelenített oszlopokat a sablon áttekintőjében. Ennek a beállításnak nincs hatása az oszlop helyzetére."
 
 #. SysConfig
-msgid "Defines the signals for each ITSMChange state."
-msgstr "Meghatározza a szignálokat minden egyes ITSMChange állapothoz."
+msgid "Defines the signals for each ITSM change state."
+msgstr "Meghatározza a szignálokat minden egyes ITSM változás állapotához."
 
 #. SysConfig
 msgid ""
@@ -2413,6 +2445,14 @@ msgid "Lookup of agents, used for autocompletion."
 msgstr "Ügyintézők kikeresése az automatikus kiegészítés használatához."
 
 #. SysConfig
+msgid "Manage ITSM Change Management state machine."
+msgstr ""
+
+#. SysConfig
+msgid "Manage the category ↔ impact ↔ priority matrix."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
 "permitted."
@@ -2510,6 +2550,14 @@ msgid ""
 msgstr "Végrehajtja a beállított műveletet minden eseménynél (mint egy meghívó) minden egyes beállított webszolgáltatáshoz."
 
 #. SysConfig
+msgid "Planned end time"
+msgstr "Tervezett befejezési idő"
+
+#. SysConfig
+msgid "Planned start time"
+msgstr "Tervezett kezdési idő"
+
+#. SysConfig
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
@@ -2536,6 +2584,10 @@ msgid ""
 "Projected Service Availability (PSA) of changes. Overview of approved "
 "changes and their services."
 msgstr "A változás tervezett szolgáltatáselérhetősége (PSA). A jóváhagyott változások és azok szolgáltatásainak áttekintése."
+
+#. SysConfig
+msgid "Requested time"
+msgstr "Kért idő"
 
 #. SysConfig
 msgid "Required privileges in order for an agent to take a workorder."
@@ -2751,15 +2803,15 @@ msgstr "Az ügyintéző beállítása a munkamegrendeléshez."
 
 #. SysConfig
 msgid ""
-"Set the default height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen."
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr "A beágyazott HTML mezők alapértelmezett magasságának beállítása (képpontban) az ügyintézői felület változásnagyítás képernyőjén és munkamegrendelés-nagyítás képernyőjén."
 
 #. SysConfig
 msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in "
-"AgentITSMChangeZoom and AgentITSMWorkOrderZoom."
-msgstr "A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az AgentITSMChangeZoom és az AgentITSMWorkOrderZoom felületen."
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
+msgstr "A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az ügyintézői felület változásnagyítás képernyőjén és munkamegrendelés-nagyítás képernyőjén."
 
 #. SysConfig
 msgid ""
@@ -2785,10 +2837,10 @@ msgstr "Beállítja az állapotgépet a munkamegrendeléseknél."
 
 #. SysConfig
 msgid ""
-"Shows a checkbox in the AgentITSMWorkOrderEdit screen that defines if the "
-"the following workorders should also be moved if a workorder is modified and"
-" the planned end time has changed."
-msgstr "Egy jelölőnégyzetet jelenít meg az AgentITSMWorkOrderEdit képernyőn, amely azt határozza meg, hogy a következő munkamegrendeléseket is át kell-e helyezni, ha egy munkamegrendelés módosult és a tervezett befejezési idő megváltozott."
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
+msgstr "Egy jelölőnégyzetet jelenít meg az ügyintézői felület munkamegrendelés szerkesztése képernyőjén, amely azt határozza meg, hogy a következő munkamegrendeléseket is át kell-e helyezni, ha egy munkamegrendelés módosult és a tervezett befejezési idő megváltozott."
 
 #. SysConfig
 msgid ""
@@ -2945,6 +2997,10 @@ msgstr "A munkamegrendelés felvétele."
 #. SysConfig
 msgid "Template Overview"
 msgstr "Sablon áttekintő"
+
+#. SysConfig
+msgid "Template type"
+msgstr "Sablontípus"
 
 #. SysConfig
 msgid "Template."
