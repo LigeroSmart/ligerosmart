@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - scripts/test/Selenium/Output/TicketZoom/TicketInformation.t
+# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Output/TicketZoom/TicketInformation.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,6 @@ $Selenium->RunTest(
 
         my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
 
         # Disable 'Ticket Information', 'Customer Information' and 'Linked Objects' widgets in AgentTicketZoom screen.
         for my $WidgetDisable (qw(0100-TicketInformation 0200-CustomerInformation 0300-LinkTable)) {
@@ -33,7 +32,7 @@ $Selenium->RunTest(
             );
         }
 
-        # Enable ticket service, type, responsible.
+        # enable ticket service, type, responsible
         $Helper->ConfigSettingChange(
             Key   => 'Ticket::Service',
             Value => 1,
@@ -90,6 +89,8 @@ $Selenium->RunTest(
             Value => {},
         );
 
+        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+
         # Create test responsible user.
         my $ResponsibleUser = $Helper->TestUserCreate(
             Groups => ['admin'],
@@ -100,7 +101,7 @@ $Selenium->RunTest(
             UserLogin => $ResponsibleUser,
         );
 
-        # Create login user.
+        # Create test user.
         my $UserLogin = $Helper->TestUserCreate(
             Groups => ['admin'],
         ) || die "Did not get test user";
@@ -125,8 +126,10 @@ $Selenium->RunTest(
             CreatedByUser => $UserObject->UserName( UserID => $UserLoginID ),
         );
 
+        my $TypeObject = $Kernel::OM->Get('Kernel::System::Type');
+
         # Create test type.
-        my $TypeID = $Kernel::OM->Get('Kernel::System::Type')->TypeAdd(
+        my $TypeID = $TypeObject->TypeAdd(
             Name    => $TicketData{Type},
             ValidID => 1,
             UserID  => 1,
@@ -136,8 +139,10 @@ $Selenium->RunTest(
             "TypeID $TypeID is created"
         );
 
+        my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
+
         # Create test queue.
-        my $QueueID = $Kernel::OM->Get('Kernel::System::Queue')->QueueAdd(
+        my $QueueID = $QueueObject->QueueAdd(
             Name            => $TicketData{Queue},
             ValidID         => 1,
             GroupID         => 1,
@@ -340,7 +345,10 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
 
         # Toggle to collapse 'Ticket Information' widget.
         $Selenium->find_element("//a[contains(\@title, \'Show or hide the content' )]")->click();
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("h2:contains(\'Ticket Information\')").closest(".WidgetSimple.Collapsed").length' );
+
+        $Selenium->WaitFor(
+            JavaScript => 'return $("div.WidgetSimple.Collapsed").length'
+        );
 
         # Verify there is collapsed element on the screen.
         $Self->True(

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - scripts/test/Selenium/Agent/AgentStatistics/Import.t
+# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Agent/AgentStatistics/Import.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,18 +20,18 @@ $Selenium->RunTest(
     sub {
 
         my $Helper        = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-        my $SLAObject     = $Kernel::OM->Get('Kernel::System::SLA');
         my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
+        my $SLAObject     = $Kernel::OM->Get('Kernel::System::SLA');
 
         my $Config = {
 
-            # Service data.
+            # Service data
             Services => [
                 { Name => "TestService - " . $Helper->GetRandomID() },
                 { Name => "TestService - " . $Helper->GetRandomID() },
             ],
 
-            # SLA data.
+            # SLA data
             SLAs => [
                 {
                     Name => "TestSLA - " . $Helper->GetRandomID(),
@@ -48,9 +48,8 @@ $Selenium->RunTest(
             Value => 1,
         );
 
-        my @ServiceIDs;
-
         # Add Services.
+        my @ServiceIDs;
         my %ServicesNameToID;
         SERVICE:
         for my $Service ( @{ $Config->{Services} } ) {
@@ -86,9 +85,8 @@ $Selenium->RunTest(
             push @ServiceIDs, $ServiceID;
         }
 
-        my @SLAIDs;
-
         # Add SLAs and connect them with the Services.
+        my @SLAIDs;
         SLA:
         for my $SLA ( @{ $Config->{SLAs} } ) {
 
@@ -243,7 +241,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Title", 'css' )->send_keys(" - Updated");
 
         # Check X-axis configuration dialog.
-        $Selenium->find_element( ".EditXAxis",                   'css' )->click();
+        $Selenium->find_element( ".EditXAxis", 'css' )->click();
         $Selenium->WaitFor( JavaScript => "return \$('.Dialog.Modal #EditDialog a.RemoveButton i').length" );
 
         $Selenium->find_element( "#EditDialog a.RemoveButton i", 'css' )->click();
@@ -256,7 +254,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => "return !\$('.Dialog.Modal').length" );
 
         # Check Y-axis configuration dialog.
-        $Selenium->find_element( ".EditYAxis",                   'css' )->click();
+        $Selenium->find_element( ".EditYAxis", 'css' )->click();
         $Selenium->WaitFor( JavaScript => "return \$('.Dialog.Modal #EditDialog a.RemoveButton i').length" );
 
         $Selenium->find_element( "#EditDialog a.RemoveButton i", 'css' )->click();
@@ -277,7 +275,7 @@ $Selenium->RunTest(
         );
 
         # Wait for load selected Restriction - QueueIDs.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#RestrictionsQueueIDs").length;' );
+        $Selenium->WaitFor( JavaScript => 'return $("#RestrictionsQueueIDs").length;' );
 
         # Add restriction per Queue - Junk.
         $Selenium->execute_script(

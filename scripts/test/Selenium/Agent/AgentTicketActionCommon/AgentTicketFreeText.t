@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - scripts/test/Selenium/Agent/AgentTicketFreeText.t
+# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Agent/AgentTicketFreeText.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ $Selenium->RunTest(
         my $SLAObject       = $Kernel::OM->Get('Kernel::System::SLA');
         my $StateObject     = $Kernel::OM->Get('Kernel::System::State');
         my $DBObject        = $Kernel::OM->Get('Kernel::System::DB');
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper          = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         my $RandomID = $Helper->GetRandomID();
         my $Success;

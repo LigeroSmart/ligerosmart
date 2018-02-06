@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -133,9 +133,6 @@ $Selenium->RunTest(
         }
 
         $Selenium->find_element("//input[\@value='$ServiceID']")->click();
-        $Selenium->WaitFor(
-            JavaScript => "return \$('input[value=$ServiceID]:checked').length"
-        );
         $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
         # Check test customer user allocation to test service.
@@ -149,12 +146,9 @@ $Selenium->RunTest(
 
         # Remove test customer user allocations from test service.
         $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->click();
-        $Selenium->WaitFor(
-            JavaScript => "return \$('input[value=$CustomerUserName]:checked').length == 0"
-        );
         $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
-        # Check if there is any test service allocation towards test customer user.
+        # Check if there is any test service allocation towards test customer user
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
 
         $Self->Is(
@@ -201,9 +195,12 @@ $Selenium->RunTest(
 
         # Make sure the cache is correct.
         for my $Cache (qw( CustomerUser Service )) {
-            $CacheObject->CleanUp( Type => $Cache );
+            $CacheObject->CleanUp(
+                Type => $Cache,
+            );
         }
     }
+
 );
 
 1;
