@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Nisu pronađeni FAQ podaci.';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'od 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Ključna reč';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Glasaj (npr jednako 10 ili veće od 60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ informacija';
     $Self->{Translation}->{'Rating'} = 'Ocenjivanje';
-    $Self->{Translation}->{'out of 5'} = 'od 5';
     $Self->{Translation}->{'Votes'} = 'Glasovi';
     $Self->{Translation}->{'No votes found!'} = 'Glasovi nisu pronađeni!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Glasovi nisu pronađeni! Budite prvi koji će oceniti ovaj FAQ članak.';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = 'Potreban ID Kategorije!';
     $Self->{Translation}->{'A category should have a name!'} = 'Kategorija treba da ima ime!';
     $Self->{Translation}->{'This category already exists'} = 'Ova kategorija već postoji';
-    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ kategorija ažurirana!';
     $Self->{Translation}->{'This category already exists!'} = 'Ova kategorija već postoji!';
-    $Self->{Translation}->{'FAQ category added!'} = 'FAQ kategorija dodata!';
     $Self->{Translation}->{'No CategoryID is given!'} = 'Nije dat ID Kategorije!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Nije bilo moguće obrisati kategoriju %s!';
+    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ kategorija ažurirana!';
+    $Self->{Translation}->{'FAQ category added!'} = 'FAQ kategorija dodata!';
     $Self->{Translation}->{'Delete Category'} = 'Obriši kategoriju';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = 'Nije dat ID Jezika!';
     $Self->{Translation}->{'The name is required!'} = 'Ime je obavezno!';
     $Self->{Translation}->{'This language already exists!'} = 'Ovaj jezik već postoji!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Nije bilo moguće obrisati jezik %s!';
     $Self->{Translation}->{'FAQ language updated!'} = 'Ažuriran FAQ jezik!';
     $Self->{Translation}->{'FAQ language added!'} = 'Dodat FAQ jezik!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Nije bilo moguće obrisati jezik %s!';
     $Self->{Translation}->{'Delete Language %s'} = 'Obriši jezik %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Ograničenje pregleda FAQ dnevnika "malo"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Ograničenje pregleda FAQ "malo"';
     $Self->{Translation}->{'FAQ Print.'} = 'Štampaj FAQ.';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Ograničenje broja FAQ po strani za pregled FAQ dnevnika "malo"';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Ograničenje broja FAQ po strani za pregled FAQ "malo"';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Modul rutera FAQ pretrage u interfejsu operatera.';
     $Self->{Translation}->{'Field4'} = 'Polje4';
     $Self->{Translation}->{'Field5'} = 'Polje5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Upravljanje jezicima';
     $Self->{Translation}->{'Language Management.'} = 'Upravljanje jezicima.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Ograničenje pretrage za generisanje liste ključnih reči FAQ članaka.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Poveži drugi objekat sa ovom stavkom FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Lista imena redova za koje je funcija srodnih članaka aktivirana.';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Broj prikazanih stavki u poslednjim izmenama.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Broj prikazanih stavki u poslednje kreiranim.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Broj prikazanih stavki u "prvih 10" .';
-    $Self->{Translation}->{'Other Settings'} = 'Druga podešavanja';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         'Izlazni filter za ubacivanje JavaScript u CustomerTicketMessage ekran.';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = 'Ograničenje broja prikazanih srodnih FAQ članaka.';
@@ -519,8 +519,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Prikaži stavke subkategorija.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Prikaži zadnje promenjene stavke u definisanim interfejsima.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Prikaži zadnje kreirane stavke u definisanim interfejsima.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
-        'Prikaži zvezdice za članke sa jednakom ili boljom ocenom od određene vrednosti (postavi vrednost 0 za deaktiviranje izlaza).';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Prikaži prvih 10 stavki u definisanim interfejsima.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Prikaži glasanje u definisanim interfejsima.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -554,7 +554,7 @@ sub Data {
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Stavka alatne linije za skraćenicu.';
     $Self->{Translation}->{'external (customer)'} = 'eksterno (klijent)';
     $Self->{Translation}->{'internal (agent)'} = 'interno (operater)';
-    $Self->{Translation}->{'public (all)'} = '';
+    $Self->{Translation}->{'public (all)'} = 'javno (sve)';
     $Self->{Translation}->{'public (public)'} = 'javno (javno)';
 
 
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

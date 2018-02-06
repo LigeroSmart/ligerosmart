@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'ไม่พบข้อมูล FAQ';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = '1 ใน  5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'คีย์เวิร์ด';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'โหวต (เช่น เท่ากับ 10 หรือมากกว่า60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'ข้อมูล FAQ';
     $Self->{Translation}->{'Rating'} = 'เรตติ้ง';
-    $Self->{Translation}->{'out of 5'} = '1 ใน  5';
     $Self->{Translation}->{'Votes'} = 'โหวต';
     $Self->{Translation}->{'No votes found!'} = 'ไม่พบการโหวต!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'ไม่พบการโหวต! เป็นคนแรกในการประเมินหัวข้อ FAQ นี้';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = 'ต้องระบุชื่อหมวดหมู่!';
     $Self->{Translation}->{'This category already exists'} = 'หมวดหมู่นี้มีอยู่แล้ว!';
-    $Self->{Translation}->{'FAQ category updated!'} = 'อัปเดตหมวดหมู่ FAQ แล้ว!';
     $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = 'เพิ่มหมวดหมู่ FAQ แล้ว!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'อัปเดตหมวดหมู่ FAQ แล้ว!';
+    $Self->{Translation}->{'FAQ category added!'} = 'เพิ่มหมวดหมู่ FAQ แล้ว!';
     $Self->{Translation}->{'Delete Category'} = 'ลบหมวดหมู่';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = 'ต้องระบุชื่อ!';
     $Self->{Translation}->{'This language already exists!'} = 'ภาษานี้มีอยู่แล้ว!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = 'อัปเดตภาษา FAQ แล้ว!';
     $Self->{Translation}->{'FAQ language added!'} = 'เพิ่มภาษา FAQ แล้ว!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'ลบภาษา %';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'ภาพรวมของวารสารFAQ"ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'ภาพรวมของFAQ"ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'จำนวน FAQ ที่จำกัดในแต่ละหน้าสำหรับภาพรวมวารสาร FAQ "ขนาดเล็ก"';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'จำกัด FAQ ในแต่ละหน้าของภาพรวม FAQ "ขนาดเล็ก"';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'backend router ค้นหา FAQ ของอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Field4'} = 'ฟิลด์4';
     $Self->{Translation}->{'Field5'} = 'ฟิลด์5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'การจัดการภาษา';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'ลิงค์ออบเจกต์อื่นไปยัง FAQ นี้';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'จำนวน items ที่แสดงในช่วงที่เปลี่ยนแปลงครั้งล่าสุด';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'จำนวน items ที่แสดงในช่วงที่สร้างขึ้นครั้งล่าสุด';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'จำนวนรายการที่แสดงฟีเจอร์ใน 10 อันดับแรก';
-    $Self->{Translation}->{'Other Settings'} = 'การตั้งค่าอื่นๆ';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'แสดงรายการของหมวดหมู่ย่อย';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'แสดงรายการการเปลี่ยนแปลงที่ผ่านมาล่าสุดในอินเตอร์เฟซที่กำหนดไว้';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'แสดงรายการที่สร้างล่าสุดในอินเตอร์เฟซที่กำหนดไว้.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'แสดง10 รายการยอดนิยมในอินเตอร์เฟซที่กำหนดไว้';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'แสดงการโหวตในอินเตอร์เฟซที่กำหนดไว้';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

@@ -1,6 +1,6 @@
 # 
 # Translators:
-# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014-2015,2017
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014-2015,2017-2018
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # David Bautista <david.bautista@certicamara.com>, 2015
 # Leonel Vazquez <leonel.vazquez@otrs.com>, 2014
@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 16:01+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -198,6 +198,10 @@ msgstr "Artículos FAQ por página"
 msgid "No FAQ data found."
 msgstr "No se encontraron datos de FAQ."
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "de 5"
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "Palabra clave"
@@ -293,10 +297,6 @@ msgstr "Información FAQ"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "Puntuación"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr "de 5"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -452,16 +452,8 @@ msgid "This category already exists"
 msgstr "Esta categoría ya existe"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "Actualizada categoría de FAQ"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr "Ésta categoría ya existe!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "Añadida categoría de FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -470,6 +462,14 @@ msgstr "No se ha dado CategoryID!"
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr "No fue posible borrar la categoría %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "Actualizada categoría de FAQ"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "Añadida categoría de FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -528,16 +528,16 @@ msgid "This language already exists!"
 msgstr "Este idioma ya existe."
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "No se ha podido eliminar el idioma %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "Actualizado idioma de FAQ."
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "Añadido idioma de FAQ"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr "No se ha podido eliminar el idioma %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1090,14 +1090,6 @@ msgid "FAQ Print."
 msgstr "Imprimir FAQ."
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr "Límite de FAQ por página para la vista general «pequeña» de la Bitácora de FAQ"
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr "Límite de FAQ por página para la vista general «pequeña» de FAQ"
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr "Encaminador para la búsqueda de FAQ en la interfaz del agente."
 
@@ -1152,6 +1144,10 @@ msgstr "Gestión de Idiomas."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "Límite de la búsqueda para construir el listado de palabras clave de artículos FAQ."
+
+#. SysConfig
+msgid "Limit."
+msgstr "Límite"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1318,10 +1314,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "Número de elementos a mostrar en el Top 10."
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "Otras Configuraciones"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr "Filtro de salida para agregar Java-Script a la pantalla CustomerTicketMessage."
 
@@ -1460,8 +1452,8 @@ msgstr "Mostrar los últimos artículos creados en las interfaces definidas."
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
-msgstr "Mostrar las estrellas para los artículos con valoración igual o mayor al valor definido (utilizar el valor '0' para desactivar)."
+"defined value (set value '0' to deactivate the output)."
+msgstr "Muestra las estrellas para los artículos con una calificación igual o superior al valor definido (ajuste el valor '0' para desactivar)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

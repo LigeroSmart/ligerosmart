@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 15:58+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -194,6 +194,10 @@ msgstr "常見問題文章/頁"
 msgid "No FAQ data found."
 msgstr "沒有找到常見問題數據。"
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr ""
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "關鍵字"
@@ -289,10 +293,6 @@ msgstr "常見問題資訊"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "評分"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr ""
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -448,16 +448,8 @@ msgid "This category already exists"
 msgstr "此目錄分類已經存在"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "常見問題目錄分類已更新!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "常見問題目錄分類已添加!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -466,6 +458,14 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "常見問題目錄分類已更新!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "常見問題目錄分類已添加!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -524,16 +524,16 @@ msgid "This language already exists!"
 msgstr "此語言已存在!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "常見問題語言已更新!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "常見問題語言已添加!"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1086,14 +1086,6 @@ msgid "FAQ Print."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr "常見問題日誌概況 \"小\" 模式每頁顯示常見問題數量"
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr "常見問題概況 \"小\"  模式每頁顯示常見問題數量"
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr ""
 
@@ -1147,6 +1139,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
+msgid "Limit."
 msgstr ""
 
 #. SysConfig
@@ -1314,10 +1310,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "首10篇功能顯示項目數量"
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "其它設置"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr ""
 
@@ -1456,7 +1448,7 @@ msgstr "顯示指定介面的最近創建項目"
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
+"defined value (set value '0' to deactivate the output)."
 msgstr ""
 
 #. SysConfig

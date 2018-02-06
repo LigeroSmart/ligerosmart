@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = '没有找到FAQ数据。';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = '(5分制)';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = '关键字';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '投票数 (例如，= 10 或 >= 60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ详细信息';
     $Self->{Translation}->{'Rating'} = '评分';
-    $Self->{Translation}->{'out of 5'} = '(5分制)';
     $Self->{Translation}->{'Votes'} = '投票次数';
     $Self->{Translation}->{'No votes found!'} = '还没有投票!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '还没有投票! 这将是该 FAQ 文章的第一个投票。';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '需要CategoryID！';
     $Self->{Translation}->{'A category should have a name!'} = '必须输入类别名称!';
     $Self->{Translation}->{'This category already exists'} = '类别已存在';
-    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ类别已更新!';
     $Self->{Translation}->{'This category already exists!'} = '该类别已存在！';
-    $Self->{Translation}->{'FAQ category added!'} = 'FAQ类别已添加!';
     $Self->{Translation}->{'No CategoryID is given!'} = '没有指定CategoryID ！';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '不能删除类别%s！';
+    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ类别已更新!';
+    $Self->{Translation}->{'FAQ category added!'} = 'FAQ类别已添加!';
     $Self->{Translation}->{'Delete Category'} = '删除类别';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '没有指定LanguageID！';
     $Self->{Translation}->{'The name is required!'} = '名称是必需的!';
     $Self->{Translation}->{'This language already exists!'} = '该语言已经存在!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '不能删除语言%s！';
     $Self->{Translation}->{'FAQ language updated!'} = 'FAQ语言已更新!';
     $Self->{Translation}->{'FAQ language added!'} = 'FAQ语言已添加!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '不能删除语言%s！';
     $Self->{Translation}->{'Delete Language %s'} = '删除语言 %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQ日志概览“简洁视图”限制';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ概览“简洁视图”限制';
     $Self->{Translation}->{'FAQ Print.'} = 'FAQ打印。';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'FAQ日志概览“简洁视图”中每页显示的FAQ数量';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'FAQ概览“简洁视图”中每页显示的FAQ数量';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '服务人员界面中，FAQ搜索的后台选项。';
     $Self->{Translation}->{'Field4'} = '字段4';
     $Self->{Translation}->{'Field5'} = '字段5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = '管理语言';
     $Self->{Translation}->{'Language Management.'} = '管理语言';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '为建立关键字FAQ文章列表的搜索限制。';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象到这个FAQ条目';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '启用相关文章功能的队列名称列表。';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '显示最近更改条目的数量。';
     $Self->{Translation}->{'Number of shown items in last created.'} = '显示最新创建条目的数量。';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '按Top10格式显示的条目数。';
-    $Self->{Translation}->{'Other Settings'} = '其它设置';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '添加Javascript到客户工单消息窗口的输出过滤器。';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '相关FAQ文章的输出限制。';
@@ -519,8 +519,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = '显示子目录的条目。';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '在定义的界面上显示最近更改的条目。';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '在定义的界面上显示最新创建的条目。';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
-        '显示文章的星级等于或高于定义的值（设置值“0”则输出为空）。';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '在定义的界面上显示点击量前十个条目。';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '在定义的界面上显示文章评分。';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

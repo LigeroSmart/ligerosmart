@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Tidak ditemukan data FAQ.';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'dari 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Kata kunci';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Pilih (contoh: Sama Dengan 10 atau Lebih Besar dari 60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Informasi FAQ';
     $Self->{Translation}->{'Rating'} = 'Peringkat';
-    $Self->{Translation}->{'out of 5'} = 'dari 5';
     $Self->{Translation}->{'Votes'} = 'Pemilihan';
     $Self->{Translation}->{'No votes found!'} = 'Ttdak ditemukan pemilihan!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Belum ada Pemilihan! Jadilah yang pertama melakukan pemeringkatan artikel FAQ ini.';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = 'Sebuah kategori harus memiliki nama!';
     $Self->{Translation}->{'This category already exists'} = 'Kategori ini sudah ada';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Kategori FAQ diupdate!';
     $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = 'Kategori FAQ ditambahkan!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Kategori FAQ diupdate!';
+    $Self->{Translation}->{'FAQ category added!'} = 'Kategori FAQ ditambahkan!';
     $Self->{Translation}->{'Delete Category'} = 'Hapus Kategori';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = 'Nama dibutuhkan!';
     $Self->{Translation}->{'This language already exists!'} = 'Bahasa ini sudah ada!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = 'Bahasa FAQ diperbarui!';
     $Self->{Translation}->{'FAQ language added!'} = 'Bahasa FAQ ditambahkan!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'Hapus Bahasa %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Jurnal gambaran batas "kecil"  FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Gambaran batas "Kecil"';
     $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Batas per halaman FAQ untuk jurnal gambaran "kecil" FAQ';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Batas per halaman FAQ untuk gambaran "kecil" FAQ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Pencarian penerus backend FAQ pada antarmuka agen';
     $Self->{Translation}->{'Field4'} = 'Field4';
     $Self->{Translation}->{'Field5'} = 'Field5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Manajemen Bahasa';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Tautkan objek lainnya ke item FAQ ini';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Jumlah item yang ditampilkan dalam perubahan terakhir.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Jumlah item yang di tampilkan dalam pembuatan terakhir.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Jumlah item yang ditampilkan dalam 10 fitur teratas.';
-    $Self->{Translation}->{'Other Settings'} = 'Pengaturan Lain';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Tampilkan item dari subkategori.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Tampilkan item terakhir yang di ubah pada antarmuka yang di tentukan.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Tampilkan item terakhir yang di ciptakan pada antarmuka yang di tentukan.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Tampilkan 10 item teratas pada antarmuka yang di tentukan.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Tampilkan pemilihan pada antarmuka yang di tentukan.';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -193,6 +193,10 @@ msgstr "GyIK bejegyzések oldalanként"
 msgid "No FAQ data found."
 msgstr "Nem találhatók GyIK adatok."
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "az 5-ből"
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "Kulcsszó"
@@ -288,10 +292,6 @@ msgstr "GyIK információk"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "Értékelés"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr "az 5-ből"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -447,16 +447,8 @@ msgid "This category already exists"
 msgstr "Ez a kategória már létezik"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "GyIK kategória frissítve!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr "Ez a kategória már létezik!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "GyIK kategória hozzáadva!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -465,6 +457,14 @@ msgstr "Nincs kategória-azonosító megadva!"
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr "Nem sikerült a(z) %s kategória törlése!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "GyIK kategória frissítve!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "GyIK kategória hozzáadva!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -523,16 +523,16 @@ msgid "This language already exists!"
 msgstr "Ez a nyelv már létezik!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Nem sikerült a(z) %s nyelv törlése!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "GyIK nyelv frissítve!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "GyIK nyelv hozzáadva!"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr "Nem sikerült a(z) %s nyelv törlése!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1085,14 +1085,6 @@ msgid "FAQ Print."
 msgstr "GyIK nyomtatás."
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr "Oldalankénti GyIK korlát a „kis” GyIK napló áttekintőnél"
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr "Oldalankénti GyIK korlát a „kis” GyIK áttekintőnél"
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr "Az ügyintézői felület GyIK keresési háttérprogram útválasztója."
 
@@ -1147,6 +1139,10 @@ msgstr "Nyelvkezelés."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "A keresés korlátozása a kulcsszó GyIK bejegyzéslista összeállításához."
+
+#. SysConfig
+msgid "Limit."
+msgstr ""
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1313,10 +1309,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "A megjelenített elemek száma a legjobb 10 szolgáltatásban."
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "Egyéb beállítások"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr "Kimenetszűrő JavaScript hozzáadásához az ügyféljegy üzenet képernyőhöz."
 
@@ -1455,8 +1447,8 @@ msgstr "Az utoljára létrehozott elemek megjelenítése a meghatározott felül
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
-msgstr "Csillagok megjelenítése a meghatározott értékkel egyenlő vagy annál jobb értékeléssel rendelkező bejegyzéseknél (állítsa az értéket „0”-ra a kimenet kikapcsolásához)."
+"defined value (set value '0' to deactivate the output)."
+msgstr ""
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

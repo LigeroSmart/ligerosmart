@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 15:58+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -196,6 +196,10 @@ msgstr "FAQ-artiklar per sida"
 msgid "No FAQ data found."
 msgstr "Ingen FAQ-information hittades."
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "av 5"
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "Nyckelord"
@@ -291,10 +295,6 @@ msgstr "FAQ-Information"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "Betyg"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr "av 5"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -450,16 +450,8 @@ msgid "This category already exists"
 msgstr "Denna kategori finns redan!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "FAQ-kategori uppdaterad!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "FAQ-kategori tillagd!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -468,6 +460,14 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "FAQ-kategori uppdaterad!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "FAQ-kategori tillagd!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -526,16 +526,16 @@ msgid "This language already exists!"
 msgstr "Detta språk finns redan!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "FAQ-språk uppdaterat!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "FAQ-språk skapat!"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1088,14 +1088,6 @@ msgid "FAQ Print."
 msgstr ""
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr ""
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr ""
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr ""
 
@@ -1149,6 +1141,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
+msgid "Limit."
 msgstr ""
 
 #. SysConfig
@@ -1316,10 +1312,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr ""
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "Övriga inställningar"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr ""
 
@@ -1458,7 +1450,7 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
+"defined value (set value '0' to deactivate the output)."
 msgstr ""
 
 #. SysConfig

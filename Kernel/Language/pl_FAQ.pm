@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Brak danych FAQ.';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'z 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Słowo kluczowe';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Głosuj (np.: równe 10 lub więcej niż 60)';
@@ -101,11 +104,11 @@ sub Data {
     $Self->{Translation}->{'Profile Selection'} = 'Wybór profilu';
     $Self->{Translation}->{'Vote'} = 'Głosuj';
     $Self->{Translation}->{'No vote settings'} = 'Brak ustawień głosowania';
-    $Self->{Translation}->{'Specific votes'} = '';
+    $Self->{Translation}->{'Specific votes'} = 'Konkretne głosy';
     $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'np.: równe 10 lub więcej niż 60';
     $Self->{Translation}->{'Rate'} = 'Oceń';
-    $Self->{Translation}->{'No rate settings'} = '';
-    $Self->{Translation}->{'Specific rate'} = '';
+    $Self->{Translation}->{'No rate settings'} = 'Brak ustawień ocen';
+    $Self->{Translation}->{'Specific rate'} = 'Konkretna ocena';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'np.: równe 25% lub więcej niż 75%';
     $Self->{Translation}->{'FAQ Article Create Time'} = 'Czas utworzenia artykułu FAQ';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ Czas zmiany zgłoszenia';
@@ -113,13 +116,12 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Informacje FAQ';
     $Self->{Translation}->{'Rating'} = 'Ocena';
-    $Self->{Translation}->{'out of 5'} = 'z 5';
     $Self->{Translation}->{'Votes'} = 'Głosy';
     $Self->{Translation}->{'No votes found!'} = 'Brak głosów!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Brak głosów! Bądź pierwszy i oceń ten artykuł FAQ.';
     $Self->{Translation}->{'Download Attachment'} = 'Pobierz załącznik';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        '';
+        'Aby otworzyć łącza, w poniższych blokach opisu, należy przycisnąć klawisz Ctrl, Cmd lub Shift podczas kliknięcia (w zależności od przeglądarki i systemu operacyjnego).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Jak pomocny był ten artykuł? Prosimy o twoją ocenę i pomoc przy udoskonalaniu bazy FAQ. Dziękujemy!';
     $Self->{Translation}->{'not helpful'} = 'nieprzydatne';
@@ -128,10 +130,10 @@ sub Data {
     # Template: AgentFAQZoomSmall
     $Self->{Translation}->{'Add FAQ title to article subject'} = 'Dodaj tytuł FAQ jako temat wiadomości';
     $Self->{Translation}->{'Insert FAQ Text'} = 'Wstaw tekst FAQ';
-    $Self->{Translation}->{'Insert Full FAQ'} = '';
+    $Self->{Translation}->{'Insert Full FAQ'} = 'Wstaw cały FAQ';
     $Self->{Translation}->{'Insert FAQ Link'} = 'Wstaw odnośnik FAQ';
     $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Wstaw tekst i odnośnik FAQ';
-    $Self->{Translation}->{'Insert Full FAQ & Link'} = '';
+    $Self->{Translation}->{'Insert Full FAQ & Link'} = 'Wstaw cały FAQ i odnośnik';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Nie znaleziono artykułów FAQ.';
@@ -143,9 +145,9 @@ sub Data {
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Wyszukiwanie pełnotekstowe w artykułach FAQ (np. "Naj*pszy" lub "Kowalsk*")';
-    $Self->{Translation}->{'Vote restrictions'} = '';
+    $Self->{Translation}->{'Vote restrictions'} = 'Ograniczenia głosowania';
     $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
-    $Self->{Translation}->{'Rate restrictions'} = '';
+    $Self->{Translation}->{'Rate restrictions'} = 'Ograniczenia ocen';
     $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
     $Self->{Translation}->{'Time restrictions'} = 'Ograniczenia czasowe';
     $Self->{Translation}->{'Only FAQ articles created'} = '';
@@ -153,71 +155,71 @@ sub Data {
     $Self->{Translation}->{'Search-Profile as Template?'} = '';
 
     # Template: CustomerFAQZoom
-    $Self->{Translation}->{'Article Number'} = '';
+    $Self->{Translation}->{'Article Number'} = 'Numer artykułu';
     $Self->{Translation}->{'Search for articles with keyword'} = 'Szukaj artykułów za pomocą słowa kluczowego';
 
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
     $Self->{Translation}->{'Public'} = 'Pobliczne';
 
     # Template: PublicFAQSearchResultShort
-    $Self->{Translation}->{'Back to FAQ Explorer'} = '';
+    $Self->{Translation}->{'Back to FAQ Explorer'} = 'Wróć do Przeglądu FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
-    $Self->{Translation}->{'You need rw permission!'} = '';
-    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
-    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+    $Self->{Translation}->{'You need rw permission!'} = 'Potrzebujesz praw odczytu/zapisu!';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Brak kategorii gdzie użytkownik posiada prawa zapisu/odczytu!';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'Brak domyślnego języka i nie można stworzyć nowego.';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
-    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'Need CategoryID!'} = 'Potrzebne CategoryID!';
     $Self->{Translation}->{'A category should have a name!'} = 'Kategoria powinna posiadać nazwę!';
     $Self->{Translation}->{'This category already exists'} = 'Ta kategoria już istnieje';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Kategoria FAQ zaktualizowana!';
     $Self->{Translation}->{'This category already exists!'} = 'Ta kategoria już istnieje!';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'Nie zadeklarowano CategoryID!';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Nie można usunąć kategorii %s!';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Kategoria FAQ zaktualizowana!';
     $Self->{Translation}->{'FAQ category added!'} = 'Kategoria FAQ dodana!';
-    $Self->{Translation}->{'No CategoryID is given!'} = '';
-    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
     $Self->{Translation}->{'Delete Category'} = 'Usuń kategorię';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
-    $Self->{Translation}->{'No ItemID is given!'} = '';
-    $Self->{Translation}->{'You have no permission for this category!'} = '';
-    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+    $Self->{Translation}->{'No ItemID is given!'} = 'Nie zadeklarowano ItemID!';
+    $Self->{Translation}->{'You have no permission for this category!'} = 'Nie masz uprawnień do tych kategorii!';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'Nie możesz usunąć artykułu FAQ %s!';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'CategoryID %s jest nie prawidłowe.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'FAQ History'} = 'Historia FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Dziennik FAQ';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'Potrzebna konfiguracja opcji FAQ::Frontend::Overview';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
         '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Brak konfiguracji opcji dla widoku "%s"!';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'No LanguageID is given!'} = 'Brak zadeklarowanego LanguageID!';
     $Self->{Translation}->{'The name is required!'} = 'Nazwa jest wymagana!';
     $Self->{Translation}->{'This language already exists!'} = 'Ten język już istnieje!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Nie możemy usunąć języka %s!';
     $Self->{Translation}->{'FAQ language updated!'} = 'Język FAQ zaktualizowany!';
     $Self->{Translation}->{'FAQ language added!'} = 'Język FAQ dodany!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'Usuń język %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
     $Self->{Translation}->{'Last update'} = 'Ostatnia aktualizacja';
-    $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
+    $Self->{Translation}->{'FAQ Dynamic Fields'} = 'Pola Dynamiczne FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQRichText.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
-    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+    $Self->{Translation}->{'No %s is given!'} = 'Nie zadeklarowano %s!';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = 'Nie można załadować LanguageObject!';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
-    $Self->{Translation}->{'No Result!'} = '';
+    $Self->{Translation}->{'No Result!'} = 'Brak Wyników!';
     $Self->{Translation}->{'FAQ Number'} = 'Numer FAQ';
-    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'Last Changed by'} = 'Ostatnio Zmienione przez';
     $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
@@ -229,21 +231,21 @@ sub Data {
     $Self->{Translation}->{'Smaller than equals'} = 'Mniejsze lub równe';
 
     # Perl Module: Kernel/Modules/AgentFAQZoom.pm
-    $Self->{Translation}->{'Need FileID!'} = '';
+    $Self->{Translation}->{'Need FileID!'} = 'Potrzebny FileID!';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Dziękujemy za oddanie głosu!';
     $Self->{Translation}->{'You have already voted!'} = 'Już raz głosowałeś!';
     $Self->{Translation}->{'No rate selected!'} = 'Nie wybrałeś oceny!';
-    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = 'Mechanizm głosowania nie jest włączony!';
     $Self->{Translation}->{'The vote rate is not defined!'} = '';
 
     # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
     $Self->{Translation}->{'FAQ Article Print'} = 'Drukuj informację FAQ';
 
     # Perl Module: Kernel/Modules/CustomerFAQSearch.pm
-    $Self->{Translation}->{'Created between'} = '';
+    $Self->{Translation}->{'Created between'} = 'Stworzone pomiędzy';
 
     # Perl Module: Kernel/Modules/CustomerFAQZoom.pm
-    $Self->{Translation}->{'Need ItemID!'} = '';
+    $Self->{Translation}->{'Need ItemID!'} = 'Potrzebne ItemID!';
 
     # Perl Module: Kernel/Modules/PublicFAQExplorer.pm
     $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artykuły FAQ (nowe)';
@@ -251,24 +253,24 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artykuły FAQ (10 najlepszych)';
 
     # Perl Module: Kernel/Modules/PublicFAQRSS.pm
-    $Self->{Translation}->{'No Type is given!'} = '';
+    $Self->{Translation}->{'No Type is given!'} = 'Brak zadeklarowanego Typu!';
     $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
-    $Self->{Translation}->{'Can\'t create RSS file!'} = '';
+    $Self->{Translation}->{'Can\'t create RSS file!'} = 'Nie można stworzyć pliku RSS!';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
     $Self->{Translation}->{'%s (FAQFulltext)'} = '';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
-    $Self->{Translation}->{'%s - Customer (%s)'} = '';
-    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Customer (%s)'} = '%s - Klient (%s)';
+    $Self->{Translation}->{'%s - Customer (FAQFulltext)'} = '%s - Klient (FAQFulltext)';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
-    $Self->{Translation}->{'%s - Public (%s)'} = '';
-    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '';
+    $Self->{Translation}->{'%s - Public (%s)'} = '%s - Publiczne (%s)';
+    $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - Publiczne (FAQFulltext)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
     $Self->{Translation}->{'Need rate!'} = '';
-    $Self->{Translation}->{'This article is empty!'} = '';
+    $Self->{Translation}->{'This article is empty!'} = 'Ten artykuł jest pusty!';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Ostatnio dodane informacje FAQ';
     $Self->{Translation}->{'Latest updated FAQ articles'} = 'Ostatnio zaktualizowane informacje FAQ';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 informacji FAQ';
@@ -287,11 +289,11 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
         '';
-    $Self->{Translation}->{'Add FAQ article'} = '';
+    $Self->{Translation}->{'Add FAQ article'} = 'Dodaj artykuł FAQ';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Kolor CSS dla wyników głosowania.';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
     $Self->{Translation}->{'Category Management'} = 'Zarządzanie kategoriami';
-    $Self->{Translation}->{'Category Management.'} = '';
+    $Self->{Translation}->{'Category Management.'} = 'Zarządzanie Kategorią.';
     $Self->{Translation}->{'Customer FAQ Print.'} = '';
     $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
     $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
@@ -398,16 +400,14 @@ sub Data {
     $Self->{Translation}->{'FAQ Area'} = '';
     $Self->{Translation}->{'FAQ Area.'} = '';
     $Self->{Translation}->{'FAQ Delete.'} = '';
-    $Self->{Translation}->{'FAQ Edit.'} = '';
-    $Self->{Translation}->{'FAQ History.'} = '';
+    $Self->{Translation}->{'FAQ Edit.'} = 'Edycja FAQ.';
+    $Self->{Translation}->{'FAQ History.'} = 'Historia FAQ.';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Limit FAQ w przeglądzie dziennika w trybie "Małe"';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Limit FAQ w przeglądzie w trybie "Małe"';
-    $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Limit FAQ na stronę w przeglądzie dziennika w trybie "Małe"';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Limit FAQ na stronę w przeglądzie w trybie "Małe"';
+    $Self->{Translation}->{'FAQ Print.'} = 'Drukuj FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'Field4'} = '';
-    $Self->{Translation}->{'Field5'} = '';
+    $Self->{Translation}->{'Field4'} = 'Pole4';
+    $Self->{Translation}->{'Field5'} = 'Pole5';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupaa dla akceptacji artykułów FAQ.';
@@ -417,8 +417,9 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Dziennik';
     $Self->{Translation}->{'Language Management'} = 'Zarządzanie językami';
-    $Self->{Translation}->{'Language Management.'} = '';
+    $Self->{Translation}->{'Language Management.'} = 'Zarządzanie Językiem';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Połącz inny obiekt z tym elementem FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -429,9 +430,9 @@ sub Data {
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
-        '';
+        'Maksymalna liczba artykułów FAQ które będą wyświetlane w Przeglądzie FAQ w interfejsie użytkownika.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =
-        '';
+        'Maksymalna liczba artykułów FAQ które będą wyświetlane w Przeglądzie FAQ w interfejsie klienta.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} =
         '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} =
@@ -462,7 +463,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article.'} = '';
+    $Self->{Translation}->{'New FAQ Article.'} = 'Nowy Artykuł FAQ.';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Nowe artykuły FAQ wymagają zatwierdzenia przed publikacją.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '';
     $Self->{Translation}->{'Number of shown items in last created.'} = '';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
-    $Self->{Translation}->{'Other Settings'} = 'Inne ustawienia';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = '';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '';
@@ -555,7 +555,7 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'zewnętrzne (klienci)';
     $Self->{Translation}->{'internal (agent)'} = 'wewnętrzne (agenci)';
     $Self->{Translation}->{'public (all)'} = 'publiczne (wszyscy)';
-    $Self->{Translation}->{'public (public)'} = '';
+    $Self->{Translation}->{'public (public)'} = 'publiczne (public)';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

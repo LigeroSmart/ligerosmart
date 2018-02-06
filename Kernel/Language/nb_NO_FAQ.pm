@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Ingen artikler funnet';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'av 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Nøkkelord';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Info om OSS';
     $Self->{Translation}->{'Rating'} = 'Rating';
-    $Self->{Translation}->{'out of 5'} = 'av 5';
     $Self->{Translation}->{'Votes'} = 'Stemmer';
     $Self->{Translation}->{'No votes found!'} = 'Ingen stemmer funnet!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Ingen stemmer avgitt! Bli den første til å stemme på denne artikkelen.';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = 'En kategori må ha et navn!';
     $Self->{Translation}->{'This category already exists'} = 'Denne kategorien eksisterer allerede';
-    $Self->{Translation}->{'FAQ category updated!'} = 'OSS-kategori oppdatert!';
     $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = 'OSS-kategori lagt til';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'OSS-kategori oppdatert!';
+    $Self->{Translation}->{'FAQ category added!'} = 'OSS-kategori lagt til';
     $Self->{Translation}->{'Delete Category'} = 'Slett kategori';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = 'Navn er påkrevd!';
     $Self->{Translation}->{'This language already exists!'} = 'Dette språket finnes allerede!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = 'OSS-språk oppdatert!';
     $Self->{Translation}->{'FAQ language added!'} = 'OSS-språk lagt til!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'Slett språk %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Field4'} = 'Felt 4';
     $Self->{Translation}->{'Field5'} = 'Felt 5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Språkoppsett';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Lenk opp et annet objekt til denne artikkelen';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Antall objekter vist i siste endringer.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Antall viste objekter under sist opprettet.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Antall viste artikler i "Topp 10"-funksjonen';
-    $Self->{Translation}->{'Other Settings'} = 'Andre innstillinger';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Vis innhold i underkategorier.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Vis sist endrede artikler i definerte grensesnitt.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Vis sist opprettede artikler i definerte grensesnitt';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Vis "Topp 10" i definerte grensesnitt.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Vis avstemming i definerte grensensnitt';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

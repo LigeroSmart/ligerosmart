@@ -16,15 +16,15 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentFAQAdd
-    $Self->{Translation}->{'Add FAQ Article'} = 'Añadir artículo FAQ.';
+    $Self->{Translation}->{'Add FAQ Article'} = 'Añadir artículo a las FAQ.';
     $Self->{Translation}->{'Keywords'} = 'Palabras claves';
     $Self->{Translation}->{'A category is required.'} = 'Se requiere una categoría.';
     $Self->{Translation}->{'Approval'} = 'Aprobación';
 
     # Template: AgentFAQCategory
-    $Self->{Translation}->{'FAQ Category Management'} = 'Gestión de categorías de FAQ';
-    $Self->{Translation}->{'Add FAQ Category'} = 'Agregar categoría Preguntas Frecuentes';
-    $Self->{Translation}->{'Edit FAQ Category'} = 'Editar categoría Preguntas Frecuentes';
+    $Self->{Translation}->{'FAQ Category Management'} = 'Gestión las categorías de las FAQ';
+    $Self->{Translation}->{'Add FAQ Category'} = 'Agregar categoría a las FAQ';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'Editar categoría de las FAQ';
     $Self->{Translation}->{'Add category'} = 'Añadir categoría';
     $Self->{Translation}->{'Add Category'} = 'Añadir categoría';
     $Self->{Translation}->{'Edit Category'} = 'Editar categoría';
@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'No se encontraron datos de FAQ.';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'de 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Palabra clave';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Vota (ejm. Igual a 10 o mayor a 60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Información de las FAQ';
     $Self->{Translation}->{'Rating'} = 'Puntuación';
-    $Self->{Translation}->{'out of 5'} = 'de 5';
     $Self->{Translation}->{'Votes'} = 'Votos';
     $Self->{Translation}->{'No votes found!'} = '¡No se encontró ningún voto!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'No se encontró ningún voto. Sea el primero en valorar este artículo FAQ';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '¡Se necesita la CategoryID!';
     $Self->{Translation}->{'A category should have a name!'} = '¡Las categorías deben tener un nombre!';
     $Self->{Translation}->{'This category already exists'} = 'Esta categoría ya existe';
-    $Self->{Translation}->{'FAQ category updated!'} = '¡Categoría de las FAQ actualizada!';
     $Self->{Translation}->{'This category already exists!'} = '¡Esta categoría ya existe!';
-    $Self->{Translation}->{'FAQ category added!'} = '¡Categoría de las FAQ añadida!';
     $Self->{Translation}->{'No CategoryID is given!'} = '¡No se ha proporcionado ningúna CategoryID!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '¡No se pudo eliminar la categoría %s!';
+    $Self->{Translation}->{'FAQ category updated!'} = '¡Categoría de las FAQ actualizada!';
+    $Self->{Translation}->{'FAQ category added!'} = '¡Categoría de las FAQ añadida!';
     $Self->{Translation}->{'Delete Category'} = 'Borrar categoría';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -199,11 +201,11 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
     $Self->{Translation}->{'No LanguageID is given!'} = '¡No se ha proporcionado LanguajeID!';
-    $Self->{Translation}->{'The name is required!'} = '¡El nombre es imprescindible!';
+    $Self->{Translation}->{'The name is required!'} = '¡Se requiere el nombre!';
     $Self->{Translation}->{'This language already exists!'} = '¡Este idioma ya existe!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '¡No se pudo eliminar el idioma %s!';
     $Self->{Translation}->{'FAQ language updated!'} = '¡Idioma de las FAQ actualizado!';
     $Self->{Translation}->{'FAQ language added!'} = '¡Idioma de las FAQ añadido!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '¡No se pudo eliminar el idioma %s!';
     $Self->{Translation}->{'Delete Language %s'} = 'Borrar Idioma %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de el Diario de las FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Límite para la vista general «pequeña» de FAQ';
     $Self->{Translation}->{'FAQ Print.'} = 'Imprimir FAQ.';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Límite de FAQ por página para la vista general «pequeña» de el Diario de las FAQ';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Límite de FAQ por página para la vista general «pequeña» de FAQ';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Encaminador para la búsqueda de FAQ en la interfaz del agente.';
     $Self->{Translation}->{'Field4'} = 'Campo4';
     $Self->{Translation}->{'Field5'} = 'Campo5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Gestión de Idiomas';
     $Self->{Translation}->{'Language Management.'} = 'Gestión del lenguaje.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Límite la búsqueda para crear la lista de palabras clave de la lista artículo de Preguntas frecuentes.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Enlazar otro objecto a este artículo FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Lista de nombres de colas para los que la característica de artículo relacionado está habilitada.';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Número de elementos a mostrar en últimos cambios.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Número de elementos a mostrar en últimos creados.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Número de elementos a mostrar en el Top 10.';
-    $Self->{Translation}->{'Other Settings'} = 'Otros ajustes';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         'Filtro de salida para agregar Java-script  a la pantalla CustomerTicketMessage.';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = 'Límite de salida para artículos de preguntas frecuentes relacionados';
@@ -519,8 +519,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = '¿Mostrar los elementos de las subcategorías.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Mostrar los últimos artículos actualizados en las interfaces definidas.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Mostrar los últimos artículos creados en las interfaces definidas.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
-        'Mostrar las estrellas para los artículos con un ratio igual o mayor al valor definio (fije valor \'0\' para desactivar la salida)';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Mostrar los artículos Top 10 en las interfaces definidas.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Mostrar la votación en las interfaces definidas.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

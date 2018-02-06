@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Yhtään artikkelia ei löytynyt';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = '/ 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Hakusana';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'UKK tiedot';
     $Self->{Translation}->{'Rating'} = 'Arvostelut';
-    $Self->{Translation}->{'out of 5'} = '/ 5';
     $Self->{Translation}->{'Votes'} = 'Äänestykset';
     $Self->{Translation}->{'No votes found!'} = 'Ei ääniä!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Ei annettuja ääniä! Äänestä tätä artikkelia ensimmäisenä.';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = 'Kategorialla tulee olla nimi!';
     $Self->{Translation}->{'This category already exists'} = 'Tämä kategoria on jo olemassa';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Kategoria päivitetty!';
     $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = 'Kategoria lisätty!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Kategoria päivitetty!';
+    $Self->{Translation}->{'FAQ category added!'} = 'Kategoria lisätty!';
     $Self->{Translation}->{'Delete Category'} = 'Poista kategoria';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = 'Nimi on pakollinen!';
     $Self->{Translation}->{'This language already exists!'} = 'Tämä kieli on jo olemassa!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = 'Kieli päivitetty!';
     $Self->{Translation}->{'FAQ language added!'} = 'Kieli lisätty';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'Poista kieli %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Field4'} = '';
     $Self->{Translation}->{'Field5'} = '';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Kielten hallinta';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '';
     $Self->{Translation}->{'Number of shown items in last created.'} = '';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
-    $Self->{Translation}->{'Other Settings'} = 'Muut asetukset';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = '';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

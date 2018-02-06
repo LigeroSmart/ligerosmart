@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
-"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -196,6 +196,10 @@ msgstr "ページ毎の記事数"
 msgid "No FAQ data found."
 msgstr "FAQデータはありません。"
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "5つ星のうち"
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "キーワード"
@@ -291,10 +295,6 @@ msgstr "FAQ情報"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "レーティング"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr "5つ星のうち"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -450,16 +450,8 @@ msgid "This category already exists"
 msgstr "このカテゴリはすでに存在しています。"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "カテゴリが更新されました。"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr "このカテゴリはすでに存在しています！"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "新しいカテゴリが追加されました。"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -468,6 +460,14 @@ msgstr "カテゴリID が指定されていません！"
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "カテゴリが更新されました。"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "新しいカテゴリが追加されました。"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -526,16 +526,16 @@ msgid "This language already exists!"
 msgstr "この言語は設定済です。"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "言語が更新されました。"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "言語が追加されました。"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1088,14 +1088,6 @@ msgid "FAQ Print."
 msgstr "FAQ の表示"
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr "FAQジャーナル一覧(S)の1ページ毎の表示数"
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr "FAQ一覧(S)の1ページ毎の表示数"
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr "担当者インターフェイスにおける、FAQ検索のバックエンドルータ"
 
@@ -1149,6 +1141,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
+msgstr ""
+
+#. SysConfig
+msgid "Limit."
 msgstr ""
 
 #. SysConfig
@@ -1316,10 +1312,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "「トップ10記事」に何件まで表示するか"
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "その他の設定"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr ""
 
@@ -1458,7 +1450,7 @@ msgstr "最新の新規作成を表示する画面（担当者用/顧客用/公�
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
+"defined value (set value '0' to deactivate the output)."
 msgstr ""
 
 #. SysConfig

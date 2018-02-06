@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = '沒有找到常見問題數據。';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = '';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = '關鍵字';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '投票 (例：等於10或大於60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = '常見問題資訊';
     $Self->{Translation}->{'Rating'} = '評分';
-    $Self->{Translation}->{'out of 5'} = '';
     $Self->{Translation}->{'Votes'} = '選票';
     $Self->{Translation}->{'No votes found!'} = '沒有找到選票！';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = '目錄分類必須有名稱!';
     $Self->{Translation}->{'This category already exists'} = '此目錄分類已經存在';
-    $Self->{Translation}->{'FAQ category updated!'} = '常見問題目錄分類已更新!';
     $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = '常見問題目錄分類已添加!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = '常見問題目錄分類已更新!';
+    $Self->{Translation}->{'FAQ category added!'} = '常見問題目錄分類已添加!';
     $Self->{Translation}->{'Delete Category'} = '刪除目錄分類';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = '名稱為必須的!';
     $Self->{Translation}->{'This language already exists!'} = '此語言已存在!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = '常見問題語言已更新!';
     $Self->{Translation}->{'FAQ language added!'} = '常見問題語言已添加!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = '刪除語言 %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '常見問題日誌概況 "小" 模式限制';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '常見問題概況 "小"模式限制';
     $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '常見問題日誌概況 "小" 模式每頁顯示常見問題數量';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '常見問題概況 "小"  模式每頁顯示常見問題數量';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Field4'} = '欄位4';
     $Self->{Translation}->{'Field5'} = '欄位5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = '語言管理';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '連結其他物件到此常見問題物件';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = '最近更新顯示項目數量';
     $Self->{Translation}->{'Number of shown items in last created.'} = '最近創建顯示項目數量';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '首10篇功能顯示項目數量';
-    $Self->{Translation}->{'Other Settings'} = '其它設置';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = '顯示子目錄分類項目';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = '顯示指定介面的最近更新項目';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = '顯示指定介面的最近創建項目';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '顯示指定介面的首10個項目';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = '顯示指定介面的投票';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

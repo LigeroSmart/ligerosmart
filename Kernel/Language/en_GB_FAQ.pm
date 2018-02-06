@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ Category Management';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'Add FAQ Category';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'Edit FAQ Category';
     $Self->{Translation}->{'Add category'} = 'Add category';
     $Self->{Translation}->{'Add Category'} = 'Add Category';
     $Self->{Translation}->{'Edit Category'} = 'Edit Category';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ Language Management';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'Add FAQ Language';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'Edit FAQ Language';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         'Use this feature if you want to work with multiple languages.';
     $Self->{Translation}->{'Add language'} = 'Add language';
@@ -81,6 +81,9 @@ sub Data {
 
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'No FAQ data found.';
+
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'out of 5';
 
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Keyword';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'FAQ Information';
     $Self->{Translation}->{'Rating'} = 'Rating';
-    $Self->{Translation}->{'out of 5'} = 'out of 5';
     $Self->{Translation}->{'Votes'} = 'Votes';
     $Self->{Translation}->{'No votes found!'} = 'No votes found!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'No votes found! Be the first one to rate this FAQ article.';
@@ -121,7 +123,7 @@ sub Data {
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
-        'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!';
+        'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank you!';
     $Self->{Translation}->{'not helpful'} = 'not helpful';
     $Self->{Translation}->{'very helpful'} = 'very helpful';
 
@@ -137,9 +139,9 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = 'No FAQ articles found.';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'This might be helpful';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'Found no helpful resources for the subject and text.';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Type a subject or text to get a list of helpful resources.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")';
@@ -163,19 +165,19 @@ sub Data {
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Back to FAQ Explorer';
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
-    $Self->{Translation}->{'You need rw permission!'} = '';
+    $Self->{Translation}->{'You need rw permission!'} = 'You need rw permission!';
     $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
-    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'No default language found and can\'t create a new one.';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = 'A category should have a name!';
     $Self->{Translation}->{'This category already exists'} = 'This category already exists';
-    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ category updated!';
-    $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = 'FAQ category added!';
-    $Self->{Translation}->{'No CategoryID is given!'} = '';
+    $Self->{Translation}->{'This category already exists!'} = 'This category already exists!';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'No CategoryID is given!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ category updated!';
+    $Self->{Translation}->{'FAQ category added!'} = 'FAQ category added!';
     $Self->{Translation}->{'Delete Category'} = 'Delete Category';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -184,11 +186,11 @@ sub Data {
     $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'The CategoryID %s is invalid.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
-    $Self->{Translation}->{'FAQ History'} = '';
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = 'Can\'t show history, as no ItemID is given!';
+    $Self->{Translation}->{'FAQ History'} = 'FAQ History';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ Journal';
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = 'The name is required!';
     $Self->{Translation}->{'This language already exists!'} = 'This language already exists!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = 'FAQ language updated!';
     $Self->{Translation}->{'FAQ language added!'} = 'FAQ language added!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'Delete Language %';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -217,7 +219,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = 'No Result!';
     $Self->{Translation}->{'FAQ Number'} = 'FAQ number';
-    $Self->{Translation}->{'Last Changed by'} = '';
+    $Self->{Translation}->{'Last Changed by'} = 'Last Changed by';
     $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
@@ -282,7 +284,7 @@ sub Data {
     $Self->{Translation}->{'public'} = 'public';
 
     # JS File: FAQ.Agent.ConfirmationDialog
-    $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'Ok'} = 'OK';
 
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} =
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQ Journal Overview "Small" Limit';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ Overview "Small" Limit';
     $Self->{Translation}->{'FAQ Print.'} = 'FAQ Print.';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'FAQ limit per page for FAQ Journal Overview "Small"';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'FAQ limit per page for FAQ Overview "Small"';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'FAQ search backend router of the agent interface.';
     $Self->{Translation}->{'Field4'} = 'Field4';
     $Self->{Translation}->{'Field5'} = 'Field5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Language Management';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Link another object to this FAQ item';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Number of shown items in last changes.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Number of shown items in last created.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Number of shown items in the top 10 feature.';
-    $Self->{Translation}->{'Other Settings'} = 'Other Settings';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Show items of subcategories.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Show last change items in defined interfaces.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Show last created items in defined interfaces.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Show top 10 items in defined interfaces.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Show voting in defined interfaces.';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

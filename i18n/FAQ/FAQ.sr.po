@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 15:58+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -195,6 +195,10 @@ msgstr "FAQ чланака по страни"
 msgid "No FAQ data found."
 msgstr "Нису пронађени FAQ подаци."
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "од 5"
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "Кључна реч"
@@ -290,10 +294,6 @@ msgstr "FAQ информација"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "Оцењивање"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr "од 5"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -449,16 +449,8 @@ msgid "This category already exists"
 msgstr "Ова категорија већ постоји"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "FAQ категорија ажурирана!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr "Ова категорија већ постоји!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "FAQ категорија додата!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -467,6 +459,14 @@ msgstr "Није дат ИД Категорије!"
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr "Није било могуће обрисати категорију %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "FAQ категорија ажурирана!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "FAQ категорија додата!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -525,16 +525,16 @@ msgid "This language already exists!"
 msgstr "Овај језик већ постоји!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Није било могуће обрисати језик %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "Ажуриран FAQ језик!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "Додат FAQ језик!"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr "Није било могуће обрисати језик %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1087,14 +1087,6 @@ msgid "FAQ Print."
 msgstr "Штампај FAQ."
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr "Ограничење броја FAQ по страни за преглед FAQ дневника \"мало\""
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr "Ограничење броја FAQ по страни за преглед FAQ \"мало\""
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr "Модул рутера FAQ претраге у интерфејсу оператера."
 
@@ -1149,6 +1141,10 @@ msgstr "Управљање језицима."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "Ограничење претраге за генерисање листе кључних речи FAQ чланака."
+
+#. SysConfig
+msgid "Limit."
+msgstr ""
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1315,10 +1311,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "Број приказаних ставки у \"првих 10\" ."
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "Друга подешавања"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr "Излазни филтер за убацивање JavaScript у CustomerTicketMessage екран."
 
@@ -1457,8 +1449,8 @@ msgstr "Прикажи задње креиране ставке у дефини�
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
-msgstr "Прикажи звездице за чланке са једнаком или бољом оценом од одређене вредности (постави вредност 0 за деактивирање излаза)."
+"defined value (set value '0' to deactivate the output)."
+msgstr ""
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

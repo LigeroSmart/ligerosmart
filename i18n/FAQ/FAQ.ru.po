@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-12 23:14+0000\n"
-"PO-Revision-Date: 2017-12-12 23:16+0000\n"
+"POT-Creation-Date: 2018-02-06 15:57+0000\n"
+"PO-Revision-Date: 2018-02-06 15:58+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -196,6 +196,10 @@ msgstr "Количество статей на страницу"
 msgid "No FAQ data found."
 msgstr "Данные FAQ не найдены."
 
+#. Template: AgentFAQRelatedArticles
+msgid "out of 5"
+msgstr "из 5"
+
 #. Template: AgentFAQSearch
 msgid "Keyword"
 msgstr "Ключевое слово"
@@ -291,10 +295,6 @@ msgstr "Информация FAQ"
 #. Template: AgentFAQZoom
 msgid "Rating"
 msgstr "Оценка"
-
-#. Template: AgentFAQZoom
-msgid "out of 5"
-msgstr "из 5"
 
 #. Template: AgentFAQZoom
 msgid "Votes"
@@ -450,16 +450,8 @@ msgid "This category already exists"
 msgstr "Такая категория уже существует!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category updated!"
-msgstr "Категория FAQ изменена!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
 msgstr "Такая категория уже существует!"
-
-#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
-msgid "FAQ category added!"
-msgstr "Категория FAQ добавлена!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
@@ -468,6 +460,14 @@ msgstr "CategoryID не задан!"
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
 msgstr "Не удалось удалить категорию %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category updated!"
+msgstr "Категория FAQ изменена!"
+
+#. Perl Module: Kernel/Modules/AgentFAQCategory.pm
+msgid "FAQ category added!"
+msgstr "Категория FAQ добавлена!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -526,16 +526,16 @@ msgid "This language already exists!"
 msgstr "Такой язык уже существует!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
+msgid "Was not able to delete the language %s!"
+msgstr "Не удалось удалить язык %s!"
+
+#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
 msgstr "Язык для FAQ изменён!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
 msgstr "Язык для FAQ добавлен!"
-
-#. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-msgid "Was not able to delete the language %s!"
-msgstr "Не удалось удалить язык %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
@@ -1088,14 +1088,6 @@ msgid "FAQ Print."
 msgstr "Печать статьи FAQ."
 
 #. SysConfig
-msgid "FAQ limit per page for FAQ Journal Overview \"Small\""
-msgstr "Количество статей при просмотре Журнала FAQ в \"Small\" формате на страницу"
-
-#. SysConfig
-msgid "FAQ limit per page for FAQ Overview \"Small\""
-msgstr "Количество статей, отображаемых при просмотре Журнала FAQ в \"Small\" формате на страницу"
-
-#. SysConfig
 msgid "FAQ search backend router of the agent interface."
 msgstr "Включить и настроить модуль поиска FAQ для интерфейса агента."
 
@@ -1150,6 +1142,10 @@ msgstr "Управление языками."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "Лимит  для поиска для построения списка контекстных статей FAQ."
+
+#. SysConfig
+msgid "Limit."
+msgstr ""
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1316,10 +1312,6 @@ msgid "Number of shown items in the top 10 feature."
 msgstr "Количество отображаемых позиций в функции Top 10."
 
 #. SysConfig
-msgid "Other Settings"
-msgstr "Прочие настройки"
-
-#. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
 msgstr "Выходной фильтр для добавления Java-script для экрана CustomerTicketMessage."
 
@@ -1458,8 +1450,8 @@ msgstr "Показывать новые пункты в указанных ин�
 #. SysConfig
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
-"defined value (set value '0' to deactive the output)."
-msgstr "Показывать \"звёзды\" для статей, рейтинг которых равен или больше заданного здесь (установите в \"0\" для отключения показа)."
+"defined value (set value '0' to deactivate the output)."
+msgstr ""
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

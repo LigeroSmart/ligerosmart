@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Nem találhatók GyIK adatok.';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'az 5-ből';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Kulcsszó';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Szavazás (például Egyenlő 10 vagy Nagyobb mint 60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'GyIK információk';
     $Self->{Translation}->{'Rating'} = 'Értékelés';
-    $Self->{Translation}->{'out of 5'} = 'az 5-ből';
     $Self->{Translation}->{'Votes'} = 'Szavazatok';
     $Self->{Translation}->{'No votes found!'} = 'Nem találhatók szavazatok!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nem találhatók szavazatok! Legyen az első, aki értékeli ezt a GyIK bejegyzést.';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = 'Kategória-azonosító szükséges!';
     $Self->{Translation}->{'A category should have a name!'} = 'Egy kategóriának rendelkeznie kell névvel!';
     $Self->{Translation}->{'This category already exists'} = 'Ez a kategória már létezik';
-    $Self->{Translation}->{'FAQ category updated!'} = 'GyIK kategória frissítve!';
     $Self->{Translation}->{'This category already exists!'} = 'Ez a kategória már létezik!';
-    $Self->{Translation}->{'FAQ category added!'} = 'GyIK kategória hozzáadva!';
     $Self->{Translation}->{'No CategoryID is given!'} = 'Nincs kategória-azonosító megadva!';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Nem sikerült a(z) %s kategória törlése!';
+    $Self->{Translation}->{'FAQ category updated!'} = 'GyIK kategória frissítve!';
+    $Self->{Translation}->{'FAQ category added!'} = 'GyIK kategória hozzáadva!';
     $Self->{Translation}->{'Delete Category'} = 'Kategória törlése';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = 'Nincs nyelvazonosító megadva!';
     $Self->{Translation}->{'The name is required!'} = 'A név kötelező!';
     $Self->{Translation}->{'This language already exists!'} = 'Ez a nyelv már létezik!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Nem sikerült a(z) %s nyelv törlése!';
     $Self->{Translation}->{'FAQ language updated!'} = 'GyIK nyelv frissítve!';
     $Self->{Translation}->{'FAQ language added!'} = 'GyIK nyelv hozzáadva!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Nem sikerült a(z) %s nyelv törlése!';
     $Self->{Translation}->{'Delete Language %s'} = '%s nyelv törlése';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'GyIK napló áttekintő „kis” korlát';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'GyIK áttekintő „kis” korlát';
     $Self->{Translation}->{'FAQ Print.'} = 'GyIK nyomtatás.';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Oldalankénti GyIK korlát a „kis” GyIK napló áttekintőnél';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Oldalankénti GyIK korlát a „kis” GyIK áttekintőnél';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Az ügyintézői felület GyIK keresési háttérprogram útválasztója.';
     $Self->{Translation}->{'Field4'} = '4. mező';
     $Self->{Translation}->{'Field5'} = '5. mező';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Nyelvkezelés';
     $Self->{Translation}->{'Language Management.'} = 'Nyelvkezelés.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'A keresés korlátozása a kulcsszó GyIK bejegyzéslista összeállításához.';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Másik objektum hozzákapcsolása ehhez a GyIK elemhez';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Azon várólistanevek listája, amelyeknél a kapcsolódó bejegyzés funkció engedélyezve van.';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'A megjelenített elemek száma a legutóbb módosítottakban.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'A megjelenített elemek száma a legutóbb létrehozottakban.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'A megjelenített elemek száma a legjobb 10 szolgáltatásban.';
-    $Self->{Translation}->{'Other Settings'} = 'Egyéb beállítások';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         'Kimenetszűrő JavaScript hozzáadásához az ügyféljegy üzenet képernyőhöz.';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = 'Kimenetkorlát a kapcsolódó GyIK bejegyzésekhez.';
@@ -519,8 +519,8 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Alkategóriák elemeinek megjelenítése.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Az utoljára módosított elemek megjelenítése a meghatározott felületeken.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Az utoljára létrehozott elemek megjelenítése a meghatározott felületeken.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
-        'Csillagok megjelenítése a meghatározott értékkel egyenlő vagy annál jobb értékeléssel rendelkező bejegyzéseknél (állítsa az értéket „0”-ra a kimenet kikapcsolásához).';
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
+        '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'A legjobb 10 elem megjelenítése a meghatározott felületeken.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Szavazás megjelenítése a meghatározott felületeken.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 

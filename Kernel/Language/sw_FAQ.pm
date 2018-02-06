@@ -82,6 +82,9 @@ sub Data {
     # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Hakuna data za maswali';
 
+    # Template: AgentFAQRelatedArticles
+    $Self->{Translation}->{'out of 5'} = 'Kati ya 5';
+
     # Template: AgentFAQSearch
     $Self->{Translation}->{'Keyword'} = 'Neno kuu';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Kura (mfano. sawa na 10 au Zaidi ya 60)';
@@ -113,7 +116,6 @@ sub Data {
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Habari za Maswali';
     $Self->{Translation}->{'Rating'} = 'Thaminisha';
-    $Self->{Translation}->{'out of 5'} = 'Kati ya 5';
     $Self->{Translation}->{'Votes'} = 'Kura';
     $Self->{Translation}->{'No votes found!'} = 'Hakuna Kura zilizopatika';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Hakuna kura. Kuwa wa kwanza kuthaminisha makala hii ya maswali.';
@@ -171,11 +173,11 @@ sub Data {
     $Self->{Translation}->{'Need CategoryID!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = 'sehemu iwe na jina';
     $Self->{Translation}->{'This category already exists'} = 'Hii sehemu tayari ipo';
-    $Self->{Translation}->{'FAQ category updated!'} = 'Sehemu ya maswali iliyobadilishwa!';
     $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = 'Sehemu ya maswali iliyoongezwa!';
     $Self->{Translation}->{'No CategoryID is given!'} = '';
     $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'Sehemu ya maswali iliyobadilishwa!';
+    $Self->{Translation}->{'FAQ category added!'} = 'Sehemu ya maswali iliyoongezwa!';
     $Self->{Translation}->{'Delete Category'} = 'Futa sehemu';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
@@ -201,9 +203,9 @@ sub Data {
     $Self->{Translation}->{'No LanguageID is given!'} = '';
     $Self->{Translation}->{'The name is required!'} = 'Jina linahitajika!';
     $Self->{Translation}->{'This language already exists!'} = 'Lugha ipo tayari!';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'FAQ language updated!'} = 'Lugha ya maswali imebadilishwa!';
     $Self->{Translation}->{'FAQ language added!'} = 'Lugha ya maswali  imeongezwa!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
     $Self->{Translation}->{'Delete Language %s'} = 'Futa Lugha';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
@@ -403,8 +405,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = ' Kikomo "kidogo" cha mapitio ya jarida la maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Kikomo "kidogo" cha mapitio ya maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'FAQ Print.'} = '';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = 'Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio ya jarida ya maswali yanayoulizwa mara kwa mara. \'\'Ndogo\'\'.';
-    $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = 'Upeo wa maswali yanayoulizwa mara kwa mara kwa ukurasa kwa mapitio  ya maswali yanayoulizwa mara kwa mara. \'\'Ndogo\'\'.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha wakala.';
     $Self->{Translation}->{'Field4'} = 'Sehemu4';
     $Self->{Translation}->{'Field5'} = 'Sehemu5';
@@ -419,6 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Menejimenti ya lugha';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Unganishga kitu kingine na kipengele hiki cha  maswali yaliyoulizwa mara kwa mara';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';
@@ -475,7 +476,6 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Namba ya vitu vilivoonyweshwa katika mabadiliko ya mwisho.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Namba ya vitu vilivotengenezwa mwishoni.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Namba ya vitu vilivoonyweshwa katika vipengele 10 bora.';
-    $Self->{Translation}->{'Other Settings'} = 'Mipangilio mingine';
     $Self->{Translation}->{'Output filter to add Java-script to CustomerTicketMessage screen.'} =
         '';
     $Self->{Translation}->{'Output limit for the related FAQ articles.'} = '';
@@ -519,7 +519,7 @@ sub Data {
     $Self->{Translation}->{'Show items of subcategories.'} = 'Inaonyesha vipengele vya kategori.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Inaonyesha vipengele vilivyobadilishwa katika kiolesura kilichofafanuliwa.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Inaonyesha vipengele vilivyotengenezwa mwishoni katika kiolesura  kilichofafanuliwa.';
-    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactive the output).'} =
+    $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
         '';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Inaonyesha vipengele  10  bora katika kiolesura kilichofafanuliwa.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Inaonyesha kupiga kura katika kiolesura kilichofafanuliwa.';
@@ -563,6 +563,7 @@ sub Data {
     'Ok',
     'Settings',
     'Submit',
+    'This might be helpful',
     'Yes',
     );
 
