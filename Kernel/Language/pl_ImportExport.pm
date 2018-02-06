@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ogranicz eksport przez wyszukanie';
     $Self->{Translation}->{'Import information'} = 'Importuj informacje';
     $Self->{Translation}->{'Source File'} = 'Plik źródłowy';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = 'Podsumowanie importu dla %s';
     $Self->{Translation}->{'Records'} = 'Rekordy';
     $Self->{Translation}->{'Success'} = 'Powodzenie';
     $Self->{Translation}->{'Duplicate names'} = 'Duplikaty nazw';
@@ -64,7 +64,7 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Średnik (;)';
     $Self->{Translation}->{'Colon (:)'} = 'Dwukropek (:)';
     $Self->{Translation}->{'Dot (.)'} = 'Kropka (.)';
-    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Comma (,)'} = 'Przecinek (,)';
     $Self->{Translation}->{'Charset'} = 'Kodowanie ';
     $Self->{Translation}->{'Include Column Headers'} = 'Umieść nagłówki kolumn';
     $Self->{Translation}->{'Column'} = 'Kolumna';

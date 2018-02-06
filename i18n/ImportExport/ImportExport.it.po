@@ -3,13 +3,14 @@
 # Fabio Bucci <fabietto82@gmail.com>, 2017
 # Luca Maranzano <liuk@linux.it>, 2014
 # Marthe Ngo Temb <ngotemb@gmail.com>, 2015
+# Sergio Giganti <s.giganti@eaisoftware.it>, 2017
 # Vincenzo Reale <vinx.reale@gmail.com>, 2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:57+0000\n"
-"PO-Revision-Date: 2017-09-29 14:58+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2017-10-10 14:08+0000\n"
+"PO-Revision-Date: 2017-12-12 08:56+0000\n"
+"Last-Translator: Sergio Giganti <s.giganti@eaisoftware.it>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +36,7 @@ msgstr "Inizia Esportazione"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr ""
+msgstr "Step 1 di 5 - Modifica informazioni comuni"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -51,11 +52,11 @@ msgstr "Il formato è obbligatorio!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr ""
+msgstr "Step 2 di 5 - Modifica informazioni oggetto"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5 - Edit format information"
-msgstr ""
+msgstr "Step 3 di 5 - Modifica informazioni formato"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -63,7 +64,7 @@ msgstr "è obbligatorio!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr ""
+msgstr "Step 4 di 5 - Modifica informazioni mappatura"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -75,7 +76,7 @@ msgstr "Aggiungi un elemento di mappatura."
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr ""
+msgstr "Step 5 di 5 - Modifica informazioni di ricerca"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -115,11 +116,11 @@ msgstr "Ok"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
-msgstr ""
+msgstr "Nessun oggetto di backend trovato!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No format backend found!"
-msgstr ""
+msgstr "Nessun formato di backend trovato!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
@@ -127,7 +128,7 @@ msgstr "Modello non trovato!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr ""
+msgstr "Non è possibile inserire/modificare template!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
@@ -135,11 +136,11 @@ msgstr "Necessario TemplateID!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr ""
+msgstr "Errore riscontrato. Impossibile importare! Leggi i Syslog per ulteriori dettagli."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr ""
+msgstr "Errore riscontrato. Impossibile esportare! Leggi i Syslog per ulteriori dettagli."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"

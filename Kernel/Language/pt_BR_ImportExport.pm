@@ -34,7 +34,7 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportação por pesquisa';
     $Self->{Translation}->{'Import information'} = 'Informações de importação';
     $Self->{Translation}->{'Source File'} = 'Arquivo de Origem';
-    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Import summary for %s'} = 'Resumo de importação para %s';
     $Self->{Translation}->{'Records'} = 'Registros';
     $Self->{Translation}->{'Success'} = 'Sucesso';
     $Self->{Translation}->{'Duplicate names'} = 'Nomes duplicados';

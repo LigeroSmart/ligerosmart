@@ -21,7 +21,7 @@ sub Data {
     $Self->{Translation}->{'Start Import'} = 'Iniciar Importación';
     $Self->{Translation}->{'Start Export'} = 'Iniciar Exportación';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Paso 1 de 5 - Editar información común';
-    $Self->{Translation}->{'Name is required!'} = '¡El nombre es requerido!';
+    $Self->{Translation}->{'Name is required!'} = '¡Se requiere Nombre!';
     $Self->{Translation}->{'Object is required!'} = '¡Debe especificar Objeto!';
     $Self->{Translation}->{'Format is required!'} = '¡Debe especificar Formato!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = 'Paso 2 de 5 - Editar información de objeto';
