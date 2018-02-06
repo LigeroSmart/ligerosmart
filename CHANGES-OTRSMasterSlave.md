@@ -1,4 +1,7 @@
-#6.0.3 20??-??-??
+#6.0.4 20??-??-??
+
+#6.0.3 2018-02-13
+ - 2018-02-06 Updated translations, thanks to all translators.
  - 2018-02-06 Updated framework files to OTRS 6.0.5.
  - 2018-01-11 Fixed bug#[12951](https://bugs.otrs.org/show_bug.cgi?id=12951) - Untranslated strings in TicketZoom screen.
  - 2018-01-10 Fixed bug#[10415](https://bugs.otrs.org/show_bug.cgi?id=10415) - RichTextWidth and RichTextHeight settings missing.
