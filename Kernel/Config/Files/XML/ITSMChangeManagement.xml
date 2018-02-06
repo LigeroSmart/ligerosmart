@@ -64,7 +64,7 @@
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
                 <Item Key="Name" Translatable="1">Category ↔ Impact ↔ Priority</Item>
                 <Item Key="Block">ChangeSettings</Item>
-                <Item Key="Description">Manage the category - impact - priority matrix.</Item>
+                <Item Key="Description" Translatable="1">Manage the category ↔ impact ↔ priority matrix.</Item>
                 <Item Key="IconBig">fa-table</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
@@ -140,7 +140,7 @@
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
                 <Item Key="Name" Translatable="1">ITSM Change Notifications</Item>
                 <Item Key="Block">Communication</Item>
-                <Item Key="Description">Create and manage change notifications.</Item>
+                <Item Key="Description" Translatable="1">Create and manage change notifications.</Item>
                 <Item Key="IconBig">fa-bell-o</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
@@ -197,7 +197,7 @@
                 <Item Key="Module">Kernel::Output::HTML::NavBar::ModuleAdmin</Item>
                 <Item Key="Name" Translatable="1">State Machine</Item>
                 <Item Key="Block">ChangeSettings</Item>
-                <Item Key="Description">Manage ITSM Change Management state machine.</Item>
+                <Item Key="Description" Translatable="1">Manage ITSM Change Management state machine.</Item>
                 <Item Key="IconBig">fa-cogs</Item>
                 <Item Key="IconSmall"></Item>
             </Hash>
