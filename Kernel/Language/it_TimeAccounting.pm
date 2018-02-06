@@ -121,7 +121,7 @@ sub Data {
         'Esiste già un task con questo nome. Scegliere un nome diverso.';
     $Self->{Translation}->{'User List'} = 'Elenco utenti';
     $Self->{Translation}->{'User Settings'} = 'Impostazioni utente';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'L\'Utente può vedere lo straordinario';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrare straordinari';
     $Self->{Translation}->{'User is allowed to create projects'} = 'L\'Utente può creare progetti';
     $Self->{Translation}->{'Allow project creation'} = 'Consentire la creazione del progetto';
@@ -154,7 +154,7 @@ sub Data {
     $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Non puoi salvare le impostazioni, perchè un giorno ha solo 24 ore!';
     $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Non puoi cancellare le unità lavorative!';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
-        '';
+        'Questa Data è fuori limite massimo, ma non hai ancora ancora inserito questo giorno, quindi hai ancora una (!) possibilità di inserirne uno.';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Giorni lavorativi incompleti';
     $Self->{Translation}->{'Please insert your working hours!'} = 'Inserire l\'orario lavorativo!';
     $Self->{Translation}->{'Successful insert!'} = 'Inserimento avvenuto con successo!';
@@ -162,7 +162,7 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Inserimento di date multiple avvenuto con successo!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'La data inserita non è valida! E\' stata impostata la data di oggi.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        'Nessun periodo di tempo configurato, o la data specificata è fuori dai periodi di tempo definiti.';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         'Per favore, contattare l\'amministrazione della contabilizzazione temporale per aggiornare i tuoi intervalli di tempo!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Ultimi progetti selezionati';

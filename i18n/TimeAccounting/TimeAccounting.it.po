@@ -2,7 +2,7 @@
 # Translators:
 # Fabrizio Scaletta <fabrizio.scaletta@pharmaidea.com>, 2017
 # Luca Maranzano <liuk@linux.it>, 2014
-# Sergio Giganti <s.giganti@eaisoftware.it>, 2017
+# Sergio Giganti <s.giganti@eaisoftware.it>, 2017-2018
 # stefanomarty <stefano.ste.martinelli@gmail.com>, 2016
 # stefanomarty <stefano.ste.martinelli@gmail.com>, 2016
 # Vincenzo Reale <vinx.reale@gmail.com>, 2015,2017
@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-12-12 10:07+0000\n"
+"PO-Revision-Date: 2018-01-03 12:05+0000\n"
 "Last-Translator: Sergio Giganti <s.giganti@eaisoftware.it>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -371,7 +371,7 @@ msgstr "Impostazioni utente"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to see overtimes"
-msgstr ""
+msgstr "L'Utente può vedere lo straordinario"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
@@ -485,7 +485,7 @@ msgstr "Non puoi cancellare le unità lavorative!"
 msgid ""
 "This Date is out of limit, but you haven't insert this day yet, so you get "
 "one(!) chance to insert"
-msgstr ""
+msgstr "Questa Data è fuori limite massimo, ma non hai ancora ancora inserito questo giorno, quindi hai ancora una (!) possibilità di inserirne uno."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -515,7 +515,7 @@ msgstr "La data inserita non è valida! E' stata impostata la data di oggi."
 msgid ""
 "No time period configured, or the specified date is outside of the defined "
 "time periods."
-msgstr ""
+msgstr "Nessun periodo di tempo configurato, o la data specificata è fuori dai periodi di tempo definiti."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid ""
