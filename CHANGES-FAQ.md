@@ -3,7 +3,7 @@
  - 2018-01-07 Fixed bug#[13443](https://bugs.otrs.org/show_bug.cgi?id=13443) - Personal settings are not displayed.
  - 2017-12-15 Fixed bug#[13416](https://bugs.otrs.org/show_bug.cgi?id=13416) - Trying to enable multi-language feature from language management leads to an error.
  - 2017-12-15 Fixed bug#[13421](https://bugs.otrs.org/show_bug.cgi?id=13421) - FAQ link for ticket compose does not show for new default groups.
- - 2017-12-15 Added related FAQ articles for agents feature (required output filter is moved to OTRSBusiness package).
+ - 2017-12-15 Added related FAQ articles for agents feature (for OTRS Business™ Solution).
  - 2018-01-08 Fixed bug#[11446](https://bugs.otrs.org/show_bug.cgi?id=11446) - Refresh after language is added tries to add the language again.
 
 #6.0.2 2017-12-19
