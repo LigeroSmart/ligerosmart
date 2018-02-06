@@ -3,11 +3,12 @@
 # Daniel Lisiecki, 2017
 # Jerzy Ruszczak <orcio6@o2.pl>, 2015-2016
 # OTRS365 <info@otrs365.com>, 2015
+# Patryk Zera <sanchez@atlasnet.pl>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-13 01:14+0000\n"
-"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"POT-Creation-Date: 2018-02-06 18:59+0000\n"
+"PO-Revision-Date: 2018-02-06 19:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Polish (http://www.transifex.com/otrs/OTRS/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -47,6 +48,14 @@ msgstr "Wyczyść wartość Nadrzędny"
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
 msgstr "Wyczyść wartość Podrzędny"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr ""
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -212,6 +221,10 @@ msgid ""
 msgstr "Uprawnienia wymagane do używania ekranu Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
 
 #. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the default body text for notes added in the ticket MasterSlave screen "
 "of a zoomed ticket in the agent interface."
@@ -276,7 +289,7 @@ msgstr "Pokazuje opcje priorytetu zgłoszenia na ekranie Nadrzędny/Podrzędny, 
 msgid ""
 "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr ""
+msgstr "Pokazuje pole tytułu na ekranie Nadrzędny/Podrzędny w szczegółach zgłoszenia w intefejsie agenta."
 
 #. SysConfig
 msgid "Slave Tickets"

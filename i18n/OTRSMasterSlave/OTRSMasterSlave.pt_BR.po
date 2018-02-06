@@ -1,13 +1,14 @@
 # 
 # Translators:
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2016
+# Ricardo von Staa <ricardo.von.staa@otrs.com>, 2017
 # Ronaldo Richieri <ronaldo@complemento.net.br>, 2015,2017
 # Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-13 01:14+0000\n"
-"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"POT-Creation-Date: 2018-02-06 18:59+0000\n"
+"PO-Revision-Date: 2018-02-06 19:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -47,6 +48,14 @@ msgstr "Limpar Chamados Mestres"
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
 msgstr "Limpar Chamados Escravos"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr "Mestre"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -212,6 +221,10 @@ msgid ""
 msgstr "Permissões requeridas para usar a tela MasterSlave de ticket de um ticket detalhado na interface de agente."
 
 #. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the default body text for notes added in the ticket MasterSlave screen "
 "of a zoomed ticket in the agent interface."
@@ -276,7 +289,7 @@ msgstr "Exibe as opções de prioridade de ticket na tela MasterSlave de ticket 
 msgid ""
 "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr ""
+msgstr "Mostra o título na tela de um chamado MestreEscravo de um chamado aberto na interface de agente."
 
 #. SysConfig
 msgid "Slave Tickets"
@@ -290,7 +303,7 @@ msgstr "Especifica os diferentes tipos de artigo onde o nome real do ticket Mast
 
 #. SysConfig
 msgid "Specifies the different note types that will be used in the system."
-msgstr ""
+msgstr "Especifica os diferentes tipos de notas que serão utilizados no sistema."
 
 #. SysConfig
 msgid ""

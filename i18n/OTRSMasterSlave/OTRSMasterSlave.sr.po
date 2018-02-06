@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-13 01:14+0000\n"
-"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"POT-Creation-Date: 2018-02-06 18:59+0000\n"
+"PO-Revision-Date: 2018-02-06 19:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -46,6 +46,14 @@ msgstr "Опозови подешавање главних тикета"
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
 msgstr "Опозови подешавање зависних тикета"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr "Главно"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -211,6 +219,10 @@ msgid ""
 msgstr "Неопходна дозвола за употребу главни/зависни екрана детаљног приказа тикета у интерфејсу оператера."
 
 #. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the default body text for notes added in the ticket MasterSlave screen "
 "of a zoomed ticket in the agent interface."
@@ -275,7 +287,7 @@ msgstr "Приказује опције приоритета тикета на �
 msgid ""
 "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr ""
+msgstr "Приказује насловна поља на екрану главни/зависни тикета у интерфејсу оператера."
 
 #. SysConfig
 msgid "Slave Tickets"

@@ -32,6 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = '';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master'} = 'Induk';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = '';
 
     # SysConfig
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Pendaftaran tiket modul acara.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Kebenaran yang diperlukan untuk menggunakan skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Menetapkan teks badan default untuk nota ditambah dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

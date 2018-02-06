@@ -32,6 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = '';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master'} = 'Fuzu';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = '';
 
     # SysConfig
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Usajili wa kipimo cha tukio la tiketi.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Inahitaji ruhusa kutumia skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kioesura cha wakala.';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Inaweka matini kiini kilichoongezwa cha chaguo-msingi katika skrini ya mkuumtuwa ya tiketi katika tiketi iliyokuzwa katika kiolesura cha wakala.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

@@ -1,12 +1,13 @@
 # 
 # Translators:
 # 汇民 王 <whuim@163.com>, 2016-2017
+# 汇民 王 <whuim@qq.com>, 2018
 # 陈德文 <sggggy@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-13 01:14+0000\n"
-"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"POT-Creation-Date: 2018-02-06 18:59+0000\n"
+"PO-Revision-Date: 2018-02-06 19:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -46,6 +47,14 @@ msgstr "取消主工单设置"
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
 msgstr "取消从工单设置"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr "主"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -211,6 +220,10 @@ msgid ""
 msgstr "服务人员界面使用主从工单详情窗口必需的权限。"
 
 #. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the default body text for notes added in the ticket MasterSlave screen "
 "of a zoomed ticket in the agent interface."
@@ -275,7 +288,7 @@ msgstr "在服务人员界面主从工单详情窗口是否显示工单优先级
 msgid ""
 "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr ""
+msgstr "在服务人员界面主从工单详情窗口显示工单标题字段。"
 
 #. SysConfig
 msgid "Slave Tickets"

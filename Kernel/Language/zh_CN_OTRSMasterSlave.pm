@@ -32,6 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = '取消从工单设置';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master'} = '主';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = '主工单';
 
     # SysConfig
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = '注册到工单事件模块。';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '服务人员界面使用主从工单详情窗口必需的权限。';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '设置服务人员界面主从工单详情窗口添加备注的的默认正文文本。';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -102,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '在服务人员界面主从工单详情窗口是否显示工单优先级的选项。';
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '';
+        '在服务人员界面主从工单详情窗口显示工单标题字段。';
     $Self->{Translation}->{'Slave Tickets'} = '从工单';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '指定使用从工单的客户真实姓名替换主工单的真空姓名的信件类型。';

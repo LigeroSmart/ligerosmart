@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-13 01:14+0000\n"
-"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"POT-Creation-Date: 2018-02-06 18:59+0000\n"
+"PO-Revision-Date: 2018-02-06 19:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -51,6 +51,14 @@ msgstr "Aufheben der Master-Tickets"
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
 msgstr "Aufheben der Slave-Tickets"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr "Master"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -214,6 +222,10 @@ msgid ""
 "Required permissions to use the ticket MasterSlave screen of a zoomed ticket"
 " in the agent interface."
 msgstr "Benötigte Berechtigungen für die Anzeige des MasterSlave-Dialogs im Ticket-Zoom-Dialog des Agenteninterface."
+
+#. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
 
 #. SysConfig
 msgid ""

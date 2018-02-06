@@ -25,14 +25,16 @@ sub Data {
     $Self->{Translation}->{'New Master Ticket'} = '新しいマスターチケット';
     $Self->{Translation}->{'Unset Master Ticket'} = 'マスターチケットを解除する';
     $Self->{Translation}->{'Unset Slave Ticket'} = 'スレーブチケットを解除する';
-    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '%s%s%sのステーブ: %s';
+    $Self->{Translation}->{'Slave of %s%s%s: %s'} = '%s%s%sのスレーブ: %s';
 
     # Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
     $Self->{Translation}->{'Unset Master Tickets'} = 'マスターチケットを解除する';
     $Self->{Translation}->{'Unset Slave Tickets'} = 'スレーブチケットを解除する';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master Ticket'} = 'マスターチケット';
+    $Self->{Translation}->{'Master'} = 'マスター';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
+    $Self->{Translation}->{'Master Ticket'} = 'マスター チケット';
 
     # SysConfig
     $Self->{Translation}->{'All master tickets'} = 'すべてのマスターチケット';
@@ -46,7 +48,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '';
+        '担当者インターフェイス のズームされたチケットのマスター・スレーブ画面で、デフォルトの チケット 優先度を定義します。';
     $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '担当者インタフェースのズームされたチケットのマスター・スレーブ画面で、デフォルトのメモのタイプを定義します。';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'チケットイベントモジュールの登録';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '担当者インタフェースで、ズームされたチケットのマスター・スレーブ画面を使用するための必要な許可です。';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '担当者インタフェースのズームされたチケットのマスター・スレーブ画面で、追加されたメモのデフォルトの本文を設定します。';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

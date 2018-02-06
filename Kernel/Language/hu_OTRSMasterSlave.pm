@@ -32,6 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Alárendelt jegyek törlése';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master'} = 'Mester';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = 'Mesterjegy';
 
     # SysConfig
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'A jegy esemény modul regisztrációja.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'A szükséges jogosultságok egy nagyított jegynek a jegy mester-alárendelt képernyőjének használatához az ügyintézői felületen.';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Beállítja az alapértelmezett törzsszöveget egy nagyított jegynek a jegy mester-alárendelt képernyőjén hozzáadott jegyzeteknél az ügyintézői felületen.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -102,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Megjeleníti a jegy prioritási lehetőségeket egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '';
+        'Megjeleníti a címmezőt egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Slave Tickets'} = 'Alárendelt jegyek';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';

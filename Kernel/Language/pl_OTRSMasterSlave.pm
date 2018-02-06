@@ -32,6 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Wyczyść wartość Podrzędny';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = 'Zgłoszenie nadrzędne';
 
     # SysConfig
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Rejestracja modułu zdarzeń zgłoszenia,';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Uprawnienia wymagane do używania ekranu Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Ustawia domyślną treść notatki dodawanej do zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -102,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Pokazuje opcje priorytetu zgłoszenia na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta';
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '';
+        'Pokazuje pole tytułu na ekranie Nadrzędny/Podrzędny w szczegółach zgłoszenia w intefejsie agenta.';
     $Self->{Translation}->{'Slave Tickets'} = 'Zgłoszenia podrzędne';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Określa różne rodzaje typów wiadomości i w jaki sposób właściwa nazwa ze zgłoszenia nadrzędnego zostanie zastąpiona w zgłoszeniu podrzędnym.';

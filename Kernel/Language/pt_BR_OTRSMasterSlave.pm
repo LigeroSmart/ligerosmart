@@ -32,6 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Limpar Chamados Escravos';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+    $Self->{Translation}->{'Master'} = 'Mestre';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = 'Chamado Mestre';
 
     # SysConfig
@@ -81,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Registro do módulo de eventos de ticket.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Permissões requeridas para usar a tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define o corpo do texto padrão para notas adicionadas na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -102,12 +105,12 @@ sub Data {
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Exibe as opções de prioridade de ticket na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '';
+        'Mostra o título na tela de um chamado MestreEscravo de um chamado aberto na interface de agente.';
     $Self->{Translation}->{'Slave Tickets'} = 'Chamados Escravos';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Especifica os diferentes tipos de artigo onde o nome real do ticket Master será substituído com o nome do ticket escravo.';
     $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '';
+        'Especifica os diferentes tipos de notas que serão utilizados no sistema.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Este módulo ativa o campo Mestre/Escravo nas telas de novo chamado fone/e-mail.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Chamado MestreEscravo';

@@ -1,7 +1,7 @@
 # 
 # Translators:
 # Camilo ochoa <ceochoa@misena.edu.co>, 2015
-# David B <link.bigpoint@outlook.com>, 2017
+# David B <link.bigpoint@outlook.com>, 2017-2018
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
 # Fernando Casal <fernando.casal@serviciomovil.com>, 2017
 # juanman <juanma@gnutn.org.ar>, 2016
@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-12-13 01:14+0000\n"
-"PO-Revision-Date: 2017-12-13 01:15+0000\n"
+"POT-Creation-Date: 2018-02-06 18:59+0000\n"
+"PO-Revision-Date: 2018-02-06 19:00+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -50,6 +50,14 @@ msgstr "Desactivar tickets maestros"
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
 msgstr "Desactivar tickets esclavos"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Master"
+msgstr "Maestro"
+
+#. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
+msgid "Slave of %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -215,6 +223,10 @@ msgid ""
 msgstr "Permisos requeridos para usar la pantalla Maestro-Esclavo de un ticket, en la vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
+msgid "Sets if Master / Slave field must be selected by the agent."
+msgstr ""
+
+#. SysConfig
 msgid ""
 "Sets the default body text for notes added in the ticket MasterSlave screen "
 "of a zoomed ticket in the agent interface."
@@ -279,7 +291,7 @@ msgstr "Muestra las opciones de prioridad de ticket en la pantalla Maestro-Escla
 msgid ""
 "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr ""
+msgstr "Muestra el campo título del ticket en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente."
 
 #. SysConfig
 msgid "Slave Tickets"
