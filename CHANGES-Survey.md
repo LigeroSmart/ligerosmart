@@ -1,4 +1,6 @@
-#6.0.3 20??-??-??
+#6.0.4 20??-??-??
+
+#6.0.3 2018-02-13
  - 2018-02-06 Updated translations, thanks to all translators.
  - 2018-01-05 Fixed bug#[13442](https://bugs.otrs.org/show_bug.cgi?id=13442) - Personal setting is not displayed.
 
