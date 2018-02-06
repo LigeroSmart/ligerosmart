@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-27 00:53+0000\n"
-"Last-Translator: Joao Ferro <fmthard@gmail.com>\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -192,18 +192,6 @@ msgstr "Define a Prioridade por omissão de ticket no formulário de decisão da
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Define o tipo por omissão de uma nota no formulário de campos adicionais ITSM da interface de agente."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Define o tipo por omissão de uma nota no formulário de decisão da interface de agente."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Define o comentário de histórico para a ação de campos adicionais ITSM, utilizado no histórico do ticket."
@@ -263,12 +251,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de tickets ITSM no primeiro nível de solução."
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "Se uma nota é adicionada por um agente, define o estado do ticket no formulário de campos adicionais ITSM da interface de agente."
 
 #. SysConfig
 msgid ""
@@ -418,10 +400,6 @@ msgstr "Mostra os campos de título no formulário de campos adicionais ITSM do 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Mostra os campos de título no formulário de decisão do agente."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Especifica os diferentes tipos de notas que serão utilizados no sistema."
 
 #. SysConfig
 msgid "Ticket decision."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -190,18 +190,6 @@ msgstr "Inafafanua kipaumbele cha tiketi chaguo msingi katika skrini ya maamuzi 
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Inafafanua aina ya chaguo msingi ya kidokezo katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Inaelezea aina ya chaguo msingi ya kidokezo katika skrini ya maamuzi ya kiolesura cha wakala."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Inaelezea maoni ya historia kwa ajili ya kitendo cha skrini ya uga wa ITSM ulioongezwa, ambacho kinatumika kwa ajili ya historia ya tiketi."
@@ -261,12 +249,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa ufumbuzi wa tiketi ya ITSM"
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
 msgid ""
@@ -416,10 +398,6 @@ msgstr "Inyesha uga za kichwa cha habari katika skrini ya uga wa ITSM ulioongezw
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Inyesha uga wa kichwa cha habari katika skrini ya maamzi ya kiolesura cha wakala."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Inabainisha aina za vidokezo mbalimbali ambavyo vitatumika katika mfumo."
 
 #. SysConfig
 msgid "Ticket decision."

@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Подешава сервис на екрану одлуке у интерфејсу оператера (Ticket::Service мора бити активиран).';
     $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
-        'Подешава сервис на екрану приоритета тикета на детаљном прегледу тикета у интерфејсу оператера (неопходно је активирати Ticket::Service).';
+        'Подешава сервис на екрану приоритета тикета у интерфејсу оператера (неопходно је укључити Ticket::Service).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Одређује власника тикета на екрану додатних ITSM поља у интерфејсу оператера.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -128,7 +128,7 @@ sub Data {
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Подешава тип тикета на екрану одлуке у интерфејсу оператера (Ticket::Type мора бити активиран).';
     $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
-        'Одређује тип тикета на екрану приоритета тикета детаљног приказа тикета у интерфејсу оператера (Тикет::Тип треба да буде активирано).';
+        'Одређује тип тикета на екрану приоритета тикета у интерфејсу оператера (Ticket::Type треба да буде укључено).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'У менију приказује везу за промену одлуке тикета на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

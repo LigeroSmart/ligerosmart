@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 14:59+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -194,18 +194,6 @@ msgstr "Definiert die Standard-Priorität in der Entscheidungs-Oberfläche im Ag
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Definiert den Standard-Typ einer Notiz in der zusätzliche ITSM Felder-Oberfläche im Agenten-Interface."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Definiert den Standard-Typ einer Notiz in der Entscheidungs-Oberfläche im Agenten-Interface."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Steuert den Historien-Kommentar für die Aktionen in der Oberfläche zusätzliche ITSM-Felder im Agentenbereich."
@@ -264,12 +252,6 @@ msgstr ""
 msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -420,10 +402,6 @@ msgstr "Zeigt den Ticket-Titel in der zusätzliche ITSM-Felder-Oberfläche für 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Zeigt den Ticket-Titel in der Entscheidungs-Oberfläche für Tickets im Agentenbereich."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Gibt die verschiedenen Notiztypen an, die im System verwendet werden."
 
 #. SysConfig
 msgid "Ticket decision."

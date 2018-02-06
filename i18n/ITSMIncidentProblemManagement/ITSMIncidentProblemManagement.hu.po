@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 21:16+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -190,18 +190,6 @@ msgstr "Meghatározza az alapértelmezett jegyprioritást az ügyintézői felü
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Meghatározza a jegyzet alapértelmezett típusát az ügyintézői felület további ITSM mező képernyőjén."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Meghatározza a jegyzet alapértelmezett típusát az ügyintézői felület döntési képernyőjén."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Azt az előzmény megjegyzést határozza meg a további ITSM mező képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni."
@@ -261,12 +249,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Engedélyezi a statisztikák modult az ITSM jegy megoldásának átlagával kapcsolatos statisztikák előállításához."
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
 msgid ""
@@ -416,10 +398,6 @@ msgstr "Megjeleníti a címmezőket az ügyintézői felület további ITSM mez�
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Megjeleníti a címmezőket az ügyintézői felület döntési képernyőjén."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Megadja a különböző jegyzettípusokat, amelyek a rendszeren használva lesznek."
 
 #. SysConfig
 msgid "Ticket decision."

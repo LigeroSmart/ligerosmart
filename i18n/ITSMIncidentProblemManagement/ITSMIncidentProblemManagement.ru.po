@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -191,18 +191,6 @@ msgstr "Задает стандартный приоритет на экране
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Задает стандартный тип заметки на экране Дополнительные ITSM поля в интерфейсе агента"
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Задает стандартный тип заметки на экране Решение в интерфейсе агента"
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Задает комментарий в истории для действий на экране Дополнительные ITSM поля в интерфейсе агента"
@@ -262,12 +250,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Включает модуль отчетов для формирования отчетов о среднем ITSM ticket solution."
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "Возможность установить новое состояние завки при добавлении заметки на экране Дополнительные ITSM поля в интерфейсе агента."
 
 #. SysConfig
 msgid ""
@@ -417,10 +399,6 @@ msgstr "Показывает поле Тема на экране Дополни�
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Показывает поле Тема на экране Решение в интерфейсе агента."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Задает различные типы сообщений/заметок для использования в системе."
 
 #. SysConfig
 msgid "Ticket decision."

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: English (United Kingdom) (http://www.transifex.com/otrs/OTRS/language/en_GB/)\n"
 "MIME-Version: 1.0\n"
@@ -191,18 +191,6 @@ msgstr "Defines the default ticket priority in the decision screen of the agent 
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Defines the default type of the note in the additional ITSM field screen of the agent interface."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Defines the default type of the note in the decision screen of the agent interface."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Defines the history comment for the additional ITSM field screen action, which gets used for ticket history."
@@ -262,12 +250,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Enables the stats module to generate statistics about the average of ITSM ticket solution."
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface."
 
 #. SysConfig
 msgid ""
@@ -417,10 +399,6 @@ msgstr "Shows the title fields in the additional ITSM field screen of the agent 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Shows the title fields in the decision screen of the agent interface."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Specifies the different note types that will be used in the system."
 
 #. SysConfig
 msgid "Ticket decision."

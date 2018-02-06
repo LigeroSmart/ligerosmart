@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -191,18 +191,6 @@ msgstr "Mentakrifkan keutamaan tiket default di skrin keputusan antara muka agen
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Menentukan jenis default nota di skrin medan ITSM tambahan antara muka ejen."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Mentakrifkan jenis default nota dalam skrin keputusan antara muka agen."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Menentukan komen sejarah untuk medan skrin tindakan ITSM tambahan,  yang dapat digunakan untuk sejarah tiket."
@@ -262,12 +250,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Membolehkan modul statistik untuk menjana statistik tentang purata penyelesaian tiket ITSM."
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin bidang ITSM tambahan bagi antara muka ejen."
 
 #. SysConfig
 msgid ""
@@ -417,10 +399,6 @@ msgstr "Menunjukkan bidang tajuk dalam skrin bidang ITSM tambahan bagi antara mu
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Menunjukkan bidang tajuk dalam skrin keputusan bagi antara muka ejen."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Tentukan jenis nota berbeza yang akan digunakan dalam sistem."
 
 #. SysConfig
 msgid "Ticket decision."

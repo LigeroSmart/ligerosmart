@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -192,18 +192,6 @@ msgstr "Definisikan prioritas default tiket dalam layar keputusan pada antarmuka
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Definisikan tipe default catatan dalam layar bidang ITSM tambahan pada antarmuka agen."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Definisikan tipe default catatan dalam layar keputusan pada antarmuka agen."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Definisikan riwayat komentar untuk tindakan layar bidang ITSM tambahan, yang digunakan pada riwayat tiket."
@@ -263,12 +251,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "aktifkan modul stats untuk menghasilkan statistik tentang rata-rata penyelesaian tiket ITSM"
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "Jika sebuah catatan yang di tambahkan oleh agen, tentukan status tiket didalam layar bidang ITSM tambahan pada antarmuka agen."
 
 #. SysConfig
 msgid ""
@@ -418,10 +400,6 @@ msgstr "Tunjukan bidang judul di layar bidang ITSM tambahan pada antarmuka agen.
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Tunjukan bidang judul di layar keputusan pada antarmuka agen"
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Menentukan jenis catatan yang berbeda yang akan digunakan dalam sistem."
 
 #. SysConfig
 msgid "Ticket decision."

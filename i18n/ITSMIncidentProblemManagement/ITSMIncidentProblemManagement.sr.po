@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2017-12-13 12:30+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -318,7 +318,7 @@ msgstr "Подешава сервис на екрану одлуке у инте
 msgid ""
 "Sets the service in the ticket priority screen of a zoomed ticket in the "
 "agent interface (Ticket::Service needs to be activated)."
-msgstr "Подешава сервис на екрану приоритета тикета на детаљном прегледу тикета у интерфејсу оператера (неопходно је активирати Ticket::Service)."
+msgstr "Подешава сервис на екрану приоритета тикета у интерфејсу оператера (неопходно је укључити Ticket::Service)."
 
 #. SysConfig
 msgid ""
@@ -357,7 +357,7 @@ msgstr "Подешава тип тикета на екрану одлуке у �
 msgid ""
 "Sets the ticket type in the ticket priority screen of a zoomed ticket in the"
 " agent interface (Ticket::Type needs to be activated)."
-msgstr "Одређује тип тикета на екрану приоритета тикета детаљног приказа тикета у интерфејсу оператера (Тикет::Тип треба да буде активирано)."
+msgstr "Одређује тип тикета на екрану приоритета тикета у интерфејсу оператера (Ticket::Type треба да буде укључено)."
 
 #. SysConfig
 msgid ""

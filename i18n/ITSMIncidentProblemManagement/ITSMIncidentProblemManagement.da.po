@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Danish (http://www.transifex.com/otrs/OTRS/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -189,18 +189,6 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr ""
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr ""
@@ -259,12 +247,6 @@ msgstr ""
 msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
-msgstr ""
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -414,10 +396,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
 msgstr ""
 
 #. SysConfig

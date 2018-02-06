@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-11-15 13:05+0000\n"
+"POT-Creation-Date: 2018-02-06 19:52+0000\n"
+"PO-Revision-Date: 2018-02-06 19:52+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -191,18 +191,6 @@ msgstr "定义服务人员界面在工单决定窗口默认的工单优先级。
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "定义服务人员界面在工单额外的ITSM字段窗口默认的备注类型。"
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "定义服务人员界面在工单决定窗口默认的备注类型。"
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "定义工单额外的ITSM字段窗口操作的历史注释，用于工单历史。"
@@ -262,12 +250,6 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "使统计模块能够生成ITSM工单平均解决率的统计数据。"
-
-#. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
-msgstr "在服务人员界面额外的ITSM字段窗口，如果服务人员添加了一个备注，设置工单的状态。"
 
 #. SysConfig
 msgid ""
@@ -417,10 +399,6 @@ msgstr "在服务人员界面工单额外的ITSM字段窗口显示工单标题�
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "在服务人员界面工单决定窗口显示工单标题字段。"
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "指定将在系统中使用的不同备注类型。"
 
 #. SysConfig
 msgid "Ticket decision."
