@@ -1,4 +1,6 @@
-#6.0.3 20??-??-??
+#6.0.4 20??-??-??
+
+#6.0.3 2018-02-13
  - 2018-02-06 Updated translations, thanks to all translators.
  - 2018-01-07 Fixed bug#[13443](https://bugs.otrs.org/show_bug.cgi?id=13443) - Personal settings are not displayed.
  - 2017-12-15 Fixed bug#[13416](https://bugs.otrs.org/show_bug.cgi?id=13416) - Trying to enable multi-language feature from language management leads to an error.
