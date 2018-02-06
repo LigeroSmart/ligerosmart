@@ -1,4 +1,5 @@
 #6.0.3 20??-??-??
+ - 2018-02-06 Updated framework files to OTRS 6.0.5.
  - 2018-01-11 Fixed bug#[12951](https://bugs.otrs.org/show_bug.cgi?id=12951) - Untranslated strings in TicketZoom screen.
  - 2018-01-10 Fixed bug#[10415](https://bugs.otrs.org/show_bug.cgi?id=10415) - RichTextWidth and RichTextHeight settings missing.
  - 2018-01-10 Fixed bug#[13257](https://bugs.otrs.org/show_bug.cgi?id=13257) - Legacy default subject in AgentTicketMasterSlave screen.

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - cad684b4317bb0b0a4f21a676fada526e4c95dcd - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -332,7 +332,7 @@ sub Run {
 
     # ACL compatibility translation
     my %ACLCompatGetParam = (
-        StateID       => $GetParam{StateID},
+        StateID       => $GetParam{NewStateID},
         PriorityID    => $GetParam{NewPriorityID},
         QueueID       => $GetParam{NewQueueID},
         OwnerID       => $GetParam{NewOwnerID},
