@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
+# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Agent/AgentTicketActionCommonACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,9 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ACLObject    = $Kernel::OM->Get('Kernel::System::ACL::DB::ACL');
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
         my $RandomID = $Helper->GetRandomID();
 
@@ -124,8 +126,6 @@ $Selenium->RunTest(
                 'Field' . $RandomID => 1,
             },
         );
-
-        my $ACLObject = $Kernel::OM->Get('Kernel::System::ACL::DB::ACL');
 
         # Import test ACL.
         $ACLObject->ACLImport(
@@ -272,8 +272,6 @@ EOF
             UserID         => 1,
         );
 
-        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
         # Create test ticket.
         my $TicketID = $TicketObject->TicketCreate(
             Title        => 'Selenium Ticket',
@@ -384,17 +382,17 @@ EOF
                 'return typeof($) === "function" && $("#nav-Communication ul").css({ "height": "auto", "opacity": "100" });'
         );
 
-        # Click on 'Note' and switch window.
+        # Click on 'Note' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketNote;TicketID=$TicketID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # Wait until page has loaded.
+        # Wait until page has loaded
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ServiceID").length' );
 
-        # Check for entries in the service selection, there should be only one.
+        # Check for entries in the service selection, there should be only one
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('#ServiceID option:not([value=\"\"])').length"

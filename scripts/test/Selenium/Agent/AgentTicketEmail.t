@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - scripts/test/Selenium/Agent/AgentTicketEmail.t
+# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Agent/AgentTicketEmail.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -426,6 +426,9 @@ $Selenium->RunTest(
             Key   => 'SessionUseCookie',
             Value => 0,
         );
+
+        # Allow apache to pick up the changed SysConfig via Apache::Reload.
+        sleep 1;
 
         # Navigate to AgentTicketEmail screen and login because there is no session cookies.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketEmail");
