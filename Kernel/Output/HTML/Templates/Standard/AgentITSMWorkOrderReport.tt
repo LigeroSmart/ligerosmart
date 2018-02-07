@@ -23,7 +23,7 @@
         <div class="Content">
             <fieldset class="TableLike FixedLabel">
                 <label class="Mandatory" for="RichText"><span class="Marker">*</span> [% Translate("Report") | html %]:</label>
-                <div class="RichTextField">
+                <div class="RichTextField Field">
 
                     <textarea id="RichText" class="RichText Validate_Required [% Data.ReportInvalid %]" name="Report" rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") %]">[% Data.Report | html %]</textarea>
                     <div id="RichTextError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
