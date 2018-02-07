@@ -489,19 +489,115 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        # perform FAQ search
-        my @ViewableItemIDs = $FAQObject->FAQSearch(
-            OrderBy             => [$SortBy],
-            OrderByDirection    => [$OrderBy],
-            Limit               => $SearchLimit,
-            UserID              => $Self->{UserID},
-            States              => $InterfaceStates,
-            Interface           => $Interface,
-            ContentSearchPrefix => '*',
-            ContentSearchSuffix => '*',
-            %GetParam,
-            %DynamicFieldSearchParameters,
+        # Get UserCategoryGroup Hash.
+        # This returns a Hash of the following sample data structure:
+        #
+        # $CustomerUserCatGroup = {
+        #   '1' => {
+        #          '3' => 'MiscSub'
+        #        },
+        #   '3' => {},
+        #   '0' => {
+        #            '1' => 'Misc',
+        #            '2' => 'secret'
+        #          },
+        #   '2' => {}
+        # };
+        #
+        # Keys of the outer hash inform about subcategories.
+        #   0 Shows top level CategoryIDs.
+        #   1 Shows the SubcategoryIDs of Category 1.
+        #   2 and 3 are empty hashes because these categories don't have subcategories.
+        #
+        # Keys of the inner hashes are CategoryIDs a user is allowed to have ro access to.
+        # Values are the Category names.
+
+        my $CustomerUserCatGroup = $FAQObject->GetCustomerCategories(
+            CustomerUser => $Self->{UserLogin},
+            Type         => 'ro',
+            UserID       => $Self->{UserID},
         );
+
+        # Find CategoryIDs the current User is allowed to view.
+        my %AllowedCategoryIDs = ();
+
+        if ( $CustomerUserCatGroup && ref $CustomerUserCatGroup eq 'HASH' ) {
+
+            # So now we have to extract all Category ID's of the "inner hashes"
+            #   -> Loop through the outer category ID's.
+            for my $Level ( sort keys %{$CustomerUserCatGroup} ) {
+
+                # Check if the Value of the current hash key is a hash ref.
+                if ( $CustomerUserCatGroup->{$Level} && ref $CustomerUserCatGroup->{$Level} eq 'HASH' ) {
+
+                    # Map the keys of the inner hash to a TempIDs hash.
+                    # Original Data structure:
+                    #   {
+                    #       '1' => 'Misc',
+                    #       '2' => 'secret'
+                    #   }
+                    #
+                    #   after mapping:
+                    #
+                    #   {
+                    #       '1' => 1,
+                    #       '2' => 1'
+                    #   }
+
+                    my %TempIDs = map { $_ => 1 } keys %{ $CustomerUserCatGroup->{$Level} };
+
+                    # Put the TempIDs over the formally found AllowedCategorys to produce a hash
+                    #   that holds all CategoryID as keys and the number 1 as values.
+                    %AllowedCategoryIDs = (
+                        %AllowedCategoryIDs,
+                        %TempIDs
+                    );
+                }
+            }
+        }
+
+        # For the database query it's necessary to have an array of CategoryIDs.
+        my @CategoryIDs = ();
+
+        if (%AllowedCategoryIDs) {
+            @CategoryIDs = sort keys %AllowedCategoryIDs;
+        }
+
+        # Categories got from the web request could include a not allowed category if the user
+        #    temper with the categories drop-box, a check is needed.
+        #
+        # "Map" copy from one array to another, while "grep" will only let pass the categories
+        #    that are defined in the %AllowedCategoryIDs hash.
+        if ( IsArrayRefWithData( $GetParam{CategoryIDs} ) ) {
+            @{ $GetParam{CategoryIDs} } = map {$_} grep { $AllowedCategoryIDs{$_} } @{ $GetParam{CategoryIDs} };
+        }
+
+        # Just search if we do have categories, we have access to.
+        # If we don't have access to any category, a search with no CategoryIDs
+        #   would result in finding all categories.
+        #
+        # It is not possible to create FAQ's without categories
+        #   so at least one category has to be present
+
+        my @ViewableItemIDs = ();
+
+        if (@CategoryIDs) {
+
+            # perform FAQ search
+            @ViewableItemIDs = $FAQObject->FAQSearch(
+                OrderBy             => [$SortBy],
+                OrderByDirection    => [$OrderBy],
+                Limit               => $SearchLimit,
+                UserID              => $Self->{UserID},
+                States              => $InterfaceStates,
+                Interface           => $Interface,
+                ContentSearchPrefix => '*',
+                ContentSearchSuffix => '*',
+                CategoryIDs         => \@CategoryIDs,
+                %GetParam,
+                %DynamicFieldSearchParameters,
+            );
+        }
 
         my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
 

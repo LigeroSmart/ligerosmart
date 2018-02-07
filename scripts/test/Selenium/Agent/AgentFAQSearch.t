@@ -34,8 +34,13 @@ $Selenium->RunTest(
             "FAQ category is created - ID $CategoryID",
         );
 
-        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
-            Group => 'users',
+        # Add test group.
+        my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+        my $GroupID     = $GroupObject->GroupAdd(
+            Name    => 'group' . $Helper->GetRandomID(),
+            Comment => 'Comment describing the group',
+            ValidID => 1,
+            UserID  => 1,
         );
 
         $FAQObject->SetCategoryGroup(
@@ -121,7 +126,51 @@ $Selenium->RunTest(
         $Selenium->find_element( "table tbody tr td", 'css' );
 
         # Check test FAQs searched by 'FAQ*'.
-        # All FAQs will be in a search result.
+        # There are no test FAQs, user doesn't have permission for test category.
+        for my $FAQ (@FAQSearch) {
+
+            # Check if there is no test FAQ on screen.
+            $Self->True(
+                index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) == -1,
+                "$FAQ->{FAQTitle} - found",
+            );
+        }
+
+        my $UserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+            UserLogin => $TestUserLogin,
+            Silent    => 1,
+        );
+
+        # Add user permission for test group.
+        my $Success = $GroupObject->PermissionGroupUserAdd(
+            GID        => $GroupID,
+            UID        => $UserID,
+            Permission => {
+                ro        => 1,
+                move_into => 0,
+                create    => 0,
+                owner     => 0,
+                priority  => 0,
+                rw        => 0,
+            },
+            UserID => 1,
+        );
+
+        $Self->True(
+            $Success,
+            "PermissionGroupUserAdd() is done.",
+        );
+
+        # Check 'Change search options' screen.
+        $Selenium->find_element( "#FAQSearch", 'css' )->click();
+
+        # Wait until form has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => "return \$('#SearchProfile').length" );
+
+        $Selenium->find_element( "Title",             'name' )->clear();
+        $Selenium->find_element( "Title",             'name' )->send_keys('FAQ*');
+        $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
+
         for my $FAQ (@FAQSearch) {
 
             # Check if there is test FAQ on screen.
@@ -191,7 +240,7 @@ $Selenium->RunTest(
         );
 
         # Delete test category.
-        my $Success = $FAQObject->CategoryDelete(
+        $Success = $FAQObject->CategoryDelete(
             CategoryID => $CategoryID,
             UserID     => 1,
         );
