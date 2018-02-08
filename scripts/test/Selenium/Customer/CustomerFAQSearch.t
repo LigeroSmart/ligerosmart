@@ -22,6 +22,12 @@ $Selenium->RunTest(
         my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
+        # Disable check of email addresses.
+        $Helper->ConfigSettingChange(
+            Key   => 'CustomerGroupSupport',
+            Value => 1,
+        );
+
         # Create test FAQ category.
         my $CategoryID = $FAQObject->CategoryAdd(
             Name     => 'Category ' . $Helper->GetRandomID(),
