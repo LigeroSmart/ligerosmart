@@ -412,7 +412,7 @@ sub _ChangeAdd {
     }
 
 
-    # Check if CAB customers are valid agents, otherwise remove them.
+    # Check if CAB customers are valid customers, otherwise remove them.
     if ( IsArrayRefWithData($Data{CABCustomers}) ) {
 
         my @NewCABCustomers;
