@@ -21,6 +21,7 @@ our @ObjectDependencies = (
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Main',
+    'Kernel::System::User',
 );
 
 =head1 NAME
@@ -364,6 +365,16 @@ sub _WorkOrderAdd {
                 );
             }
         }
+    }
+
+    # Check if the workorder agent is still valid, leave empty if not
+    my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
+        UserID => $Data{WorkOrderAgentID},
+        Valid  => 1,
+    );
+
+    if ( !$UserData{UserID} ) {
+        delete $Data{WorkOrderAgentID};
     }
 
     # override the change id from the template

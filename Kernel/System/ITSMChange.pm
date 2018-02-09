@@ -34,6 +34,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::User',
+    'Kernel::System::Valid',
     'Kernel::System::VirtualFS',
 );
 
@@ -3437,7 +3438,7 @@ sub _CheckChangeParams {
 
     # change manager and change builder must be agents
     ARGUMENT:
-    for my $Argument (qw( ChangeManagerID ChangeBuilderID )) {
+    for my $Argument (qw(ChangeManagerID ChangeBuilderID)) {
 
         # params are not required
         next ARGUMENT if !exists $Param{$Argument};
@@ -3496,6 +3497,11 @@ sub _CheckChangeParams {
             return;
         }
 
+        # get the valid id for "valid"
+        my $ValidID = $Kernel::OM->Get('Kernel::System::Valid')->ValidLookup(
+            Valid => 'valid',
+        );
+
         # check customer users
         for my $CustomerUser ( @{ $Param{CABCustomers} } ) {
 
@@ -3505,7 +3511,7 @@ sub _CheckChangeParams {
                 Valid => 1,
             );
 
-            if ( !%CustomerUserData ) {
+            if ( $CustomerUserData{ValidID} ne $ValidID ) {
                 $Kernel::OM->Get('Kernel::System::Log')->Log(
                     Priority => 'error',
                     Message  => "The CABCustomer $CustomerUser is not a valid customer!",
