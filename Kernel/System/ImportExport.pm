@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::System::Cache',
     'Kernel::Config',
     'Kernel::System::CheckItem',
     'Kernel::System::DB',
@@ -2205,6 +2206,14 @@ Import function
 sub Import {
     my ( $Self, %Param ) = @_;
 
+    my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+
+    # Disable the cache for faster import.
+    $CacheObject->Configure(
+        CacheInMemory  => 0,
+        CacheInBackend => 0,
+    );
+
     # get log object
     my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
 
@@ -2324,6 +2333,9 @@ sub Import {
             Message  => "Last processed line number of import file: $Result{Counter}",
         );
     }
+
+    # Cleanup the cache after import.
+    $CacheObject->CleanUp();
 
     return \%Result;
 }
