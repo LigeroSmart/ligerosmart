@@ -2,13 +2,13 @@
 # Translators:
 # Dusan Vuckovic, 2017
 # Jaroslav Balaz <balazj315@gmail.com>, 2015
-# Милорад Јовановић <j.milorad@gmail.com>, 2014-2017
+# Милорад Јовановић <j.milorad@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-02-06 18:42+0000\n"
+"Last-Translator: Милорад Јовановић <j.milorad@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1144,7 +1144,7 @@ msgstr "Ограничење претраге за генерисање лист
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Ограничење."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1450,7 +1450,7 @@ msgstr "Прикажи задње креиране ставке у дефини�
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr ""
+msgstr "Прикажи звездице за чланке са једнаком или бољом оценом од одређене вредности (постави вредност 0 за деактивирање излаза)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

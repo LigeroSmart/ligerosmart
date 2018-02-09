@@ -419,7 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Управљање језицима';
     $Self->{Translation}->{'Language Management.'} = 'Управљање језицима.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Ограничење претраге за генерисање листе кључних речи FAQ чланака.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Ограничење.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Повежи други објекат са овом ставком FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Листа имена редова за које је фунција сродних чланака активирана.';
@@ -520,7 +520,7 @@ sub Data {
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Прикажи задње промењене ставке у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Прикажи задње креиране ставке у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
-        '';
+        'Прикажи звездице за чланке са једнаком или бољом оценом од одређене вредности (постави вредност 0 за деактивирање излаза).';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Прикажи првих 10 ставки у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Прикажи гласање у дефинисаним интерфејсима.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =

@@ -1,4 +1,6 @@
 #6.0.4 20??-??-??
+ - 2018-02-08 Updated translations, thanks to all translators.
+ - 2018-02-07 Fixed bug#[12326](https://bugs.otrs.org/show_bug.cgi?id=12326) - FAQ Permissions not working correctly in customer frontend.
 
 #6.0.3 2018-02-13
  - 2018-02-06 Updated translations, thanks to all translators.

@@ -419,7 +419,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Gestión de Idiomas';
     $Self->{Translation}->{'Language Management.'} = 'Gestión del lenguaje.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Límite la búsqueda para crear la lista de palabras clave de la lista artículo de Preguntas frecuentes.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Límite';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Enlazar otro objecto a este artículo FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Lista de nombres de colas para los que la característica de artículo relacionado está habilitada.';
@@ -520,7 +520,7 @@ sub Data {
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Mostrar los últimos artículos actualizados en las interfaces definidas.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Mostrar los últimos artículos creados en las interfaces definidas.';
     $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
-        '';
+        'Muestra las estrellas para los artículos con una calificación igual o superior al valor definido (ajuste el valor \'0\' para desactivar).';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Mostrar los artículos Top 10 en las interfaces definidas.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Mostrar la votación en las interfaces definidas.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =
