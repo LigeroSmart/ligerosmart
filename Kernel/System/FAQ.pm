@@ -1211,7 +1211,7 @@ sub FAQCount {
 
         # integer quote the category ids
         for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
-            $DBObject->Quote( $CategoryID, 'Integer' );
+            $CategoryID = $DBObject->Quote( $CategoryID, 'Integer' );
         }
 
         my @SortedIDs = sort @{ $Param{CategoryIDs} };
@@ -2053,7 +2053,7 @@ sub FAQTop10Get {
 
         # integer quote the category ids
         for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
-            $DBObject->Quote( $CategoryID, 'Integer' );
+            $CategoryID = $DBObject->Quote( $CategoryID, 'Integer' );
         }
 
         my @SortedIDs = sort @{ $Param{CategoryIDs} };
