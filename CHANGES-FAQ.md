@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-02-12 Fixed bug#[10650](https://bugs.otrs.org/show_bug.cgi?id=10650) - Navigation broken when keyword search result opened in CSS overlay.
 
 #6.0.4 2018-02-13
  - 2018-02-08 Updated translations, thanks to all translators.

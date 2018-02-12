@@ -42,7 +42,7 @@
                         <label>[% Translate("Keywords") | html %]:</label>
                         <p class="Value">
 [% RenderBlockStart("Keywords") %]
-                            <a href="[% Env("Baselink") %]Action=AgentFAQSearchSmall;Subaction=Search;Keyword=[% Data.Keyword | uri %]" title="[% Data.Keyword | html %]">[% Data.Keyword | html %]</a>
+                            <span title="[% Data.Keyword | html %]">[% Data.Keyword | html %]</span>
 [% RenderBlockEnd("Keywords") %]
                         </p>
                         <div class="Clear"></div>
