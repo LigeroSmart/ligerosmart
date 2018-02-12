@@ -389,7 +389,7 @@ sub _ChangeAdd {
     }
 
     # Check if CAB agents are valid agents, otherwise remove them.
-    if ( IsArrayRefWithData($Data{CABAgents}) ) {
+    if ( IsArrayRefWithData( $Data{CABAgents} ) ) {
 
         my @NewCABAgents;
 
@@ -411,9 +411,8 @@ sub _ChangeAdd {
         $Data{CABAgents} = \@NewCABAgents;
     }
 
-
     # Check if CAB customers are valid customers, otherwise remove them.
-    if ( IsArrayRefWithData($Data{CABCustomers}) ) {
+    if ( IsArrayRefWithData( $Data{CABCustomers} ) ) {
 
         my @NewCABCustomers;
 
