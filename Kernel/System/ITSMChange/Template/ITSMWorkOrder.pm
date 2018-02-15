@@ -367,14 +367,17 @@ sub _WorkOrderAdd {
         }
     }
 
-    # Check if the workorder agent is still valid, leave empty if not
-    my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
-        UserID => $Data{WorkOrderAgentID},
-        Valid  => 1,
-    );
+    if ( $Data{WorkOrderAgentID} ) {
 
-    if ( !$UserData{UserID} ) {
-        delete $Data{WorkOrderAgentID};
+        # Check if the workorder agent is still valid, leave empty if not
+        my %UserData = $Kernel::OM->Get('Kernel::System::User')->GetUserData(
+            UserID => $Data{WorkOrderAgentID},
+            Valid  => 1,
+        );
+
+        if ( !$UserData{UserID} ) {
+            delete $Data{WorkOrderAgentID};
+        }
     }
 
     # override the change id from the template

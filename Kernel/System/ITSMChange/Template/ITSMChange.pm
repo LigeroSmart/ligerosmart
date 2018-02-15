@@ -378,14 +378,17 @@ sub _ChangeAdd {
     # replace the ChangeBuilderID from the saved template with the current user id
     $Data{ChangeBuilderID} = $Param{UserID};
 
-    # Check if the change manager is still valid, leave empty if not
-    my %UserData = $UserObject->GetUserData(
-        UserID => $Data{ChangeManagerID},
-        Valid  => 1,
-    );
+    if ( $Data{ChangeManagerID} ) {
 
-    if ( !$UserData{UserID} ) {
-        delete $Data{ChangeManagerID};
+        # Check if the change manager is still valid, leave empty if not
+        my %UserData = $UserObject->GetUserData(
+            UserID => $Data{ChangeManagerID},
+            Valid  => 1,
+        );
+
+        if ( !$UserData{UserID} ) {
+            delete $Data{ChangeManagerID};
+        }
     }
 
     # Check if CAB agents are valid agents, otherwise remove them.
