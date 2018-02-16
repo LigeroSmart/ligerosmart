@@ -152,9 +152,8 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # Expand Miscellaneous dropdown menu.
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof($) === "function" && $("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
+        $Selenium->execute_script(
+            '$("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
         );
 
         # Click on 'History' and switch window.
@@ -210,9 +209,8 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
 
         # Expand Miscellaneous dropdown menu.
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof($) === "function" && $("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
+        $Selenium->execute_script(
+            '$("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
         );
 
         # Click on 'History' and switch window.
