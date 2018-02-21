@@ -19,6 +19,7 @@ $Kernel::OM->ObjectParamAdd(
 );
 my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
 my $FAQObject    = $Kernel::OM->Get('Kernel::System::FAQ');
 
 # set config options
@@ -35,8 +36,15 @@ $ConfigObject->Set(
 my $TestUserLogin = $Helper->TestUserCreate(
     Groups => [ 'users', ],
 );
-my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+my $TestUserID = $UserObject->UserLookup(
     UserLogin => $TestUserLogin,
+);
+
+my $AdminUserLogin = $Helper->TestUserCreate(
+    Groups => [ 'admin', 'users' ],
+);
+my $AdminUserID = $UserObject->UserLookup(
+    UserLogin => $AdminUserLogin,
 );
 
 # create some customer users
@@ -49,14 +57,14 @@ for ( 0 .. 1 ) {
 my $RandomNumber = $Helper->GetRandomNumber();
 
 my %StateList = $FAQObject->StateList(
-    UserID => 1,
+    UserID => $AdminUserID,
 );
 my %ReverseStateList = reverse %StateList;
 
 # Call this function at the beginning, to check if the cache cleanup works correctly after new article was created.
 $FAQObject->FAQKeywordArticleList(
     CustomerUser => $CustomerUsers[0],
-    UserID       => 1,
+    UserID       => $AdminUserID,
 );
 
 # define the tickets for the statistic result tests
@@ -71,7 +79,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
     {
         Title       => 'Some Text Example',
@@ -82,7 +90,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
     {
         Title       => 'Some Text Example',
@@ -93,7 +101,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
     {
         Title       => 'Some Text Public',
@@ -104,7 +112,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
     {
         Title       => 'Some Text Internal',
@@ -115,7 +123,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
     {
         Title       => 'Some Text Internal',
@@ -126,7 +134,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
     {
         Title       => 'Some Text Internal',
@@ -137,7 +145,7 @@ my @FAQItems = (
         Field1      => 'Problem...',
         Field2      => 'Solution...',
         ContentType => 'text/html',
-        UserID      => 1,
+        UserID      => $AdminUserID,
     },
 );
 
@@ -171,7 +179,7 @@ my @Tests = (
         Description           => 'Test with a customer user for FAQKeywordArticleList',
         FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
-            UserID       => 1,
+            UserID       => $AdminUserID,
         },
         ReferenceData => {
             "$RandomNumber.$RandomNumber" => [
@@ -208,7 +216,7 @@ my @Tests = (
         FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => ['en'],
-            UserID       => 1,
+            UserID       => $AdminUserID,
         },
         ReferenceData => {
             "example$RandomNumber" => [
@@ -239,7 +247,7 @@ my @Tests = (
         FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => ['de'],
-            UserID       => 1,
+            UserID       => $AdminUserID,
         },
         ReferenceData => {
             "faq$RandomNumber" => [
@@ -258,7 +266,7 @@ my @Tests = (
         FAQKeywordArticleList => {
             CustomerUser => $CustomerUsers[0],
             Languages    => [ 'en', 'de' ],
-            UserID       => 1,
+            UserID       => $AdminUserID,
         },
         ReferenceData => {
             "example$RandomNumber" => [
@@ -357,7 +365,7 @@ my @Tests = (
         Description           => "Test with a test user with language 'en' and 'de' for FAQKeywordArticleList",
         FAQKeywordArticleList => {
             Languages => [ 'en', 'de' ],
-            UserID    => 1,
+            UserID    => $AdminUserID,
         },
         ReferenceData => {
             "example$RandomNumber" => [

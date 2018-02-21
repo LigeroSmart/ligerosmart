@@ -18,10 +18,16 @@ $Kernel::OM->ObjectParamAdd(
     },
 );
 
-my $Helper   = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-my $RandomID = $Helper->GetRandomID();
+my $Helper     = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $UserObject = $Kernel::OM->Get('Kernel::System::User');
+my $RandomID   = $Helper->GetRandomID();
 
-my $UserID = 1;
+my $TestUserLogin = $Helper->TestUserCreate(
+    Groups => [ 'admin', 'users' ],
+);
+my $UserID = $UserObject->UserLookup(
+    UserLogin => $TestUserLogin,
+);
 
 my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
