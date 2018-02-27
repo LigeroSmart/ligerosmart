@@ -87,6 +87,7 @@
         <File Permission="660" Location="scripts/test/Ticket.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminITSMCIPAllocate.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/AdminUser.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentStatistics/Add.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentStatistics/Import.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketActionCommon/AgentTicketFreeText.t" />
