@@ -299,9 +299,8 @@ sub Run {
             if (%ChangeManagerData) {
 
                 # build string to display
-                $ChangeManager = sprintf '"%s %s" <%s>',
-                    $ChangeManagerData{UserFirstname},
-                    $ChangeManagerData{UserLastname},
+                $ChangeManager = sprintf '"%s" <%s>',
+                    $ChangeManagerData{UserFullname},
                     $ChangeManagerData{UserEmail};
             }
         }
@@ -317,9 +316,8 @@ sub Run {
             if (%ChangeBuilderData) {
 
                 # build string to display
-                $ChangeBuilder = sprintf '"%s %s" <%s>',
-                    $ChangeBuilderData{UserFirstname},
-                    $ChangeBuilderData{UserLastname},
+                $ChangeBuilder = sprintf '"%s" <%s>',
+                    $ChangeBuilderData{UserFullname},
                     $ChangeBuilderData{UserEmail};
             }
         }
@@ -527,9 +525,8 @@ sub _CheckChangeManagerAndChangeBuilder {
         # Look for exact match at beginning,
         # as $User{UserLastname} might contain a trailing 'out of office' note.
         # Note that this won't catch deletions of $Param{$Role} at the end.
-        my $CheckString = sprintf '"%s %s" <%s>',
-            $User{UserFirstname},
-            $User{UserLastname},
+        my $CheckString = sprintf '"%s" <%s>',
+            $User{UserFullname},
             $User{UserEmail};
         if ( index( $CheckString, $Param{$Role} ) != 0 ) {
             $Errors{$Role} = 1;
@@ -586,9 +583,8 @@ sub _IsNewCABMemberOk {
             # Look for exact match at beginning,
             # as $User{UserLastname} might contain a trailing 'out of office' note.
             # Note that this won't catch deletions of $Param{NewCABMember} at the end.
-            my $CheckString = sprintf '"%s %s" <%s>',
-                $User{UserFirstname},
-                $User{UserLastname},
+            my $CheckString = sprintf '"%s" <%s>',
+                $User{UserFullname},
                 $User{UserEmail};
             if ( index( $CheckString, $Param{NewCABMember} ) == 0 ) {
 

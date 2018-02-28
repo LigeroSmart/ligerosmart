@@ -189,8 +189,8 @@
 [% RenderBlockEnd("EmptyChangeInitiators") %]
 [% RenderBlockStart("ChangeInitiatorExists") %]
 [% RenderBlockStart("ChangeInitiator") %]
-                        <p class="Value" title="[% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])">
-                            [% Data.UserLogin | truncate(15) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
+                        <p class="Value" title="[% Data.UserFullname | html %]">
+                            [% Data.UserFullname | html %]
                         </p>
 [% RenderBlockEnd("ChangeInitiator") %]
 [% RenderBlockEnd("ChangeInitiatorExists") %]
@@ -203,8 +203,8 @@
                         <p class="Value" title="-">-</p>
 [% RenderBlockEnd("EmptyChangeManager") %]
 [% RenderBlockStart("ChangeManager") %]
-                        <p class="Value" title="[% Data.ChangeManagerUserLogin | html %] ([% Data.ChangeManagerUserFirstname | html %] [% Data.ChangeManagerUserLastname | html %])">
-                            [% Data.ChangeManagerUserLogin | truncate(15) | html %] ([% Data.ChangeManagerUserFirstname | html %] [% Data.ChangeManagerUserLastname | html %])
+                        <p class="Value" title="[% Data.ChangeManagerUserFullname | html %]">
+                            [% Data.ChangeManagerUserFullname | html %]
                         </p>
 [% RenderBlockEnd("ChangeManager") %]
                         <div class="Clear"></div>
@@ -212,8 +212,8 @@
 
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>[% Translate("Change Builder") | html %]:</label>
-                        <p class="Value" title="[% Data.ChangeBuilderUserLogin | html %] ([% Data.ChangeBuilderUserFirstname | html %] [% Data.ChangeBuilderUserLastname | html %])">
-                            [% Data.ChangeBuilderUserLogin | truncate(15) | html %] ([% Data.ChangeBuilderUserFirstname | html %] [% Data.ChangeBuilderUserLastname | html %])
+                        <p class="Value" title="[% Data.ChangeBuilderUserFullname | html %]">
+                            [% Data.ChangeBuilderUserFullname | html %]
                         </p>
                         <div class="Clear"></div>
                     </fieldset>
@@ -225,13 +225,13 @@
 [% RenderBlockEnd("EmptyCAB") %]
 [% RenderBlockStart("CAB") %]
 [% RenderBlockStart("CABAgent") %]
-                        <p class="Value" title="[% Data.CABAgentUserLogin | html %] ([% Data.CABAgentUserFirstname | html %] [% Data.CABAgentUserLastname | html %])">
-                            [% Data.CABAgentUserLogin | truncate(15) | html %] ([% Data.CABAgentUserFirstname | html %] [% Data.CABAgentUserLastname | html %])
+                        <p class="Value" title="[% Data.CABAgentUserFullname | html %]">
+                            [% Data.CABAgentUserFullname | html %]
                         </p>
 [% RenderBlockEnd("CABAgent") %]
 [% RenderBlockStart("CABCustomer") %]
-                        <p class="Value" title="[% Data.CABCustomerUserLogin | html %] ([% Data.CABCustomerUserFirstname | html %] [% Data.CABCustomerUserLastname | html %])">
-                            [% Data.CABCustomerUserLogin | truncate(15) | html %] ([% Data.CABCustomerUserFirstname | html %] [% Data.CABCustomerUserLastname | html %])
+                        <p class="Value" title="[% Data.CABCustomerUserFullname | html %]">
+                            [% Data.CABCustomerUserFullname | html %]
                         </p>
 [% RenderBlockEnd("CABCustomer") %]
 [% RenderBlockEnd("CAB") %]
@@ -244,8 +244,8 @@
                         <div class="Clear"></div>
 
                         <label>[% Translate("Created by") | html %]:</label>
-                        <p class="Value" title="[% Data.CreateUserLogin | html %] ([% Data.CreateUserFirstname | html %] [% Data.CreateUserLastname | html %])">
-                            [% Data.CreateUserLogin | truncate(15) | html %] ([% Data.CreateUserFirstname | html %] [% Data.CreateUserLastname | html %])
+                        <p class="Value" title="[% Data.CreateUserFullname | html %]">
+                            [% Data.CreateUserFullname | html %]
                         </p>
                         <div class="Clear"></div>
                     </fieldset>
@@ -256,8 +256,8 @@
                         <div class="Clear"></div>
 
                         <label>[% Translate("Last changed by") | html %]:</label>
-                        <p class="Value" title="[% Data.ChangeUserLogin | html %] ([% Data.ChangeUserFirstname | html %] [% Data.ChangeUserLastname | html %])">
-                            [% Data.ChangeUserLogin | truncate(15) | html %] ([% Data.ChangeUserFirstname | html %] [% Data.ChangeUserLastname | html %])
+                        <p class="Value" title="[% Data.ChangeUserFullname | html %]">
+                            [% Data.ChangeUserFullname | html %]
                         </p>
                         <div class="Clear"></div>
 

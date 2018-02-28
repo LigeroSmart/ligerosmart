@@ -124,8 +124,8 @@
 [% RenderBlockEnd("RecordDelete") %]
 [% RenderBlockStart("RecordCreateBy") %]
                 <td>
-                    <div title="[% Data.CreateByUserLogin | html %] [% Data.CreateByLeftParenthesis | html %][% Data.CreateByUserFirstname | html %] [% Data.CreateByUserLastname | html %][% Data.CreateByRightParenthesis | html %]">
-                        [% Data.CreateByUserLogin | truncate(15) | html %] [% Data.CreateByLeftParenthesis | html %][% Data.CreateByUserFirstname | html %] [% Data.CreateByUserLastname | html %][% Data.CreateByRightParenthesis | html %]
+                    <div title="[% Data.CreateByUserFullname | html %]">
+                        [% Data.CreateByUserFullname | html %]
                     </div>
                 </td>
 [% RenderBlockEnd("RecordCreateBy") %]
@@ -138,8 +138,8 @@
 [% RenderBlockEnd("RecordCreateTime") %]
 [% RenderBlockStart("RecordChangeBy") %]
                 <td>
-                    <div title="[% Data.ChangeByUserLogin | html %] [% Data.ChangeByLeftParenthesis | html %][% Data.ChangeByUserFirstname | html %] [% Data.ChangeByUserLastname | html %][% Data.ChangeByRightParenthesis | html %]">
-                        [% Data.ChangeByUserLogin | truncate(15) | html %] [% Data.ChangeByLeftParenthesis | html %][% Data.ChangeByUserFirstname | html %] [% Data.ChangeByUserLastname | html %][% Data.ChangeByRightParenthesis | html %]
+                    <div title="[% Data.ChangeByUserFullname | html %]">
+                        [% Data.ChangeByUserFullname | html %]
                     </div>
                 </td>
 [% RenderBlockEnd("RecordChangeBy") %]

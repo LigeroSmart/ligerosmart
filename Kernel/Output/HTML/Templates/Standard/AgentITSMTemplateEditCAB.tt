@@ -78,8 +78,8 @@
                                 <td>
                                     [% Translate(Data.UserType) | html %]
                                 </td>
-                                <td title="[% Data.UserLogin | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])">
-                                    [% Data.UserLogin | truncate(25) | html %] ([% Data.UserFirstname | html %] [% Data.UserLastname | html %])
+                                <td title="[% Data.UserFullname | html %]">
+                                    [% Data.UserFullname | html %]
                                 </td>
                                 <td class="Center Last">
                                     <a href="#" id="[% Data.InternalUserType %][% Data.UserID | html %]" title="[% Translate("Delete") | html %]" class="TrashCan DeleteCABMember">

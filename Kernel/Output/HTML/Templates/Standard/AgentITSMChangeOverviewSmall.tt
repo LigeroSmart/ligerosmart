@@ -198,22 +198,22 @@
 [% RenderBlockEnd("RecordChangeTitle") %]
 [% RenderBlockStart("RecordWorkOrderAgent") %]
                 <td>
-                    <div title="[% Data.WorkOrderAgentUserLogin | html %] [% Data.WorkOrderAgentLeftParenthesis | html %][% Data.WorkOrderAgentUserFirstname | html %] [% Data.WorkOrderAgentUserLastname | html %][% Data.WorkOrderAgentRightParenthesis | html %]">
-                        [% Data.WorkOrderAgentUserLogin | truncate(15) | html %] [% Data.WorkOrderAgentLeftParenthesis | html %][% Data.WorkOrderAgentUserFirstname | truncate(15) | html %] [% Data.WorkOrderAgentUserLastname | truncate(15) | html %][% Data.WorkOrderAgentRightParenthesis | html %]
+                    <div title="[% Data.WorkOrderAgentUserFullname | html %]">
+                        [% Data.WorkOrderAgentUserFullname | html %]
                     </div>
                 </td>
 [% RenderBlockEnd("RecordWorkOrderAgent") %]
 [% RenderBlockStart("RecordChangeBuilder") %]
                 <td>
-                    <div title="[% Data.ChangeBuilderUserLogin | html %] [% Data.ChangeBuilderLeftParenthesis | html %][% Data.ChangeBuilderUserFirstname | html %] [% Data.ChangeBuilderUserLastname | html %][% Data.ChangeBuilderRightParenthesis | html %]">
-                        [% Data.ChangeBuilderUserLogin | truncate(15) | html %] [% Data.ChangeBuilderLeftParenthesis | html %][% Data.ChangeBuilderUserFirstname | truncate(15) | html %] [% Data.ChangeBuilderUserLastname | truncate(15) | html %][% Data.ChangeBuilderRightParenthesis | html %]
+                    <div title="[% Data.ChangeBuilderUserFullname | html %]">
+                        [% Data.ChangeBuilderUserFullname | html %]
                     </div>
                 </td>
 [% RenderBlockEnd("RecordChangeBuilder") %]
 [% RenderBlockStart("RecordChangeManager") %]
                 <td>
-                    <div title="[% Data.ChangeManagerUserLogin | html %] [% Data.ChangeManagerLeftParenthesis | html %][% Data.ChangeManagerUserFirstname | html %] [% Data.ChangeManagerUserLastname | html %][% Data.ChangeManagerRightParenthesis | html %]">
-                        [% Data.ChangeManagerUserLogin | truncate(15) | html %] [% Data.ChangeManagerLeftParenthesis | html %][% Data.ChangeManagerUserFirstname | truncate(15) | html %] [% Data.ChangeManagerUserLastname | truncate(15) | html %][% Data.ChangeManagerRightParenthesis | html %]
+                    <div title="[% Data.ChangeManagerUserFullname | html %]">
+                        [% Data.ChangeManagerUserFullname | html %]
                     </div>
                 </td>
 [% RenderBlockEnd("RecordChangeManager") %]

@@ -116,7 +116,7 @@
 [% RenderBlockEnd("EmptyWorkOrderAgent") %]
 [% RenderBlockStart("WorkOrderAgent") %]
                     <p class="Value">
-                        [% Data.WorkOrderAgentUserLogin | truncate(20) | html %] ([% Data.WorkOrderAgentUserFirstname | html %] [% Data.WorkOrderAgentUserLastname | html %])
+                        [% Data.WorkOrderAgentUserFullname | html %]
                     </p>
 [% RenderBlockEnd("WorkOrderAgent") %]
                     <div class="Clear"></div>

@@ -80,10 +80,7 @@ sub GetObjectAttributes {
                 User => $CustomerUserID,
             );
 
-            $Requester{"customer_$CustomerUserID"} = sprintf "%s (%s %s)",
-                $CustomerUser{UserLogin},
-                $CustomerUser{UserFirstname},
-                $CustomerUser{UserLastname};
+            $Requester{"customer_$CustomerUserID"} = $CustomerUser{UserFullname},;
         }
         else {
             my $OwnerID = $Ticket{OwnerID};
@@ -94,10 +91,7 @@ sub GetObjectAttributes {
                 UserID => $OwnerID,
             );
 
-            $Requester{"agent_$OwnerID"} = sprintf "%s (%s %s)",
-                $User{UserLogin},
-                $User{UserFirstname},
-                $User{UserLastname};
+            $Requester{"agent_$OwnerID"} = $User{UserFullname};
         }
     }
 

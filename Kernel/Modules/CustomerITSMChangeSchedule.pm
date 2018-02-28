@@ -465,11 +465,10 @@ sub Run {
                     );
 
                     # set user data
-                    $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
-                    $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
-                    $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
-                    $Data{ $UserType . 'LeftParenthesis' }  = '(';
-                    $Data{ $UserType . 'RightParenthesis' } = ')';
+                    $Data{ $UserType . 'UserLogin' }     = $User{UserLogin};
+                    $Data{ $UserType . 'UserFirstname' } = $User{UserFirstname};
+                    $Data{ $UserType . 'UserLastname' }  = $User{UserLastname};
+                    $Data{ $UserType . 'UserFullname' }  = $User{UserFullname};
                 }
 
                 # to store the linked service data

@@ -342,9 +342,8 @@ sub _IsNewCABMemberOk {
             # Look for exact match at beginning,
             # as $User{UserLastname} might contain a trailing 'out of office' note.
             # Note that this won't catch deletions of $Param{NewCABMember} at the end.
-            my $CheckString = sprintf '"%s %s" <%s>',
-                $User{UserFirstname},
-                $User{UserLastname},
+            my $CheckString = sprintf '"%s" <%s>',
+                $User{UserFullname},
                 $User{UserEmail};
             if ( index( $CheckString, $Param{NewCABMember} ) == 0 ) {
 

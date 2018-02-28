@@ -894,7 +894,7 @@ sub _ITSMChangeGetWorkOrderGraph {
         if (%WorkOrderAgentData) {
 
             # get WorkOrderAgent information
-            for my $Postfix (qw(UserLogin UserFirstname UserLastname)) {
+            for my $Postfix (qw(UserLogin UserFullname)) {
                 $WorkOrderInformation{"WorkOrderAgent$Postfix"} = $WorkOrderAgentData{$Postfix}
                     || '';
             }

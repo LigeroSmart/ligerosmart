@@ -502,16 +502,8 @@ sub Run {
                         Cached => 1,
                     );
 
-                    # set user data
-                    $Info{ $UserType . 'UserLogin' }        = $User{UserLogin};
-                    $Info{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
-                    $Info{ $UserType . 'UserLastname' }     = $User{UserLastname};
-                    $Info{ $UserType . 'LeftParenthesis' }  = '(';
-                    $Info{ $UserType . 'RightParenthesis' } = ')';
-
                     # set user full name
-                    $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
-                        . $User{UserLastname} . ')';
+                    $Info{$UserType} = $User{UserFullname};
                 }
 
                 # to store the linked service data
@@ -737,8 +729,7 @@ sub Run {
                     );
 
                     # set user full name
-                    $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
-                        . $User{UserLastname} . ')';
+                    $Info{$UserType} = $User{UserFullname};
                 }
 
                 my $ChangeTitle = $LayoutObject->Output(
@@ -869,8 +860,7 @@ sub Run {
             # output "printed by"
             $PDFObject->Text(
                 Text => $PrintedBy . ' '
-                    . $Self->{UserFirstname} . ' '
-                    . $Self->{UserLastname} . ' ('
+                    . $Self->{UserFullname} . ' ('
                     . $Self->{UserEmail} . ') '
                     . $Time,
                 FontSize => 9,
@@ -1085,22 +1075,22 @@ sub _MaskForm {
             UserID => $Param{CABAgent},
         );
 
-        # set user frenly CABAgent string
-        my $UserValue = sprintf '"%s %s" <%s>',
-            $UserData{UserFirstname},
-            $UserData{UserLastname},
+        # set user frienly CABAgent string
+        my $UserValue = sprintf '"%s" <%s>',
+            $UserData{UserFullname},
             $UserData{UserEmail};
 
         $Param{CABAgentSearch} = $UserValue;
     }
 
-    # set user frendly CABCustomer field
+    # set user friendly CABCustomer field
     if ( $Param{CABCustomer} && $Param{CABCustomer} ne '' ) {
 
         # get customer data
         my %CustomerSearchList = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerSearch(
             Search => $Param{CABCustomer},
         );
+
         $Param{CABCustomerSearch} = $CustomerSearchList{ $Param{CABCustomer} };
     }
 

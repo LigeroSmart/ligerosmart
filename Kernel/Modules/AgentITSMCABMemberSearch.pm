@@ -99,9 +99,8 @@ sub Run {
                 UserID => $UserID,
                 Valid  => $Param{Valid},
             );
-            my $UserValuePlain = sprintf '"%s %s" <%s>',
-                $User{UserFirstname},
-                $User{UserLastname},
+            my $UserValuePlain = sprintf '"%s" <%s>',
+                $User{UserFullname},
                 $User{UserEmail};
 
             push @Data, {
@@ -111,8 +110,10 @@ sub Run {
             };
         }
 
+        my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
         # get customer list
-        my %CustomerUserList = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerSearch(
+        my %CustomerUserList = $CustomerUserObject->CustomerSearch(
             Search => $Search,
             Valid  => 1,
         );
@@ -128,11 +129,11 @@ sub Run {
             # the skip the user
             next USERID if $Groups && !$GroupUsers{$CustomerUserLogin};
 
-            # html quote characters like <>
-            my $CustomerUserValuePlain = $CustomerUserList{$CustomerUserLogin};
-            $CustomerUserList{$CustomerUserLogin} = $LayoutObject->Ascii2Html(
-                Text => $CustomerUserList{$CustomerUserLogin},
+            my %CustomerUser = $CustomerUserObject->CustomerUserDataGet(
+                User => $CustomerUserLogin,
             );
+
+            my $CustomerUserValuePlain = '"' . $CustomerUser{UserFullname} . '" <' . $CustomerUser{UserEmail} . '>';
 
             push @Data, {
                 UserKey   => $CustomerUserLogin,
