@@ -80,7 +80,7 @@ sub GetObjectAttributes {
                 User => $CustomerUserID,
             );
 
-            $Requester{"customer_$CustomerUserID"} = $CustomerUser{UserFullname},;
+            $Requester{"customer_$CustomerUserID"} = $CustomerUser{UserFullname};
         }
         else {
             my $OwnerID = $Ticket{OwnerID};
