@@ -144,6 +144,7 @@ sub Run {
                     Data       => $ObjectOption{PriorityList},
                     SelectedID => $AllocateData->{$ImpactKey}{$CategoryKey} || '',
                     Title      => 'Priority',
+                    Class      => 'Modernize',
                 );
 
                 $AllocateMatrix->[$Row]->[$Column]->{OptionStrg} = $OptionStrg;
