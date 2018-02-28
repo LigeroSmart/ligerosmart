@@ -11,6 +11,8 @@ package Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our @ObjectDependencies = (
     'Kernel::System::ITSMChange::ITSMCondition',
     'Kernel::System::ITSMChange::ITSMWorkOrder',
@@ -211,11 +213,11 @@ sub SelectorList {
     }
 
     # add 'all' selector (for expressions and actions)
-    $SelectorList{'all'} = 'all';
+    $SelectorList{'all'} = Translatable('all');
 
     # add 'any' selector only for expressions
     if ( $Param{ExpressionID} ) {
-        $SelectorList{'any'} = 'any';
+        $SelectorList{'any'} = Translatable('any');
     }
 
     return \%SelectorList;
