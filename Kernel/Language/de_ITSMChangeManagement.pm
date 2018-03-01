@@ -611,7 +611,7 @@ sub Data {
     $Self->{Translation}->{'Create Change (from Template)'} = '';
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '';
     $Self->{Translation}->{'Create a change from this ticket.'} = '';
-    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '';
+    $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'ITSM Change-Benachrichtigungen erstellen und verwalten';
     $Self->{Translation}->{'Create and manage change notifications.'} = '';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Standardtyp für einen Arbeitsauftrag. Dieser Eintrag muss in der General Catalog Klasse \'ITSM::ChangeManagement::WorkOrder::Type\' existieren.';
@@ -834,7 +834,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Condition Edit.'} = '';
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = '';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '';
-    $Self->{Translation}->{'ITSM Change Notifications'} = '';
+    $Self->{Translation}->{'ITSM Change Notifications'} = 'ITSM Change-Benachrichtigungen';
     $Self->{Translation}->{'ITSM Change PIR Overview.'} = '';
     $Self->{Translation}->{'ITSM Change notification rules'} = '';
     $Self->{Translation}->{'ITSM Changes'} = 'Changes';
