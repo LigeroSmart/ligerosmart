@@ -200,7 +200,7 @@ sub Data {
     $Self->{Translation}->{'Edit Content'} = 'Tartalom szerkesztése';
     $Self->{Translation}->{'Create by'} = 'Létrehozta';
     $Self->{Translation}->{'Change by'} = 'Módosította';
-    $Self->{Translation}->{'Change Time'} = 'Idő megváltoztatása';
+    $Self->{Translation}->{'Change Time'} = 'Változtatás ideje';
 
     # Template: AgentITSMWorkOrderAdd
     $Self->{Translation}->{'Add Workorder to %s%s'} = 'Munkamegrendelés hozzáadása ehhez: %s%s';
@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Nem lehet létrehozni a kimenetet, mivel nincs változásazonosító megadva!';
     $Self->{Translation}->{'unknown change title'} = 'ismeretlen változáscím';
     $Self->{Translation}->{'ITSM Workorder'} = 'ITSM munkamegrendelés';
+    $Self->{Translation}->{'WorkOrderNumber'} = 'Munkamegrendelés-szám';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'Munkamegrendelés-cím';
     $Self->{Translation}->{'unknown workorder title'} = 'ismeretlen munkamegrendelés-cím';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM munkamegrendelés áttekintés (%s)';
+    $Self->{Translation}->{'ChangeState'} = 'Változásállapot';
+    $Self->{Translation}->{'PlannedEffort'} = 'Tervezett ráfordítás';
+    $Self->{Translation}->{'CAB Agents'} = '';
+    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'RequestedTime'} = 'Kért idő';
     $Self->{Translation}->{'PlannedStartTime'} = 'Tervezett kezdési idő';
     $Self->{Translation}->{'PlannedEndTime'} = 'Tervezett befejezési idő';
     $Self->{Translation}->{'ActualStartTime'} = 'Tényleges kezdési idő';
     $Self->{Translation}->{'ActualEndTime'} = 'Tényleges befejezési idő';
+    $Self->{Translation}->{'ChangeTime'} = 'Módosítás ideje';
+    $Self->{Translation}->{'ChangeNumber'} = 'Változásszám';
+    $Self->{Translation}->{'WorkOrderState'} = 'Munkamegrendelés-állapot';
+    $Self->{Translation}->{'WorkOrderType'} = 'Munkamegrendelés-típus';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'Munkamegrendelés ügyintéző';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM munkamegrendelés áttekintés (%s)';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = 'Nem sikerült a(z) %s munkamegrendelés visszaállítása a(z) %s változásnál!';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = 'Változáskeresés';
     $Self->{Translation}->{'ChangeTitle'} = 'Változáscím';
     $Self->{Translation}->{'WorkOrders'} = 'Munkamegrendelések';
-    $Self->{Translation}->{'ChangeState'} = 'Változásállapot';
     $Self->{Translation}->{'Change Search Result'} = 'Változáskeresési eredmények';
     $Self->{Translation}->{'Change Number'} = 'Változásszám';
     $Self->{Translation}->{'Work Order Title'} = 'Munkamegrendelés-cím';
@@ -500,6 +511,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = 'A munkamegrendelés (azonosító = %s) elérte a tervezett kezdési időt.';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '(azonosító = %s) %s: (új = %s, régi = %s)';
 
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = 'összes';
+    $Self->{Translation}->{'any'} = 'bármely';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'kérve';
     $Self->{Translation}->{'pending approval'} = 'jóváhagyásra vár';
@@ -584,7 +599,7 @@ sub Data {
     $Self->{Translation}->{'Change number'} = 'Változásszám';
     $Self->{Translation}->{'Change search backend router of the agent interface.'} = 'Az ügyintézői felület változás keresési háttérprogram útválasztója.';
     $Self->{Translation}->{'Change state'} = 'Változásállapot';
-    $Self->{Translation}->{'Change time'} = 'Változás ideje';
+    $Self->{Translation}->{'Change time'} = 'Változtatás ideje';
     $Self->{Translation}->{'Change title'} = 'Változáscím';
     $Self->{Translation}->{'Condition Edit'} = 'Feltétel szerkesztés';
     $Self->{Translation}->{'Condition Overview'} = 'Feltétel áttekintés';
@@ -597,7 +612,7 @@ sub Data {
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Változás létrehozása (sablonból) ebből a jegyből.';
     $Self->{Translation}->{'Create a change from this ticket.'} = 'Változás létrehozása ebből a jegyből.';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'ITSM változásmenedzsment értesítések létrehozása és kezelése.';
-    $Self->{Translation}->{'Create and manage change notifications.'} = '';
+    $Self->{Translation}->{'Create and manage change notifications.'} = 'Változás értesítések létrehozása és kezelése.';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Egy munkamegrendelés alapértelmezett típusa. Ennek a bejegyzésnek léteznie kell az „ITSM::ChangeManagement::WorkOrder::Type” általános katalógus osztályban.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
@@ -697,7 +712,7 @@ sub Data {
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.'} =
         'Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „Elszámolt idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.'} =
-        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejetési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén.';
+        'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejezési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.'} =
         'Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges kezdési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén.';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.'} =
@@ -851,8 +866,8 @@ sub Data {
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Másik objektum összekapcsolása a munkamegrendeléssel.';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'CAB-tagok kikeresése az automatikus kiegészítéshez.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Ügyintézők kikeresése az automatikus kiegészítés használatához.';
-    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
-    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '';
+    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = 'ITSM változásmenedzsment állapotgép kezelése.';
+    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = 'A kategória ↔ hatás ↔ prioritás mátrix kezelése.';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Egy modul annak ellenőrzéséhez, hogy a „Munkamegrendelés hozzáadása” vagy a „Munkamegrendelés hozzáadása sablonból” osztályokat engedélyezni kell-e.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Egy modul a CAB-tagok ellenőrzéséhez.';

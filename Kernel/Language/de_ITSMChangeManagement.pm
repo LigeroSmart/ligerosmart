@@ -125,15 +125,15 @@ sub Data {
     $Self->{Translation}->{'Changes per page'} = 'Changes pro Seite';
 
     # Template: AgentITSMChangeOverviewSmall
-    $Self->{Translation}->{'Workorder Title'} = '';
+    $Self->{Translation}->{'Workorder Title'} = 'Arbeitsauftragstitel';
     $Self->{Translation}->{'Change Title'} = 'Titel ändern';
-    $Self->{Translation}->{'Workorder Agent'} = '';
+    $Self->{Translation}->{'Workorder Agent'} = 'Arbeitsauftragsagent';
     $Self->{Translation}->{'Change Builder'} = 'Change-Builder';
     $Self->{Translation}->{'Change Manager'} = 'Change-Manager';
     $Self->{Translation}->{'Workorders'} = 'Arbeitsaufträge';
     $Self->{Translation}->{'Change State'} = 'Änderungsstatus';
-    $Self->{Translation}->{'Workorder State'} = '';
-    $Self->{Translation}->{'Workorder Type'} = '';
+    $Self->{Translation}->{'Workorder State'} = 'Arbeitsauftragsstatus';
+    $Self->{Translation}->{'Workorder Type'} = 'Arbeitsauftragtyp';
     $Self->{Translation}->{'Requested Time'} = 'Wunschtermin';
     $Self->{Translation}->{'Planned Start Time'} = 'Geplante Startzeit';
     $Self->{Translation}->{'Planned End Time'} = 'Geplante Endzeit';
@@ -145,9 +145,9 @@ sub Data {
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(z. B. 10*5155 or 105658*)';
-    $Self->{Translation}->{'CAB Agent'} = '';
+    $Self->{Translation}->{'CAB Agent'} = 'CAB-Agent';
     $Self->{Translation}->{'e.g.'} = 'z. B.';
-    $Self->{Translation}->{'CAB Customer'} = '';
+    $Self->{Translation}->{'CAB Customer'} = 'CAB-Kunde';
     $Self->{Translation}->{'ITSM Workorder Instruction'} = '';
     $Self->{Translation}->{'ITSM Workorder Report'} = '';
     $Self->{Translation}->{'ITSM Change Priority'} = '';
@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'unknown change title'} = 'unbekannter Änderungstitel';
     $Self->{Translation}->{'ITSM Workorder'} = 'ITSM Arbeitsauftrag';
+    $Self->{Translation}->{'WorkOrderNumber'} = 'Arbeitsauftragnummer';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'Arbeitsauftragtitel';
     $Self->{Translation}->{'unknown workorder title'} = 'unbekannter Arbeitsauftragstitel';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM-Arbeitsauftragübersicht (%s)';
+    $Self->{Translation}->{'ChangeState'} = 'Change-Status';
+    $Self->{Translation}->{'PlannedEffort'} = 'Geplanter Aufwand';
+    $Self->{Translation}->{'CAB Agents'} = 'CAB-Agenten';
+    $Self->{Translation}->{'CAB Customers'} = 'CAB-Kunden';
+    $Self->{Translation}->{'RequestedTime'} = 'Wunschtermin';
     $Self->{Translation}->{'PlannedStartTime'} = 'Geplanter Start';
     $Self->{Translation}->{'PlannedEndTime'} = 'Geplantes Ende';
     $Self->{Translation}->{'ActualStartTime'} = 'Tatsächlicher Start';
     $Self->{Translation}->{'ActualEndTime'} = 'Tatsächliches Ende';
+    $Self->{Translation}->{'ChangeTime'} = 'Geändert';
+    $Self->{Translation}->{'ChangeNumber'} = 'Change Nummer';
+    $Self->{Translation}->{'WorkOrderState'} = 'Arbeitsauftragstatus';
+    $Self->{Translation}->{'WorkOrderType'} = 'Arbeitsauftragtyp';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'Arbeitsauftragagent';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM-Arbeitsauftragübersicht (%s)';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = 'Suche ändern';
     $Self->{Translation}->{'ChangeTitle'} = 'Change-Titel';
     $Self->{Translation}->{'WorkOrders'} = 'Arbeitsauftrag';
-    $Self->{Translation}->{'ChangeState'} = 'Change-Status';
     $Self->{Translation}->{'Change Search Result'} = 'Suchergebnis ändern';
     $Self->{Translation}->{'Change Number'} = 'Nummer ändern';
     $Self->{Translation}->{'Work Order Title'} = 'Arbeitsauftragtitel';
@@ -500,6 +511,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '';
 
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = 'alle';
+    $Self->{Translation}->{'any'} = 'beliebige';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'Requested';
     $Self->{Translation}->{'pending approval'} = 'Pending Approval';
@@ -560,7 +575,7 @@ sub Data {
         'Agenten-Ansicht Benachrichtigung-Modul um die Zahl der Changes anzuzeigen.';
     $Self->{Translation}->{'Agent interface notification module to see the number of workorders.'} =
         '';
-    $Self->{Translation}->{'CAB Member Search'} = '';
+    $Self->{Translation}->{'CAB Member Search'} = 'CAB-Mitgliedersuche';
     $Self->{Translation}->{'Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes).'} =
         'Cache-Zeit in Minuten für die Change Management Werkzeugleiste. Standard: 3 Stunden (180 Minuten)';
     $Self->{Translation}->{'Cache time in minutes for the change management. Default: 5 days (7200 minutes).'} =

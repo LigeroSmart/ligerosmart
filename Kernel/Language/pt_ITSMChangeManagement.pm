@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'unknown change title'} = '';
     $Self->{Translation}->{'ITSM Workorder'} = 'Ordem de Serviço ITSM';
+    $Self->{Translation}->{'WorkOrderNumber'} = 'Número da Ordem de Serviço';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'Título da Ordem de Serviço';
     $Self->{Translation}->{'unknown workorder title'} = '';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
+    $Self->{Translation}->{'ChangeState'} = 'Estado da Alteração';
+    $Self->{Translation}->{'PlannedEffort'} = 'Esforço planeado';
+    $Self->{Translation}->{'CAB Agents'} = '';
+    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'RequestedTime'} = 'Solicitado em';
     $Self->{Translation}->{'PlannedStartTime'} = 'Início planeado';
     $Self->{Translation}->{'PlannedEndTime'} = 'fim planeado';
     $Self->{Translation}->{'ActualStartTime'} = 'Início Real';
     $Self->{Translation}->{'ActualEndTime'} = 'fim Real';
+    $Self->{Translation}->{'ChangeTime'} = 'Alterado em';
+    $Self->{Translation}->{'ChangeNumber'} = 'Número da Alteração';
+    $Self->{Translation}->{'WorkOrderState'} = 'Estado da Ordem de Serviço';
+    $Self->{Translation}->{'WorkOrderType'} = 'Tipo da Ordem de Serviço';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'agente da Ordem de Serviço';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = '';
     $Self->{Translation}->{'ChangeTitle'} = 'Título da Alteração';
     $Self->{Translation}->{'WorkOrders'} = 'Ordens de Serviço';
-    $Self->{Translation}->{'ChangeState'} = 'Estado da Alteração';
     $Self->{Translation}->{'Change Search Result'} = '';
     $Self->{Translation}->{'Change Number'} = '';
     $Self->{Translation}->{'Work Order Title'} = '';
@@ -499,6 +510,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned end time.'} = '';
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '';
+
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = 'todos';
+    $Self->{Translation}->{'any'} = 'qualquer';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'Requerida';
@@ -873,7 +888,7 @@ sub Data {
     $Self->{Translation}->{'Other Settings'} = 'Outras definições';
     $Self->{Translation}->{'Overview over all Changes.'} = '';
     $Self->{Translation}->{'PIR'} = '';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'RPI (Revista Pós-Implementação)';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'RPI (Revisão Pós-Implementação)';
     $Self->{Translation}->{'PSA'} = '';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         '';

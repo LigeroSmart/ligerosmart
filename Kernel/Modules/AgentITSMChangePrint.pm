@@ -308,8 +308,7 @@ sub Run {
                 );
             }
 
-            push @WorkOrderOverview,
-                [
+            push @WorkOrderOverview, [
                 $WorkOrder->{WorkOrderNumber},
                 $WorkOrder->{WorkOrderTitle},
                 $WorkOrder->{WorkOrderState},
@@ -317,7 +316,7 @@ sub Run {
                 $WorkOrder->{PlannedEndTime},
                 $WorkOrder->{ActualStartTime},
                 $WorkOrder->{ActualEndTime},
-                ];
+            ];
         }
 
         $Output .= $Self->_OutputWorkOrderOverview(
@@ -326,11 +325,7 @@ sub Run {
     }
 
     # output either a single workorder or all workorders of a change
-    my @WorkOrderIDs = $PrintChange
-        ?
-        @{ $Change->{WorkOrderIDs} || [] }
-        :
-        ($WorkOrderID);
+    my @WorkOrderIDs = $PrintChange ? @{ $Change->{WorkOrderIDs} || [] } : ($WorkOrderID);
 
     for my $WorkOrderID (@WorkOrderIDs) {
 
@@ -343,20 +338,22 @@ sub Run {
         # check error
         if ( !$WorkOrder ) {
             return $LayoutObject->ErrorScreen(
-                Message =>
-                    $LayoutObject->{LanguageObject}->Translate( 'WorkOrder "%s" not found in database!', $WorkOrderID ),
+                Message => $LayoutObject->{LanguageObject}->Translate(
+                    'WorkOrder "%s" not found in database!',
+                    $WorkOrderID,
+                ),
                 Comment => Translatable('Please contact the administrator.'),
             );
         }
 
         # start a new page for every workorder
         my $HeaderArea = $LayoutObject->{LanguageObject}->Translate('ITSM Workorder');
-        my $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber};
+        my $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{ Translatable('WorkOrderNumber') };
 
         $Output .= $Self->_OutputHeadline(
             HeaderArea     => $HeaderArea,
             HeaderValue    => $HeaderValue,
-            Title          => $WorkOrder->{WorkOrderTitle} || Translatable('unknown workorder title'),
+            Title          => $WorkOrder->{ Translatable('WorkOrderTitle') } || Translatable('unknown workorder title'),
             TemplatePrefix => 'WorkOrder',
         );
 
@@ -415,10 +412,9 @@ sub Run {
         push @Filename, 'workorder', $Change->{ChangeNumber} . '-' . $WorkOrder->{WorkOrderNumber};
     }
 
-    push @Filename,
-        $CurSysDTObject->Format(
+    push @Filename, $CurSysDTObject->Format(
         Format => '%F_%H-%M',
-        );
+    );
 
     # return the PDF document
     my $PDFString = $Kernel::OM->Get('Kernel::System::PDF')->DocumentOutput();
@@ -776,57 +772,57 @@ sub _OutputChangeInfo {
 
     my @RowSpec = (
         {
-            Attribute           => 'ChangeState',
+            Attribute           => Translatable('ChangeState'),
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
         {
-            Attribute  => 'PlannedEffort',
+            Attribute  => Translatable('PlannedEffort'),
             IsOptional => 1,
             Table      => \@TableLeft,
         },
         {
-            Attribute  => 'AccountedTime',
+            Attribute  => Translatable('AccountedTime'),
             IsOptional => 1,
             Table      => \@TableLeft,
         },
         {
-            Attribute           => 'Category',
+            Attribute           => Translatable('Category'),
             Key                 => 'Category',
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
         {
-            Attribute           => 'Impact',
+            Attribute           => Translatable('Impact'),
             Key                 => 'Impact',
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
         {
-            Attribute           => 'Priority',
+            Attribute           => Translatable('Priority'),
             Key                 => 'Priority',
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
         @DynamicFieldRowSpec,
         {
-            Attribute   => 'ChangeManager',
+            Attribute   => Translatable('ChangeManager'),
             Table       => \@TableLeft,
             ValueIsUser => 1,
         },
         {
-            Attribute   => 'ChangeBuilder',
+            Attribute   => Translatable('ChangeBuilder'),
             Table       => \@TableLeft,
             ValueIsUser => 1,
         },
         {
             Attribute => 'CABAgentsLong',
-            Key       => 'CAB Agents',
+            Key       => Translatable('CAB Agents'),
             Table     => \@TableLeft,
         },
         {
             Attribute => 'CABCustomersLong',
-            Key       => 'CAB Customers',
+            Key       => Translatable('CAB Customers'),
             Table     => \@TableLeft,
         },
         {
@@ -835,39 +831,39 @@ sub _OutputChangeInfo {
             Table     => \@TableLeft,
         },
         {
-            Attribute   => 'RequestedTime',
+            Attribute   => Translatable('RequestedTime'),
             IsOptional  => 1,
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'PlannedStartTime',
+            Attribute   => Translatable('PlannedStartTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'PlannedEndTime',
+            Attribute   => Translatable('PlannedEndTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'ActualStartTime',
+            Attribute   => Translatable('ActualStartTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'ActualEndTime',
+            Attribute   => Translatable('ActualEndTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'CreateTime',
+            Attribute   => Translatable('CreateTime'),
             Key         => 'Created',
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'ChangeTime',
+            Attribute   => Translatable('ChangeTime'),
             Key         => 'Changed',
             Table       => \@TableRight,
             ValueIsTime => 1,
@@ -1044,75 +1040,75 @@ sub _OutputWorkOrderInfo {
             Key       => 'ChangeTitle',
         },
         {
-            Attribute => 'ChangeNumber',
+            Attribute => Translatable('ChangeNumber'),
             Table     => \@TableLeft,
             Key       => 'ChangeNumber',
         },
         {
-            Attribute           => 'WorkOrderState',
+            Attribute           => Translatable('WorkOrderState'),
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
         {
-            Attribute           => 'WorkOrderType',
+            Attribute           => Translatable('WorkOrderType'),
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
         {
-            Attribute   => 'WorkOrderAgent',
+            Attribute   => Translatable('WorkOrderAgent'),
             Table       => \@TableLeft,
             ValueIsUser => 1,
         },
         {
-            Attribute  => 'PlannedEffort',
+            Attribute  => Translatable('PlannedEffort'),
             IsOptional => 1,
             Table      => \@TableLeft,
             Key        => 'PlannedEffort',
         },
         {
-            Attribute  => 'AccountedTime',
+            Attribute  => Translatable('AccountedTime'),
             IsOptional => 1,
             Table      => \@TableLeft,
             Key        => 'AccountedTime',
         },
         @DynamicFieldRowSpec,
         {
-            Attribute => 'Attachments',
+            Attribute => Translatable('Attachments'),
             Key       => 'Attachments',
             Table     => \@TableLeft,
         },
         {
-            Attribute   => 'PlannedStartTime',
+            Attribute   => Translatable('PlannedStartTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
             Key         => 'PlannedStartTime',
         },
         {
-            Attribute   => 'PlannedEndTime',
+            Attribute   => Translatable('PlannedEndTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
             Key         => 'PlannedEndTime',
         },
         {
-            Attribute   => 'ActualStartTime',
+            Attribute   => Translatable('ActualStartTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
             Key         => 'ActualStartTime',
         },
         {
-            Attribute   => 'ActualEndTime',
+            Attribute   => Translatable('ActualEndTime'),
             Table       => \@TableRight,
             ValueIsTime => 1,
             Key         => 'ActualEndTime',
         },
         {
-            Attribute   => 'CreateTime',
+            Attribute   => Translatable('CreateTime'),
             Key         => 'Created',
             Table       => \@TableRight,
             ValueIsTime => 1,
         },
         {
-            Attribute   => 'ChangeTime',
+            Attribute   => Translatable('ChangeTime'),
             Key         => 'Changed',
             Table       => \@TableRight,
             ValueIsTime => 1,

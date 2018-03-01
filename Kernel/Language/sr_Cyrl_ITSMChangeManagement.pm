@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Не може се крирати излаз јер није дат ChangeID!';
     $Self->{Translation}->{'unknown change title'} = 'непознат наслов промене';
     $Self->{Translation}->{'ITSM Workorder'} = 'ITSM радни налог';
+    $Self->{Translation}->{'WorkOrderNumber'} = 'Број радног налога';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'Радни налог - наслов';
     $Self->{Translation}->{'unknown workorder title'} = 'непознат наслов радног налога';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'Преглед ITSM радног налога (%s)';
+    $Self->{Translation}->{'ChangeState'} = 'Промена - статус';
+    $Self->{Translation}->{'PlannedEffort'} = 'Планирани напор';
+    $Self->{Translation}->{'CAB Agents'} = '';
+    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'RequestedTime'} = 'Тражено време';
     $Self->{Translation}->{'PlannedStartTime'} = 'Планирано време почетка';
     $Self->{Translation}->{'PlannedEndTime'} = 'Планирано време завршетка';
     $Self->{Translation}->{'ActualStartTime'} = 'Стварно време почетка';
     $Self->{Translation}->{'ActualEndTime'} = 'Стварно време завршетка';
+    $Self->{Translation}->{'ChangeTime'} = 'Време промене';
+    $Self->{Translation}->{'ChangeNumber'} = 'Број промене';
+    $Self->{Translation}->{'WorkOrderState'} = 'Радни налог - статус';
+    $Self->{Translation}->{'WorkOrderType'} = 'Радни налог - тип';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'Радни налог - оператер';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'Преглед ITSM радног налога (%s)';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = 'Није било могуће поништити радни налог %s за промену %s!';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = 'Претрага промена';
     $Self->{Translation}->{'ChangeTitle'} = 'Промена - наслов';
     $Self->{Translation}->{'WorkOrders'} = 'Радни налози';
-    $Self->{Translation}->{'ChangeState'} = 'Промена - статус';
     $Self->{Translation}->{'Change Search Result'} = 'Резултат претраге промена';
     $Self->{Translation}->{'Change Number'} = 'Број промене';
     $Self->{Translation}->{'Work Order Title'} = 'Наслов радног налога';
@@ -500,6 +511,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = 'Радни налог (ID=%s) је достигао планирано време почетка.';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '(ID=%s) %s: (ново=%s, старо=%s)';
 
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = 'sve';
+    $Self->{Translation}->{'any'} = 'сваки';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'захтевано';
     $Self->{Translation}->{'pending approval'} = 'одобрење на чекању';
@@ -601,7 +616,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Подразумевени тип радног налога. Овај унос мора да постоји у класи општег каталога \'ITSM::ChangeManagement::WorkOrder::Type\'.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        'Дефинише Акције где је дугме поставки доступно у повезаном графичком елементу објекта (LinkObject::ViewMode = "complex"). Молимо да имате на уму да ове Акције морају да буду регистроване у следећим JS и CSS датотекама: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js.';
+        'Дефинише акције где је дугме поставки доступно у повезаном графичком елементу објекта (LinkObject::ViewMode = "complex"). Молимо да имате на уму да ове Акције морају да буду регистроване у следећим JS и CSS датотекама: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Дефинише сигнале за сваки статус радног налога.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Дефинише које колоне су приказане у повезаном графичком елементу промена (LinkObject::ViewMode = "complex"). Напомена: Само атрибути промене су дозвољени за подразумеване колоне. Могуће поставке: 0 = онемогућено, 1 = доступно, 2 = подразумевано активирано.';

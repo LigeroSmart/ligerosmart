@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 19:47+0000\n"
-"PO-Revision-Date: 2018-02-06 19:48+0000\n"
+"POT-Creation-Date: 2018-03-01 09:03+0000\n"
+"PO-Revision-Date: 2018-03-01 09:03+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -858,12 +858,36 @@ msgid "ITSM Workorder"
 msgstr "Orden de Trabajo ITSM"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderNumber"
+msgstr "Número de la Orden de Trabajo"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderTitle"
+msgstr "Título de la Orden de Trabajo"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
 msgstr "Título de la Orden de trabajo desconocido"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
-msgid "ITSM Workorder Overview (%s)"
-msgstr "ITSM Resumen de la orden de trabajo (%s)"
+msgid "ChangeState"
+msgstr "Estado del Cambio"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEffort"
+msgstr "Esfuerzo Planeado"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Agents"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Customers"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "RequestedTime"
+msgstr "Fecha Solicitada"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
@@ -880,6 +904,30 @@ msgstr "Fecha de Inicio Real"
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualEndTime"
 msgstr "Fecha de Finalización Real"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeTime"
+msgstr "Fecha del cambio"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeNumber"
+msgstr "Número del Cambio"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderState"
+msgstr "Estado de la Orden de Trabajo"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderType"
+msgstr "Tipo de Orden de Trabajo"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderAgent"
+msgstr "Agente de la Orden de Trabajo"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr "ITSM Resumen de la orden de trabajo (%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
@@ -904,10 +952,6 @@ msgstr "Título del Cambio"
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "Orden de Trabajo"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "ChangeState"
-msgstr "Estado del Cambio"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -1308,6 +1352,14 @@ msgstr "Orden de trabajo (ID=%s) alcanzó la hora de inicio planificada."
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) %s: (new=%s, old=%s)"
 msgstr "(ID=%s)%s:(nuevo=%s, viejo=%s)"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "all"
+msgstr "todo"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "any"
+msgstr "cualquiera"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"

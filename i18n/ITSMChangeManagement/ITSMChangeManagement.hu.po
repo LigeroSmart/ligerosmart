@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 19:47+0000\n"
-"PO-Revision-Date: 2018-02-06 19:48+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-03-01 09:03+0000\n"
+"PO-Revision-Date: 2018-03-01 09:03+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -559,7 +559,7 @@ msgstr "Módosította"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change Time"
-msgstr "Idő megváltoztatása"
+msgstr "Változtatás ideje"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to %s%s"
@@ -853,12 +853,36 @@ msgid "ITSM Workorder"
 msgstr "ITSM munkamegrendelés"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderNumber"
+msgstr "Munkamegrendelés-szám"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderTitle"
+msgstr "Munkamegrendelés-cím"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
 msgstr "ismeretlen munkamegrendelés-cím"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
-msgid "ITSM Workorder Overview (%s)"
-msgstr "ITSM munkamegrendelés áttekintés (%s)"
+msgid "ChangeState"
+msgstr "Változásállapot"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEffort"
+msgstr "Tervezett ráfordítás"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Agents"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Customers"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "RequestedTime"
+msgstr "Kért idő"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
@@ -875,6 +899,30 @@ msgstr "Tényleges kezdési idő"
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualEndTime"
 msgstr "Tényleges befejezési idő"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeTime"
+msgstr "Módosítás ideje"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeNumber"
+msgstr "Változásszám"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderState"
+msgstr "Munkamegrendelés-állapot"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderType"
+msgstr "Munkamegrendelés-típus"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderAgent"
+msgstr "Munkamegrendelés ügyintéző"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr "ITSM munkamegrendelés áttekintés (%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
@@ -899,10 +947,6 @@ msgstr "Változáscím"
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "Munkamegrendelések"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "ChangeState"
-msgstr "Változásállapot"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -1304,6 +1348,14 @@ msgstr "A munkamegrendelés (azonosító = %s) elérte a tervezett kezdési idő
 msgid "(ID=%s) %s: (new=%s, old=%s)"
 msgstr "(azonosító = %s) %s: (új = %s, régi = %s)"
 
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "all"
+msgstr "összes"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "any"
+msgstr "bármely"
+
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
 msgstr "kérve"
@@ -1602,7 +1654,7 @@ msgstr "Változásállapot"
 
 #. SysConfig
 msgid "Change time"
-msgstr "Változás ideje"
+msgstr "Változtatás ideje"
 
 #. SysConfig
 msgid "Change title"
@@ -1650,7 +1702,7 @@ msgstr "ITSM változásmenedzsment értesítések létrehozása és kezelése."
 
 #. SysConfig
 msgid "Create and manage change notifications."
-msgstr ""
+msgstr "Változás értesítések létrehozása és kezelése."
 
 #. SysConfig
 msgid ""
@@ -1960,7 +2012,7 @@ msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók az „El
 msgid ""
 "Defines the operators that are selectable for the attribute ActualEndTime in"
 " the change condition edit screen of the agent interface."
-msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejetési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
+msgstr "Meghatározza azokat az operátorokat, amelyek kiválaszthatók a „Tényleges befejezési idő” attribútumnál az ügyintézői felület változás feltételének szerkesztése képernyőjén."
 
 #. SysConfig
 msgid ""
@@ -2446,11 +2498,11 @@ msgstr "Ügyintézők kikeresése az automatikus kiegészítés használatához.
 
 #. SysConfig
 msgid "Manage ITSM Change Management state machine."
-msgstr ""
+msgstr "ITSM változásmenedzsment állapotgép kezelése."
 
 #. SysConfig
 msgid "Manage the category ↔ impact ↔ priority matrix."
-msgstr ""
+msgstr "A kategória ↔ hatás ↔ prioritás mátrix kezelése."
 
 #. SysConfig
 msgid ""

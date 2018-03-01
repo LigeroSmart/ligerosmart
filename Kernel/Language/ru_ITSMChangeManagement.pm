@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = 'Невозможно создать результат, так как не задан ChangeID!';
     $Self->{Translation}->{'unknown change title'} = 'Неизвестный заголовок Изменения';
     $Self->{Translation}->{'ITSM Workorder'} = 'Задача';
+    $Self->{Translation}->{'WorkOrderNumber'} = 'WorkOrderNumber - Номер задачи';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'WorkOrderTitle - Заголовок Задачи';
     $Self->{Translation}->{'unknown workorder title'} = 'Неизвестный заголовок Задачи';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'Обзор Задач ITSM (%s)';
+    $Self->{Translation}->{'ChangeState'} = 'Состояние изменения';
+    $Self->{Translation}->{'PlannedEffort'} = 'Планируемые ресурсы???';
+    $Self->{Translation}->{'CAB Agents'} = '';
+    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'RequestedTime'} = 'RequestedTime';
     $Self->{Translation}->{'PlannedStartTime'} = 'Запланированное время начала';
     $Self->{Translation}->{'PlannedEndTime'} = 'Запланированное время окончания';
     $Self->{Translation}->{'ActualStartTime'} = 'Фактическое время начала';
     $Self->{Translation}->{'ActualEndTime'} = 'Фактическое время окончания';
+    $Self->{Translation}->{'ChangeTime'} = 'ChangeTime - Время изменения';
+    $Self->{Translation}->{'ChangeNumber'} = 'Номер изменения';
+    $Self->{Translation}->{'WorkOrderState'} = 'WorkOrderState - состояние Задачи';
+    $Self->{Translation}->{'WorkOrderType'} = 'WorkOrderType - Тип Задачи';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'WorkOrderAgent - Агент для задачи';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'Обзор Задач ITSM (%s)';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = 'Не удалось очистить Задачу %s Изменения %s!';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = 'Поиск Изменений';
     $Self->{Translation}->{'ChangeTitle'} = 'Заголовок изменения';
     $Self->{Translation}->{'WorkOrders'} = 'Задачи';
-    $Self->{Translation}->{'ChangeState'} = 'Состояние изменения';
     $Self->{Translation}->{'Change Search Result'} = 'Результат поиска Изменений';
     $Self->{Translation}->{'Change Number'} = 'Номер Изменения';
     $Self->{Translation}->{'Work Order Title'} = 'Заголовок Задачи';
@@ -500,6 +511,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '';
 
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = 'все';
+    $Self->{Translation}->{'any'} = 'любой(ая)';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'запрошено';
     $Self->{Translation}->{'pending approval'} = 'отложенное утверждение';
@@ -571,7 +586,7 @@ sub Data {
     $Self->{Translation}->{'Change Overview "Small" Limit'} = 'Изменить количество строк/записей при просмотре изменений в формате Small.';
     $Self->{Translation}->{'Change Overview.'} = 'Обзор Изменения';
     $Self->{Translation}->{'Change Print.'} = 'Печать Изменения.';
-    $Self->{Translation}->{'Change Schedule'} = 'Планировщик изменений';
+    $Self->{Translation}->{'Change Schedule'} = 'Расписание изменений';
     $Self->{Translation}->{'Change Schedule.'} = 'Изменение расписания.';
     $Self->{Translation}->{'Change Settings'} = '';
     $Self->{Translation}->{'Change Zoom'} = 'Подробный просмотр изменения';
@@ -843,8 +858,8 @@ sub Data {
     $Self->{Translation}->{'ITSM event module to recalculate the workorder numbers.'} = 'ITSM модуль обработки событий, перевычисляющий номера задач.';
     $Self->{Translation}->{'ITSM event module to set the actual start and end times of workorders.'} =
         'ITSM модуль обработки событий, устанавливающий фактическое время начала и окончания задач.';
-    $Self->{Translation}->{'ITSMChange'} = 'Изменение';
-    $Self->{Translation}->{'ITSMWorkOrder'} = 'Задача';
+    $Self->{Translation}->{'ITSMChange'} = 'ITSMChange';
+    $Self->{Translation}->{'ITSMWorkOrder'} = 'ITSMWorkOrder';
     $Self->{Translation}->{'If frequency is \'regularly\', you can configure how often the notifications are sent (every X hours).'} =
         'Если частота указана как "regularly" вы можете задать как часто будут отправляться уведомления (каждые Х часов).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Связать другой объект с изменением';

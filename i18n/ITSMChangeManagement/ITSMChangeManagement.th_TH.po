@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 19:47+0000\n"
-"PO-Revision-Date: 2018-02-06 19:48+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-03-01 09:03+0000\n"
+"PO-Revision-Date: 2018-03-01 09:03+0000\n"
+"Last-Translator: OTRS SDN BHD <otrssdnbhd@gmail.com>\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -853,12 +853,36 @@ msgid "ITSM Workorder"
 msgstr "ใบสั่งงาน ITSM"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderNumber"
+msgstr "ใบสั่งงานที่"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderTitle"
+msgstr "หัวข้อใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
-msgid "ITSM Workorder Overview (%s)"
+msgid "ChangeState"
+msgstr "สถานภาพของChange "
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEffort"
+msgstr "ความพยายามที่วางแผนไว้"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Agents"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Customers"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "RequestedTime"
+msgstr "เวลาที่ร้องขอ"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
@@ -875,6 +899,30 @@ msgstr "เวลาเริ่มต้นที่เกิดขึ้นจ
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualEndTime"
 msgstr "เวลาสิ้นสุดที่เกิดขึ้นจริง"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeTime"
+msgstr "เวลาของการเปลี่ยนแปลง"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeNumber"
+msgstr "ลำดับของChange"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderState"
+msgstr "สถานภาพของใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderType"
+msgstr "ประเภทใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderAgent"
+msgstr "เอเย่นต์ของใบสั่งงาน"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
@@ -899,10 +947,6 @@ msgstr "หัวข้อChange "
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "ใบสั่งงาน"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "ChangeState"
-msgstr "สถานภาพของChange "
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -1303,6 +1347,14 @@ msgstr ""
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "(ID=%s) %s: (new=%s, old=%s)"
 msgstr ""
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "all"
+msgstr "ทั้งหมด"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "any"
+msgstr "ใดๆ"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"

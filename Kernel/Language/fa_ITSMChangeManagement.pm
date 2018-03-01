@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'unknown change title'} = '';
     $Self->{Translation}->{'ITSM Workorder'} = 'دستور کار';
+    $Self->{Translation}->{'WorkOrderNumber'} = 'شماره دستور کار';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'عنوان دستور کار';
     $Self->{Translation}->{'unknown workorder title'} = '';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
+    $Self->{Translation}->{'ChangeState'} = 'وضعیت تغییر';
+    $Self->{Translation}->{'PlannedEffort'} = 'سعی برنامه‌ریزی شده';
+    $Self->{Translation}->{'CAB Agents'} = '';
+    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'RequestedTime'} = 'زمان مورد انتظار';
     $Self->{Translation}->{'PlannedStartTime'} = 'زمان آغاز برنامه‌ریزی شده';
     $Self->{Translation}->{'PlannedEndTime'} = 'زمان خاتمه برنامه‌ریزی شده';
     $Self->{Translation}->{'ActualStartTime'} = 'زمان آغاز در عمل';
     $Self->{Translation}->{'ActualEndTime'} = 'زمان خاتمه در عمل';
+    $Self->{Translation}->{'ChangeTime'} = 'تغییر یافته';
+    $Self->{Translation}->{'ChangeNumber'} = 'شماره تغییر';
+    $Self->{Translation}->{'WorkOrderState'} = 'وضعیت دستور کار';
+    $Self->{Translation}->{'WorkOrderType'} = 'نوع دستور کار';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'کارشناس انجام دستور کار';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = '';
     $Self->{Translation}->{'ChangeTitle'} = 'عنوان تغییر';
     $Self->{Translation}->{'WorkOrders'} = 'دستور کارها';
-    $Self->{Translation}->{'ChangeState'} = 'وضعیت تغییر';
     $Self->{Translation}->{'Change Search Result'} = '';
     $Self->{Translation}->{'Change Number'} = '';
     $Self->{Translation}->{'Work Order Title'} = '';
@@ -499,6 +510,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned end time.'} = '';
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '';
+
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = 'همه';
+    $Self->{Translation}->{'any'} = 'هیچ';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'درخواست شده';

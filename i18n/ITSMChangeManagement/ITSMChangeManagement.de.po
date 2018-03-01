@@ -8,13 +8,13 @@
 # Sascha Lewandowski <S.Lewandowski@it-lew.de>, 2015
 # Stefan Simmerstatter, 2015
 # Udo Bretz, 2014
-# Udo Bretz, 2014,2016-2017
+# Udo Bretz, 2014,2016-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 19:47+0000\n"
-"PO-Revision-Date: 2018-02-06 19:48+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-03-01 09:03+0000\n"
+"PO-Revision-Date: 2018-03-01 09:03+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category ↔ Impact ↔ Priority"
-msgstr ""
+msgstr "Kategorie ↔ Auswirkung ↔ Priorität"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category ↔ Impact."
@@ -344,7 +344,7 @@ msgstr "Changes pro Seite"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Title"
-msgstr ""
+msgstr "Arbeitsauftragstitel"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Title"
@@ -352,7 +352,7 @@ msgstr "Titel ändern"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Agent"
-msgstr ""
+msgstr "Arbeitsauftragsagent"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Builder"
@@ -372,11 +372,11 @@ msgstr "Änderungsstatus"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder State"
-msgstr ""
+msgstr "Arbeitsauftragsstatus"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Type"
-msgstr ""
+msgstr "Arbeitsauftragtyp"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
@@ -408,7 +408,7 @@ msgstr "(z. B. 10*5155 or 105658*)"
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Agent"
-msgstr ""
+msgstr "CAB-Agent"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
@@ -416,7 +416,7 @@ msgstr "z. B."
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Customer"
-msgstr ""
+msgstr "CAB-Kunde"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Instruction"
@@ -861,12 +861,36 @@ msgid "ITSM Workorder"
 msgstr "ITSM Arbeitsauftrag"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderNumber"
+msgstr "Arbeitsauftragnummer"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderTitle"
+msgstr "Arbeitsauftragtitel"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
 msgstr "unbekannter Arbeitsauftragstitel"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
-msgid "ITSM Workorder Overview (%s)"
-msgstr "ITSM-Arbeitsauftragübersicht (%s)"
+msgid "ChangeState"
+msgstr "Change-Status"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "PlannedEffort"
+msgstr "Geplanter Aufwand"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Agents"
+msgstr "CAB-Agenten"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "CAB Customers"
+msgstr "CAB-Kunden"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "RequestedTime"
+msgstr "Wunschtermin"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
@@ -883,6 +907,30 @@ msgstr "Tatsächlicher Start"
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualEndTime"
 msgstr "Tatsächliches Ende"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeTime"
+msgstr "Geändert"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ChangeNumber"
+msgstr "Change Nummer"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderState"
+msgstr "Arbeitsauftragstatus"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderType"
+msgstr "Arbeitsauftragtyp"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "WorkOrderAgent"
+msgstr "Arbeitsauftragagent"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
+msgid "ITSM Workorder Overview (%s)"
+msgstr "ITSM-Arbeitsauftragübersicht (%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
@@ -907,10 +955,6 @@ msgstr "Change-Titel"
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
 msgstr "Arbeitsauftrag"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
-msgid "ChangeState"
-msgstr "Change-Status"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
@@ -1312,6 +1356,14 @@ msgstr ""
 msgid "(ID=%s) %s: (new=%s, old=%s)"
 msgstr ""
 
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "all"
+msgstr "alle"
+
+#. Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+msgid "any"
+msgstr "beliebige"
+
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
 msgstr "Requested"
@@ -1518,7 +1570,7 @@ msgstr ""
 
 #. SysConfig
 msgid "CAB Member Search"
-msgstr ""
+msgstr "CAB-Mitgliedersuche"
 
 #. SysConfig
 msgid ""

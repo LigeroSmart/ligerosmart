@@ -169,7 +169,7 @@ sub Data {
 
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = '变更信息';
-    $Self->{Translation}->{'Planned Effort'} = '预计耗时';
+    $Self->{Translation}->{'Planned Effort'} = '计划用时';
     $Self->{Translation}->{'Accounted Time'} = '所用工时';
     $Self->{Translation}->{'Change Initiator(s)'} = '变更发起人';
     $Self->{Translation}->{'CAB'} = 'CAB';
@@ -339,12 +339,24 @@ sub Data {
     $Self->{Translation}->{'Can\'t create output, as no ChangeID is given!'} = '不能创建输出，因为没有指定变更ID！';
     $Self->{Translation}->{'unknown change title'} = '未知的变更标题';
     $Self->{Translation}->{'ITSM Workorder'} = '工作指令';
+    $Self->{Translation}->{'WorkOrderNumber'} = '工作指令编号';
+    $Self->{Translation}->{'WorkOrderTitle'} = '工作指令标题';
     $Self->{Translation}->{'unknown workorder title'} = '未知的工作指令标题';
-    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '工作指令概览（%s）';
+    $Self->{Translation}->{'ChangeState'} = '变更状态';
+    $Self->{Translation}->{'PlannedEffort'} = '计划工作量';
+    $Self->{Translation}->{'CAB Agents'} = '';
+    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'RequestedTime'} = '请求时间';
     $Self->{Translation}->{'PlannedStartTime'} = '计划开始时间';
     $Self->{Translation}->{'PlannedEndTime'} = '计划结束时间';
     $Self->{Translation}->{'ActualStartTime'} = '实际开始时间';
     $Self->{Translation}->{'ActualEndTime'} = '实际结束时间';
+    $Self->{Translation}->{'ChangeTime'} = '修改时间';
+    $Self->{Translation}->{'ChangeNumber'} = '变更编号';
+    $Self->{Translation}->{'WorkOrderState'} = '工作指令状态';
+    $Self->{Translation}->{'WorkOrderType'} = '工作指令类型';
+    $Self->{Translation}->{'WorkOrderAgent'} = '工作指令服务人员';
+    $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = '工作指令概览（%s）';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
     $Self->{Translation}->{'Was not able to reset WorkOrder %s of Change %s!'} = '不能重置工作指令%s（属于变更%s）！';
@@ -357,7 +369,6 @@ sub Data {
     $Self->{Translation}->{'Change Search'} = '变更搜索';
     $Self->{Translation}->{'ChangeTitle'} = '变更标题';
     $Self->{Translation}->{'WorkOrders'} = '工作指令';
-    $Self->{Translation}->{'ChangeState'} = '变更状态';
     $Self->{Translation}->{'Change Search Result'} = '变更搜索结果';
     $Self->{Translation}->{'Change Number'} = '变更编号';
     $Self->{Translation}->{'Work Order Title'} = '工作指令标题';
@@ -500,6 +511,10 @@ sub Data {
     $Self->{Translation}->{'Workorder (ID=%s) reached planned start time.'} = '工作指令（ID=%s）已到达计划开始时间。';
     $Self->{Translation}->{'(ID=%s) %s: (new=%s, old=%s)'} = '（ID=%s）%s：（新=%s，旧=%s）';
 
+    # Perl Module: Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm
+    $Self->{Translation}->{'all'} = '全部';
+    $Self->{Translation}->{'any'} = '任何';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = '请求的';
     $Self->{Translation}->{'pending approval'} = '待审批';
@@ -597,7 +612,7 @@ sub Data {
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = '从这个工单创建一个变更（即从模板的方式）。';
     $Self->{Translation}->{'Create a change from this ticket.'} = '从这个工单创建变更。';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = '创建和管理ITSM变更管理通知。';
-    $Self->{Translation}->{'Create and manage change notifications.'} = '';
+    $Self->{Translation}->{'Create and manage change notifications.'} = '创建和管理变更通知。';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         '工作指令的默认类型。这个条目必须在目录类\'ITSM::ChangeManagement::WorkOrder::Type\'中存在。';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
@@ -612,7 +627,7 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} =
         '定义一个概览模块，以显示模板列表的简洁视图。';
     $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = '定义是否可以打印记帐时间。';
-    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = '定义是否可以打印计划工作量。';
+    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = '定义是否可以打印计划用时。';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.'} =
         '定义是否允许一个锁定状态的变更可达到结束状态（在状态模式转换中定义）。';
     $Self->{Translation}->{'Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state.'} =
@@ -623,7 +638,7 @@ sub Data {
         '定义变更搜索和工作指令搜索功能是否能够使用镜像数据库。';
     $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
         '定义服务人员界面在变更编辑屏幕能否设置变更状态。';
-    $Self->{Translation}->{'Defines if the planned effort should be shown.'} = '定义是否显示计划工作量。';
+    $Self->{Translation}->{'Defines if the planned effort should be shown.'} = '定义是否显示计划用时。';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = '定义客户是否可以打印请求日期。';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
         '定义客户是否可以搜索请求日期。';
@@ -697,41 +712,41 @@ sub Data {
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface.'} =
         '定义服务人员界面变更条件编辑屏幕中占用时间属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中实际结束时间属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中实际开始时间属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中目录ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中目录创建人ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中目录管理人ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中变更状态ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中变更标题属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中动态字段属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中影响ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中计划用时属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中计划结束时间属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中计划开始时间属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中优先级ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中请求时间属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中工作指令服务人员ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中工作指令编号属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中工作指令状态ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface.'} =
-        '';
+        '定义服务人员界面变更条件编辑屏幕中工作指令标题属性可选择的运算符。';
     $Self->{Translation}->{'Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface.'} =
         '定义服务人员界面变更条件编辑屏幕中工作指令类型ID属性可选择的运算符。';
     $Self->{Translation}->{'Defines the period (in years), in which start and end times can be selected.'} =
@@ -851,8 +866,8 @@ sub Data {
     $Self->{Translation}->{'Link another object to the workorder.'} = '链接另一对象到工作指令。';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '查找CAB成员，用于自动补齐功能。';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '查找服务人员，用于自动补齐功能。';
-    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
-    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '';
+    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '管理ITSM变更管理状态机。';
+    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '管理 风险类别 ↔ 影响 ↔ 优先级 矩阵。';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         '检查是否允许WorkOrderAdd（添加工作指令）或WorkOrderAddFromTemplate（从模板添加工作指令）的模块。';
     $Self->{Translation}->{'Module to check the CAB members.'} = '检查CAB成员的模块。';
