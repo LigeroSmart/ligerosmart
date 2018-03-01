@@ -534,6 +534,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = '退回';
     $Self->{Translation}->{'decision'} = '決定';
     $Self->{Translation}->{'pir'} = 'PIR (實施後審查)';
+    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'CategoryID'} = '';
+    $Self->{Translation}->{'ImpactID'} = '';
+    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = '';
+    $Self->{Translation}->{'ChangeBuilderID'} = '';
+    $Self->{Translation}->{'WorkOrderStateID'} = '';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '';
     $Self->{Translation}->{'is'} = '是';
     $Self->{Translation}->{'is not'} = '不是';
     $Self->{Translation}->{'is empty'} = '空白';
@@ -547,6 +556,16 @@ sub Data {
     $Self->{Translation}->{'begins with'} = '';
     $Self->{Translation}->{'ends with'} = '';
     $Self->{Translation}->{'set'} = '設置';
+    $Self->{Translation}->{'OldChangeBuilder'} = '';
+    $Self->{Translation}->{'OldChangeManager'} = '';
+    $Self->{Translation}->{'CABCustomers'} = 'CAB用户';
+    $Self->{Translation}->{'CABAgents'} = 'CAB服務人員';
+    $Self->{Translation}->{'WorkOrderAgents'} = '';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
+    $Self->{Translation}->{'ChangeInitiators'} = '';
+    $Self->{Translation}->{'GroupITSMChange'} = '';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'Ok';

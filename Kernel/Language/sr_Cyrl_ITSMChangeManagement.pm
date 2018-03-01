@@ -534,6 +534,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'одустанак';
     $Self->{Translation}->{'decision'} = 'одлука';
     $Self->{Translation}->{'pir'} = 'PIR';
+    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'CategoryID'} = '';
+    $Self->{Translation}->{'ImpactID'} = '';
+    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = '';
+    $Self->{Translation}->{'ChangeBuilderID'} = '';
+    $Self->{Translation}->{'WorkOrderStateID'} = '';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '';
     $Self->{Translation}->{'is'} = 'је';
     $Self->{Translation}->{'is not'} = 'није';
     $Self->{Translation}->{'is empty'} = 'је празно';
@@ -547,6 +556,16 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'почиње са';
     $Self->{Translation}->{'ends with'} = 'завршава са';
     $Self->{Translation}->{'set'} = 'подеси';
+    $Self->{Translation}->{'OldChangeBuilder'} = '';
+    $Self->{Translation}->{'OldChangeManager'} = '';
+    $Self->{Translation}->{'CABCustomers'} = 'СОП клијенти';
+    $Self->{Translation}->{'CABAgents'} = 'СОП оператери';
+    $Self->{Translation}->{'WorkOrderAgents'} = '';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
+    $Self->{Translation}->{'ChangeInitiators'} = '';
+    $Self->{Translation}->{'GroupITSMChange'} = '';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'У реду';

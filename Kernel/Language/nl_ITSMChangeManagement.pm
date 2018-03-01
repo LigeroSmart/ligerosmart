@@ -534,6 +534,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'Backout Plan';
     $Self->{Translation}->{'decision'} = 'Beslissing';
     $Self->{Translation}->{'pir'} = 'PIR (Post Implementation Review)';
+    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'CategoryID'} = '';
+    $Self->{Translation}->{'ImpactID'} = '';
+    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = '';
+    $Self->{Translation}->{'ChangeBuilderID'} = '';
+    $Self->{Translation}->{'WorkOrderStateID'} = '';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '';
     $Self->{Translation}->{'is'} = 'is';
     $Self->{Translation}->{'is not'} = 'is niet';
     $Self->{Translation}->{'is empty'} = 'is leeg';
@@ -547,6 +556,16 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'begint met';
     $Self->{Translation}->{'ends with'} = 'eindigt op';
     $Self->{Translation}->{'set'} = 'plaats';
+    $Self->{Translation}->{'OldChangeBuilder'} = '';
+    $Self->{Translation}->{'OldChangeManager'} = '';
+    $Self->{Translation}->{'CABCustomers'} = 'CAB klanten';
+    $Self->{Translation}->{'CABAgents'} = 'CAB gebruikers';
+    $Self->{Translation}->{'WorkOrderAgents'} = '';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
+    $Self->{Translation}->{'ChangeInitiators'} = '';
+    $Self->{Translation}->{'GroupITSMChange'} = '';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'OK';

@@ -534,6 +534,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'menarikdiri';
     $Self->{Translation}->{'decision'} = 'keputusan';
     $Self->{Translation}->{'pir'} = 'PIR (Post Implementation Review)';
+    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'CategoryID'} = '';
+    $Self->{Translation}->{'ImpactID'} = '';
+    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = '';
+    $Self->{Translation}->{'ChangeBuilderID'} = '';
+    $Self->{Translation}->{'WorkOrderStateID'} = '';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '';
     $Self->{Translation}->{'is'} = 'ialah';
     $Self->{Translation}->{'is not'} = 'ialah tidak';
     $Self->{Translation}->{'is empty'} = 'ialah kosong';
@@ -547,6 +556,16 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'bermula dengan';
     $Self->{Translation}->{'ends with'} = 'tamat dengan';
     $Self->{Translation}->{'set'} = 'set';
+    $Self->{Translation}->{'OldChangeBuilder'} = '';
+    $Self->{Translation}->{'OldChangeManager'} = '';
+    $Self->{Translation}->{'CABCustomers'} = 'Pelanggan CAB';
+    $Self->{Translation}->{'CABAgents'} = 'Ejen CAB';
+    $Self->{Translation}->{'WorkOrderAgents'} = '';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
+    $Self->{Translation}->{'ChangeInitiators'} = '';
+    $Self->{Translation}->{'GroupITSMChange'} = '';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'Ok';

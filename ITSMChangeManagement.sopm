@@ -1477,61 +1477,61 @@
             <Data Key="name" Type="Quote">ITSMWorkOrder</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ChangeStateID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeStateID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ChangeTitle</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeTitle</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">CategoryID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">CategoryID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ImpactID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ImpactID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">PriorityID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">PriorityID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ChangeManagerID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeManagerID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ChangeBuilderID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeBuilderID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">RequestedTime</Data>
+            <Data Key="name" Type="Quote" Translatable="1">RequestedTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">PlannedStartTime</Data>
+            <Data Key="name" Type="Quote" Translatable="1">PlannedStartTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">PlannedEndTime</Data>
+            <Data Key="name" Type="Quote" Translatable="1">PlannedEndTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ActualStartTime</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ActualStartTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">ActualEndTime</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ActualEndTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">PlannedEffort</Data>
+            <Data Key="name" Type="Quote" Translatable="1">PlannedEffort</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">AccountedTime</Data>
+            <Data Key="name" Type="Quote" Translatable="1">AccountedTime</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">WorkOrderNumber</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderNumber</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">WorkOrderStateID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderStateID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">WorkOrderTypeID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderTypeID</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">WorkOrderTitle</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderTitle</Data>
         </Insert>
         <Insert Table="condition_attribute">
-            <Data Key="name" Type="Quote">WorkOrderAgentID</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderAgentID</Data>
         </Insert>
         <Insert Table="condition_operator">
             <Data Key="name" Type="Quote" Translatable="1">is</Data>
@@ -1576,43 +1576,43 @@
             <Data Key="name" Type="Quote" Translatable="1">lock</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">ChangeBuilder</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">OldChangeBuilder</Data>
+            <Data Key="name" Type="Quote" Translatable="1">OldChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">ChangeManager</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeManager</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">OldChangeManager</Data>
+            <Data Key="name" Type="Quote" Translatable="1">OldChangeManager</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">CABCustomers</Data>
+            <Data Key="name" Type="Quote" Translatable="1">CABCustomers</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">CABAgents</Data>
+            <Data Key="name" Type="Quote" Translatable="1">CABAgents</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">WorkOrderAgents</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderAgents</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">WorkOrderAgent</Data>
+            <Data Key="name" Type="Quote" Translatable="1">WorkOrderAgent</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">OldWorkOrderAgent</Data>
+            <Data Key="name" Type="Quote" Translatable="1">OldWorkOrderAgent</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">ChangeInitiators</Data>
+            <Data Key="name" Type="Quote" Translatable="1">ChangeInitiators</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">GroupITSMChange</Data>
+            <Data Key="name" Type="Quote" Translatable="1">GroupITSMChange</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">GroupITSMChangeBuilder</Data>
+            <Data Key="name" Type="Quote" Translatable="1">GroupITSMChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote">GroupITSMChangeManager</Data>
+            <Data Key="name" Type="Quote" Translatable="1">GroupITSMChangeManager</Data>
         </Insert>
         <Insert Table="change_template_type">
             <Data Key="name" Type="Quote">ITSMChange</Data>

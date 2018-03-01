@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-03-01 09:03+0000\n"
-"PO-Revision-Date: 2018-03-01 09:03+0000\n"
+"POT-Creation-Date: 2018-03-01 09:49+0000\n"
+"PO-Revision-Date: 2018-03-01 09:49+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Dutch (http://www.transifex.com/otrs/OTRS/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -1428,6 +1428,42 @@ msgid "pir"
 msgstr "PIR (Post Implementation Review)"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeStateID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "CategoryID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ImpactID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "PriorityID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeManagerID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeBuilderID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderStateID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderTypeID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderAgentID"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is"
 msgstr "is"
 
@@ -1478,6 +1514,46 @@ msgstr "eindigt op"
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "set"
 msgstr "plaats"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "OldChangeBuilder"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "OldChangeManager"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "CABCustomers"
+msgstr "CAB klanten"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "CABAgents"
+msgstr "CAB gebruikers"
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "WorkOrderAgents"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "OldWorkOrderAgent"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "ChangeInitiators"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "GroupITSMChange"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "GroupITSMChangeBuilder"
+msgstr ""
+
+#. Database XML Definition: ITSMChangeManagement.sopm
+msgid "GroupITSMChangeManager"
+msgstr ""
 
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
 msgid "Ok"

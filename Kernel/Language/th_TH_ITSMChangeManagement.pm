@@ -534,6 +534,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'backout';
     $Self->{Translation}->{'decision'} = 'การตัดสินใจ';
     $Self->{Translation}->{'pir'} = 'pir';
+    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'CategoryID'} = '';
+    $Self->{Translation}->{'ImpactID'} = '';
+    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = '';
+    $Self->{Translation}->{'ChangeBuilderID'} = '';
+    $Self->{Translation}->{'WorkOrderStateID'} = '';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '';
     $Self->{Translation}->{'is'} = 'คือ';
     $Self->{Translation}->{'is not'} = 'คือ ไม่';
     $Self->{Translation}->{'is empty'} = 'คือ ว่างเปล่า';
@@ -547,6 +556,16 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'เริ่มต้นด้วย';
     $Self->{Translation}->{'ends with'} = 'ลงท้ายด้วย';
     $Self->{Translation}->{'set'} = 'ตั้งค่า';
+    $Self->{Translation}->{'OldChangeBuilder'} = '';
+    $Self->{Translation}->{'OldChangeManager'} = '';
+    $Self->{Translation}->{'CABCustomers'} = 'ลูกค้า CAB';
+    $Self->{Translation}->{'CABAgents'} = 'เอเย่นต์ CAB';
+    $Self->{Translation}->{'WorkOrderAgents'} = '';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
+    $Self->{Translation}->{'ChangeInitiators'} = '';
+    $Self->{Translation}->{'GroupITSMChange'} = '';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'โอเค';

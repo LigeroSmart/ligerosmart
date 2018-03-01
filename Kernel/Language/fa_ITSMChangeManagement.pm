@@ -534,6 +534,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'طرح بازگشت';
     $Self->{Translation}->{'decision'} = 'تصمیم';
     $Self->{Translation}->{'pir'} = 'بررسی پس از پیاده‌سازی';
+    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'CategoryID'} = '';
+    $Self->{Translation}->{'ImpactID'} = '';
+    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = '';
+    $Self->{Translation}->{'ChangeBuilderID'} = '';
+    $Self->{Translation}->{'WorkOrderStateID'} = '';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '';
     $Self->{Translation}->{'is'} = 'هست';
     $Self->{Translation}->{'is not'} = 'نیست';
     $Self->{Translation}->{'is empty'} = 'خالی است';
@@ -547,6 +556,16 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'شروع می‌شود با';
     $Self->{Translation}->{'ends with'} = 'پایان می‌یابد با';
     $Self->{Translation}->{'set'} = 'تنظیم شده';
+    $Self->{Translation}->{'OldChangeBuilder'} = '';
+    $Self->{Translation}->{'OldChangeManager'} = '';
+    $Self->{Translation}->{'CABCustomers'} = 'هیئت مشاور تغییر - مشترکان';
+    $Self->{Translation}->{'CABAgents'} = 'کارشناسان هیئت مشاور تغییر';
+    $Self->{Translation}->{'WorkOrderAgents'} = '';
+    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
+    $Self->{Translation}->{'ChangeInitiators'} = '';
+    $Self->{Translation}->{'GroupITSMChange'} = '';
+    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'تایید';
