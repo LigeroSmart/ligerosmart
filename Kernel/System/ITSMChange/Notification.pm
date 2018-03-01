@@ -16,6 +16,7 @@ use Storable;
 use Kernel::System::VariableCheck qw(:all);
 
 use Kernel::Language;
+use Kernel::Language qw(Translatable);
 use Kernel::System::EventHandler;
 
 use vars qw(@ISA);
@@ -1327,7 +1328,7 @@ sub RecipientLookup {
 =head2 RecipientList()
 
 Returns an array reference with hash references. The key of the hash reference is the id
-of an recipient and the name is the value.
+of an recipient and the human readable and translatable name is the value.
 
     my $List = $NotificationObject->RecipientList();
 
@@ -1336,22 +1337,41 @@ returns
     [
         {
             Key   => 1,
-            Value => 'ChangeBuilder'
+            Value => 'Change Builder',
         },
         {
             Key   => 2,
-            Value => 'ChangeManager'
+            Value => 'Change Manager',
         },
     ]
 
 =cut
 
 sub RecipientList {
-    my $Self = shift;
+    my ( $Self, %Param ) = @_;
+
+    # Human readable translatable names of recipients.
+    my %HumanReadableRecipient = (
+        ChangeBuilder          => Translatable('Change Builder'),
+        OldChangeBuilder       => Translatable('Previous Change Builder'),
+        ChangeManager          => Translatable('Change Manager'),
+        OldChangeManager       => Translatable('Previous Change Manager'),
+        CABCustomers           => Translatable('CAB Customers'),
+        CABAgents              => Translatable('CAB Agents'),
+        WorkOrderAgents        => Translatable('Workorder Agents'),
+        WorkOrderAgent         => Translatable('Workorder Agent'),
+        OldWorkOrderAgent      => Translatable('Previous Workorder Agent'),
+        ChangeInitiators       => Translatable('Change Initiators'),
+        GroupITSMChange        => Translatable('Group ITSMChange'),
+        GroupITSMChangeBuilder => Translatable('Group ITSMChangeBuilder'),
+        GroupITSMChangeManager => Translatable('Group ITSMChangeManager'),
+    );
 
     # do SQL query
     return if !$Kernel::OM->Get('Kernel::System::DB')->Prepare(
-        SQL => 'SELECT id, name FROM change_notification_grps ORDER BY name',
+        SQL => 'SELECT id, name
+            FROM change_notification_grps
+            ORDER BY name',
     );
 
     # fetch recipients
@@ -1359,7 +1379,7 @@ sub RecipientList {
     while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
         my $Recipient = {
             Key   => $Row[0],
-            Value => $Row[1],
+            Value => $HumanReadableRecipient{ $Row[1] } || $Row[1],
         };
         push @Recipients, $Recipient;
     }

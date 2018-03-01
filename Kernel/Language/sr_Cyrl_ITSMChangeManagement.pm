@@ -515,6 +515,16 @@ sub Data {
     $Self->{Translation}->{'all'} = 'sve';
     $Self->{Translation}->{'any'} = 'сваки';
 
+    # Perl Module: Kernel/System/ITSMChange/Notification.pm
+    $Self->{Translation}->{'Previous Change Builder'} = '';
+    $Self->{Translation}->{'Previous Change Manager'} = '';
+    $Self->{Translation}->{'Workorder Agents'} = '';
+    $Self->{Translation}->{'Previous Workorder Agent'} = '';
+    $Self->{Translation}->{'Change Initiators'} = '';
+    $Self->{Translation}->{'Group ITSMChange'} = '';
+    $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'Group ITSMChangeManager'} = '';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'захтевано';
     $Self->{Translation}->{'pending approval'} = 'одобрење на чекању';
@@ -556,16 +566,6 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'почиње са';
     $Self->{Translation}->{'ends with'} = 'завршава са';
     $Self->{Translation}->{'set'} = 'подеси';
-    $Self->{Translation}->{'OldChangeBuilder'} = '';
-    $Self->{Translation}->{'OldChangeManager'} = '';
-    $Self->{Translation}->{'CABCustomers'} = 'СОП клијенти';
-    $Self->{Translation}->{'CABAgents'} = 'СОП оператери';
-    $Self->{Translation}->{'WorkOrderAgents'} = '';
-    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
-    $Self->{Translation}->{'ChangeInitiators'} = '';
-    $Self->{Translation}->{'GroupITSMChange'} = '';
-    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
-    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'У реду';

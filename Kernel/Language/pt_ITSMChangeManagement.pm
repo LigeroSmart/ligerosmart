@@ -515,6 +515,16 @@ sub Data {
     $Self->{Translation}->{'all'} = 'todos';
     $Self->{Translation}->{'any'} = 'qualquer';
 
+    # Perl Module: Kernel/System/ITSMChange/Notification.pm
+    $Self->{Translation}->{'Previous Change Builder'} = '';
+    $Self->{Translation}->{'Previous Change Manager'} = '';
+    $Self->{Translation}->{'Workorder Agents'} = '';
+    $Self->{Translation}->{'Previous Workorder Agent'} = '';
+    $Self->{Translation}->{'Change Initiators'} = '';
+    $Self->{Translation}->{'Group ITSMChange'} = '';
+    $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
+    $Self->{Translation}->{'Group ITSMChangeManager'} = '';
+
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'Requerida';
     $Self->{Translation}->{'pending approval'} = 'Aprovação Pendente';
@@ -556,16 +566,6 @@ sub Data {
     $Self->{Translation}->{'begins with'} = 'inicia com';
     $Self->{Translation}->{'ends with'} = 'termina com';
     $Self->{Translation}->{'set'} = 'configurar';
-    $Self->{Translation}->{'OldChangeBuilder'} = '';
-    $Self->{Translation}->{'OldChangeManager'} = '';
-    $Self->{Translation}->{'CABCustomers'} = 'Clientes CAB';
-    $Self->{Translation}->{'CABAgents'} = 'agentes CAB';
-    $Self->{Translation}->{'WorkOrderAgents'} = '';
-    $Self->{Translation}->{'OldWorkOrderAgent'} = '';
-    $Self->{Translation}->{'ChangeInitiators'} = '';
-    $Self->{Translation}->{'GroupITSMChange'} = '';
-    $Self->{Translation}->{'GroupITSMChangeBuilder'} = '';
-    $Self->{Translation}->{'GroupITSMChangeManager'} = '';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'Ok';

@@ -1576,43 +1576,43 @@
             <Data Key="name" Type="Quote" Translatable="1">lock</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">ChangeBuilder</Data>
+            <Data Key="name" Type="Quote">ChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">OldChangeBuilder</Data>
+            <Data Key="name" Type="Quote">OldChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">ChangeManager</Data>
+            <Data Key="name" Type="Quote">ChangeManager</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">OldChangeManager</Data>
+            <Data Key="name" Type="Quote">OldChangeManager</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">CABCustomers</Data>
+            <Data Key="name" Type="Quote">CABCustomers</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">CABAgents</Data>
+            <Data Key="name" Type="Quote">CABAgents</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">WorkOrderAgents</Data>
+            <Data Key="name" Type="Quote">WorkOrderAgents</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">WorkOrderAgent</Data>
+            <Data Key="name" Type="Quote">WorkOrderAgent</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">OldWorkOrderAgent</Data>
+            <Data Key="name" Type="Quote">OldWorkOrderAgent</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">ChangeInitiators</Data>
+            <Data Key="name" Type="Quote">ChangeInitiators</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">GroupITSMChange</Data>
+            <Data Key="name" Type="Quote">GroupITSMChange</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">GroupITSMChangeBuilder</Data>
+            <Data Key="name" Type="Quote">GroupITSMChangeBuilder</Data>
         </Insert>
         <Insert Table="change_notification_grps">
-            <Data Key="name" Type="Quote" Translatable="1">GroupITSMChangeManager</Data>
+            <Data Key="name" Type="Quote">GroupITSMChangeManager</Data>
         </Insert>
         <Insert Table="change_template_type">
             <Data Key="name" Type="Quote">ITSMChange</Data>
