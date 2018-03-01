@@ -340,7 +340,7 @@ sub Data {
     $Self->{Translation}->{'unknown change title'} = 'nepoznat naslov promene';
     $Self->{Translation}->{'ITSM Workorder'} = 'ITSM radni nalog';
     $Self->{Translation}->{'WorkOrderNumber'} = 'Broj radnog naloga';
-    $Self->{Translation}->{'WorkOrderTitle'} = '';
+    $Self->{Translation}->{'WorkOrderTitle'} = 'Radni nalog - naslov';
     $Self->{Translation}->{'unknown workorder title'} = 'nepoznat naslov radnog naloga';
     $Self->{Translation}->{'ChangeState'} = 'Promena - status';
     $Self->{Translation}->{'PlannedEffort'} = 'Planirani napor';
