@@ -106,7 +106,7 @@
 [% RenderBlockEnd("OverviewResult") %]
 
 [% RenderBlockStart("OverviewUpdate") %]
-        <form action="[% Env("CGIHandle") %]" method="post" class="Validate">
+        <form action="[% Env("CGIHandle") %]" method="post" class="Validate PreventMultipleSubmits" name="ChangeNotification" id="ChangeNotification">
 
             <div class="WidgetSimple">
                 <div class="Header">
@@ -119,7 +119,10 @@
                     <input type="hidden" name="ID" value="[% Data.ID | html %]"/>
                     <input type="hidden" name="ContinueAfterSave" id="ContinueAfterSave" value=""/>
                     <fieldset class="TableLike">
-                        <label for="Name">[% Translate("Name") | html %]: </label>
+                        <label for="Name" class="Mandatory">
+                            <span class="Marker">*</span>
+                            [% Translate("Name") | html %]:
+                        </label>
                         <div class="Field">
                             <input type="text" id="Name" name="Name" class="Validate_Required W50pc [% Data.NameInvalid | html %]" value="[% Data.Name | html %]" maxlength="50"/>
                             <div id="NameError" class="TooltipErrorMessage"><p>[% Translate("A notification should have a name!") | html %]</p></div>
@@ -127,7 +130,11 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label for="EventID">[% Translate("Event") | html %]: </label>
+                        <label for="EventID" class="Mandatory">
+                            <span class="Marker">*</span>
+                            [% Translate("Event") | html %]:
+                        </label>
+
                         <div class="Field">
                             [% Data.EventOption %]
                         </div>
@@ -185,7 +192,7 @@
                                 [% Translate("Subject") | html %]:
                             </label>
                             <div class="Field">
-                                <input type="text" name="Template_Subject" id="Template_Subject" value="" class="W50pc" maxlength="200"/>
+                                <input type="text" name="Template_Subject" id="Template_Subject" value="" class="W75pc" maxlength="200"/>
                                 <div id="Template_SubjectError" class="TooltipErrorMessage">
                                     <p>[% Translate("This field is required.") | html %]</p>
                                 </div>
@@ -248,7 +255,7 @@
                             [% Translate("Subject") | html %]:
                                         </label>
                                         <div class="Field">
-                                            <input type="text" name="[% Data.Type | html %]_[% Data.LanguageID | html %]_Subject" id="[% Data.Type | html %]_[% Data.LanguageID | html %]_Subject" value="[% Data.Subject | html %]" class="W50pc Validate_Required [% Data.SubjectServerError | html %]" maxlength="200"/>
+                                            <input type="text" name="[% Data.Type | html %]_[% Data.LanguageID | html %]_Subject" id="[% Data.Type | html %]_[% Data.LanguageID | html %]_Subject" value="[% Data.Subject | html %]" class="W75pc Validate_Required [% Data.SubjectServerError | html %]" maxlength="200"/>
                                             <div id="[% Data.Type | html %]_[% Data.LanguageID | html %]_SubjectError" class="TooltipErrorMessage">
                                                 <p>[% Translate("This field is required.") | html %]</p>
                                             </div>
@@ -306,7 +313,7 @@
                 <div class="Content">
                     <fieldset class="TableLike">
                         <div class="Field SpacingTop SaveButtons">
-                            <button class="Primary CallForAction" id="SubmitAndContinue" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
+                            <button class="Primary CallForAction" id="SubmitAndContinue" type="button" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
                             [% Translate("or") | html %]
                             <button class="Primary CallForAction" id="Submit" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save and finish") | html %]</span></button>
                             [% Translate("or") | html %]

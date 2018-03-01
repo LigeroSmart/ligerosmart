@@ -57,5 +57,6 @@ ITSM.Admin.ChangeManagement.ChangeNotification = (function (TargetNS) {
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
+
     return TargetNS;
 }(ITSM.Admin.ChangeManagement.ChangeNotification || {}));

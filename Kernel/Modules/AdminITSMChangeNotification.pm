@@ -213,7 +213,8 @@ sub Run {
         }
 
         # add notification
-        if ( my $NewID = $NotificationObject->NotificationRuleAdd(%GetParam) ) {
+        my $NewID = $NotificationObject->NotificationRuleAdd(%GetParam);
+        if ($NewID) {
 
             my $ContinueAfterSave = $ParamObject->GetParam( Param => 'ContinueAfterSave' );
 
@@ -371,18 +372,20 @@ sub _Edit {
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || ( $ValidObject->ValidIDsGet() )[0],
         Sort       => 'NumericKey',
+        Class      => 'Modernize W50pc',
     );
     $Param{EventOption} = $LayoutObject->BuildSelection(
-        Data => $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeList( UserID => 1 ) || [],
-        Name => 'EventID',
+        Data       => $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeList( UserID => 1 ) || [],
+        Name       => 'EventID',
         SelectedID => $Param{EventID},
+        Class      => 'Modernize W50pc Validate_Required',
     );
     $Param{RecipientOption} = $LayoutObject->BuildSelection(
-        Data => $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientList( UserID => 1 ) || [],
-        Name => 'RecipientIDs',
+        Data       => $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientList( UserID => 1 ) || [],
+        Name       => 'RecipientIDs',
         Multiple   => 1,
-        Size       => 13,                     # current number of default recipients, avoid scrolling
         SelectedID => $Param{RecipientIDs},
+        Class      => 'Modernize W50pc',
     );
 
     $LayoutObject->Block(
@@ -408,7 +411,7 @@ sub _Edit {
         );
     }
 
-    # show differnet widget containers for agent and customer notifications
+    # show different widget containers for agent and customer notifications
     for my $Type (qw(Agent Customer)) {
 
         # show the widget container for this type
@@ -506,7 +509,7 @@ sub _Edit {
         $Param{LanguageStrg} = $LayoutObject->BuildSelection(
             Data         => \%DefaultUsedLanguages,
             Name         => $Type . 'LanguageAdd',
-            Class        => 'LanguageAdd',
+            Class        => 'Modernize W50pc LanguageAdd',
             Translation  => 1,
             PossibleNone => 1,
             HTMLQuote    => 0,
@@ -517,6 +520,7 @@ sub _Edit {
             Translation  => 1,
             PossibleNone => 1,
             HTMLQuote    => 0,
+
         );
         $LayoutObject->Block(
             Name => 'NotificationLanguageAdd',

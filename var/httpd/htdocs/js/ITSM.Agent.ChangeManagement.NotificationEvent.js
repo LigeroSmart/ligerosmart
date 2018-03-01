@@ -117,7 +117,7 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
 
         // initialize the rich text editor if set
         if (parseInt(Core.Config.Get('RichTextSet'), 10) === 1) {
-            Core.UI.RichTextEditor.InitAll();
+            Core.UI.RichTextEditor.InitAllEditors();
         }
 
         // bind click function to remove button
@@ -169,27 +169,17 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
      */
     TargetNS.LanguageSelectionRebuild = function (Type) {
 
-        // get original selection with all possible fields and clone it
-        var $LanguageClone = $('#' + Type + 'LanguageOrig').clone();
-        $LanguageClone.attr('id', Type + 'LanguageAdd');
-        $LanguageClone.attr('name', Type + 'LanguageAdd');
-        $LanguageClone.addClass("LanguageAdd");
+        var $OrigOptions = $('#' + Type + 'LanguageOrig option').clone();
 
-        // strip all already used attributes
-        $LanguageClone.find('option').each(function () {
-            if ($('#' + Type + 'NotificationLanguageContainer label#' + Type + '_' + $(this).val() + '_Label_Subject').length) {
-                $(this).remove();
+        // Remove the existing options in order to rebuild it from the original list of options.
+        $('#' + Type + 'LanguageAdd option').remove();
+        $.each($OrigOptions, function() {
+            if (!$('#' + Type + 'NotificationLanguageContainer label#' + Type + '_' + $(this).val() + '_Label_Subject').length) {
+                $('#' + Type + 'LanguageAdd').append($(this));
             }
         });
 
-        // replace selection with original selection
-        $('#' + Type + 'LanguageAdd').replaceWith($LanguageClone);
-
-        // bind click function to add button
-        $('#' + Type + 'LanguageAdd').off('change.LanguageAdd').on('change.LanguageAdd', function(){
-            TargetNS.AddLanguage($(this), $(this).val(), $(this).find('option:selected').text());
-            return false;
-        });
+        $('#' + Type + 'LanguageAdd').trigger('redraw.InputField');
 
         return true;
     };
