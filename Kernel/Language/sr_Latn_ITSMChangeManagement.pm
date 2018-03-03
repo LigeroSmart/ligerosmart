@@ -24,6 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Upravljanje obaveštenjima u ITSM upravljanju promenama';
     $Self->{Translation}->{'Add Notification Rule'} = 'Dodaj pravilo obaveštavanja';
+    $Self->{Translation}->{'Edit Notification Rule'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'Obaveštenje treba da ima ime!';
     $Self->{Translation}->{'Name is required.'} = 'Ime je obavezno.';
 
@@ -344,8 +345,8 @@ sub Data {
     $Self->{Translation}->{'unknown workorder title'} = 'nepoznat naslov radnog naloga';
     $Self->{Translation}->{'ChangeState'} = 'Promena - status';
     $Self->{Translation}->{'PlannedEffort'} = 'Planirani napor';
-    $Self->{Translation}->{'CAB Agents'} = '';
-    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'CAB Agents'} = 'Operateri CAB';
+    $Self->{Translation}->{'CAB Customers'} = 'CAB klijenti';
     $Self->{Translation}->{'RequestedTime'} = 'Traženo vreme';
     $Self->{Translation}->{'PlannedStartTime'} = 'Planirano vreme početka';
     $Self->{Translation}->{'PlannedEndTime'} = 'Planirano vreme završetka';
@@ -518,9 +519,9 @@ sub Data {
     # Perl Module: Kernel/System/ITSMChange/Notification.pm
     $Self->{Translation}->{'Previous Change Builder'} = '';
     $Self->{Translation}->{'Previous Change Manager'} = '';
-    $Self->{Translation}->{'Workorder Agents'} = '';
-    $Self->{Translation}->{'Previous Workorder Agent'} = '';
-    $Self->{Translation}->{'Change Initiators'} = '';
+    $Self->{Translation}->{'Workorder Agents'} = 'Operateri radnog naloga';
+    $Self->{Translation}->{'Previous Workorder Agent'} = 'Prethodni operater radnog naloga';
+    $Self->{Translation}->{'Change Initiators'} = 'Inicijatori promene';
     $Self->{Translation}->{'Group ITSMChange'} = '';
     $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
     $Self->{Translation}->{'Group ITSMChangeManager'} = '';
@@ -545,9 +546,9 @@ sub Data {
     $Self->{Translation}->{'decision'} = 'odluka';
     $Self->{Translation}->{'pir'} = 'PIR';
     $Self->{Translation}->{'ChangeStateID'} = '';
-    $Self->{Translation}->{'CategoryID'} = '';
-    $Self->{Translation}->{'ImpactID'} = '';
-    $Self->{Translation}->{'PriorityID'} = '';
+    $Self->{Translation}->{'CategoryID'} = 'ID Kategorije';
+    $Self->{Translation}->{'ImpactID'} = 'ID uticaja';
+    $Self->{Translation}->{'PriorityID'} = 'ID prioriteta';
     $Self->{Translation}->{'ChangeManagerID'} = '';
     $Self->{Translation}->{'ChangeBuilderID'} = '';
     $Self->{Translation}->{'WorkOrderStateID'} = '';
@@ -631,7 +632,7 @@ sub Data {
     $Self->{Translation}->{'Create a change (from template) from this ticket.'} = 'Napravi promenu (od šablona) iz ovog tiketa.';
     $Self->{Translation}->{'Create a change from this ticket.'} = 'Napravi promenu iz ovog tiketa.';
     $Self->{Translation}->{'Create and manage ITSM Change Management notifications.'} = 'Kreiranje i upravljanje obaveštenjima ITSM upravljanjem promenama.';
-    $Self->{Translation}->{'Create and manage change notifications.'} = '';
+    $Self->{Translation}->{'Create and manage change notifications.'} = 'Kreiranje i upravljanje obaveštenjima o promeni.';
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Podrazumeveni tip radnog naloga. Ovaj unos mora da postoji u klasi opšteg kataloga \'ITSM::ChangeManagement::WorkOrder::Type\'.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
@@ -886,7 +887,7 @@ sub Data {
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Potraži članove CAB radi automatskog dovršavanja.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Potraži operatere, upotrebljene za automatsko dovršavanje.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
-    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = '';
+    $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = 'Upravljanje matricom Kategorija - Uticaj - Prioritet.';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Modul za proveru da li dodavanje radnog naloga ili dodavanje radnog naloga iz šablona treba da bude dozvoljeno.';
     $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul za proveru članova CAB.';

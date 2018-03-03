@@ -24,6 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM változásmenedzsment értesítés kezelés';
     $Self->{Translation}->{'Add Notification Rule'} = 'Értesítési szabály hozzáadása';
+    $Self->{Translation}->{'Edit Notification Rule'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'Az értesítésnek rendelkeznie kell egy névvel!';
     $Self->{Translation}->{'Name is required.'} = 'A név kötelező.';
 
@@ -127,7 +128,7 @@ sub Data {
     # Template: AgentITSMChangeOverviewSmall
     $Self->{Translation}->{'Workorder Title'} = 'Munkamegrendelés-cím';
     $Self->{Translation}->{'Change Title'} = 'Változáscím';
-    $Self->{Translation}->{'Workorder Agent'} = 'Munkamegrendelés ügyintézője';
+    $Self->{Translation}->{'Workorder Agent'} = 'Munkamegrendelés-ügyintéző';
     $Self->{Translation}->{'Change Builder'} = 'Változás-összeállító';
     $Self->{Translation}->{'Change Manager'} = 'Változásmenedzser';
     $Self->{Translation}->{'Workorders'} = 'Munkamegrendelések';
@@ -344,18 +345,18 @@ sub Data {
     $Self->{Translation}->{'unknown workorder title'} = 'ismeretlen munkamegrendelés-cím';
     $Self->{Translation}->{'ChangeState'} = 'Változásállapot';
     $Self->{Translation}->{'PlannedEffort'} = 'Tervezett ráfordítás';
-    $Self->{Translation}->{'CAB Agents'} = '';
-    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'CAB Agents'} = 'CAB ügyintézők';
+    $Self->{Translation}->{'CAB Customers'} = 'CAB ügyfelek';
     $Self->{Translation}->{'RequestedTime'} = 'Kért idő';
     $Self->{Translation}->{'PlannedStartTime'} = 'Tervezett kezdési idő';
     $Self->{Translation}->{'PlannedEndTime'} = 'Tervezett befejezési idő';
     $Self->{Translation}->{'ActualStartTime'} = 'Tényleges kezdési idő';
     $Self->{Translation}->{'ActualEndTime'} = 'Tényleges befejezési idő';
-    $Self->{Translation}->{'ChangeTime'} = 'Módosítás ideje';
+    $Self->{Translation}->{'ChangeTime'} = 'Változás ideje';
     $Self->{Translation}->{'ChangeNumber'} = 'Változásszám';
     $Self->{Translation}->{'WorkOrderState'} = 'Munkamegrendelés-állapot';
     $Self->{Translation}->{'WorkOrderType'} = 'Munkamegrendelés-típus';
-    $Self->{Translation}->{'WorkOrderAgent'} = 'Munkamegrendelés ügyintéző';
+    $Self->{Translation}->{'WorkOrderAgent'} = 'Munkamegrendelés-ügyintéző';
     $Self->{Translation}->{'ITSM Workorder Overview (%s)'} = 'ITSM munkamegrendelés áttekintés (%s)';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
@@ -516,14 +517,14 @@ sub Data {
     $Self->{Translation}->{'any'} = 'bármely';
 
     # Perl Module: Kernel/System/ITSMChange/Notification.pm
-    $Self->{Translation}->{'Previous Change Builder'} = '';
-    $Self->{Translation}->{'Previous Change Manager'} = '';
-    $Self->{Translation}->{'Workorder Agents'} = '';
-    $Self->{Translation}->{'Previous Workorder Agent'} = '';
-    $Self->{Translation}->{'Change Initiators'} = '';
-    $Self->{Translation}->{'Group ITSMChange'} = '';
-    $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
-    $Self->{Translation}->{'Group ITSMChangeManager'} = '';
+    $Self->{Translation}->{'Previous Change Builder'} = 'Előző változás-összeállító';
+    $Self->{Translation}->{'Previous Change Manager'} = 'Előző változásmenedzser';
+    $Self->{Translation}->{'Workorder Agents'} = 'Munkamegrendelés ügyintézői';
+    $Self->{Translation}->{'Previous Workorder Agent'} = 'Előző munkamegrendelés-ügyintéző';
+    $Self->{Translation}->{'Change Initiators'} = 'Változtatáskezdeményezők';
+    $Self->{Translation}->{'Group ITSMChange'} = 'ITSM változás csoport';
+    $Self->{Translation}->{'Group ITSMChangeBuilder'} = 'ITSM változás-összeállító csoport';
+    $Self->{Translation}->{'Group ITSMChangeManager'} = 'ITSM változásmenedzser csoport';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'kérve';
@@ -544,15 +545,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'visszaállás';
     $Self->{Translation}->{'decision'} = 'döntés';
     $Self->{Translation}->{'pir'} = 'PIR';
-    $Self->{Translation}->{'ChangeStateID'} = '';
-    $Self->{Translation}->{'CategoryID'} = '';
-    $Self->{Translation}->{'ImpactID'} = '';
-    $Self->{Translation}->{'PriorityID'} = '';
-    $Self->{Translation}->{'ChangeManagerID'} = '';
-    $Self->{Translation}->{'ChangeBuilderID'} = '';
-    $Self->{Translation}->{'WorkOrderStateID'} = '';
-    $Self->{Translation}->{'WorkOrderTypeID'} = '';
-    $Self->{Translation}->{'WorkOrderAgentID'} = '';
+    $Self->{Translation}->{'ChangeStateID'} = 'Változásállapot-azonosító';
+    $Self->{Translation}->{'CategoryID'} = 'Kategória-azonosító';
+    $Self->{Translation}->{'ImpactID'} = 'Hatásazonosító';
+    $Self->{Translation}->{'PriorityID'} = 'Prioritásazonosító';
+    $Self->{Translation}->{'ChangeManagerID'} = 'Változásmenedzser-azonosító';
+    $Self->{Translation}->{'ChangeBuilderID'} = 'Változásösszeállító-azonosító';
+    $Self->{Translation}->{'WorkOrderStateID'} = 'Munkamegrendelésállapot-azonosító';
+    $Self->{Translation}->{'WorkOrderTypeID'} = 'Munkamegrendeléstípus-azonosító';
+    $Self->{Translation}->{'WorkOrderAgentID'} = 'Munkamegrendelésügyintéző-azonosító';
     $Self->{Translation}->{'is'} = 'egyenlő';
     $Self->{Translation}->{'is not'} = 'nem';
     $Self->{Translation}->{'is empty'} = 'üres';

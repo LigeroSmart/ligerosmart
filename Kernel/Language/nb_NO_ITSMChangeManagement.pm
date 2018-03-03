@@ -24,6 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM Endringer - Meldingsoppsett';
     $Self->{Translation}->{'Add Notification Rule'} = 'Legg til Meldingsregel';
+    $Self->{Translation}->{'Edit Notification Rule'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'En melding må ha et navn!';
     $Self->{Translation}->{'Name is required.'} = 'Navn er påkrevd';
 

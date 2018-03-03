@@ -24,6 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Usimamizi wa Taarifa za ITSM UsimamiziMabadiliko';
     $Self->{Translation}->{'Add Notification Rule'} = 'Ongeza Sheria ya Taarifa';
+    $Self->{Translation}->{'Edit Notification Rule'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'Taarifa lazima iwe na jina!';
     $Self->{Translation}->{'Name is required.'} = 'Jina linatakiwa.';
 

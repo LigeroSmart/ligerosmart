@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-03-01 16:37+0000\n"
-"PO-Revision-Date: 2018-03-01 16:37+0000\n"
+"POT-Creation-Date: 2018-03-03 13:21+0000\n"
+"PO-Revision-Date: 2018-03-03 13:21+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -32,6 +32,10 @@ msgstr "مدیریت اعلان مربوط به مدیریت تغییرات در
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
 msgstr "افزودن قاعده اعلان"
+
+#. Template: AdminITSMChangeNotification
+msgid "Edit Notification Rule"
+msgstr ""
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"

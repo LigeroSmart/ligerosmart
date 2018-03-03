@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-03-01 16:37+0000\n"
-"PO-Revision-Date: 2018-03-01 16:37+0000\n"
+"POT-Creation-Date: 2018-03-03 13:21+0000\n"
+"PO-Revision-Date: 2018-03-03 13:21+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,10 @@ msgstr "ITSM változásmenedzsment értesítés kezelés"
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
 msgstr "Értesítési szabály hozzáadása"
+
+#. Template: AdminITSMChangeNotification
+msgid "Edit Notification Rule"
+msgstr ""
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
@@ -344,7 +348,7 @@ msgstr "Változáscím"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Agent"
-msgstr "Munkamegrendelés ügyintézője"
+msgstr "Munkamegrendelés-ügyintéző"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Builder"
@@ -874,11 +878,11 @@ msgstr "Tervezett ráfordítás"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "CAB Agents"
-msgstr ""
+msgstr "CAB ügyintézők"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "CAB Customers"
-msgstr ""
+msgstr "CAB ügyfelek"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "RequestedTime"
@@ -902,7 +906,7 @@ msgstr "Tényleges befejezési idő"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ChangeTime"
-msgstr "Módosítás ideje"
+msgstr "Változás ideje"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ChangeNumber"
@@ -918,7 +922,7 @@ msgstr "Munkamegrendelés-típus"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrderAgent"
-msgstr "Munkamegrendelés ügyintéző"
+msgstr "Munkamegrendelés-ügyintéző"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
@@ -1358,35 +1362,35 @@ msgstr "bármely"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Previous Change Builder"
-msgstr ""
+msgstr "Előző változás-összeállító"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Previous Change Manager"
-msgstr ""
+msgstr "Előző változásmenedzser"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Workorder Agents"
-msgstr ""
+msgstr "Munkamegrendelés ügyintézői"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Previous Workorder Agent"
-msgstr ""
+msgstr "Előző munkamegrendelés-ügyintéző"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Change Initiators"
-msgstr ""
+msgstr "Változtatáskezdeményezők"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Group ITSMChange"
-msgstr ""
+msgstr "ITSM változás csoport"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Group ITSMChangeBuilder"
-msgstr ""
+msgstr "ITSM változás-összeállító csoport"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Group ITSMChangeManager"
-msgstr ""
+msgstr "ITSM változásmenedzser csoport"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
@@ -1462,39 +1466,39 @@ msgstr "PIR"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeStateID"
-msgstr ""
+msgstr "Változásállapot-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "CategoryID"
-msgstr ""
+msgstr "Kategória-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ImpactID"
-msgstr ""
+msgstr "Hatásazonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "PriorityID"
-msgstr ""
+msgstr "Prioritásazonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeManagerID"
-msgstr ""
+msgstr "Változásmenedzser-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeBuilderID"
-msgstr ""
+msgstr "Változásösszeállító-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "WorkOrderStateID"
-msgstr ""
+msgstr "Munkamegrendelésállapot-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "WorkOrderTypeID"
-msgstr ""
+msgstr "Munkamegrendeléstípus-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "WorkOrderAgentID"
-msgstr ""
+msgstr "Munkamegrendelésügyintéző-azonosító"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is"

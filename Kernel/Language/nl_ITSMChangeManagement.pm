@@ -24,6 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM Change Management notificiatie beheer';
     $Self->{Translation}->{'Add Notification Rule'} = 'Notificatie regel toevoegen';
+    $Self->{Translation}->{'Edit Notification Rule'} = '';
     $Self->{Translation}->{'A notification should have a name!'} = 'Geef een naam voor de notificatie.';
     $Self->{Translation}->{'Name is required.'} = '';
 
