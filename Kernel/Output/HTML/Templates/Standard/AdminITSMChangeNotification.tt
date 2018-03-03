@@ -20,11 +20,11 @@
 
     IF Data.Action == 'Add';
         BreadcrumbPath.push({
-            Name => 'Add Notification Rule',
+            Name => Translate('Add Notification Rule'),
         });
     ELSIF Data.Action == 'Change';
         BreadcrumbPath.push({
-            Name => 'Edit Notification Rule',
+            Name => Translate('Edit Notification Rule'),
         });
     END;
 
