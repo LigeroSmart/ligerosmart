@@ -24,7 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM változásmenedzsment értesítés kezelés';
     $Self->{Translation}->{'Add Notification Rule'} = 'Értesítési szabály hozzáadása';
-    $Self->{Translation}->{'Edit Notification Rule'} = '';
+    $Self->{Translation}->{'Edit Notification Rule'} = 'Értesítési szabály szerkesztése';
     $Self->{Translation}->{'A notification should have a name!'} = 'Az értesítésnek rendelkeznie kell egy névvel!';
     $Self->{Translation}->{'Name is required.'} = 'A név kötelező.';
 

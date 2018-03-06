@@ -24,7 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '管理变更通知';
     $Self->{Translation}->{'Add Notification Rule'} = '添加通知规则';
-    $Self->{Translation}->{'Edit Notification Rule'} = '';
+    $Self->{Translation}->{'Edit Notification Rule'} = '编辑通知规则';
     $Self->{Translation}->{'A notification should have a name!'} = '通知必须有名称！';
     $Self->{Translation}->{'Name is required.'} = '名称是必需的。';
 
@@ -345,8 +345,8 @@ sub Data {
     $Self->{Translation}->{'unknown workorder title'} = '未知的工作指令标题';
     $Self->{Translation}->{'ChangeState'} = '变更状态';
     $Self->{Translation}->{'PlannedEffort'} = '计划工作量';
-    $Self->{Translation}->{'CAB Agents'} = '';
-    $Self->{Translation}->{'CAB Customers'} = '';
+    $Self->{Translation}->{'CAB Agents'} = '服务人员CAB成员';
+    $Self->{Translation}->{'CAB Customers'} = '客户CAB成员';
     $Self->{Translation}->{'RequestedTime'} = '请求时间';
     $Self->{Translation}->{'PlannedStartTime'} = '计划开始时间';
     $Self->{Translation}->{'PlannedEndTime'} = '计划结束时间';
@@ -517,14 +517,14 @@ sub Data {
     $Self->{Translation}->{'any'} = '任何';
 
     # Perl Module: Kernel/System/ITSMChange/Notification.pm
-    $Self->{Translation}->{'Previous Change Builder'} = '';
-    $Self->{Translation}->{'Previous Change Manager'} = '';
-    $Self->{Translation}->{'Workorder Agents'} = '';
-    $Self->{Translation}->{'Previous Workorder Agent'} = '';
-    $Self->{Translation}->{'Change Initiators'} = '';
-    $Self->{Translation}->{'Group ITSMChange'} = '';
-    $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
-    $Self->{Translation}->{'Group ITSMChangeManager'} = '';
+    $Self->{Translation}->{'Previous Change Builder'} = '前任变更创建人';
+    $Self->{Translation}->{'Previous Change Manager'} = '前任变更经理';
+    $Self->{Translation}->{'Workorder Agents'} = '工作指令服务人员';
+    $Self->{Translation}->{'Previous Workorder Agent'} = '前任工作指令服务人员';
+    $Self->{Translation}->{'Change Initiators'} = '变更发起人';
+    $Self->{Translation}->{'Group ITSMChange'} = 'ITSM变更组';
+    $Self->{Translation}->{'Group ITSMChangeBuilder'} = 'ITSM变更创建人组';
+    $Self->{Translation}->{'Group ITSMChangeManager'} = 'ITSM变更经理组';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = '请求的';
@@ -545,15 +545,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = '回退';
     $Self->{Translation}->{'decision'} = '决定';
     $Self->{Translation}->{'pir'} = 'PIR (实施后审查)';
-    $Self->{Translation}->{'ChangeStateID'} = '';
-    $Self->{Translation}->{'CategoryID'} = '';
-    $Self->{Translation}->{'ImpactID'} = '';
-    $Self->{Translation}->{'PriorityID'} = '';
-    $Self->{Translation}->{'ChangeManagerID'} = '';
-    $Self->{Translation}->{'ChangeBuilderID'} = '';
-    $Self->{Translation}->{'WorkOrderStateID'} = '';
-    $Self->{Translation}->{'WorkOrderTypeID'} = '';
-    $Self->{Translation}->{'WorkOrderAgentID'} = '';
+    $Self->{Translation}->{'ChangeStateID'} = '变更状态ID';
+    $Self->{Translation}->{'CategoryID'} = '类别ID';
+    $Self->{Translation}->{'ImpactID'} = '影响ID';
+    $Self->{Translation}->{'PriorityID'} = '优先级ID';
+    $Self->{Translation}->{'ChangeManagerID'} = '变更经理ID';
+    $Self->{Translation}->{'ChangeBuilderID'} = '变更创建人ID';
+    $Self->{Translation}->{'WorkOrderStateID'} = '工作指令状态ID';
+    $Self->{Translation}->{'WorkOrderTypeID'} = '工作指令类型ID';
+    $Self->{Translation}->{'WorkOrderAgentID'} = '工作指令服务人员ID';
     $Self->{Translation}->{'is'} = '是';
     $Self->{Translation}->{'is not'} = '不是';
     $Self->{Translation}->{'is empty'} = '为空';
