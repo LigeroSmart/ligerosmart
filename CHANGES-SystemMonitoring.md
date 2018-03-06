@@ -1,7 +1,10 @@
-#6.0.2 2017-??-??
+#6.0.3 2018-??-??
+
+#6.0.2 2017-03-06
  - 2018-02-02 Fixed bug#[9012](https://bugs.otrs.org/show_bug.cgi?id=9012) - OTRS dies if a system monitoring mail with an empty body will be received.
 
-#6.0.1 2017-??-??
+#6.0.1 2017-11-15
+ - First formal release for OTRS 6.
 
 #6.0.0.rc1 2017-11-08
  - 2017-10-17 Added support for Icinga2, thanks to Emerson Pinter.
