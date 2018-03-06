@@ -16,9 +16,9 @@ sub Data {
     my $Self = shift;
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Značaj  ↔ Uticaj ↔ Prioritet';
+    $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Značaj ↔ uticaj ↔ prioritet';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
-        'Upravljanje rezultatom prioriteta kombinovanjem Značaj ↔ Uticaj.';
+        'Upravljanje rezultatom prioriteta kombinovanjem značaj ↔ uticaj.';
     $Self->{Translation}->{'Priority allocation'} = 'Raspodela prioriteta';
 
     # Template: AdminSLA
