@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - c13fa98bc08d792b55ad24607bab266cc36168d0 - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - ff1eda8671ef1909fabd3fc754965eaf6e4e3bb3 - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -500,7 +500,9 @@ sub Run {
             # check if article is from the same TicketID as we checked permissions for.
             if ( $Article{TicketID} ne $Self->{TicketID} ) {
                 return $LayoutObject->ErrorScreen(
-                    Message => "Article does not belong to ticket $Self->{TicketID}!",
+                    Message => $LayoutObject->{LanguageObject}->Translate(
+                        'Article does not belong to ticket %s!', $Self->{TicketID}
+                    ),
                 );
             }
 

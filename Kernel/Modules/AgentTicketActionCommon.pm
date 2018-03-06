@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - cad684b4317bb0b0a4f21a676fada526e4c95dcd - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - c6eab050e22300aeac0aa6676962a24eb3c97cbd - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2380,6 +2380,12 @@ sub _Mask {
             Name => 'TicketTypeDynamicField',
             Data => $TicketTypeDynamicField,
         );
+
+        # Output customization block too, if it exists.
+        $LayoutObject->Block(
+            Name => 'TicketTypeDynamicField_' . $TicketTypeDynamicField->{Name},
+            Data => $TicketTypeDynamicField,
+        );
     }
 
     # End Widget Ticket Actions
@@ -2747,6 +2753,12 @@ sub _Mask {
                     Data => $ArticleTypeDynamicField,
                 );
             }
+
+            # Output customization block too, if it exists.
+            $LayoutObject->Block(
+                Name => 'ArticleTypeDynamicField_' . $ArticleTypeDynamicField->{Name},
+                Data => $ArticleTypeDynamicField,
+            );
         }
     }
 
