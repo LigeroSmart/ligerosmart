@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-03-06 Updated translations, thanks to all translators.
  - 2018-02-12 Fixed bug#[11646](https://bugs.otrs.org/show_bug.cgi?id=11646) - SQL quoting of category IDs ineffective.
  - 2018-02-12 Fixed bug#[11889](https://bugs.otrs.org/show_bug.cgi?id=11889) - CategoryAdd returns wrong CategoryID if subcategory name already exists.
  - 2018-02-12 Fixed bug#[10650](https://bugs.otrs.org/show_bug.cgi?id=10650) - Navigation broken when keyword search result opened in CSS overlay.

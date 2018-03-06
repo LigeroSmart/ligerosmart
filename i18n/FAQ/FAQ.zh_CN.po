@@ -5,14 +5,14 @@
 # 光中 杨 <yangkwch@163.com>, 2016
 # 文浩坚 <never.min@gmail.com>, 2015
 # 汇民 王 <whuim@163.com>, 2016-2017
-# 汇民 王 <whuim@qq.com>, 2017
+# 汇民 王 <whuim@qq.com>, 2017-2018
 # 陈德文 <sggggy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-02-12 02:50+0000\n"
+"Last-Translator: 汇民 王 <whuim@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1148,7 +1148,7 @@ msgstr "为建立关键字FAQ文章列表的搜索限制。"
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "限制。"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1454,7 +1454,7 @@ msgstr "在定义的界面上显示最新创建的条目。"
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr ""
+msgstr "显示星级大于或等于定义值的文章（设置值'0'以禁用输出）。"
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

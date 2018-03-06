@@ -1,12 +1,12 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2017
+# Balázs Úr <urbalazs@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-02-16 12:04+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1142,7 +1142,7 @@ msgstr "A keresés korlátozása a kulcsszó GyIK bejegyzéslista összeállít�
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Korlát."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1448,7 +1448,7 @@ msgstr "Az utoljára létrehozott elemek megjelenítése a meghatározott felül
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr ""
+msgstr "Csillagok megjelenítése a meghatározott értékkel egyenlő vagy annál jobb értékeléssel rendelkező bejegyzéseknél (állítsa az értéket „0”-ra a kimenet kikapcsolásához)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
