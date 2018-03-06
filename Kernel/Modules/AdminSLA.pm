@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/Modules/AdminSLA.pm
+# $origin: otrs - a1887f3f718f5fb0e3c6d3f80d590189a7d7a3eb - Kernel/Modules/AdminSLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -431,6 +431,7 @@ sub _MaskNew {
         SelectedID   => $Param{FirstResponseNotify} || $SLAData{FirstResponseNotify},
         Translation  => 0,
         PossibleNone => 1,
+        Class        => 'Modernize',
     );
     $SLAData{UpdateNotifyOptionStrg} = $LayoutObject->BuildSelection(
         Data         => \%NotifyLevelList,
@@ -438,6 +439,7 @@ sub _MaskNew {
         SelectedID   => $Param{UpdateNotify} || $SLAData{UpdateNotify},
         Translation  => 0,
         PossibleNone => 1,
+        Class        => 'Modernize',
     );
     $SLAData{SolutionNotifyOptionStrg} = $LayoutObject->BuildSelection(
         Data         => \%NotifyLevelList,
@@ -445,6 +447,7 @@ sub _MaskNew {
         SelectedID   => $Param{SolutionNotify} || $SLAData{SolutionNotify},
         Translation  => 0,
         PossibleNone => 1,
+        Class        => 'Modernize',
     );
 
     # get valid list
