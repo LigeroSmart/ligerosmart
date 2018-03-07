@@ -33,7 +33,7 @@ sub Data {
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master'} = '主';
-    $Self->{Translation}->{'Slave of %s%s%s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s'} = '%s%s%s的从工单';
     $Self->{Translation}->{'Master Ticket'} = '主工单';
 
     # SysConfig
@@ -83,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = '注册到工单事件模块。';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '服务人员界面使用主从工单详情窗口必需的权限。';
-    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '设置服务人员是否必须选择主从字段。';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '设置服务人员界面主从工单详情窗口添加备注的的默认正文文本。';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

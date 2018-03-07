@@ -32,7 +32,7 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Opozovi podešavanje zavisnih tiketa';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'Master'} = 'Glavno';
     $Self->{Translation}->{'Slave of %s%s%s'} = '';
     $Self->{Translation}->{'Master Ticket'} = 'Glavni tiket';
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-02-06 19:00+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-02-12 02:58+0000\n"
+"Last-Translator: 汇民 王 <whuim@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,7 +54,7 @@ msgstr "主"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Slave of %s%s%s"
-msgstr ""
+msgstr "%s%s%s的从工单"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -221,7 +221,7 @@ msgstr "服务人员界面使用主从工单详情窗口必需的权限。"
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
-msgstr ""
+msgstr "设置服务人员是否必须选择主从字段。"
 
 #. SysConfig
 msgid ""

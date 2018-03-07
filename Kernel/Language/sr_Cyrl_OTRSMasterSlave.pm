@@ -33,7 +33,7 @@ sub Data {
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master'} = 'Главно';
-    $Self->{Translation}->{'Slave of %s%s%s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s'} = 'Зависни од %s%s%s';
     $Self->{Translation}->{'Master Ticket'} = 'Главни тикет';
 
     # SysConfig
@@ -83,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Регистрација модула догађаја за тикете.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Неопходна дозвола за употребу главни/зависни екрана детаљног приказа тикета у интерфејсу оператера.';
-    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = 'Дефинише да ли поље Главни / Зависни мора бити подешено од стране оператера.';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Одређује подразумевани садржај за напомене додате на на Главни/Зависни екрану детаљног приказа тикета у интерфејсу оператера.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
