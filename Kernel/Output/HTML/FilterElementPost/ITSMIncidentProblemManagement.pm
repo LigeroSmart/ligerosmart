@@ -206,7 +206,7 @@ END
     }
 
     # Define impact field search pattern, use without the x modifier and non greedy match (.+?)
-    my $ImpactFieldPattern = '<div class="Row Row_DynamicField_ITSMImpact">.+?<div class="Clear"></div>';
+    my $ImpactFieldPattern = '<div class="Row Row_DynamicField_ITSMImpact">.+?<div class="Clear"></div>\s*</div>';
 
     # Find Impact field and move before the priority field
     if ( ${ $Param{Data} } =~ m{($ImpactFieldPattern)}ms ) {
