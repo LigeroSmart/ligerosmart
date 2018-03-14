@@ -375,15 +375,15 @@ sub _Edit {
         Class      => 'Modernize W50pc',
     );
     $Param{EventOption} = $LayoutObject->BuildSelection(
-        Data         => $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeList( UserID => 1 ) || [],
-        Name         => 'EventID',
+        Data => $Kernel::OM->Get('Kernel::System::ITSMChange::History')->HistoryTypeList( UserID => 1 ) || [],
+        Name => 'EventID',
         SelectedID   => $Param{EventID},
         Class        => 'Modernize W50pc Validate_Required',
         Translatable => 0,
     );
     $Param{RecipientOption} = $LayoutObject->BuildSelection(
-        Data       => $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientList( UserID => 1 ) || [],
-        Name       => 'RecipientIDs',
+        Data => $Kernel::OM->Get('Kernel::System::ITSMChange::Notification')->RecipientList( UserID => 1 ) || [],
+        Name => 'RecipientIDs',
         Multiple   => 1,
         SelectedID => $Param{RecipientIDs},
         Class      => 'Modernize W50pc',
