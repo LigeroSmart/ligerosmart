@@ -26,7 +26,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::ITSMChange::Template::ITSMChange - all template functions for workorders
+Kernel::System::ITSMChange::Template::ITSMWorkOrder - all template functions for workorders
 
 =head1 DESCRIPTION
 

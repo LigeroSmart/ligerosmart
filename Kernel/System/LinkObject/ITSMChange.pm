@@ -19,7 +19,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel/System/LinkObject/ITSMChange.pm - LinkObject backend for ITSMChange
+Kernel::System::LinkObject::ITSMChange - LinkObject backend for ITSMChange
 
 =cut
 

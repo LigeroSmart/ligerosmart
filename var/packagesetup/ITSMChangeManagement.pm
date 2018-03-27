@@ -38,7 +38,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-ITSMChangeManagement.pm - code to execute during package installation
+var::packagesetup::ITSMChangeManagement - code to execute during package installation
 
 =head1 DESCRIPTION
 

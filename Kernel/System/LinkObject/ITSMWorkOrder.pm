@@ -20,7 +20,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel/System/LinkObject/ITSMWorkOrder.pm - LinkObject ITSMWorkOrder module
+Kernel::System::LinkObject::ITSMWorkOrder - LinkObject ITSMWorkOrder module
 
 =cut
 
