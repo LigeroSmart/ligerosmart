@@ -29,7 +29,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-ITSMCore.pm - code to execute during package installation
+var::packagesetup::ITSMCore - code to execute during package installation
 
 =head1 PUBLIC INTERFACE
 
