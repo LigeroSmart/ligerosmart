@@ -419,14 +419,14 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###State" Required="0" Valid="1">
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###State" Required="0" Valid="1">
         <Description Translatable="1">If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateMandatory" Required="0" Valid="1">
+    <Setting Name="Ticket::Frontend::AgentTicketDecision###StateMandatory" Required="0" Valid="1">
         <Description Translatable="1">Sets if state must be selected by the agent.</Description>
         <Navigation>Frontend::Agent::View::TicketDecision</Navigation>
         <Value>
