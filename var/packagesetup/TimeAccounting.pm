@@ -25,7 +25,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-TimeAccounting.pm - code to execute during package installation
+var::packagesetup::TimeAccounting - code to execute during package installation
 
 =head1 DESCRIPTION
 
