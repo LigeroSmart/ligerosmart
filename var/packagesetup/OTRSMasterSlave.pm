@@ -28,7 +28,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-OTRSMasterSlave.pm - code to execute during package installation
+var::packagesetup::OTRSMasterSlave - code to execute during package installation
 
 =head1 SYNOPSIS
 
