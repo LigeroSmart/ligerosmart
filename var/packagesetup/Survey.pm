@@ -22,7 +22,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Survey.pm - code to execute during package installation
+var::packagesetup::Survey - code to execute during package installation
 
 =head1 DESCRIPTION
 
