@@ -19,7 +19,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-ImportExport.pm - code to execute during package installation
+var::packagesetup::ImportExport - code to execute during package installation
 
 =head1 PUBLIC INTERFACE
 
