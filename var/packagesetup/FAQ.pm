@@ -33,7 +33,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-FAQ.pm - code to execute during package installation
+var::packagesetup::FAQ - code to execute during package installation
 
 =head1 DESCRIPTION
 
