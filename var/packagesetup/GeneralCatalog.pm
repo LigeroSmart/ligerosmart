@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-GeneralCatalog.pm - code to execute during package installation
+var::packagesetup::GeneralCatalog - code to execute during package installation
 
 =head1 PUBLIC INTERFACE
 
