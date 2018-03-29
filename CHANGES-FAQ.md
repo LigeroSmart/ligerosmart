@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-03-29 Fixed bug#[13739](https://bugs.otrs.org/show_bug.cgi?id=13739) - Wrong Sysconfig descriptions for public interface.
  - 2018-03-06 Updated translations, thanks to all translators.
  - 2018-02-12 Fixed bug#[11646](https://bugs.otrs.org/show_bug.cgi?id=11646) - SQL quoting of category IDs ineffective.
  - 2018-02-12 Fixed bug#[11889](https://bugs.otrs.org/show_bug.cgi?id=11889) - CategoryAdd returns wrong CategoryID if subcategory name already exists.
