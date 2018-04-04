@@ -21,7 +21,7 @@ our @ObjectDependencies = (
 sub new {
     my ( $Type, %Param ) = @_;
 
-    # allocate new hash for object
+    # Allocate new hash for object.
     my $Self = {%Param};
     bless( $Self, $Type );
 
@@ -44,12 +44,15 @@ sub Param {
 
     my @Params = ();
 
-    my $DateTimeObject = $Kernel::OM->Create('Kernel::System::DateTime');
-    my $DateTime       = $DateTimeObject->Get();
+    # Get current time.
+    my $DateTimeObject = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+    );
+    my $DateTimeSettings = $DateTimeObject->Get();
 
-    my $D = sprintf( "%02d", $DateTime->{Day} );
-    my $M = sprintf( "%02d", $DateTime->{Month} );
-    my $Y = sprintf( "%02d", $DateTime->{Year} );
+    my $D = sprintf( "%02d", $DateTimeSettings->{Day} );
+    my $M = sprintf( "%02d", $DateTimeSettings->{Month} );
+    my $Y = sprintf( "%02d", $DateTimeSettings->{Year} );
 
     # Create possible time selections.
     my %Year = map { $_ => $_ } ( $Y - 10 .. $Y + 1 );
@@ -123,6 +126,7 @@ sub Param {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    # Check needed stuff.
     for my $ParamName (qw(StartYear StartMonth StartDay EndYear EndMonth EndDay)) {
         if ( !$Param{$ParamName} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -133,25 +137,55 @@ sub Run {
         }
     }
 
-    # correct start day of month if entered wrong by user
-    my $StartDay = sprintf( "%02d", Days_in_Month( $Param{StartYear}, $Param{StartMonth} ) );
+    my $DateTimeObjectStart = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Year     => $Param{StartYear},
+            Month    => $Param{StartMonth},
+            Day      => 1,
+            TimeZone => 'floating',
+        },
+    );
+
+    my $LastDayOfMonthStart;
+    if ( defined $DateTimeObjectStart ) {
+        $LastDayOfMonthStart = $DateTimeObjectStart->LastDayOfMonthGet();
+    }
+
+    # Correct start day of month if entered wrong by user.
+    my $StartDay = sprintf( "%02d", $LastDayOfMonthStart );
     if ( $Param{StartDay} < $StartDay ) {
         $StartDay = $Param{StartDay};
     }
 
-    # correct end day of month if entered wrong by user
-    my $EndDay = sprintf( "%02d", Days_in_Month( $Param{EndYear}, $Param{EndMonth} ) );
+    my $DateTimeObjectEnd = $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            Year     => $Param{EndYear},
+            Month    => $Param{EndMonth},
+            Day      => 1,
+            TimeZone => 'floating',
+        },
+    );
+
+    my $LastDayOfMonthEnd;
+    if ( defined $DateTimeObjectEnd ) {
+        $LastDayOfMonthEnd = $DateTimeObjectEnd->LastDayOfMonthGet();
+    }
+
+    # Correct end day of month if entered wrong by user.
+    my $EndDay = sprintf( "%02d", $LastDayOfMonthEnd );
     if ( $Param{EndDay} < $EndDay ) {
         $EndDay = $Param{EndDay};
     }
 
-    # set start and end date
+    # Set start and end date.
     my $StartDate = "$Param{StartYear}-$Param{StartMonth}-$StartDay 00:00:00";
     my $EndDate   = "$Param{EndYear}-$Param{EndMonth}-$EndDay 23:59:59";
 
     my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-    # get a count of all FAQ articles
+    # Get a count of all FAQ articles.
     my $Top10ItemIDsRef = $FAQObject->FAQTop10Get(
         Interface => 'internal',
         StartDate => $StartDate,
@@ -159,7 +193,7 @@ sub Run {
         UserID    => 1,
     ) || [];
 
-    # build result table
+    # Build result table.
     my @Data;
     for my $ItemIDRef ( @{$Top10ItemIDsRef} ) {
 
@@ -184,7 +218,7 @@ sub Run {
         );
         my $Votes = $VoteData->{Votes} || 0;
 
-        # build table row
+        # Build table row.
         push @Data, [
             $FAQData{Number},
             $FAQData{Title},
@@ -194,10 +228,10 @@ sub Run {
         ];
     }
 
-    # set report title
+    # Set report title.
     my $Title = "$Param{StartYear}-$Param{StartMonth}-$StartDay - $Param{EndYear}-$Param{EndMonth}-$EndDay";
 
-    # table headlines
+    # Table headlines.
     my @HeadData = (
         'FAQ #',
         'Title',
