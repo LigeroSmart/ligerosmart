@@ -880,7 +880,7 @@ sub Run {
             $LayoutObject->Block(
                 Name => 'TemplateEdit5Element',
                 Data => {
-                    Name => $Item->{Name} || '',
+                    Name      => $Item->{Name} || '',
                     InputStrg => $InputString,
                     ID        => $Item->{Key},
                 },
@@ -1658,7 +1658,7 @@ sub _MaskTemplateEdit2 {
         $LayoutObject->Block(
             Name => 'TemplateEdit2Element',
             Data => {
-                Name => $Item->{Name} || '',
+                Name         => $Item->{Name} || '',
                 InputStrg    => $InputString,
                 ID           => $ID,
                 ErrorMessage => $ErrorMessage,
@@ -1789,7 +1789,7 @@ sub _MaskTemplateEdit3 {
         $LayoutObject->Block(
             Name => 'TemplateEdit3Element',
             Data => {
-                Name => $Item->{Name} || '',
+                Name      => $Item->{Name} || '',
                 InputStrg => $InputString,
                 ID        => $ID,
             },
