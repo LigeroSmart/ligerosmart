@@ -59,7 +59,7 @@ my $MasterSlaveDynamicFieldData = $DynamicFieldObject->DynamicFieldGet(
 
 # create new user
 my $TestUserLogin = $HelperObject->TestUserCreate(
-    Groups => [ 'admin', 'users' ],
+    Groups   => [ 'admin', 'users' ],
     Language => 'en'
 );
 $Self->True(

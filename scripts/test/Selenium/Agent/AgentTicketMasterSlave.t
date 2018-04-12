@@ -231,7 +231,7 @@ $Selenium->RunTest(
             index(
                 $Selenium->get_page_source(),
                 'Changed dynamic field MasterSlave from "" to "SlaveOf:' . $TicketNumbers[0]
-                ) > -1,
+            ) > -1,
             "Slave dynamic field update value - found",
         );
 

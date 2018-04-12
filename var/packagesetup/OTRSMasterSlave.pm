@@ -239,7 +239,7 @@ sub _SetDynamicFields {
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicFieldsList} } ) {
             if ( int $DynamicFieldConfig->{FieldOrder} > int $MaxFieldOrder ) {
-                $MaxFieldOrder = $DynamicFieldConfig->{FieldOrder}
+                $MaxFieldOrder = $DynamicFieldConfig->{FieldOrder};
             }
         }
     }
