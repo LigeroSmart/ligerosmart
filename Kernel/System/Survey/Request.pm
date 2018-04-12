@@ -399,7 +399,7 @@ sub RequestSend {
     # Get request recipient.
     my $To = $Self->_GetRequestRecipient(
         UserEmail => $CustomerUser{UserEmail} // '',
-        TicketID => $Param{TicketID},
+        TicketID  => $Param{TicketID},
     );
 
     return if !$To;

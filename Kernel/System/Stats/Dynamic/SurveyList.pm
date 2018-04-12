@@ -106,7 +106,7 @@ sub GetObjectAttributes {
 
         # Remove dynamic fields from the list if is not sortable.
         if ( !$IsSortable ) {
-            delete $OrderBy{ 'DynamicField_' . $DynamicFieldConfig->{Name} }
+            delete $OrderBy{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
         }
     }
 
@@ -543,7 +543,7 @@ sub _SurveyAttributes {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
         next DYNAMICFIELD if !$DynamicFieldConfig->{Name};
 
-        $SurveyAttributes{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Label}
+        $SurveyAttributes{ 'DynamicField_' . $DynamicFieldConfig->{Name} } = $DynamicFieldConfig->{Label};
     }
 
     return \%SurveyAttributes;

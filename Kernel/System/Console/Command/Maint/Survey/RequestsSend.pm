@@ -140,7 +140,7 @@ sub Run {
                 PublicSurveyKey     => $Request->{PublicSurveyKey},
             );
             if ( !$Success ) {
-                $Self->Print("    <red>Error sending the request</red>\n")
+                $Self->Print("    <red>Error sending the request</red>\n");
             }
             else {
                 $Self->Print("    <green>Request is sent successfully.</green>\n");
