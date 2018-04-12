@@ -234,8 +234,7 @@ sub Run {
 
                     $JSData{DialogTitle} = $Column eq 'Delete'
                         ? 'Delete Template'
-                        : 'Edit Template Content'
-                        ;
+                        : 'Edit Template Content';
 
                     $LayoutObject->AddJSData(
                         Key   => 'ITSMChangeTemplateOverviewConfirmDialog.' . $JSData{ElementID},

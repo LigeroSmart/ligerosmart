@@ -2724,7 +2724,7 @@ sub ChangeCIPLookup {
     my %ChangeCIP = %{
         $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::' . $Param{Type},
-            ) || {}
+        ) || {}
     };
 
     if ( $Param{ID} ) {

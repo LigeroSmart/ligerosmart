@@ -79,17 +79,17 @@ my %ChangeStateID2Name = reverse %Name2ChangeStateID;
 
 # default ChangeState Transitions
 my %DefaultChangeStateTransitions = (
-    0           => ['requested'],
-    'requested' => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
-    'pending approval' => [ 'rejected',  'retracted', 'approved' ],
+    0                  => ['requested'],
+    'requested'        => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
+    'pending approval' => [ 'rejected', 'retracted', 'approved' ],
     'approved'         => [ 'retracted', 'in progress' ],
-    'in progress' => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
-    'pending pir' => [ 'failed',      'successful' ],
-    'rejected'    => [0],
-    'retracted'   => [0],
-    'failed'      => [0],
-    'successful'  => [0],
-    'canceled'    => [0],
+    'in progress'      => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
+    'pending pir'      => [ 'failed', 'successful' ],
+    'rejected'         => [0],
+    'retracted'        => [0],
+    'failed'           => [0],
+    'successful'       => [0],
+    'canceled'         => [0],
 );
 
 # ------------------------------------------------------------ #

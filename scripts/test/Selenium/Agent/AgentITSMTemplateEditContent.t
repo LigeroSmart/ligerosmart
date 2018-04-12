@@ -112,14 +112,14 @@ $Selenium->RunTest(
             index(
                 $Selenium->get_page_source(),
                 "This will create a new change from this template, so you can edit and save it."
-                ) > -1,
+            ) > -1,
             "'This will create a new change from this template, so you can edit and save it.' is found",
         );
         $Self->True(
             index(
                 $Selenium->get_page_source(),
                 "The new change will be deleted automatically after it has been saved as template."
-                ) > -1,
+            ) > -1,
             "'The new change will be deleted automatically after it has been saved as template.' is found",
         );
 

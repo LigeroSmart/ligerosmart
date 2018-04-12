@@ -100,7 +100,7 @@ sub Run {
 
     # show dash ('-') when the field is empty
     for my $Field (qw(ContentNew ContentOld)) {
-        $HistoryEntry->{$Field} ||= '-'
+        $HistoryEntry->{$Field} ||= '-';
     }
 
     # output header

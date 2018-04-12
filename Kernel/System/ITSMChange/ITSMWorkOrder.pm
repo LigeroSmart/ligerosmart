@@ -2085,7 +2085,7 @@ sub WorkOrderPossibleStatesGet {
             };
         }
 
-        return \@ArrayHashRef
+        return \@ArrayHashRef;
     }
 
     # assemble the array of hash refs with all next states

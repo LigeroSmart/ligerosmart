@@ -1039,17 +1039,17 @@ sub _StateMachineDefaultSet {
 
     # define ChangeState transitions
     my %ChangeStateTransitions = (
-        0           => ['requested'],
-        'requested' => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
-        'pending approval' => [ 'rejected',  'retracted', 'approved' ],
+        0                  => ['requested'],
+        'requested'        => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
+        'pending approval' => [ 'rejected', 'retracted', 'approved' ],
         'approved'         => [ 'retracted', 'in progress' ],
-        'in progress' => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
-        'pending pir' => [ 'failed',      'successful' ],
-        'rejected'    => [0],
-        'retracted'   => [0],
-        'failed'      => [0],
-        'successful'  => [0],
-        'canceled'    => [0],
+        'in progress'      => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
+        'pending pir'      => [ 'failed', 'successful' ],
+        'rejected'         => [0],
+        'retracted'        => [0],
+        'failed'           => [0],
+        'successful'       => [0],
+        'canceled'         => [0],
     );
 
     # define WorkOrderState transitions

@@ -232,7 +232,7 @@ sub Run {
             },
         ],
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
-        Class => 'Modernize Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
+        Class      => 'Modernize Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
     );
 
     # time period that can be selected from the GUI

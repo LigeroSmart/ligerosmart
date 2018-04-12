@@ -263,7 +263,7 @@ my @DefaultWorkOrderStates = (
 my %WorkOrderStateID2Name = %{
     $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
-        ) || {}
+    ) || {}
 };
 my %WorkOrderStateName2ID   = reverse %WorkOrderStateID2Name;
 my @SortedWorkOrderStateIDs = sort keys %WorkOrderStateID2Name;
@@ -359,7 +359,7 @@ my @DefaultWorkOrderTypes = (
 my %WorkOrderTypeID2Name = %{
     $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
-        ) || {}
+    ) || {}
 };
 my %WorkOrderTypeName2ID = reverse %WorkOrderTypeID2Name;
 my @SortedTypeIDs        = sort keys %WorkOrderTypeID2Name;
@@ -2812,7 +2812,7 @@ for my $Test (@WorkOrderSearchTests) {
 
         # get defined expected result count (defined in search test case!)
         if ( exists $Test->{ResultData}->{Count} ) {
-            $ExpectedCount = $Test->{ResultData}->{Count}
+            $ExpectedCount = $Test->{ResultData}->{Count};
         }
 
         # check the number of IDs in the returned arrayref

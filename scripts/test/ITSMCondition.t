@@ -155,7 +155,7 @@ CREATEWORKORDER:
 for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
     my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
     my $WorkOrderID    = $WorkOrderObject->WorkOrderAdd(
-        ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
+        ChangeID         => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
         WorkOrderTitle   => $WorkOrderTitle,
         PlannedStartTime => $DateTimeObject->ToString(),
         PlannedEndTime   => $Kernel::OM->Create(
@@ -163,14 +163,14 @@ for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
             ObjectParams => {
                 Epoch => $DateTimeObject->ToEpoch() + 100,
                 }
-            )->ToString(),
+        )->ToString(),
         ActualStartTime => $DateTimeObject->ToString(),
         ActualEndTime   => $Kernel::OM->Create(
             'Kernel::System::DateTime',
             ObjectParams => {
                 Epoch => $DateTimeObject->ToEpoch() + 100,
                 }
-            )->ToString(),
+        )->ToString(),
         UserID => 1,
     );
 
@@ -1245,7 +1245,7 @@ my @ExpressionTests = (
                     ObjectParams => {
                         Epoch => $DateTimeObject->ToEpoch() + 10,
                         }
-                    )->ToString(),
+                )->ToString(),
                 UserID => 1,
             },
         },
@@ -1278,7 +1278,7 @@ my @ExpressionTests = (
                     ObjectParams => {
                         Epoch => $SystemTimeBeforeAdding,
                         }
-                    )->ToString(),
+                )->ToString(),
                 UserID => 1,
             },
         },
@@ -1311,7 +1311,7 @@ my @ExpressionTests = (
                     ObjectParams => {
                         Epoch => $SystemTimeBeforeAdding,
                         }
-                    )->ToString(),
+                )->ToString(),
                 UserID => 1,
             },
         },
@@ -1344,7 +1344,7 @@ my @ExpressionTests = (
                     ObjectParams => {
                         Epoch => $DateTimeObject->ToEpoch() + 10,
                         }
-                    )->ToString(),
+                )->ToString(),
                 UserID => 1,
             },
         },

@@ -533,7 +533,7 @@ sub _CheckChangeManagerAndChangeBuilder {
         }
     }
 
-    return %Errors
+    return %Errors;
 }
 
 sub _IsNewCABMemberOk {
