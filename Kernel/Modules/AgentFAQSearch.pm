@@ -1407,7 +1407,7 @@ sub _MaskForm {
             StateID => $StateID,
             UserID  => $Self->{UserID},
         );
-        $States{ $StateData{TypeID} } = $StateData{Name}
+        $States{ $StateData{TypeID} } = $StateData{Name};
     }
 
     $Param{StateSelectionStrg} = $LayoutObject->BuildSelection(

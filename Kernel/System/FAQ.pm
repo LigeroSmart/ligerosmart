@@ -2321,7 +2321,7 @@ sub FAQContentTypeSet {
             Type => 'FAQ',
         );
 
-        return 1
+        return 1;
     }
 
     # Otherwise content type has to be determined by the FAQ item content.

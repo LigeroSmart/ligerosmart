@@ -608,6 +608,7 @@ sub _CreateAditionalFAQLanguages {
             );
         }
     }
+
     return 1;
 }
 
@@ -783,7 +784,7 @@ sub _MigrateDTLInSysConfig {
             Name           => "FAQ::Frontend::MenuModule###$MenuModule",
             EffectiveValue => $Setting->{$MenuModule},
             IsValid        => 1,
-            },
+        };
     }
 
     my $Success = $SysConfigObject->SettingsSet(
