@@ -526,7 +526,7 @@ sub Run {
     );
     $Output .= $LayoutObject->NavigationBar();
     $Output .= $LayoutObject->Output(
-        Data => { %Param, %Frontend },
+        Data         => { %Param, %Frontend },
         TemplateFile => 'AgentTimeAccountingReporting'
     );
     $Output .= $LayoutObject->Footer();

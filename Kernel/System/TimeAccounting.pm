@@ -258,8 +258,7 @@ sub UserReporting {
                 my $DayStartPoint =
                     $Year == $YearStart && $Month == $MonthStart
                     ? $DayStart
-                    : 1
-                    ;
+                    : 1;
 
                 my $DayEndPoint;
 

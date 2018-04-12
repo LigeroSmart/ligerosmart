@@ -231,7 +231,7 @@ sub _MigrateConfigs {
         push @NewSettings, {
             Name           => 'Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays',
             EffectiveValue => $Setting->{'201-TimeAccounting::IncompleteWorkingDays'},
-            }
+        };
     }
 
     return 1 if !@NewSettings;
