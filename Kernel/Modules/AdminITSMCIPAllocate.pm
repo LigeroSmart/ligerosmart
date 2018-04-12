@@ -174,7 +174,7 @@ sub Run {
         for my $Row ( 0 .. $#{$AllocateMatrix} ) {
 
             if ( $Row != 0 ) {
-                $LayoutObject->Block( Name => 'Row' )
+                $LayoutObject->Block( Name => 'Row' );
             }
 
             for my $Column ( 0 .. $#{ $AllocateMatrix->[$Row] } ) {
