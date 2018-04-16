@@ -152,16 +152,36 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
         $('.CallForAction').on('click.SubmitAction', SetSubmitAction);
 
         $('.DeleteExpression').on('click.ConditionDeleteExpression', function() {
+
+            if (!window.confirm(Core.Language.Translate('Do you really want to delete this expression?'))) {
+               return false;
+            }
+
             $('#DeleteExpressionID').val($(this).attr('id').replace(/DeleteExpressionID-/, ''));
             $(this).closest('form').submit();
             return false;
         });
 
         $('.DeleteAction').on('click.ConditionDeleteAction', function() {
+
+            if (!window.confirm(Core.Language.Translate('Do you really want to delete this action?'))) {
+               return false;
+            }
+
             $('#DeleteActionID').val($(this).attr('id').replace(/DeleteActionID-/, ''));
             $(this).closest('form').submit();
             return false;
         });
+
+        $('.DeleteCondition').on('click.ConditionDelete', function() {
+
+            if (!window.confirm(Core.Language.Translate('Do you really want to delete this condition?'))) {
+               return false;
+            }
+
+            return true;
+        });
+
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');

@@ -50,7 +50,7 @@
                                 <td class="Center">[% Translate(Data.Valid) | html %]</td>
                                 <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
                                 <td class="Center">
-                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];ChangeID=[% Data.ChangeID | uri %];ConditionID=[% Data.ConditionID | uri %];DeleteConditionID::[% Data.ConditionID | uri %]=Delete" title="[% Translate("Delete") | html %]">
+                                    <a href="[% Env("Baselink") %]Action=[% Env("Action") %];ChangeID=[% Data.ChangeID | uri %];ConditionID=[% Data.ConditionID | uri %];DeleteConditionID::[% Data.ConditionID | uri %]=Delete" title="[% Translate("Delete") | html %]" class="DeleteCondition">
                                         <i class="fa fa-trash-o">
                                             <span class="InvisibleText">[% Translate("Delete Condition") | html %]</span>
                                         </i>
