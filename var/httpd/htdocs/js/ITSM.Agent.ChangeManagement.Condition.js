@@ -124,27 +124,6 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
     }
 
     /**
-     * @private
-     * @name DeleteActionExpression
-     * @memberof ITSM.Agent.ChangeManagement.Condition
-     * @function
-     * @param {Object} Event object of mouse click.
-     * @returns {False} returns false to prevent the default click handler.
-     * @description
-     *      This function sets the action/expression that was clicked to be deleted and submits the form.
-     */
-    function DeleteActionExpression(Event) {
-        var $This       = $(this);
-        var ElementType = Event.data.Type;
-        var ElementID   = 'Delete' + ElementType + 'ID';
-        var ToReplace   = ElementID + '-';
-
-        $(ElementID).val($This.attr('id').replace(ToReplace, ''));
-        $This.closest('form').submit();
-        return false;
-    }
-
-    /**
      * @name Init
      * @namespace ITSM.Agent.ChangeManagement.Condition
      * @function
@@ -170,20 +149,19 @@ ITSM.Agent.ChangeManagement.Condition = (function (TargetNS) {
             ExpressionActionDropdown
         );
 
-
         $('.CallForAction').on('click.SubmitAction', SetSubmitAction);
 
-        $('.DeleteExpression').on(
-            'click.ConditionDeleteExpression',
-            { 'Type': 'Expression' },
-            DeleteActionExpression
-        );
+        $('.DeleteExpression').on('click.ConditionDeleteExpression', function() {
+            $('#DeleteExpressionID').val($(this).attr('id').replace(/DeleteExpressionID-/, ''));
+            $(this).closest('form').submit();
+            return false;
+        });
 
-        $('.DeleteAction').on(
-            'click.ConditionDeleteAction',
-            { 'Type': 'Action' },
-            DeleteActionExpression
-        );
+        $('.DeleteAction').on('click.ConditionDeleteAction', function() {
+            $('#DeleteActionID').val($(this).attr('id').replace(/DeleteActionID-/, ''));
+            $(this).closest('form').submit();
+            return false;
+        });
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
