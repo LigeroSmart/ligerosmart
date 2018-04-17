@@ -254,6 +254,17 @@ $Selenium->RunTest(
                 "return typeof(\$) === 'function' && \$('.CancelClosePopup').length && \$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"]').length"
         );
 
+        # click on delete icon
+        my $CheckConfirmJS = <<"JAVASCRIPT";
+(function () {
+    window.confirm = function (message) {
+        return true;
+    };
+}());
+JAVASCRIPT
+        $Selenium->execute_script($CheckConfirmJS);
+
+
         $Selenium->execute_script(
             "\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"] i').trigger('click');"
         );
