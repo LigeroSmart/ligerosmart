@@ -264,7 +264,6 @@ $Selenium->RunTest(
 JAVASCRIPT
         $Selenium->execute_script($CheckConfirmJS);
 
-
         $Selenium->execute_script(
             "\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"] i').trigger('click');"
         );
