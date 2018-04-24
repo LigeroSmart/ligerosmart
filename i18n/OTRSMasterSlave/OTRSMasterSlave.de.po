@@ -7,12 +7,13 @@
 # Nikolai Townsend <info@bandanh.com>, 2016
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
 # Rudy R <rudy.rohde@googlemail.com>, 2015
+# Stefan Hagl <stefan.hagl@gmx.at>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-02-06 19:00+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-03-23 07:02+0000\n"
+"Last-Translator: Stefan Hagl <stefan.hagl@gmx.at>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +59,7 @@ msgstr "Master"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Slave of %s%s%s"
-msgstr ""
+msgstr "Slave von %s%s%s"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
@@ -225,7 +226,7 @@ msgstr "Benötigte Berechtigungen für die Anzeige des MasterSlave-Dialogs im Ti
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
-msgstr ""
+msgstr "Legt fest, ob Master / Slave Feld durch einen Agenten ausgewählt sein muss."
 
 #. SysConfig
 msgid ""
@@ -292,7 +293,7 @@ msgstr "Zeigt die Priorität eines Tickets im MasterSlave-Bildschirm des Agenten
 msgid ""
 "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
 " the agent interface."
-msgstr ""
+msgstr "Zeigt das Titel-Feld in der MasterSlave-Oberfläche eines aufgerufenen Tickets im Agenten-Interface an. "
 
 #. SysConfig
 msgid "Slave Tickets"

@@ -83,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Registro do módulo de eventos de ticket.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Permissões requeridas para usar a tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
-    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = 'Define se o campo Mestre/ Escravo deve ser selecionado pelo agente.';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define o corpo do texto padrão para notas adicionadas na tela MasterSlave de ticket de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

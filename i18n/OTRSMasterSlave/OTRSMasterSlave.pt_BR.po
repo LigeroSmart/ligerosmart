@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>, 2018
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2016
 # Ricardo von Staa <ricardo.von.staa@otrs.com>, 2017
 # Ronaldo Richieri <ronaldo@complemento.net.br>, 2015,2017
@@ -8,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-02-06 19:00+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-04-09 15:05+0000\n"
+"Last-Translator: Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -222,7 +223,7 @@ msgstr "Permissões requeridas para usar a tela MasterSlave de ticket de um tick
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
-msgstr ""
+msgstr "Define se o campo Mestre/ Escravo deve ser selecionado pelo agente."
 
 #. SysConfig
 msgid ""

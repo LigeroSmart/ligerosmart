@@ -33,7 +33,7 @@ sub Data {
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master'} = 'Master';
-    $Self->{Translation}->{'Slave of %s%s%s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s'} = 'Slave von %s%s%s';
     $Self->{Translation}->{'Master Ticket'} = 'Master-Ticket';
 
     # SysConfig
@@ -83,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Registrierung des Ticket-Event-Moduls.';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Benötigte Berechtigungen für die Anzeige des MasterSlave-Dialogs im Ticket-Zoom-Dialog des Agenteninterface.';
-    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = 'Legt fest, ob Master / Slave Feld durch einen Agenten ausgewählt sein muss.';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Bestimmt den standardmäßigen Text einer Notiz für Tickets im MasterSlave-Bildschirm des Agenten-Interface.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -105,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Zeigt die Priorität eines Tickets im MasterSlave-Bildschirm des Agenten-Interface für ein aufgerufenes Ticket an.';
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '';
+        'Zeigt das Titel-Feld in der MasterSlave-Oberfläche eines aufgerufenen Tickets im Agenten-Interface an. ';
     $Self->{Translation}->{'Slave Tickets'} = 'Slave-Tickets';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Definiert die verschiedene Artikeltypen in denen der reale Name des Master-Tickets mit denen des Slave-Tickets ersetzt wird.';
