@@ -408,7 +408,6 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Pencarian penerus backend FAQ pada antarmuka agen';
     $Self->{Translation}->{'Field4'} = 'Field4';
     $Self->{Translation}->{'Field5'} = 'Field5';
-    $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Pendaftaran modul Halamandepan untuk antarmuka umum.';
     $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grup untuk persetujuan artikel FAQ';
     $Self->{Translation}->{'History of this FAQ'} = 'Sejarah dari FAQ ini';
@@ -429,6 +428,7 @@ sub Data {
         'Daftar jenis status yang dapat digunakan pada antarmuka pelanggan.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         'Daftar jenis status yang dapat digunakan pada antarmuka umum.';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         'Jumlah artikel FAQ maksimal yang akan ditampilkan di dalam hasil Eksplorer FAQ di antarmuka agen.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =

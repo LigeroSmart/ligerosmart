@@ -408,7 +408,6 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Maswali yanayoulizwa mara kwa mara tafuta backend ruta ya kiolesura cha wakala.';
     $Self->{Translation}->{'Field4'} = 'Sehemu4';
     $Self->{Translation}->{'Field5'} = 'Sehemu5';
-    $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Moduli ya usajili ya frontend kwa ajili ya kiolesura cha umma.';
     $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Makundi ya idhini kwa maswali yaliyoulizwa mara kwa mara.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historia ya maswali haya yaliyoulizwa mara kwa mara.';
@@ -429,6 +428,7 @@ sub Data {
         'Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha mteja.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         'Orodha ya aina ya hali ambazo zinaweza kutumika katika kiolesura cha umma.';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         'Namba ya upeo wa juu ya maswali yanayoulizwa mara kwa mara yanayatayoonyeshwa katika majibu ya kichunguzi cha maswali yanayoulizwa mara kwa mara ya kiolesura cha wakala.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =

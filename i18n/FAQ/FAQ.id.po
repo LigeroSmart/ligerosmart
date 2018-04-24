@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -1100,10 +1100,6 @@ msgid "Field5"
 msgstr "Field5"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "Pendaftaran modul Halamandepan untuk antarmuka umum."
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr ""
 
@@ -1166,6 +1162,10 @@ msgstr "Daftar jenis status yang dapat digunakan pada antarmuka pelanggan."
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "Daftar jenis status yang dapat digunakan pada antarmuka umum."
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""

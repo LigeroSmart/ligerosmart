@@ -408,7 +408,6 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Field4'} = '欄位4';
     $Self->{Translation}->{'Field5'} = '欄位5';
-    $Self->{Translation}->{'Frontend module registration for the public interface.'} = '公開介面的前台模組登記';
     $Self->{Translation}->{'Full FAQ'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '常見問題文章審批用戶組';
     $Self->{Translation}->{'History of this FAQ'} = '此常見問題歷史';
@@ -429,6 +428,7 @@ sub Data {
         '在客戶介面可使用的狀態分類列表';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         '在公開介面可使用的狀態分類列表';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         '在服務員介面可顯示於常見問題瀏覽器結果的常見問題文章最多數量';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =

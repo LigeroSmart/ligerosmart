@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2018-03-06 23:23+0000\n"
+"POT-Creation-Date: 2018-04-24 16:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1027,10 +1027,6 @@ msgid "Field5"
 msgstr ""
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr ""
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr ""
 
@@ -1092,6 +1088,10 @@ msgstr ""
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
+msgstr ""
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
 msgstr ""
 
 #. SysConfig

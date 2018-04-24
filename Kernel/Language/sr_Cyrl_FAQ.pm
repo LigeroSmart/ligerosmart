@@ -408,7 +408,6 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Модул рутера FAQ претраге у интерфејсу оператера.';
     $Self->{Translation}->{'Field4'} = 'Поље4';
     $Self->{Translation}->{'Field5'} = 'Поље5';
-    $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Регистрација приступног модула за јавни интерфејс.';
     $Self->{Translation}->{'Full FAQ'} = 'Kомплетан FAQ';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Група за одобравање FAQ чланака.';
     $Self->{Translation}->{'History of this FAQ'} = 'Историјат овог FAQ';
@@ -429,6 +428,7 @@ sub Data {
         'Листа типова стања који се могу користити у интерфејсу клијента.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         'Листа типова стања који се могу користити у јавном интерфејсу.';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         'Максимални број FAQ чланака који ће бити приказани у резултату FAQ претраживача у интерфејсу оператера.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =

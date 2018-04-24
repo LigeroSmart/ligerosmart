@@ -408,7 +408,6 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = 'Modul rutera FAQ pretrage u interfejsu operatera.';
     $Self->{Translation}->{'Field4'} = 'Polje4';
     $Self->{Translation}->{'Field5'} = 'Polje5';
-    $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Registracija pristupnog modula za javni interfejs.';
     $Self->{Translation}->{'Full FAQ'} = 'Kompletan FAQ';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Grupa za odobravanje FAQ članaka.';
     $Self->{Translation}->{'History of this FAQ'} = 'Istorijat ovog FAQ';
@@ -429,6 +428,7 @@ sub Data {
         'Lista tipova stanja koji se mogu koristiti u interfejsu klijenta.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         'Lista tipova stanja koji se mogu koristiti u javnom interfejsu.';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         'Maksimalni broj FAQ članaka koji će biti prikazani u rezultatu FAQ pretraživača u interfejsu operatera.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =
@@ -520,7 +520,7 @@ sub Data {
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Prikaži zadnje promenjene stavke u definisanim interfejsima.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Prikaži zadnje kreirane stavke u definisanim interfejsima.';
     $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
-        'Prikaži zvezdice za članke sa jednakom ili boljom ocenom od određene vrednosti (postavi vrednost 0 za deaktiviranje izlaza).';
+        'Prikaži zvezdice za članke sa jednakom ili boljom ocenom od definisane vrednosti (postavite vrednost \'0\' za deaktiviranje prikaza).';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Prikaži prvih 10 stavki u definisanim interfejsima.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Prikaži glasanje u definisanim interfejsima.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =

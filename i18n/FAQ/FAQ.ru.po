@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1100,10 +1100,6 @@ msgid "Field5"
 msgstr "Поле5"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "Frontend module registration для публичного/общедоступного интерфейса."
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr "Полный FAQ"
 
@@ -1166,6 +1162,10 @@ msgstr "Список типов состояний, которые могут и
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "Список типов состояний, которые могут использоваться в публичном/общедоступном интерфейсе."
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""

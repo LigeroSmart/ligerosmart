@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>, 2018
 # Felipe Braga <fbobraga@gmail.com>, 2015-2016
 # Gilberto José Souza Coutinho <gilberto.jsc@gmail.com>, 2017
 # Glauber Caires <glaubercaires@gmail.com>, 2016
@@ -14,8 +15,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -46,11 +47,11 @@ msgstr "Gerenciamento de Categoria de FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "Adicionar Categoria de FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "Editar Categoria de FAQ"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -156,11 +157,11 @@ msgstr "Gerenciamento de Idiomas FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "Adicionar Idioma de FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "Editar Idioma do FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -758,7 +759,7 @@ msgstr "Gerenciamento de Categoria"
 
 #. SysConfig
 msgid "Category Management."
-msgstr ""
+msgstr "Gerenciamento de Categoria."
 
 #. SysConfig
 msgid "Customer FAQ Print."
@@ -1107,10 +1108,6 @@ msgid "Field5"
 msgstr "Campo5"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "Frontend de registo do módulo para a interface pública."
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr "FAQ completo"
 
@@ -1144,7 +1141,7 @@ msgstr "Gestão de idiomas"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "Gerenciamento de Idiomas."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1152,7 +1149,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Limite."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1173,6 +1170,10 @@ msgstr "Lista dos tipos de estado que pode ser utilizado na interface de cliente
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "Lista dos tipos de estado que pode ser utilizado na interface pública."
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1386,11 +1387,11 @@ msgstr ""
 msgid ""
 "Select how many items should be shown in Journal Overview \"Small\" by "
 "default."
-msgstr ""
+msgstr "Selecione quantos itens devem ser mostrados na visão geral do diário \"Small\" por padrão."
 
 #. SysConfig
 msgid "Select how many items should be shown in Overview \"Small\" by default."
-msgstr ""
+msgstr "Selecione quantos itens devem ser mostrados na visão geral \"Small\" por padrão."
 
 #. SysConfig
 msgid ""
@@ -1458,7 +1459,7 @@ msgstr "Mostrar os últimos itens criados em interfaces definidas."
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr ""
+msgstr "Mostre as estrelas para os artigos com uma classificação igual ou maior do valor definido (defina o valor '0' para desativar a saída)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

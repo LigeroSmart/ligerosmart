@@ -5,15 +5,15 @@
 # David B <link.bigpoint@outlook.com>, 2017-2018
 # Deiry Arias <mailimarias@gmail.com>, 2015
 # Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
-# Fernando Casal <fernando.casal@serviciomovil.com>, 2017
+# Fernando Casal <fernando.casal@serviciomovil.com>, 2017-2018
 # Galo Izquierdo <gizquier@hotmail.com>, 2015
 # Luigy, 2016
 # Roberto Lugo <rlugo@cinetixgroup.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -1105,10 +1105,6 @@ msgid "Field5"
 msgstr "Campo5"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "Registro de módulo \"Frontend\" en la interfaz pública."
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr "FAQ completas"
 
@@ -1150,7 +1146,7 @@ msgstr "Límite la búsqueda para crear la lista de palabras clave de la lista a
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Límite."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
@@ -1171,6 +1167,10 @@ msgstr "Lista de tipos de estado que pueden ser usados en la interface de client
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "Lista de tipos de estado que pueden ser usados en la interface pública."
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -1456,7 +1456,7 @@ msgstr "Mostrar los últimos artículos creados en las interfaces definidas."
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr ""
+msgstr "Mostrar las estrellas para los artículos con una calificación igual o superior al valor definido (ajuste el valor '0' para desactivar la salida)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."

@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-12 02:50+0000\n"
-"Last-Translator: 汇民 王 <whuim@qq.com>\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1103,10 +1103,6 @@ msgid "Field5"
 msgstr "字段5"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "公共界面的前端模块注册"
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr "完整FAQ"
 
@@ -1169,6 +1165,10 @@ msgstr "在客户界面中能够使用的状态类型列表。"
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "在公共界面中能够使用的状态类型列表。"
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""

@@ -408,7 +408,6 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '服务人员界面中，FAQ搜索的后台选项。';
     $Self->{Translation}->{'Field4'} = '字段4';
     $Self->{Translation}->{'Field5'} = '字段5';
-    $Self->{Translation}->{'Frontend module registration for the public interface.'} = '公共界面的前端模块注册';
     $Self->{Translation}->{'Full FAQ'} = '完整FAQ';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '批准 FAQ 文章请求的群组。';
     $Self->{Translation}->{'History of this FAQ'} = 'FAQ文章的历史信息';
@@ -429,6 +428,7 @@ sub Data {
         '在客户界面中能够使用的状态类型列表。';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         '在公共界面中能够使用的状态类型列表。';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         '在服务人员界面中，FAQ浏览器能够显示FAQ文章的最大数量。';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =

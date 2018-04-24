@@ -1,14 +1,14 @@
 # 
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017
-# Kentaro Hori <kentaro0919@gmail.com>, 2014-2015,2017
+# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014-2015,2017
 # Kozo Sakurai <sakurai@io-architect.com>, 2017
 # Norihiro Tanaka <noritnk@kcn.ne.jp>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-06 15:58+0000\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1100,10 +1100,6 @@ msgid "Field5"
 msgstr "Field5"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "公開画面のフロントエンドモジュールの定義"
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr ""
 
@@ -1166,6 +1162,10 @@ msgstr "顧客画面で利用可能なステートタイプリスト"
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "公開画面で利用可能なステートタイプリスト"
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""

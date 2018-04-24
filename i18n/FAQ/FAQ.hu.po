@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 15:57+0000\n"
-"PO-Revision-Date: 2018-02-16 12:04+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-04-24 16:43+0000\n"
+"PO-Revision-Date: 2018-04-24 16:44+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1097,10 +1097,6 @@ msgid "Field5"
 msgstr "5. mező"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "Előtétprogram modul regisztráció a nyilvános felülethez."
-
-#. SysConfig
 msgid "Full FAQ"
 msgstr "Teljes GyIK"
 
@@ -1163,6 +1159,10 @@ msgstr "Állapottípusok listája, amelyek használhatók az ügyfélfelületen.
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr "Állapottípusok listája, amelyek használhatók a nyilvános felületen."
+
+#. SysConfig
+msgid "Loader module registration for the public interface."
+msgstr ""
 
 #. SysConfig
 msgid ""

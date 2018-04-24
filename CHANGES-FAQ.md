@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-04-24 Updated translations, thanks to all translators.
  - 2018-04-04 Fixed bug#[12304](https://bugs.otrs.org/show_bug.cgi?id=12304) - Broken reference to Date::Pcalc in FAQAccess.pm.
  - 2018-03-29 Fixed bug#[13739](https://bugs.otrs.org/show_bug.cgi?id=13739) - Wrong Sysconfig descriptions for public interface.
  - 2018-03-06 Updated translations, thanks to all translators.
