@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>, 2018
 # Edicarlos Lopes <edicarlos.lds@gmail.com>, 2017
 # Felipe Braga <fbobraga@gmail.com>, 2015
 # Glauber Caires <glaubercaires@gmail.com>, 2016
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-02-06 16:28+0000\n"
-"PO-Revision-Date: 2018-02-06 16:28+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-04-10 17:01+0000\n"
+"Last-Translator: Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,15 +48,15 @@ msgstr "Descrição Interna"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Condições do cliente"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Por favor, escolha uma propriedade do cliente para adicionar uma condição."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Chave de pesquisa pública"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
@@ -151,7 +152,7 @@ msgstr "Resposta:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Opções de visão geral da pesquisa"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
@@ -170,7 +171,7 @@ msgstr "Sem restrições"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Apenas pesquisas criadas entre"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -198,7 +199,7 @@ msgstr "Tabela de Requisições"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Selecionar todos os pedidos"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -210,7 +211,7 @@ msgstr "Hora do Voto"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Selecionar este pedido"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -218,7 +219,7 @@ msgstr "Ver detalhes"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Excluir estatísticas"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -230,11 +231,11 @@ msgstr "voltar ao resumo de estatísticas"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Voto anterior"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Próximo voto"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -416,7 +417,7 @@ msgstr "Você já respondeu a pesquisa."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Lista de enquetes"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid ""
@@ -468,11 +469,11 @@ msgstr "Define o módulo de visão geral para exibir a visão pequena de uma lis
 msgid ""
 "Defines groups which have a permission to change survey status. Array is "
 "empty by default and agents from all groups can change survey status."
-msgstr ""
+msgstr "Define grupos que têm permissão para alterar o status da pesquisa.  A matriz está vazia por padrão e agentes de todos os grupos podem alterar o status da pesquisa."
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "Define se as solicitações de pequisa serão enviadas apenas para clientes reais."
 
 #. SysConfig
 msgid ""
@@ -492,7 +493,7 @@ msgstr "Define a quantidade de horas que um chamado deve estar fechado para envi
 msgid ""
 "Defines the columns for the dropdown list for building send conditions (0 =>"
 " inactive, 1 => active)."
-msgstr ""
+msgstr "Define as colunas da lista suspensa para criação de condições de envio (0=> inativo, 1=> ativo)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -500,7 +501,7 @@ msgstr "Define a altura padrão para Richtext nos elementos da SurveyZoom"
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "Define os grupos (rw) que podem excluir as estatísticas da pesquisa."
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
@@ -514,7 +515,7 @@ msgstr "Define as colunas exibidas na visão geral de pesquisa. Esta opção nã
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
+msgstr "Determina se o módulo de estatísticas pode gerar listas de pesquisas."
 
 #. SysConfig
 msgid "Edit survey general information."
@@ -567,7 +568,7 @@ msgstr "Se esta regex for encontrada, nenhuma pesquisa será enviado para o clie
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Limite."
 
 #. SysConfig
 msgid ""
@@ -656,7 +657,7 @@ msgstr "Módulo de evento de chamado para enviar requisições de pesquisa via e
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "Acionar os resultados da exclusão ( incluindo dados de voto e solicitações)"
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."

@@ -1,4 +1,5 @@
 #6.0.4 20??-??-??
+ - 2018-04-24 Updated translations, thanks to all translators.
 
 #6.0.3 2018-02-13
  - 2018-02-06 Updated translations, thanks to all translators.

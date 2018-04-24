@@ -22,10 +22,10 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Sardžaj obaveštenja';
     $Self->{Translation}->{'Ticket Types'} = 'Tipovi tiketa';
     $Self->{Translation}->{'Internal Description'} = 'Interni opis';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Customer conditions'} = 'Uslovi klijenta';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'Molimo izaberite atribut klijenta za dodavanje uslova.';
+    $Self->{Translation}->{'Public survey key'} = 'Javni ključ ankete';
+    $Self->{Translation}->{'Example survey'} = 'Primer ankete';
 
     # Template: AgentSurveyEdit
     $Self->{Translation}->{'Edit General Info'} = 'Uredi opšte informacije';
@@ -56,12 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Odgovor:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Podešavanja pregleda ankete';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
-        '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+        'Pretrage u atributima Number, Title, Introduction, Description, NotificationSender, NotificationSubject i NotificationBody, redefiniu druge atribute sa istim imenom.';
+    $Self->{Translation}->{'Survey Create Time'} = 'Vreme kreiranja ankete';
+    $Self->{Translation}->{'No restriction'} = 'Bez ograničenja';
+    $Self->{Translation}->{'Only surveys created between'} = 'Samo ankete kreirane između';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Maksimum prikazanih anketa po strani';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,16 +72,16 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Pregled statistike za';
     $Self->{Translation}->{'Requests Table'} = 'Tabela zahteva';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Izaberi sve zahteve';
     $Self->{Translation}->{'Send Time'} = 'Vreme slanja';
     $Self->{Translation}->{'Vote Time'} = 'Vreme glasanja';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Izaberi ovaj zahtev';
     $Self->{Translation}->{'See Details'} = 'Vidi detalje';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = 'Obriši statistike';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detalji statistike ankete';
     $Self->{Translation}->{'go back to stats overview'} = 'idi nazad na pregled statistike';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = 'Prethodni glas';
+    $Self->{Translation}->{'Next vote'} = 'Sledeći glas';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informacije o anketi';
@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Da/Ne';
     $Self->{Translation}->{'Radio (List)'} = 'Dugme (Lista)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Polje za potvrdu (Lista)';
-    $Self->{Translation}->{'Net Promoter Score'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = 'Ocena promotera';
     $Self->{Translation}->{'Question Type'} = 'Tip pitanja';
     $Self->{Translation}->{'Complete'} = 'Kompletno';
     $Self->{Translation}->{'Incomplete'} = 'Nekompletno';
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = 'Već ste odgovorili na anketu.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = 'Lista anketa';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
@@ -169,22 +169,22 @@ sub Data {
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
         'Određuje grupe koje imaju dozvolu da menjaju status ankete. Tabela je podrazumevano prazna i operateri iz svih grupa mogu da menjaju status ankete.';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
-        '';
+        'Definiše da li će zahtevi za ankete biti poslati samo pravim klijentima.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Definiše maksimalni broj anketa koji će biti poslat korisniku tokom 30 dana. (0 znači da nema maksimuma, svi zahtevi će biti poslati).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Definiše broj sati od zatvaranja tiketa za pokretanje slanja ankete. (0 znači da se šalje odmah po zatvaranju). Napomena: odlaganje slanja ankete obavlja „OTRS ” servis pre aktiviranja „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” postavke.';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
-        '';
+        'Definiše kolone za listu prilikom pravljenja uslova zahteva (0 => isključeno, 1 => uključeno).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Definiše podrazumevanu visinu okvira za prikaz teksta  za detaljni prikaz elemenata ankete.';
-    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = 'Definiše grupe (rw) koje mogu da brišu statistike anketa.';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'Određuje maksimalnu visinu „Richtext” prikaza teksta  za detaljni prikaz elemenata ankete.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Definiše prikazane kolone u pregledu ankete. Ova opcije nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
-        '';
+        'Određuje da li modul statistika može generisati liste anketa.';
     $Self->{Translation}->{'Edit survey general information.'} = 'Uredi opšte informacije o anketi.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Uredi anketna pitanja.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -208,7 +208,7 @@ sub Data {
         'Parametri stranica (na kojima su ankete vidljive) na malom prikazu pregleda anketa.';
     $Self->{Translation}->{'Public Survey.'} = 'Javna anketa.';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        '';
+        'Rezultati stariji od podešenog broja dana će biti obrisani. Napomena: rezultate briše OTRS sistemski servis, po aktivaciji podešavanja \'Task###SurveyRequestsDelete\'.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'U meniju prikazuje vezu za uređivanje ankete u detaljnom prikazu interfejsa operatera.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =
@@ -223,13 +223,13 @@ sub Data {
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Ograničenje pregleda ankete - „malo”';
     $Self->{Translation}->{'Survey Stats Module.'} = 'Modul za statistiku ankete.';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Modul za detaljni prikaz ankete.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Ograničenje ankete po strani za pregled - „malo”';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small".'} = 'Ograničenje ankete po strani za pregled malog formata.';
     $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = 'Anketa neće biti poslata na podešenu imejl adresu.';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
-        'Identifikator za anketu, npr Survey#, MySurvey#. Podrazumevano je Survey#.';
+        'Identifikator za anketu, npr. Survey#, MySurvey#. Podrazumevano je Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Modul događaja na tiketu za automatsko slanje imejla o istraživanju korisnicima ako je tiket zatvoren.';
-    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = 'Okida brisanje rezultata (uključujući podatke primljenih glasova i poslatih zahteva).';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Okidač odloženog slanja zahteva za anketu.';
     $Self->{Translation}->{'Zoom into statistics details.'} = 'Ulaz u detaljni prikaz statistike.';
 

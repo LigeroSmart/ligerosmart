@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Frontend-Modul-Registrierung für die öffentliche Umfrageübersicht.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Wenn dieser reguläre Ausdruck zutrifft, wird keine Umfrage an den Kunden gesendet.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Limit.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parameter für die Seiten der Umfrageübersicht.';
     $Self->{Translation}->{'Public Survey.'} = 'Öffentliche Umfrage.';

@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Igen/Nem';
     $Self->{Translation}->{'Radio (List)'} = 'Választógomb (lista)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Jelölőnégyzet (lista)';
-    $Self->{Translation}->{'Net Promoter Score'} = 'Nettó támogató pontszám';
+    $Self->{Translation}->{'Net Promoter Score'} = 'Valós ügyféltámogatottsági érték';
     $Self->{Translation}->{'Question Type'} = 'Kérdés típusa';
     $Self->{Translation}->{'Complete'} = 'Kész';
     $Self->{Translation}->{'Incomplete'} = 'Befejezetlen';
@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Előtétprogram modul regisztráció a nyilvános kérdőív objektumhoz a nyilvános kérdőív területen.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Ha ez a reguláris kifejezés illeszkedik, akkor az ügyfélkérdőív nem kerül kiküldésre.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Korlát.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Paraméterek a kis kérdőív áttekintő oldalaihoz (amelyekben a kérdőívek megjelennek).';
     $Self->{Translation}->{'Public Survey.'} = 'Nyilvános kérdőív.';

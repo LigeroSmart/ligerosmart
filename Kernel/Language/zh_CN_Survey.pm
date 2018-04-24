@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         '服务人员界面公共调查的前端模块注册。';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '如果匹配这个正则表达式，不会给客户发送调查。';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = '限制。';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '调查概览简洁模式显示调查的页面参数。';
     $Self->{Translation}->{'Public Survey.'} = '公共调查。';

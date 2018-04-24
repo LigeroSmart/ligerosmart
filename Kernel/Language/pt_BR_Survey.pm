@@ -22,9 +22,9 @@ sub Data {
     $Self->{Translation}->{'Notification Body'} = 'Corpo da Notificação';
     $Self->{Translation}->{'Ticket Types'} = 'Tipos de Chamado';
     $Self->{Translation}->{'Internal Description'} = 'Descrição Interna';
-    $Self->{Translation}->{'Customer conditions'} = '';
-    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
-    $Self->{Translation}->{'Public survey key'} = '';
+    $Self->{Translation}->{'Customer conditions'} = 'Condições do cliente';
+    $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = 'Por favor, escolha uma propriedade do cliente para adicionar uma condição.';
+    $Self->{Translation}->{'Public survey key'} = 'Chave de pesquisa pública';
     $Self->{Translation}->{'Example survey'} = 'Exemplo de pesquisa';
 
     # Template: AgentSurveyEdit
@@ -56,12 +56,12 @@ sub Data {
     $Self->{Translation}->{'Answer:'} = 'Resposta:';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Opções de visão geral da pesquisa';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
         '';
     $Self->{Translation}->{'Survey Create Time'} = '';
     $Self->{Translation}->{'No restriction'} = 'Sem restrições';
-    $Self->{Translation}->{'Only surveys created between'} = '';
+    $Self->{Translation}->{'Only surveys created between'} = 'Apenas pesquisas criadas entre';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Qtd. máx. de pesquisas exibidas por página';
 
     # Template: AgentSurveyOverviewSmall
@@ -72,16 +72,16 @@ sub Data {
     # Template: AgentSurveyStats
     $Self->{Translation}->{'Stats Overview of'} = 'Resumo de Estatísticas de';
     $Self->{Translation}->{'Requests Table'} = 'Tabela de Requisições';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Selecionar todos os pedidos';
     $Self->{Translation}->{'Send Time'} = 'Hora de Envio';
     $Self->{Translation}->{'Vote Time'} = 'Hora do Voto';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Selecionar este pedido';
     $Self->{Translation}->{'See Details'} = 'Ver detalhes';
-    $Self->{Translation}->{'Delete stats'} = '';
+    $Self->{Translation}->{'Delete stats'} = 'Excluir estatísticas';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detalhes de Estatísticas da Pesquisa';
     $Self->{Translation}->{'go back to stats overview'} = 'voltar ao resumo de estatísticas';
-    $Self->{Translation}->{'Previous vote'} = '';
-    $Self->{Translation}->{'Next vote'} = '';
+    $Self->{Translation}->{'Previous vote'} = 'Voto anterior';
+    $Self->{Translation}->{'Next vote'} = 'Próximo voto';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informação da Pesquisa';
@@ -144,7 +144,7 @@ sub Data {
     $Self->{Translation}->{'You have already answered the survey.'} = 'Você já respondeu a pesquisa.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
-    $Self->{Translation}->{'Survey List'} = '';
+    $Self->{Translation}->{'Survey List'} = 'Lista de enquetes';
 
     # JS File: Survey.Agent.SurveyEditQuestions
     $Self->{Translation}->{'Do you really want to delete this question? ALL associated data will be LOST!'} =
@@ -167,24 +167,24 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Define o módulo de visão geral para exibir a visão pequena de uma lista de pesquisa.';
     $Self->{Translation}->{'Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status.'} =
-        '';
+        'Define grupos que têm permissão para alterar o status da pesquisa.  A matriz está vazia por padrão e agentes de todos os grupos podem alterar o status da pesquisa.';
     $Self->{Translation}->{'Defines if survey requests will be only send to real customers.'} =
-        '';
+        'Define se as solicitações de pequisa serão enviadas apenas para clientes reais.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
         'Define a máxima quantidade de pesquisas que são enviadas para um cliente a cada 30 dias (0 significa que não há máximo; todas as requisições de pesquisa serão enviadas).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' setting.'} =
         'Define a quantidade de horas que um chamado deve estar fechado para envio de uma pesquisa (0 significa enviar imediatamente após fechamento). Nota: um envio tardio de pesquisa é feito pelo OTRS Daemon, sob ativação da configuração  \'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend\' .';
     $Self->{Translation}->{'Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active).'} =
-        '';
+        'Define as colunas da lista suspensa para criação de condições de envio (0=> inativo, 1=> ativo).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Define a altura padrão para Richtext nos elementos da SurveyZoom';
-    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = '';
+    $Self->{Translation}->{'Defines the groups (rw) which can delete survey stats.'} = 'Define os grupos (rw) que podem excluir as estatísticas da pesquisa.';
     $Self->{Translation}->{'Defines the maximum height for Richtext views for SurveyZoom elements.'} =
         'Define a altura máxima para visualizações do Richtext nos elementos do SurveyZoom.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
         'Define as colunas exibidas na visão geral de pesquisa. Esta opção não tem efeito sobre a posição das colunas.';
     $Self->{Translation}->{'Determines if the statistics module may generate survey lists.'} =
-        '';
+        'Determina se o módulo de estatísticas pode gerar listas de pesquisas.';
     $Self->{Translation}->{'Edit survey general information.'} = 'Editar informação geral da pesquisa.';
     $Self->{Translation}->{'Edit survey questions.'} = 'Editar as questões da pesquisa.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Registro de módulo de interface para o objeto PublicSurvey na área de pesquisa pública.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Se esta regex for encontrada, nenhuma pesquisa será enviado para o cliente';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Limite.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parâmetros para as páginas (nas quais as pesquisas são mostradas) da visão geral de pesquisa pequena.';
     $Self->{Translation}->{'Public Survey.'} = 'Pesquisa Pública';
@@ -229,7 +229,7 @@ sub Data {
         'O identificador de uma pesquisa, ex. Pesquisa#, MinhaPesquisa#. O padrão é Pesquisa#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
         'Módulo de evento de chamado para enviar requisições de pesquisa via e-mail automaticamente para clientes se um chamado for fechado.';
-    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = '';
+    $Self->{Translation}->{'Trigger delete results (including vote data and requests).'} = 'Acionar os resultados da exclusão ( incluindo dados de voto e solicitações)';
     $Self->{Translation}->{'Trigger sending delayed survey requests.'} = 'Disparar o envio de solicitações de pesquisa atrasadas.';
     $Self->{Translation}->{'Zoom into statistics details.'} = 'Zoom em detalhes de estatísticas.';
 

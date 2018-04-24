@@ -203,7 +203,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Регистрација "Frontend" модула за јавне анкетне објекте анкете у простору јавних анкета.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Ако се овај израз поклапа, анкета неће бити послата кориснику.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Ограничење.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметри страница (на којима су анкете видљиве) на малом приказу прегледа анкета.';
     $Self->{Translation}->{'Public Survey.'} = 'Јавна анкета.';
