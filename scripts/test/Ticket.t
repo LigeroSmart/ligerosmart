@@ -2556,6 +2556,12 @@ for my $Index ( 1 .. 3 ) {
         Name    => $ServiceName,
         ValidID => 1,
         Comment => 'Unit Test Comment',
+# ---
+# ITSMCore
+# ---
+        TypeID      => $ServiceTypeName2ID{Training},
+        Criticality => '3 normal',
+# ---
         UserID  => 1,
     ) || die "ServiceAdd() error.";
     push @Services,
@@ -2570,6 +2576,11 @@ for my $Index ( 1 .. 3 ) {
         Name    => $SLAName,
         ValidID => 1,
         Comment => 'Unit Test Comment',
+# ---
+# ITSMCore
+# ---
+        TypeID => $SLATypeName2ID{Other},
+# ---
         UserID  => 1,
     ) || die "SLAAdd() error.";
     push @SLAs,
