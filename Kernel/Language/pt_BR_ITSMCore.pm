@@ -18,7 +18,7 @@ sub Data {
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Criticalidade ↔ Impacto ↔ Prioridade';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
-        'Gerenciar a prioridade resultante da combinação Criticalidade ↔ Impacto.';
+        'Gerencie o resultado de prioridade da combinação de Criticalidade ↔ Impacto. ';
     $Self->{Translation}->{'Priority allocation'} = 'Atribuição de prioridade';
 
     # Template: AdminSLA
@@ -44,7 +44,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
     $Self->{Translation}->{'No SLAID is given!'} = '';
     $Self->{Translation}->{'SLAID %s not found in database!'} = '';
-    $Self->{Translation}->{'Calendar Default'} = '';
+    $Self->{Translation}->{'Calendar Default'} = 'Padrão de Calendário';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = '';
@@ -103,11 +103,11 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = 'Tipo de Estado de Incidente.';
     $Self->{Translation}->{'Includes'} = 'Inclui';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Gerenciar matriz de prioridade.';
-    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Módulo para mostrar o link voltar no menu SLA.';
-    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Módulo para mostrar o link voltar no menu serviço.';
+    $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Módulo para mostrar o item do menu Voltar no menu SLA.';
+    $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Módulo para mostrar o item do menu Voltar no menu de serviço.';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Módulo para mostrar o link associar no menu serviço.';
-    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Módulo para mostrar o link imprimir no menu SLA.';
-    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Módulo para mostrar o link imprimir no menu serviço.';
+    $Self->{Translation}->{'Module to show the Print menu item in SLA menu.'} = 'Módulo para mostrar o item de menu de Imprimir no menu SLA.';
+    $Self->{Translation}->{'Module to show the Print menu item in service menu.'} = 'Módulo para mostrar o item de menu Imprimir no menu de serviço.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parâmetros para os estados de incidente na visão de preferências.';
     $Self->{Translation}->{'Part of'} = 'Parte de';
     $Self->{Translation}->{'Relevant to'} = 'Relevante a';
