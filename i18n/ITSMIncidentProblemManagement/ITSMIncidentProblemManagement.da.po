@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 19:52+0000\n"
-"PO-Revision-Date: 2018-02-06 19:52+0000\n"
+"POT-Creation-Date: 2018-04-24 14:31+0000\n"
+"PO-Revision-Date: 2018-04-24 14:32+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Danish (http://www.transifex.com/otrs/OTRS/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -247,6 +247,12 @@ msgstr ""
 msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"If a note is added by an agent, sets the state of a ticket in the additional"
+" ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig

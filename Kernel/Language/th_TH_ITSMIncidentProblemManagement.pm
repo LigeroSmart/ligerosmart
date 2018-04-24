@@ -98,6 +98,8 @@ sub Data {
         'เปิดใช้งานสถานภาพของโมดูลเพื่อสร้างสถิติเกี่ยวกับค่าเฉลี่ยการแก้ปัญหาขั้นแรกของตั๋ว ITSM ';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'เปิดใช้งานสถานภาพของโมดูลเพื่อสร้างสถิติเกี่ยวกับค่าเฉลี่ยของการแก้ปัญหาตั๋ว ITSM ';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        'เซตสถานภาพของตั๋วในหน้าจอฟิลด์เพิ่มเติมของ ITSMในอินเตอร์เฟซของเอเย่นต์หากเอเย่นต์ได้เพิ่มโน้ต';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'เซตสถานภาพของตั๋วในหน้าจอการตัดสินใจนอินเตอร์เฟซของเอเย่นต์หากเอเย่นต์ได้เพิ่มโน้ต';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =

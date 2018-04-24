@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>, 2018
 # Flávio Veras <flaviove@gmail.com>, 2017
 # Gilberto José Souza Coutinho <gilberto.jsc@gmail.com>, 2017
 # Glauber Caires <glaubercaires@gmail.com>, 2016
@@ -7,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-12-31 22:00+0000\n"
+"POT-Creation-Date: 2018-04-24 14:31+0000\n"
+"PO-Revision-Date: 2018-04-24 14:32+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -37,12 +38,12 @@ msgstr "Associar chamado"
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change Decision of %s%s%s"
-msgstr ""
+msgstr "Mudar decisão de %s%s%s"
 
 #. Perl Module:
 #. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change ITSM fields of %s%s%s"
-msgstr ""
+msgstr "Alterar campos ITSM de %s%s%s"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
@@ -193,18 +194,6 @@ msgstr "Define a prioridade padrão de chamado na tela de decisão da interface 
 
 #. SysConfig
 msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Define o tipo padrão de uma nota na tela de campos adicionais ITSM da interface de atendente."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Define o tipo padrão de uma nota na tela de decisão da interface de atendente."
-
-#. SysConfig
-msgid ""
 "Defines the history comment for the additional ITSM field screen action, "
 "which gets used for ticket history."
 msgstr "Define o comentário de histórico para a ação de campos adicionais ITSM, que é usado no histórico do chamado."
@@ -247,7 +236,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the decision screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de decisão da interface do agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
@@ -280,13 +269,13 @@ msgstr "Se uma nota é adicionada por um atendente, define o estado de um chamad
 #. SysConfig
 msgid ""
 "Modifies the display order of the dynamic field ITSMImpact and other things."
-msgstr ""
+msgstr "Modifica a ordem de exibição do campo dinâmico ITSMImpact e outras coisas."
 
 #. SysConfig
 msgid ""
 "Module to dynamically show the service incident state and to calculate the "
 "priority."
-msgstr ""
+msgstr "Módulo para mostrar dinamicamente o estado do incidente de serviço e para calcular a prioridade."
 
 #. SysConfig
 msgid ""
@@ -301,7 +290,7 @@ msgstr "Permissões necessárias para usar a tela de decisão na interface de at
 
 #. SysConfig
 msgid "Service Incident State and Priority Calculation"
-msgstr ""
+msgstr "Estado de Incidente de Serviço e Cálculo de prioridade."
 
 #. SysConfig
 msgid ""
@@ -419,10 +408,6 @@ msgstr "Mostra os campos de título na tela de campos adicionais ITSM da interfa
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Mostra os campos de título na tela de decisão da interface de atendente."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Especifica os diferentes tipos de notas que serão utilizados no sistema."
 
 #. SysConfig
 msgid "Ticket decision."

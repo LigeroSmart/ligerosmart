@@ -98,6 +98,8 @@ sub Data {
         'Activar módulo estatístico para xerar estatísticas sobre a media da taxa de resolución en primeiro nivel de tickets ITSM.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Activar módulo estatístico para xerar estatísticas sobre a media da resolución de tickets ITSM.';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        'Se unha nota é engadida por un axente, establece o estado dun ticket na pantalla campo ITSM adicional da interface de axente.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Se unha nota é engadida por un axente, establece o estado dun ticket na pantalla de decisión da interface de axente.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =

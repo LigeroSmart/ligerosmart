@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMIncidentProblemManagement\n"
-"POT-Creation-Date: 2018-03-06 15:25+0000\n"
+"POT-Creation-Date: 2018-04-24 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,6 +196,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Enables the stats module to generate statistics about the average of ITSM ticket solution."
+msgstr ""
+
+#. SysConfig
+msgid "If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface."
 msgstr ""
 
 #. SysConfig

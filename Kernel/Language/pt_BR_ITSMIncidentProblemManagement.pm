@@ -24,8 +24,8 @@ sub Data {
 
     # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Link ticket'} = 'Associar chamado';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
-    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = 'Mudar decisão de %s%s%s';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = 'Alterar campos ITSM de %s%s%s';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Revisão Requisitada';
@@ -91,24 +91,26 @@ sub Data {
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados na tela de decisão da interface do agente.';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de chamados ITSM no primeiro nível de solução.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de chamados ITSM no primeiro nível de solução.';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        'Se uma nota é adicionada por um atendente, define o estado de um chamado na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Se uma nota é adicionada por um atendente, define o estado de um chamado na tela de decisão da interface dd atendente.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
-        '';
+        'Modifica a ordem de exibição do campo dinâmico ITSMImpact e outras coisas.';
     $Self->{Translation}->{'Module to dynamically show the service incident state and to calculate the priority.'} =
-        '';
+        'Módulo para mostrar dinamicamente o estado do incidente de serviço e para calcular a prioridade.';
     $Self->{Translation}->{'Required permissions to use the additional ITSM field screen in the agent interface.'} =
         'Permissões necessárias para usar a tela de campos adicionais ITSM na interface de atendente.';
     $Self->{Translation}->{'Required permissions to use the decision screen in the agent interface.'} =
         'Permissões necessárias para usar a tela de decisão na interface de atendente.';
-    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = '';
+    $Self->{Translation}->{'Service Incident State and Priority Calculation'} = 'Estado de Incidente de Serviço e Cálculo de prioridade.';
     $Self->{Translation}->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Define o serviço adicional na tela de campos adicionais ITSM de interface do atendente (Chamado::Serviço precisa estar ativado).';
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =

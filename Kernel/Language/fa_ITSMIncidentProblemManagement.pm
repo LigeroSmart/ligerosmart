@@ -98,6 +98,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         '';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =

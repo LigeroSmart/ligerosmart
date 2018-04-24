@@ -98,6 +98,8 @@ sub Data {
         '使统计模块能够生成ITSM工单一线平均解决率的统计数据。';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         '使统计模块能够生成ITSM工单平均解决率的统计数据。';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        '在服务人员界面额外的ITSM字段窗口，如果服务人员添加了一个备注，设置工单的状态。';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         '在服务人员界面工单决定窗口，如果服务人员添加了一个备注，设置工单的状态。';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =

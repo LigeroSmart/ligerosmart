@@ -98,6 +98,8 @@ sub Data {
         'Включает модуль отчетов для формирования отчетов о среднем ITSM ticket first level solution rate.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Включает модуль отчетов для формирования отчетов о среднем ITSM ticket solution.';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        'Возможность установить новое состояние завки при добавлении заметки на экране Дополнительные ITSM поля в интерфейсе агента.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Возможность установить новое состояние завки при добавлении заметки на экране Решение в интерфейсе агента.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =

@@ -98,6 +98,8 @@ sub Data {
         'aktifkan modul stats untuk menghasilkan statistik tentang rata-rata tingkat penyelesaian level pertama tiket ITSM.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'aktifkan modul stats untuk menghasilkan statistik tentang rata-rata penyelesaian tiket ITSM';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        'Jika sebuah catatan yang di tambahkan oleh agen, tentukan status tiket didalam layar bidang ITSM tambahan pada antarmuka agen.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Jika sebuah catatan ditambahkan oleh agen, tentukan status tiket didalam layar keputusan pada antarmuka agen.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =

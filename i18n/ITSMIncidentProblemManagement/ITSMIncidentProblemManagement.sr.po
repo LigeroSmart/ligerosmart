@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 13:04+0000\n"
-"PO-Revision-Date: 2017-12-13 12:30+0000\n"
+"POT-Creation-Date: 2018-04-24 14:31+0000\n"
+"PO-Revision-Date: 2018-04-24 14:32+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -189,18 +189,6 @@ msgid ""
 "Defines the default ticket priority in the decision screen of the agent "
 "interface."
 msgstr "Одређује подразумевани приоритет тикета на екрану одлуке у интерфејсу оператера."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the additional ITSM field screen of "
-"the agent interface."
-msgstr "Одређује подразумевани тип напомене, на екрану додатних ITSM поља у интерфејсу оператера."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the decision screen of the agent "
-"interface."
-msgstr "Одређује подразумевани тип напомене на екрану одлуке у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -418,10 +406,6 @@ msgstr "Приказује поља наслова на екрану додат�
 #. SysConfig
 msgid "Shows the title fields in the decision screen of the agent interface."
 msgstr "Приказује поља наслова на екрану одлуке у интерфејсу оператера."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Одређује различите типове напомена који ће се користити у систему."
 
 #. SysConfig
 msgid "Ticket decision."

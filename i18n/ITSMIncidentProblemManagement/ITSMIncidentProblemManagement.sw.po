@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 19:52+0000\n"
-"PO-Revision-Date: 2018-02-06 19:52+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-04-24 14:31+0000\n"
+"PO-Revision-Date: 2018-04-24 14:32+0000\n"
+"Last-Translator: Macbethana Wilfred <mwi@nrd.no>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -249,6 +249,12 @@ msgid ""
 "Enables the stats module to generate statistics about the average of ITSM "
 "ticket solution."
 msgstr "Wezesha moduli za takwimu kutengeneza takwimu kuhusu wastani wa ufumbuzi wa tiketi ya ITSM"
+
+#. SysConfig
+msgid ""
+"If a note is added by an agent, sets the state of a ticket in the additional"
+" ITSM field screen of the agent interface."
+msgstr "Kama kidokezo kimeongezwa na wakala, inaweka hali ya tiketi katika skrini ya uga wa ITSM ulioongezwa wa kiolesura cha wakala."
 
 #. SysConfig
 msgid ""

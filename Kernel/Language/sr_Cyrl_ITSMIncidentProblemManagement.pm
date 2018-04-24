@@ -98,6 +98,8 @@ sub Data {
         'Активира статистички модул за генерисање статистике о просеку решавања ITSM тикета на првом нивоу.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
         'Активира статистички модул за генерисање статистике о просеку решавања ITSM тикета.';
+    $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} =
+        'Ако је оператер додао напомену, подешава статус тикета на екрану додатних ITSM поља у интерфејсу оператера.';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} =
         'Ако је оператер додао напомену, подешава статус тикета на екрану одлуке у интерфејсу оператера.';
     $Self->{Translation}->{'Modifies the display order of the dynamic field ITSMImpact and other things.'} =
