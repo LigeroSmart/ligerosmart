@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/Output/HTML/TicketOverview/Medium.pm
+# $origin: otrs - 7697dd68db62a03bba33ac138ce0bcd20c71e5ef - Kernel/Output/HTML/TicketOverview/Medium.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -818,7 +818,7 @@ sub _Show {
             Space              => ' ',
         );
         if ( 60 * 60 * 1 > $Article{FirstResponseTime} ) {
-            $Article{FirstResponseTimeClass} = 'Warning'
+            $Article{FirstResponseTimeClass} = 'Warning';
         }
         $LayoutObject->Block(
             Name => 'FirstResponseTime',
@@ -842,7 +842,7 @@ sub _Show {
             Space              => ' ',
         );
         if ( 60 * 60 * 1 > $Article{UpdateTime} ) {
-            $Article{UpdateTimeClass} = 'Warning'
+            $Article{UpdateTimeClass} = 'Warning';
         }
         $LayoutObject->Block(
             Name => 'UpdateTime',

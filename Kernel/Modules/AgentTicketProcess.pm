@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 4fe218beccdb926a29dd7bed9de48211430d69d0 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 53a5e345767ab9d1ac41391caf4a757fed8ea408 - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -96,7 +96,7 @@ sub Run {
         $Self->{LinkTicketData} = \%TicketData;
 
         # set LinkTicketID param for showing on main form
-        $Param{LinkTicketID} = $Self->{LinkTicketID}
+        $Param{LinkTicketID} = $Self->{LinkTicketID};
     }
 
     # get the article information on link actions
@@ -279,7 +279,7 @@ sub Run {
     # fetch also FadeAway processes to continue working with existing tickets, but not to start new
     #    ones
     if ( !$Self->{IsMainWindow} && $Self->{Subaction} ) {
-        push @ProcessStates, 'FadeAway'
+        push @ProcessStates, 'FadeAway';
     }
 
     # create process object
@@ -5197,7 +5197,7 @@ sub _StoreActivityDialog {
                 my $HistoryComment = '%%Note';
                 if ( $CommunicationChannel eq 'Phone' ) {
                     $HistoryType    = 'PhoneCallAgent';
-                    $HistoryComment = '%%'
+                    $HistoryComment = '%%';
                 }
 
                 my $From = "\"$Self->{UserFullname}\" <$Self->{UserEmail}>";
