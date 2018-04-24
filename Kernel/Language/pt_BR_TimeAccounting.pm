@@ -111,7 +111,7 @@ sub Data {
         'Já existe um projeto com este nome. Por favor, escolha um diferente.';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Editar Configurações da Contabilidade de Tempo.';
     $Self->{Translation}->{'Add task'} = 'Adicionar tarefa';
-    $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
+    $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Filtrar por projetos, tarefas ou usuários';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Períodos de tempo não podem ser excluídos.';
     $Self->{Translation}->{'Project List'} = 'Lista de projetos';
     $Self->{Translation}->{'Task List'} = 'Lista de tarefas';
@@ -120,12 +120,12 @@ sub Data {
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         'Já existe uma tarefa com esse nome. Por favor, escolha um nome diferente.';
     $Self->{Translation}->{'User List'} = 'Lista de usuários';
-    $Self->{Translation}->{'User Settings'} = '';
-    $Self->{Translation}->{'User is allowed to see overtimes'} = '';
+    $Self->{Translation}->{'User Settings'} = 'Configurações de usuário';
+    $Self->{Translation}->{'User is allowed to see overtimes'} = 'O usuário tem permissão para ver horas extras';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar horas extras';
-    $Self->{Translation}->{'User is allowed to create projects'} = '';
+    $Self->{Translation}->{'User is allowed to create projects'} = 'O usuário tem permissão para criar projetos';
     $Self->{Translation}->{'Allow project creation'} = 'Liberar criação de projetos';
-    $Self->{Translation}->{'Time Spans'} = '';
+    $Self->{Translation}->{'Time Spans'} = 'Intervalos de tempo';
     $Self->{Translation}->{'Period Begin'} = 'Período Inicial';
     $Self->{Translation}->{'Period End'} = 'Período Final';
     $Self->{Translation}->{'Days of Vacation'} = 'Dias de Férias';
@@ -162,9 +162,9 @@ sub Data {
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Entrada de várias datas inserida com sucesso!';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Data inserida é inválida! Data foi alterada para hoje.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
-        '';
+        'Nenhum período de tempo configurado ou a data especificada está fora dos períodos de tempo definidos.';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
-        '';
+        'Entre em contato com o administrador contábil do tempo para atualizar seus períodos de tempo!';
     $Self->{Translation}->{'Last Selected Projects'} = 'Últimos projetos selecionados';
     $Self->{Translation}->{'All Projects'} = 'Todos os projetos';
 
@@ -185,7 +185,7 @@ sub Data {
     $Self->{Translation}->{'Setting'} = 'Configuração';
     $Self->{Translation}->{'User updated!'} = 'Usuário atualizado!';
     $Self->{Translation}->{'User added!'} = 'Usuário adicionado!';
-    $Self->{Translation}->{'Add a user to time accounting...'} = '';
+    $Self->{Translation}->{'Add a user to time accounting...'} = 'Adicionar um usuário para a contabilidade do tempo....';
     $Self->{Translation}->{'New User'} = 'Novo usuário';
     $Self->{Translation}->{'Period Status'} = 'Estado do período';
 
