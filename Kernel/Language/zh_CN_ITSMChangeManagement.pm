@@ -568,6 +568,11 @@ sub Data {
     $Self->{Translation}->{'ends with'} = '以...结束';
     $Self->{Translation}->{'set'} = '设置';
 
+    # JS File: ITSM.Agent.ChangeManagement.Condition
+    $Self->{Translation}->{'Do you really want to delete this expression?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this action?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this condition?'} = '';
+
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = '确定';
 
@@ -1075,6 +1080,9 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Do you really want to delete this action?',
+    'Do you really want to delete this condition?',
+    'Do you really want to delete this expression?',
     'Do you really want to delete this notification language?',
     'Do you really want to delete this notification?',
     'No',

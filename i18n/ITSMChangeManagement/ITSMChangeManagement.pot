@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMChangeManagement\n"
-"POT-Creation-Date: 2018-03-06 15:19+0000\n"
+"POT-Creation-Date: 2018-04-24 14:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1532,6 +1532,18 @@ msgstr ""
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "set"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this expression?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this action?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this condition?"
 msgstr ""
 
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
