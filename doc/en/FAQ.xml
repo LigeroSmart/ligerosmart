@@ -422,11 +422,6 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <para>DynamicField object registration.</para>
         </section>
         <section>
-            <title>FAQ::Agent::RelatedArticles::Enabled.</title>
-            <para>Navigation: Core::FAQ::RelatedArticles.</para>
-            <para>Enable the related article feature for the customer frontend.</para>
-        </section>
-        <section>
             <title>FAQ::Agent::StateTypes.</title>
             <para>Navigation: Frontend::Agent.</para>
             <para>List of state types which can be used in the agent interface.</para>
@@ -655,26 +650,6 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <title>FAQ::Frontend::AgentFAQPrint###DynamicField.</title>
             <para>Navigation: Frontend::Agent::View::FAQPrint.</para>
             <para>Dynamic fields shown in the FAQ print screen of the agent interface.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::AgentFAQRelatedArticles###DefaultLanguages.</title>
-            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
-            <para>The default languages for the related FAQ articles.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::AgentFAQRelatedArticles###QueuesEnabled.</title>
-            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
-            <para>List of queue names for which the related article feature is enabled.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::AgentFAQRelatedArticles###ShowLimit.</title>
-            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
-            <para>Output limit for the related FAQ articles.</para>
-        </section>
-        <section>
-            <title>FAQ::Frontend::AgentFAQRelatedArticles###VoteStarsVisible.</title>
-            <para>Navigation: Frontend::Agent::FAQRelatedArticles.</para>
-            <para>Show the stars for the articles with a rating equal or greater like the defined value (set value '0' to deactivate the output).</para>
         </section>
         <section>
             <title>FAQ::Frontend::AgentFAQSearch###Defaults###ApprovedSearch.</title>
@@ -1591,19 +1566,17 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     <section>
         <title>Related article function</title>
         <para>
-            The OTRS FAQ package has an related article feature for the agent and customer ticket
+            The OTRS FAQ package has an related article feature for the customer ticket
             creation. The feature is activated by default, but the functionality can be deactivated
-            by with the following settings: 'FAQ::Agent::RelatedArticles::Enabled' and/or 'FAQ::Customer::RelatedArticles::Enabled'.
+            by with the following setting: 'FAQ::Customer::RelatedArticles::Enabled'.
         </para>
         <para>
             The related article feature can be enabled for the defined queues under
-            'FAQ::Frontend::AgentFAQRelatedArticles###QueuesEnabled' and/or
             'FAQ::Frontend::CustomerFAQRelatedArticles###QueuesEnabled'. If the settings are empty the
             feature is enabled for all queues.
         </para>
         <para>
-            The output for the rating in the related article list can be configured with the settings:
-            'FAQ::Frontend::AgentFAQRelatedArticles###VoteStarsVisible' and/or
+            The output for the rating in the related article list can be configured with the setting
             'FAQ::Frontend::CustomerFAQRelatedArticles###VoteStarsVisible'. Only the rating greater then
             the configured value will be visible in the list.
         </para>
