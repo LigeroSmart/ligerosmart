@@ -1,4 +1,5 @@
 #6.0.7 2018-??-??
+ - 2018-05-18 Fixed bug#[13863](https://bugs.otrs.org/show_bug.cgi?id=13863) - FAQ actions may have bad influence on a systems performance.
  - 2018-05-07 Fixed bug#[13803](https://bugs.otrs.org/show_bug.cgi?id=13803) - Misleading documentation for FAQRelatedArticles in AgentFrontend.
 
 #6.0.6 2018-05-04
