@@ -131,6 +131,8 @@ ITSM.Agent.ChangeManagement.NotificationEvent = (function (TargetNS) {
 
         TargetNS.LanguageSelectionRebuild(Type);
 
+        Core.UI.InitWidgetActionToggle();
+
         return false;
     };
 
