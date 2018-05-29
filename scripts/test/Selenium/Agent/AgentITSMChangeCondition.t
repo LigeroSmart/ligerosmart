@@ -241,7 +241,7 @@ $Selenium->RunTest(
         );
 
         $Selenium->execute_script(
-            "\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"]').trigger('click');"
+            "\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"]').click();"
         );
 
         $Selenium->WaitFor( WindowCount => 2 );
@@ -265,12 +265,12 @@ JAVASCRIPT
         $Selenium->execute_script($CheckConfirmJS);
 
         $Selenium->execute_script(
-            "\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"] i').trigger('click');"
+            "\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"]').click();"
         );
 
         $Selenium->WaitFor(
             JavaScript =>
-                "return typeof(\$) === 'function' && !\$('a[href*=\"Action=AgentITSMChangeCondition;ChangeID=$ChangeID\"]').length"
+                "return typeof(\$) === 'function' && \$('button[value=Add]').length"
         );
 
         # Close popup.
