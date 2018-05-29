@@ -53,8 +53,6 @@ $Selenium->RunTest(
             UserID     => 1,
         );
 
-        my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
-
         # Add FAQ articles.
         my @FAQArticles;
         for my $Item (qw(subject body)) {
@@ -311,7 +309,9 @@ $Selenium->RunTest(
             "FAQ category ID $SubCategoryID is deleted",
         );
 
-        for my $Cache (qw(FAQ FAQKeywordArticleList)) {
+        # Make sure the cache is correct.
+        my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+        for my $Cache (qw(FAQ FAQKeywordArticleList FAQSearch)) {
             $CacheObject->CleanUp(
                 Type => $Cache,
             );
