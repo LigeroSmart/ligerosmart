@@ -97,10 +97,7 @@ $Selenium->RunTest(
         );
 
         # Make sure the cache is correct.
-        my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
-        for my $Cache (qw(FAQ FAQSearch)) {
-            $CacheObject->CleanUp( Type => $Cache );
-        }
+        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );
 
