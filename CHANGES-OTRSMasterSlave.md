@@ -1,4 +1,5 @@
 #6.0.6 20??-??-??
+ - 2018-06-05 Updated translations, thanks to all translators.
  - 2018-06-04 Updated framework files to OTRS 6.0.8.
 
 #6.0.5 2018-04-05

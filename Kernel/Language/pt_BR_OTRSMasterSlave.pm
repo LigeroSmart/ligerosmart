@@ -33,7 +33,7 @@ sub Data {
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master'} = 'Mestre';
-    $Self->{Translation}->{'Slave of %s%s%s'} = '';
+    $Self->{Translation}->{'Slave of %s%s%s'} = 'Escravo de %s%s%s';
     $Self->{Translation}->{'Master Ticket'} = 'Chamado Mestre';
 
     # SysConfig
