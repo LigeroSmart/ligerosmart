@@ -418,7 +418,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Управление языками';
     $Self->{Translation}->{'Language Management.'} = 'Управление языками.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Лимит  для поиска для построения списка контекстных статей FAQ.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Ограничение.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Привязать другой объект к этому элементу FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Список очередей для которых возможность поиска контекстных статей FAQ включена.';
@@ -428,7 +428,7 @@ sub Data {
         'Список типов состояний, которые могут использоваться в интерфейсе клиента.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         'Список типов состояний, которые могут использоваться в публичном/общедоступном интерфейсе.';
-    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = 'Loader module registration для публичного интерфейса.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         'Максимальное количество статей, выводимое в FAQ Explorer в интерфейсе агента.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =
@@ -520,7 +520,7 @@ sub Data {
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Показывать последние изменения в указаных интерфейсах.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Показывать новые пункты в указанных интерфейсах.';
     $Self->{Translation}->{'Show the stars for the articles with a rating equal or greater like the defined value (set value \'0\' to deactivate the output).'} =
-        '';
+        'Показывать "звезды" для статей с рейтингом равным или больше заданного здесь значения (установите в "0" для отключения показа). ';
     $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'Показывать Top 10 в указанных интерфейсах.';
     $Self->{Translation}->{'Show voting in defined interfaces.'} = 'Показывать оценку в указанных интерфейсах.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} =

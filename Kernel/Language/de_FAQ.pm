@@ -141,7 +141,7 @@ sub Data {
     # Template: CustomerFAQRelatedArticles
     $Self->{Translation}->{'This might be helpful'} = 'Diese Artikel könnten hilfreich sein';
     $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'Leider wurden keine passenden Artikel gefunden.';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Nach dem Eintippen eines Betreffs oder Textes werden hier möglicherweise passende Artikel angezeigt.';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Nach dem Eintippen eines Betreffs oder Textes werden hier passende Artikel angezeigt.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Volltext-Suche in FAQ-Artikeln (z. B. "John*n" or "Will*")';

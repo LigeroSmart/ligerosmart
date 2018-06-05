@@ -418,7 +418,7 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = '言語管理';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'リミット';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'このFAQ記事に他オブジェクトを関連付ける';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';

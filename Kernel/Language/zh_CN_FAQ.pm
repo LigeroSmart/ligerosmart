@@ -428,7 +428,7 @@ sub Data {
         '在客户界面中能够使用的状态类型列表。';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         '在公共界面中能够使用的状态类型列表。';
-    $Self->{Translation}->{'Loader module registration for the public interface.'} = '';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = '公共界面的加载模块注册。';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         '在服务人员界面中，FAQ浏览器能够显示FAQ文章的最大数量。';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =
