@@ -1984,7 +1984,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::Frontend::MenuModule###040-InvolvedPersons" Required="0" Valid="1">
-        <Description Translatable="1">Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.</Description>
         <Navigation>Frontend::Agent::ITSMChange::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -2192,7 +2192,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::MenuModule###040-WorkOrderAgent" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.</Description>
         <Navigation>Frontend::Agent::ITSMWorkOrder::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -2206,7 +2206,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::MenuModule###050-Report" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.</Description>
         <Navigation>Frontend::Agent::ITSMWorkOrder::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -2220,7 +2220,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMWorkOrder::Frontend::MenuModule###060-Link" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.</Description>
         <Navigation>Frontend::Agent::ITSMWorkOrder::MenuModule</Navigation>
         <Value>
             <Hash>
@@ -5277,7 +5277,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::NumberGenerator::MinCounterSize" Required="1" Valid="1">
-        <Description Translatable="1">Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.</Description>
+        <Description Translatable="1">Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.</Description>
         <Navigation>Core::ITSMChange</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="^[0-9]$">5</Item>
@@ -5291,7 +5291,7 @@
         </Value>
     </Setting>
     <Setting Name="ITSMChange::NumberGenerator::Date::UseFormattedCounter" Required="1" Valid="1">
-        <Description Translatable="1">Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).</Description>
+        <Description Translatable="1">Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).</Description>
         <Navigation>Core::ITSMChange</Navigation>
         <Value>
             <Item ValueType="Checkbox">1</Item>
@@ -5425,7 +5425,7 @@
         </Value>
     </Setting>
     <Setting Name="Events###ITSMChange" Required="0" Valid="1">
-        <Description Translatable="1">List of all ticket events to be displayed in the GUI.</Description>
+        <Description Translatable="1">List of all change events to be displayed in the GUI.</Description>
         <Navigation>Frontend::Admin</Navigation>
         <Value>
              <Array>
@@ -5445,7 +5445,7 @@
         </Value>
     </Setting>
     <Setting Name="Events###ITSMWorkOrder" Required="0" Valid="1">
-        <Description Translatable="1">List of all ticket events to be displayed in the GUI.</Description>
+        <Description Translatable="1">List of all workorder events to be displayed in the GUI.</Description>
         <Navigation>Frontend::Admin</Navigation>
         <Value>
             <Array>
