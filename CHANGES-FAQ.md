@@ -1,4 +1,7 @@
-#6.0.7 2018-??-??
+#6.0.8 2018-??-??
+
+#6.0.7 2018-06-12
+ - 2018-06-05 Code cleanup.
  - 2018-05-07 Fixed bug#[13803](https://bugs.otrs.org/show_bug.cgi?id=13803) - Misleading documentation for FAQRelatedArticles in AgentFrontend.
 
 #6.0.6 2018-05-04
