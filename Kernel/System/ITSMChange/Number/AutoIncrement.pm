@@ -50,7 +50,7 @@ sub ChangeNumberBuild {
         || $ConfigObject->Get('ITSMChange::NumberGenerator::MinCounterSize')
         || 5;
 
-    # Pad ticket number with leading '0' to length $MinSize (config option).
+    # Pad change number with leading '0' to length $MinSize (config option).
     $Counter = sprintf "%.*u", $MinSize, $Counter;
 
     my $ChangeNumber = $SystemID . $Counter;
