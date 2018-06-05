@@ -154,7 +154,7 @@
 #4.0.0.rc1 - 2014-11-18
  - 2014-11-13 Sync Translation files.
  - 2014-11-11 Code cleanup.
- - 2014-11-06 Fixed bug#[10851](http://bugs.otrs.org/show_bug.cgi?id=10851) - `You have already voted' by addition of link after vote.
+ - 2014-11-06 Fixed bug#[10851](http://bugs.otrs.org/show_bug.cgi?id=10851) - 'You have already voted' by addition of link after vote.
  - 2014-11-06 Fixed bug#[10848](http://bugs.otrs.org/show_bug.cgi?id=10848) - $Env{"..."} on OTRS 4.0.
  - 2014-10-30 Fixed bug#[10661](http://bugs.otrs.org/show_bug.cgi?id=10661) - in public.pl no 'home' button or 'back' button.
  - 2014-10-29 Fixed bug#[10605](http://bugs.otrs.org/show_bug.cgi?id=10605) - subject shows only 30 characters.
