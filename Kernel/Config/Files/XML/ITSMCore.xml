@@ -75,7 +75,12 @@
         <Navigation>Core::ITSMCore</Navigation>
         <Value>
             <Hash>
-                <Item Key="DependsOn" Translatable="1">Both</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="Both" Translatable="1">Both</Item>
+                    <Item ValueType="Option" Value="Source" Translatable="1">Source</Item>
+                    <Item ValueType="Option" Value="Target" Translatable="1">Target</Item>
+                </DefaultItem>
+                <Item Key="DependsOn" SelectedID="Both"></Item>
             </Hash>
         </Value>
     </Setting>
