@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>, 2018
 # Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 14:08+0000\n"
-"PO-Revision-Date: 2017-11-15 14:08+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-04-24 14:13+0000\n"
+"PO-Revision-Date: 2018-05-08 21:57+0000\n"
+"Last-Translator: Ricardo von Staa <ricardo.von.staa@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,19 +25,19 @@ msgstr "Gerenciamento do Catálogo Geral"
 
 #. Template: AdminGeneralCatalog
 msgid "Items in Class"
-msgstr ""
+msgstr "Itens na Classe"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Item"
-msgstr ""
+msgstr "Alterar Item"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Class"
-msgstr ""
+msgstr "Adicionar Classe"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Item"
-msgstr ""
+msgstr "Adicionar Item"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -52,15 +53,39 @@ msgstr "Classe do Catálogo"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
+msgstr "Alterar Item do Catálogo"
+
+#. SysConfig
+msgid "Admin modules overview."
 msgstr ""
 
 #. SysConfig
+msgid "Agent Statistics."
+msgstr "Estatísticas de Agente."
+
+#. SysConfig
 msgid "Comment 2"
-msgstr ""
+msgstr "Comentário 2"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Criar e gerenciar o Catálogo Geral."
+
+#. SysConfig
+msgid "Custom RSS feed."
+msgstr ""
+
+#. SysConfig
+msgid "Customer Information Center search."
+msgstr ""
+
+#. SysConfig
+msgid "Customer User Information Center search."
+msgstr ""
+
+#. SysConfig
+msgid "Dashboard overview."
+msgstr ""
 
 #. SysConfig
 msgid "Define the general catalog comment 2."
@@ -71,7 +96,20 @@ msgid "Define the group with permissions."
 msgstr "Definir o grupo de permissionamento."
 
 #. SysConfig
+msgid ""
+"Defines if the communication between this system and OTRS Group servers that"
+" provide cloud services is possible. If set to 'Disable cloud services', "
+"some functionality will be lost such as system registration, support data "
+"sending, upgrading to and use of OTRS Business Solution™, OTRS Verify™, OTRS"
+" News and product News dashboard widgets, among others."
+msgstr ""
+
+#. SysConfig
 msgid "Defines the URL JS Color Picker path."
+msgstr ""
+
+#. SysConfig
+msgid "Disable cloud services"
 msgstr ""
 
 #. SysConfig
@@ -81,8 +119,28 @@ msgid ""
 msgstr "Módulo de registo da interface para a configuração AdminGeneralCatalog na área administrativa."
 
 #. SysConfig
+msgid "Frontend module registration for the public interface."
+msgstr "Frontend de registo do módulo para a interface pública."
+
+#. SysConfig
 msgid "General Catalog"
 msgstr "Catálogo Geral"
+
+#. SysConfig
+msgid "Logged in users."
+msgstr ""
+
+#. SysConfig
+msgid "News about OTRS."
+msgstr ""
+
+#. SysConfig
+msgid "Out of Office users."
+msgstr ""
+
+#. SysConfig
+msgid "Overview of all Tickets per assigned Queue."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -94,3 +152,34 @@ msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
 msgstr "Parâmetros do grupos de permissão de exemplo dos atributos do catálogo geral."
+
+#. SysConfig
+msgid ""
+"Sends the notifications which are configured in the admin interface under "
+"\"Ticket Notifications\"."
+msgstr ""
+
+#. SysConfig
+msgid "Show command line output."
+msgstr ""
+
+#. SysConfig
+msgid "Statistic Reports overview."
+msgstr ""
+
+#. SysConfig
+msgid "Statistics overview."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"The logo shown in the header of the agent interface for the skin \"High "
+"Contrast\". See \"AgentLogo\" for further description."
+msgstr ""
+
+#. SysConfig
+msgid ""
+"The logo shown on top of the login box of the agent interface. The URL to "
+"the image can be a relative URL to the skin image directory, or a full URL "
+"to a remote web server."
+msgstr ""

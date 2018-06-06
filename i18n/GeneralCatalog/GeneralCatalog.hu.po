@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 14:08+0000\n"
-"PO-Revision-Date: 2017-11-15 20:54+0000\n"
+"POT-Creation-Date: 2018-04-24 14:13+0000\n"
+"PO-Revision-Date: 2018-05-05 05:55+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -57,12 +57,36 @@ msgid "Edit Catalog Item"
 msgstr "Katalóguselem szerkesztése"
 
 #. SysConfig
+msgid "Admin modules overview."
+msgstr "Adminisztrátori modulok áttekintője."
+
+#. SysConfig
+msgid "Agent Statistics."
+msgstr "Ügyintézői statisztikák."
+
+#. SysConfig
 msgid "Comment 2"
 msgstr "2. megjegyzés"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Az általános katalógus létrehozása és kezelése."
+
+#. SysConfig
+msgid "Custom RSS feed."
+msgstr "Egyéni RSS hírforrás."
+
+#. SysConfig
+msgid "Customer Information Center search."
+msgstr "Ügyfélinformációs-központ keresés."
+
+#. SysConfig
+msgid "Customer User Information Center search."
+msgstr "Ügyfél-felhasználó információs-központ keresés."
+
+#. SysConfig
+msgid "Dashboard overview."
+msgstr "Vezérlőpult áttekintő."
 
 #. SysConfig
 msgid "Define the general catalog comment 2."
@@ -73,8 +97,21 @@ msgid "Define the group with permissions."
 msgstr "A jogosultságokkal rendelkező csoport meghatározása."
 
 #. SysConfig
+msgid ""
+"Defines if the communication between this system and OTRS Group servers that"
+" provide cloud services is possible. If set to 'Disable cloud services', "
+"some functionality will be lost such as system registration, support data "
+"sending, upgrading to and use of OTRS Business Solution™, OTRS Verify™, OTRS"
+" News and product News dashboard widgets, among others."
+msgstr "Meghatározza, hogy lehetséges-e a kommunikáció a rendszer és az OTRS csoport azon kiszolgálói között, amelyek felhőszolgáltatásokat nyújtanak. Ha „Felhőszolgáltatások letiltása” értékre van állítva, akkor néhány funkcionalitás el fog veszi, mint például a rendszer regisztráció, a támogatási adatok küldése, az OTRS Business Solution™ használata és az arra történő frissítés, az OTRS Verify™, az OTRS hírek és termékhírek vezérlőpult felületi elemek, stb."
+
+#. SysConfig
 msgid "Defines the URL JS Color Picker path."
 msgstr "Meghatározza a JS színválasztó útvonalának URL-ét."
+
+#. SysConfig
+msgid "Disable cloud services"
+msgstr "Felhőszolgáltatások letiltása"
 
 #. SysConfig
 msgid ""
@@ -83,8 +120,28 @@ msgid ""
 msgstr "Előtétprogram modul regisztráció az adminisztrációs területen lévő általános katalógus beállításhoz."
 
 #. SysConfig
+msgid "Frontend module registration for the public interface."
+msgstr "Előtétprogram-modul regisztráció a nyilvános felülethez."
+
+#. SysConfig
 msgid "General Catalog"
 msgstr "Általános katalógus"
+
+#. SysConfig
+msgid "Logged in users."
+msgstr "Bejelentkezett felhasználók."
+
+#. SysConfig
+msgid "News about OTRS."
+msgstr "Az OTRS-sel kapcsolatos hírek."
+
+#. SysConfig
+msgid "Out of Office users."
+msgstr "Irodán kívüli felhasználók."
+
+#. SysConfig
+msgid "Overview of all Tickets per assigned Queue."
+msgstr "Az összes jegy áttekintője a hozzárendelt várólistánként."
 
 #. SysConfig
 msgid ""
@@ -96,3 +153,34 @@ msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
 msgstr "Paraméterek az általános katalógus attribútumainak példa jogosultság csoportjaihoz."
+
+#. SysConfig
+msgid ""
+"Sends the notifications which are configured in the admin interface under "
+"\"Ticket Notifications\"."
+msgstr "Elküldi azokat az értesítéseket, amelyek az adminisztrációs felületen a „Jegyértesítések” alatt vannak beállítva."
+
+#. SysConfig
+msgid "Show command line output."
+msgstr "Parancssori kimenet megjelenítése."
+
+#. SysConfig
+msgid "Statistic Reports overview."
+msgstr "Statisztikai jelentések áttekintője."
+
+#. SysConfig
+msgid "Statistics overview."
+msgstr "Statisztikák áttekintője."
+
+#. SysConfig
+msgid ""
+"The logo shown in the header of the agent interface for the skin \"High "
+"Contrast\". See \"AgentLogo\" for further description."
+msgstr "Az ügyintézői felület fejlécében megjelenített logó a „Nagy kontraszt” felszínnél. További leírásért nézze meg az „AgentLogo” beállítást."
+
+#. SysConfig
+msgid ""
+"The logo shown on top of the login box of the agent interface. The URL to "
+"the image can be a relative URL to the skin image directory, or a full URL "
+"to a remote web server."
+msgstr "Az ügyintéző felület bejelentkező doboza fölött megjelenített logó. A kép URL lehet relatív URL a felszín képkönyvtárától, vagy egy teljes URL egy távoli webkiszolgálótól."

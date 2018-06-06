@@ -3,13 +3,15 @@
 # Gaudin vincent <vincent.gaudin@cprpsncf.fr>, 2015
 # Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>, 2015
 # Richard BARET <inactive+rbaret@transifex.com>, 2015
+# Snake, 2018
+# Thomas Imbreckx <zinks@linux.com>, 2018
 # Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 14:08+0000\n"
-"PO-Revision-Date: 2017-11-15 14:08+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-04-24 14:13+0000\n"
+"PO-Revision-Date: 2018-05-22 06:57+0000\n"
+"Last-Translator: Snake\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,77 +25,165 @@ msgstr "Fonctionnalité"
 
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
-msgstr "Gestion du Catalogue Général"
+msgstr "Gestion du catalogue général"
 
 #. Template: AdminGeneralCatalog
 msgid "Items in Class"
-msgstr ""
+msgstr "Éléments dans la classe"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Item"
-msgstr ""
+msgstr "Éditer un élément"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Class"
-msgstr ""
+msgstr "Ajouter une classe"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Item"
-msgstr ""
+msgstr "Ajouter un élément"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
-msgstr "Ajouter un Element au Catalogue"
+msgstr "Ajouter un élément au catalogue"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Class"
-msgstr "Ajouter une Classe de Catalogue"
+msgstr "Ajouter une classe au catalogue"
 
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
-msgstr "Classe de Catalogue"
+msgstr "Classe de catalogue"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
-msgstr ""
+msgstr "Éditer un élément du catalogue"
+
+#. SysConfig
+msgid "Admin modules overview."
+msgstr "Vue d'ensemble des modules administrateur"
+
+#. SysConfig
+msgid "Agent Statistics."
+msgstr "Statistiques des opérateurs."
 
 #. SysConfig
 msgid "Comment 2"
-msgstr ""
+msgstr "Commentaire 2"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "Créer et gérer le Catalogue Général."
+msgstr "Créer et gérer le catalogue général."
+
+#. SysConfig
+msgid "Custom RSS feed."
+msgstr "Flux RSS personnalisé."
+
+#. SysConfig
+msgid "Customer Information Center search."
+msgstr "Recherche dans le centre d'information des clients."
+
+#. SysConfig
+msgid "Customer User Information Center search."
+msgstr "Recherche dans le centre d'information des utilisateurs client."
+
+#. SysConfig
+msgid "Dashboard overview."
+msgstr "Vue d'ensemble du tableau de bord."
 
 #. SysConfig
 msgid "Define the general catalog comment 2."
-msgstr ""
+msgstr "Définir le commentaire 2 du catalogue général."
 
 #. SysConfig
 msgid "Define the group with permissions."
-msgstr ""
+msgstr "Définir le groupe de permissions."
+
+#. SysConfig
+msgid ""
+"Defines if the communication between this system and OTRS Group servers that"
+" provide cloud services is possible. If set to 'Disable cloud services', "
+"some functionality will be lost such as system registration, support data "
+"sending, upgrading to and use of OTRS Business Solution™, OTRS Verify™, OTRS"
+" News and product News dashboard widgets, among others."
+msgstr "Définit si la communication entre le système et les serveurs du groupe OTRS fournit si possible des services cloud. Si définit sur \"Disable cloud services\", certaines fonctionnalités seront perdu comme par exemple l'enregistrement du système, l'envoie de données, la mise à niveau et l'utilisation de OTRS Business Solution™, OTRS Verify™, OTRS News, etc..."
 
 #. SysConfig
 msgid "Defines the URL JS Color Picker path."
-msgstr ""
+msgstr "Définit l'URL du chemin \"JS Color Picker\"."
+
+#. SysConfig
+msgid "Disable cloud services"
+msgstr "Désactiver les services cloud"
 
 #. SysConfig
 msgid ""
 "Frontend module registration for the AdminGeneralCatalog configuration in "
 "the admin area."
-msgstr "Interface d'enregistrement de module pour la configuration du Catalogue Général Admin dans la section administrateur"
+msgstr "Interface d'enregistrement de module pour la configuration du catalogue général dans la zone administrateur"
+
+#. SysConfig
+msgid "Frontend module registration for the public interface."
+msgstr "Interface d'enregistrement de module pour l'interface publique."
 
 #. SysConfig
 msgid "General Catalog"
-msgstr "Catalogue Général"
+msgstr "Catalogue général"
+
+#. SysConfig
+msgid "Logged in users."
+msgstr "Utilisateurs actuellement connectés."
+
+#. SysConfig
+msgid "News about OTRS."
+msgstr "Nouveautés à propos d'OTRS."
+
+#. SysConfig
+msgid "Out of Office users."
+msgstr "Utilisateurs à l'extérieur du bureau."
+
+#. SysConfig
+msgid "Overview of all Tickets per assigned Queue."
+msgstr "Vue d'ensemble des tickets assignés par files."
 
 #. SysConfig
 msgid ""
 "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Paramètres pour l'exemple du commentaire 2 des attributs du Catalogue Général"
+msgstr "Paramètres pour l'exemple du commentaire 2 des attributs du catalogue général"
 
 #. SysConfig
 msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
-msgstr "Paramètres pour l'exemple des permissions de groupe des attributs du Catalogue Général"
+msgstr "Paramètres pour l'exemple des permissions de groupe des attributs du catalogue général"
+
+#. SysConfig
+msgid ""
+"Sends the notifications which are configured in the admin interface under "
+"\"Ticket Notifications\"."
+msgstr "Envoyer les notifications qui sont configurées dans le module \"Notifications des tickets\" de l'interface administrateur."
+
+#. SysConfig
+msgid "Show command line output."
+msgstr "Afficher le résultat de la ligne de commande."
+
+#. SysConfig
+msgid "Statistic Reports overview."
+msgstr "Vue d'ensemble des rapports de statistiques."
+
+#. SysConfig
+msgid "Statistics overview."
+msgstr "Vue d'ensemble des statistiques."
+
+#. SysConfig
+msgid ""
+"The logo shown in the header of the agent interface for the skin \"High "
+"Contrast\". See \"AgentLogo\" for further description."
+msgstr "Le logo affiché dans l'en-tête de l'interface opérateur pour le skin \"High Constrast\". Voir \"AgentLogo\" pour plus d'informations."
+
+#. SysConfig
+msgid ""
+"The logo shown on top of the login box of the agent interface. The URL to "
+"the image can be a relative URL to the skin image directory, or a full URL "
+"to a remote web server."
+msgstr "Le logo affiché sur la page d'authentification des opérateurs. L'URL peut faire référence à un fichier situé sur l'ordinateur, ou à l'adresse Web de l'image."
