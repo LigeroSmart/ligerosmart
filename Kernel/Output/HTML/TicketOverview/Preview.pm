@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 53a5e345767ab9d1ac41391caf4a757fed8ea408 - Kernel/Output/HTML/TicketOverview/Preview.pm
+# $origin: otrs - 0a04e722fbcbd39cca3fb089c294e72b3170e6b1 - Kernel/Output/HTML/TicketOverview/Preview.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1171,9 +1171,9 @@ sub _Show {
 
         # html quoting
         $ArticleItem->{Body} = $LayoutObject->Ascii2Html(
-            NewLine => $Param{Config}->{DefaultViewNewLine}  || 90,
-            Text    => $ArticleItem->{Body},
-            VMax    => $Param{Config}->{DefaultPreViewLines} || 25,
+            NewLine         => $Param{Config}->{DefaultViewNewLine} || 90,
+            Text            => $ArticleItem->{Body},
+            VMax            => $Param{Config}->{DefaultPreViewLines} || 25,
             LinkFeature     => 1,
             HTMLResultMode  => 1,
             StripEmptyLines => $Param{Config}->{StripEmptyLines},
