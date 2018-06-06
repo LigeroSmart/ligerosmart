@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 53a5e345767ab9d1ac41391caf4a757fed8ea408 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
+# $origin: otrs - 0a04e722fbcbd39cca3fb089c294e72b3170e6b1 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,7 +146,7 @@ $Self->True(
 my @TicketData;
 for my $Item ( 0 .. 1 ) {
     my $TicketID = $TicketObject->TicketCreate(
-        Title => ( $Item == 0 ) ? $Services[0]->{ServiceID} : 'test',
+        Title         => ( $Item == 0 ) ? $Services[0]->{ServiceID} : 'test',
         QueueID       => 1,
         Lock          => 'unlock',
         Priority      => '3 normal',

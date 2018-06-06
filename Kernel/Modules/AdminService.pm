@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 53a5e345767ab9d1ac41391caf4a757fed8ea408 - Kernel/Modules/AdminService.pm
+# $origin: otrs - 0a04e722fbcbd39cca3fb089c294e72b3170e6b1 - Kernel/Modules/AdminService.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -363,7 +363,7 @@ sub _MaskNew {
 
     # generate ParentOptionStrg
     my $KeepChildren = $ConfigObject->Get('Ticket::Service::KeepChildren') // 0;
-    my %ServiceList = $ServiceObject->ServiceList(
+    my %ServiceList  = $ServiceObject->ServiceList(
         Valid        => !$KeepChildren,
         KeepChildren => $KeepChildren,
         UserID       => $Self->{UserID},
