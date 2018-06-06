@@ -20,20 +20,20 @@ sub Data {
     $Self->{Translation}->{'Impact'} = 'Impact';
 
     # JS Template: ServiceIncidentState
-    $Self->{Translation}->{'Service Incident State'} = '';
+    $Self->{Translation}->{'Service Incident State'} = 'État d\'incident du service';
 
     # Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
-    $Self->{Translation}->{'Link ticket'} = '';
-    $Self->{Translation}->{'Change Decision of %s%s%s'} = '';
-    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '';
+    $Self->{Translation}->{'Link ticket'} = 'Lier le ticket';
+    $Self->{Translation}->{'Change Decision of %s%s%s'} = 'Modifier la décision de %s %s %s';
+    $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = 'Modifier les champs ITSM de %s %s %s';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
     $Self->{Translation}->{'Review Required'} = 'Revue requise';
-    $Self->{Translation}->{'Decision Result'} = 'Résultat de la Décision';
+    $Self->{Translation}->{'Decision Result'} = 'Résultat de la décision';
     $Self->{Translation}->{'Approved'} = 'Approuvé';
-    $Self->{Translation}->{'Postponed'} = '';
-    $Self->{Translation}->{'Pre-approved'} = '';
-    $Self->{Translation}->{'Rejected'} = '';
+    $Self->{Translation}->{'Postponed'} = 'Reporté';
+    $Self->{Translation}->{'Pre-approved'} = 'Pré-approuvé';
+    $Self->{Translation}->{'Rejected'} = 'Rejeté';
     $Self->{Translation}->{'Repair Start Time'} = 'Date de début de réparation';
     $Self->{Translation}->{'Recovery Start Time'} = 'Date de début de retour à la normale';
     $Self->{Translation}->{'Decision Date'} = 'Date de décision';
@@ -44,15 +44,15 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Ajouter une décision';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Champs ITSM additionels';
-    $Self->{Translation}->{'Additional ITSM ticket fields.'} = '';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'Champs ITSM additionnels';
+    $Self->{Translation}->{'Additional ITSM ticket fields.'} = 'Champs ITSM additionnels.';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'Autoriser l\'ajout de notes dans les champs ITSM additionnels sur l\'interface opérateur.';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} =
-        '';
+        'Autoriser l\'ajout de notes dans les champs ITSM additionnels sur l\'interface de décision.';
     $Self->{Translation}->{'Allows defining new types for ticket (if ticket type feature is enabled).'} =
-        '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = 'Modifiez les champs ITSM!';
+        'Autoriser la modification du type de ticket (si la fonctionnalité est activée).';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Modifiez les champs ITSM !';
     $Self->{Translation}->{'Decision'} = 'Décision';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
@@ -151,7 +151,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows the title fields in the decision screen of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Ticket decision.'} = '';
+    $Self->{Translation}->{'Ticket decision.'} = 'Décision du ticket.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

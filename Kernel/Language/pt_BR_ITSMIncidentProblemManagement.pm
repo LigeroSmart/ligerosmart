@@ -89,11 +89,11 @@ sub Data {
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         'Define o próximo estado de um chamado após a adição de uma nota, na tela de decisão da interface de atendente.';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados no campo de tela ITSM adicional da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
         'Campos dinâmicos mostrados na tela de decisão da interface do agente.';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados na tela de zoom do ticket da interface de agente.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         'Permite que o módulo de estatísticas gere estatísticas sobre o nível médio de chamados ITSM no primeiro nível de solução.';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -116,7 +116,7 @@ sub Data {
     $Self->{Translation}->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} =
         'Define o serviço na tela de decisão da interface de atendente (Chamado::Serviço precisa estar ativado).';
     $Self->{Translation}->{'Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).'} =
-        '';
+        'Define o serviço na tela de prioridade de ticket de um ticket em zoom na interface de agente (Ticket::Service precisa estar ativo).';
     $Self->{Translation}->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} =
         'Define o proprietário do chamado na tela de campos adicionais ITSM da interface de atendente.';
     $Self->{Translation}->{'Sets the ticket owner in the decision screen of the agent interface.'} =
@@ -130,7 +130,7 @@ sub Data {
     $Self->{Translation}->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} =
         'Define o tipo de chamado na tela de decisão da interface de atendente (Chamado::Tipo precisa estar ativado).';
     $Self->{Translation}->{'Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).'} =
-        '';
+        'Define o tipo de serviço na tela de prioridade do ticket de um ticket em zoom na interface de agente (Ticket::Type precisa estar ativo).';
     $Self->{Translation}->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} =
         'Mostra um link no menu para alterar a decisão de um chamado na sua visão em detalhes na interface de atendente.';
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =

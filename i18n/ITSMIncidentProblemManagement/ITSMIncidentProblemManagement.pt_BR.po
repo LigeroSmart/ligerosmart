@@ -4,13 +4,14 @@
 # Flávio Veras <flaviove@gmail.com>, 2017
 # Gilberto José Souza Coutinho <gilberto.jsc@gmail.com>, 2017
 # Glauber Caires <glaubercaires@gmail.com>, 2016
+# Ricardo von Staa <ricardo.von.staa@otrs.com>, 2018
 # Samuel Diniz Casimiro <nedmaj@yahoo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-04-24 14:31+0000\n"
-"PO-Revision-Date: 2018-04-24 14:32+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2018-05-08 21:01+0000\n"
+"Last-Translator: Ricardo von Staa <ricardo.von.staa@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -232,7 +233,7 @@ msgstr "Define o próximo estado de um chamado após a adição de uma nota, na 
 msgid ""
 "Dynamic fields shown in the additional ITSM field screen of the agent "
 "interface."
-msgstr ""
+msgstr "Campos dinâmicos mostrados no campo de tela ITSM adicional da interface de agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the decision screen of the agent interface."
@@ -240,7 +241,7 @@ msgstr "Campos dinâmicos mostrados na tela de decisão da interface do agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de zoom do ticket da interface de agente."
 
 #. SysConfig
 msgid ""
@@ -308,7 +309,7 @@ msgstr "Define o serviço na tela de decisão da interface de atendente (Chamado
 msgid ""
 "Sets the service in the ticket priority screen of a zoomed ticket in the "
 "agent interface (Ticket::Service needs to be activated)."
-msgstr ""
+msgstr "Define o serviço na tela de prioridade de ticket de um ticket em zoom na interface de agente (Ticket::Service precisa estar ativo)."
 
 #. SysConfig
 msgid ""
@@ -347,7 +348,7 @@ msgstr "Define o tipo de chamado na tela de decisão da interface de atendente (
 msgid ""
 "Sets the ticket type in the ticket priority screen of a zoomed ticket in the"
 " agent interface (Ticket::Type needs to be activated)."
-msgstr ""
+msgstr "Define o tipo de serviço na tela de prioridade do ticket de um ticket em zoom na interface de agente (Ticket::Type precisa estar ativo)."
 
 #. SysConfig
 msgid ""
