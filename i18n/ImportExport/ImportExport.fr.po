@@ -5,13 +5,14 @@
 # Matthieu HUTIN, 2015
 # Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>, 2015
 # Richard BARET <inactive+rbaret@transifex.com>, 2015
+# Snake, 2018
 # Thomas Imbreckx <zinks@linux.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:57+0000\n"
-"PO-Revision-Date: 2017-09-29 14:58+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-02-06 20:07+0000\n"
+"PO-Revision-Date: 2018-05-18 20:04+0000\n"
+"Last-Translator: Thomas Imbreckx <zinks@linux.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
-msgstr "Gestion de l'Import/Export"
+msgstr "Gestion de l'importation/exportation"
 
 #. Template: AdminImportExport
 msgid "Create a template to import and export object information."
@@ -37,27 +38,27 @@ msgstr "Démarrer l'export"
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr "Etape 1 sur 5 - Editer l'information commune"
+msgstr "Étape 1 sur 5 - Éditer les information communes"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr "Un Nom est requis!"
+msgstr "Un nom est requis !"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
-msgstr "Un Objet est requis!"
+msgstr "Un objet est requis !"
 
 #. Template: AdminImportExport
 msgid "Format is required!"
-msgstr "Un Format est requis!"
+msgstr "Un format est requis !"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr "Etape 2 sur 5 - Editer l'information d'objet"
+msgstr "Étape 2 sur 5 - Éditer les informations de l'objet"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5 - Edit format information"
-msgstr ""
+msgstr "Étape 3 sur 5 - Éditer les informations du format"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -65,11 +66,11 @@ msgstr "est requis !"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr "Etape 4 sur 5 - Editer l'information de mappage"
+msgstr "Étape 4 sur 5 - Éditer les informations de mappage"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "Aucun élément de mappage trouvé"
+msgstr "Aucun élément de mappage trouvé."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
@@ -77,23 +78,23 @@ msgstr "Ajouter un élément de mappage"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr "Etape 5 sur 5 - Editer l'information de recherche"
+msgstr "Étape 5 sur 5 - Éditer les informations de recherche"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
-msgstr "Restreindre l'export par recherche"
+msgstr "Restreindre l'exportation par recherche"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Informations d'import"
+msgstr "Informations d'importation"
 
 #. Template: AdminImportExport
 msgid "Source File"
-msgstr "Fichier Source"
+msgstr "Fichier source"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "Importer le résumé pour %s"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -109,7 +110,7 @@ msgstr "Noms en double"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr "Numéro de la dernière ligne traitée dans le fichier d'import"
+msgstr "Numéro de la dernière ligne traitée dans le fichier d'importation"
 
 #. Template: AdminImportExport
 msgid "Ok"
@@ -117,35 +118,35 @@ msgstr "Ok"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
-msgstr ""
+msgstr "Aucun objet \"backend\" n'a été trouvé !"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No format backend found!"
-msgstr ""
+msgstr "Aucun format \"backend\" n'a été trouvé !"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
-msgstr "Template non trouvé!"
+msgstr "Modèle non trouvé !"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr "Impossible d'insérer/mettre à jour le template!"
+msgstr "Impossible d'insérer ou mettre à jour le modèle !"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr "Identifiant de template requis!"
+msgstr "L'ID du modèle est requis !"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr "Une erreur est survenue. Import impossible! Voyez le log système pour les détails."
+msgstr "Une erreur est survenue, importation impossible ! Pour plus de détails, consultez le journal d’événements système."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr "Une erreur est survenue. Export impossible! Voyez le log système pour les détails."
+msgstr "Une erreur est survenue, exportation impossible ! Pour plus de détails, consultez le journal d’événements système."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr ""
+msgstr "Liste des modèles"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
@@ -165,15 +166,15 @@ msgstr "entier plus grand que zéro"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
-msgstr "Elément requis, veuillez entrer une donnée"
+msgstr "Élément requis, veuillez entrer des données"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr ""
+msgstr "Données invalides. Veuillez insérer une %s valide"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
-msgstr "Format non trouvé!"
+msgstr "Format non trouvé !"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column Separator"
@@ -197,7 +198,7 @@ msgstr "Point (.)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Comma (,)"
-msgstr ""
+msgstr "Virgule (,)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Charset"
@@ -213,7 +214,7 @@ msgstr "Colonne"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Enregistrement en arrière plan du module d'import/export"
+msgstr "Enregistrement du module \"Format backend\" pour le module d'importation/exportation"
 
 #. SysConfig
 msgid "Import and export object information."
