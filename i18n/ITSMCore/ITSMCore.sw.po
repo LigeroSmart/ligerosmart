@@ -1,12 +1,12 @@
-#
+# 
 # Translators:
 # Macbethana Wilfred <mwi@nrd.no>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:04+0000\n"
-"PO-Revision-Date: 2017-09-29 15:06+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,11 +16,11 @@ msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "Umuhimu ↔ Madhara ↔ Kipaumbele"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "Simamia matokeo ya kipaumbele ya kuunganisha Umuhimu "
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -266,24 +266,24 @@ msgid "Manage priority matrix."
 msgstr "Simamia matriki ya kipaumbele."
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya huduma."
+msgid "Module to show the Back menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "Moduli ya kuonyesha kiungo cha kurudi nyuma katika menyu ya sla."
+msgid "Module to show the Back menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya huduma."
+msgid "Module to show the Link menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "Moduli ya kuonyesha kiungo cha kuchapisha katika menyu ya sla."
+msgid "Module to show the Print menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "Moduli ya kuonyesha kiungo cha kiungo katika menyu ya huduma."
+msgid "Module to show the Print menu item in service menu."
+msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
@@ -344,6 +344,10 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "Source"
 msgstr ""
 
 #. SysConfig

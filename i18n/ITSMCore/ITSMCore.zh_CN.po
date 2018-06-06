@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 15:06+0000\n"
-"PO-Revision-Date: 2017-11-16 01:54+0000\n"
-"Last-Translator: 汇民 王 <whuim@qq.com>\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -348,6 +348,10 @@ msgid ""
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "设置链接的类型和方向以便计算故障状态。键是链接类型的名称（在LinkObject::Type中定义），值是IncidentLinkType（故障链接类型）的方向以计算故障状态。示例：如果IncidentLinkType（故障链接类型）设为“DependsOn（依赖）”，方向是Source（源），只有“依赖”链接（而不是链接类型为“被...需要”的链接）才用来计算故障状态。可以根据需要添加更多的链接类型和方向，如方向为“目标”的“Includes（包含）”链接。所有在系统配置选项的LinkObject::Type中定义的链接类型都可以使用，方向只可以是“Source（源）”、“Target（目标）”或“Both（源和目标都是）”。重要：在更改了系统配置选项后，你需要运行脚本bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate，才能按新的设置重新计算故障状态。"
+
+#. SysConfig
+msgid "Source"
+msgstr ""
 
 #. SysConfig
 msgid ""

@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 15:06+0000\n"
-"PO-Revision-Date: 2017-11-23 15:12+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -347,6 +347,10 @@ msgid ""
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "Подешава тип и смер веза који ће се користити за утврђивање стања инцидента. Кључ је назив типа везе (као што је дефинисано у LinkObject::Type), а вредност је смер IncidentLinkType који треба испратити за одређивање стања инцидента. На пример, ако је IncidentLinkType подешен на DependsOn и смер је Source, само веза \"Зависи од\" ће бити праћена (а неће и супротна веза \"Неопходно за\") у одређивању стања инцидента. Уколико желите може додати још типова и смерова веза, нпр. \"Укључује\" са смером \"Циљ\". Сви типови веза дефинисани у системској конфигурацији LinkObject::Type су могући и смер може бити \"Извор\", \"Циљ\" или \"Оба\". ВАЖНО: НАКОН ИЗМЕНЕ ОПЦИЈА СИСТЕМСКЕ КОНФИГУРАЦИЈЕ МОРАТЕ ПОКРЕНУТИ СКРИПТ bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate ДА БИ СВА СТАЊА ИНЦИДЕНТА БИЛА ПОНОВО УТВРЂЕНА НА ОСНОВУ НОВИХ ПОДЕШАВАЊА!"
+
+#. SysConfig
+msgid "Source"
+msgstr ""
 
 #. SysConfig
 msgid ""

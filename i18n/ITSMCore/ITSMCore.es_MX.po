@@ -1,13 +1,13 @@
-#
+# 
 # Translators:
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2017
 # Luis Medina <luis.medina@sacc.com.mx>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:49+0000\n"
-"PO-Revision-Date: 2017-10-25 03:28+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "Criticidad ↔ Impacto ↔ Prioridad"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "Administrar el resultado de la combinación de prioridad Criticidad ↔ Impacto."
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -267,24 +267,24 @@ msgid "Manage priority matrix."
 msgstr "Administrar matriz de prioridades"
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "Módulo para mostrar un enlace de regreso en el menú del servicio"
+msgid "Module to show the Back menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "Módulo para mostrar un enlace de regreso en el menú de SLA"
+msgid "Module to show the Back menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "Módulo para mostrar un enlace de impresión en el menú de servicio."
+msgid "Module to show the Link menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "Módulo para mostrar un enlace de impresión en el menú de SLA."
+msgid "Module to show the Print menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "Módulo para mostrar el enlace en el menú de servicio."
+msgid "Module to show the Print menu item in service menu."
+msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
@@ -346,6 +346,10 @@ msgid ""
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "Fija el tipo y direccion de los vínculos a ser usados para calcular el estado de incidencia. La llave es el nombre del tipo de vínculo (como está definido en  LinkObject::Type), y el valor es la direccion del 'IncidentLinkType' que deberá de ser seguido para calcular el estado de incidencia. Por ejemplo si el  'IncidentLinkType' está fijado a 'DependsON' y la direccion es 'Fuente'. sólo los vínculos 'DependsOn' serán seguidos (y no por el contrario su opuesto 'RequiredFor') para calcular el estado de incidencia. Usted puede añadir tantos tipos de vínculos y direcciones como sea necesario, por ejemplo 'Includes' con la dirección 'Destino'. Todos los tipos de vínculos definidos en las opciones de  configuración el sistema  LinkObject::Type son posibles y su dirección puede ser 'Fuente', 'Destino' o 'Ambos'. IMPORTANTE: DESPUES DE HACER CAMBIOS A ESTA OPCIÓN DE 'SYSCONFIG' NECESITARÁ EJECUTAR el COMANDO DE CONSOLA bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate  ¡DE TAL FORMA QUE TODOS LOS ESTADOS DE INCIDENCIA SERÁN RECALCULADOS BASADOS EN LA NUEVA CONFIGURACIÓN!"
+
+#. SysConfig
+msgid "Source"
+msgstr ""
 
 #. SysConfig
 msgid ""

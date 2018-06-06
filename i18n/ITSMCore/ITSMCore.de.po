@@ -1,4 +1,4 @@
-#
+# 
 # Translators:
 # Ettore Atalan <atalanttore@googlemail.com>, 2015-2016
 # Felix Schäfer <web.otrs@yorfeix.de>, 2017
@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 13:49+0000\n"
-"PO-Revision-Date: 2017-10-23 03:01+0000\n"
-"Last-Translator: Felix Schäfer <web.otrs@yorfeix.de>\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "Kritikalität ↔ Auswirkung ↔ Priorität"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "Verwaltung der Priorität aus der Kombination von Kritikalität ↔ Impact."
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -269,24 +269,24 @@ msgid "Manage priority matrix."
 msgstr "Prioritäts-Matrix verwalten"
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "Über dieses Modul wird der Zurück-Link in der Linkleiste der Service-Ansicht angezeigt."
+msgid "Module to show the Back menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "Über dieses Modul wird der Zurück-Link in der Linkleiste der SLA-Ansicht angezeigt."
+msgid "Module to show the Back menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "Über dieses Modul wird der Drucken-Link in der Linkleiste der Service-Ansicht angezeigt."
+msgid "Module to show the Link menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "Über dieses Modul wird der Drucken-Link in der Linkleiste der SLA-Ansicht angezeigt."
+msgid "Module to show the Print menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
-msgstr "Über dieses Modul wird der Link-Link in der Linkleiste der Service-Ansicht angezeigt."
+msgid "Module to show the Print menu item in service menu."
+msgstr ""
 
 #. SysConfig
 msgid "Parameters for the incident states in the preference view."
@@ -347,6 +347,10 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "Source"
 msgstr ""
 
 #. SysConfig

@@ -1,25 +1,25 @@
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:04+0000\n"
-"PO-Revision-Date: 2017-09-29 15:06+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fa\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "اهمیت ↔ اثر ↔ اولویت"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "مدیریت الویت ناشی از ترکیب اهمیت ↔ اثر"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -265,23 +265,23 @@ msgid "Manage priority matrix."
 msgstr "مدیریت ماتریس الویت"
 
 #. SysConfig
-msgid "Module to show back link in service menu."
-msgstr "ماژولی برای نمایش لینک بازگشت در منوی سرویس"
+msgid "Module to show the Back menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
-msgstr "ماژولی برای نمایش لینک بازگشت در منوی SLA"
+msgid "Module to show the Back menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in service menu."
-msgstr "ماژولی برای نمایش لینک چاپ در منوی سرویس"
+msgid "Module to show the Link menu item in service menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
-msgstr "ماژولی برای نمایش لینک چاپ در منوی SLA"
+msgid "Module to show the Print menu item in SLA menu."
+msgstr ""
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
+msgid "Module to show the Print menu item in service menu."
 msgstr ""
 
 #. SysConfig
@@ -343,6 +343,10 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "Source"
 msgstr ""
 
 #. SysConfig

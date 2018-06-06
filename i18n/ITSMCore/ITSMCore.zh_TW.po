@@ -1,11 +1,11 @@
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 15:04+0000\n"
-"PO-Revision-Date: 2017-09-29 15:06+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,11 +15,11 @@ msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
-msgstr "重要 ↔ 影響 ↔ 優先級"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Manage the priority result of combinating Criticality ↔ Impact."
-msgstr "\"重要 ↔ 影響\"之間的組合決定優先級"
+msgstr ""
 
 #. Template: AdminITSMCIPAllocate
 msgid "Priority allocation"
@@ -265,23 +265,23 @@ msgid "Manage priority matrix."
 msgstr "管理優先級矩陣"
 
 #. SysConfig
-msgid "Module to show back link in service menu."
+msgid "Module to show the Back menu item in SLA menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show back link in sla menu."
+msgid "Module to show the Back menu item in service menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in service menu."
+msgid "Module to show the Link menu item in service menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show print link in sla menu."
+msgid "Module to show the Print menu item in SLA menu."
 msgstr ""
 
 #. SysConfig
-msgid "Module to show the link link in service menu."
+msgid "Module to show the Print menu item in service menu."
 msgstr ""
 
 #. SysConfig
@@ -343,6 +343,10 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "Source"
 msgstr ""
 
 #. SysConfig

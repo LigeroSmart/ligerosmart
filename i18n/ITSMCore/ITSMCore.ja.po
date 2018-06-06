@@ -1,14 +1,14 @@
 # 
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016
-# Kentaro Hori <kentaro0919@gmail.com>, 2014
+# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014
 # Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 15:06+0000\n"
-"PO-Revision-Date: 2017-11-17 02:30+0000\n"
-"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -347,6 +347,10 @@ msgid ""
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "インシデント状態の計算に使用するリンクのタイプと方向を設定します。 キーはリンクタイプの名前（LinkObject :: Typeで定義されている）であり、値はインシデントステータスを計算するために従うべきIncidentLinkTypeの方向です。 たとえば、IncidentLinkTypeが 'DependsOn'に設定されており、Directionが 'Source'の場合、インシデントのステータスを計算するために、 '依存する'リンクのみが表示されます（反対のリンクは 'Required for'ではありません）。 広告タイプのリンクタイプを追加できます（例： 方向 'Target'を含む 'Includes'。 sysconfigオプションLinkObject :: Typeで定義されているすべてのリンクタイプが可能で、方向は 'Source'、 'Target'、または 'Both'です。 重要：このSYSCONFIGオプションに変更を加えたら、コンソールコマンドbin/otrs.Console.plを実行する必要があります。Admin :: ITSM :: IncidentState :: Recalculateしたがって、すべての事態は新しい設定に基づいて再計算されます！"
+
+#. SysConfig
+msgid "Source"
+msgstr ""
 
 #. SysConfig
 msgid ""

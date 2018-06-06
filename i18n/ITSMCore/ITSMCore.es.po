@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-15 15:06+0000\n"
-"PO-Revision-Date: 2017-11-16 08:34+0000\n"
-"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
+"POT-Creation-Date: 2018-06-06 09:13+0000\n"
+"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -348,6 +348,10 @@ msgid ""
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "Establezca el tipo y la dirección de los enlaces que se usarán para calcular el estado de la incidencia. La clave es el nombre del tipo de enlace (como se define en LinkObject::Type), y el valor es la dirección del IncidentLinkType que se debe seguir para calcular el estado de la incidencia. Por ejemplo, si el IncidentLinkType está fijado en \"Depende de\"  y la dirección es \"Origen\", solo se seguirán los enlaces \"Depende de\" (y no el enlace opuesto \"Requerido para\"), para calcular el estado de la incidencia. Puede agregar más tipos de enlaces y direcciones si lo desea, por ejemplo \"Includes\" con la dirección \"objetivo\". Todos los tipos de enlaces definidos en las opciones de sysconfig LinkObject::Type son posibles y la dirección puede ser \"Origen\", \"Objetivo\" o \"Ambas\". IMPORTANTE: TRAS REALIZAR LOS CAMBIOS EN ESTA OPCIÓN DE SYSCONFIG, NECESITA EJECUTAR EL COMANDO DE CONSOLA bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate PARA QUE TODOS LOS ESTADOS SE RECALCULEN EN BASE A LAS NUEVAS CONFIGURACIONES."
+
+#. SysConfig
+msgid "Source"
+msgstr ""
 
 #. SysConfig
 msgid ""
