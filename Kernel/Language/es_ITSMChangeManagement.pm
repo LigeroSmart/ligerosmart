@@ -850,8 +850,8 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = 'Editar el cambio.';
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'Editar las condiciones del cambio.';
     $Self->{Translation}->{'Edit the workorder.'} = 'Editar la orden de trabajo.';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        'Habilita el tamaño mínimo del contador de cambios (si se seleccionó "Fecha" como ChangeNumberGenerator).';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Enviar el horario de cambios. Descripción general de los cambios aprobados.';
     $Self->{Translation}->{'History Zoom'} = 'Detalle del historial';
@@ -889,6 +889,8 @@ sub Data {
         'Si la frecuencia es \'regular\', puede configurar la frecuencia con la que se envían las notificaciones (every X hours).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Enlazar otro objecto al cambio.';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Enlazar otro objecto a la orden de trabajo.';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Búsqueda de miembros de CAB para autocompletar.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Búsqueda de agentes, usada para autocompletar.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = 'Gestionar el estado de la máquina en la Gestión del Cambio ITSM.';
@@ -923,8 +925,6 @@ sub Data {
         'Realiza la acción configurada para cada evento ( como un Invoker) para cada servicio Web configurado.';
     $Self->{Translation}->{'Planned end time'} = 'Hora de finalización planificada';
     $Self->{Translation}->{'Planned start time'} = 'Hora de inicio planificada';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'Presenta un vínculo en el menú para mostrar a las personas involucradas en un cambio, en la vista detallada de dicho cambio de la interfaz del agente.';
     $Self->{Translation}->{'Print the change.'} = 'Imprimir el cambio.';
     $Self->{Translation}->{'Print the workorder.'} = 'Imprimir la orden de trabajo.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Disponibilidad del servicio proyectado';
@@ -996,24 +996,22 @@ sub Data {
         'Establezca  la altura máxima (en píxeles) de los campos inline HTML en el detalle de la pantalla de cambio y la pantalla de detalle de la orden de trabajo de la interfaz del agente.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Estable el tamaño mínimo del contador de cambios (si se seleccionó "AutoIncrement" como ITSMChange::NumberGenerator). El valor por defecto es 5, esto significa que el contador comienza desde 10000.';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        'Establece el tamaño mínimo del contador de cambios si se seleccionó "AutoIncrement" como ChangeNumberGenerator. El valor por defecto es 5, esto significa que el contador comienza desde 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Configura la máquina de estados para los cambios.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Configura la máquina de estados para las órdenes de trabajo';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Muestra una casilla de verificación en la pantalla de edición de órdenes de trabajo de la interfaz del agente que define si los siguientes pedidos de trabajo también deberían moverse si un pedido en curso se modifica y la hora de finalización planificada ha cambiado.';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
-        'Muestra un enlace en el menú que permite cambiar el agente de orden de trabajo, en la vista de detalle de dicho pedido de trabajo de la interfaz de agente.';
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'Muestra un vínculo en el menú que permite definir un cambio como una plantilla, en la vista detallada de dicho cambio, en la interfaz del agente.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'Muestra un enlace en el menú que permite definir una orden de trabajo como plantilla en la vista de detalle del pedido de trabajo, en la interfaz de agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
-        'Muestra un enlace en el menú que permite editar el informe de una orden de trabajo, en la vista de detalle de dicha orden de trabajo de la interfaz de agente.';
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'Muestra un link en el menú para vincular un cambio con otro objeto, en la vista detallada de dicho cambio de la interfaz del agente.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
-        'Muestra un enlace en el menú que permite vincular un pedido de trabajo con otro objeto en la vista de acercamiento de dicho pedido de trabajo de la interfaz de agente.';
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'Muestra un vínculo en el menú que permite mover el periodo de tiempo de un cambio, en su vista detallada de la interfaz del agente.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1044,6 +1042,8 @@ sub Data {
         'Muestra un enlace en el menú para imprimir una orden de trabajo en la vista ampliada de la interfaz de agente.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'Muestra un vínculo en el menú para reajustar un cambio y sus ordenes de trabajo en la vista de zoom o en la interfaz de agente.';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Muestra la historia del cambio (ordenado inversamente) en la interfaz del agente.';
     $Self->{Translation}->{'State Machine'} = 'Máquina de Estados';

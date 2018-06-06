@@ -1,14 +1,14 @@
 # 
 # Translators:
-# Dusan Vuckovic, 2016-2017
+# Dusan Vuckovic, 2016-2018
 # Jaroslav Balaz <balazj315@gmail.com>, 2017
 # Милорад Јовановић <j.milorad@gmail.com>, 2015-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-03-03 13:21+0000\n"
-"PO-Revision-Date: 2018-03-03 13:21+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2018-04-24 14:36+0000\n"
+"PO-Revision-Date: 2018-04-26 09:23+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +38,7 @@ msgstr "Додај правило обавештавања"
 
 #. Template: AdminITSMChangeNotification
 msgid "Edit Notification Rule"
-msgstr ""
+msgstr "Уреди правило обавештавања"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
@@ -1364,11 +1364,11 @@ msgstr "сваки"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Previous Change Builder"
-msgstr ""
+msgstr "Претходни градитељ промене"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Previous Change Manager"
-msgstr ""
+msgstr "Претходни управних промене"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Workorder Agents"
@@ -1384,15 +1384,15 @@ msgstr "Иницијатори промене"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Group ITSMChange"
-msgstr ""
+msgstr "Група ITSMChange"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Group ITSMChangeBuilder"
-msgstr ""
+msgstr "Група ITSMChangeBuilder"
 
 #. Perl Module: Kernel/System/ITSMChange/Notification.pm
 msgid "Group ITSMChangeManager"
-msgstr ""
+msgstr "Група ITSMChangeManager"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "requested"
@@ -1468,7 +1468,7 @@ msgstr "PIR"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeStateID"
-msgstr ""
+msgstr "ChangeStateID"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "CategoryID"
@@ -1484,23 +1484,23 @@ msgstr "ИД приоритета"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeManagerID"
-msgstr ""
+msgstr "ChangeManagerID"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeBuilderID"
-msgstr ""
+msgstr "ChangeBuilderID"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "WorkOrderStateID"
-msgstr ""
+msgstr "WorkOrderStateID"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "WorkOrderTypeID"
-msgstr ""
+msgstr "WorkOrderTypeID"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "WorkOrderAgentID"
-msgstr ""
+msgstr "WorkOrderAgentID"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "is"
@@ -1553,6 +1553,18 @@ msgstr "завршава са"
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "set"
 msgstr "подеси"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this expression?"
+msgstr "Да ли стварно желите да обришете овај израз?"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this action?"
+msgstr "Да ли стварно желите да обришете ову акцију?"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this condition?"
+msgstr "Да ли заиста желите да обришете овај услов?"
 
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
 msgid "Ok"
@@ -2572,7 +2584,7 @@ msgstr "Потражи оператере, употребљене за ауто�
 
 #. SysConfig
 msgid "Manage ITSM Change Management state machine."
-msgstr ""
+msgstr "Уређивање машине стања ITSM управљања променама."
 
 #. SysConfig
 msgid "Manage the category ↔ impact ↔ priority matrix."

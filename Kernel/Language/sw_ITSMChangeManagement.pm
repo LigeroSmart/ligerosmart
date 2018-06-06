@@ -850,7 +850,7 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = '';
     $Self->{Translation}->{'Edit the conditions of the change.'} = '';
     $Self->{Translation}->{'Edit the workorder.'} = '';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
         '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
@@ -889,6 +889,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
@@ -923,8 +925,6 @@ sub Data {
         'Fanya kitecndo cha usanidishwaji kwa kila tukio (kama Kichochezi) kwa kila huduma ya wavuti iliyosanidiwa.';
     $Self->{Translation}->{'Planned end time'} = '';
     $Self->{Translation}->{'Planned start time'} = '';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'Inawasilisha kiunganishi katika menyu kuonyesha watu wanaohusika katika badiliko, katika mandhari iliyokuzwa ya badiliko hilo katika kiolesura cha wakala.';
     $Self->{Translation}->{'Print the change.'} = '';
     $Self->{Translation}->{'Print the workorder.'} = '';
     $Self->{Translation}->{'Projected Service Availability'} = '';
@@ -996,23 +996,21 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Inaweka upeo wa chini wa ukubwa wa kihesabuji tiketi (Kama "Inaongezeka otomatiki" imechaguliwa kama Badiliko la ITSM::Kitengeneza namaba za tiketi). Chaguo-msingi ni 5, hii inamaanisha kihesabuji kinaanzia 10000';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Inaseti hali ya mashine kwa mabadiliko.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Inaseti hali ya mashine kwa oda za kazi.';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'Inaonyesha kiungo kwenye menyu kinachoruhusu kufafanua mabadiliko kama kiolezo katika muonekano uliokuzwa wa mabadiliko, katika kiolesura cha wakala. ';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'Inaonyesha kiungo kwenye menyu  kinachoruhusu kuunganisha mabadiliko na kitu kingine katika muonekano uliokuzwa kiolesura cha wakala.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'Inaonyesha kiungo kwenye menyu  kinachoruhusu kuhamisha kipengele cha muda wa mabadiliko katika muonekano uliokuzwa wa kiolesura cha wakala.';
@@ -1044,6 +1042,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'Inaonyesha kiungo kwenye menyu ili kweka upya mabadiliko na oda zake za kazi katika muonekano wake uliokuzwa wa kiolesura cha wakala. ';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Inaonyesha badili historia (utaratibu uliogeuzwa) katika kiolesura cha wakala.';
     $Self->{Translation}->{'State Machine'} = 'Mashine ya Hali';

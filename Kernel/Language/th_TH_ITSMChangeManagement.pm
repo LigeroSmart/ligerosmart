@@ -850,7 +850,7 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = '';
     $Self->{Translation}->{'Edit the conditions of the change.'} = '';
     $Self->{Translation}->{'Edit the workorder.'} = '';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
         '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '';
@@ -889,6 +889,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Link another object to the change.'} = '';
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
@@ -923,8 +925,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Planned end time'} = '';
     $Self->{Translation}->{'Planned start time'} = '';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'แสดงการเชื่อมโยงในเมนูที่จะแสดงให้คนที่เกี่ยวข้องในการเปลี่ยนแปลงในมุมมองการซูมของการเปลี่ยนแปลงดังกล่าวของอินเตอร์เฟสเอเย่นต์';
     $Self->{Translation}->{'Print the change.'} = '';
     $Self->{Translation}->{'Print the workorder.'} = '';
     $Self->{Translation}->{'Projected Service Availability'} = '';
@@ -996,24 +996,22 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'ตั้งค่าขนาดตัวนับการเปลี่ยนแปลงน้อยที่สุด (ถ้า "AutoIncrement" ได้รับเลือกเป็น ITSMChange :: NumberGenerator) ค่าเริ่มต้นคือ 5 ซึ่งหมายความว่าตัวนับเริ่มต้นจาก 10000';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'ตั้งค่าเครื่องของสถานะสำหรับการเปลี่ยนแปลง';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'ตั้งค่าเครื่องของสถานะสำหรับใบสั่งงาน';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'แสดงการเชื่อมโยงในเมนูที่อนุญาติให้กำหนด
 การเปลี่ยนแปลงเป็นแม่แบบในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'แสดงการเชื่อมโยงในเมนูที่อนุญาติให้เชื่อมโยงการเปลี่ยนแปลงกับออบเจคอื่นในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'แสดงการเชื่อมโยงในเมนูที่อนุญาติให้ย้ายช่วงเวลาของการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์';
@@ -1045,6 +1043,8 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'แสดงการเชื่อมโยงในเมนูเพื่อรีเซ็ตการเปลี่ยนแปลงและใบสั่งงานในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'แสดงประวัติการเปลี่ยนแปลง (ลำดับย้อนกลับ) ในอินเตอร์เฟซเอเย่นต์';
     $Self->{Translation}->{'State Machine'} = 'สถานะกลไก';

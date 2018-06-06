@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-03-03 13:21+0000\n"
-"PO-Revision-Date: 2018-03-03 13:21+0000\n"
+"POT-Creation-Date: 2018-04-24 14:36+0000\n"
+"PO-Revision-Date: 2018-04-24 14:36+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Russian (http://www.transifex.com/otrs/OTRS/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1553,6 +1553,18 @@ msgstr "окончить с"
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "set"
 msgstr "установлено"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this expression?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this action?"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this condition?"
+msgstr ""
 
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
 msgid "Ok"

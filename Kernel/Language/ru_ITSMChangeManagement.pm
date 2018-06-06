@@ -850,8 +850,8 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = 'Редактировать изменение.';
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'Редактировать условия изменения.';
     $Self->{Translation}->{'Edit the workorder.'} = 'Редактировать задачу.';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        'Включает минимальный размер счетчика изменений (если выбрана «Дата» в качестве ChangeNumberGenerator).';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Планирование перемещения Изменений. Обзор порядка утверждения Изменений.';
     $Self->{Translation}->{'History Zoom'} = 'История подробно';
@@ -889,6 +889,8 @@ sub Data {
         'Если частота указана как "regularly" вы можете задать как часто будут отправляться уведомления (каждые Х часов).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Связать другой объект с изменением';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Связать другой объект с задачей';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Список членов CAB для автозавершения.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Список агентов для автозавершения.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
@@ -923,8 +925,6 @@ sub Data {
         'Выполняет заданное действие для каждого события (как Invoker) для каждого настроенного Webservice.';
     $Self->{Translation}->{'Planned end time'} = '';
     $Self->{Translation}->{'Planned start time'} = '';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'Показывает ссылку/элемент в меню для показа вовлеченных сотрудников для изменения при подробном просмотре изменения в интерфейсе агента.';
     $Self->{Translation}->{'Print the change.'} = 'Печать изменения.';
     $Self->{Translation}->{'Print the workorder.'} = 'Печать задачи.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Проектируемая доступность сервиса';
@@ -996,24 +996,22 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Задает минимальное количество разрядов для счетчика изменений (если выбран тип  "AutoIncrement" для ITSMChange::NumberGenerator). По умолчанию - 5, что означает, что начальное значение счетчика будет 10000.';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        'Устанавливает минимальный размер счетчика изменений, если «AutoIncrement» был выбран как ChangeNumberGenerator. По умолчанию 5, это означает, что счетчик начинается с 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Задает state machine для изменений.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Задает state machine для заданий.';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
-        'Отображает ссылку в меню, которая позволяет изменить агента для Задачи, в детальном просмотре этой Задачи в интерфейсе агента.';
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'Отображает ссылку в меню, которая позволяет определить изменения как шаблон в детальном просмотре изменения в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'Отображает ссылку в меню, которая позволяет определить Задачу как шаблон в детальном просмотре Задачи в интерфейсе агента.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
-        'Отображает ссылку в меню, которая позволяет редактировать отчет о Задаче, в детальном просмотре этой задачи в интерфейсе агента.';
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'Отображает ссылку в меню, которая позволяет установить связь изменения с другим объекторм в детальном просмотре изменения в интерфейсе агента.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
-        'Отображает ссылку в меню, которая позволяет установить связь Задачи с другим объектом в детальном просмотре задания в интерфейсе агента.';
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'Отображает ссылку в меню которая позволяет перемещать временной интервал изменения в его детальном просмотре в агентском интерфейсе.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1044,6 +1042,8 @@ sub Data {
         'Отображает ссылку в меню для печати Задачи при ее детальном просмотре в интерфейсе агента.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'Показывает пункт меню для очистки изменения и его задач при его подробном просмотре в интерфейсе агента.';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Показывает историю изменений (в обратном порядке) в интерфейсе агента.';
     $Self->{Translation}->{'State Machine'} = 'Состояния';

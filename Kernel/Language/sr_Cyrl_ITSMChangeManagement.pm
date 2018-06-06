@@ -24,7 +24,7 @@ sub Data {
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'Управљање обавештењима у ITSM управљању променама';
     $Self->{Translation}->{'Add Notification Rule'} = 'Додај правило обавештавања';
-    $Self->{Translation}->{'Edit Notification Rule'} = '';
+    $Self->{Translation}->{'Edit Notification Rule'} = 'Уреди правило обавештавања';
     $Self->{Translation}->{'A notification should have a name!'} = 'Обавештење треба да има име!';
     $Self->{Translation}->{'Name is required.'} = 'Име је обавезно.';
 
@@ -517,14 +517,14 @@ sub Data {
     $Self->{Translation}->{'any'} = 'сваки';
 
     # Perl Module: Kernel/System/ITSMChange/Notification.pm
-    $Self->{Translation}->{'Previous Change Builder'} = '';
-    $Self->{Translation}->{'Previous Change Manager'} = '';
+    $Self->{Translation}->{'Previous Change Builder'} = 'Претходни градитељ промене';
+    $Self->{Translation}->{'Previous Change Manager'} = 'Претходни управних промене';
     $Self->{Translation}->{'Workorder Agents'} = 'Оператери радног налога';
     $Self->{Translation}->{'Previous Workorder Agent'} = 'Претходни оператер радног налога';
     $Self->{Translation}->{'Change Initiators'} = 'Иницијатори промене';
-    $Self->{Translation}->{'Group ITSMChange'} = '';
-    $Self->{Translation}->{'Group ITSMChangeBuilder'} = '';
-    $Self->{Translation}->{'Group ITSMChangeManager'} = '';
+    $Self->{Translation}->{'Group ITSMChange'} = 'Група ITSMChange';
+    $Self->{Translation}->{'Group ITSMChangeBuilder'} = 'Група ITSMChangeBuilder';
+    $Self->{Translation}->{'Group ITSMChangeManager'} = 'Група ITSMChangeManager';
 
     # Database XML Definition: ITSMChangeManagement.sopm
     $Self->{Translation}->{'requested'} = 'захтевано';
@@ -545,15 +545,15 @@ sub Data {
     $Self->{Translation}->{'backout'} = 'одустанак';
     $Self->{Translation}->{'decision'} = 'одлука';
     $Self->{Translation}->{'pir'} = 'PIR';
-    $Self->{Translation}->{'ChangeStateID'} = '';
+    $Self->{Translation}->{'ChangeStateID'} = 'ChangeStateID';
     $Self->{Translation}->{'CategoryID'} = 'ИД Категорије';
     $Self->{Translation}->{'ImpactID'} = 'ИД утицаја';
     $Self->{Translation}->{'PriorityID'} = 'ИД приоритета';
-    $Self->{Translation}->{'ChangeManagerID'} = '';
-    $Self->{Translation}->{'ChangeBuilderID'} = '';
-    $Self->{Translation}->{'WorkOrderStateID'} = '';
-    $Self->{Translation}->{'WorkOrderTypeID'} = '';
-    $Self->{Translation}->{'WorkOrderAgentID'} = '';
+    $Self->{Translation}->{'ChangeManagerID'} = 'ChangeManagerID';
+    $Self->{Translation}->{'ChangeBuilderID'} = 'ChangeBuilderID';
+    $Self->{Translation}->{'WorkOrderStateID'} = 'WorkOrderStateID';
+    $Self->{Translation}->{'WorkOrderTypeID'} = 'WorkOrderTypeID';
+    $Self->{Translation}->{'WorkOrderAgentID'} = 'WorkOrderAgentID';
     $Self->{Translation}->{'is'} = 'је';
     $Self->{Translation}->{'is not'} = 'није';
     $Self->{Translation}->{'is empty'} = 'је празно';
@@ -569,9 +569,9 @@ sub Data {
     $Self->{Translation}->{'set'} = 'подеси';
 
     # JS File: ITSM.Agent.ChangeManagement.Condition
-    $Self->{Translation}->{'Do you really want to delete this expression?'} = '';
-    $Self->{Translation}->{'Do you really want to delete this action?'} = '';
-    $Self->{Translation}->{'Do you really want to delete this condition?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this expression?'} = 'Да ли стварно желите да обришете овај израз?';
+    $Self->{Translation}->{'Do you really want to delete this action?'} = 'Да ли стварно желите да обришете ову акцију?';
+    $Self->{Translation}->{'Do you really want to delete this condition?'} = 'Да ли заиста желите да обришете овај услов?';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'У реду';
@@ -850,8 +850,8 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = 'Уреди промену.';
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'Уреди услове за промену.';
     $Self->{Translation}->{'Edit the workorder.'} = 'Уреди радни налог.';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        'Активира минималну величину бројача промена (ако је изабран "Датум" за ChangeNumberGenerator).';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Проследи распоред промена. Преглед одобрених промена.';
     $Self->{Translation}->{'History Zoom'} = 'Детаљи историјата';
@@ -889,9 +889,11 @@ sub Data {
         'Ако је учесталост \'редовно\', можете подесити колико често се шаљу обавештења (на сваких X сати).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Повежи други објекат са променом.';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Повежи други објекат са радним налогом.';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Потражи чланове CAB ради аутоматског довршавања.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Потражи оператере, употребљене за аутоматско довршавање.';
-    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
+    $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = 'Уређивање машине стања ITSM управљања променама.';
     $Self->{Translation}->{'Manage the category ↔ impact ↔ priority matrix.'} = 'Управљање матрицом Категорија - Утицај - Приоритет.';
     $Self->{Translation}->{'Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted.'} =
         'Модул за проверу да ли додавање радног налога или додавање радног налога из шаблона треба да буде дозвољено.';
@@ -923,8 +925,6 @@ sub Data {
         'Извршава подешену акцију за сваки догађај (као позивалац) за сваки конфигурисан веб сервис.';
     $Self->{Translation}->{'Planned end time'} = 'Планирано време завршетка';
     $Self->{Translation}->{'Planned start time'} = 'Планирано време почетка';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'У менију приказује везу која омогућава приказ особа укључених у промену  на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Print the change.'} = 'Одштампај промену.';
     $Self->{Translation}->{'Print the workorder.'} = 'Одштампај радни налог.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Пројектована доступност сервиса';
@@ -996,24 +996,22 @@ sub Data {
         'Дефинише максималну висину реда (у пикселима) HTML поља у екрану детаља промене и радног налога у интерфејсу оператера.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Подешава минималну величину бројача промена (ако је изабран "AutoIncrement" за ITSMChange::NumberGenerator). Подразумевано је 5, што значи да бројач почиње од 10000.';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        'Дефинише минималну величину бројача промена уколико је изабран "AutoIncrement" као ChangeNumberGenerator. Подразумевано је 5, што значи да бројач почиње од 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Подеси машину стања за промене.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Подеси машину стања за радне налоге.';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Приказује поље за потврду у екрану измена радног налога у интерфејсу оператера које дефинише да ли ће следећи радни налози такође бити премештени уколико је радни налог измењен и планирано време завршетка промењено.';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
-        'У менију приказује везу која омогућава измену оператера за радни налог, на детаљном приказу тог налога у интерфејсу оператера.';
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'У менију приказује везу која омогућава дефинисање промене као шаблона на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'У менију приказује везу која омогућава дефинисање радног налога као шаблона на детаљном приказу у интерфејсу оператера.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
-        'У менију приказује везу која омогућава измену извештаја за радни налог, на детаљном приказу тог налога у интерфејсу оператера.';
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'У менију приказује везу која омогућаваповезивање промене са другим објектом на детаљном приказу промене у интерфејсу оператера.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
-        'У менију приказује везу која омогућава повезивање радног налога са другим објектом на детаљном приказу тог налога у интерфејсу оператера.';
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'У менију приказује везу која омогућава померање временског термина промене на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1044,6 +1042,8 @@ sub Data {
         'У менију приказује везу за штампање радног налога на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'У менију приказује везу за поништавање промене и припадајућих радних налога на детаљном приказу у интерфејсу оператера.';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Приказује историјат тикета (обрнут редослед) у интерфејсу оператера.';
     $Self->{Translation}->{'State Machine'} = 'Машина стања';

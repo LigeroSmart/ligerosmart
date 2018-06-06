@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-03-03 13:21+0000\n"
-"PO-Revision-Date: 2018-03-04 10:26+0000\n"
+"POT-Creation-Date: 2018-04-24 14:36+0000\n"
+"PO-Revision-Date: 2018-05-25 19:20+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -1552,6 +1552,18 @@ msgstr "ezzel végződik"
 msgid "set"
 msgstr "beállítva"
 
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this expression?"
+msgstr "Valóban törölni szeretné ezt a kifejezést?"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this action?"
+msgstr "Valóban törölni szeretné ezt a műveletet?"
+
+#. JS File: ITSM.Agent.ChangeManagement.Condition
+msgid "Do you really want to delete this condition?"
+msgstr "Valóban törölni szeretné ezt a feltételt?"
+
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
 msgid "Ok"
 msgstr "OK"
@@ -1857,7 +1869,7 @@ msgstr "Meghatározza, hogy a változáskeresés és a munkamegrendelés-keresé
 msgid ""
 "Defines if the change state can be set in the change edit screen of the "
 "agent interface."
-msgstr "Meghatározza, hogy a változás állapota beállítható-e az ügyintézői felület változás szerkesztéseképernyőjén."
+msgstr "Meghatározza, hogy a változás állapota beállítható-e az ügyintézői felület változás szerkesztése képernyőjén."
 
 #. SysConfig
 msgid "Defines if the planned effort should be shown."
@@ -2685,7 +2697,7 @@ msgstr "Tervezett kezdési idő"
 msgid ""
 "Presents a link in the menu to show the involved persons in a change, in the"
 " zoom view of such change in the agent interface."
-msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen."
+msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez a változás nagyítás nézetében az ügyintézői felületen."
 
 #. SysConfig
 msgid "Print the change."
@@ -2735,7 +2747,7 @@ msgstr "A szükséges jogosultságok egy sablon létrehozásához egy változás
 
 #. SysConfig
 msgid "Required privileges to create a template from a changes' CAB."
-msgstr "A szükséges jogosultságok egy sablon létrehozásához a változások CAB-jából."
+msgstr "A szükséges jogosultságok egy sablon létrehozásához a változások CAB-jéből."
 
 #. SysConfig
 msgid "Required privileges to create a template from a workorder."
@@ -2970,7 +2982,7 @@ msgstr "Egy jelölőnégyzetet jelenít meg az ügyintézői felület munkamegre
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
 "zoom view of such workorder of the agent interface."
-msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi a munkamegrendelés ügyintézőjének megváltoztatását az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén."
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi a munkamegrendelés ügyintézőjének megváltoztatását az ügyintézői felület munkamegrendelésének nagyítási nézetén."
 
 #. SysConfig
 msgid ""
@@ -2988,7 +3000,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy mun
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
 "the zoom view of such workorder of the agent interface."
-msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés jelentésének szerkesztését az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén."
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés jelentésének szerkesztését az ügyintézői felület munkamegrendelésének nagyítási nézetén."
 
 #. SysConfig
 msgid ""
@@ -3000,7 +3012,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy vá
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
 " in the zoom view of such workorder of the agent interface."
-msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés összekapcsolását egy másik objektummal az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén."
+msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés összekapcsolását egy másik objektummal az ügyintézői felület munkamegrendelésének nagyítási nézetén."
 
 #. SysConfig
 msgid ""

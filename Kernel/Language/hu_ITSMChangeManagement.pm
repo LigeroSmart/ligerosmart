@@ -569,9 +569,9 @@ sub Data {
     $Self->{Translation}->{'set'} = 'beállítva';
 
     # JS File: ITSM.Agent.ChangeManagement.Condition
-    $Self->{Translation}->{'Do you really want to delete this expression?'} = '';
-    $Self->{Translation}->{'Do you really want to delete this action?'} = '';
-    $Self->{Translation}->{'Do you really want to delete this condition?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this expression?'} = 'Valóban törölni szeretné ezt a kifejezést?';
+    $Self->{Translation}->{'Do you really want to delete this action?'} = 'Valóban törölni szeretné ezt a műveletet?';
+    $Self->{Translation}->{'Do you really want to delete this condition?'} = 'Valóban törölni szeretné ezt a feltételt?';
 
     # JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
     $Self->{Translation}->{'Ok'} = 'OK';
@@ -662,7 +662,7 @@ sub Data {
     $Self->{Translation}->{'Defines if the change search and the workorder search functions could use the mirror DB.'} =
         'Meghatározza, hogy a változáskeresés és a munkamegrendelés-keresés funkciók használhatják-e a tükör adatbázist.';
     $Self->{Translation}->{'Defines if the change state can be set in the change edit screen of the agent interface.'} =
-        'Meghatározza, hogy a változás állapota beállítható-e az ügyintézői felület változás szerkesztéseképernyőjén.';
+        'Meghatározza, hogy a változás állapota beállítható-e az ügyintézői felület változás szerkesztése képernyőjén.';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Meghatározza, hogy a tervezett ráfordítást meg kell-e jeleníteni.';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Meghatározza, hogy a kért dátumot ügyfél szerint kell-e kinyomtatni.';
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
@@ -850,8 +850,8 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = 'A változás szerkesztése.';
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'A változás feltételeinek szerkesztése.';
     $Self->{Translation}->{'Edit the workorder.'} = 'A munkamegrendelés szerkesztése.';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        'Engedélyezi a legkisebb változásszámláló méretet (ha „Dátum” lett kiválasztva változásszám-előállítóként).';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Változások előjegyzési terve. A jóváhagyott változások áttekintése.';
     $Self->{Translation}->{'History Zoom'} = 'Előzménynagyítás';
@@ -889,6 +889,8 @@ sub Data {
         'Ha a gyakoriság „rendszeresen”, akkor beállíthatja, hogy az értesítések milyen gyakran legyenek elküldve (minden X. órában).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Másik objektum összekapcsolása a változással.';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Másik objektum összekapcsolása a munkamegrendeléssel.';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'CAB-tagok kikeresése az automatikus kiegészítéshez.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Ügyintézők kikeresése az automatikus kiegészítés használatához.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = 'ITSM változásmenedzsment állapotgép kezelése.';
@@ -923,8 +925,6 @@ sub Data {
         'Végrehajtja a beállított műveletet minden eseménynél (mint egy meghívó) minden egyes beállított webszolgáltatáshoz.';
     $Self->{Translation}->{'Planned end time'} = 'Tervezett befejezési idő';
     $Self->{Translation}->{'Planned start time'} = 'Tervezett kezdési idő';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez az ilyen változás nagyítás nézetében az ügyintézői felületen.';
     $Self->{Translation}->{'Print the change.'} = 'A változás nyomtatása.';
     $Self->{Translation}->{'Print the workorder.'} = 'A munkamegrendelés nyomtatása.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Tervezett szolgáltatáselérhetőség';
@@ -939,7 +939,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to change the workorder agent.'} = 'A szükséges jogosultságok egy munkamegrendelés ügyintézőjének megváltoztatásához.';
     $Self->{Translation}->{'Required privileges to create a template from a change.'} = 'A szükséges jogosultságok egy sablon létrehozásához egy változásból.';
     $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} =
-        'A szükséges jogosultságok egy sablon létrehozásához a változások CAB-jából.';
+        'A szükséges jogosultságok egy sablon létrehozásához a változások CAB-jéből.';
     $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'A szükséges jogosultságok egy sablon létrehozásához egy munkamegrendelésből.';
     $Self->{Translation}->{'Required privileges to create changes from templates.'} = 'A szükséges jogosultságok változások létrehozásához sablonokból.';
     $Self->{Translation}->{'Required privileges to create changes.'} = 'A szükséges jogosultságok változások létrehozásához.';
@@ -996,24 +996,22 @@ sub Data {
         'A beágyazott HTML mezők legnagyobb magasságának beállítása (képpontban) az ügyintézői felület változásnagyítás képernyőjén és munkamegrendelés-nagyítás képernyőjén.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Beállítja a legkisebb változásszámláló méretet (ha „AutoIncrement” lett kiválasztva ITSM változás::Számelőállítóként) Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni.';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        'Beállítja a legkisebb változásszámláló méretet, ha „AutoIncrement” lett kiválasztva változásszám-előállítóként. Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Beállítja az állapotgépet a változásoknál.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Beállítja az állapotgépet a munkamegrendeléseknél.';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Egy jelölőnégyzetet jelenít meg az ügyintézői felület munkamegrendelés szerkesztése képernyőjén, amely azt határozza meg, hogy a következő munkamegrendeléseket is át kell-e helyezni, ha egy munkamegrendelés módosult és a tervezett befejezési idő megváltozott.';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
-        'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi a munkamegrendelés ügyintézőjének megváltoztatását az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén.';
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy változás sablonként való meghatározását a változás nagyítás nézetében az ügyintézői felületen.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés sablonként való meghatározását a munkamegrendelés nagyított nézetében az ügyintézői felületen.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
-        'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés jelentésének szerkesztését az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén.';
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy változás összekapcsolását egy másik objektummal az ügyintézői felület változás nagyítás nézetében.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
-        'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés összekapcsolását egy másik objektummal az ügyintézői felület ilyen munkamegrendelésének nagyítási nézetén.';
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy változás időrésének áthelyezését az ügyintézői felületen az elem nagyítási nézetében.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1044,6 +1042,8 @@ sub Data {
         'Egy hivatkozást jelenít meg a menüben egy munkamegrendelés nyomtatásához annak nagyítási nézetén az ügyintézői felületen.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'Egy hivatkozást jelenít meg a menüben egy változás és annak munkamegrendelései visszaállításához az ügyintézői felületen az elem nagyítási nézetében.';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Megjeleníti a változás előzményeit (fordított sorrendben) az ügyintézői felületen.';
     $Self->{Translation}->{'State Machine'} = 'Állapotgép';

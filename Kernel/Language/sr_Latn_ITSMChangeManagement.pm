@@ -850,8 +850,8 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = 'Uredi promenu.';
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'Uredi uslove za promenu.';
     $Self->{Translation}->{'Edit the workorder.'} = 'Uredi radni nalog.';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
-        'Aktivira minimalnu veličinu brojača promena (ako je izabran "Datum" za ChangeNumberGenerator).';
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
+        '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Prosledi raspored promena. Pregled odobrenih promena.';
     $Self->{Translation}->{'History Zoom'} = 'Detalji istorijata';
@@ -889,6 +889,8 @@ sub Data {
         'Ako je učestalost \'redovno\', možete podesiti koliko često se šalju obaveštenja (na svakih X sati).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Poveži drugi objekat sa promenom.';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Poveži drugi objekat sa radnim nalogom.';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Potraži članove CAB radi automatskog dovršavanja.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Potraži operatere, upotrebljene za automatsko dovršavanje.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
@@ -923,8 +925,6 @@ sub Data {
         'Izvršava podešenu akciju za svaki događaj (kao pozivalac) za svaki konfigurisan veb servis.';
     $Self->{Translation}->{'Planned end time'} = 'Planirano vreme završetka';
     $Self->{Translation}->{'Planned start time'} = 'Planirano vreme početka';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'U meniju prikazuje vezu koja omogućava prikaz osoba uključenih u promenu  na detaljnom prikazu u interfejsu operatera.';
     $Self->{Translation}->{'Print the change.'} = 'Odštampaj promenu.';
     $Self->{Translation}->{'Print the workorder.'} = 'Odštampaj radni nalog.';
     $Self->{Translation}->{'Projected Service Availability'} = 'Projektovana dostupnost servisa';
@@ -996,24 +996,22 @@ sub Data {
         'Definiše maksimalnu visinu reda (u pikselima) HTML polja u ekranu detalja promene i radnog naloga u interfejsu operatera.';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Podešava minimalnu veličinu brojača promena (ako je izabran "AutoIncrement" za ITSMChange::NumberGenerator). Podrazumevano je 5, što znači da brojač počinje od 10000.';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        'Definiše minimalnu veličinu brojača promena ukoliko je izabran "AutoIncrement" kao ChangeNumberGenerator. Podrazumevano je 5, što znači da brojač počinje od 10000.';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Podesi mašinu stanja za promene.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Podesi mašinu stanja za radne naloge.';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Prikazuje polje za potvrdu u ekranu izmena radnog naloga u interfejsu operatera koje definiše da li će sledeći radni nalozi takođe biti premešteni ukoliko je radni nalog izmenjen i planirano vreme završetka promenjeno.';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
-        'U meniju prikazuje vezu koja omogućava izmenu operatera za radni nalog, na detaljnom prikazu tog naloga u interfejsu operatera.';
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'U meniju prikazuje vezu koja omogućava definisanje promene kao šablona na detaljnom prikazu u interfejsu operatera.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'U meniju prikazuje vezu koja omogućava definisanje radnog naloga kao šablona na detaljnom prikazu u interfejsu operatera.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
-        'U meniju prikazuje vezu koja omogućava izmenu izveštaja za radni nalog, na detaljnom prikazu tog naloga u interfejsu operatera.';
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'U meniju prikazuje vezu koja omogućavapovezivanje promene sa drugim objektom na detaljnom prikazu promene u interfejsu operatera.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
-        'U meniju prikazuje vezu koja omogućava povezivanje radnog naloga sa drugim objektom na detaljnom prikazu tog naloga u interfejsu operatera.';
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'U meniju prikazuje vezu koja omogućava pomeranje vremenskog termina promene na detaljnom prikazu u interfejsu operatera.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1044,6 +1042,8 @@ sub Data {
         'U meniju prikazuje vezu za štampanje radnog naloga na detaljnom prikazu u interfejsu operatera.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'U meniju prikazuje vezu za poništavanje promene i pripadajućih radnih naloga na detaljnom prikazu u interfejsu operatera.';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Prikazuje istorijat tiketa (obrnut redosled) u interfejsu operatera.';
     $Self->{Translation}->{'State Machine'} = 'Mašina stanja';

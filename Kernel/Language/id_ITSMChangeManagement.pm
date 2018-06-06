@@ -850,7 +850,7 @@ sub Data {
     $Self->{Translation}->{'Edit the change.'} = '';
     $Self->{Translation}->{'Edit the conditions of the change.'} = '';
     $Self->{Translation}->{'Edit the workorder.'} = '';
-    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ChangeNumberGenerator).'} =
+    $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
         '';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Perubahan bahwa jadwal dimajukan . Ikhtisar lebih perubahan disetujui.';
@@ -889,6 +889,8 @@ sub Data {
         'Jika frekuensi \'teratur\', Anda dapat mengkonfigurasi seberapa sering pemberitahuan dikirim (setiap X jam).';
     $Self->{Translation}->{'Link another object to the change.'} = '';
     $Self->{Translation}->{'Link another object to the workorder.'} = '';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Lookup anggota CAB untuk pelengkapan otomatis.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Lookup agen, yang digunakan untuk melengkapi.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '';
@@ -923,8 +925,6 @@ sub Data {
         'Melakukan tindakan dikonfigurasi untuk setiap acara (sebagai Invoker) untuk setiap Layanan Web dikonfigurasi.';
     $Self->{Translation}->{'Planned end time'} = '';
     $Self->{Translation}->{'Planned start time'} = '';
-    $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} =
-        'Menyajikan link dalam menu untuk menunjukkan orang-orang yang terlibat dalam perubahan, dalam tampilan zoom perubahan tersebut dalam antarmuka agen.';
     $Self->{Translation}->{'Print the change.'} = '';
     $Self->{Translation}->{'Print the workorder.'} = '';
     $Self->{Translation}->{'Projected Service Availability'} = '';
@@ -996,24 +996,22 @@ sub Data {
         '';
     $Self->{Translation}->{'Sets the minimal change counter size (if "AutoIncrement" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000.'} =
         'Menetapkan minimal ukuran perubahan counter (jika "auto_increment" terpilih sebagai Perubahan ITSM :: Number Generator). Default adalah 5, ini berarti konter dimulai dari 10000.';
-    $Self->{Translation}->{'Sets the minimal change counter size if "AutoIncrement" was selected as ChangeNumberGenerator. Default is 5, this means the counter starts from 10000.'} =
-        '';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Set up mesin untuk perubahan.';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Set up mesin untuk perintah kerja.';
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '';
-    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of such workorder of the agent interface.'} =
-        'Menunjukkan link dalam menu yang memungkinkan mengubah agen perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen.';
+    $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'Menunjukkan link dalam menu yang memungkinkan mendefinisikan perubahan sebagai template dalam tampilan zoom perubahan, dalam antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'Menunjukkan link dalam menu yang memungkinkan mendefinisikan perintah kerja sebagai template dalam tampilan zoom dari perintah kerja, di antarmuka agen.';
-    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of such workorder of the agent interface.'} =
-        'Menunjukkan link dalam menu yang memungkinkan mengedit laporan dari perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen.';
+    $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'Menunjukkan link dalam menu yang memungkinkan menghubungkan perubahan dengan objek lain pada tampilan perubahan zoom dari antarmuka agen.';
-    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of such workorder of the agent interface.'} =
-        'Menunjukkan link dalam menu yang memungkinkan menghubungkan perintah kerja dengan objek lain dalam tampilan zoom dari perintah kerja seperti antarmuka agen.';
+    $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'Menunjukkan link dalam menu yang memungkinkan bergerak slot waktu perubahan dalam tampilan zoom-nya dari antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1044,6 +1042,8 @@ sub Data {
         'Menunjukkan link dalam menu untuk mencetak perintah kerja dalam tampilan zoom-nya dari antarmuka agen.';
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'Menunjukkan link dalam menu untuk mengatur ulang perubahan dan perintah kerja dalam tampilan zoom-nya dari antarmuka agen.';
+    $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
+        '';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Menunjukkan sejarah perubahan (urutan terbalik) di antarmuka agen.';
     $Self->{Translation}->{'State Machine'} = 'State mesin';
