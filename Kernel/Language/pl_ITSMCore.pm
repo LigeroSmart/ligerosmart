@@ -103,6 +103,7 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '';
     $Self->{Translation}->{'Includes'} = 'Zawiera';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Zarządzaj macierzą priorytetów.';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Moduł pokazywania linku powrotu w menu SLA.';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Moduł pokazywania linku powrotu w menu serwisowym.';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Moduł pokazywania linku w menu serwisowym.';

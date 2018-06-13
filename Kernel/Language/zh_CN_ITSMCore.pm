@@ -103,6 +103,7 @@ sub Data {
     $Self->{Translation}->{'Incident State Type.'} = '故障状态类型。';
     $Self->{Translation}->{'Includes'} = '包括';
     $Self->{Translation}->{'Manage priority matrix.'} = '管理优先级矩阵。';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'SLA菜单中显示“后退”菜单项的模块。';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = '服务菜单中显示“后退”菜单项的模块。';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = '服务菜单中显示“链接”菜单项的模块。';

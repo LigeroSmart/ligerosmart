@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 09:13+0000\n"
-"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"POT-Creation-Date: 2018-06-13 10:00+0000\n"
+"PO-Revision-Date: 2018-06-13 10:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -266,6 +266,10 @@ msgstr "Inclus"
 #. SysConfig
 msgid "Manage priority matrix."
 msgstr "Gestion de la matrice de priorité."
+
+#. SysConfig
+msgid "Manage the criticality - impact - priority matrix."
+msgstr ""
 
 #. SysConfig
 msgid "Module to show the Back menu item in SLA menu."

@@ -1,11 +1,11 @@
 # 
 # Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2017
+# Balázs Úr <urbalazs@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 09:13+0000\n"
-"PO-Revision-Date: 2018-06-06 09:15+0000\n"
+"POT-Creation-Date: 2018-06-13 10:00+0000\n"
+"PO-Revision-Date: 2018-06-13 10:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -266,6 +266,10 @@ msgid "Manage priority matrix."
 msgstr "Prioritásmátrix kezelése."
 
 #. SysConfig
+msgid "Manage the criticality - impact - priority matrix."
+msgstr ""
+
+#. SysConfig
 msgid "Module to show the Back menu item in SLA menu."
 msgstr "Egy modul a Vissza menüpont megjelenítéséhez az SLA menüben."
 
@@ -348,7 +352,7 @@ msgstr "Állítsa be a hivatkozások típusát és irányát, hogy használható
 
 #. SysConfig
 msgid "Source"
-msgstr ""
+msgstr "Forrás"
 
 #. SysConfig
 msgid ""
