@@ -114,7 +114,7 @@ sub Run {
             ObjectParams => {
                 String => $Request->{CreateTime},
             },
-        )->ToString();
+        )->ToEpoch();
 
         $Self->Print(
             "  RequestID: <yellow>$Request->{ID}</yellow>\n   -For TicketID: $Request->{TicketID}\n"

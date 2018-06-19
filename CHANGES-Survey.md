@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-06-19 Fixed bug#[13849](https://bugs.otrs.org/show_bug.cgi?id=13849) - Survey request is beeing sent ignoring SendInHoursAfterClose.
 
 #6.0.4 2018-05-04
  - 2018-04-24 Updated translations, thanks to all translators.
