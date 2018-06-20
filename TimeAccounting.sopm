@@ -312,7 +312,7 @@
         <b>FIGYELMEZTETÉS</b>
         <br>
         <br>
-        In order to grant users access to the time accounting 'settings' and 'reporting' features, you need to add them as member to the group 'admin'.
+        Annak érdekében, hogy hozzáférést adjon a felhasználók számára az időelszámolás „beállítási” és „jelentési” funkcióihoz, hozzá kell adnia őket az „admin” csoporthoz tagként.
         <br>
         <br>
         Azok a menüpontok, amelyeket ez a csomag adott hozzá, azután lesznek láthatóak, miután ismét bejelentkezik a rendszerbe.
