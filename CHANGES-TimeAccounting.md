@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-06-20 Fixed bug#[13467](https://bugs.otrs.org/show_bug.cgi?id=13467) - Setting "Days of vacation" to value 0 not possible.
 
 #6.0.4 2018-05-04
  - 2018-04-24 Updated translations, thanks to all translators.

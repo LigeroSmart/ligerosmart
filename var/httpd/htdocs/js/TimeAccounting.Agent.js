@@ -92,6 +92,33 @@ TimeAccounting.Agent = (function (TargetNS) {
                 ]
             );
         }
+
+        $('.LeaveDays').on('change', function() {
+            var FieldValue = $(this).val();
+
+           // replace , with .
+           FieldValue = FieldValue.replace(/,/g, ".");
+
+           // check if the entered value only consists of allowed values
+           // if not, we do not eval for security reasons
+           if (FieldValue.match(/^[0-9.+\- ]+$/)) {
+               // Calculation
+               try {
+                   /*eslint-disable no-eval */
+                   FieldValue = eval(FieldValue);
+                   /*eslint-enable no-eval */
+               }
+               catch (CalcError) {
+                   FieldValue = 0;
+               }
+
+               // set new value
+               $(this).val(FieldValue.toFixed(2));
+           }
+           else {
+               $(this).val('');
+           }
+        });
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');

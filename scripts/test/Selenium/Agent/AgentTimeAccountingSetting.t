@@ -138,6 +138,28 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
+        $Selenium->execute_script("\$('#LeaveDays-1').val('');");
+        $Selenium->find_element( "#LeaveDays-1", 'css' )->send_keys(0);
+        $Selenium->find_element( "#DateStart-1", 'css' )->click();
+
+        # Verify leave days correct format.
+        $Self->Is(
+            $Selenium->find_element( "#LeaveDays-1", 'css' )->get_value(),
+            '0.00',
+            "Leave Days correct format",
+        );
+
+        $Selenium->execute_script("\$('#LeaveDays-1').val('');");
+        $Selenium->find_element( "#LeaveDays-1", 'css' )->send_keys(40);
+        $Selenium->find_element( "#DateStart-1", 'css' )->click();
+
+        # Verify leave days correct format.
+        $Self->Is(
+            $Selenium->find_element( "#LeaveDays-1", 'css' )->get_value(),
+            '40.00',
+            "Leave Days correct format",
+        );
+
         # Click 'Add time period'.
         $Selenium->find_element("//button[\@value='Add time period'][\@type='submit']")->VerifiedClick();
 

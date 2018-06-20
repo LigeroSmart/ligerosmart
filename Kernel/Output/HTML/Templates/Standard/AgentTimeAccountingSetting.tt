@@ -468,7 +468,7 @@
 [% RenderBlockEnd("DateEndBeforeDateStart") %]
                             </td>
                             <td>
-                                <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="Validate_Required [% Data.LeaveDaysInvalid | html %]" title="[% Translate("Leave Days") | html %]" />
+                                <input type="text" id="LeaveDays-[% Data.Period | html %]" name="LeaveDays[[% Data.Period | html %]]" value="[% Data.LeaveDays | html %]" class="LeaveDays Validate_Required [% Data.LeaveDaysInvalid | html %]" title="[% Translate("Leave Days") | html %]" />
                                 <div id="LeaveDays-[% Data.Period | html %]Error" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                                 <div id="LeaveDays-[% Data.Period | html %]ServerError" class="TooltipErrorMessage"><p>[% Translate("This field is required.") | html %]</p></div>
                             </td>
