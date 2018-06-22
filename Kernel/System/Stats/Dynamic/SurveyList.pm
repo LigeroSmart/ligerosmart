@@ -294,6 +294,8 @@ sub GetStatTable {
         %{ $Param{Restrictions} },
     );
 
+    my $StatsObject = $Kernel::OM->Get('Kernel::System::Stats');
+
     SURVEY:
     for my $SurveyID (@SurveyIDs) {
 
@@ -432,6 +434,19 @@ sub GetStatTable {
                 # Clean SurveyData.
                 if ( !$SurveyData{$Attribute} ) {
                     $SurveyData{$Attribute} = '';
+                }
+
+                if (
+                    $Param{TimeZone}
+                    && $SurveyData{$Attribute}
+                    && $SurveyData{$Attribute} =~ /\A(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})\z/
+                    )
+                {
+                    $SurveyData{$Attribute} = $StatsObject->_FromOTRSTimeZone(
+                        String   => $SurveyData{$Attribute},
+                        TimeZone => $Param{TimeZone},
+                    );
+                    $SurveyData{$Attribute} .= " ($Param{TimeZone})";
                 }
 
                 push @ResultRow, $SurveyData{$Attribute};

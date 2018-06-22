@@ -82,6 +82,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Output/SurveyMenu/Generic.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/SurveyOverview/Small.t" />
         <File Permission="660" Location="scripts/test/Selenium/Public/PublicSurvey.t" />
+        <File Permission="660" Location="scripts/test/Stats/Dynamic/DynamicList.t" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.CustomerUserConditions.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyEditQuestions.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Survey.Agent.SurveyOverview.js" />
