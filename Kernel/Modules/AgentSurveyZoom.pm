@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
 
@@ -388,10 +389,10 @@ sub Run {
 
     # output the possible status menu
     my %NewStatus = (
-        ChangeStatus => '- Change Status -',
-        Master       => 'Master',
-        Valid        => 'Valid',
-        Invalid      => 'Invalid',
+        ChangeStatus => Translatable('- Change Status -'),
+        Master       => Translatable('Master'),
+        Valid        => Translatable('Valid'),
+        Invalid      => Translatable('Invalid'),
 
     );
 
@@ -403,11 +404,13 @@ sub Run {
     }
 
     my $NewStatusStr = $LayoutObject->BuildSelection(
-        Name       => 'NewStatus',
-        ID         => 'NewStatus',
-        Data       => \%NewStatus,
-        SelectedID => 'ChangeStatus',
-        Title      => $LayoutObject->{LanguageObject}->Translate('New Status'),
+        Name        => 'NewStatus',
+        ID          => 'NewStatus',
+        Data        => \%NewStatus,
+        SelectedID  => 'ChangeStatus',
+        Title       => $LayoutObject->{LanguageObject}->Translate('New Status'),
+        Class       => 'Modernize',
+        Translation => 1,
     );
 
     $LayoutObject->Block(

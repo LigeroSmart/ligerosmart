@@ -1,4 +1,5 @@
 #6.0.5 20??-??-??
+ - 2018-06-22 Fixed bug#[13741](https://bugs.otrs.org/show_bug.cgi?id=13741) - Change status dropdown is not modern and not translated in AgentSurveyZoom screen.
  - 2018-06-22 Fixed bug#[13755](https://bugs.otrs.org/show_bug.cgi?id=13755) - Survey statistic does not process timezone.
  - 2018-06-19 Fixed bug#[13849](https://bugs.otrs.org/show_bug.cgi?id=13849) - Survey request is beeing sent ignoring SendInHoursAfterClose.
 

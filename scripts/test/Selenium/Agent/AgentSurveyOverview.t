@@ -18,11 +18,12 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $SurveyObject = $Kernel::OM->Get('Kernel::System::Survey');
 
         # Create test survey.
         my $SurveyTitle = 'Survey ' . $Helper->GetRandomID();
-        my $SurveyID    = $Kernel::OM->Get('Kernel::System::Survey')->SurveyAdd(
+        my $SurveyID    = $SurveyObject->SurveyAdd(
             UserID              => 1,
             Title               => $SurveyTitle,
             Introduction        => 'Survey Introduction',
@@ -112,10 +113,56 @@ $Selenium->RunTest(
             'Crated survey link found.'
         );
 
+        # Check if change status dropdown is modernized.
+        # See bug#13741 https://bugs.otrs.org/show_bug.cgi?id=13741
+        my $Question   = 'Question ' . $Helper->GetRandomID();
+        my $QuestionID = $SurveyObject->QuestionAdd(
+            UserID         => 1,
+            SurveyID       => $SurveyID,
+            Question       => $Question,
+            AnswerRequired => 1,
+            Type           => 'YesNo',
+        );
+
+        # Go to AgentSurveyZoom screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
+
+        $Selenium->WaitFor( JavaScript => "return \$('#NewStatus.Modernize').length === 1" );
+
+        $Self->True(
+            $Selenium->execute_script("return \$('#NewStatus.Modernize').length === 1;"),
+            "'Change Status' dropdown is modernized",
+        );
+
+        # Switch status of survey.
+        for my $Status (qw(Master Valid)) {
+            $Selenium->execute_script(
+                "\$('#NewStatus').val('$Status').trigger('redraw.InputField').trigger('change');"
+            );
+
+            $Selenium->WaitFor( JavaScript => "return \$('label:contains(Status)').next().text().trim() === $Status;" );
+
+            $Self->Is(
+                $Selenium->execute_script("return \$('label:contains(Status)').next().text().trim();"),
+                "$Status",
+                "Survey status is set to $Status"
+            );
+        }
+
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # Clean-up test created survey data.
+        # Delete survey question.
         my $Success = $DBObject->Do(
+            SQL  => "DELETE FROM survey_question WHERE survey_id = ?",
+            Bind => [ \$SurveyID ],
+        );
+        $Self->True(
+            $Success,
+            "Survey-Queue for $SurveyTitle is deleted",
+        );
+
+        # Clean-up test created survey data.
+        $Success = $DBObject->Do(
             SQL  => "DELETE FROM survey_queue WHERE survey_id = ?",
             Bind => [ \$SurveyID ],
         );
