@@ -96,6 +96,7 @@
                 <input type="radio" class="NPS" id="PublicSurveyVote5[% Data.QuestionID | html %][% Data.AnswerID | html %]" name="PublicSurveyVote5[[% Data.QuestionID | html %]]" value="[% Data.AnswerID | html %]" [% Data.AnswerSelected | html %]/>
                 <label class="Answer NPS" for="PublicSurveyVote5[% Data.QuestionID | html %][% Data.AnswerID | html %]">[% Data.Answer | html %]</label>
 [% RenderBlockEnd("PublicAnswerNPSb") %]
+                <div class="Clear"></div>
 [% RenderBlockEnd("PublicAnswerNPS") %]
 
             </div>
