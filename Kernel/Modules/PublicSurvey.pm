@@ -211,7 +211,7 @@ sub Run {
                     PublicSurveyKey => $PublicSurveyKey,
                 );
                 $Output = $LayoutObject->CustomerHeader(
-                    Title => 'Survey',
+                    Title => Translatable('Survey'),
                 );
 
                 # print the main table.
