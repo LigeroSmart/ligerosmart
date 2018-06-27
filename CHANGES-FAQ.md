@@ -1,4 +1,5 @@
 #6.0.8 2018-??-??
+ - 2018-06-27 Fixed bug#[13895](https://bugs.otrs.org/show_bug.cgi?id=13895) - Inconsistent field 'Add another attribute' in AgentFAQSearch.
 
 #6.0.7 2018-06-12
  - 2018-06-05 Updated translations, thanks to all translators.
