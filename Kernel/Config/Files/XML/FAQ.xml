@@ -261,14 +261,14 @@ Your OTRS Notification Master
         <Description Translatable="1">Default state of tickets for the approval of FAQ articles.</Description>
         <Navigation>Core::FAQ::Approval</Navigation>
         <Value>
-            <Item ValueType="String">new</Item>
+            <Item ValueType="Entity" ValueEntityType="State" ValueRegex="">new</Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::ApprovalTicketType" Required="1" Valid="1">
         <Description Translatable="1">Default type of tickets for the approval of FAQ articles.</Description>
         <Navigation>Core::FAQ::Approval</Navigation>
         <Value>
-            <Item ValueType="String">Unclassified</Item>
+            <Item ValueType="Entity" ValueEntityType="Type">Unclassified</Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::Item::Field1" Required="1" Valid="1">
