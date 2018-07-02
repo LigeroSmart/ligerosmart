@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 0a04e722fbcbd39cca3fb089c294e72b3170e6b1 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - e90ad7d84fe87c8397ffdf688d6792350ebef1f6 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -255,26 +255,35 @@ sub Run {
     # get lock state
     if ( $Config->{RequiredLock} ) {
         if ( !$TicketObject->TicketLockGet( TicketID => $Self->{TicketID} ) ) {
-            $TicketObject->TicketLockSet(
+
+            my $Lock = $TicketObject->TicketLockSet(
                 TicketID => $Self->{TicketID},
                 Lock     => 'lock',
                 UserID   => $Self->{UserID}
             );
-            my $Success = $TicketObject->TicketOwnerSet(
-                TicketID  => $Self->{TicketID},
-                UserID    => $Self->{UserID},
-                NewUserID => $Self->{UserID},
-            );
 
-            # show lock state
-            if ($Success) {
-                $LayoutObject->Block(
-                    Name => 'PropertiesLock',
-                    Data => {
-                        %Param,
-                        TicketID => $Self->{TicketID},
-                    },
+            # Set new owner if ticket owner is different then logged user.
+            if ( $Lock && ( $Ticket{OwnerID} != $Self->{UserID} ) ) {
+
+                # Remember previous owner, which will be used to restore ticket owner on undo action.
+                $Param{PreviousOwner} = $Ticket{OwnerID};
+
+                my $Success = $TicketObject->TicketOwnerSet(
+                    TicketID  => $Self->{TicketID},
+                    UserID    => $Self->{UserID},
+                    NewUserID => $Self->{UserID},
                 );
+
+                # Show lock state.
+                if ($Success) {
+                    $LayoutObject->Block(
+                        Name => 'PropertiesLock',
+                        Data => {
+                            %Param,
+                            TicketID => $Self->{TicketID},
+                        },
+                    );
+                }
             }
         }
         else {
