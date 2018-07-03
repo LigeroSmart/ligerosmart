@@ -13,27 +13,68 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # get FAQ object
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        my @ItemIDs;
+        $Helper->ConfigSettingChange(
+            Key   => 'FAQ::Frontend::CustomerFAQExplorer###SearchPageShown',
+            Value => '40',
+            Valid => 1,
+        );
 
-        # create test FAQs
-        for ( 1 .. 5 ) {
-            my $FAQTitle = 'FAQ ' . $Helper->GetRandomID();
+        $Helper->ConfigSettingChange(
+            Key   => 'FAQ::Frontend::CustomerFAQExplorer###SearchLimit',
+            Value => '200',
+            Valid => 1,
+        );
+
+        my $RandomID = $Helper->GetRandomID();
+
+        # Create FAQ category.
+        my $CategoryName = "CategoryA$RandomID";
+        my $CategoryID   = $FAQObject->CategoryAdd(
+            Name     => $CategoryName,
+            Comment  => 'Some comment',
+            ParentID => 0,
+            ValidID  => 1,
+            UserID   => 1,
+        );
+        $Self->True(
+            $CategoryID,
+            "CategoryID $CategoryID is created",
+        );
+
+        # Setup group for category.
+        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
+            Group => 'users',
+        );
+        $FAQObject->SetCategoryGroup(
+            CategoryID => $CategoryID,
+            GroupIDs   => [$GroupID],
+            UserID     => 1,
+        );
+
+        # Get 'external (customer)' state ID.
+        my %States = $FAQObject->StateList(
+            UserID => 1,
+        );
+        %States = reverse %States;
+
+        my $StateID = $States{'external (customer)'};
+
+        # Create test FAQs.
+        my @Items;
+        for my $Count ( 1 .. 5 ) {
+            my $FAQTitle = "FAQ$Count-$RandomID";
             my $ItemID   = $FAQObject->FAQAdd(
                 Title       => $FAQTitle,
-                CategoryID  => 1,
-                StateID     => 1,
+                CategoryID  => $CategoryID,
+                StateID     => $StateID,
                 LanguageID  => 1,
                 ValidID     => 1,
                 UserID      => 1,
@@ -43,18 +84,16 @@ $Selenium->RunTest(
 
             $Self->True(
                 $ItemID,
-                "FAQ is created - $ItemID",
+                "FAQID $ItemID is created $FAQTitle",
             );
 
-            my %FAQ = (
+            push @Items, {
                 ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
-            );
-
-            push @ItemIDs, \%FAQ;
+                Page     => ($Count < 4) ? 1 : 2,
+            };
         }
 
-        # create and login test customer
         my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate() || die "Did not get test user";
 
         $Selenium->Login(
@@ -63,18 +102,17 @@ $Selenium->RunTest(
             Password => $TestCustomerUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to CustomerFAQExplorer screen of created test FAQ
+        # Navigate to CustomerFAQExplorer screen of created test FAQ.
         $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQExplorer");
 
-        # check CustomerFAQExplorer screen
+        # Check CustomerFAQExplorer screen.
         $Selenium->find_element( "table",             'css' );
         $Selenium->find_element( "table thead tr th", 'css' );
         $Selenium->find_element( "table tbody tr td", 'css' );
 
-        # test data for explorer screen
+        # Test data for explorer screen.
         my @Tests = (
             {
                 ScreenData => 'FAQ Explorer',
@@ -94,34 +132,98 @@ $Selenium->RunTest(
             );
         }
 
-        # click on 'Misc', go on subcategory screen
-        $Selenium->find_element( 'Misc', 'link_text' )->VerifiedClick();
+        # Click on test created category, go to subcategory screen.
+        $Selenium->find_element( "$CategoryName", 'link_text' )->VerifiedClick();
 
-        # order FAQ item per FAQID by Down
+        # Order FAQ item per FAQID by Down.
         $Selenium->VerifiedGet(
-            "${ScriptAlias}customer.pl?Action=CustomerFAQExplorer;CategoryID=1;SortBy=FAQID;OrderBy=Down"
+            "${ScriptAlias}customer.pl?Action=CustomerFAQExplorer;CategoryID=$CategoryID;SortBy=Title;Order=Up"
         );
 
-        # check and delete test created FAQs
-        for my $FAQ (@ItemIDs) {
-
-            # check if there is test FAQ on screen
-            $Self->True(
-                index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
-                "$FAQ->{FAQTitle} is found",
+        # Check test created FAQs.
+        my $Index = 0;
+        for my $Test (@Items) {
+            $Self->Is(
+                $Selenium->execute_script(
+                    "return \$('h3:contains(\"FAQ Articles\")').closest('.WidgetSimple').find('tbody tr:eq($Index) td:eq(1)').text().trim();"
+                ),
+                $Test->{FAQTitle},
+                "FAQ Article '$Test->{FAQTitle}' is found"
             );
+            $Index++;
+        }
 
+        # Check if CustomerFAQExplorer show pagination if configured SearchLimit is reached (see bug#13885).
+        $Helper->ConfigSettingChange(
+            Key   => 'FAQ::Frontend::CustomerFAQExplorer###SearchPageShown',
+            Value => '3',
+            Valid => 1,
+        );
+
+        $Helper->ConfigSettingChange(
+            Key   => 'FAQ::Frontend::CustomerFAQExplorer###SearchLimit',
+            Value => '5',
+            Valid => 1,
+        );
+
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}customer.pl?Action=CustomerFAQExplorer;CategoryID=$CategoryID;SortBy=Title;Order=Up"
+        );
+
+        # Check items in the first page.
+        for my $Item ( @Items ) {
+            my $IsFound = ( $Item->{Page} == 1 ) ? 'is found' : 'is not found';
+            my $Length  = ( $Item->{Page} == 1 ) ? 1 : 0;
+
+            $Self->Is(
+                $Selenium->execute_script(
+                    "return \$('h3:contains(\"FAQ Articles\")').closest('.WidgetSimple').find('td a[href*=\"Action=CustomerFAQZoom;ItemID=$Item->{ItemID}\"]').length;"
+                ),
+                $Length,
+                "Page 1 - FAQ Article '$Item->{FAQTitle}' $IsFound"
+            );
+        }
+
+        # Go to second result page.
+        $Selenium->find_element( "#CustomerFAQExplorerPage2", 'css' )->VerifiedClick();
+
+        # Check items in the second page.
+        for my $Item ( @Items ) {
+            my $IsFound = ( $Item->{Page} == 2 ) ? 'is found' : 'is not found';
+            my $Length  = ( $Item->{Page} == 2 ) ? 1 : 0;
+
+            $Self->Is(
+                $Selenium->execute_script(
+                    "return \$('h3:contains(\"FAQ Articles\")').closest('.WidgetSimple').find('td a[href*=\"Action=CustomerFAQZoom;ItemID=$Item->{ItemID}\"]').length;"
+                ),
+                $Length,
+                "Page 2 - FAQ Article '$Item->{FAQTitle}' $IsFound"
+            );
+        }
+
+        # Delete FAQ category.
+        my $Success = $FAQObject->CategoryDelete(
+            CategoryID => $CategoryID,
+            UserID     => 1,
+        );
+        $Self->True(
+            $Success,
+            "CategoryID $CategoryID is deleted",
+        );
+
+        # Delete FAQs.
+        for my $FAQ (@Items) {
             my $Success = $FAQObject->FAQDelete(
                 ItemID => $FAQ->{ItemID},
                 UserID => 1,
             );
             $Self->True(
                 $Success,
-                "FAQ is deleted - ID $FAQ->{ItemID}",
+                "FAQID $FAQ->{ItemID} is deleted",
             );
         }
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
     }
 );

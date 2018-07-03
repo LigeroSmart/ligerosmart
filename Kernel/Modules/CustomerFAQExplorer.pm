@@ -313,6 +313,10 @@ sub Run {
         IDPrefix  => "CustomerFAQExplorer",
     );
 
+    if ( $PageNav{TotalHits} =~ m/<span\sclass="PaginationLimit">(\d.*)<\/span>/g ) {
+        $PageNav{TotalHits} = $1;
+    }
+
     # show footer filter - show only if more the one page is available
     if ( defined $PageNav{TotalHits} && ( $PageNav{TotalHits} > $SearchPageShown ) ) {
         $LayoutObject->Block(
