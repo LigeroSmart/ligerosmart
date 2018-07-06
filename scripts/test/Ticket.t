@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 41f230a3b9626dddb2cdebb303176dec65824022 - scripts/test/Ticket.t
+# $origin: otrs - c0957da2ac39f51919ef6f2a9da6c8238224acdb - scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2355,7 +2355,7 @@ my @Tests = (
             OrderBy => 'Up',
             SortBy  => 'EscalationResponseTime',
         },
-        ExpectedResult => [ $TestTicketIDs[0], $TestTicketIDs[2], $TestTicketIDs[1] ],
+        ExpectedResult => [ $TestTicketIDs[1], $TestTicketIDs[0], $TestTicketIDs[2] ],
     },
     {
         Config => {
@@ -2369,7 +2369,7 @@ my @Tests = (
             OrderBy => 'Up',
             SortBy  => 'EscalationUpdateTime',
         },
-        ExpectedResult => [ $TestTicketIDs[2], $TestTicketIDs[1], $TestTicketIDs[0] ],
+        ExpectedResult => [ $TestTicketIDs[0], $TestTicketIDs[2], $TestTicketIDs[1] ],
     },
     {
         Config => {
@@ -2383,7 +2383,7 @@ my @Tests = (
             OrderBy => 'Up',
             SortBy  => 'EscalationSolutionTime',
         },
-        ExpectedResult => [ $TestTicketIDs[0], $TestTicketIDs[1], $TestTicketIDs[2] ],
+        ExpectedResult => [ $TestTicketIDs[2], $TestTicketIDs[0], $TestTicketIDs[1] ],
     },
     {
         Config => {

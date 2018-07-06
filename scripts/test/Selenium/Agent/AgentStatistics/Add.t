@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 9ea07a9796030854fbc7ca5f042f5501c2dddd9b - scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: otrs - bd5fa1bafd3f96caca084c34bfb9ea3f95b59c0a - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,6 +23,7 @@ $Selenium->RunTest(
         my $ServiceObject = $Kernel::OM->Get('Kernel::System::Service');
         my $SLAObject     = $Kernel::OM->Get('Kernel::System::SLA');
         my $StatsObject   = $Kernel::OM->Get('Kernel::System::Stats');
+        my $ConfigObject  = $Kernel::OM->Get('Kernel::Config');
 
         my $Success = $Helper->ConfigSettingChange(
             Valid => 1,
@@ -88,7 +89,7 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
+        my $ScriptAlias = $ConfigObject->Get('ScriptAlias');
 
         # Check add statistics screen.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentStatistics;Subaction=Add");
@@ -189,10 +190,16 @@ $Selenium->RunTest(
             $Selenium->find_element("//a[contains(\@data-statistic-preselection, \'$StatsData->{Type}\' )]")->click();
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
 
-            my $Description = 'Description ' . $StatsData->{Title};
+            # Check title of the page (see bug #13942)
+            $Self->Is(
+                $Selenium->get_title(),
+                'Add New Statistic - Statistics - ' . $ConfigObject->Get('ProductName'),
+                "Check title of the page",
+            );
 
             # Set values for new statistics - General Specifications.
-            $Selenium->find_element( "#Title",       'css' )->send_keys( $StatsData->{Title} );
+            $Selenium->find_element( "#Title", 'css' )->send_keys( $StatsData->{Title} );
+            my $Description = 'Description ' . $StatsData->{Title};
             $Selenium->find_element( "#Description", 'css' )->send_keys($Description);
             $Selenium->execute_script(
                 "\$('#ObjectModule').val('$StatsData->{Object}').trigger('redraw.InputField').trigger('change');"
@@ -210,10 +217,45 @@ $Selenium->RunTest(
                 $Selenium->execute_script(
                     "\$('#EditDialog select').val('$StatsData->{XAxis}').trigger('redraw.InputField').trigger('change');"
                 );
-            }
 
+                # Set invalid date for CreateTime (31.06.).
+                # See bug #13938 (https://bugs.otrs.org/show_bug.cgi?id=13938).
+                if ( $StatsData->{XAxis} eq 'XAxisCreateTime' ) {
+                    $Selenium->execute_script(
+                        "\$('#XAxisCreateTimeStopMonth').val('6').trigger('redraw.InputField').trigger('change');"
+                    );
+                    $Selenium->execute_script(
+                        "\$('#XAxisCreateTimeStopDay').val('31').trigger('redraw.InputField').trigger('change');"
+                    );
+                }
+            }
             $Selenium->find_element( "#DialogButton1", 'css' )->click();
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".Dialog.Modal").length' );
+
+            # Check error message if there is set wrong invalid date for x-axis
+            if ( $StatsData->{XAxis} eq 'XAxisCreateTime' ) {
+                $Self->Is(
+                    $Selenium->execute_script("return \$('.Preview p.Error').text().trim()"),
+                    "CreateTime: The selected date is not valid.",
+                    "There is message for invalid date for CreateTime",
+                );
+
+                $Selenium->find_element( ".EditXAxis", 'css' )->click();
+                $Selenium->WaitFor(
+                    JavaScript =>
+                        'return typeof($) === "function" && $(".Dialog.Modal").length && $("#DialogButton1").length'
+                );
+
+                $Selenium->execute_script(
+                    "\$('#XAxisCreateTimeStopMonth').val('12').trigger('redraw.InputField').trigger('change');"
+                );
+                $Selenium->execute_script(
+                    "\$('#XAxisCreateTimeStopDay').val('31').trigger('redraw.InputField').trigger('change');"
+                );
+
+                $Selenium->find_element( "#DialogButton1", 'css' )->click();
+                $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".Dialog.Modal").length' );
+            }
 
             # Check Y-axis configuration dialog.
             $Selenium->find_element( ".EditYAxis", 'css' )->click();
