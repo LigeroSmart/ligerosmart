@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - e90ad7d84fe87c8397ffdf688d6792350ebef1f6 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 59c1c660e6835e5cd2ce9e85a1c71215c7971483 - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2648,7 +2648,7 @@ sub _RenderTitle {
         $Title = $Ticket{Title};
     }
 
-    $Param{GetParam}->{Title} = $Title;
+    $Param{GetParam}->{Title} //= $Title;
 
     my %Data = (
         Label            => $LayoutObject->{LanguageObject}->Translate("Title"),
