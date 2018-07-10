@@ -127,7 +127,7 @@ $Selenium->RunTest(
         # Go to AgentSurveyZoom screen.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
 
-        $Selenium->WaitFor( JavaScript => "return \$('#NewStatus.Modernize').length === 1" );
+        $Selenium->WaitFor( JavaScript => "return \$('#NewStatus.Modernize').length === 1;" );
 
         $Self->True(
             $Selenium->execute_script("return \$('#NewStatus.Modernize').length === 1;"),
@@ -136,11 +136,16 @@ $Selenium->RunTest(
 
         # Switch status of survey.
         for my $Status (qw(Master Valid)) {
+
+            $Selenium->execute_script('window.Core.App.PageLoadComplete = false;');
             $Selenium->execute_script(
                 "\$('#NewStatus').val('$Status').trigger('redraw.InputField').trigger('change');"
             );
 
-            $Selenium->WaitFor( JavaScript => "return \$('label:contains(Status)').next().text().trim() === $Status;" );
+            $Selenium->WaitFor(
+                JavaScript =>
+                    'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+            );
 
             $Self->Is(
                 $Selenium->execute_script("return \$('label:contains(Status)').next().text().trim();"),
