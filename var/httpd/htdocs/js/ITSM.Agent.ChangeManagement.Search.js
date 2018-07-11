@@ -396,7 +396,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                     $Element1.text(Name);
                     $Element1.attr('value', Name);
                     $Element1.prop('selected', true);
-                    $('#SearchProfile').append($Element1);
+                    $('#SearchProfile').append($Element1).trigger('redraw.InputField');
 
                     // set input box to empty
                     $('#SearchProfileAddName').val('');
