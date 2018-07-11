@@ -20,7 +20,7 @@
                 [% Data.ProfilesStrg %]
                 <div id="SearchProfileAddBlock">
                     <input type="text" name="Name" id="SearchProfileAddName"/>
-                    <button type="button" title="[% Translate("Create Template") | html %]" id="SearchProfileAddAction">[% Translate("Add") | html %]</button>
+                    <button class="CallForAction" type="button" title="[% Translate("Create Template") | html %]" id="SearchProfileAddAction"><span>[% Translate("Add") | html %]</span></button>
                 </div>
             </div>
             <div class="Field">
