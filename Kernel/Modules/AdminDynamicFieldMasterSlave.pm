@@ -465,7 +465,7 @@ sub _ShowScreen {
         PossibleNone  => 0,
         Translation   => 0,
         Sort          => 'NumericKey',
-        Class         => 'W75pc Validate_Number',
+        Class         => 'W75pc Validate_Number Modernize',
     );
 
     my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
@@ -477,7 +477,7 @@ sub _ShowScreen {
         SelectedID   => $Param{ValidID} || 1,
         PossibleNone => 0,
         Translation  => 1,
-        Class        => 'W50pc',
+        Class        => 'W50pc Modernize',
     );
 
     # create the possible values template
