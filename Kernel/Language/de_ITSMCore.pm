@@ -100,7 +100,6 @@ sub Data {
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA-Übersicht.';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM-Dienstübersicht.';
     $Self->{Translation}->{'Incident State Type'} = 'Vorfallstatus-Typ';
-    $Self->{Translation}->{'Incident State Type.'} = 'Vorfallsstatus-Typ.';
     $Self->{Translation}->{'Includes'} = 'Beinhaltet';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Prioritäts-Matrix verwalten';
     $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';

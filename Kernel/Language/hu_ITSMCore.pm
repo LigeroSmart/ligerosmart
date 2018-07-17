@@ -69,7 +69,7 @@ sub Data {
     $Self->{Translation}->{'Other'} = 'Egyéb';
     $Self->{Translation}->{'Availability'} = 'Elérhetőség';
     $Self->{Translation}->{'Response Time'} = 'Válaszidő';
-    $Self->{Translation}->{'Recovery Time'} = 'Helyreállítási idő';
+    $Self->{Translation}->{'Recovery Time'} = 'Visszaállítási idő';
     $Self->{Translation}->{'Resolution Rate'} = 'Megoldási arány';
     $Self->{Translation}->{'Transactions'} = 'Tranzakciók';
     $Self->{Translation}->{'Errors'} = 'Hibák';
@@ -100,10 +100,9 @@ sub Data {
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA áttekintés.';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM szolgáltatás áttekintés.';
     $Self->{Translation}->{'Incident State Type'} = 'Incidensállapot típus';
-    $Self->{Translation}->{'Incident State Type.'} = 'Incidensállapot típus.';
     $Self->{Translation}->{'Includes'} = 'Tartalmazza';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Prioritásmátrix kezelése.';
-    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = 'A kritikusság ↔ hatás ↔ prioritás mátrix kezelése.';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Egy modul a Vissza menüpont megjelenítéséhez az SLA menüben.';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Egy modul a Vissza menüpont megjelenítéséhez a szolgáltatás menüben.';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Egy modul az Összekapcsolás menüpont megjelenítéséhez a szolgáltatás menüben.';
@@ -121,7 +120,7 @@ sub Data {
     $Self->{Translation}->{'Service Zoom.'} = 'Szolgáltatás nagyítás.';
     $Self->{Translation}->{'Service-Area'} = 'Szolgáltatás terület';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
-        'Állítsa be a hivatkozások típusát és irányát, hogy használható legyen az incidensállapot kiszámításához. A kulcs a hivatkozástípus neve (ahogy a LinkObject::Type értékében van meghatározva), és az érték az IncidentLinkType iránya, amelyet követnie kell az incidensállapot kiszámításához. Például ha az IncidentLinkType „DependsOn” értékre van állítva, és az irány „Source”, akkor csak a „Depends on” hivatkozások lesznek követve (és nem az ellentétes „Required for” hivatkozás) az incidensállapot kiszámításához. Hozzáadhat további hivatkozástípusokat és irányokat, ahogy csak szeretné, például „Includes” a „Target” iránnyal. Minden LinkObject::Type rendszerbeállítási lehetőségben meghatározott hivatkozástípus lehetséges, és az irány „Source”, „Target” vagy „Both” lehet. FONTOS: MIUTÁN MÓDOSÍTÁSOKAT HAJTOTT VÉGRE EZEN A RENDSZERBEÁLLÍTÁSON, LE KELL FUTTATNIA A bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate KONZOLPARANCSOT AZÉRT, HOGY MINDEN INCIDENSÁLLAPOT ÚJRA KISZÁMÍTÁSRA KERÜLJÖN AZ ÚJ BEÁLLÍTÁSOK ALAPJÁN!';
+        'A hivatkozások típusának és irányának beállítása, hogy használható legyen az incidensállapot kiszámításához. A kulcs a hivatkozástípus neve (ahogy a LinkObject::Type értékében van meghatározva), és az érték az IncidentLinkType iránya, amelyet követnie kell az incidensállapot kiszámításához. Például ha az IncidentLinkType „DependsOn” értékre van állítva, és az irány „Forrás”, akkor csak a „Depends on” hivatkozások lesznek követve (és nem az ellentétes „Required for” hivatkozás) az incidensállapot kiszámításához. Hozzáadhat további hivatkozástípusokat és irányokat, ahogy csak szeretné, például „Includes” a „Cél” iránnyal. Minden LinkObject::Type rendszerbeállítási lehetőségben meghatározott hivatkozástípus lehetséges, és az irány „Forrás”, „Cél” vagy „Mindkettő” lehet. FONTOS: MIUTÁN MÓDOSÍTÁSOKAT HAJTOTT VÉGRE EZEN A RENDSZERBEÁLLÍTÁSON, LE KELL FUTTATNIA A bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate KONZOLPARANCSOT AZÉRT, HOGY MINDEN INCIDENSÁLLAPOT ÚJRA KISZÁMÍTÁSRA KERÜLJÖN AZ ÚJ BEÁLLÍTÁSOK ALAPJÁN!';
     $Self->{Translation}->{'Source'} = 'Forrás';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Ez a beállítás határozza meg, hogy egy „ITSMChange” objektum összeköthető-e a „Ticket” objektumokkal a „Normal” hivatkozástípus használatával.';

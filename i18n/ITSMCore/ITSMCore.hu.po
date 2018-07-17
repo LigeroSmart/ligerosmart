@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-06-13 10:00+0000\n"
-"PO-Revision-Date: 2018-06-13 10:01+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2018-06-25 06:14+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -152,7 +152,7 @@ msgstr "Válaszidő"
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Recovery Time"
-msgstr "Helyreállítási idő"
+msgstr "Visszaállítási idő"
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Resolution Rate"
@@ -267,7 +267,7 @@ msgstr "Prioritásmátrix kezelése."
 
 #. SysConfig
 msgid "Manage the criticality - impact - priority matrix."
-msgstr ""
+msgstr "A kritikusság ↔ hatás ↔ prioritás mátrix kezelése."
 
 #. SysConfig
 msgid "Module to show the Back menu item in SLA menu."
@@ -348,7 +348,7 @@ msgid ""
 " MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
 "bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
 "INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
-msgstr "Állítsa be a hivatkozások típusát és irányát, hogy használható legyen az incidensállapot kiszámításához. A kulcs a hivatkozástípus neve (ahogy a LinkObject::Type értékében van meghatározva), és az érték az IncidentLinkType iránya, amelyet követnie kell az incidensállapot kiszámításához. Például ha az IncidentLinkType „DependsOn” értékre van állítva, és az irány „Source”, akkor csak a „Depends on” hivatkozások lesznek követve (és nem az ellentétes „Required for” hivatkozás) az incidensállapot kiszámításához. Hozzáadhat további hivatkozástípusokat és irányokat, ahogy csak szeretné, például „Includes” a „Target” iránnyal. Minden LinkObject::Type rendszerbeállítási lehetőségben meghatározott hivatkozástípus lehetséges, és az irány „Source”, „Target” vagy „Both” lehet. FONTOS: MIUTÁN MÓDOSÍTÁSOKAT HAJTOTT VÉGRE EZEN A RENDSZERBEÁLLÍTÁSON, LE KELL FUTTATNIA A bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate KONZOLPARANCSOT AZÉRT, HOGY MINDEN INCIDENSÁLLAPOT ÚJRA KISZÁMÍTÁSRA KERÜLJÖN AZ ÚJ BEÁLLÍTÁSOK ALAPJÁN!"
+msgstr "A hivatkozások típusának és irányának beállítása, hogy használható legyen az incidensállapot kiszámításához. A kulcs a hivatkozástípus neve (ahogy a LinkObject::Type értékében van meghatározva), és az érték az IncidentLinkType iránya, amelyet követnie kell az incidensállapot kiszámításához. Például ha az IncidentLinkType „DependsOn” értékre van állítva, és az irány „Forrás”, akkor csak a „Depends on” hivatkozások lesznek követve (és nem az ellentétes „Required for” hivatkozás) az incidensállapot kiszámításához. Hozzáadhat további hivatkozástípusokat és irányokat, ahogy csak szeretné, például „Includes” a „Cél” iránnyal. Minden LinkObject::Type rendszerbeállítási lehetőségben meghatározott hivatkozástípus lehetséges, és az irány „Forrás”, „Cél” vagy „Mindkettő” lehet. FONTOS: MIUTÁN MÓDOSÍTÁSOKAT HAJTOTT VÉGRE EZEN A RENDSZERBEÁLLÍTÁSON, LE KELL FUTTATNIA A bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate KONZOLPARANCSOT AZÉRT, HOGY MINDEN INCIDENSÁLLAPOT ÚJRA KISZÁMÍTÁSRA KERÜLJÖN AZ ÚJ BEÁLLÍTÁSOK ALAPJÁN!"
 
 #. SysConfig
 msgid "Source"

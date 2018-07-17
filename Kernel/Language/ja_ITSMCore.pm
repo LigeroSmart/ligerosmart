@@ -100,10 +100,9 @@ sub Data {
     $Self->{Translation}->{'ITSM SLA Overview.'} = 'ITSM SLA の概要';
     $Self->{Translation}->{'ITSM Service Overview.'} = 'ITSM サービスの概要';
     $Self->{Translation}->{'Incident State Type'} = 'インシデント状態のタイプ';
-    $Self->{Translation}->{'Incident State Type.'} = 'インシデント状態のタイプ';
     $Self->{Translation}->{'Includes'} = '含む：';
     $Self->{Translation}->{'Manage priority matrix.'} = '優先度の関連性を管理';
-    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '重要度↔影響度↔優先度の関連性を管理';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'SLAメニューに戻るメニュー項目を表示するモジュール';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'サービスメニューに戻るメニュー項目を表示するモジュール';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'サービスメニューにリンクメニュー項目を表示するモジュール';
@@ -122,7 +121,7 @@ sub Data {
     $Self->{Translation}->{'Service-Area'} = 'サービス・エリア';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         'インシデント状態の計算に使用するリンクのタイプと方向を設定します。 キーはリンクタイプの名前（LinkObject :: Typeで定義されている）であり、値はインシデントステータスを計算するために従うべきIncidentLinkTypeの方向です。 たとえば、IncidentLinkTypeが \'DependsOn\'に設定されており、Directionが \'Source\'の場合、インシデントのステータスを計算するために、 \'依存する\'リンクのみが表示されます（反対のリンクは \'Required for\'ではありません）。 広告タイプのリンクタイプを追加できます（例： 方向 \'Target\'を含む \'Includes\'。 sysconfigオプションLinkObject :: Typeで定義されているすべてのリンクタイプが可能で、方向は \'Source\'、 \'Target\'、または \'Both\'です。 重要：このSYSCONFIGオプションに変更を加えたら、コンソールコマンドbin/otrs.Console.plを実行する必要があります。Admin :: ITSM :: IncidentState :: Recalculateしたがって、すべての事態は新しい設定に基づいて再計算されます！';
-    $Self->{Translation}->{'Source'} = '';
+    $Self->{Translation}->{'Source'} = 'ソース';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         '‘Normal’リンク・タイプを使用して、‘ITSMChange’オブジェクトが他の‘Ticket’オブジェクトとリンクされるように、定義します。';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
