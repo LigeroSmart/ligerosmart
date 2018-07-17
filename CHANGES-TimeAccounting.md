@@ -1,4 +1,6 @@
-#6.0.5 20??-??-??
+#6.0.6 2018-??-??
+
+#6.0.5 2018-07-24
  - 2018-07-17 Updated translations, thanks to all translators.
  - 2018-06-26 Added feature - Allow specific users to skip time accounting.
  - 2018-06-20 Fixed bug#[13467](https://bugs.otrs.org/show_bug.cgi?id=13467) - Setting "Days of vacation" to value 0 not possible.
