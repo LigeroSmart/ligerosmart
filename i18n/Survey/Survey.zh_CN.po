@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 16:28+0000\n"
-"PO-Revision-Date: 2018-02-12 02:58+0000\n"
-"Last-Translator: 汇民 王 <whuim@qq.com>\n"
+"POT-Creation-Date: 2018-07-17 13:51+0000\n"
+"PO-Revision-Date: 2018-07-17 13:53+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -342,9 +342,53 @@ msgstr "编辑问题"
 msgid "Answer Edit"
 msgstr "编辑回答"
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "统计概览"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr "你没有权限使用此调查或详细统计！"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "统计详情"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "无法设置新的状态！还未定义问题。"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr "无法设置新的状态！问题不完整。"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "状态已更改。"
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "- 没有选择队列 -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr "-没有选择工单类型-"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr "-没有选择工单服务-"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- 更改状态 -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Master"
+msgstr "主"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Invalid"
+msgstr "无效"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"

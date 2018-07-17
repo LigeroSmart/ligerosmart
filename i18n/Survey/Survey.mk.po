@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 16:28+0000\n"
-"PO-Revision-Date: 2018-02-06 16:28+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2018-07-17 13:51+0000\n"
+"PO-Revision-Date: 2018-07-17 13:53+0000\n"
+"Last-Translator: Bojan <bojan_maksimovski@yahoo.com>\n"
 "Language-Team: Macedonian (http://www.transifex.com/otrs/OTRS/language/mk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -342,9 +342,53 @@ msgstr "Уреди ги прашањета"
 msgid "Answer Edit"
 msgstr "Уреди ги одговорите"
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Преглед на Статистика"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Детаљ од Статистиката"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Не може да постави нов статус! Нема дефинирани прашања."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Статусот е променет."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "-Не е избран ред-"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Промена на статусот -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Master"
+msgstr "Главен"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Invalid"
+msgstr "Невалидно"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"

@@ -4,13 +4,14 @@
 # Gaudin vincent <vincent.gaudin@cprpsncf.fr>, 2015
 # Matthieu HUTIN, 2015
 # nico <n.losantos@brgm.fr>, 2015
+# Snake, 2018
 # Thomas Imbreckx <zinks@linux.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 16:28+0000\n"
-"PO-Revision-Date: 2018-02-06 16:28+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2018-07-17 13:51+0000\n"
+"PO-Revision-Date: 2018-07-17 13:53+0000\n"
+"Last-Translator: Thomas Imbreckx <zinks@linux.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr "Créer nouveau sondage"
+msgstr "Créer un nouveau sondage"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
@@ -40,7 +41,7 @@ msgstr "Types de tickets"
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
-msgstr "Description Interne"
+msgstr "Description interne"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
@@ -56,15 +57,15 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Exemple de sondage"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
-msgstr "Modifier Info générale"
+msgstr "Modifier les informations générales"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr "Modifier Questions"
+msgstr "Modifier les questions"
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
@@ -72,15 +73,15 @@ msgstr "Vous êtes ici"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
-msgstr "Questions Enquêtes"
+msgstr "Questions du sondage"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
-msgstr "Ajouter Questions"
+msgstr "Ajouter des questions"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Type the question"
-msgstr "Entrer la question"
+msgstr "Écrivez la question"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
@@ -88,7 +89,7 @@ msgstr "Réponse requise"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
-msgstr "Aucune question sauvegardée pour cette Enquête"
+msgstr "Aucune question sauvegardée pour cette enquête"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
@@ -100,47 +101,47 @@ msgstr "Réponse requise"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "Après avoir terminé l'édition du sondage, vous pouvez fermer la fenêtre."
+msgstr "Après avoir terminé l'édition du sondage, fermez cette fenêtre."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Fermer cette fenêtre"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
-msgstr "Modifier Question"
+msgstr "Modifier la question"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
-msgstr "Retour aux Questions"
+msgstr "Retour aux questions"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr "Question:"
+msgstr "Question :"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
-msgstr "Possible réponses pour"
+msgstr "Réponses possibles pour"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Answer"
-msgstr "Ajouter Réponses"
+msgstr "Ajouter une réponse"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No answers saved for this question."
-msgstr "Pas de réponse trouvé pour cette question."
+msgstr "Aucune réponse n'a été trouvée pour cette question."
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
-msgstr "il n'y a pas de réponses possible, une zone de texte sera affiché."
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
-msgstr "Modifier Réponse"
+msgstr "Modifier la réponse"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to edit question"
-msgstr "Retour à la modification des questions."
+msgstr "Retour à la modification des questions"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
@@ -148,7 +149,7 @@ msgstr "Réponse :"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Vue d'ensemble des options de sondage"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid ""
@@ -163,7 +164,7 @@ msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
-msgstr ""
+msgstr "Pas de restrictions"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
@@ -183,11 +184,11 @@ msgstr "Sujet de la notification"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
-msgstr "Changé pars"
+msgstr "Modifié par"
 
 #. Template: AgentSurveyStats
 msgid "Stats Overview of"
-msgstr "Statistiques vue d'ensemble "
+msgstr "Vue d'ensemble des statistiques de"
 
 #. Template: AgentSurveyStats
 msgid "Requests Table"
@@ -195,7 +196,7 @@ msgstr "Tableau des demandes"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Sélectionner toutes les demandes"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -207,7 +208,7 @@ msgstr "Temps de vote"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Sélectionner cette demande"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -219,11 +220,11 @@ msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
-msgstr "Détail statistique sondage"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
-msgstr "Retour vue d'ensemble statistique"
+msgstr "Retour à la vue d'ensemble des statistiques"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
@@ -345,9 +346,53 @@ msgstr "Modifier la question"
 msgid "Answer Edit"
 msgstr "Modifier la réponse"
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Vue d'ensemble des statistiques"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Détail Stats"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Impossible de mettre à jour ! aucune question n'est definie"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Le statut a été changé."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "- Aucune file sélectionnée -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Changer le statut -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Master"
+msgstr "Maître"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Invalid"
+msgstr "Non valide"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
@@ -564,7 +609,7 @@ msgstr "Si cette expression régulière est vérifiée, aucune enquête Client n
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Limite."
 
 #. SysConfig
 msgid ""

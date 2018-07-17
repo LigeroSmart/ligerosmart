@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Редактировать вопрос';
     $Self->{Translation}->{'Answer Edit'} = 'Редактировать ответ';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Обзор статистики';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'У вас нет разрешения для этого опроса или статистики!';
+    $Self->{Translation}->{'Stats Detail'} = 'Подробный отчет';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Нельзя задать новое состояние! Никакие вопросы не выделены.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Невозможно задать новый статус! Вопросы не завершены.';
+    $Self->{Translation}->{'Status changed.'} = 'Изменить состояние.';
     $Self->{Translation}->{'- No queue selected -'} = '- Ни одной очереди не выбрано -';
+    $Self->{Translation}->{'- No ticket type selected -'} = 'Не выбран тип заявки';
+    $Self->{Translation}->{'- No ticket service selected -'} = 'Не выбран сервис заявки';
+    $Self->{Translation}->{'- Change Status -'} = '- Изменить состояние -';
+    $Self->{Translation}->{'Master'} = 'Главный';
+    $Self->{Translation}->{'Invalid'} = 'Недействительный';
     $Self->{Translation}->{'New Status'} = 'Новое состояние';
     $Self->{Translation}->{'Survey Description'} = 'Описание опроса';
     $Self->{Translation}->{'answered'} = 'ответили';
@@ -203,7 +216,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         'Frontend module registration для объекта Публичного опроса в разделе публичных опросов.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Если это регулярное выражение верно, опрос клиенту не посылается.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Ограничение.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Параметры страницы (на которой отображаются опросы) при обзоре опросов в small формате.';
     $Self->{Translation}->{'Public Survey.'} = 'Общедоступный опрос.';

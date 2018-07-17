@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Sửa câu hỏi';
     $Self->{Translation}->{'Answer Edit'} = 'Sửa đáp án';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Thống kê tổng quát';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Thống kê chi tiết';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Không thể đặt trạng thái mới! Không có câu hỏi nào được định nghĩa.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Trạng thái đã đổi.';
     $Self->{Translation}->{'- No queue selected -'} = '- Chưa chọn hàng đợi -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Đổi trạng thái -';
+    $Self->{Translation}->{'Master'} = 'Chính';
+    $Self->{Translation}->{'Invalid'} = 'Không hợp lệ';
     $Self->{Translation}->{'New Status'} = 'Trạng thái mới';
     $Self->{Translation}->{'Survey Description'} = 'Mô tả khảo sát';
     $Self->{Translation}->{'answered'} = 'đã trả lời';

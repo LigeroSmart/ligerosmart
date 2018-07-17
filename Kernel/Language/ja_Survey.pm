@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = '質問の編集';
     $Self->{Translation}->{'Answer Edit'} = '回答の編集';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = '統計一覧';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = '統計の詳細';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '新しい状態を設定できません! 質問が定義されていません。';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = '状態が変更されました。';
     $Self->{Translation}->{'- No queue selected -'} = 'キューが選択されていません';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- ステータス変更 -';
+    $Self->{Translation}->{'Master'} = 'マスター';
+    $Self->{Translation}->{'Invalid'} = '無効';
     $Self->{Translation}->{'New Status'} = '新しい状況';
     $Self->{Translation}->{'Survey Description'} = 'アンケートの説明';
     $Self->{Translation}->{'answered'} = '回答あり';
@@ -203,7 +216,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンド・モジュールの登録です。';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'この正規表現にマッチする場合、調査は顧客に送信されません。';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'リミット';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'アンケート一覧 (Small) の (アンケートが表示される) ページに対するパラメータ';
     $Self->{Translation}->{'Public Survey.'} = '公開インターフェースのPublicSurveyオブジェクトに対するフロントエンドモジュール登録です。';

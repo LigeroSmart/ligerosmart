@@ -8,13 +8,14 @@
 # Marcello Kera <marcellokera@yahoo.com.br>, 2017
 # MBaeta <matheus.baeta@otrs.com>, 2017
 # Murilo Moreira de Oliveira <murilo.moreira@gmail.com>, 2014,2016
+# Ricardo von Staa <ricardo.von.staa@otrs.com>, 2018
 # Ronaldo Richieri <ronaldo@complemento.net.br>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 16:28+0000\n"
-"PO-Revision-Date: 2018-04-10 17:01+0000\n"
-"Last-Translator: Arthur  Guimarães Yuan <arthuryuan23@hotmail.com>\n"
+"POT-Creation-Date: 2018-07-17 13:51+0000\n"
+"PO-Revision-Date: 2018-07-17 13:53+0000\n"
+"Last-Translator: José Ribeiro <joserribeiro26@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -159,11 +160,11 @@ msgid ""
 "Searches in the attributes Number, Title, Introduction, Description, "
 "NotificationSender, NotificationSubject and NotificationBody, overriding "
 "other attributes with the same name."
-msgstr ""
+msgstr "Buscas nos atributos Número, Título, Introdução, Descrição, Enviador de Notificação, Assunto de Notificação e Corpo de Notificação, sobrescrevendo atributos de mesmo nome."
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Hora de Criação da Pesquisa"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
@@ -349,9 +350,53 @@ msgstr "Edição de Pergunta"
 msgid "Answer Edit"
 msgstr "Edição de Resposta"
 
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Overview"
+msgstr "Resumo de Estatísticas"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "You have no permission for this survey or stats detail!"
+msgstr "Você não tem permissão para esta pesquisa ou detalhes de estatísticas!"
+
+#. Perl Module: Kernel/Modules/AgentSurveyStats.pm
+msgid "Stats Detail"
+msgstr "Detalhe da estatística"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! No questions defined."
+msgstr "Não é possível configurar o novo estado. Nenhuma questão definida."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Can't set new status! Questions incomplete."
+msgstr "Não é possível definir novo status! Perguntas incompletas."
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Status changed."
+msgstr "Estado alterado."
+
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
 msgstr "Nenhuma fila selecionada"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket type selected -"
+msgstr "- Nenhum tipo de chamado selecionado -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- No ticket service selected -"
+msgstr "- Nenhum serviço de chamado selecionado -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "- Change Status -"
+msgstr "- Alterar Estado -"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Master"
+msgstr "Mestre"
+
+#. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+msgid "Invalid"
+msgstr "Inválido"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"

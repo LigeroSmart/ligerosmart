@@ -16,70 +16,70 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurveyAdd
-    $Self->{Translation}->{'Create New Survey'} = 'Créer nouveau sondage';
+    $Self->{Translation}->{'Create New Survey'} = 'Créer un nouveau sondage';
     $Self->{Translation}->{'Introduction'} = 'Présentation';
     $Self->{Translation}->{'Survey Introduction'} = 'Présentation du sondage';
     $Self->{Translation}->{'Notification Body'} = 'Corps de la notification';
     $Self->{Translation}->{'Ticket Types'} = 'Types de tickets';
-    $Self->{Translation}->{'Internal Description'} = 'Description Interne';
+    $Self->{Translation}->{'Internal Description'} = 'Description interne';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
     $Self->{Translation}->{'Public survey key'} = '';
-    $Self->{Translation}->{'Example survey'} = '';
+    $Self->{Translation}->{'Example survey'} = 'Exemple de sondage';
 
     # Template: AgentSurveyEdit
-    $Self->{Translation}->{'Edit General Info'} = 'Modifier Info générale';
+    $Self->{Translation}->{'Edit General Info'} = 'Modifier les informations générales';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Edit Questions'} = 'Modifier Questions';
+    $Self->{Translation}->{'Edit Questions'} = 'Modifier les questions';
     $Self->{Translation}->{'You are here'} = 'Vous êtes ici';
-    $Self->{Translation}->{'Survey Questions'} = 'Questions Enquêtes';
-    $Self->{Translation}->{'Add Question'} = 'Ajouter Questions';
-    $Self->{Translation}->{'Type the question'} = 'Entrer la question';
+    $Self->{Translation}->{'Survey Questions'} = 'Questions du sondage';
+    $Self->{Translation}->{'Add Question'} = 'Ajouter des questions';
+    $Self->{Translation}->{'Type the question'} = 'Écrivez la question';
     $Self->{Translation}->{'Answer required'} = 'Réponse requise';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'Aucune question sauvegardée pour cette Enquête';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Aucune question sauvegardée pour cette enquête';
     $Self->{Translation}->{'Question'} = 'Question';
     $Self->{Translation}->{'Answer Required'} = 'Réponse requise';
     $Self->{Translation}->{'When you finish to edit the survey questions just close this screen.'} =
-        'Après avoir terminé l\'édition du sondage, vous pouvez fermer la fenêtre.';
-    $Self->{Translation}->{'Close this window'} = '';
-    $Self->{Translation}->{'Edit Question'} = 'Modifier Question';
-    $Self->{Translation}->{'go back to questions'} = 'Retour aux Questions';
-    $Self->{Translation}->{'Question:'} = 'Question:';
-    $Self->{Translation}->{'Possible Answers For'} = 'Possible réponses pour';
-    $Self->{Translation}->{'Add Answer'} = 'Ajouter Réponses';
-    $Self->{Translation}->{'No answers saved for this question.'} = 'Pas de réponse trouvé pour cette question.';
+        'Après avoir terminé l\'édition du sondage, fermez cette fenêtre.';
+    $Self->{Translation}->{'Close this window'} = 'Fermer cette fenêtre';
+    $Self->{Translation}->{'Edit Question'} = 'Modifier la question';
+    $Self->{Translation}->{'go back to questions'} = 'Retour aux questions';
+    $Self->{Translation}->{'Question:'} = 'Question :';
+    $Self->{Translation}->{'Possible Answers For'} = 'Réponses possibles pour';
+    $Self->{Translation}->{'Add Answer'} = 'Ajouter une réponse';
+    $Self->{Translation}->{'No answers saved for this question.'} = 'Aucune réponse n\'a été trouvée pour cette question.';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
         'il n\'y a pas de réponses possible, une zone de texte sera affiché.';
-    $Self->{Translation}->{'Edit Answer'} = 'Modifier Réponse';
-    $Self->{Translation}->{'go back to edit question'} = 'Retour à la modification des questions.';
+    $Self->{Translation}->{'Edit Answer'} = 'Modifier la réponse';
+    $Self->{Translation}->{'go back to edit question'} = 'Retour à la modification des questions';
     $Self->{Translation}->{'Answer:'} = 'Réponse :';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Survey overview options'} = '';
+    $Self->{Translation}->{'Survey overview options'} = 'Vue d\'ensemble des options de sondage';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
         '';
     $Self->{Translation}->{'Survey Create Time'} = '';
-    $Self->{Translation}->{'No restriction'} = '';
+    $Self->{Translation}->{'No restriction'} = 'Pas de restrictions';
     $Self->{Translation}->{'Only surveys created between'} = '';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Sondages maximum par page';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Expéditeur de la notification  ';
     $Self->{Translation}->{'Notification Subject'} = 'Sujet de la notification';
-    $Self->{Translation}->{'Changed By'} = 'Changé pars';
+    $Self->{Translation}->{'Changed By'} = 'Modifié par';
 
     # Template: AgentSurveyStats
-    $Self->{Translation}->{'Stats Overview of'} = 'Statistiques vue d\'ensemble ';
+    $Self->{Translation}->{'Stats Overview of'} = 'Vue d\'ensemble des statistiques de';
     $Self->{Translation}->{'Requests Table'} = 'Tableau des demandes';
-    $Self->{Translation}->{'Select all requests'} = '';
+    $Self->{Translation}->{'Select all requests'} = 'Sélectionner toutes les demandes';
     $Self->{Translation}->{'Send Time'} = 'Temps de l\'envoi';
     $Self->{Translation}->{'Vote Time'} = 'Temps de vote';
-    $Self->{Translation}->{'Select this request'} = '';
+    $Self->{Translation}->{'Select this request'} = 'Sélectionner cette demande';
     $Self->{Translation}->{'See Details'} = 'Voir les détails';
     $Self->{Translation}->{'Delete stats'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = 'Détail statistique sondage';
-    $Self->{Translation}->{'go back to stats overview'} = 'Retour vue d\'ensemble statistique';
+    $Self->{Translation}->{'go back to stats overview'} = 'Retour à la vue d\'ensemble des statistiques';
     $Self->{Translation}->{'Previous vote'} = '';
     $Self->{Translation}->{'Next vote'} = '';
 
@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Modifier la question';
     $Self->{Translation}->{'Answer Edit'} = 'Modifier la réponse';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Vue d\'ensemble des statistiques';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Détail Stats';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Impossible de mettre à jour ! aucune question n\'est definie';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Le statut a été changé.';
     $Self->{Translation}->{'- No queue selected -'} = '- Aucune file sélectionnée -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Changer le statut -';
+    $Self->{Translation}->{'Master'} = 'Maître';
+    $Self->{Translation}->{'Invalid'} = 'Non valide';
     $Self->{Translation}->{'New Status'} = 'Nouveau Statut';
     $Self->{Translation}->{'Survey Description'} = 'Description du sondage';
     $Self->{Translation}->{'answered'} = 'Répondu';
@@ -203,7 +216,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
         '';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Si cette expression régulière est vérifiée, aucune enquête Client ne sera envoyée.';
-    $Self->{Translation}->{'Limit.'} = '';
+    $Self->{Translation}->{'Limit.'} = 'Limite.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         '';
     $Self->{Translation}->{'Public Survey.'} = 'Enquête publique';

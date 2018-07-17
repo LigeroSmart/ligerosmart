@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = '编辑问题';
     $Self->{Translation}->{'Answer Edit'} = '编辑回答';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = '统计概览';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '你没有权限使用此调查或详细统计！';
+    $Self->{Translation}->{'Stats Detail'} = '统计详情';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '无法设置新的状态！还未定义问题。';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '无法设置新的状态！问题不完整。';
+    $Self->{Translation}->{'Status changed.'} = '状态已更改。';
     $Self->{Translation}->{'- No queue selected -'} = '- 没有选择队列 -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '-没有选择工单类型-';
+    $Self->{Translation}->{'- No ticket service selected -'} = '-没有选择工单服务-';
+    $Self->{Translation}->{'- Change Status -'} = '- 更改状态 -';
+    $Self->{Translation}->{'Master'} = '主';
+    $Self->{Translation}->{'Invalid'} = '无效';
     $Self->{Translation}->{'New Status'} = '新的状态';
     $Self->{Translation}->{'Survey Description'} = '调查描述';
     $Self->{Translation}->{'answered'} = '已回答';

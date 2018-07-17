@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Hariri maswali';
     $Self->{Translation}->{'Answer Edit'} = 'Hariri majibu';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Mapitio ya takwimu';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Maelezo ya tafiti';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Sioni hali mpya! Hakuna maswali yaliyofafanuliwa.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Hali imebadilika';
     $Self->{Translation}->{'- No queue selected -'} = '- Hakuna foleni iliyochaguliwa-';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Badilisha Hali-';
+    $Self->{Translation}->{'Master'} = 'Fuzu';
+    $Self->{Translation}->{'Invalid'} = 'Isiyo halali';
     $Self->{Translation}->{'New Status'} = 'Hali mpya';
     $Self->{Translation}->{'Survey Description'} = 'Maelezo ya tafiti';
     $Self->{Translation}->{'answered'} = 'Yaliyojibiwa';

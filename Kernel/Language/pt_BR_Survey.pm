@@ -58,8 +58,8 @@ sub Data {
     # Template: AgentSurveyOverviewNavBar
     $Self->{Translation}->{'Survey overview options'} = 'Opções de visão geral da pesquisa';
     $Self->{Translation}->{'Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name.'} =
-        '';
-    $Self->{Translation}->{'Survey Create Time'} = '';
+        'Buscas nos atributos Número, Título, Introdução, Descrição, Enviador de Notificação, Assunto de Notificação e Corpo de Notificação, sobrescrevendo atributos de mesmo nome.';
+    $Self->{Translation}->{'Survey Create Time'} = 'Hora de Criação da Pesquisa';
     $Self->{Translation}->{'No restriction'} = 'Sem restrições';
     $Self->{Translation}->{'Only surveys created between'} = 'Apenas pesquisas criadas entre';
     $Self->{Translation}->{'Max. shown surveys per page'} = 'Qtd. máx. de pesquisas exibidas por página';
@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Edição de Pergunta';
     $Self->{Translation}->{'Answer Edit'} = 'Edição de Resposta';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Resumo de Estatísticas';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Você não tem permissão para esta pesquisa ou detalhes de estatísticas!';
+    $Self->{Translation}->{'Stats Detail'} = 'Detalhe da estatística';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Não é possível configurar o novo estado. Nenhuma questão definida.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Não é possível definir novo status! Perguntas incompletas.';
+    $Self->{Translation}->{'Status changed.'} = 'Estado alterado.';
     $Self->{Translation}->{'- No queue selected -'} = 'Nenhuma fila selecionada';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nenhum tipo de chamado selecionado -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Nenhum serviço de chamado selecionado -';
+    $Self->{Translation}->{'- Change Status -'} = '- Alterar Estado -';
+    $Self->{Translation}->{'Master'} = 'Mestre';
+    $Self->{Translation}->{'Invalid'} = 'Inválido';
     $Self->{Translation}->{'New Status'} = 'Novo estado';
     $Self->{Translation}->{'Survey Description'} = 'Descrição da Pesquisa';
     $Self->{Translation}->{'answered'} = 'Respondido';

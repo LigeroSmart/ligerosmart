@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Edit soalan';
     $Self->{Translation}->{'Answer Edit'} = 'Edit Jawapan';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Statistik Tinjauan';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Statistik Terperinchi';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Tidak boleh menetapkan status baru! Tiada soalan yang ditakrifkan.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'status berubah.';
     $Self->{Translation}->{'- No queue selected -'} = '-Tiada giliran dipilih-';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Ubah Status -';
+    $Self->{Translation}->{'Master'} = 'Induk';
+    $Self->{Translation}->{'Invalid'} = 'Tidak Sah';
     $Self->{Translation}->{'New Status'} = 'Status baharu';
     $Self->{Translation}->{'Survey Description'} = 'Huraian penyiasatan';
     $Self->{Translation}->{'answered'} = 'Dijawab';

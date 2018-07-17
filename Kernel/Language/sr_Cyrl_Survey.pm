@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Уреди питање';
     $Self->{Translation}->{'Answer Edit'} = 'Уреди одговор';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Преглед статистике';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Немате дозволу за ову анкету или детаље статистике!';
+    $Self->{Translation}->{'Stats Detail'} = 'Детаљ статистике';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Не може се поставити нови статус! Нема дефинисаних питања.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Не може се поставити нови статус! Питања су непотпуна.';
+    $Self->{Translation}->{'Status changed.'} = 'Статус промењен.';
     $Self->{Translation}->{'- No queue selected -'} = '- Није изабран ред -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Није изабран тип тикета -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Није изабран сервис тикета -';
+    $Self->{Translation}->{'- Change Status -'} = '- Промени статус -';
+    $Self->{Translation}->{'Master'} = 'Главно';
+    $Self->{Translation}->{'Invalid'} = 'Неважећи';
     $Self->{Translation}->{'New Status'} = 'Нови статус';
     $Self->{Translation}->{'Survey Description'} = 'Опис анкете';
     $Self->{Translation}->{'answered'} = 'одговорено';

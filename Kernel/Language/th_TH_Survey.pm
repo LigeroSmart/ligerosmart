@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'แก้ไขคำถาม';
     $Self->{Translation}->{'Answer Edit'} = 'แก้ไขคำตอบ';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'สถิติภาพรวม';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'เนื้อหาสถิติ';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'สถานภาพเปลี่ยนแล้ว';
     $Self->{Translation}->{'- No queue selected -'} = '- ไม่มีคิวที่ถูกเลือก -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- เปลี่ยนสถานะ -';
+    $Self->{Translation}->{'Master'} = 'มาสเตอร์';
+    $Self->{Translation}->{'Invalid'} = 'ไม่ถูกต้อง';
     $Self->{Translation}->{'New Status'} = 'สถานะใหม่';
     $Self->{Translation}->{'Survey Description'} = 'คำอธิบายแบบสอบถาม';
     $Self->{Translation}->{'answered'} = 'ตอบแล้ว';

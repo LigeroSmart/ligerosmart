@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Editar Pregunta';
     $Self->{Translation}->{'Answer Edit'} = 'Editar Resposta';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Vista xeral das estatísticas';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Detalle das estatísticas';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Non se pode establecer o novo status!Non hai preguntas definidas.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Estado cambiado.';
     $Self->{Translation}->{'- No queue selected -'} = '- Non hai ningunha fila seleccionada -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '';
+    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Cambiar o estado -';
+    $Self->{Translation}->{'Master'} = 'Principal';
+    $Self->{Translation}->{'Invalid'} = 'Incorrecto';
     $Self->{Translation}->{'New Status'} = 'Novo estado';
     $Self->{Translation}->{'Survey Description'} = 'Descrición da enquisa';
     $Self->{Translation}->{'answered'} = 'respondida';

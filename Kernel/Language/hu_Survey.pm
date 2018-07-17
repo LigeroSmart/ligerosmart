@@ -121,8 +121,21 @@ sub Data {
     $Self->{Translation}->{'Question Edit'} = 'Kérdés szerkesztése';
     $Self->{Translation}->{'Answer Edit'} = 'Válasz szerkesztése';
 
+    # Perl Module: Kernel/Modules/AgentSurveyStats.pm
+    $Self->{Translation}->{'Stats Overview'} = 'Statisztikák áttekintése';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Nincs jogosultsága ehhez a kérdőívhez vagy a statisztikák részleteihez!';
+    $Self->{Translation}->{'Stats Detail'} = 'Statisztikák részlete';
+
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nem állítható be az új állapot! Nincsenek kérdések meghatározva.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Nem állítható be új állapot! A kérdések nincsenek befejezve.';
+    $Self->{Translation}->{'Status changed.'} = 'Állapot módosítva.';
     $Self->{Translation}->{'- No queue selected -'} = '- Nincs várólista kijelölve -';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nincs jegytípus kiválasztva -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Nincs jegyszolgáltatás kiválasztva -';
+    $Self->{Translation}->{'- Change Status -'} = '- Állapot módosítása -';
+    $Self->{Translation}->{'Master'} = 'Mester';
+    $Self->{Translation}->{'Invalid'} = 'Érvénytelen';
     $Self->{Translation}->{'New Status'} = 'Új állapot';
     $Self->{Translation}->{'Survey Description'} = 'Kérdőív leírása';
     $Self->{Translation}->{'answered'} = 'megválaszolt';
