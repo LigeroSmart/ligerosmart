@@ -1,4 +1,6 @@
-#6.0.5 20??-??-??
+#6.0.6 2018-??-??
+
+#6.0.5 2018-07-24
  - 2018-07-17 Updated translations, thanks to all translators.
  - 2018-06-25 Fixed bug#[13742](https://bugs.otrs.org/show_bug.cgi?id=13742) - Survey modul form is not divided in case of NPS question.
  - 2018-06-22 Fixed bug#[13741](https://bugs.otrs.org/show_bug.cgi?id=13741) - Change status dropdown is not modern and not translated in AgentSurveyZoom screen.
