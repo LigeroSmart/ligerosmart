@@ -35,7 +35,7 @@ sub Data {
     $Self->{Translation}->{'Pre-approved'} = 'Előzetesen jóváhagyva';
     $Self->{Translation}->{'Rejected'} = 'Elutasítva';
     $Self->{Translation}->{'Repair Start Time'} = 'Javítás indítási ideje';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Helyreállítás indítási ideje';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Visszaállítás indítási ideje';
     $Self->{Translation}->{'Decision Date'} = 'Döntés dátuma';
     $Self->{Translation}->{'Due Date'} = 'Határidő';
 

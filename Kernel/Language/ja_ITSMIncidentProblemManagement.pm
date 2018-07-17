@@ -69,7 +69,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
         '担当者インタフェースの決定画面で、メモ追加後の「次の状態」についてデフォルトの選択肢を定義します。';
     $Self->{Translation}->{'Defines the default subject of a note in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの追加 ITSMフィールド画面で用いるデフォルトのメモの件名を定義します。';
     $Self->{Translation}->{'Defines the default subject of a note in the decision screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default ticket priority in the additional ITSM field screen of the agent interface.'} =
@@ -85,15 +85,15 @@ sub Data {
     $Self->{Translation}->{'Defines the history type for the decision screen action, which gets used for ticket history.'} =
         '';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの追加 ITSMフィールド画面で、メモ追加後のチケットの次の状態について選択肢を定義します。';
     $Self->{Translation}->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの決定画面で、メモ追加後のチケットの次の状態について選択肢を定義します。';
     $Self->{Translation}->{'Dynamic fields shown in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの追加 ITSMフィールド画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the decision screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの決定画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the ticket zoom screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスのチケットズーム画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} =
         '';
     $Self->{Translation}->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} =
@@ -136,9 +136,9 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a list of all the involved agents on this ticket, in the additional ITSM field screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの追加 ITSMフィールド画面で、そのチケットに関与する全担当者のリストです。';
     $Self->{Translation}->{'Shows a list of all the involved agents on this ticket, in the decision screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスの決定画面で、そのチケットに関与する全ての担当者のリストを表示します。';
     $Self->{Translation}->{'Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the additional ITSM field screen of the agent interface.'} =
         '';
     $Self->{Translation}->{'Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the decision screen of the agent interface.'} =
