@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - c6eab050e22300aeac0aa6676962a24eb3c97cbd - Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
+# $origin: otrs - e90ad7d84fe87c8397ffdf688d6792350ebef1f6 - Kernel/Output/HTML/Templates/Standard/AgentTicketActionCommon.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -72,7 +72,7 @@
 [% RenderBlockStart("PropertiesLock") %]
             <p>
                 [% Translate("The ticket has been locked") | html %].
-                <a class="UndoClosePopup" href="[% Env("Baselink") %]Action=AgentTicketLock;Subaction=Unlock;TicketID=[% Data.TicketID %];[% Env("ChallengeTokenParam") | html %]">
+                <a class="UndoClosePopup" href="[% Env("Baselink") %]Action=AgentTicketLock;Subaction=Unlock;TicketID=[% Data.TicketID %][% IF Data.PreviousOwner %];PreviousOwner=[% Data.PreviousOwner %][% END %];[% Env("ChallengeTokenParam") | html %]">
                     [% Translate("Undo & close") | html %]
                 </a>
             </p>

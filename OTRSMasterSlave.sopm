@@ -2,7 +2,7 @@
 <otrs_package version="1.0">
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
-    <Framework Minimum="6.0.8">6.0.x</Framework>
+    <Framework Minimum="6.0.9">6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
