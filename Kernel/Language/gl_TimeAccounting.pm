@@ -125,6 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar Tempo Exceso';
     $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'Permitir creación proxecto';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
+    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
+        '';
+    $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
+        '';
     $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Comienzo Periodo';
     $Self->{Translation}->{'Period End'} = 'Fin Periodo';

@@ -125,6 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Prikaži prekovremeno';
     $Self->{Translation}->{'User is allowed to create projects'} = 'Korisniku je omogućeno da kreira projekte';
     $Self->{Translation}->{'Allow project creation'} = 'Dozvoli kreiranje projekta';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
+    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
+        '';
+    $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
+        '';
     $Self->{Translation}->{'Time Spans'} = 'Rasponi vremena';
     $Self->{Translation}->{'Period Begin'} = 'Početak perioda';
     $Self->{Translation}->{'Period End'} = 'Kraj perioda';

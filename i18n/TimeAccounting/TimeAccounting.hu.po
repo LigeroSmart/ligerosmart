@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-11-08 22:09+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-07-17 14:02+0000\n"
+"PO-Revision-Date: 2018-07-17 14:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -379,6 +379,25 @@ msgstr "A felhasználó létrehozhat projekteket"
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "Projektlétrehozás engedélyezése"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"

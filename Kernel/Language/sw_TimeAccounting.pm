@@ -125,6 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Onyesha muda wa nyongeza';
     $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = 'Ruhusu utengenezaji wa mradi';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
+    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
+        '';
+    $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
+        '';
     $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = 'Kuanza kwa kipengele';
     $Self->{Translation}->{'Period End'} = 'Kuisha kwa kipengele';

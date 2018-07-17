@@ -2,14 +2,14 @@
 # Translators:
 # Alvaro Molina <AlvaroMolinaCL@gmail.com>, 2016
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
-# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014,2017
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014,2017-2018
 # Luis Armando Medina <lamedina@gmail.com>, 2016
 # Luis Medina <luis.medina@sacc.com.mx>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-11-08 05:06+0000\n"
+"POT-Creation-Date: 2018-07-17 14:02+0000\n"
+"PO-Revision-Date: 2018-07-17 14:09+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -383,6 +383,25 @@ msgstr "El usuario puede crear proyectos"
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "Permitir creación de proyectos"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr "El usuario tiene puede omitir la contabilidad de tiempo"
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr "Permitir la omisión de la contabilidad de tiempo"
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr "Si se selecciona esta opción, la contabilidad de tiempo será opcional para el usuario."
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr "No habrá advertencias sobre entradas faltantes y no se exigirán las entradas."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"

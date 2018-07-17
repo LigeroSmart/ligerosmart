@@ -125,6 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = '超過勤務を表示';
     $Self->{Translation}->{'User is allowed to create projects'} = 'ユーザーはプロジェクトを作成できます。';
     $Self->{Translation}->{'Allow project creation'} = 'プロジェクトの新規追加を許可する';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
+    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
+        '';
+    $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
+        '';
     $Self->{Translation}->{'Time Spans'} = '期間';
     $Self->{Translation}->{'Period Begin'} = '開始点';
     $Self->{Translation}->{'Period End'} = '終了点';

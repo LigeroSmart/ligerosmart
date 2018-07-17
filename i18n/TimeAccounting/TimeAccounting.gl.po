@@ -1,12 +1,12 @@
 # 
 # Translators:
 # Arturo Mondelo <arturo.mondelo@hotmail.es>, 2015
-# Xosé <xosecalvo@gmail.com>, 2015
+# Xosé, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-11-08 05:06+0000\n"
+"POT-Creation-Date: 2018-07-17 14:02+0000\n"
+"PO-Revision-Date: 2018-07-17 14:03+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Galician (http://www.transifex.com/otrs/OTRS/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -380,6 +380,25 @@ msgstr ""
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "Permitir creación proxecto"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"

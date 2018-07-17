@@ -1,13 +1,13 @@
 # 
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2015-2016
-# Kentaro Hori <kentaro0919@gmail.com>, 2014,2016
+# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014,2016
 # Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-11-08 05:05+0000\n"
-"PO-Revision-Date: 2017-11-08 05:06+0000\n"
+"POT-Creation-Date: 2018-07-17 14:02+0000\n"
+"PO-Revision-Date: 2018-07-17 14:03+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -381,6 +381,25 @@ msgstr "ユーザーはプロジェクトを作成できます。"
 #. Template: AgentTimeAccountingSetting
 msgid "Allow project creation"
 msgstr "プロジェクトの新規追加を許可する"
+
+#. Template: AgentTimeAccountingSetting
+msgid "User is allowed to skip time accounting"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid "Allow time accounting skipping"
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"If this option is selected, time accounting is effectively optional for the "
+"user."
+msgstr ""
+
+#. Template: AgentTimeAccountingSetting
+msgid ""
+"There will be no warnings about missing entries and no entry enforcement."
+msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
