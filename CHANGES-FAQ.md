@@ -1,4 +1,6 @@
-#6.0.8 2018-??-??
+#6.0.9 2018-??-??
+
+#6.0.8 2018-07-24
  - 2018-07-17 Updated translations, thanks to all translators.
  - 2018-07-03 Fixed bug#[13885](https://bugs.otrs.org/show_bug.cgi?id=13885) - CustomerFAQExplorer does not show pagination if configured SearchLimit is reached.
  - 2018-06-28 Fixed bug#[13875](https://bugs.otrs.org/show_bug.cgi?id=13875) - Old settings in FAQ System Configuration.
