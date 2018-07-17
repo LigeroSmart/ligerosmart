@@ -132,6 +132,7 @@
             <Column Name="description" Required="true" Type="VARCHAR" Size="1020" />
             <Column Name="show_overtime" Required="false" Type="INTEGER" />
             <Column Name="create_project" Required="false" Type="INTEGER" />
+            <Column Name="allow_skip" Required="false" Type="INTEGER" />
             <Column Name="calendar" Required="false" Type="INTEGER" />
             <Index Name="time_accounting_user_user_id">
                 <IndexColumn Name="user_id" />
@@ -169,6 +170,9 @@
                 <IndexColumn Name="date_start" />
                 <IndexColumn Name="date_end" />
             </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="time_accounting_user" Version="6.0.5">
+            <ColumnAdd Name="allow_skip" Required="false" Type="INTEGER" />
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">

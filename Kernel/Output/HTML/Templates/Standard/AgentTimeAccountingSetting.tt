@@ -415,6 +415,14 @@
                     </div>
                     <div class="Clear"></div>
 
+                    <label for="AllowSkip">[% Translate("User is allowed to skip time accounting") | html %]</label>
+                    <div class="Field">
+                        <input type="checkbox" name="AllowSkip" id="AllowSkip" value="1" title="[% Translate("Allow time accounting skipping") | html %]" [% Data.AllowSkip %] />
+                        <p class="FieldExplanation">[% Translate("If this option is selected, time accounting is effectively optional for the user.") | html %]</p>
+                        <p class="FieldExplanation">[% Translate("There will be no warnings about missing entries and no entry enforcement.") | html %]</p>
+                    </div>
+                    <div class="Clear"></div>
+
                     <label for="Calendar">[% Translate("Calendar") | html %]:</label>
                     <div class="Field">
                         [% Data.CalendarOption %]

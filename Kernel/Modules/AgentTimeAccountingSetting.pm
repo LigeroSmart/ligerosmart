@@ -61,7 +61,7 @@ sub Run {
             for my $Parameter (qw(Subaction Description Calendar)) {
                 $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter );
             }
-            for my $Parameter (qw(ShowOvertime CreateProject)) {
+            for my $Parameter (qw(ShowOvertime CreateProject AllowSkip)) {
                 $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter ) || 0;
             }
 
@@ -1142,7 +1142,7 @@ sub _UserSettingsEdit {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get parameters
-    for my $Parameter (qw(Description ShowOvertime CreateProject Calendar)) {
+    for my $Parameter (qw(Description ShowOvertime CreateProject AllowSkip Calendar)) {
         $GetParam{$Parameter} = $ParamObject->GetParam( Param => $Parameter );
     }
 
@@ -1210,6 +1210,9 @@ sub _UserSettingsEdit {
             ? 'checked="checked"'
             : '',
             CreateProject => ( $GetParam{CreateProject} || $UserData{CreateProject} )
+            ? 'checked="checked"'
+            : '',
+            AllowSkip => ( $GetParam{AllowSkip} || $UserData{AllowSkip} )
             ? 'checked="checked"'
             : '',
             }

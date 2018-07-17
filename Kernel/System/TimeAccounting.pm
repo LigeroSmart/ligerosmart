@@ -785,7 +785,7 @@ sub UserList {
     # db select
     $DBObject->Prepare(
         SQL => '
-            SELECT user_id, description, show_overtime, create_project, calendar
+            SELECT user_id, description, show_overtime, create_project, allow_skip, calendar
             FROM time_accounting_user',
     );
 
@@ -796,7 +796,8 @@ sub UserList {
         $Data{ $Row[0] }{Description}   = $Row[1];
         $Data{ $Row[0] }{ShowOvertime}  = $Row[2];
         $Data{ $Row[0] }{CreateProject} = $Row[3];
-        $Data{ $Row[0] }{Calendar}      = $Row[4];
+        $Data{ $Row[0] }{AllowSkip}     = $Row[4];
+        $Data{ $Row[0] }{Calendar}      = $Row[5];
     }
 
     return %Data;
@@ -831,7 +832,7 @@ sub UserGet {
     # db select
     $DBObject->Prepare(
         SQL => '
-            SELECT description, show_overtime, create_project, calendar
+            SELECT description, show_overtime, create_project, allow_skip, calendar
             FROM time_accounting_user
             WHERE user_id = ?',
         Bind => [ \$Param{UserID} ],
@@ -844,7 +845,8 @@ sub UserGet {
         $Data{Description}   = $Row[0];
         $Data{ShowOvertime}  = $Row[1];
         $Data{CreateProject} = $Row[2];
-        $Data{Calendar}      = $Row[3];
+        $Data{AllowSkip}     = $Row[3];
+        $Data{Calendar}      = $Row[4];
     }
 
     return %Data;
@@ -1126,6 +1128,7 @@ updates user data in the db
         Description   => 'Some Text',
         CreateProject => 1 || 0,
         ShowOvertime  => 1 || 0,
+        AllowSkip     => 1 || 0,
         Period        => {
             1 => {
                 DateStart    => '2015-12-12',
@@ -1168,6 +1171,7 @@ sub UserSettingsUpdate {
     # set default values
     $Param{ShowOvertime}  ||= 0;
     $Param{CreateProject} ||= 0;
+    $Param{AllowSkip}     ||= 0;
     $Param{Calendar}      ||= 0;
 
     # get database object
@@ -1177,11 +1181,11 @@ sub UserSettingsUpdate {
     return if !$DBObject->Do(
         SQL => '
             UPDATE time_accounting_user
-            SET description = ?, show_overtime = ?, create_project = ?, calendar = ?
+            SET description = ?, show_overtime = ?, create_project = ?, allow_skip = ?, calendar = ?
             WHERE user_id = ?',
         Bind => [
             \$Param{Description}, \$Param{ShowOvertime},
-            \$Param{CreateProject}, \$Param{Calendar}, \$Param{UserID}
+            \$Param{CreateProject}, \$Param{AllowSkip}, \$Param{Calendar}, \$Param{UserID}
         ],
     );
 
@@ -1232,6 +1236,21 @@ sub WorkingUnitsCompletnessCheck {
         return;
     }
 
+    my $UserID = $Param{UserID};
+
+    my %UserData = $Self->UserGet( UserID => $UserID );
+    if ( !%UserData ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'Could not get user data',
+        );
+
+        return;
+    }
+
+    # Skip check for users that are not required to log times.
+    return () if $UserData{AllowSkip};
+
     my %Data                = ();
     my $WorkingUnitID       = 0;
     my %CompleteWorkingDays = ();
@@ -1248,8 +1267,6 @@ sub WorkingUnitsCompletnessCheck {
         $DateTimeSettings->{Month},
         $DateTimeSettings->{Year},
     );
-
-    my $UserID = $Param{UserID};
 
     # TODO: Search only in the CurrentUserPeriod
     # TODO: Search only working units where action_id and project_id is true
@@ -1299,7 +1316,7 @@ sub WorkingUnitsCompletnessCheck {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    my $Calendar = { $Self->UserGet( UserID => $UserID ) }->{Calendar};
+    my $Calendar = $UserData{Calendar};
 
     for my $Year ( $YearStart .. $YearEnd ) {
 
@@ -2390,7 +2407,7 @@ sub Date2SystemTime {
 
 converts a given time stamp to local system time.
 
-    my $SystemTime = $TimeObject->TimeStamp2SystemTime(
+    my $SystemTime = $TimeAccountingObject->TimeStamp2SystemTime(
         String => '2004-08-14 22:45:00',
     );
 

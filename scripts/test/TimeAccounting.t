@@ -21,6 +21,16 @@ $Kernel::OM->ObjectParamAdd(
 );
 my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
+# set fixed time
+$Helper->FixedTimeSet(
+    $Kernel::OM->Create(
+        'Kernel::System::DateTime',
+        ObjectParams => {
+            String => '2011-01-31 23:59:59',
+        },
+    )->ToEpoch(),
+);
+
 my $RandomNumber = int substr $Helper->GetRandomNumber(), -5, 5;
 
 # data for the new action (task)
@@ -170,11 +180,12 @@ $Self->True(
 $RandomNumber = int substr $Helper->GetRandomNumber(), -3, 3;
 
 # update user data
-$Update = $TimeAccountingObject->UserSettingsUpdate(
+my %UserSettingsUpdateData = (
     UserID        => $UserID,
     Description   => 'Test user' . $RandomNumber,
     CreateProject => 1,
     ShowOvertime  => 1,
+    AllowSkip     => 1,
     Period        => {
         1 => {
             DateStart   => '2011-01-01',
@@ -194,6 +205,7 @@ $Update = $TimeAccountingObject->UserSettingsUpdate(
         },
     },
 );
+$Update = $TimeAccountingObject->UserSettingsUpdate(%UserSettingsUpdateData);
 
 # verify that the action was updated
 $Self->True(
@@ -283,11 +295,41 @@ $Self->Is(
     'Verify end date of current period',
 );
 
-# hash with the working units for Jan. 15th, 2011
+# Check for completeness - should be ok as user is not required to log times.
+my %WorkingUnitsCheckAllowSkip = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
+    UserID => $UserID,
+);
+$Self->False(
+    $WorkingUnitsCheckAllowSkip{EnforceInsert},
+    'Verify user permission to skip logging enabled',
+);
+
+# Update 'AllowSkip' flag.
+$Update = $TimeAccountingObject->UserSettingsUpdate(
+    %UserSettingsUpdateData,
+    AllowSkip => 0,
+);
+
+# verify that the action was updated
+$Self->True(
+    $Update,
+    'Update test user settings',
+);
+
+# Check for completeness - should return a result as user is now required to log times.
+my %WorkingUnitsCheckNoAllowSkip = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
+    UserID => $UserID,
+);
+$Self->True(
+    $WorkingUnitsCheckNoAllowSkip{EnforceInsert},
+    'Verify user permission to skip logging disabled',
+);
+
+# hash with the working units for Jan. 14th, 2011
 my %WorkingUnits = (
     Year         => '2011',
     Month        => '01',
-    Day          => '15',
+    Day          => '14',
     LeaveDay     => 0,
     Sick         => 0,
     Overtime     => 0,
@@ -326,9 +368,9 @@ my %WorkingUnitsCheck = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
     UserID => $UserID,
 );
 
-# verify that Jan 15th, 2011 is not in the list of days without entry
+# verify that Jan 14th, 2011 is not in the list of days without entry
 $Self->False(
-    defined $WorkingUnitsCheck{'Incomplete'}{'2011'}{'01'}{'15'},
+    defined $WorkingUnitsCheck{'Incomplete'}{'2011'}{'01'}{'14'},
     'Verify completion of working units'
 );
 
@@ -448,6 +490,7 @@ $TimeAccountingObject->UserSettingsUpdate(
     Description   => 'Test user',
     CreateProject => 0,
     ShowOvertime  => 0,
+    AllowSkip     => 0,
     Period        => {
         1 => {
             DateStart   => '2011-01-01',

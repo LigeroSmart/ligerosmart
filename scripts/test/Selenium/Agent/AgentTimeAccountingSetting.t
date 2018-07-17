@@ -129,7 +129,7 @@ $Selenium->RunTest(
 
         # Check edit user page.
         for my $EditUserPageID (
-            qw(Description ShowOvertime CreateProject Calendar DateStart-1 DateEnd-1 LeaveDays-1
+            qw(Description ShowOvertime CreateProject AllowSkip Calendar DateStart-1 DateEnd-1 LeaveDays-1
             WeeklyHours-1 Overtime-1 PeriodStatus-1)
             )
         {
@@ -181,6 +181,9 @@ $Selenium->RunTest(
 
         $Selenium->find_element( "#CreateProject", 'css' )->click();
         $Selenium->WaitFor( JavaScript => "return \$('#CreateProject:checked').length" );
+
+        $Selenium->find_element( "#AllowSkip", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return \$('#AllowSkip:checked').length" );
 
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 

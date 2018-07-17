@@ -119,6 +119,15 @@
         </para>
     </section>
     <section>
+        <title>Exclusion of Time Accounting Registration Enforcement</title>
+        <para>
+            The enforcement of logging accounted time can be disabled on a per-user base.
+            If the checkbox 'User is allowed to skip time accounting' is checked in the time accounting settings for this user,
+            the user can use the full functionality of the time accounting but logging time will be completely optional.
+            This feature may be used for cases where users are only supposed to log times irregularily or for a part of their working time.
+        </para>
+    </section>
+    <section>
         <title>Mass Entries</title>
         <para>
             Disabled by default, this feature allows agents to set special time accounting
@@ -523,8 +532,8 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
             <listitem><para>In the new screen fill the comments if needed.</para></listitem>
             <listitem>
                 <para>
-                    For this example we will leave unchecked "Show Overtime" and
-                    "Allow project creation" and we will use the default calendar.
+                    For this example we will leave unchecked "Show Overtime",
+                    "Allow project creation" and "Allow time accounting skipping" and we will use the default calendar.
                 </para>
             </listitem>
             <listitem>
