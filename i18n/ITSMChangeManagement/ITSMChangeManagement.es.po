@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 14:36+0000\n"
-"PO-Revision-Date: 2018-04-24 14:36+0000\n"
+"POT-Creation-Date: 2018-06-06 13:53+0000\n"
+"PO-Revision-Date: 2018-06-11 14:43+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -2440,8 +2440,8 @@ msgstr "Editar la orden de trabajo."
 #. SysConfig
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
-"ChangeNumberGenerator)."
-msgstr "Habilita el tamaño mínimo del contador de cambios (si se seleccionó \"Fecha\" como ChangeNumberGenerator)."
+"ITSMChange::NumberGenerator)."
+msgstr ""
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2578,6 +2578,14 @@ msgid "Link another object to the workorder."
 msgstr "Enlazar otro objecto a la orden de trabajo."
 
 #. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
 msgid "Lookup of CAB members for autocompletion."
 msgstr "Búsqueda de miembros de CAB para autocompletar."
 
@@ -2697,12 +2705,6 @@ msgstr "Hora de finalización planificada"
 #. SysConfig
 msgid "Planned start time"
 msgstr "Hora de inicio planificada"
-
-#. SysConfig
-msgid ""
-"Presents a link in the menu to show the involved persons in a change, in the"
-" zoom view of such change in the agent interface."
-msgstr "Presenta un vínculo en el menú para mostrar a las personas involucradas en un cambio, en la vista detallada de dicho cambio de la interfaz del agente."
 
 #. SysConfig
 msgid "Print the change."
@@ -2962,13 +2964,6 @@ msgid ""
 msgstr "Estable el tamaño mínimo del contador de cambios (si se seleccionó \"AutoIncrement\" como ITSMChange::NumberGenerator). El valor por defecto es 5, esto significa que el contador comienza desde 10000."
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
-"ChangeNumberGenerator. Default is 5, this means the counter starts from "
-"10000."
-msgstr "Establece el tamaño mínimo del contador de cambios si se seleccionó \"AutoIncrement\" como ChangeNumberGenerator. El valor por defecto es 5, esto significa que el contador comienza desde 10000."
-
-#. SysConfig
 msgid "Sets up the state machine for changes."
 msgstr "Configura la máquina de estados para los cambios."
 
@@ -2986,8 +2981,8 @@ msgstr "Muestra una casilla de verificación en la pantalla de edición de órde
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of such workorder of the agent interface."
-msgstr "Muestra un enlace en el menú que permite cambiar el agente de orden de trabajo, en la vista de detalle de dicho pedido de trabajo de la interfaz de agente."
+"zoom view of the workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3004,8 +2999,8 @@ msgstr "Muestra un enlace en el menú que permite definir una orden de trabajo c
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of such workorder of the agent interface."
-msgstr "Muestra un enlace en el menú que permite editar el informe de una orden de trabajo, en la vista de detalle de dicha orden de trabajo de la interfaz de agente."
+"the zoom view of the workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3016,8 +3011,8 @@ msgstr "Muestra un link en el menú para vincular un cambio con otro objeto, en 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of such workorder of the agent interface."
-msgstr "Muestra un enlace en el menú que permite vincular un pedido de trabajo con otro objeto en la vista de acercamiento de dicho pedido de trabajo de la interfaz de agente."
+" in the zoom view of the workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3108,6 +3103,12 @@ msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
 msgstr "Muestra un vínculo en el menú para reajustar un cambio y sus ordenes de trabajo en la vista de zoom o en la interfaz de agente."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 14:36+0000\n"
-"PO-Revision-Date: 2018-04-26 09:23+0000\n"
+"POT-Creation-Date: 2018-06-06 13:53+0000\n"
+"PO-Revision-Date: 2018-07-10 14:00+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -2437,8 +2437,8 @@ msgstr "Уреди радни налог."
 #. SysConfig
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
-"ChangeNumberGenerator)."
-msgstr "Активира минималну величину бројача промена (ако је изабран \"Датум\" за ChangeNumberGenerator)."
+"ITSMChange::NumberGenerator)."
+msgstr "Активира минималну величину бројача промена (ако је изабран датум за ITSMChange::NumberGenerator)."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2575,6 +2575,14 @@ msgid "Link another object to the workorder."
 msgstr "Повежи други објекат са радним налогом."
 
 #. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr "Листа свих догађаја на променама која ће бити приказана у графичком интерфејсу."
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr "Листа свих догађаја на радним налозима која ће бити приказана у графичком интерфејсу."
+
+#. SysConfig
 msgid "Lookup of CAB members for autocompletion."
 msgstr "Потражи чланове CAB ради аутоматског довршавања."
 
@@ -2694,12 +2702,6 @@ msgstr "Планирано време завршетка"
 #. SysConfig
 msgid "Planned start time"
 msgstr "Планирано време почетка"
-
-#. SysConfig
-msgid ""
-"Presents a link in the menu to show the involved persons in a change, in the"
-" zoom view of such change in the agent interface."
-msgstr "У менију приказује везу која омогућава приказ особа укључених у промену  на детаљном приказу у интерфејсу оператера."
 
 #. SysConfig
 msgid "Print the change."
@@ -2959,13 +2961,6 @@ msgid ""
 msgstr "Подешава минималну величину бројача промена (ако је изабран \"AutoIncrement\" за ITSMChange::NumberGenerator). Подразумевано је 5, што значи да бројач почиње од 10000."
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
-"ChangeNumberGenerator. Default is 5, this means the counter starts from "
-"10000."
-msgstr "Дефинише минималну величину бројача промена уколико је изабран \"AutoIncrement\" као ChangeNumberGenerator. Подразумевано је 5, што значи да бројач почиње од 10000."
-
-#. SysConfig
 msgid "Sets up the state machine for changes."
 msgstr "Подеси машину стања за промене."
 
@@ -2983,8 +2978,8 @@ msgstr "Приказује поље за потврду у екрану изме
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of such workorder of the agent interface."
-msgstr "У менију приказује везу која омогућава измену оператера за радни налог, на детаљном приказу тог налога у интерфејсу оператера."
+"zoom view of the workorder of the agent interface."
+msgstr "У менију приказује везу која омогућава измену оператера радног налога, у детаљном приказу тог налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -3001,8 +2996,8 @@ msgstr "У менију приказује везу која омогућава 
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of such workorder of the agent interface."
-msgstr "У менију приказује везу која омогућава измену извештаја за радни налог, на детаљном приказу тог налога у интерфејсу оператера."
+"the zoom view of the workorder of the agent interface."
+msgstr "У менију приказује везу која омогућава измену извештаја радног налога, у детаљном приказу тог налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -3013,8 +3008,8 @@ msgstr "У менију приказује везу која омогућава�
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of such workorder of the agent interface."
-msgstr "У менију приказује везу која омогућава повезивање радног налога са другим објектом на детаљном приказу тог налога у интерфејсу оператера."
+" in the zoom view of the workorder of the agent interface."
+msgstr "У менију приказује везу која омогућава повезивање радног налога са другим објектом у детаљном приказу тог налога у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
@@ -3105,6 +3100,12 @@ msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
 msgstr "У менију приказује везу за поништавање промене и припадајућих радних налога на детаљном приказу у интерфејсу оператера."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr "У менију приказује везу која омогућава приказ особа укључених у промену у детаљном приказу у интерфејсу оператера."
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 14:36+0000\n"
-"PO-Revision-Date: 2018-04-24 14:36+0000\n"
+"POT-Creation-Date: 2018-06-06 13:53+0000\n"
+"PO-Revision-Date: 2018-06-11 14:43+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -2437,7 +2437,7 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
-"ChangeNumberGenerator)."
+"ITSMChange::NumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2575,6 +2575,14 @@ msgid "Link another object to the workorder."
 msgstr ""
 
 #. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
 msgid "Lookup of CAB members for autocompletion."
 msgstr ""
 
@@ -2693,12 +2701,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Planned start time"
-msgstr ""
-
-#. SysConfig
-msgid ""
-"Presents a link in the menu to show the involved persons in a change, in the"
-" zoom view of such change in the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2959,13 +2961,6 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
-"ChangeNumberGenerator. Default is 5, this means the counter starts from "
-"10000."
-msgstr ""
-
-#. SysConfig
 msgid "Sets up the state machine for changes."
 msgstr ""
 
@@ -2983,7 +2978,7 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of such workorder of the agent interface."
+"zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -3001,7 +2996,7 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of such workorder of the agent interface."
+"the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -3013,7 +3008,7 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of such workorder of the agent interface."
+" in the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -3105,6 +3100,12 @@ msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
 msgstr "担当者インタフェースの変更管理ズーム・ビューで、変更内容をリセットするためのリンクをメニューに表示します。"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."

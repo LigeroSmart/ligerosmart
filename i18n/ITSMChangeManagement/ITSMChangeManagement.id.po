@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 14:36+0000\n"
-"PO-Revision-Date: 2018-04-24 14:36+0000\n"
+"POT-Creation-Date: 2018-06-06 13:53+0000\n"
+"PO-Revision-Date: 2018-06-11 14:43+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -2437,7 +2437,7 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
-"ChangeNumberGenerator)."
+"ITSMChange::NumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2575,6 +2575,14 @@ msgid "Link another object to the workorder."
 msgstr ""
 
 #. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr ""
+
+#. SysConfig
 msgid "Lookup of CAB members for autocompletion."
 msgstr "Lookup anggota CAB untuk pelengkapan otomatis."
 
@@ -2694,12 +2702,6 @@ msgstr ""
 #. SysConfig
 msgid "Planned start time"
 msgstr ""
-
-#. SysConfig
-msgid ""
-"Presents a link in the menu to show the involved persons in a change, in the"
-" zoom view of such change in the agent interface."
-msgstr "Menyajikan link dalam menu untuk menunjukkan orang-orang yang terlibat dalam perubahan, dalam tampilan zoom perubahan tersebut dalam antarmuka agen."
 
 #. SysConfig
 msgid "Print the change."
@@ -2959,13 +2961,6 @@ msgid ""
 msgstr "Menetapkan minimal ukuran perubahan counter (jika \"auto_increment\" terpilih sebagai Perubahan ITSM :: Number Generator). Default adalah 5, ini berarti konter dimulai dari 10000."
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
-"ChangeNumberGenerator. Default is 5, this means the counter starts from "
-"10000."
-msgstr ""
-
-#. SysConfig
 msgid "Sets up the state machine for changes."
 msgstr "Set up mesin untuk perubahan."
 
@@ -2983,8 +2978,8 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of such workorder of the agent interface."
-msgstr "Menunjukkan link dalam menu yang memungkinkan mengubah agen perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen."
+"zoom view of the workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3001,8 +2996,8 @@ msgstr "Menunjukkan link dalam menu yang memungkinkan mendefinisikan perintah ke
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of such workorder of the agent interface."
-msgstr "Menunjukkan link dalam menu yang memungkinkan mengedit laporan dari perintah kerja, dalam tampilan zoom dari perintah kerja seperti antarmuka agen."
+"the zoom view of the workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3013,8 +3008,8 @@ msgstr "Menunjukkan link dalam menu yang memungkinkan menghubungkan perubahan de
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of such workorder of the agent interface."
-msgstr "Menunjukkan link dalam menu yang memungkinkan menghubungkan perintah kerja dengan objek lain dalam tampilan zoom dari perintah kerja seperti antarmuka agen."
+" in the zoom view of the workorder of the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid ""
@@ -3105,6 +3100,12 @@ msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
 msgstr "Menunjukkan link dalam menu untuk mengatur ulang perubahan dan perintah kerja dalam tampilan zoom-nya dari antarmuka agen."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr ""
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."

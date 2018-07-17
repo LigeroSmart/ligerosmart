@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 14:36+0000\n"
-"PO-Revision-Date: 2018-05-25 19:20+0000\n"
+"POT-Creation-Date: 2018-06-06 13:53+0000\n"
+"PO-Revision-Date: 2018-06-11 14:46+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -2435,8 +2435,8 @@ msgstr "A munkamegrendelés szerkesztése."
 #. SysConfig
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
-"ChangeNumberGenerator)."
-msgstr "Engedélyezi a legkisebb változásszámláló méretet (ha „Dátum” lett kiválasztva változásszám-előállítóként)."
+"ITSMChange::NumberGenerator)."
+msgstr "Engedélyezi a legkisebb változásszámláló méretet (ha „Date” lett kiválasztva az ITSMChange::NumberGenerator beállításaként)."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2573,6 +2573,14 @@ msgid "Link another object to the workorder."
 msgstr "Másik objektum összekapcsolása a munkamegrendeléssel."
 
 #. SysConfig
+msgid "List of all change events to be displayed in the GUI."
+msgstr "Az összes változásesemény listája, amelyek megjelennek a grafikus felületen."
+
+#. SysConfig
+msgid "List of all workorder events to be displayed in the GUI."
+msgstr "Az összes munkamegrendelés-esemény listája, amelyek megjelennek a grafikus felületen."
+
+#. SysConfig
 msgid "Lookup of CAB members for autocompletion."
 msgstr "CAB-tagok kikeresése az automatikus kiegészítéshez."
 
@@ -2692,12 +2700,6 @@ msgstr "Tervezett befejezési idő"
 #. SysConfig
 msgid "Planned start time"
 msgstr "Tervezett kezdési idő"
-
-#. SysConfig
-msgid ""
-"Presents a link in the menu to show the involved persons in a change, in the"
-" zoom view of such change in the agent interface."
-msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez a változás nagyítás nézetében az ügyintézői felületen."
 
 #. SysConfig
 msgid "Print the change."
@@ -2957,13 +2959,6 @@ msgid ""
 msgstr "Beállítja a legkisebb változásszámláló méretet (ha „AutoIncrement” lett kiválasztva ITSM változás::Számelőállítóként) Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni."
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size if \"AutoIncrement\" was selected as "
-"ChangeNumberGenerator. Default is 5, this means the counter starts from "
-"10000."
-msgstr "Beállítja a legkisebb változásszámláló méretet, ha „AutoIncrement” lett kiválasztva változásszám-előállítóként. Az alapértelmezett 5, amely azt jelenti, hogy a számláló 10000-től fog indulni."
-
-#. SysConfig
 msgid "Sets up the state machine for changes."
 msgstr "Beállítja az állapotgépet a változásoknál."
 
@@ -2981,7 +2976,7 @@ msgstr "Egy jelölőnégyzetet jelenít meg az ügyintézői felület munkamegre
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of such workorder of the agent interface."
+"zoom view of the workorder of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi a munkamegrendelés ügyintézőjének megváltoztatását az ügyintézői felület munkamegrendelésének nagyítási nézetén."
 
 #. SysConfig
@@ -2999,7 +2994,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy mun
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of such workorder of the agent interface."
+"the zoom view of the workorder of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés jelentésének szerkesztését az ügyintézői felület munkamegrendelésének nagyítási nézetén."
 
 #. SysConfig
@@ -3011,7 +3006,7 @@ msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy vá
 #. SysConfig
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of such workorder of the agent interface."
+" in the zoom view of the workorder of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben, amely lehetővé teszi egy munkamegrendelés összekapcsolását egy másik objektummal az ügyintézői felület munkamegrendelésének nagyítási nézetén."
 
 #. SysConfig
@@ -3103,6 +3098,12 @@ msgid ""
 "Shows a link in the menu to reset a change and its workorders in its zoom "
 "view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben egy változás és annak munkamegrendelései visszaállításához az ügyintézői felületen az elem nagyítási nézetében."
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
+msgstr "Egy hivatkozást jelenít meg a menüben egy változásban érintett személyek megjelenítéséhez a változás nagyítás nézetében az ügyintézői felületen."
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."

@@ -851,7 +851,7 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change.'} = 'Уреди услове за промену.';
     $Self->{Translation}->{'Edit the workorder.'} = 'Уреди радни налог.';
     $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
-        '';
+        'Активира минималну величину бројача промена (ако је изабран датум за ITSMChange::NumberGenerator).';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         'Проследи распоред промена. Преглед одобрених промена.';
     $Self->{Translation}->{'History Zoom'} = 'Детаљи историјата';
@@ -889,8 +889,8 @@ sub Data {
         'Ако је учесталост \'редовно\', можете подесити колико често се шаљу обавештења (на сваких X сати).';
     $Self->{Translation}->{'Link another object to the change.'} = 'Повежи други објекат са променом.';
     $Self->{Translation}->{'Link another object to the workorder.'} = 'Повежи други објекат са радним налогом.';
-    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
-    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = 'Листа свих догађаја на променама која ће бити приказана у графичком интерфејсу.';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = 'Листа свих догађаја на радним налозима која ће бити приказана у графичком интерфејсу.';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = 'Потражи чланове CAB ради аутоматског довршавања.';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = 'Потражи оператере, употребљене за аутоматско довршавање.';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = 'Уређивање машине стања ITSM управљања променама.';
@@ -1001,17 +1001,17 @@ sub Data {
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         'Приказује поље за потврду у екрану измена радног налога у интерфејсу оператера које дефинише да ли ће следећи радни налози такође бити премештени уколико је радни налог измењен и планирано време завршетка промењено.';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
-        '';
+        'У менију приказује везу која омогућава измену оператера радног налога, у детаљном приказу тог налога у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         'У менију приказује везу која омогућава дефинисање промене као шаблона на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         'У менију приказује везу која омогућава дефинисање радног налога као шаблона на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
-        '';
+        'У менију приказује везу која омогућава измену извештаја радног налога, у детаљном приказу тог налога у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         'У менију приказује везу која омогућаваповезивање промене са другим објектом на детаљном приказу промене у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
-        '';
+        'У менију приказује везу која омогућава повезивање радног налога са другим објектом у детаљном приказу тог налога у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         'У менију приказује везу која омогућава померање временског термина промене на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1043,7 +1043,7 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         'У менију приказује везу за поништавање промене и припадајућих радних налога на детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
-        '';
+        'У менију приказује везу која омогућава приказ особа укључених у промену у детаљном приказу у интерфејсу оператера.';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         'Приказује историјат тикета (обрнут редослед) у интерфејсу оператера.';
     $Self->{Translation}->{'State Machine'} = 'Машина стања';

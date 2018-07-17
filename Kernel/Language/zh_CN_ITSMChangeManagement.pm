@@ -851,7 +851,7 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change.'} = '编辑变更条件。';
     $Self->{Translation}->{'Edit the workorder.'} = '编辑工作指令。';
     $Self->{Translation}->{'Enables the minimal change counter size (if "Date" was selected as ITSMChange::NumberGenerator).'} =
-        '';
+        '启用最小的变更计数器大小（如果ITSMChange::NumberGenerator 变更编号生成器选择为“日期”）';
     $Self->{Translation}->{'Forward schedule of changes. Overview over approved changes.'} =
         '转发变更的计划表。已批准变更的概览。';
     $Self->{Translation}->{'History Zoom'} = '历史详情';
@@ -889,8 +889,8 @@ sub Data {
         '如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。';
     $Self->{Translation}->{'Link another object to the change.'} = '链接另一对象到变更。';
     $Self->{Translation}->{'Link another object to the workorder.'} = '链接另一对象到工作指令。';
-    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '';
-    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '';
+    $Self->{Translation}->{'List of all change events to be displayed in the GUI.'} = '图形界面显示的所有变更事件列表。';
+    $Self->{Translation}->{'List of all workorder events to be displayed in the GUI.'} = '在图形用户界面中显示的工作指令事件列表。';
     $Self->{Translation}->{'Lookup of CAB members for autocompletion.'} = '查找CAB成员，用于自动补齐功能。';
     $Self->{Translation}->{'Lookup of agents, used for autocompletion.'} = '查找服务人员，用于自动补齐功能。';
     $Self->{Translation}->{'Manage ITSM Change Management state machine.'} = '管理ITSM变更管理状态机。';
@@ -1001,17 +1001,17 @@ sub Data {
     $Self->{Translation}->{'Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed.'} =
         '在服务人员界面编辑工作指令屏幕显示一个复选框，用于确定当一个工作指令被修改且计划结束时间变更时，是否将后面的工作指令也随之移动时间。';
     $Self->{Translation}->{'Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface.'} =
-        '';
+        '在服务人员界面工作指令详情窗口，在菜单中显示一个允许修改该工作指令的服务人员的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface.'} =
         '在服务人员界面变更详情窗口，在菜单中显示一个允许定义一个变更为模板的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface.'} =
         '在服务人员界面工作指令详情窗口，在菜单中显示一个允许定义一个工作指令为模板的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface.'} =
-        '';
+        '在服务人员界面工作指令详情窗口，在菜单中显示一个允许编辑该工作指令的报告的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface.'} =
         '在服务人员界面变更详情窗口，在菜单中显示一个允许链接变更到另一对象的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
-        '';
+        '在服务人员界面工作指令详情窗口，在菜单中显示一个允许链接该工作指令到其它对象的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
         '在服务人员界面变更详情窗口，在菜单中显示一个允许移动变更时间轴的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
@@ -1043,7 +1043,7 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.'} =
         '在服务人员界面工作指令详情窗口，在菜单中显示一个重置变更和工作指令的链接。';
     $Self->{Translation}->{'Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface.'} =
-        '';
+        '在服务人员界面变更详情窗口，在菜单中显示一个链接以显示变更的相关人员。';
     $Self->{Translation}->{'Shows the change history (reverse ordered) in the agent interface.'} =
         '在服务人员界面显示变更历史（倒序）。';
     $Self->{Translation}->{'State Machine'} = '状态模式转换';
