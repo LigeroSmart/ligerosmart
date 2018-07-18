@@ -294,22 +294,11 @@
             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypeDefault" Required="0" Valid="1">
-        <Description Translatable="1">Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###IsVisibleForCustomerDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines if the MasterSlave note is visible for the customer by default.</Description>
         <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
-            <Item ValueType="String" ValueRegex="">note-internal</Item>
-        </Value>
-    </Setting>
-    <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypes" Required="0" Valid="1">
-        <Description Translatable="1">Specifies the different note types that will be used in the system.</Description>
-        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
-        <Value>
-            <Hash>
-                <Item Key="note-internal">1</Item>
-                <Item Key="note-external">0</Item>
-                <Item Key="note-report">0</Item>
-            </Hash>
+             <Item ValueType="Checkbox">0</Item>
         </Value>
     </Setting>
     <Setting Name="Ticket::Frontend::AgentTicketMasterSlave###Priority" Required="0" Valid="0">
