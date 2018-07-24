@@ -54,7 +54,7 @@ sub new {
 
 fill up the link list with data
 
-    $Success = $FAQLinkObject->LinkListWithData(
+    $Success = $LinkObject->LinkListWithData(
         LinkList => $HashRef,
         UserID   => 1,
     );
@@ -119,7 +119,7 @@ sub LinkListWithData {
 
 checks read permission for a given object and UserID.
 
-    $Permission = $FAQLinkObject->ObjectPermission(
+    $Permission = $LinkObject->ObjectPermission(
         Object  => 'FAQ',
         Key     => 123,
         UserID  => 1,
@@ -332,7 +332,7 @@ sub ObjectSearch {
 
 link add pre event module
 
-    $True = $FAQLinkObject->LinkAddPre(
+    $True = $LinkObject->LinkAddPre(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -343,7 +343,7 @@ link add pre event module
 
     or
 
-    $True = $FAQLinkObject->LinkAddPre(
+    $True = $LinkObject->LinkAddPre(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -377,7 +377,7 @@ sub LinkAddPre {
 
 link add pre event module
 
-    $True = $FAQLinkObject->LinkAddPost(
+    $True = $LinkObject->LinkAddPost(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -388,7 +388,7 @@ link add pre event module
 
     or
 
-    $True = $FAQLinkObject->LinkAddPost(
+    $True = $LinkObject->LinkAddPost(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -422,7 +422,7 @@ sub LinkAddPost {
 
 link delete pre event module
 
-    $True = $FAQLinkObject->LinkDeletePre(
+    $True = $LinkObject->LinkDeletePre(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -433,7 +433,7 @@ link delete pre event module
 
     or
 
-    $True = $FAQLinkObject->LinkDeletePre(
+    $True = $LinkObject->LinkDeletePre(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,
@@ -467,7 +467,7 @@ sub LinkDeletePre {
 
 link delete post event module
 
-    $True = $FAQLinkObject->LinkDeletePost(
+    $True = $LinkObject->LinkDeletePost(
         Key          => 123,
         SourceObject => 'FAQ',
         SourceKey    => 321,
@@ -478,7 +478,7 @@ link delete post event module
 
     or
 
-    $True = $FAQLinkObject->LinkDeletePost(
+    $True = $LinkObject->LinkDeletePost(
         Key          => 123,
         TargetObject => 'FAQ',
         TargetKey    => 321,

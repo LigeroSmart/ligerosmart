@@ -28,11 +28,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::Output::HTML::LinkObject::FAQ - layout backend module
+Kernel::Output::HTML::LinkObject::FAQ - link object backend module
 
 =head1 DESCRIPTION
 
-All layout functions of link object (FAQ)
+All link object functions of link object (FAQ)
 
 =head2 new()
 
@@ -543,7 +543,7 @@ sub TableCreateSimple {
 
 return a output string
 
-    my $String = $LayoutObject->ContentStringCreate(
+    my $String = $LinkObject->ContentStringCreate(
         ContentData => $HashRef,
     );
 
