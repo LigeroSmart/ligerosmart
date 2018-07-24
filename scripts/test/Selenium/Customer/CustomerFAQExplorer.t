@@ -90,7 +90,7 @@ $Selenium->RunTest(
             push @Items, {
                 ItemID   => $ItemID,
                 FAQTitle => $FAQTitle,
-                Page     => ($Count < 4) ? 1 : 2,
+                Page     => ( $Count < 4 ) ? 1 : 2,
             };
         }
 
@@ -171,9 +171,9 @@ $Selenium->RunTest(
         );
 
         # Check items in the first page.
-        for my $Item ( @Items ) {
+        for my $Item (@Items) {
             my $IsFound = ( $Item->{Page} == 1 ) ? 'is found' : 'is not found';
-            my $Length  = ( $Item->{Page} == 1 ) ? 1 : 0;
+            my $Length  = ( $Item->{Page} == 1 ) ? 1          : 0;
 
             $Self->Is(
                 $Selenium->execute_script(
@@ -188,9 +188,9 @@ $Selenium->RunTest(
         $Selenium->find_element( "#CustomerFAQExplorerPage2", 'css' )->VerifiedClick();
 
         # Check items in the second page.
-        for my $Item ( @Items ) {
+        for my $Item (@Items) {
             my $IsFound = ( $Item->{Page} == 2 ) ? 'is found' : 'is not found';
-            my $Length  = ( $Item->{Page} == 2 ) ? 1 : 0;
+            my $Length  = ( $Item->{Page} == 2 ) ? 1          : 0;
 
             $Self->Is(
                 $Selenium->execute_script(
