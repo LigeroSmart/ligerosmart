@@ -1545,27 +1545,65 @@ sub FAQJournalGet {
         return;
     }
 
+    my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+    my %Groups      = $GroupObject->PermissionUserGet(
+        UserID => $Param{UserID},
+        Type   => 'ro',
+    );
+
+    return if !%Groups;
+
+    my @GroupIDs          = keys %Groups;
+    my $GroupPlaceholders = join ', ', ('?') x @GroupIDs;
+    my @GroupBind         = map { \$_ } @GroupIDs;
+
+    my $CategorySQL =
+        "SELECT g.category_id
+        FROM faq_category_group g
+        WHERE g.group_id IN ( $GroupPlaceholders )";
+
+    # get database object
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
+        SQL  => $CategorySQL,
+        Bind => \@GroupBind,
+    );
+
+    my @CategoryIDs;
+    while ( my @Row = $DBObject->FetchrowArray() ) {
+        push @CategoryIDs, $Row[0];
+    }
+
+    return if !@CategoryIDs;
+
+    my @Bind = map { \$_ } @CategoryIDs;
+    my $CategoryPlaceholders = join ', ', ('?') x @CategoryIDs;
+
     # build SQL query
-    my $SQL = 'SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number '
-        . 'FROM faq_item i, faq_state s, faq_history h, faq_category c '
-        . 'WHERE s.id = i.state_id '
-        . 'AND h.item_id = i.id '
-        . 'AND i.category_id = c.id ';
+    my $SQL =
+        "SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number
+        FROM faq_item i
+            INNER JOIN faq_state s ON s.id = i.state_id
+            INNER JOIN faq_history h ON h.item_id = i.id
+            INNER JOIN faq_category c ON c.id = i.category_id
+        WHERE c.id IN ($CategoryPlaceholders)";
 
     # add states condition
     if ( $Param{States} && ref $Param{States} eq 'ARRAY' && @{ $Param{States} } ) {
-        my $StatesString = join ', ', @{ $Param{States} };
+        push @Bind, map { \$_ } @{ $Param{States} };
+        my $StatesString = join ', ', ('?') x @{ $Param{States} };
         $SQL .= "AND s.name IN ($StatesString) ";
     }
 
     # add order by clause
     $SQL .= 'ORDER BY h.created DESC';
-    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     # get the data from db
     return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => 200,
+        Bind  => \@Bind,
     );
 
     my @Data;

@@ -80,6 +80,26 @@ $Selenium->RunTest(
             "Link from Journal to Zoom view - success",
         );
 
+        # Create new test user and login with stats permission
+        $TestUserLogin = $Helper->TestUserCreate(
+            Groups => [ 'stats', ],
+        ) || die "Did not get test user";
+
+        $Selenium->Login(
+            Type     => 'Agent',
+            User     => $TestUserLogin,
+            Password => $TestUserLogin,
+        );
+
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQJournal");
+
+        # FAQ item is created in Misc category, users with stats permission don't see it
+        $Self->Is(
+            $Selenium->execute_script("return \$('#EmptyMessageSmall').text().trim()"),
+            'No FAQ Journal data found',
+            "There is no permission to see FAQ items",
+        );
+
         # delete test created FAQ
         my $Success = $FAQObject->FAQDelete(
             ItemID => $ItemID,

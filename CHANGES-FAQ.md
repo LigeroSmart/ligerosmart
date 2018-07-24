@@ -1,4 +1,5 @@
 #6.0.9 2018-??-??
+ - 2018-07-24 FAQ journal should check the groups of categories (PR#76).
 
 #6.0.8 2018-07-24
  - 2018-07-17 Updated translations, thanks to all translators.
