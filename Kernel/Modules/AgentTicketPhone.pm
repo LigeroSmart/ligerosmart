@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 0a04e722fbcbd39cca3fb089c294e72b3170e6b1 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - 5ccf05fc265abfb8bcad4f2206aca1e7721e254b - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -834,6 +834,12 @@ sub Run {
                 %SplitTicketParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
                 QueueID => $Self->{QueueID},
+            ),
+            TimeUnits => $Self->_GetTimeUnits(
+                %GetParam,
+                %ACLCompatGetParam,
+                %SplitTicketParam,
+                ArticleID => $Article{ArticleID},
             ),
             From         => $Article{From},
             Subject      => $Subject,
@@ -2412,6 +2418,21 @@ sub _GetTos {
     # add empty selection
     $NewTos{''} = '-';
     return \%NewTos;
+}
+
+sub _GetTimeUnits {
+    my ( $Self, %Param ) = @_;
+
+    my $AccountedTime = '';
+
+    # Get accounted time if AccountTime config item is enabled.
+    if ( $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Frontend::AccountTime') && defined $Param{ArticleID} ) {
+        $AccountedTime = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleAccountedTimeGet(
+            ArticleID => $Param{ArticleID},
+        );
+    }
+
+    return $AccountedTime ? $AccountedTime : '';
 }
 
 sub _GetStandardTemplates {

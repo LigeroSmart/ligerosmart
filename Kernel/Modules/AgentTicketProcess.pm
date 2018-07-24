@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 59c1c660e6835e5cd2ce9e85a1c71215c7971483 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 5ccf05fc265abfb8bcad4f2206aca1e7721e254b - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2924,6 +2924,12 @@ sub _RenderArticle {
         # Get TimeUnits value.
         $Param{TimeUnits} = $Param{GetParam}{TimeUnits};
 
+        if ( !defined $Param{TimeUnits} && $Self->{ArticleID} ) {
+            $Param{TimeUnits} = $Self->_GetTimeUnits(
+                ArticleID => $Self->{ArticleID},
+            );
+        }
+
         $LayoutObject->Block(
             Name => 'TimeUnits',
             Data => \%Param,
@@ -2934,6 +2940,21 @@ sub _RenderArticle {
         Success => 1,
         HTML    => $LayoutObject->Output( TemplateFile => 'ProcessManagement/Article' ),
     };
+}
+
+sub _GetTimeUnits {
+    my ( $Self, %Param ) = @_;
+
+    my $AccountedTime = '';
+
+    # Get accounted time if AccountTime config item is enabled.
+    if ( $Kernel::OM->Get('Kernel::Config')->Get('Ticket::Frontend::AccountTime') && defined $Param{ArticleID} ) {
+        $AccountedTime = $Kernel::OM->Get('Kernel::System::Ticket::Article')->ArticleAccountedTimeGet(
+            ArticleID => $Param{ArticleID},
+        );
+    }
+
+    return $AccountedTime ? $AccountedTime : '';
 }
 
 sub _RenderCustomer {
