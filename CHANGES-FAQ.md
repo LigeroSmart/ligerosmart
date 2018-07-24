@@ -1,4 +1,6 @@
-#6.0.9 2018-??-??
+#6.0.10 2018-??-??
+
+#6.0.9 2018-07-31
  - 2018-07-24 FAQ journal should check the groups of categories (PR#76).
 
 #6.0.8 2018-07-24
