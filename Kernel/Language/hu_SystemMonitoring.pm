@@ -22,7 +22,7 @@ sub Data {
         'Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor használja ezt a blokkot, ha a szűrőt a levelezési szűrő ELŐTT kell lefuttatni.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Nagios nyugtázási típus meghatározása.';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL .'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';

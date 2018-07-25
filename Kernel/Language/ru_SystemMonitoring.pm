@@ -22,7 +22,7 @@ sub Data {
         'Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ДО PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Определите тип подтверждения Nagios.';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL .'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';

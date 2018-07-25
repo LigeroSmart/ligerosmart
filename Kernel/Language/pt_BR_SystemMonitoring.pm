@@ -22,7 +22,7 @@ sub Data {
         'Interface de email básica com Ferramentas de Monitoramento. Use este bloco se o filtro tiver que rodar ANTES do PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Definir o tipo de acknowledge do Nagios';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL .'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';

@@ -1,4 +1,7 @@
-#6.0.3 2018-??-??
+#6.0.4 2018-??-??
+
+#6.0.3 2018-07-25
+ - 2018-07-25 Updated translations, thanks to all translators.
  - 2018-07-25 Fixed bug#[13679](https://bugs.otrs.org/show_bug.cgi?id=13679) - Icinga2 support is not displayed in package description.
 
 #6.0.2 2017-03-06

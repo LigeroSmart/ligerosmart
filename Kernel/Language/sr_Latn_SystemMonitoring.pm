@@ -22,7 +22,7 @@ sub Data {
         'Osnovni imejl interfejs za sistemski nadzor. Koristite ovaj blok ako filter treba da bude pušten PRE PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Određuje „Nagios” tip potvrde.';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL .'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';
