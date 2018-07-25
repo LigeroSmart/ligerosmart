@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+
+<book lang="hu">
+
+<!--
+************************************** Head ***********************************************
+-->
+
+<bookinfo>
+    <title>$Name</title>
+    <edition>$Description, verzió: $Version</edition>
+
+    <copyright>
+        <year>$YearStamp</year>
+        <holder>$Vendor, $URL</holder>
+    </copyright>
+
+    <date>$DateStamp</date>
+
+    <legalnotice>
+        <para>$License</para>
+        <para>
+            Ez a mű az $Vendor szerzői joga alatt áll. Zimmersmühlenweg 11, 61440 Oberursel,
+            Németország.
+        </para>
+        <para>Összeállítás dátuma: $DateStamp</para>
+    </legalnotice>
+</bookinfo>
+
+<!--
+************************************ Customer part ******************************************
+-->
+
+<!-- ********** -->
+<!-- 1. Preface -->
+<!-- ********** -->
+<preface id="preface">
+    <title>Előszó</title>
+    <para>
+        Ez a modul egy alapszintű felület valósít meg a rendszerfigyelés alkalmazáscsomagokhoz.
+    </para>
+    <para>
+        Nagios használatakor e-mail üzenetek fogadásával működik, amelyeket egy hálózatfigyelő
+        alkalmazáscsomag küld. Új jegyek az összetevők hibái esetén jönnek létre. Miután egy jegy
+        megnyílt, az érintett összetevőre vonatkozó üzenetek ehhez a jegyhez lesznek csatolva.
+        Amikor az összetevő helyreáll, a jegyállapot megváltoztatható vagy a jegy lezárható. Ha
+        létezik nyitott jegy egy adott gép/szolgáltatás kombinációjához, akkor az erre a bizonyos
+        kombinációra vonatkozó összes levél csatolva lesz a jegyhez, amíg az nincs lezárva.
+    </para>
+    <para>
+        Icinga2 használatakor egy gép és egy szolgáltatás meghatározásával működik a jegy dinamikus
+        mezőiben. Miután a jegyzárolás beállításra kerül, a gép és a szolgáltatás ezen kombinációja
+        lesz használva egy olyan HTTP-kérés előállításához, amely a beállított Icinga2 gépnek lesz
+        elküldve (nézze meg a beállítás fejezetet). Az Icinga2 programban ez a kérés lesz használva
+        az új incidensek létrehozásához vagy megerősítéséhez.
+    </para>
+    <para>
+        Ha kérdései vannak ezzel a dokumentummal kapcsolatban, vagy további információkra van
+        szüksége, akkor lépjen be az OTRS azonosítójával a
+        <ulink url="https://portal.otrs.com">portal.otrs.com</ulink> címen lévő ügyfélportálunkra,
+        és hozzon létre egy jegyet.
+    </para>
+    <para>
+        Még nincs OTRS azonosítója?
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">Regisztráljon itt ingyenesen.</ulink>
+    </para>
+</preface>
+
+<!-- *************** -->
+<!-- 2. Feature List -->
+<!-- *************** -->
+<chapter>
+    <title>Funkciólista</title>
+    <section>
+        <title>Vezérlési folyamat (Nagios)</title>
+        <para>
+            A következő diagram azt mutatja be, hogy ez a modul hogyan kezeli a leveleket, és az
+            egyes esetekben mely műveletet aktiválja. Nagyjából az összes ellenőrzés beállítható a
+            lent felsorolt paraméterek által megadott reguláris kifejezések használatával.
+        </para>
+        <para>
+            <screen><![CDATA[
+A levél illeszkedik a „FromAddress” értékre?
+|
++-> NEM  -> Folytatás a szabályos levélfeldolgozással
+|
++-> IGEN -> Létezik már a megegyező gép/szolgáltatás kombinációval egy
+            jegy az OTRS-ben?
+            |
+            +-> NEM  -> A „State:” illeszkedik erre: „NewTicketRegExp”?
+            |           |
+            |           +-> NEM  -> A levél feldolgozásának leállítása
+            |           |           (csendes eldobás)
+            |           |
+            |           +-> IGEN -> Új jegy létrehozása, a szolgáltatás
+            |                       és a gép rögzítése, levél csatolása
+            |
+            +-> IGEN -> Levél csatolása a jegyhez
+                     -> A „State:” illeszkedik erre: „CloseTicketRegExp”?
+                         |
+                         +-> NEM  -> Folytatás szabályos levélfeldolgozással
+                         |
+                         +-> IGEN -> Jegytípus megváltoztatása arra, ahogy
+                                     be van állítva ebben: „CloseActionState”
+            ]]></screen>
+        </para>
+        <para>
+            Néhány további épségellenőrzés mellett ez az, ahogy a rendszerfigyelő modul kezeli a
+            bejövő leveleket. A reguláris kifejezések megváltoztatásával lehetővé kell tenni a
+            különböző megfigyelőrendszerekhez való alkalmazkodást.
+        </para>
+    </section>
+    <section>
+        <title>Icinga2 nyugtázás</title>
+        <para>
+            Egy új jegy jön létre a meghatározott dinamikus mezőkben lévő értékekkel, amely gép és
+            szolgáltatás kombinációjaként szükséges az Icinga2 géppel való kommunikációhoz. Miután
+            ez az újonnan létrehozott jegy zárolva lesz egy ügyintézőre, egy HTTP-kérés kerül
+            elküldésre a beállított Icinga2 gépnek. Az Icinga2 gépen egy új nyugta jön létre vagy
+            egy meglévő kerül megerősítésre.
+        </para>
+    </section>
+</chapter>
+
+<!-- ********************** -->
+<!-- 3. System Requirements -->
+<!-- ********************** -->
+<chapter>
+    <title>Rendszerkövetelmények</title>
+    <section>
+        <title>Keretrendszer</title>
+        <para>
+            A következő OTRS keretrendszer szükséges:
+        </para>
+        <para>
+            $Framework
+        </para>
+    </section>
+    <section>
+        <title>Csomagok</title>
+        <para>
+            A következő csomagok szükségesek:
+        </para>
+        <para>
+            $PackageRequired
+        </para>
+    </section>
+    <section>
+        <title>Operációs rendszer</title>
+        <para>
+            Ez a csomag a következő operációs rendszerek egyikét igényli:
+        </para>
+        <para>
+            $OS
+        </para>
+    </section>
+    <section>
+        <title>Harmadik féltől származó szoftver</title>
+        <para>
+            Ez a harmadik féltől származó szoftver szükséges a csomag használatához:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Egy hálózatfigyelő rendszer, mint például Nagios, Icinga2, HP OpenView vagy
+                    hasonlók, amelyek képesek az eseményeket e-mailen keresztül elküldeni.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</chapter>
+
+<!-- *************** -->
+<!-- 4. Installation -->
+<!-- *************** -->
+<chapter>
+    <title>Telepítés</title>
+    <para>
+        A következő lépések elmagyarázzák, hogyan kell telepíteni a csomagot. Két lehetőség van.
+    </para>
+    <section>
+        <title>Adminisztrátori felület</title>
+        <para>
+            Használja a következő URL-t az adminisztrátori felülettel történő csomagtelepítéshez
+            (ne feledje, hogy az „admin” csoportban kell lennie).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </section>
+    <section>
+        <title>Parancssor</title>
+        <para>
+            Ha esetleg valamilyen okból nem tudja használni az adminisztrátori felületet, akkor
+            használhatja a következő parancssori eszközt helyette („bin/otrs.Console.pl
+            Admin::Package::Install”).
+        </para>
+        <para>
+            <screen>
+shell> bin/otrs.Console.pl Admin::Package::Install /elérési/út/$Name-$Version.opm
+            </screen>
+        </para>
+    </section>
+</chapter>
+
+<!-- **************** -->
+<!-- 5. Configuration -->
+<!-- **************** -->
+<chapter>
+    <title>Beállítás</title>
+    <para>A csomag a rendszerbeállításokon keresztül állítható be az adminisztrátori
+felületen. A következő beállítási lehetőségek érhetők el:</para>
+    <section>
+        <title>Icinga2::Acknowledge::Author</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>Icinga2 nyugtázás szerzője.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::Comment</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>Icinga2 nyugtázás megjegyzése.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::Enabled</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>Icinga2 nyugtázás engedélyezve?</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::FreeField::Host</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>A dinamikus mező neve a gépnél.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::FreeField::Service</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>A dinamikus mező neve a szolgáltatásnál.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::HTTP::Password</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>A HTTP nyugtázási jelszó.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::HTTP::URL</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>Icinga API URL.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::HTTP::User</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>A HTTP nyugtázási felhasználó.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::Notify</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>Icinga2 nyugtázás értesítés.</para>
+    </section>
+    <section>
+        <title>Icinga2::Acknowledge::Sticky</title>
+        <para>Navigáció: Core::SystemMonitoring::Icinga2.</para>
+        <para>Icinga2 nyugtázás ragasztás.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::FreeField::Host</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>A dinamikus mező neve a gépnél.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::FreeField::Service</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>A dinamikus mező neve a szolgáltatásnál.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::Password</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>A HTTP nyugtázási jelszó.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::URL</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>A HTTP nyugtázási URL.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::HTTP::User</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>A HTTP nyugtázási felhasználó.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::NamedPipe::CMD</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>Elnevezett cső nyugtázási parancs.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::NamedPipe::Host</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>Elnevezett cső nyugtázási formátum a gépnél.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::NamedPipe::Service</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>Elnevezett cső nyugtázási formátum a szolgáltatásnál.</para>
+    </section>
+    <section>
+        <title>Nagios::Acknowledge::Type</title>
+        <para>Navigáció: Core::SystemMonitoring::Nagios.</para>
+        <para>Nagios nyugtázási típus meghatározása.</para>
+    </section>
+    <section>
+        <title>PostMaster::PreFilterModule###00-SystemMonitoring</title>
+        <para>Navigáció: Core::Email::PostMaster.</para>
+        <para>Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor használja ezt a blokkot, ha a szűrőt a levelezési szűrő ELŐTT kell lefuttatni.</para>
+    </section>
+    <section>
+        <title>PostMaster::PreFilterModule###1-SystemMonitoring</title>
+        <para>Navigáció: Core::Email::PostMaster.</para>
+        <para>Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor használja ezt a blokkot, ha a szűrőt a levelezési szűrő UTÁN kell lefuttatni.</para>
+    </section>
+    <section>
+        <title>SystemMonitoring::LinkTicketWithCI</title>
+        <para>Navigáció: Core::SystemMonitoring.</para>
+        <para>Egy már megnyitott incidensjegy összekapcsolása az érintett CI-vel. Ez csak akkor lehetséges, amikor egy következő rendszerfigyelő e-mail érkezik.</para>
+    </section>
+    <section>
+        <title>SystemMonitoring::SetIncidentState</title>
+        <para>Navigáció: Core::SystemMonitoring.</para>
+        <para>Egy CI incidensállapotának automatikus beállítása, amikor egy rendszerfigyelő e-mail érkezik.</para>
+    </section>
+    <section>
+        <title>Ticket::EventModulePost###9-Icinga2Acknowledge</title>
+        <para>Navigáció: Core::Event::Icinga2.</para>
+        <para>Jegyesemény modul egy nyugta küldéséhez a Icinga2 számára.</para>
+    </section>
+    <section>
+        <title>Ticket::EventModulePost###9-NagiosAcknowledge</title>
+        <para>Navigáció: Core::Event::Nagios.</para>
+        <para>Jegyesemény modul egy nyugta küldéséhez a Nagios számára.</para>
+    </section>
+</chapter>
+
+<!-- ******** -->
+<!-- 6. Usage -->
+<!-- ******** -->
+<!--
+<chapter>
+    <title>Használat</title>
+</chapter>
+-->
+
+<!--
+***************************************** Technical part ************************************
+-->
+<!-- ********************************** -->
+<!-- 7. Technical Implementation Detail -->
+<!-- ********************************** -->
+<!--
+<chapter>
+    <title>Műszaki megvalósítás részletei</title>
+    <para>
+        Műszaki megvalósítás részletei
+    </para>
+</chapter>
+-->
+
+<!-- *********** -->
+<!-- 8. Filelist -->
+<!-- *********** -->
+<chapter>
+    <title>Fájllista</title>
+    <para>
+        Ez a lista jeleníti meg a csomagban lévő összes fájlt a jogosultságaikkal együtt.
+    </para>
+    <para>
+        $Filelist
+    </para>
+</chapter>
+
+<!-- ******* -->
+<!-- 9. Test -->
+<!-- ******* -->
+<chapter>
+    <title>Tesztek</title>
+    <para>
+        Ez a modul minőségbiztosításon esett át a jelenlegi OTRS iránymutatások szerint.
+    </para>
+    <section>
+        <title>Tesztesetek</title>
+        <para>
+            A csomag teszteléséhez kövesse a Használat szakaszban bemutatott példákat.
+        </para>
+    </section>
+    <section>
+        <title>Egységteszt</title>
+        <para>
+            A modul minőségének biztosításához számos, úgynevezett egységtesztet hoztak létre a
+            modul funkcionalitásainak teszteléséhez. Ezek az egységtesztek parancssoron keresztül
+            futtathatók.
+        </para>
+        <para>
+            FIGYELEM: soha ne futtasson egységteszteket egy produktív rendszeren, mivel a
+            rendszerhez hozzáadott tesztadatok többé nem lesznek eltávolíthatók. Mindig
+            tesztrendszert használjon.
+        </para>
+        <para>A csomagra jellemző egységtesztek futtatása</para>
+        <para>
+            Csak azon egységtesztek futtatásához, amelyeket ez a csomag fog szállítani, használja
+            a következő parancsot a parancssorban:
+        </para>
+        <para>
+            <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Maint/SystemMonitoring/NagiosCheck
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SystemMonitoring
+            </screen>
+        </para>
+        <para>
+            Az összes elérhető egységteszt futtatása
+        </para>
+        <para>
+            Az összes elérhető egységteszt futtatásához használja a következő parancsot a
+            parancssorban:
+        </para>
+        <para>
+            <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run
+            </screen>
+        </para>
+    </section>
+</chapter>
+
+<!-- ************** -->
+<!-- 10. Change Log -->
+<!-- ************** -->
+<chapter>
+    <title>Változásnapló</title>
+    <para>
+        $ChangeLog
+    </para>
+</chapter>
+
+</book>
