@@ -159,7 +159,7 @@ sub Run {
     # convert to string
     my $Output = $RSSObject->as_string();
     if ( !$Output ) {
-        return $LayoutObject->FatalError(
+        return $LayoutObject->CustomerFatalError(
             Message => Translatable('Can\'t create RSS file!'),
         );
     }
