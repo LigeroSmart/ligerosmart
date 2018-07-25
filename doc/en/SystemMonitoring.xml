@@ -7,14 +7,18 @@
 <!--
 ************************************** Head ***********************************************
 -->
+
 <bookinfo>
     <title>$Name</title>
     <edition>$Description Version $Version</edition>
+
     <copyright>
         <year>$YearStamp</year>
         <holder>$Vendor, $URL</holder>
     </copyright>
+
     <date>$DateStamp</date>
+
     <legalnotice>
         <para>$License</para>
         <para>
@@ -38,23 +42,27 @@
     </para>
     <para>
         For Nagios, it works by receiving email messages sent by a Network Monitoring Suite. New
-        tickets are created in case of component failures. Once a ticket has
-        been opened messages regarding the effected component are attached to
-        this ticket. When the component recovers, the ticket state can be
-        changed or the ticket can be closed.
-        If an open ticket for a given Host/Service combination exists, all
-        mails concerning this particular combination will be attached to the
-        ticket until it's closed.
+        tickets are created in case of component failures. Once a ticket has been opened messages
+        regarding the effected component are attached to this ticket. When the component recovers,
+        the ticket state can be changed or the ticket can be closed. If an open ticket for a given
+        host/service combination exists, all mails concerning this particular combination will be
+        attached to the ticket until it's closed.
     </para>
     <para>
-        For Icinga2, it works by specifying a host and a service in ticket dynamic fields.
-        This combination of host and service is used after a ticket lock is set to generate a
-        HTTP request which is send to the configured Icinga2 host (please see configuration chapter).
+        For Icinga2, it works by specifying a host and a service in ticket dynamic fields. This
+        combination of host and service is used after a ticket lock is set to generate a HTTP
+        request which is send to the configured Icinga2 host (please see configuration chapter).
         In Icinga2, this request is used to create or to confirm new incidents.
     </para>
     <para>
-        If you have questions regarding this document or if you need further information, please log in to our customer portal at portal.otrs.com with your OTRS ID and create a ticket. You do not have an OTRS ID yet? Register
-        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">here for free</ulink>.
+        If you have questions regarding this document or if you need further information, please
+        log in to our customer portal at
+        <ulink url="https://portal.otrs.com">portal.otrs.com</ulink>
+        with your OTRS ID and create a ticket.
+    </para>
+    <para>
+        You do not have an OTRS ID yet?
+        <ulink url="https://portal.otrs.com/otrs/customer.pl#Signup">Register here for free.</ulink>
     </para>
 </preface>
 
@@ -63,22 +71,15 @@
 <!-- *************** -->
 <chapter>
     <title>Feature List</title>
-    <!--
-        List of all functions declared at the functional level
-         -   minimum in 4 sentences
-         -   customer-specific
-         -   possible screen-shots
-         -   no OTRS terminology like TicketEventModul, PreApplicationModul
-    -->
     <section>
         <title>Control flow (Nagios)</title>
         <para>
-            The following diagram illustrates how mails are handled by this module
-            and in which cases they trigger which action. Pretty much all checks are
-            configurable using the regular expressions given by the parameters listed
-            above.
+            The following diagram illustrates how mails are handled by this module and in which
+            cases they trigger which action. Pretty much all checks are configurable using the
+            regular expressions given by the parameters listed below.
         </para>
-<para><screen><![CDATA[
+        <para>
+            <screen><![CDATA[
 Mail matches 'FromAddress'?
 |
 +-> NO  --> Continue with regular mail processing
@@ -100,23 +101,23 @@ Mail matches 'FromAddress'?
                         +-> NO  -> Continue with regular mail processing
                         |
                         +-> YES -> Change ticket type as configured in
-                                    'CloseActionState']]>
-</screen></para>
-        <para>Besides of a few additional sanity checks this is how the
-            SystemMonitoring module treats incoming mails. By changing the regular
-            expressions it should be possible to adopt it to different monitoring
-            systems.
+                                    'CloseActionState'
+            ]]></screen>
+        </para>
+        <para>
+            Besides of a few additional sanity checks this is how the SystemMonitoring module
+            treats incoming mails. By changing the regular expressions it should be possible to
+            adopt it to different monitoring systems.
         </para>
     </section>
     <section>
         <title>Icinga2 acknowledge</title>
         <para>
-            A new ticket is created with values in the specified dynamic fields
-            which are needed as combination of host and service for the communication
-            to the Icinga2 host.
-            After this newly created ticket is locked to an agent, a HTTP request is send to
-            the configured Icinga2 host.
-            In the Icinga2 host a new acknowledge is created or an existing one is confirmed.
+            A new ticket is created with values in the specified dynamic fields which are needed
+            as combination of host and service for the communication to the Icinga2 host. After
+            this newly created ticket is locked to an agent, a HTTP request is send to the
+            configured Icinga2 host. In the Icinga2 host a new acknowledge is created or an
+            existing one is confirmed.
         </para>
     </section>
 </chapter>
@@ -128,27 +129,41 @@ Mail matches 'FromAddress'?
     <title>System Requirements</title>
     <section>
         <title>Framework</title>
-        <para>The following OTRS framework is required:</para>
-        <para>$Framework</para>
+        <para>
+            The following OTRS Framework is required:
+        </para>
+        <para>
+            $Framework
+        </para>
     </section>
     <section>
         <title>Packages</title>
-        <para>The following packages are required:</para>
-        <para>$PackageRequired</para>
+        <para>
+            The following packages are required:
+        </para>
+        <para>
+            $PackageRequired
+        </para>
     </section>
     <section>
         <title>Operating System</title>
-        <para>This package requires one of the following operating systems:</para>
-        <para>$OS</para>
+        <para>
+            This package requires one of the following operating systems:
+        </para>
+        <para>
+            $OS
+        </para>
     </section>
     <section>
         <title>Third Party Software</title>
-        <para>This third party software is required to use this package:</para>
+        <para>
+            This third party software is required to use this package:
+        </para>
         <itemizedlist>
             <listitem>
                 <para>
-                    A network monitoring system, such as Nagios, or HP OpenView,
-                    or similar, capable of sending out events via e-mail.
+                    A network monitoring system, such as Nagios, Icinga2, HP OpenView or similar,
+                    capable of sending out events via e-mail.
                 </para>
             </listitem>
         </itemizedlist>
@@ -161,7 +176,7 @@ Mail matches 'FromAddress'?
 <chapter>
     <title>Installation</title>
     <para>
-        The following instructions explain how to install the package.
+        The following instructions explain how to install the package. There are two possibilities.
     </para>
     <section>
         <title>Admin Interface</title>
@@ -194,129 +209,129 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 <!-- **************** -->
 <chapter>
     <title>Configuration</title>
-    <para>The package can be configured via the SysConfig in the Admin Interface. The following configuration options are available:</para>
+    <para>The package can be configured via the System Configuration in the Admin Interface. The following configuration options are available:</para>
     <section>
-        <title>Icinga2::Acknowledge::Author.</title>
+        <title>Icinga2::Acknowledge::Author</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement author.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::Comment.</title>
+        <title>Icinga2::Acknowledge::Comment</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement comment.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::Enabled.</title>
+        <title>Icinga2::Acknowledge::Enabled</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement enabled?</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::FreeField::Host.</title>
+        <title>Icinga2::Acknowledge::FreeField::Host</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Name of the Dynamic Field for Host.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::FreeField::Service.</title>
+        <title>Icinga2::Acknowledge::FreeField::Service</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Name of the Dynamic Field for Service.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::HTTP::Password.</title>
+        <title>Icinga2::Acknowledge::HTTP::Password</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>The HTTP acknowledge password.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::HTTP::URL.</title>
+        <title>Icinga2::Acknowledge::HTTP::URL</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
-        <para>Icinga API URL .</para>
+        <para>Icinga API URL.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::HTTP::User.</title>
+        <title>Icinga2::Acknowledge::HTTP::User</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>The HTTP acknowledge user.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::Notify.</title>
+        <title>Icinga2::Acknowledge::Notify</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement notify.</para>
     </section>
     <section>
-        <title>Icinga2::Acknowledge::Sticky.</title>
+        <title>Icinga2::Acknowledge::Sticky</title>
         <para>Navigation: Core::SystemMonitoring::Icinga2.</para>
         <para>Icinga2 acknowledgement sticky.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::FreeField::Host.</title>
+        <title>Nagios::Acknowledge::FreeField::Host</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Name of the Dynamic Field for Host.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::FreeField::Service.</title>
+        <title>Nagios::Acknowledge::FreeField::Service</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Name of the Dynamic Field for Service.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::HTTP::Password.</title>
+        <title>Nagios::Acknowledge::HTTP::Password</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>The HTTP acknowledge password.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::HTTP::URL.</title>
+        <title>Nagios::Acknowledge::HTTP::URL</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>The HTTP acknowledge URL.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::HTTP::User.</title>
+        <title>Nagios::Acknowledge::HTTP::User</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>The HTTP acknowledge user.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::NamedPipe::CMD.</title>
+        <title>Nagios::Acknowledge::NamedPipe::CMD</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Named pipe acknowledge command.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::NamedPipe::Host.</title>
+        <title>Nagios::Acknowledge::NamedPipe::Host</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Named pipe acknowledge format for host.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::NamedPipe::Service.</title>
+        <title>Nagios::Acknowledge::NamedPipe::Service</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Named pipe acknowledge format for service.</para>
     </section>
     <section>
-        <title>Nagios::Acknowledge::Type.</title>
+        <title>Nagios::Acknowledge::Type</title>
         <para>Navigation: Core::SystemMonitoring::Nagios.</para>
         <para>Define Nagios acknowledge type.</para>
     </section>
     <section>
-        <title>PostMaster::PreFilterModule###00-SystemMonitoring.</title>
+        <title>PostMaster::PreFilterModule###00-SystemMonitoring</title>
         <para>Navigation: Core::Email::PostMaster.</para>
         <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.</para>
     </section>
     <section>
-        <title>PostMaster::PreFilterModule###1-SystemMonitoring.</title>
+        <title>PostMaster::PreFilterModule###1-SystemMonitoring</title>
         <para>Navigation: Core::Email::PostMaster.</para>
         <para>Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter.</para>
     </section>
     <section>
-        <title>SystemMonitoring::LinkTicketWithCI.</title>
+        <title>SystemMonitoring::LinkTicketWithCI</title>
         <para>Navigation: Core::SystemMonitoring.</para>
         <para>Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.</para>
     </section>
     <section>
-        <title>SystemMonitoring::SetIncidentState.</title>
+        <title>SystemMonitoring::SetIncidentState</title>
         <para>Navigation: Core::SystemMonitoring.</para>
         <para>Set the incident state of a CI automatically when a system monitoring email arrives.</para>
     </section>
     <section>
-        <title>Ticket::EventModulePost###9-Icinga2Acknowledge.</title>
+        <title>Ticket::EventModulePost###9-Icinga2Acknowledge</title>
         <para>Navigation: Core::Event::Icinga2.</para>
         <para>Ticket event module to send an acknowledge to Icinga2.</para>
     </section>
     <section>
-        <title>Ticket::EventModulePost###9-NagiosAcknowledge.</title>
+        <title>Ticket::EventModulePost###9-NagiosAcknowledge</title>
         <para>Navigation: Core::Event::Nagios.</para>
         <para>Ticket event module to send an acknowledge to Nagios.</para>
     </section>
@@ -325,7 +340,6 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 <!-- ******** -->
 <!-- 6. Usage -->
 <!-- ******** -->
-
 <!--
 <chapter>
     <title>Usage</title>
@@ -336,9 +350,9 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 ***************************************** Technical part ************************************
 -->
 
-<!-- ********************************* -->
+<!-- ********************************** -->
 <!-- 7. Technical Implementation Detail -->
-<!-- ********************************* -->
+<!-- ********************************** -->
 <!--
 <chapter>
     <title>Technical Implementation Details</title>
@@ -347,13 +361,18 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     </para>
 </chapter>
 -->
-<!-- *********** -->
-<!-- 8. Filelist -->
-<!-- *********** -->
+
+<!-- ************ -->
+<!-- 8. File List -->
+<!-- ************ -->
 <chapter>
-    <title>File list</title>
-    <para>This list shows all included files and the referring permissions.</para>
-    <para>$Filelist</para>
+    <title>File List</title>
+    <para>
+        This list shows all included files and the referring permissions.
+    </para>
+    <para>
+        $Filelist
+    </para>
 </chapter>
 
 <!-- ******* -->
@@ -361,39 +380,59 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
 <!-- ******* -->
 <chapter>
     <title>Tests</title>
-    <para>This module has been quality assured according to the current OTRS guidelines.</para>
+    <para>
+        This module has been quality assured according to the current OTRS guidelines.
+    </para>
     <section>
-        <title>Unit Tests</title>
+        <title>Test Cases</title>
+        <para>
+            To test this package please follow the examples described in the Usage section.
+        </para>
+    </section>
+    <section>
+        <title>Unit Test</title>
         <para>
             To ensure the quality of the module, several so-called unit tests were created, to test
             the functionalities of this module. These unit tests can be run via command line.
         </para>
         <para>
-            ATTENTION: Please never run unit tests on a productive system, since the added test data
-            to the system will no longer be removed. Always use a test system.
+            ATTENTION: Please never run unit tests on a productive system, since the added test
+            data to the system will no longer be removed. Always use a test system.
         </para>
         <para>Run the package specific unit tests</para>
         <para>
             To run only the unit test which will be delivered with this package, use the following
             command on the command line:
         </para>
-        <screen>
-shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SystemMonitoring:NagiosCheck:NagiosCheckTicketCount
-        </screen>
-        <para>Run all available unit tests</para>
+        <para>
+            <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Maint/SystemMonitoring/NagiosCheck
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Console/Command/Maint/SystemMonitoring/NagiosCheckTicketCount
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test SystemMonitoring
+            </screen>
+        </para>
+        <para>
+            Run all available unit tests
+        </para>
         <para>
             To run all available unit tests, use the following command on the command line:
         </para>
-        <screen>shell> perl bin/otrs.Console.pl Dev::UnitTest::Run</screen>
+        <para>
+            <screen>
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run
+            </screen>
+        </para>
     </section>
 </chapter>
 
 <!-- ************** -->
-<!-- 10. Change log -->
+<!-- 10. Change Log -->
 <!-- ************** -->
 <chapter>
     <title>Change Log</title>
-    <para>$ChangeLog</para>
+    <para>
+        $ChangeLog
+    </para>
 </chapter>
 
 </book>

@@ -169,7 +169,7 @@
         </Value>
     </Setting>
     <Setting Name="Icinga2::Acknowledge::HTTP::URL" Required="0" Valid="1">
-        <Description Translatable="1">Icinga API URL .</Description>
+        <Description Translatable="1">Icinga API URL.</Description>
         <Navigation>Core::SystemMonitoring::Icinga2</Navigation>
         <Value>
             <Item ValueType="String" ValueRegex="">http://icinga2.example.com:5665/v1/actions/acknowledge-problem</Item>
