@@ -1,4 +1,5 @@
 #6.0.3 2018-??-??
+ - 2018-07-25 Fixed bug#[13679](https://bugs.otrs.org/show_bug.cgi?id=13679) - Icinga2 support is not displayed in package description.
 
 #6.0.2 2017-03-06
  - 2018-02-02 Fixed bug#[9012](https://bugs.otrs.org/show_bug.cgi?id=9012) - OTRS dies if a system monitoring mail with an empty body will be received.
