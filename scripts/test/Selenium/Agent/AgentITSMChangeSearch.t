@@ -85,6 +85,15 @@ $Selenium->RunTest(
             JavaScript => "return typeof(\$) === 'function' && \$('input[name=\"ChangeTitle\"]').length"
         );
 
+        # Check if ITSMChange Search form contain Excel output option, see bug#12769.
+        $Self->Is(
+            $Selenium->execute_script(
+                "return \$('#ResultForm option:contains(\"Excel\")').length"
+            ),
+            '1',
+            'ITSMChange Search contain Excel output',
+        );
+
         $Selenium->find_element( "ChangeNumber",      'name' )->send_keys( $ChangeData->{ChangeNumber} );
         $Selenium->find_element( "ChangeTitle",       'name' )->send_keys( $ChangeData->{ChangeTitle} );
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
