@@ -5303,10 +5303,11 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
+                <Item Key="PreferenceGroup">Miscellaneous</Item>
                 <Item Key="Column" Translatable="1">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Screen after creating a workorder</Item>
                 <Item Key="Desc" Translatable="1">Configure which screen should be shown after a new workorder has been created.</Item>
-                <Item Key="Key" Translatable="1">Screen</Item>
+                <Item Key="Key" Translatable="1"></Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="AgentITSMWorkOrderZoom" Translatable="1">Workorder Zoom</Item>
@@ -5326,10 +5327,11 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
+                <Item Key="PreferenceGroup">Miscellaneous</Item>
                 <Item Key="Column" Translatable="1">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Change Overview "Small" Limit</Item>
                 <Item Key="Desc" Translatable="1">Change limit per page for Change Overview "Small".</Item>
-                <Item Key="Key" Translatable="1">Limit</Item>
+                <Item Key="Key" Translatable="1"></Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="10">10</Item>
@@ -5353,6 +5355,7 @@
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
+                <Item Key="PreferenceGroup">Miscellaneous</Item>
                 <Item Key="Column" Translatable="1">Other Settings</Item>
                 <Item Key="Label" Translatable="1">Change and Workorder Templates</Item>
                 <Item Key="Desc" Translatable="1">Change and workorder templates edited by this user.</Item>
