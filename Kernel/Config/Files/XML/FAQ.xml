@@ -254,7 +254,7 @@ Your OTRS Notification Master
         <Description Translatable="1">Default priority of tickets for the approval of FAQ articles.</Description>
         <Navigation>Core::FAQ::Approval</Navigation>
         <Value>
-            <Item ValueType="String">3 normal</Item>
+            <Item ValueType="Entity" ValueEntityType="Priority" ValueRegex="">3 normal</Item>
         </Value>
     </Setting>
     <Setting Name="FAQ::ApprovalTicketDefaultState" Required="1" Valid="1">
