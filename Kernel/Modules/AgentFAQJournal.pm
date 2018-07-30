@@ -46,7 +46,7 @@ sub Run {
     # Get Journal entries.
     my $Journal = $Kernel::OM->Get('Kernel::System::FAQ')->FAQJournalGet(
         UserID => $Self->{UserID},
-    );
+    ) // [];
 
     # Find out which columns should be shown.
     my @ShowColumns;
