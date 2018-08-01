@@ -737,12 +737,16 @@ sub _RenderAjax {
                 )
                 && $Param{GetParam}->{ServiceID}
                 && $Param{GetParam}->{DynamicField_ITSMImpact}
-                && $Param{GetParam}->{DynamicField_ITSMCriticality}
             ) {
+
+                my %Service = $Kernel::OM->Get('Kernel::System::Service')->ServiceGet(
+                    ServiceID     => $Param{GetParam}->{ServiceID},
+                    UserID        => $Self->{UserID},
+                );
 
                 # calculate priority from the CIP matrix
                 my $PriorityIDFromImpact = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                    Criticality => $Param{GetParam}->{DynamicField_ITSMCriticality},
+                    Criticality => $Service{Criticality},
                     Impact      => $Param{GetParam}->{DynamicField_ITSMImpact},
                 );
 
