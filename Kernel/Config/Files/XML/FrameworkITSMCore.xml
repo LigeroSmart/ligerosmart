@@ -22,7 +22,7 @@
         <Navigation>Core::Package</Navigation>
         <Value>
             <Hash>
-                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages6/">OTRS::ITSM 6 Master</Item>
+                <Item Key="https://ftp.otrs.org/pub/otrs/itsm/packages6/">OTRS::ITSM 6 Master</Item>
             </Hash>
         </Value>
     </Setting>
