@@ -6,7 +6,7 @@ PlatformSets:
 DeployOTRSBranch: rel-6_0
 
 DeployOTRSPackages:
- - OTRSCodePolicy@master
- - GeneralCatalog@master
- - ITSMCore@master
- - ITSMIncidentProblemManagement@master
+ - OTRSCodePolicy@rel-6_0
+ - GeneralCatalog@rel-6_0
+ - ITSMCore@rel-6_0
+ - ITSMIncidentProblemManagement@rel-6_0
