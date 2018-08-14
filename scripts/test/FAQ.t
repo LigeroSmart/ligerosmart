@@ -1045,6 +1045,57 @@ $Self->True(
     "Valid Items are less than Valid and Invalid ($ArticleCountValid < $ArticleCount) with true",
 );
 
+# Test FAQCount() with multiple Categories, see bug#7980.
+my $RandomID = $Helper->GetRandomID();
+my @CategoryIDs;
+my $Count = 0;
+for my $Index ( 1 .. 3 ) {
+
+    # Create test Category.
+    my $CategoryID = $FAQObject->CategoryAdd(
+        Name     => $Index . 'Category' . $RandomID,
+        ParentID => 0,
+        ValidID  => 1,
+        UserID   => 1,
+    );
+    $Self->True(
+        $CategoryID,
+        "CategoryID $CategoryID is created"
+    );
+    push @CategoryIDs, $CategoryID;
+
+    # Create test FAQ.
+    my $FAQID = $FAQObject->FAQAdd(
+        Title       => $Index . 'FAQ' . $RandomID,
+        CategoryID  => $CategoryID,
+        StateID     => 1,
+        LanguageID  => 1,
+        Keywords    => 'some keywords',
+        Field1      => 'Problem...',
+        Field2      => 'Solution...',
+        ContentType => 'text/html',
+        UserID      => 1,
+    );
+    $Self->True(
+        $FAQID,
+        "FAQID $FAQID is created"
+    );
+
+    $Count++;
+}
+
+my $MultiCategoryArticleCount = $FAQObject->FAQCount(
+    CategoryIDs => [@CategoryIDs],
+    ItemStates  => $InterfaceStates,
+    Valid       => 1,
+    UserID      => 1,
+);
+$Self->Is(
+    $MultiCategoryArticleCount,
+    $Count,
+    "FAQCount() with multiple Categories success"
+);
+
 # cleanup is done by restore database
 
 1;

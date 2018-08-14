@@ -1,5 +1,6 @@
 #6.0.10 2018-??-??
 - 2018-07-27 Follow-up fix for bug#[13875](https://bugs.otrs.org/show_bug.cgi?id=13875) - Old settings in FAQ System Configuration.
+ - 2018-08-14 Fixed bug#[7980](https://bugs.otrs.org/show_bug.cgi?id=7980) - FAQCount() does not count but returns the count of the last category.
 
 #6.0.9 2018-07-31
  - 2018-07-24 FAQ journal should check the groups of categories (PR#76).
