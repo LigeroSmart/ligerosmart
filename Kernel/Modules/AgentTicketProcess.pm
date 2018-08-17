@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, http://otrs.com/
 # --
-# $origin: otrs - 5ccf05fc265abfb8bcad4f2206aca1e7721e254b - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 71a9d72bfed608466ed2e983d21504e7a580c0f2 - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4854,8 +4854,10 @@ sub _StoreActivityDialog {
             if ( !$TicketParam{Title} ) {
 
                 # get the current server Time-stamp
-                my $CurrentTimeStamp = $Kernel::OM->Create('Kernel::System::DateTime')->ToString();
-                $TicketParam{Title} = "$Param{ProcessName} - $CurrentTimeStamp";
+                my $DateTimeObject   = $Kernel::OM->Create('Kernel::System::DateTime');
+                my $CurrentTimeStamp = $DateTimeObject->ToString();
+                my $OTRSTimeZone     = $DateTimeObject->OTRSTimeZoneGet();
+                $TicketParam{Title} = "$Param{ProcessName} - $CurrentTimeStamp ($OTRSTimeZone)";
 
                 # use article subject from the web request if any
                 if ( IsStringWithData( $Param{GetParam}->{Subject} ) ) {
@@ -5253,10 +5255,10 @@ sub _StoreActivityDialog {
                             {
                                 next ATTACHMENT;
                             }
-
-                            # remember inline images and normal attachments
-                            push @NewAttachmentData, \%{$Attachment};
                         }
+
+                        # Remember inline images and normal attachments.
+                        push @NewAttachmentData, \%{$Attachment};
                     }
 
                     @Attachments = @NewAttachmentData;
@@ -5303,9 +5305,6 @@ sub _StoreActivityDialog {
                     return $LayoutObject->ErrorScreen();
                 }
 
-                # remove pre submitted attachments
-                $UploadCacheObject->FormIDRemove( FormID => $Self->{FormID} );
-
                 # write attachments
                 for my $Attachment (@Attachments) {
                     $ArticleBackendObject->ArticleWriteAttachment(
@@ -5314,6 +5313,9 @@ sub _StoreActivityDialog {
                         UserID    => $Self->{UserID},
                     );
                 }
+
+                # Remove pre submitted attachments.
+                $UploadCacheObject->FormIDRemove( FormID => $Self->{FormID} );
 
                 # get the link ticket id if given
                 my $LinkTicketID = $ParamObject->GetParam( Param => 'LinkTicketID' ) || '';
