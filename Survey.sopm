@@ -5,7 +5,7 @@
     <Framework>6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A customer survey tool.</Description>
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
     <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
