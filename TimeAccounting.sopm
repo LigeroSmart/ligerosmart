@@ -5,7 +5,7 @@
     <Framework Minimum="6.0.3">6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A Time Registration Module.</Description>
     <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
     <Description Lang="hu">Egy munkaidő nyilvántartás modul.</Description>
