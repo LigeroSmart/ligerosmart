@@ -5,7 +5,7 @@
     <Framework Minimum="6.0.2">6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The FAQ/knowledge base.</Description>
     <Description Lang="de">Die FAQ-/Wissensdatenbank.</Description>
     <Description Lang="hu">A GyIK/tudásbázis csomag.</Description>
