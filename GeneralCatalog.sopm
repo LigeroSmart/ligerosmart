@@ -6,7 +6,7 @@
     <Framework Minimum="6.0.10">6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
-    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The General Catalog package.</Description>
     <Description Lang="de">Das General Catalog Paket.</Description>
     <Description Lang="es">El paquete General Catalog.</Description>
