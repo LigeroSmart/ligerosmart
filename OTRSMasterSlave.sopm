@@ -4,8 +4,8 @@
     <Version>0.0.0</Version>
     <Framework Minimum="6.0.9">6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
-    <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">Includes "Ticket Master/Slave" feature.</Description>
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
     <Description Lang="hu">A „mester/alárendelt jegy” funkciót tartalmazza.</Description>
