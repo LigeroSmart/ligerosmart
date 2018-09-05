@@ -1,5 +1,6 @@
 #6.0.10 2018-??-??
-- 2018-07-27 Follow-up fix for bug#[13875](https://bugs.otrs.org/show_bug.cgi?id=13875) - Old settings in FAQ System Configuration.
+ - 2018-09-05 Fixed bug#[13704](https://bugs.otrs.org/show_bug.cgi?id=13704) - When deleting a FAQ attachment in AgentticketCompose, the delete button causes a submit if the answer.
+ - 2018-07-27 Follow-up fix for bug#[13875](https://bugs.otrs.org/show_bug.cgi?id=13875) - Old settings in FAQ System Configuration.
  - 2018-08-14 Fixed bug#[7980](https://bugs.otrs.org/show_bug.cgi?id=7980) - FAQCount() does not count but returns the count of the last category.
 
 #6.0.9 2018-07-31

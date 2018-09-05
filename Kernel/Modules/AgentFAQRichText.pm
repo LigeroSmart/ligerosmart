@@ -51,7 +51,6 @@ sub Run {
         ItemFields => 1,
         UserID     => $Self->{UserID},
     );
-
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     my $ScriptAlias = $ConfigObject->Get('ScriptAlias') || 'otrs/';
@@ -255,6 +254,11 @@ sub Run {
         UserID     => $Self->{UserID},
     );
 
+    my @Data = $UploadCacheObject->FormIDGetAllFilesMeta(
+        FormID => $FormID,
+    );
+
+    ATTACHMENT:
     for my $AttachmentData (@Attachments) {
 
         my %Attachment = $FAQObject->AttachmentGet(
@@ -264,6 +268,8 @@ sub Run {
         );
 
         if (%Attachment) {
+
+            next ATTACHMENT if grep { $Attachment{Filename} eq $_->{Filename} } @Data;
 
             # Add the attachment to the upload cache of the current ticket.
             $UploadCacheObject->FormIDAddFile(
@@ -306,6 +312,12 @@ sub Run {
         @FilteredTicketAttachments = @TicketAttachments;
     }
 
+    for my $Attachment (@FilteredTicketAttachments) {
+        $Attachment->{Filesize} = $LayoutObject->HumanReadableDataSize(
+            Size => $Attachment->{Filesize},
+        );
+    }
+
     my $JSON = $Kernel::OM->Get('Kernel::System::JSON')->Encode(
         Data => {
             FAQTitle          => $FAQItem{Title},
@@ -315,6 +327,7 @@ sub Run {
             Localization      => {
                 Delete => $LayoutObject->{LanguageObject}->Translate('Delete'),
             },
+            FormID => $FormID,
         },
     );
 

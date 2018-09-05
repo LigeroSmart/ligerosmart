@@ -246,7 +246,8 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                 var FAQTitle = Response.FAQTitle,
                     FAQContent = '',
                     FAQHTMLContent = '',
-                    FAQLink;
+                    FAQLink,
+                    AttachmentList;
 
                 if (InsertText === 1) {
                     FAQContent = Response.FAQContent;
@@ -259,18 +260,33 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                     FAQHTMLContent = FAQHTMLContent + '<br/><br/>' + '<a href="' + FAQLink + '">' + FAQTitle + '</a>';
                 }
 
-                // sync the attachment list with the attachments in the UploadCache
-                // 1st: delete the current attachment list
-                $('#FileUpload', parent.document).parent().siblings('li').remove();
+                // Get parent window attachment list.
+                AttachmentList = parent.$('.AttachmentList');
 
-                // 2nd: add all files based on the metadata returned in Response
+                // Add attachment unless it is a duplicate.
                 $(Response.TicketAttachments).each(function() {
-                    $('#FileUpload', parent.document).before(
-                        '<li>' + this.Filename + ' (' + this.Filesize + ')<button type="submit" id="AttachmentDelete' + this.FileID + '" name="AttachmentDelete' + this.FileID + '" value="Delete" class="SpacingLeft">' + Response.Localization.Delete + '</button></li>'
-                    );
+                    var AttachmentItem,
+                        Filename = this.Filename,
+                        AttachmentExist = parent.$('.AttachmentList tbody tr td.Filename').filter(function () {
+                            if ($(this).text() === Filename) {
+                                return $(this);
+                            }
+                        });
+
+                    if (!AttachmentExist.length) {
+                        AttachmentItem = parent.Core.Template.Render('AjaxDnDUpload/AttachmentItem', {
+                            'Filename' : Filename,
+                            'Filetype' : this.ContentType,
+                            'Filesize' : this.Filesize,
+                            'FileID'   : this.FileID,
+                        });
+                        parent.$(AttachmentItem).prependTo(AttachmentList.find('tbody')).fadeIn();
+                    }
                 });
 
                 SetData(FAQTitle, FAQContent, FAQHTMLContent);
+
+                parent.Core.UI.InitAjaxDnDUpload();
             },
             'json'
         );
