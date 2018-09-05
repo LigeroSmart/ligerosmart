@@ -4,8 +4,8 @@
     <Version>0.0.0</Version>
     <Framework>6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
-    <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">Basic mail interface to System Monitoring Suites. Also provides deeper integration to Nagios and Icinga2 (acknowledge on lock and check script).</Description>
     <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Weitergehende Integration mit Nagios und Icinga2 (Acknowledge on lock and Checkscript).</Description>
     <Description Lang="es">Interfaz de correo básico para sistema de monitorización. También proporciona una integración más profunda de Nagios e Icinga2 (reconocer el bloqueo y script de control).</Description>
