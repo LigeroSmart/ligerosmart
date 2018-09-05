@@ -4,8 +4,8 @@
     <Version>0.0.0</Version>
     <Framework>6.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
-    <URL>http://otrs.org/</URL>
-    <License>GNU GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <URL>https://otrs.com/</URL>
+    <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">The OTRS CloneDB package.</Description>
     <Description Lang="de">Das OTRS CloneDB Paket.</Description>
     <Description Lang="hu">Az OTRS CloneDB csomag.</Description>
