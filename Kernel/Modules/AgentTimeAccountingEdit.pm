@@ -60,7 +60,7 @@ sub PreRun {
     if (
         $IncompleteWorkingDays{EnforceInsert}
         && $Self->{Action} ne 'AgentTimeAccountingEdit'
-        && $Self->{Action} ne 'AgentCalendarSmall'
+        && $Self->{Action} =~ /AgentTimeAccounting/
         )
     {
 
@@ -1239,12 +1239,13 @@ sub Run {
         Title => 'Edit',
     );
 
+    $Output .= $LayoutObject->NavigationBar();
+    $LayoutObject->Block(
+        Name => 'OverviewProject',
+        Data => { %Param, %Frontend },
+    );
+
     if ( !$IncompleteWorkingDays{EnforceInsert} ) {
-        $Output .= $LayoutObject->NavigationBar();
-        $LayoutObject->Block(
-            Name => 'OverviewProject',
-            Data => { %Param, %Frontend },
-        );
 
         # show create project link, if allowed
         my %UserData = $TimeAccountingObject->UserGet(
@@ -1253,14 +1254,6 @@ sub Run {
         if ( $UserData{CreateProject} ) {
             $LayoutObject->Block(
                 Name => 'CreateProject',
-            );
-        }
-    }
-    else {
-        if ( $IncompleteWorkingDays{Warning} ) {
-            $Output .= $LayoutObject->Notify(
-                Info     => Translatable('Please insert your working hours!'),
-                Priority => 'Error',
             );
         }
     }

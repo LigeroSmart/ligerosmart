@@ -1062,9 +1062,9 @@ sub UserSettingsInsert {
     $Param{UserStatus} = $ConfigObject->Get('TimeAccounting::DefaultUserStatus')    || '1';
     $Param{Overtime}   = $ConfigObject->Get('TimeAccounting::DefaultUserOvertime')  || '0';
     $Param{DateEnd}    = $ConfigObject->Get('TimeAccounting::DefaultUserDateEnd')
-        || '2017-12-31';
+        || '2018-12-31';
     $Param{DateStart} = $ConfigObject->Get('TimeAccounting::DefaultUserDateStart')
-        || '2017-01-01';
+        || '2018-01-01';
     $Param{Description} = $ConfigObject->Get('TimeAccounting::DefaultUserDescription')
         || 'Put your description here.';
 
