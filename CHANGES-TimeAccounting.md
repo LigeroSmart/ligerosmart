@@ -1,5 +1,4 @@
 #6.0.6 2018-??-??
- - 2018-09-06 Fixed bug#[13466](https://bugs.otrs.org/show_bug.cgi?id=13466) - Time spans will be saved implicitly.
 
 #6.0.5 2018-07-24
  - 2018-07-17 Updated translations, thanks to all translators.

@@ -171,49 +171,6 @@ $Selenium->RunTest(
             "$SubmitMessage is found",
         );
 
-        # Check if Agent have access to Navbar. See bug#13466.
-        # Navigate to AgentTimeAccountingSetting.
-        $Selenium->VerifiedGet(
-            "${ScriptAlias}index.pl?Action=AgentTimeAccountingSetting;Subaction=EditUser;UserID=$TestUserID"
-        );
-
-        # Subtract 10 days from current date.
-        my $Interval = 10;
-        $DateTimeObject->Subtract( Days => $Interval );
-        my $YearStart = $DateTimeObject->Format(
-            Format => '%Y',
-        );
-        my $MonthStart = $DateTimeObject->Format(
-            Format => '%m',
-        );
-        my $DayStart = $DateTimeObject->Format(
-            Format => '%d',
-        );
-
-        my $SubtractedDate = "$YearStart-$MonthStart-$DayStart";
-        $Selenium->find_element( "#DateStart-1", 'css' )->clear();
-        $Selenium->find_element( "#DateStart-1", 'css' )->send_keys($SubtractedDate);
-
-        $Selenium->find_element( "#SubmitUserData", 'css' )->click();
-
-        # Check if notification is shown on page.
-        $Self->Is(
-            $Selenium->execute_script(
-                "return \$('.MessageBox.Error a[href*=\"Action=AgentTimeAccountingEdit\"]').text().trim();"
-            ),
-            "Please insert your working hours!",
-            'Link for AgentTimeAccountingEdit is found',
-        );
-
-        # Checks if Incomplete working days is shown.
-        $Self->Is(
-            $Selenium->execute_script(
-                "return \$('.IncompleteWorkingDays .Counter').text();"
-            ),
-            $Interval,
-            "$Interval incomplete working days is found in toolbar counter",
-        );
-
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
         # Get DB clean-up data.
