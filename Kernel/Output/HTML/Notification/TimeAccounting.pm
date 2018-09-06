@@ -52,12 +52,10 @@ sub Run {
         );
 
         # redirect if incomplete working day are out of range
-        my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-        my $Priority = ( $IncompleteWorkingDays{EnforceInsert} ) ? 'Error' : 'Warning';
-        if ( $IncompleteWorkingDays{Warning} || $IncompleteWorkingDays{EnforceInsert} ) {
+        if ( $IncompleteWorkingDays{Warning} ) {
+
             return $Kernel::OM->Get('Kernel::Output::HTML::Layout')->Notify(
-                Priority => $Priority,
-                Link     => $LayoutObject->{Baselink} . 'Action=AgentTimeAccountingEdit',
+                Priority => 'Error',
                 Info     => Translatable('Please insert your working hours!'),
             );
         }

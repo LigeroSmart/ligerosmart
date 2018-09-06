@@ -120,17 +120,12 @@ sub Run {
             my %Month = %{ $Year{$MonthID} };
 
             $Count += scalar keys %Month;
-
-            # Remove current day because it makes no sense to show the current day as incomplete.
-            if (
-                $DateTimeSettings->{Year} eq $YearID
-                && $MonthID eq sprintf( '%02d', $DateTimeSettings->{Month} )
-                && defined $Month{ sprintf( '%02d', $DateTimeSettings->{Day} ) }
-                )
-            {
-                $Count--;
-            }
         }
+    }
+
+    # Remove current day because it makes no sense to show the current day as incomplete.
+    if ( $Count > 0 ) {
+        $Count--;
     }
 
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
