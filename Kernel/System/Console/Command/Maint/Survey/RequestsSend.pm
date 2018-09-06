@@ -51,14 +51,6 @@ sub Run {
 
     $Self->Print("<yellow>Processing pending survey requests...</yellow>\n\n");
 
-    my $SendInHoursAfterClose = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
-    if ( !$SendInHoursAfterClose ) {
-        $Self->Print("No hours configured in Survey::SendInHoursAfterClose.\n");
-
-        $Self->Print("<green>Done.</green>\n");
-        return $Self->ExitCodeOk();
-    }
-
     # get force option
     my $Force = $Self->GetOption('force');
 
@@ -119,6 +111,8 @@ sub Run {
         $Self->Print(
             "  RequestID: <yellow>$Request->{ID}</yellow>\n   -For TicketID: $Request->{TicketID}\n"
         );
+
+        my $SendInHoursAfterClose = $Kernel::OM->Get('Kernel::Config')->Get('Survey::SendInHoursAfterClose');
 
         # don't send for survey_requests that are younger than CreateTime + $SendINHoursAfterClose
         if ( $SendInHoursAfterClose * 3_600 + $CreateTime > $SystemTime ) {
