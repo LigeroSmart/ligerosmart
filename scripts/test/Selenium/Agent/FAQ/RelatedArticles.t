@@ -311,7 +311,7 @@ $Selenium->RunTest(
 
         # Make sure the cache is correct.
         my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
-        for my $Cache (qw(FAQ FAQKeywordArticleList FAQSearch)) {
+        for my $Cache (qw(FAQ FAQKeywordArticleList)) {
             $CacheObject->CleanUp(
                 Type => $Cache,
             );
