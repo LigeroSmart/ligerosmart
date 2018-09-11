@@ -143,9 +143,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click()");
 
-        $Selenium->find_element( "#CABAgents-$TestCABUserID", 'css' )->click();
+        $Selenium->execute_script("\$('#CABAgents-$TestCABUserID').click();");
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && !\$('#CABAgents-$TestCABUserID').length"
+            JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents-$TestCABUserID').length === 0;"
         );
 
         # Verify CAB user deletion.
