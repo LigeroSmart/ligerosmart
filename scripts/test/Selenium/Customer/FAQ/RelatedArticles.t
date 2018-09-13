@@ -220,11 +220,15 @@ $Selenium->RunTest(
             JavaScript => 'return typeof($) === "function" && !$("span.AJAXLoader:visible").length'
         );
 
+        my $Count = scalar @RelatedFAQArticles;
         for my $Check (@RelatedFAQArticles) {
-            $Self->True(
-                $Selenium->find_element("//a[contains(\@title, '$Check->{Title}')]"),
+            $Count--;
+            $Self->Is(
+                $Selenium->execute_script("return \$('.FAQMiniList a:eq($Count)').text().trim();"),
+                $Check->{Title},
                 "Related FAQ article for subject keyword $RandomID is found - $Check->{Title}"
             );
+
             $Self->True(
                 $Selenium->find_element("//a[contains(\@href, 'Action=CustomerFAQZoom;ItemID=$Check->{ID}')]"),
                 "Link for related FAQ article is found - $Check->{Title}"
