@@ -219,6 +219,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor(
             JavaScript => 'return typeof($) === "function" && !$("span.AJAXLoader:visible").length'
         );
+        $Selenium->WaitFor(
+            JavaScript => 'return $(".FAQMiniList a:visible").length;'
+        );
 
         my $Count = scalar @RelatedFAQArticles;
         for my $Check (@RelatedFAQArticles) {
