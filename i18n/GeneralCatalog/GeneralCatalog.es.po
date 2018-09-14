@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 14:13+0000\n"
-"PO-Revision-Date: 2018-06-01 04:32+0000\n"
-"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
+"POT-Creation-Date: 2018-09-14 12:08+0000\n"
+"PO-Revision-Date: 2018-09-14 12:08+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,36 +59,12 @@ msgid "Edit Catalog Item"
 msgstr "Editar Elemento del Catálogo"
 
 #. SysConfig
-msgid "Admin modules overview."
-msgstr "Visión general de los módulos de administración."
-
-#. SysConfig
-msgid "Agent Statistics."
-msgstr "Estadísticas de agente."
-
-#. SysConfig
 msgid "Comment 2"
 msgstr "Comentario 2"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
 msgstr "Crea y gestiona el Catálogo General"
-
-#. SysConfig
-msgid "Custom RSS feed."
-msgstr "RSS feed personalizada."
-
-#. SysConfig
-msgid "Customer Information Center search."
-msgstr "Búsqueda en el Centro de información al cliente."
-
-#. SysConfig
-msgid "Customer User Information Center search."
-msgstr "Búsqueda en el Centro de información del usuario del cliente."
-
-#. SysConfig
-msgid "Dashboard overview."
-msgstr "Visión general del panel principal."
 
 #. SysConfig
 msgid "Define the general catalog comment 2."
@@ -99,21 +75,8 @@ msgid "Define the group with permissions."
 msgstr "Definir el grupo con permisos."
 
 #. SysConfig
-msgid ""
-"Defines if the communication between this system and OTRS Group servers that"
-" provide cloud services is possible. If set to 'Disable cloud services', "
-"some functionality will be lost such as system registration, support data "
-"sending, upgrading to and use of OTRS Business Solution™, OTRS Verify™, OTRS"
-" News and product News dashboard widgets, among others."
-msgstr "Define si es posible la comunicación entre este sistema y los servidores del Grupo OTRS que brindan servicios en la nube. Si se establece en 'Deshabilitar servicios en la nube', se perderá alguna funcionalidad como registro del sistema, envío de datos de soporte, actualización y uso de OTRS Business Solution ™, OTRS Verify ™, novedades de OTRS y widgets del panel principal de noticias de productos, entre otros."
-
-#. SysConfig
 msgid "Defines the URL JS Color Picker path."
 msgstr "Define la ruta URL JS del selector de color"
-
-#. SysConfig
-msgid "Disable cloud services"
-msgstr "Deshabilitar servicios en la nube"
 
 #. SysConfig
 msgid ""
@@ -122,28 +85,8 @@ msgid ""
 msgstr "El Frontend del registro del módulo para la configuración del AdminGeneralCatalog en el área admin"
 
 #. SysConfig
-msgid "Frontend module registration for the public interface."
-msgstr "Registro de módulo \"Frontend\" en la interfaz pública."
-
-#. SysConfig
 msgid "General Catalog"
 msgstr "Catálogo General"
-
-#. SysConfig
-msgid "Logged in users."
-msgstr "Usuarios conectados."
-
-#. SysConfig
-msgid "News about OTRS."
-msgstr "Noticias sobre OTRS."
-
-#. SysConfig
-msgid "Out of Office users."
-msgstr "Usuarios Fuera de la Oficina."
-
-#. SysConfig
-msgid "Overview of all Tickets per assigned Queue."
-msgstr "Visión general de todos los Tickets por Cola asignada"
 
 #. SysConfig
 msgid ""
@@ -155,34 +98,3 @@ msgid ""
 "Parameters for the example permission groups of the general catalog "
 "attributes."
 msgstr "Parámetros para los permisos de ejemplo de los atributos del catálogo general."
-
-#. SysConfig
-msgid ""
-"Sends the notifications which are configured in the admin interface under "
-"\"Ticket Notifications\"."
-msgstr "Envía las notificaciones que está configuradas en la interfaz de administración en \"Notificaciones de ticket\""
-
-#. SysConfig
-msgid "Show command line output."
-msgstr "Mostrar salida de línea de comando."
-
-#. SysConfig
-msgid "Statistic Reports overview."
-msgstr "Visión general informe estadísticas"
-
-#. SysConfig
-msgid "Statistics overview."
-msgstr "Visión general de estadísticas."
-
-#. SysConfig
-msgid ""
-"The logo shown in the header of the agent interface for the skin \"High "
-"Contrast\". See \"AgentLogo\" for further description."
-msgstr "El logo que se muestra en la cabecera de la interfaz del agente para el tema \"Contraste alto\". Ver \"AgentLogo\" para una mayor descripción."
-
-#. SysConfig
-msgid ""
-"The logo shown on top of the login box of the agent interface. The URL to "
-"the image can be a relative URL to the skin image directory, or a full URL "
-"to a remote web server."
-msgstr "El logo que se muestra en la parte superior del cuadro de inicio de sesión de la interfaz del agente. La URL de la imagen puede ser una UTL relativa al directorio de la imagen del tema, o una URL completa de un servidor web remoto."
