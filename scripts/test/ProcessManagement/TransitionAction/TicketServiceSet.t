@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 0a04e722fbcbd39cca3fb089c294e72b3170e6b1 - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
+# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
