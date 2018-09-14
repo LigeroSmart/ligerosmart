@@ -48,7 +48,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = '';
-    $Self->{Translation}->{'ServiceID %s not found in database!'} = '';
+    $Self->{Translation}->{'ServiceID %s not found in database!'} = 'ServiceID 1%s não encontrado na base de dados';
     $Self->{Translation}->{'Current Incident State'} = 'Estado Atual de Incidente';
 
     # Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
@@ -102,7 +102,7 @@ sub Data {
     $Self->{Translation}->{'Incident State Type'} = 'Tipo de Estado de Incidente';
     $Self->{Translation}->{'Includes'} = 'Inclui';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Gerenciar matriz de prioridade.';
-    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = 'Gerenciar a matrix criticidade - impacto - prioridade';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Módulo para mostrar o item do menu Voltar no menu SLA.';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Módulo para mostrar o item do menu Voltar no menu de serviço.';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Módulo para mostrar o link associar no menu serviço.';

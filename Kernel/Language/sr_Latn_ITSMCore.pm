@@ -102,7 +102,7 @@ sub Data {
     $Self->{Translation}->{'Incident State Type'} = 'Tip stanja incidenta';
     $Self->{Translation}->{'Includes'} = 'Uključuje';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Urediti matricu prioriteta';
-    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = 'Uređivanje matrica značaj - uticaj - prioritet.';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Modul za prikaz veze za vraćanje u SLA meniju.';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Modul za prikaz veze za vraćanje u servisnom meniju.';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Modul za prikaz veze u servisnom meniju.';
@@ -121,7 +121,7 @@ sub Data {
     $Self->{Translation}->{'Service-Area'} = 'Prostor servisa';
     $Self->{Translation}->{'Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to \'DependsOn\', and the Direction is \'Source\', only \'Depends on\' links will be followed (and not the opposite link \'Required for\') to calculate the incident state. You can add more link types ad directions as you like, e.g. \'Includes\' with the direction \'Target\'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be \'Source\', \'Target\', or \'Both\'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!'} =
         'Podešava tip i smer veza koji će se koristiti za utvrđivanje stanja incidenta. Ključ je naziv tipa veze (kao što je definisano u LinkObject::Type), a vrednost je smer IncidentLinkType koji treba ispratiti za određivanje stanja incidenta. Na primer, ako je IncidentLinkType podešen na DependsOn i smer je Source, samo veza "Zavisi od" će biti praćena (a neće i suprotna veza "Neophodno za") u određivanju stanja incidenta. Ukoliko želite može dodati još tipova i smerova veza, npr. "Uključuje" sa smerom "Cilj". Svi tipovi veza definisani u sistemskoj konfiguraciji LinkObject::Type su mogući i smer može biti "Izvor", "Cilj" ili "Oba". VAŽNO: NAKON IZMENE OPCIJA SISTEMSKE KONFIGURACIJE MORATE POKRENUTI SKRIPT bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate DA BI SVA STANJA INCIDENTA BILA PONOVO UTVRĐENA NA OSNOVU NOVIH PODEŠAVANJA!';
-    $Self->{Translation}->{'Source'} = '';
+    $Self->{Translation}->{'Source'} = 'Izvor';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} =
         'Ovo podešavanje određuje da li vezom tipa "Normal" objekat ITSM promena može da se poveže sa objektom tiketa.';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} =
