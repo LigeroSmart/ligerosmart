@@ -1107,6 +1107,7 @@ get the category search as hash
     my $CategoryIDArrayRef = @{$FAQObject->CustomerCategorySearch(
         CustomerUser  => 'tt',
         ParentID      => 3,   # (optional, default 0)
+        GetSubCategories => 1,  # (optional, default 0)
         Mode          => 'Customer',
         UserID        => 1,
     )};
@@ -1180,6 +1181,8 @@ sub CustomerCategorySearch {
         # cache
         $Self->{Cache}->{$CacheKey} = \%Articles;
     }
+
+    return \@CategoryIDs if !$Param{GetSubCategories};
 
     for my $CategoryID (@CategoryIDs) {
 

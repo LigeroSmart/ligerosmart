@@ -1754,9 +1754,10 @@ sub FAQKeywordArticleList {
         $StateTypes = $ConfigObject->Get('FAQ::Customer::StateTypes');
 
         $CategoryIDs = $Self->CustomerCategorySearch(
-            CustomerUser => $Param{CustomerUser},
-            Mode         => 'Customer',
-            UserID       => $Param{UserID},
+            CustomerUser     => $Param{CustomerUser},
+            Mode             => 'Customer',
+            UserID           => $Param{UserID},
+            GetSubCategories => 1,
         );
     }
     else {

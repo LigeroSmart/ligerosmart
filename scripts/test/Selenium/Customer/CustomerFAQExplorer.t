@@ -201,17 +201,88 @@ $Selenium->RunTest(
             );
         }
 
-        # Delete FAQ category.
-        my $Success = $FAQObject->CategoryDelete(
-            CategoryID => $CategoryID,
-            UserID     => 1,
+        # FAQ subcategories are shown on CustomerFAQExplorer. See bug#14053.
+        # Create Subcategory.
+        my $SubCategoryName = "Sub$CategoryName";
+        my $SubCategoryID   = $FAQObject->CategoryAdd(
+            Name     => $SubCategoryName,
+            Comment  => 'Subcategory',
+            ParentID => $CategoryID,
+            ValidID  => 1,
+            UserID   => 1,
         );
         $Self->True(
-            $Success,
-            "CategoryID $CategoryID is deleted",
+            $SubCategoryID,
+            "SubCategoryID $SubCategoryID is created",
         );
 
+        # Setup group for Subcategory.
+        $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
+            Group => 'users',
+        );
+        $FAQObject->SetCategoryGroup(
+            CategoryID => $SubCategoryID,
+            GroupIDs   => [$GroupID],
+            UserID     => 1,
+        );
+
+        # Create Subcategory FAQ.
+        my $SubFAQTitle = "SubFAQ-$RandomID";
+        my $SubItemID   = $FAQObject->FAQAdd(
+            Title       => $SubFAQTitle,
+            CategoryID  => $SubCategoryID,
+            StateID     => $StateID,
+            LanguageID  => 1,
+            ValidID     => 1,
+            UserID      => 1,
+            Approved    => 1,
+            ContentType => 'text/html',
+        );
+
+        $Self->True(
+            $SubItemID,
+            "Subcategory itemID $SubItemID is created",
+        );
+
+        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerFAQExplorer");
+
+        # Check if Subcategory is shown.
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$(\"a[href*='Action=CustomerFAQExplorer;CategoryID=$SubCategoryID']\").length == 0"
+            ),
+            "SubCategoryID $SubCategoryID in not found."
+        );
+
+        $Selenium->find_element( "$CategoryName", 'link_text' )->VerifiedClick();
+
+        # Check if Subcategory is present.
+        $Self->Is(
+            $Selenium->execute_script(
+                "return \$(\"a[href*='Action=CustomerFAQExplorer;CategoryID=$SubCategoryID']\").text().trim()"
+            ),
+            "$SubCategoryName",
+            "Subcategory $SubCategoryName is found."
+        );
+
+        # Delete FAQ category.
+        for my $CategoryIDs ( $CategoryID, $SubCategoryID )
+        {
+            my $Success = $FAQObject->CategoryDelete(
+                CategoryID => $CategoryIDs,
+                UserID     => 1,
+            );
+            $Self->True(
+                $Success,
+                "CategoryID $CategoryIDs is deleted",
+            );
+        }
+
         # Delete FAQs.
+        push @Items,
+            {
+            ItemID => $SubItemID,
+            };
         for my $FAQ (@Items) {
             my $Success = $FAQObject->FAQDelete(
                 ItemID => $FAQ->{ItemID},
