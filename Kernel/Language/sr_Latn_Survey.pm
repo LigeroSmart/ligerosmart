@@ -122,20 +122,20 @@ sub Data {
     $Self->{Translation}->{'Answer Edit'} = 'Uredi odgovor';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = '';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = '';
+    $Self->{Translation}->{'Stats Overview'} = 'Pregled statistike';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Nemate dozvolu za ovu anketu ili detalje statistike!';
+    $Self->{Translation}->{'Stats Detail'} = 'Detalj statistike';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'Status changed.'} = '';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Ne može se postaviti novi status! Nema definisanih pitanja.';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = 'Ne može se postaviti novi status! Pitanja su nepotpuna.';
+    $Self->{Translation}->{'Status changed.'} = 'Status promenjen.';
     $Self->{Translation}->{'- No queue selected -'} = '- Nije izabran red -';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
-    $Self->{Translation}->{'- Change Status -'} = '';
-    $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'Invalid'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- Nije izabran tip tiketa -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- Nije izabran servis tiketa -';
+    $Self->{Translation}->{'- Change Status -'} = '- Promeni status -';
+    $Self->{Translation}->{'Master'} = 'Glavno';
+    $Self->{Translation}->{'Invalid'} = 'Nevažeći';
     $Self->{Translation}->{'New Status'} = 'Novi status';
     $Self->{Translation}->{'Survey Description'} = 'Opis ankete';
     $Self->{Translation}->{'answered'} = 'odgovoreno';

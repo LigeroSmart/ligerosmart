@@ -134,7 +134,7 @@ sub Data {
     $Self->{Translation}->{'- No ticket type selected -'} = '- Nie wybrano typu zgłoszenia -';
     $Self->{Translation}->{'- No ticket service selected -'} = '- Nie wybrano zgłoszenia usług -';
     $Self->{Translation}->{'- Change Status -'} = '- Zmień stan -';
-    $Self->{Translation}->{'Master'} = '';
+    $Self->{Translation}->{'Master'} = 'Nadrzędny';
     $Self->{Translation}->{'Invalid'} = 'Nieaktualne';
     $Self->{Translation}->{'New Status'} = 'Nowy stan';
     $Self->{Translation}->{'Survey Description'} = 'Opis ankiety';

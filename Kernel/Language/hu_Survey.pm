@@ -122,7 +122,7 @@ sub Data {
     $Self->{Translation}->{'Answer Edit'} = 'Válasz szerkesztése';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
-    $Self->{Translation}->{'Stats Overview'} = 'Statisztikák áttekintése';
+    $Self->{Translation}->{'Stats Overview'} = 'Statisztikák áttekintője';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'Nincs jogosultsága ehhez a kérdőívhez vagy a statisztikák részleteihez!';
     $Self->{Translation}->{'Stats Detail'} = 'Statisztikák részlete';
 
