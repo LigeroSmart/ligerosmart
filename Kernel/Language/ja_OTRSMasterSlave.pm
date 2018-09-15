@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'マスター・スレーブ動的フィールド名を設定する';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '担当者インターフェイス のズームされたチケットのマスター・スレーブ画面で、デフォルトの チケット 優先度を定義します。';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '担当者インタフェースのズームされたチケットのマスター・スレーブ画面で、デフォルトのメモのタイプを定義します。';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         '担当者インタフェースのチケット履歴で使用される、チケット・マスター・スレーブ画面アクションに関する履歴コメントを定義します。';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'スレーブチケット';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'システムで使用される、異なるメモのタイプを特定します。';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'このモジュールは、新規メール/電話チケットに、マスター/スレーブチケット欄を追加します。';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'マスター・スレーブチケット';

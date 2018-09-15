@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '定义主工单功能的动态字段名称。';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         '定义服务人员界面在工单主从设置窗口是否需要工单锁定（如果工单还没有锁定，则工单被锁定且当前服务人员被自动设置为工单所有者）。';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '定义服务人员界面在工单主从设置窗口添加备注后的默认下一个工单状态。';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '定义服务人员界面在工单主从设置窗口添加备注后工单的默认优先级。';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        '定义服务人员界面在工单主从设置窗口添加备注后工单的默认备注类型。';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         '定义工单主从设置窗口操作的历史注释，以用于服务人员界面的工单历史。';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = '从工单';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         '指定使用从工单的客户真实姓名替换主工单的真空姓名的信件类型。';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        '指定将在系统中使用的不同备注类型。';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         '这个模块用来激活新建邮件/电话工单窗口的主从字段。';
     $Self->{Translation}->{'Ticket MasterSlave.'} = '主从工单。';

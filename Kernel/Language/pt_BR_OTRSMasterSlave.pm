@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'Define o nome do campo dinâmico para a funcionalidade de chamado mestre.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Define se um bloqueio de ticket é requerido na tela MasterSlave de um ticket detalhado na interface de agente (se o ticket ainda não estiver bloqueado, o ticket será bloqueado e o agente corrente será automaticamente definido como o seu proprietário).';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define o próximo estado padrão de um ticket após uma nota ter sido adicionada, na tela MasterSlave de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define a prioridade padrão do ticket na tela MasterSlave de um ticket detalhado na interface de agente.';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Define o tipo padrão de nota na tela MasterSlave de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         'Define o comentário de histórico para a ação de tela MasterSlave do ticket, que é utilizada para o histórico do ticket na interface de agente.';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Chamados Escravos';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Especifica os diferentes tipos de artigo onde o nome real do ticket Master será substituído com o nome do ticket escravo.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Especifica os diferentes tipos de notas que serão utilizados no sistema.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Este módulo ativa o campo Mestre/Escravo nas telas de novo chamado fone/e-mail.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Chamado MestreEscravo';

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-02-06 19:00+0000\n"
+"POT-Creation-Date: 2018-09-15 05:04+0000\n"
+"PO-Revision-Date: 2018-09-15 05:06+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/otrs/OTRS/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,11 @@ msgstr "Mendefinisikan jika kunci tiket diperlukan di layar MasterSlave tiket da
 
 #. SysConfig
 msgid ""
+"Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the default next state of a ticket after adding a note, in the "
 "ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Mendefinisikan default state berikutnya tiket setelah menambahkan catatan, dalam tiket Guru layar Slave dari tiket yang diperbesar di antarmuka agen."
@@ -100,12 +105,6 @@ msgid ""
 "Defines the default ticket priority in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
 msgstr "Mendefinisikan prioritas tiket default di layar tiket Master Slave dari tiket yang diperbesar di antarmuka agen."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
-msgstr "Mendefinisikan jenis default catatan dalam layar tiket Master Slave dari tiket yang diperbesar di antarmuka agen."
 
 #. SysConfig
 msgid ""
@@ -298,10 +297,6 @@ msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
 msgstr "Menentukan jenis artikel yang berbeda di mana nama asli dari master tiket akan diganti dengan satu tiket Slave."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Menentukan jenis catatan yang berbeda yang akan digunakan dalam sistem."
 
 #. SysConfig
 msgid ""

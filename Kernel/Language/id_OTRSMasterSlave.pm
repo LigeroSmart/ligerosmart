@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'Mendefinisikan nama field yang dinamis untuk fitur utama tiket.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Mendefinisikan jika kunci tiket diperlukan di layar MasterSlave tiket dari tiket yang diperbesar di antarmuka agen (jika tiket tidak terkunci lagi, tiket akan terkunci dan agen saat ini akan diatur secara otomatis sebagai pemiliknya).';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Mendefinisikan default state berikutnya tiket setelah menambahkan catatan, dalam tiket Guru layar Slave dari tiket yang diperbesar di antarmuka agen.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Mendefinisikan prioritas tiket default di layar tiket Master Slave dari tiket yang diperbesar di antarmuka agen.';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Mendefinisikan jenis default catatan dalam layar tiket Master Slave dari tiket yang diperbesar di antarmuka agen.';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         'Mendefinisikan komentar sejarah untuk tindakan tiket masterslave pada layar, yang akan digunakan untuk sejarah tiket di antarmuka agen.';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Tiket slave';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Menentukan jenis artikel yang berbeda di mana nama asli dari master tiket akan diganti dengan satu tiket Slave.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Menentukan jenis catatan yang berbeda yang akan digunakan dalam sistem.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Modul ini mengaktifkan bidang Master / Slave di baru layar email dan tiket telepon.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Tiket MasterSlave.';

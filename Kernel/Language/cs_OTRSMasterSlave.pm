@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Určuje, zda je vyžadováno uzamknutí tiketu při zobrazení Nadřízeného / Podřízeného v detailu tiketu v AgentTicketZoom. (Není-li tiket zatím uzemčen, bude uzamčen a stávající agent bude automaticky určen jako vlastník.)';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Určuje defaultní následují stav tiketu po přidání poznámky - v zobrazení Nadřízený / Podřízený v detailu tiketu v AgentTicketZoom.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Určuje defaultní prioritu tiketu v zobrazení Nadřízený / Podřízený v AgentTicketZoom.';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Určuje defaultní typ poznámky v pohledu Nadřízený / Podřízený v detailu tiketu v AgentTicketZoom.';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         'Určuje komentář historie pro akci zobrazení Nadřízený / Podřízený, komentář je použit v historii tiketu v rozhraní agenta.';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -108,8 +108,6 @@ sub Data {
         '';
     $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        '';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
         '';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         '';

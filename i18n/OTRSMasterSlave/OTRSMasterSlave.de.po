@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-03-23 07:02+0000\n"
-"Last-Translator: Stefan Hagl <stefan.hagl@gmx.at>\n"
+"POT-Creation-Date: 2018-09-15 05:04+0000\n"
+"PO-Revision-Date: 2018-09-15 05:06+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,6 +97,11 @@ msgstr "Bestimmt, ob dieser Screen im Agenten-Interface das Sperren des Tickets 
 
 #. SysConfig
 msgid ""
+"Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the default next state of a ticket after adding a note, in the "
 "ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Bestimmt den Folgestatus für Tickets, für die im MasterSlave-Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde."
@@ -106,12 +111,6 @@ msgid ""
 "Defines the default ticket priority in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
 msgstr "Bestimmt die standardmäßige Ticket-Priorität für Tickets im MasterSlave-Bildschirm des Agenten-Interface."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
-msgstr "Bestimmt den standardmäßigen Typ einer Notiz für Tickets im MasterSlave Bildschirm des Agenten-Interface."
 
 #. SysConfig
 msgid ""
@@ -304,10 +303,6 @@ msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
 msgstr "Definiert die verschiedene Artikeltypen in denen der reale Name des Master-Tickets mit denen des Slave-Tickets ersetzt wird."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Gibt die verschiedenen Notiztypen an, die im System verwendet werden."
 
 #. SysConfig
 msgid ""

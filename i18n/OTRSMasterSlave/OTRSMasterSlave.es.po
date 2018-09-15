@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-04-18 13:16+0000\n"
-"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
+"POT-Creation-Date: 2018-09-15 05:04+0000\n"
+"PO-Revision-Date: 2018-09-15 05:06+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -95,6 +95,11 @@ msgstr "Define el bloqueo requerido in la pantalla de ticket Maestro-Esclavo en 
 
 #. SysConfig
 msgid ""
+"Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the default next state of a ticket after adding a note, in the "
 "ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Define el siguiente estado del ticket después de añadir una nota, en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
@@ -104,12 +109,6 @@ msgid ""
 "Defines the default ticket priority in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
 msgstr "Define la prioridad por defecto en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
-msgstr "Define el tipo de nota por defecto en la pantalla de ticket Maestro-Esclavo en la vista detallada de dicho ticket en la interfaz del agente."
 
 #. SysConfig
 msgid ""
@@ -302,10 +301,6 @@ msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
 msgstr "Especificar los diferentes tipos de artículos donde el verdadero nombre del tickey maestro será reemplazado con el del ticket esclavo."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Especifica los diferentes tipos de notas que se usarán en el sistema."
 
 #. SysConfig
 msgid ""

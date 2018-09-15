@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'Definiše dinamički naziv polja za funkciju glavnog tiketa.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Određuje da li je potrebno zaključati glavni/zavisni ekran tiketa na detaljnom prikazu tiketa u interfejsu operatera (ako tiket još uvek nije zaključan, tiket će dobiti status zaključan i trenutni operater će biti automatski postavljen kao vlasnik).';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Određuje podrazumevani naredni status tiketa posle dodavalja beleške, na glavni/zavisni ekranu detaljnog prikaza tiketa u interfejsu operatera.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Određuje podrazumevani prioritet tiketa na glavni/zavisni ekanu detaljnog prikaza tiketa u interfejsu operatera.';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Određuje podrazumevani tip beleške na glavni/zavisni ekranu detaljnog prikaza tiketa u interfejsu operatera.';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         'Određuje komentar za istorijat na glavni/zavisni ekranskoj akciji, što će se koristiti za istorijat u interfejsu operatera.';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Zavisni tiketi';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Navodi razne tipove članaka gde će stvarno ime sa glavnog tiketa biti zamenjeno sa jednim na zavisnom tiketu.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Određuje različite tipove napomena koji će se koristiti u sistemu.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ovaj modul aktivira polje glavni/zavisni na ekranu novih imejl tiketa i tiketa poziva.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Tiket glavni/zavisni.';

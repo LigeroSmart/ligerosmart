@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2018-06-05 21:10+0000\n"
+"POT-Creation-Date: 2018-09-15 05:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,15 +79,15 @@ msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of 
 msgstr ""
 
 #. SysConfig
+msgid "Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+
+#. SysConfig
 msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid "Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -220,10 +220,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket."
-msgstr ""
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
 msgstr ""
 
 #. SysConfig

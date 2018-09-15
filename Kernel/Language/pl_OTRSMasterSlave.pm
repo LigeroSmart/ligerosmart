@@ -32,8 +32,8 @@ sub Data {
     $Self->{Translation}->{'Unset Slave Tickets'} = 'Wyczyść wartość Podrzędny';
 
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
-    $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'Slave of %s%s%s'} = '';
+    $Self->{Translation}->{'Master'} = 'Nadrzędny';
+    $Self->{Translation}->{'Slave of %s%s%s'} = 'Podrzędny do %s%s%s';
     $Self->{Translation}->{'Master Ticket'} = 'Zgłoszenie nadrzędne';
 
     # SysConfig
@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = 'Określa nazwę pola dynamicznego dla funkcjonalności zgłoszenia nadrzędnego.';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Określa, czy wymagana jest zablokowanie zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta (jeśli zgłoszenie nie jest jeszcze zablokowane, staje się zablokowane, a bieżący agent staje się jego właścicielem).';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Określa domyślny następny stan zgłoszenia po dodaniu notatki na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Określa domyślny priorytet zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Określa domyślny typ notatki notatki na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         'Określa komentarz historii dla akcji zgłoszenia na ekranie Nadrzędny/Podrzędny który zostanie użyty w historii zgłoszenia interfejsu agenta.';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -83,7 +83,7 @@ sub Data {
     $Self->{Translation}->{'Registration of the ticket event module.'} = 'Rejestracja modułu zdarzeń zgłoszenia,';
     $Self->{Translation}->{'Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Uprawnienia wymagane do używania ekranu Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
-    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = '';
+    $Self->{Translation}->{'Sets if Master / Slave field must be selected by the agent.'} = 'Określa, czy pole Nadrzędny/Podrzędny musi być wybrane przez agenta.';
     $Self->{Translation}->{'Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Ustawia domyślną treść notatki dodawanej do zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta.';
     $Self->{Translation}->{'Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = 'Zgłoszenia podrzędne';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Określa różne rodzaje typów wiadomości i w jaki sposób właściwa nazwa ze zgłoszenia nadrzędnego zostanie zastąpiona w zgłoszeniu podrzędnym.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Wskazuje różne rodzaje notatek które będą używane w systemie.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ten moduł aktywuje pole Nadrzędny/Podrzędny w oknie nowego zgłoszenia e-mail i telefonicznego';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Zgłoszenie Nadrzędne/Podrzędne';

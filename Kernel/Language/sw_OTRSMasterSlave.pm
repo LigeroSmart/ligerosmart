@@ -45,12 +45,12 @@ sub Data {
     $Self->{Translation}->{'Defines dynamic field name for master ticket feature.'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Fafanua kama kufunga kwa tiketi kunahitajika katika skrini ya tiketi ya  mkuumtumwa ya tiketi iliyokuzwa katika kiolesura cha wakala (kama tiketi haijafungwa bado, tiketi zipatwe kufungwa na wakala wa sasa atafanywa automatiki kuwa mmiliki wake).';
+    $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
+        '';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Inafafanua chaguo-msingi la hali iyajo ya tiketi baada ya kuongeza kidokezo, katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Inafafanua kipaumbele chaguo-msingi cha tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala.';
-    $Self->{Translation}->{'Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
-        'Inafafanua aina ya chaguo-msingi la kidokezo kwa skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
         'Inafafanua historia ya maoni kwa kitendo cha skrini ya tiketi mkuumtumwa, ambayo inatumika na historia ya tiketi ya kiolesura cha wakala.';
     $Self->{Translation}->{'Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.'} =
@@ -109,8 +109,6 @@ sub Data {
     $Self->{Translation}->{'Slave Tickets'} = '';
     $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
         'Inabainisha aina mbalimbali za makala ambazo majina yake ya ukweli kutoka tiketi kuu yatabadilishwa na mojawapo katika tiketi tumwa.';
-    $Self->{Translation}->{'Specifies the different note types that will be used in the system.'} =
-        'Inabainisha aina za vidokezo mbalimbali ambavyo vitatumika katika mfumo.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         '';
     $Self->{Translation}->{'Ticket MasterSlave.'} = '';

@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-02-16 12:23+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-09-15 05:04+0000\n"
+"PO-Revision-Date: 2018-09-15 05:06+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -90,6 +90,11 @@ msgstr "Meghatározza, hogy szükséges-e jegyzárolás egy nagyított jegynek a
 
 #. SysConfig
 msgid ""
+"Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the default next state of a ticket after adding a note, in the "
 "ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Meghatározza egy jegy alapértelmezett következő állapotát egy jegyzet hozzáadása után egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen."
@@ -99,12 +104,6 @@ msgid ""
 "Defines the default ticket priority in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
 msgstr "Meghatározza az alapértelmezett jegyprioritást egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
-msgstr "Meghatározza a jegyzet alapértelmezett típusát egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen."
 
 #. SysConfig
 msgid ""
@@ -297,10 +296,6 @@ msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
 msgstr "Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Megadja a különböző jegyzettípusokat, amelyek a rendszeren használva lesznek."
 
 #. SysConfig
 msgid ""

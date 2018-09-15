@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-02-06 18:59+0000\n"
-"PO-Revision-Date: 2018-02-06 19:00+0000\n"
+"POT-Creation-Date: 2018-09-15 05:04+0000\n"
+"PO-Revision-Date: 2018-09-15 05:06+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,11 @@ msgstr "Fafanua kama kufunga kwa tiketi kunahitajika katika skrini ya tiketi ya 
 
 #. SysConfig
 msgid ""
+"Defines if the MasterSlave note is visible for the customer by default."
+msgstr ""
+
+#. SysConfig
+msgid ""
 "Defines the default next state of a ticket after adding a note, in the "
 "ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Inafafanua chaguo-msingi la hali iyajo ya tiketi baada ya kuongeza kidokezo, katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
@@ -100,12 +105,6 @@ msgid ""
 "Defines the default ticket priority in the ticket MasterSlave screen of a "
 "zoomed ticket in the agent interface."
 msgstr "Inafafanua kipaumbele chaguo-msingi cha tiketi katika skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
-
-#. SysConfig
-msgid ""
-"Defines the default type of the note in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
-msgstr "Inafafanua aina ya chaguo-msingi la kidokezo kwa skrini ya mkuumtumwa ya tiketi ya tiketi iliyokuzwa katika kiolesura cha wakala."
 
 #. SysConfig
 msgid ""
@@ -298,10 +297,6 @@ msgid ""
 "Specifies the different article types where the real name from Master ticket"
 " will be replaced with the one in the Slave ticket."
 msgstr "Inabainisha aina mbalimbali za makala ambazo majina yake ya ukweli kutoka tiketi kuu yatabadilishwa na mojawapo katika tiketi tumwa."
-
-#. SysConfig
-msgid "Specifies the different note types that will be used in the system."
-msgstr "Inabainisha aina za vidokezo mbalimbali ambavyo vitatumika katika mfumo."
 
 #. SysConfig
 msgid ""
