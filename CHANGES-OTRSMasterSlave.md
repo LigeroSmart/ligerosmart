@@ -1,5 +1,7 @@
-#6.0.8 2018-??-??
+#6.0.9 2018-??-??
  - 2018-09-14 Updated framework files to OTRS 6.0.11.
+
+#6.0.8 2018-07-24
  - 2018-07-18 Fixed bug#[13896](https://bugs.otrs.org/show_bug.cgi?id=13896) - It is old setting values in the System Configuration of MasterSlave view.
 
 #6.0.7 2018-07-24
