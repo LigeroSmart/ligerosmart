@@ -1,4 +1,6 @@
-#6.0.6 2018-??-??
+#6.0.7 2018-??-??
+
+#6.0.6 2018-09-17
  - 2018-09-14 Updated translations, thanks to all translators.
  - 2018-09-06 FollowUp for bug fix#[12226](https://bugs.otrs.org/show_bug.cgi?id=12226) - SurveyRequestsSend failed.
 
