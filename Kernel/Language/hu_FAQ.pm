@@ -28,7 +28,7 @@ sub Data {
     $Self->{Translation}->{'Add category'} = 'Kategória hozzáadása';
     $Self->{Translation}->{'Add Category'} = 'Kategória hozzáadása';
     $Self->{Translation}->{'Edit Category'} = 'Kategória szerkesztése';
-    $Self->{Translation}->{'Subcategory of'} = 'A következő alkategóriája:';
+    $Self->{Translation}->{'Subcategory of'} = 'Alkategóriája ennek';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Válasszon legalább egy jogosultság csoportot.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Ügyintézőcsoportok, amelyek hozzáférnek a bejegyzésekhez ebben a kategóriában.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'A böngészőben megjegyzésként fog megjelenni.';

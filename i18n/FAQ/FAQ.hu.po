@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-04-24 16:43+0000\n"
-"PO-Revision-Date: 2018-04-30 14:47+0000\n"
+"PO-Revision-Date: 2018-07-27 07:05+0000\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "Kategória szerkesztése"
 
 #. Template: AgentFAQCategory
 msgid "Subcategory of"
-msgstr "A következő alkategóriája:"
+msgstr "Alkategóriája ennek"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
