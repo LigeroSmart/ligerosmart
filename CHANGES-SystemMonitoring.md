@@ -1,4 +1,5 @@
-#6.0.4 2018-??-??
+#6.0.4 2018-09-15
+ - Updated license information.
 
 #6.0.3 2018-07-25
  - 2018-07-25 Updated translations, thanks to all translators.
