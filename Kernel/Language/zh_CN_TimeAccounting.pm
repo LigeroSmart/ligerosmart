@@ -125,12 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = '显示加班';
     $Self->{Translation}->{'User is allowed to create projects'} = '允许用户创建项目';
     $Self->{Translation}->{'Allow project creation'} = '允许创建项目';
-    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
-    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = '允许用户跳过工时管理';
+    $Self->{Translation}->{'Allow time accounting skipping'} = '允许跳过工时管理';
     $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
-        '';
+        '如果选择此选项，则工时管理对用户来说实际上是可选的。';
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
-        '';
+        '没有关于缺少条目的警告，也没有进入强制执行的警告。';
     $Self->{Translation}->{'Time Spans'} = '时间跨度';
     $Self->{Translation}->{'Period Begin'} = '时段开始';
     $Self->{Translation}->{'Period End'} = '时段结束';
@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         '这个日期不受限制，但是你还没有插入这一天，所以你获得了一个（！）机会来插入';
     $Self->{Translation}->{'Incomplete Working Days'} = '不完整的工作日';
-    $Self->{Translation}->{'Please insert your working hours!'} = '请插入工作时间';
     $Self->{Translation}->{'Successful insert!'} = '插入成功！';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '插入多个时间时出现错误！';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '成功插入记录。';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '视图：需要%s！';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = '请插入工作时间';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '不完整的工作日';

@@ -125,12 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Túlóra megjelenítése';
     $Self->{Translation}->{'User is allowed to create projects'} = 'A felhasználó létrehozhat projekteket';
     $Self->{Translation}->{'Allow project creation'} = 'Projektlétrehozás engedélyezése';
-    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
-    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = 'A felhasználónak lehetősége van kihagyni az időelszámolást';
+    $Self->{Translation}->{'Allow time accounting skipping'} = 'Időelszámolás kihagyásának lehetővé tétele';
     $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
-        '';
+        'Ha ez a lehetőség van kiválasztva, akkor az időelszámolás ténylegesen választható a felhasználónak.';
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
-        '';
+        'Nem lesznek figyelmeztetések a hiányzó bejegyzésekről és nem lesz beírási kényszerítés.';
     $Self->{Translation}->{'Time Spans'} = 'Időtartamok';
     $Self->{Translation}->{'Period Begin'} = 'Időszak kezdete';
     $Self->{Translation}->{'Period End'} = 'Időszak vége';
@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         'Ez a dátum a határon kívül van, de még nem illesztette be ez a napot, így kap még egy(!) esélyt a beillesztésre';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Befejezetlen munkanapok';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Illessze be a munkaidejét!';
     $Self->{Translation}->{'Successful insert!'} = 'Sikeres beillesztés!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Hiba történt több dátum beillesztése közben!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'A bejegyzések sikeresen beillesztve a különböző dátumokhoz!';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Nézet: %s szükséges!';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Illessze be a munkaidejét!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Befejezetlen munkanapok';

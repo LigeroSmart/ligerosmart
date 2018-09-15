@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         'Ovaj datum je izvan granica ali ga niste još uvek uneli, pa imate još jednu(!) šansu za unos';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Nepotpuni radni dani';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Molimo vas unesite vaše radno vreme!';
     $Self->{Translation}->{'Successful insert!'} = 'Uspešno dodavanje!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Greška pri unosu više datuma!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Uspešno ubačeni unosi za više datuma!';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Prikaz: neophodan %s!';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Molimo vas unesite vaše radno vreme!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Nepotpuni radni dani';

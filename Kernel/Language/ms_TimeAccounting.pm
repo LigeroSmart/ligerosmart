@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         'Tarikh ini telah terlebih had, tetapi anda masih belum memasukkan hari ini lagi, jadi anda mendapat satu(!) peluang untuk masukkan';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Hari Bekerja Tidak Lengkap';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Sila masukkan waktu kerja anda! ';
     $Self->{Translation}->{'Successful insert!'} = 'Berjaya dimasukkan!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Ralat semasa memasukkan beberapa tarikh!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Berjaya dimasukkan penyertaan untuk beberapa tarikh!';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Pandangan: Perlu %s!';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Sila masukkan waktu kerja anda! ';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Hari bekerja tidak lengkap';

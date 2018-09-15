@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         '';
     $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Tafadhali ingiza massaa ya kazi!';
     $Self->{Translation}->{'Successful insert!'} = 'Ingizo limefanikiwa';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Kosa katika kuingiza tarehe zaidi ya moja!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Maingizo yaliyofanikiwa kwa tarehe zaidi ya moja!';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Tafadhali ingiza massaa ya kazi!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';

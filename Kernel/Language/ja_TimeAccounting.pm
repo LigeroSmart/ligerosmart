@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         '入力された日付は期間外ですので、挿入する事はできませんでした。もう一度(!)日付を入力してください。';
     $Self->{Translation}->{'Incomplete Working Days'} = '未完了の可動日';
-    $Self->{Translation}->{'Please insert your working hours!'} = '勤務実績を入力してください';
     $Self->{Translation}->{'Successful insert!'} = '入力に成功しました!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '複数日を入力中にエラーが発生しました !';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '複数日にわたる稼働実績の入力に成功しました !';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '注目！： %s の入力が必要です。';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = '勤務実績を入力してください';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '未完了の可動日';

@@ -125,12 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Pokaż godziny nadliczbowe';
     $Self->{Translation}->{'User is allowed to create projects'} = 'Użytkownik może tworzyć projekty';
     $Self->{Translation}->{'Allow project creation'} = 'Zezwalaj na tworzenie projektów';
-    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
-    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = 'Użytkownik może pominąć rozliczanie czasu pracy';
+    $Self->{Translation}->{'Allow time accounting skipping'} = 'Pozwól na ominięcie rozliczania czasu pracy';
     $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
-        '';
+        'Jeśli ta opcja jest zaznaczona, rozliczanie czasu pracy jest nieobowiązkowe dla użytkownika.';
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
-        '';
+        'Nie będzie ostrzeżeń o brakujących jednostkach czasu oraz wymuszania wpisów.';
     $Self->{Translation}->{'Time Spans'} = 'Okresy Czasu';
     $Self->{Translation}->{'Period Begin'} = 'Początek cyklu';
     $Self->{Translation}->{'Period End'} = 'Koniec cyklu';
@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         'Wprowadzona data jest poza zakresem, ale nie wprowadziłeś jeszcze tego dnia, masz więc jedyną(!) okazję';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Niepełne dni pracy';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Proszę wprowadzić swój czas pracy!';
     $Self->{Translation}->{'Successful insert!'} = 'Wprowadanie powiodło się!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Wystąpił błąd podczas wprowadzania wielu dat jednocześnie!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Pomyślnie wprowadzono wiele dat jednocześnie!';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'Widok: Potrzebny %s!';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Proszę wprowadzić swój czas pracy!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Niepełne dni pracy';

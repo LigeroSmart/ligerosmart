@@ -162,7 +162,6 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         'Эта дата вне диапазона, но вы еще не установили этот день, так что вам дается один(!) шанс для ее установки';
     $Self->{Translation}->{'Incomplete Working Days'} = 'Неполные рабочие дни';
-    $Self->{Translation}->{'Please insert your working hours!'} = 'Введите Ваши рабочие часы!';
     $Self->{Translation}->{'Successful insert!'} = 'Данные занесены успешно!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Ошибка при вводе нескольких дат!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Данные для разных дат введены успешно!';
@@ -197,6 +196,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = 'View: Требуется  %s!';
+
+    # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Введите Ваши рабочие часы!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = 'Неполные рабочие дни';
