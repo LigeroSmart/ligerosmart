@@ -7,5 +7,5 @@ DeployOTRSBranch: rel-6_0
 
 DeployOTRSPackages:
  - OTRSCodePolicy@master
- - GeneralCatalog@master
- - ITSMCore@master
+ - GeneralCatalog@rel-6_0
+ - ITSMCore@rel-6_0
