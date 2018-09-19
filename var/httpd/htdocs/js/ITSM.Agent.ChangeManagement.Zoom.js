@@ -61,12 +61,6 @@ ITSM.Agent.ChangeManagement.Zoom = (function (TargetNS) {
                 return false;
             }
 
-            // otherwise we use the browser history to go back one page (could be from the browser cache)
-            if (history.length > 0) {
-                history.back();
-                return false;
-            }
-
             // if the page was loaded from clicking a link in an email there is no referer
             // and then we want to follow the original link target (which is the change zoom )
             return true;
