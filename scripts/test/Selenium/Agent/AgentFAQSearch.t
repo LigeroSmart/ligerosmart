@@ -18,11 +18,42 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-        my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
+        my $Helper      = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $FAQObject   = $Kernel::OM->Get('Kernel::System::FAQ');
+        my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
+        my $RandomID = $Helper->GetRandomID();
+
+        # Create test group.
+        my $GroupName = "group-$RandomID";
+        my $GroupID   = $GroupObject->GroupAdd(
+            Name    => $GroupName,
+            ValidID => 1,
+            UserID  => 1,
+        );
+        $Self->True(
+            $GroupID,
+            "GroupID $GroupID - created",
+        );
+
+        # Modify AgentFAQAdd module registration configuration to allow only test created group as RW.
+        # Test bug#14068 CreateBy selection honor group configuration.
+        my %AgentFAQAddModuleConfig = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
+            Name    => 'Frontend::Module###AgentFAQAdd',
+            Default => 1,
+        );
+
+        my %AgentFAQAddModuleConfigUpdate = %{ $AgentFAQAddModuleConfig{EffectiveValue} };
+        $AgentFAQAddModuleConfigUpdate{Group} = [$GroupName];
+
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Frontend::Module###AgentFAQAdd',
+            Value => \%AgentFAQAddModuleConfigUpdate,
+        );
 
         my $CategoryID = $FAQObject->CategoryAdd(
-            Name     => 'Category' . $Helper->GetRandomID(),
+            Name     => 'Category' . $RandomID,
             Comment  => 'Some comment',
             ParentID => 0,
             ValidID  => 1,
@@ -34,14 +65,28 @@ $Selenium->RunTest(
             "FAQ category is created - ID $CategoryID",
         );
 
-        my $GroupID = $Kernel::OM->Get('Kernel::System::Group')->GroupLookup(
-            Group => 'users',
-        );
-
         $FAQObject->SetCategoryGroup(
             CategoryID => $CategoryID,
             GroupIDs   => [$GroupID],
             UserID     => 1,
+        );
+
+        # Create test user.
+        my $TestUser = $Helper->TestUserCreate(
+            Groups => [ 'admin', 'users' ],
+        ) || die "Did not get test user";
+
+        my $TestUserID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+            UserLogin => $TestUser,
+        );
+
+        # Create test user which is in group defined in the module configuration as RW in AgentFAQAdd.
+        my $TestUserLogin = $Helper->TestUserCreate(
+            Groups => [ 'admin', 'users', $GroupName ],
+        ) || die "Did not get test user";
+
+        my $TestUserLoginID = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
+            UserLogin => $TestUserLogin,
         );
 
         my @FAQSearch;
@@ -56,7 +101,7 @@ $Selenium->RunTest(
                     StateID     => 1,
                     LanguageID  => 1,
                     ValidID     => 1,
-                    UserID      => 1,
+                    UserID      => $TestUserLoginID,
                     ContentType => 'text/html',
                 );
 
@@ -75,11 +120,7 @@ $Selenium->RunTest(
             }
         }
 
-        # Create test user and login.
-        my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'users' ],
-        ) || die "Did not get test user";
-
+        # Login test user.
         $Selenium->Login(
             Type     => 'Agent',
             User     => $TestUserLogin,
@@ -113,6 +154,23 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#CategoryIDs').val('$CategoryID').trigger('redraw.InputField').trigger('change');"
         );
+
+        # Add CreatedBy and verify bug#14068.
+        $Selenium->execute_script(
+            "\$('#Attribute').val('CreatedUserIDs').trigger('redraw.InputField').trigger('change');"
+        );
+
+        $Self->Is(
+            $Selenium->execute_script("return \$('#CreatedUserIDs option[value=$TestUserLoginID]').length;"),
+            1,
+            "$TestUserLoginID which is in group $GroupName is found as possible selection"
+        );
+        $Self->Is(
+            $Selenium->execute_script("return \$('#CreatedUserIDs option[value=$TestUserID]').length;"),
+            0,
+            "$TestUser which is in not group $GroupName is not found as possible selection"
+        );
+
         $Selenium->find_element( "#SearchFormSubmit", 'css' )->VerifiedClick();
 
         # Check AgentFAQSearch result screen.
@@ -199,6 +257,28 @@ $Selenium->RunTest(
         $Self->True(
             $Success,
             "FAQ category is deleted - ID $CategoryID",
+        );
+
+        my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+        # Delete group-user relation.
+        $Success = $DBObject->Do(
+            SQL  => "DELETE FROM group_user WHERE group_id = ?",
+            Bind => [ \$GroupID ],
+        );
+        $Self->True(
+            $Success,
+            "Group-user relation for group ID $GroupID is deleted",
+        );
+
+        # Delete test group.
+        $Success = $DBObject->Do(
+            SQL  => "DELETE FROM groups WHERE id = ?",
+            Bind => [ \$GroupID ],
+        );
+        $Self->True(
+            $Success,
+            "GroupID $GroupID is deleted",
         );
 
         # Make sure the cache is correct.

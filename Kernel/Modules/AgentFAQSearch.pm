@@ -1484,37 +1484,71 @@ sub _MaskForm {
         Valid => 1,
     );
 
-    # Get the UserIDs from FAQ and faq_admin members.
-    my %GroupUsers;
-    for my $Group (qw(faq faq_admin)) {
+    my $FrontendConfig = $ConfigObject->Get('Frontend::Module');
+    my $FAQAddGroups = $FrontendConfig->{AgentFAQAdd}->{Group} || [];
 
-        my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+    my %FAQAddUsers = %ShownUsers;
+    if ( IsArrayRefWithData($FAQAddGroups) ) {
 
-        my $GroupID = $GroupObject->GroupLookup( Group => $Group );
-        my %Users = $GroupObject->GroupMemberList(
-            GroupID => $GroupID,
-            Type    => 'rw',
-            Result  => 'HASH',
-        );
-        %GroupUsers = ( %GroupUsers, %Users );
-    }
+        my %GroupUsers;
+        for my $Group ( @{$FAQAddGroups} ) {
 
-    # Remove all users that are not in the FAQ or faq_admin groups.
-    for my $UserID ( sort keys %ShownUsers ) {
-        if ( !$GroupUsers{$UserID} ) {
-            delete $ShownUsers{$UserID};
+            my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
+            my $GroupID = $GroupObject->GroupLookup( Group => $Group );
+            my %Users = $GroupObject->GroupMemberList(
+                GroupID => $GroupID,
+                Type    => 'rw',
+                Result  => 'HASH',
+            );
+            %GroupUsers = ( %GroupUsers, %Users );
+        }
+
+        # Remove all users that are not in the FAQ or faq_admin groups.
+        for my $UserID ( sort keys %FAQAddUsers ) {
+            if ( !$GroupUsers{$UserID} ) {
+                delete $FAQAddUsers{$UserID};
+            }
         }
     }
     $Param{CreatedUserStrg} = $LayoutObject->BuildSelection(
-        Data       => \%ShownUsers,
+        Data       => \%FAQAddUsers,
         Name       => 'CreatedUserIDs',
         Size       => 5,
         Multiple   => 1,
         SelectedID => $GetParam{CreatedUserIDs},
         Class      => 'Modernize',
     );
+
+    my $FAQEditGroups = $FrontendConfig->{AgentFAQEdit}->{Group} || [];
+
+    my %FAQEditUsers = %ShownUsers;
+    if ( IsArrayRefWithData($FAQEditGroups) ) {
+
+        my %GroupUsers;
+        for my $Group ( @{$FAQEditGroups} ) {
+
+            my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
+
+            my $GroupID = $GroupObject->GroupLookup( Group => $Group );
+            my %Users = $GroupObject->GroupMemberList(
+                GroupID => $GroupID,
+                Type    => 'rw',
+                Result  => 'HASH',
+            );
+            %GroupUsers = ( %GroupUsers, %Users );
+        }
+
+        # Remove all users that are not in the FAQ or faq_admin groups.
+        for my $UserID ( sort keys %FAQEditUsers ) {
+            if ( !$GroupUsers{$UserID} ) {
+                delete $FAQEditUsers{$UserID};
+            }
+        }
+    }
+
     $Param{LastChangedUserStrg} = $LayoutObject->BuildSelection(
-        Data       => \%ShownUsers,
+        Data       => \%FAQEditUsers,
         Name       => 'LastChangedUserIDs',
         Size       => 5,
         Multiple   => 1,

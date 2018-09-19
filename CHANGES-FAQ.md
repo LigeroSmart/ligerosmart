@@ -1,4 +1,5 @@
 #6.0.11 2018-??-??
+ - 2018-09-19 Fixed bug#[14068](https://bugs.otrs.org/show_bug.cgi?id=14068) - FAQ groups faq and faq_admin are still in use in search screens.
 
 #6.0.10 2018-09-21
  - 2018-09-14 Updated translations, thanks to all translators.
