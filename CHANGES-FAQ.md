@@ -1,4 +1,6 @@
-#6.0.11 2018-??-??
+#6.0.12 2018-??-??
+
+#6.0.11 2018-10-05
  - 2018-09-28 Fixed bug#[11041](https://bugs.otrs.org/show_bug.cgi?id=11041) - FAQ CSV Stats always 10 lines long.
  - 2018-09-19 Fixed bug#[14068](https://bugs.otrs.org/show_bug.cgi?id=14068) - FAQ groups faq and faq_admin are still in use in search screens.
 
