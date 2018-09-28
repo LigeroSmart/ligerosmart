@@ -3,8 +3,8 @@
     <Name>ITSMCore</Name>
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
-    <Framework Minimum="6.0.11">6.0.x</Framework>
-    <PackageRequired Version="6.0.11">GeneralCatalog</PackageRequired>
+    <Framework Minimum="6.0.12">6.0.x</Framework>
+    <PackageRequired Version="6.0.12">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>https://otrs.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
@@ -445,7 +445,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -464,7 +464,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -483,7 +483,7 @@
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -502,7 +502,7 @@
         <br/>
         <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -585,7 +585,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -604,7 +604,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -623,7 +623,7 @@
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
@@ -642,7 +642,7 @@
         <br/>
         <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
         <ul>
-        <li>GeneralCatalog 6.0.11</li>
+        <li>GeneralCatalog 6.0.12</li>
         </ul>
         <br/>
         <br/>
