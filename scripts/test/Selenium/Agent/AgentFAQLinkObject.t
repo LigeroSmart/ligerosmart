@@ -192,7 +192,7 @@ $Selenium->RunTest(
 
             # Collapse all FAQ fields to show link table in the screen.
             $Selenium->execute_script(
-                "return \$('#FAQBody .Expanded a').click();"
+                "\$('#FAQBody .Expanded a').click();"
             );
         }
 
