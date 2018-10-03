@@ -102,7 +102,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length;' );
 
         # Search for second created test faq.
         $Selenium->find_element(".//*[\@id='SEARCH::Number']")->send_keys( $FAQNumbers[1] );
@@ -111,7 +111,7 @@ $Selenium->RunTest(
         # Link created test FAQ items.
         $Selenium->find_element("//input[\@value='$ItemIDs[1]'][\@type='checkbox']")->click();
         $Selenium->WaitFor(
-            JavaScript => "return \$('input[value=$ItemIDs[1]][type=checkbox]:checked').length"
+            JavaScript => "return \$('input[value=$ItemIDs[1]][type=checkbox]:checked').length;"
         );
 
         $Selenium->execute_script(
@@ -187,14 +187,10 @@ $Selenium->RunTest(
             "$LongFAQTitle - found in AgentFAQZoom complex view mode",
         );
 
-        # TODO: remove limitation to firefox.
-        if ( $Selenium->{browser_name} eq 'chrome' ) {
-
-            # Collapse all FAQ fields to show link table in the screen.
-            $Selenium->execute_script(
-                "\$('#FAQBody .Expanded a').click();"
-            );
-        }
+        # Collapse all FAQ fields to show link table in the screen.
+        $Selenium->execute_script(
+            "\$('#FAQBody .Expanded a').click();"
+        );
 
         # Check for "default" visible columns in the Linked FAQ widget.
         $Self->Is(
@@ -334,27 +330,31 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a[href=\'#ManageLinks\']").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a[href=\'#ManageLinks\']").length;' );
+        sleep 1;
 
         # Click on 'go to link delete screen'.
         $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->click();
-        $Selenium->WaitFor( JavaScript => 'return $("div[data-id=ManageLinks].Active").length' );
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return \$('div[data-id=ManageLinks].Active').length && \$('#FAQ .DataTable tr span:contains(\"$ShortTitle\")').length;"
+        );
 
         # Check for long FAQ title in LinkDelete screen.
         # This one is displayed on hover.
         $Self->True(
-            index( $Selenium->get_page_source(), "title=\"$LongFAQTitle\"" ) > -1,
+            $Selenium->execute_script("return \$('#FAQ .DataTable tr span[title=\"$LongFAQTitle\"]').length;"),
             "\"title=$LongFAQTitle\" - found in LinkDelete screen - which is displayed on hover",
         );
 
         # Check for short ticket title in LinkDelete screen.
         $Self->True(
-            index( $Selenium->get_page_source(), $ShortTitle ) > -1,
+            $Selenium->execute_script("return \$('#FAQ .DataTable tr span:contains(\"$ShortTitle\")').length;"),
             "$ShortTitle - found in LinkDelete screen",
         );
 
         $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
-        $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length' );
+        $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length;' );
 
         $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
         $Selenium->close();
