@@ -13,26 +13,21 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
-
-        # get FAQ object
+        my $Helper    = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
         my $FAQObject = $Kernel::OM->Get('Kernel::System::FAQ');
 
-        # create test FAQ
-        # test params
         my $FAQTitle    = 'FAQ ' . $Helper->GetRandomID();
         my $FAQSymptom  = 'Selenium Symptom';
         my $FAQProblem  = 'Selenium Problem';
         my $FAQSolution = 'Selenium Solution';
         my $FAQComment  = 'Selenium Comment';
 
+        # Create test FAQ.
         my $ItemID = $FAQObject->FAQAdd(
             Title       => $FAQTitle,
             CategoryID  => 1,
@@ -53,7 +48,7 @@ $Selenium->RunTest(
             "FAQ item is created - ID $ItemID",
         );
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -64,13 +59,12 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQZoom screen of created test FAQ
+        # Navigate to AgentFAQZoom screen of created test FAQ.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemID");
 
-        # check page
+        # Check page.
         for my $ID (
             qw(Menu000-Back Menu010-Edit Menu020-History Menu030-Print Menu040-Link Menu050-Delete FAQBody FAQVoting)
             )
@@ -84,7 +78,7 @@ $Selenium->RunTest(
 
         my @FAQWidgets = ('FAQ Information');
 
-        # only check the linked objects widget for the simple view mode here
+        # Only check the linked objects widget for the simple view mode here.
         if ( $LinkTableViewMode eq 'Simple' ) {
             push @FAQWidgets, 'Linked Objects';
         }
@@ -96,7 +90,7 @@ $Selenium->RunTest(
             );
         }
 
-        # verify test FAQ is created
+        # Verify test FAQ is created.
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
             "$FAQTitle is found",
@@ -122,21 +116,21 @@ $Selenium->RunTest(
 
         );
 
-        my $Handles = $Selenium->get_window_handles();
-
         for my $Test (@Tests) {
 
-            # switch to FAQ symptom iframe and verify its values
-            $Selenium->switch_to_frame( $Test->{Iframe} );
+            # Switch to FAQ symptom iframe and verify its values.
+            $Selenium->SwitchToFrame(
+                FrameSelector => "#$Test->{Iframe}",
+            );
 
-            # wait to switch on iframe
+            # Wait to switch on iframe.
             sleep 2;
 
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
                 "$Test->{FAQData} is found",
             );
-            $Selenium->switch_to_window( $Handles->[0] );
+            $Selenium->switch_to_frame();
         }
 
         my $Success = $FAQObject->FAQDelete(
@@ -150,7 +144,6 @@ $Selenium->RunTest(
 
         # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
-
     }
 
 );
