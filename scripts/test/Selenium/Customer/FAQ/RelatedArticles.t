@@ -116,7 +116,11 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Subject", 'css' )->send_keys($SubjectRandom);
 
         # Set body text and add a whitespace at the end to trigger the AJAX request for the related faq article.
-        $Selenium->find_element( "#Subject", 'css' )->send_keys( "\N{U+E004}", $FAQArticles[1]->{Keyword}, " " );
+        sleep 1;
+        $Selenium->execute_script("CKEDITOR.instances.RichText.setData('$FAQArticles[1]->{Keyword}');");
+        $Selenium->WaitFor( JavaScript => 'return CKEDITOR.instances.RichText.getData()' );
+        $Selenium->find_element( "#Subject", 'css' )->send_keys(" ");
+        $Selenium->find_element( "#Subject", 'css' )->send_keys("\N{U+E004}");
 
         # Wait that the hint is no longer visible.
         $Selenium->WaitFor(
@@ -139,8 +143,11 @@ $Selenium->RunTest(
         );
 
         # Change the body, to have a text which should not return some related faq article.
+        sleep 1;
         $Selenium->execute_script('CKEDITOR.instances.RichText.setData();');
-        $Selenium->find_element( "#Subject", 'css' )->send_keys( "\N{U+E004}", 'Nothing', " " );
+        $Selenium->find_element( "#Subject", 'css' )->send_keys('Nothing');
+        $Selenium->find_element( "#Subject", 'css' )->send_keys(" ");
+        $Selenium->find_element( "#Subject", 'css' )->send_keys("\N{U+E004}");
 
         # Wait for AJAX call after customer user selection.
         $Selenium->WaitFor(
@@ -215,7 +222,9 @@ $Selenium->RunTest(
 
         # Type in subject keyword to show two FAQ articles in the side widget hint.
         # One from 'Misc' category and second one from subcategory of 'Misc'.
-        $Selenium->find_element( "#Subject", 'css' )->send_keys( $RandomID, " " );
+        $Selenium->find_element( "#Subject", 'css' )->send_keys($Keyword);
+        $Selenium->find_element( "#Subject", 'css' )->send_keys("\N{U+E004}");
+
         $Selenium->WaitFor(
             JavaScript => 'return typeof($) === "function" && !$("span.AJAXLoader:visible").length'
         );
