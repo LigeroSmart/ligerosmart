@@ -12,25 +12,22 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper          = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ChangeObject    = $Kernel::OM->Get('Kernel::System::ITSMChange');
+        my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -44,10 +41,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get work order object
-        my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
-
-        # create test work order
+        # Create test work order.
         my $WorkOrderTitleRandom = 'Selenium Work Order ' . $Helper->GetRandomID();
         my $WorkOrderID          = $WorkOrderObject->WorkOrderAdd(
             ChangeID       => $ChangeID,
@@ -61,7 +55,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         ) || die "Did not get test user";
@@ -72,13 +66,12 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMWorkOrderZoom for test created work order
+        # Navigate to AgentITSMWorkOrderZoom for test created work order.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
 
-        # click on 'History' and switch window
+        # Click on 'History' and switch window.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]")
             ->click();
 
@@ -86,14 +79,15 @@ $Selenium->RunTest(
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
+        sleep 2;
 
-        # click on history show details to check AgentITSMWorkOrderHistoryZoom screen
+        # Click on history show details to check AgentITSMWorkOrderHistoryZoom screen.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderHistoryZoom;HistoryEntryID=' )]")
             ->VerifiedClick();
 
-        # check AgentITSMWorkOrderHistoryZoom values
+        # Check AgentITSMWorkOrderHistoryZoom values.
         $Self->True(
             index( $Selenium->get_page_source(), "Detailed history information of WorkOrderUpdate" ) > -1,
             "Detailed history information of WorkOrderUpdate is found",
@@ -107,7 +101,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is found",
         );
 
-        # delete test created work order
+        # Delete test created work order.
         my $Success = $WorkOrderObject->WorkOrderDelete(
             WorkOrderID => $WorkOrderID,
             UserID      => 1,
@@ -117,7 +111,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is deleted",
         );
 
-        # delete test created change
+        # Delete test created change.
         $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -127,7 +121,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
