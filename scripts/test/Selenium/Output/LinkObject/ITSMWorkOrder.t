@@ -110,17 +110,19 @@ $Selenium->RunTest(
 
         # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length' );
+        sleep 2;
 
         # select test created ticket to link with test created work order
         $Selenium->execute_script(
             "\$('#TargetIdentifier').val('Ticket').trigger('redraw.InputField').trigger('change');"
         );
-
-        sleep(2);
+        sleep 2;
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' &&  \$('input[name*=TicketNumber').length;" );
 
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
-        $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
+        $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length;" );
 
         $Selenium->find_element("//input[\@id='LinkTargetKeys']")->click();
         $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->VerifiedClick();
@@ -129,13 +131,13 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
+        $Selenium->VerifiedRefresh();
 
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
-
-        # verify test work order is linked with test ticket
-        $Self->True(
-            index( $Selenium->get_page_source(), $TicketNumber ) > -1,
+        # Verify test work order is linked with test ticket.
+        sleep 1;
+        $Self->Is(
+            $Selenium->execute_script('return $(".LinkObjectLink").text()'),
+            $TicketNumber,
             "Test ticket number $TicketNumber is found",
         );
 
@@ -152,21 +154,25 @@ $Selenium->RunTest(
 
         # delete link relation
         $Selenium->find_element("//a[\@href='#ManageLinks']")->click();
-        $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
-        $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
+        $Selenium->execute_script('$("#LinkDeleteIdentifier").click();');
+        sleep 1;
+        $Selenium->execute_script('$("button[title=\'Delete links\']").click();');
 
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;Subaction=Close' )]")->click();
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('.MessageBox.Info p').length;" );
+        $Self->Is(
+            $Selenium->execute_script('return $(".MessageBox.Info p").text().trim()'),
+            "1 Link(s) deleted successfully.",
+            "Check if link is deleted successfully",
+        );
 
+        $Selenium->close();
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
-
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
-
-        # verify that link has been removed
-        $Self->True(
-            index( $Selenium->get_page_source(), $TicketNumber ) == -1,
+        # Verify that link has been removed.
+        $Selenium->VerifiedRefresh();
+        $Self->False(
+            $Selenium->execute_script('return $(".LinkObjectLink").text()'),
             "Test ticket number $TicketNumber is found",
         );
 
