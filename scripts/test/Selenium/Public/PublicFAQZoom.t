@@ -84,23 +84,22 @@ $Selenium->RunTest(
             },
         );
 
-        # get window handles
-        my $Handles = $Selenium->get_window_handles();
-
         # check test created FAQ values
         for my $Test (@Tests) {
 
             # switch to FAQ symptom iframe and verify its values
-            $Selenium->switch_to_frame( $Test->{Iframe} );
+            $Selenium->SwitchToFrame(
+                FrameSelector => "#$Test->{Iframe}",
+            );
 
-            # wait to switch on iframe
+            # Wait to switch on iframe.
             sleep 2;
 
             $Self->True(
                 index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
                 "$Test->{FAQData} - found",
             );
-            $Selenium->switch_to_window( $Handles->[0] );
+            $Selenium->switch_to_frame();
         }
 
         $Self->True(
