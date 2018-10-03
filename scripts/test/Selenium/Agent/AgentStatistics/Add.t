@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - f2d522e3bce54a17870cf51c27f62206d7537b06 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: otrs - 8a7022f5157475c7d8a5f4dd475a2af413efc8ea - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -283,6 +283,7 @@ $Selenium->RunTest(
 
             # Check Restrictions configuration dialog.
             $Selenium->find_element( ".EditRestrictions", 'css' )->click();
+            sleep 2;
             $Selenium->WaitFor(
                 JavaScript =>
                     'return typeof($) === "function" && $(".Dialog.Modal").length && $("#EditDialog select").length;'
