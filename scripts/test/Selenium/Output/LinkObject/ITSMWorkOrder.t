@@ -118,7 +118,8 @@ $Selenium->RunTest(
         );
         sleep 2;
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' &&  \$('input[name*=TicketNumber').length;" );
+            JavaScript => "return typeof(\$) === 'function' &&  \$('input[name*=TicketNumber').length;"
+        );
 
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
