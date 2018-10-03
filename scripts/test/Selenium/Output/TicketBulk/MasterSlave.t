@@ -99,7 +99,8 @@ $Selenium->RunTest(
         $Selenium->find_element("//button[\@id='SearchFormSubmit'][\@value='Run search']")->VerifiedClick();
 
         # Select first test created ticket.
-        $Selenium->find_element("//input[\@value='$TicketIDs[0]']")->click();
+        $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[0]]').click();");
+        sleep 1;
         $Selenium->WaitFor(
             JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[0]]:checked').length"
         );
@@ -127,17 +128,16 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
 
         # Wait until popup is completely loaded.
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
-        );
+        $Selenium->VerifiedRefresh();
 
         # Select second and third test created ticket
-        $Selenium->find_element("//input[\@value='$TicketIDs[1]']")->click();
+        $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[1]]').click();");
+        sleep 1;
         $Selenium->WaitFor(
             JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[1]]:checked').length"
         );
-        $Selenium->find_element("//input[\@value='$TicketIDs[2]']")->click();
+        $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[2]]').click();");
+        sleep 1;
         $Selenium->WaitFor(
             JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[2]]:checked').length"
         );
