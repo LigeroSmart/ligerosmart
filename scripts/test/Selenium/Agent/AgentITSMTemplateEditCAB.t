@@ -12,25 +12,23 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper         = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ChangeObject   = $Kernel::OM->Get('Kernel::System::ITSMChange');
+        my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
+        my $UserObject     = $Kernel::OM->Get('Kernel::System::User');
 
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -44,10 +42,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get template object
-        my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
-
-        # create simple change template
+        # Create simple change template.
         my $TemplateNameRandom = 'CAB Template ' . $Helper->GetRandomID();
         my $ChangeContent      = $TemplateObject->TemplateSerialize(
             Name         => $TemplateNameRandom,
@@ -58,7 +53,7 @@ $Selenium->RunTest(
             UserID       => 1,
         );
 
-        # create test template from test change
+        # Create test template from test change.
         my $TemplateID = $TemplateObject->TemplateAdd(
             Name         => $TemplateNameRandom,
             TemplateType => 'CAB',
@@ -73,23 +68,20 @@ $Selenium->RunTest(
             "Change Template ID $TemplateID is created",
         );
 
-        # create test CAB user
+        # Create test CAB user.
         my $TestUserCAB = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         );
 
-        # get user object
-        my $UserObject = $Kernel::OM->Get('Kernel::System::User');
-
-        # get test CAB user ID
+        # Get test CAB user ID.
         my $TestUserCABID = $UserObject->UserLookup(
             UserLogin => $TestUserCAB,
         );
 
-        # create test CAB customer user
+        # Create test CAB customer user.
         my $TestCustomerCAB = $Helper->TestCustomerUserCreate();
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         ) || die "Did not get test user";
@@ -100,52 +92,56 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get test user ID
+        # Get test user ID.
         my $TestUserID = $UserObject->UserLookup(
             UserLogin => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMTemplateOverview screen
+        # Navigate to AgentITSMTemplateOverview screen.
         $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Down;Filter=CAB"
         );
 
-        # click on 'Edit Content' for test created CAB template and switch window
+        # Click on 'Edit Content' for test created CAB template and switch window
         $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEditCAB;TemplateID=$TemplateID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#NewCABMember").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#NewCABMember").length;' );
+        sleep 2;
 
-        # add test created CAB user to test CAB template
+        # Add test created CAB user to test CAB template.
         my $AutoCompleteStringCABUser
             = "\"$TestUserCAB $TestUserCAB\" <$TestUserCAB\@localunittest.com> ($TestUserCABID)";
-        $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestUserCAB') ");
-        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringCABUser']")->click();
-        $Selenium->execute_script("\$('#BtnAddCABMember').click();");
-
-        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents$TestUserCABID').length" );
-
-        # add test created CAB customer to test CAB template
-        my $AutoCompleteStringCABCustomer
-            = "\"$TestCustomerCAB $TestCustomerCAB\" <$TestCustomerCAB\@localunittest.com> ($TestCustomerCAB)";
-        $Selenium->execute_script("\$('#NewCABMember').autocomplete('search', '$TestCustomerCAB') ");
-        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringCABCustomer']")->click();
+        $Selenium->find_element( "#NewCABMember", 'css' )->send_keys($TestUserCAB);
+        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($AutoCompleteStringCABUser)').click();");
         $Selenium->execute_script("\$('#BtnAddCABMember').click();");
 
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('#CABCustomers$TestCustomerCAB').length"
+            JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents$TestUserCABID').length;"
         );
 
-        # save edited CAB template and switch window
+        # Add test created CAB customer to test CAB template.
+        my $AutoCompleteStringCABCustomer
+            = "\"$TestCustomerCAB $TestCustomerCAB\" <$TestCustomerCAB\@localunittest.com> ($TestCustomerCAB)";
+        $Selenium->find_element( "#NewCABMember", 'css' )->send_keys($TestCustomerCAB);
+        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($AutoCompleteStringCABCustomer)').click();");
+        $Selenium->execute_script("\$('#BtnAddCABMember').click();");
+
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('#CABCustomers$TestCustomerCAB').length;"
+        );
+
+        sleep 1;
+
+        # Save edited CAB template and switch window.
         $Selenium->find_element("//button[\@type='submit'][\@name='Submit']")->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
@@ -153,10 +149,10 @@ $Selenium->RunTest(
 
         sleep(1);
 
-        # navigate to created test change
+        # Navigate to created test change.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
-        # click on 'Involed Persons' and switch window
+        # Click on 'Involed Persons' and switch window.
         $Selenium->find_element("//a[contains(\@href, \'AgentITSMChangeInvolvedPersons;ChangeID=$ChangeID' )]")
             ->click();
 
@@ -164,23 +160,24 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length;' );
+        sleep 2;
 
-        # input change manager
+        # Input change manager.
         my $AutoCompleteStringManager
             = "\"$TestUserLogin $TestUserLogin\" <$TestUserLogin\@localunittest.com> ($TestUserID)";
-        $Selenium->execute_script("\$('#ChangeManager').autocomplete('search', '$TestUserLogin') ");
-        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length' );
-        $Selenium->find_element("//*[text()='$AutoCompleteStringManager']")->click();
+        $Selenium->find_element( "#ChangeManager", 'css' )->send_keys($TestUserLogin);
+        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($AutoCompleteStringManager)').click();");
 
-        # test edited CAB template
+        # Test edited CAB template.
         $Selenium->execute_script(
             "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABTemplateButton']")->click();
 
-        # verify that both user and customer are loaded from edited test CAB template
+        # Verify that both user and customer are loaded from edited test CAB template.
         $Self->True(
             index( $Selenium->get_page_source(), "$TestUserCAB" ) > -1,
             "CAB user loaded from edited template - success",
@@ -190,7 +187,7 @@ $Selenium->RunTest(
             "CAB customer user loaded from edited template - success",
         );
 
-        # delete test template
+        # Delete test template.
         my $Success = $TemplateObject->TemplateDelete(
             TemplateID => $TemplateID,
             UserID     => 1,
@@ -200,7 +197,7 @@ $Selenium->RunTest(
             "$TemplateNameRandom edit is deleted",
         );
 
-        # delete test created change
+        # Delete test created change.
         $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -210,7 +207,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
