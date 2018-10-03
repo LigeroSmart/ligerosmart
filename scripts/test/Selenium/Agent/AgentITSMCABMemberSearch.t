@@ -111,7 +111,6 @@ $Selenium->RunTest(
         $Selenium->find_element( "#NewCABMember", 'css' )->send_keys($TestCustomerCAB);
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length;' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($AutoCompleteStringCustomer)').click();");
-
         $Selenium->find_element("//button[\@type='submit'][\@name='AddCABMemberButton']")->click();
 
         # Search if data is in the table.
