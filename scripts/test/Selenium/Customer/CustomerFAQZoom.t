@@ -94,8 +94,7 @@ $Selenium->RunTest(
 
             # Switch to FAQ symptom iframe and verify its values.
             $Selenium->SwitchToFrame(
-                FrameSelector => '#' . $Test->{Iframe},
-                WaitForLoad   => 0,
+                FrameSelector => "#$Test->{Iframe}",
             );
 
             # Wait to switch on iframe.
@@ -105,7 +104,7 @@ $Selenium->RunTest(
                 index( $Selenium->get_page_source(), $Test->{FAQData} ) > -1,
                 "$Test->{FAQData} is found",
             );
-            $Selenium->switch_to_window( $Handles->[0] );
+            $Selenium->switch_to_frame();
         }
 
         $Self->True(
