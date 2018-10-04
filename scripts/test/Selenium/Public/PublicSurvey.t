@@ -354,6 +354,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".SeeDetails").length' );
 
         # Click to see details of stats.
+        $Selenium->VerifiedRefresh();
         $Selenium->find_element( ".SeeDetails", 'css' )->click();
         $Selenium->WaitFor( JavaScript => "return \$('.TableLike').length" );
 
