@@ -121,6 +121,7 @@ $Selenium->RunTest(
                 JavaScript =>
                     "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID\"]').length"
             );
+            sleep 2;
 
             # Click on 'History' and switch window.
             $Selenium->find_element(
@@ -148,7 +149,7 @@ $Selenium->RunTest(
             $Selenium->WaitFor( WindowCount => 1 );
             $Selenium->switch_to_window( $Handles->[0] );
 
-            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length;' );
         }
 
         # Delete test created work order.
