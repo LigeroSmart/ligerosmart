@@ -119,7 +119,8 @@ $Selenium->RunTest(
         );
 
         # click on 'Link' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=ITSMChange' )]")->click();
+        $Selenium->VerifiedRefresh();
+        $Selenium->execute_script('$("a[href*=\'Action=AgentLinkObject;SourceObject=ITSMChange\']").click();');
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
@@ -130,22 +131,23 @@ $Selenium->RunTest(
 
         sleep(2);
 
-        # delete link relation
-        $Selenium->find_element("//a[\@href='#ManageLinks']")->click();
-        $Selenium->find_element("//input[\@id='LinkDeleteIdentifier']")->click();
-        $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
+        # Delete link relation.
+        $Selenium->execute_script('$("a[href*=\'Subaction=LinkDelete\']").click();');
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#LinkDeleteIdentifier').length;" );
+        $Selenium->execute_script('$("#LinkDeleteIdentifier").click();');
+        sleep 1;
+        $Selenium->execute_script('$("button[title=\'Delete links\']").click();');
+        sleep 2;
 
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;Subaction=Close' )]")->click();
-
+        $Selenium->close();
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
-
-        # verify that link has been removed
+        # Verify that link has been removed.
+        $Selenium->VerifiedRefresh();
         $Self->True(
             index( $Selenium->get_page_source(), $TicketNumber ) == -1,
-            "Test ticket number $TicketNumber is found",
+            "Test ticket number $TicketNumber is not found",
         );
 
         # delete test created change
