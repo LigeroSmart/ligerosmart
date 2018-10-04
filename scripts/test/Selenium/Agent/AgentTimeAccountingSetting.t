@@ -126,6 +126,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor(
             JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
         );
+        $Selenium->WaitFor( JavaScript => "return \$('#Description').length" );
 
         # Check edit user page.
         for my $EditUserPageID (
