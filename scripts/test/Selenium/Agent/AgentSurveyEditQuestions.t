@@ -153,8 +153,13 @@ $Selenium->RunTest(
             $Selenium->WaitFor( AlertPresent => 1 );
             $Selenium->accept_alert();
 
+            $Selenium->WaitFor(
+                JavaScript =>
+                    "return typeof(\$) === 'function' && !\$('.DataTable tr:contains(\"$Questions->{Name}\")').length;"
+            );
+
             $Self->True(
-                index( $Selenium->get_page_source(), $Questions->{Name} ) == -1,
+                $Selenium->execute_script("return !\$('.DataTable tr:contains(\"$Questions->{Name}\")').length;"),
                 "$Questions->{Name} is deleted",
             );
 
