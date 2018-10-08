@@ -73,10 +73,13 @@ $Selenium->RunTest(
             ->VerifiedClick();
 
         # Check AgentITSMChangeHistoryZoom values.
-        $Self->True(
-            index( $Selenium->get_page_source(), "Detailed history information of ChangeUpdate" ) > -1,
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        $Self->Is(
+            $Selenium->execute_script("return \$('.Content h2').text()"),
+            'Detailed history information of ChangeUpdate',
             "Detailed history information of ChangeUpdate is found",
         );
+
         $Self->True(
             index( $Selenium->get_page_source(), $ChangeTitleRandom ) > -1,
             "$ChangeTitleRandom is found",
