@@ -155,6 +155,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
 
         # Click on 'Edit General Info' again and switch window.
+        $Selenium->VerifiedRefresh();
         $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
