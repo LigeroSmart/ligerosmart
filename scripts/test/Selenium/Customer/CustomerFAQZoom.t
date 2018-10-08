@@ -87,8 +87,6 @@ $Selenium->RunTest(
             },
         );
 
-        my $Handles = $Selenium->get_window_handles();
-
         # Check test created FAQ values.
         for my $Test (@Tests) {
 
