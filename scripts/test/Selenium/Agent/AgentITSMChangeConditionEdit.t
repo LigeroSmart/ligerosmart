@@ -68,7 +68,9 @@ $Selenium->RunTest(
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $("button[name=\'AddCondition\']").length' );
+            JavaScript => 'return typeof($) === "function" && $("button[name=\'AddCondition\']").length'
+        );
+        sleep 1;
 
         # Click 'Add new condition'.
         $Selenium->find_element("//button[\@name='AddCondition'][\@type='submit']")->VerifiedClick();
