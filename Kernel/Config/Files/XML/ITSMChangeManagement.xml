@@ -3744,26 +3744,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangeOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="1"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="1"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -3924,26 +3928,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangePSAOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">0</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">0</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="0"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="0"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="1"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4005,26 +4013,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="1"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="1"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4104,26 +4116,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangeManagerOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">1</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="1"></Item>
+                <Item Key="ChangeManager" SelectedID="1"></Item>
+                <Item Key="WorkOrderCount" SelectedID="1"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4182,26 +4198,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangeMyCABOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="1"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="1"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4272,26 +4292,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangeMyChangesOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="1"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="1"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4337,32 +4361,36 @@
         <Navigation>Frontend::Agent::View::ITSMChangeMyWorkOrdersOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">0</Item>
-                <Item Key="ChangeNumber">0</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">0</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">0</Item>
-                <Item Key="ChangeState">0</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">0</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="WorkOrderStateSignal">1</Item>
-                <Item Key="WorkOrderNumber">1</Item>
-                <Item Key="WorkOrderTitle">1</Item>
-                <Item Key="WorkOrderAgent">1</Item>
-                <Item Key="WorkOrderState">1</Item>
-                <Item Key="WorkOrderType">0</Item>
-                <Item Key="DynamicField_WorkOrderFieldName1">0</Item>
-                <Item Key="DynamicField_WorkOrderFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="0"></Item>
+                <Item Key="ChangeNumber" SelectedID="0"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="0"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="0"></Item>
+                <Item Key="ChangeState" SelectedID="0"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="0"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="WorkOrderStateSignal" SelectedID="1"></Item>
+                <Item Key="WorkOrderNumber" SelectedID="1"></Item>
+                <Item Key="WorkOrderTitle" SelectedID="1"></Item>
+                <Item Key="WorkOrderAgent" SelectedID="1"></Item>
+                <Item Key="WorkOrderState" SelectedID="1"></Item>
+                <Item Key="WorkOrderType" SelectedID="0"></Item>
+                <Item Key="DynamicField_WorkOrderFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_WorkOrderFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4421,32 +4449,36 @@
         <Navigation>Frontend::Agent::View::ITSMChangePIROverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">0</Item>
-                <Item Key="ChangeNumber">0</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">0</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">0</Item>
-                <Item Key="ChangeState">0</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">0</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="WorkOrderStateSignal">1</Item>
-                <Item Key="WorkOrderNumber">1</Item>
-                <Item Key="WorkOrderTitle">1</Item>
-                <Item Key="WorkOrderAgent">1</Item>
-                <Item Key="WorkOrderState">1</Item>
-                <Item Key="WorkOrderType">0</Item>
-                <Item Key="DynamicField_WorkOrderFieldName1">0</Item>
-                <Item Key="DynamicField_WorkOrderFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="0"></Item>
+                <Item Key="ChangeNumber" SelectedID="0"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="0"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="0"></Item>
+                <Item Key="ChangeState" SelectedID="0"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="0"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="WorkOrderStateSignal" SelectedID="1"></Item>
+                <Item Key="WorkOrderNumber" SelectedID="1"></Item>
+                <Item Key="WorkOrderTitle" SelectedID="1"></Item>
+                <Item Key="WorkOrderAgent" SelectedID="1"></Item>
+                <Item Key="WorkOrderState" SelectedID="1"></Item>
+                <Item Key="WorkOrderType" SelectedID="0"></Item>
+                <Item Key="DynamicField_WorkOrderFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_WorkOrderFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4564,26 +4596,30 @@
         <Navigation>Frontend::Agent::View::ITSMChangeSearch</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">1</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">1</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">1</Item>
-                <Item Key="Services">0</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="ChangeTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="1"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="1"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="1"></Item>
+                <Item Key="Services" SelectedID="0"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1"></Item>
+                <Item Key="PlannedEndTime" SelectedID="1"></Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4765,16 +4801,20 @@
         <Navigation>Frontend::Agent::View::ITSMChangeTemplateOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="Name">1</Item>
-                <Item Key="Comment">1</Item>
-                <Item Key="Type">1</Item>
-                <Item Key="Valid">1</Item>
-                <Item Key="EditContent">1</Item>
-                <Item Key="Delete">1</Item>
-                <Item Key="CreateBy">1</Item>
-                <Item Key="CreateTime">1</Item>
-                <Item Key="ChangeBy">0</Item>
-                <Item Key="ChangeTime">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="Name" SelectedID="1"></Item>
+                <Item Key="Comment" SelectedID="1"></Item>
+                <Item Key="Type" SelectedID="1"></Item>
+                <Item Key="Valid" SelectedID="1"></Item>
+                <Item Key="EditContent" SelectedID="1"></Item>
+                <Item Key="Delete" SelectedID="1"></Item>
+                <Item Key="CreateBy" SelectedID="1"></Item>
+                <Item Key="CreateTime" SelectedID="1"></Item>
+                <Item Key="ChangeBy" SelectedID="0"></Item>
+                <Item Key="ChangeTime" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
@@ -4994,25 +5034,29 @@
         <Navigation>Frontend::Customer::View::ITSMChangeScheduleOverview</Navigation>
         <Value>
             <Hash>
-                <Item Key="ChangeStateSignal">1</Item>
-                <Item Key="ChangeNumber">1</Item>
-                <Item Key="ChangeTitle">1</Item>
-                <Item Key="ChangeBuilder">0</Item>
-                <Item Key="ChangeManager">0</Item>
-                <Item Key="WorkOrderCount">0</Item>
-                <Item Key="ChangeState">1</Item>
-                <Item Key="Category">0</Item>
-                <Item Key="Impact">0</Item>
-                <Item Key="Priority">0</Item>
-                <Item Key="Services">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">1</Item>
-                <Item Key="PlannedEndTime">1</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
-                <Item Key="CreateTime">0</Item>
-                <Item Key="DynamicField_ChangeFieldName1">0</Item>
-                <Item Key="DynamicField_ChangeFieldName2">0</Item>
+                <DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Enabled</Item>
+                </DefaultItem>
+                <Item Key="ChangeStateSignal" SelectedID="1"></Item>
+                <Item Key="ChangeNumber" SelectedID="1"></Item>
+                <Item Key="ChangeTitle" SelectedID="1"></Item>
+                <Item Key="ChangeBuilder" SelectedID="0"></Item>
+                <Item Key="ChangeManager" SelectedID="0"></Item>
+                <Item Key="WorkOrderCount" SelectedID="0"></Item>
+                <Item Key="ChangeState" SelectedID="1"></Item>
+                <Item Key="Category" SelectedID="0"></Item>
+                <Item Key="Impact" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="0"></Item>
+                <Item Key="Services" SelectedID="1"></Item>
+                <Item Key="RequestedTime" SelectedID="0"></Item>
+                <Item Key="PlannedStartTime" SelectedID="1">1</Item>
+                <Item Key="PlannedEndTime" SelectedID="1">1</Item>
+                <Item Key="ActualStartTime" SelectedID="0"></Item>
+                <Item Key="ActualEndTime" SelectedID="0"></Item>
+                <Item Key="CreateTime" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName1" SelectedID="0"></Item>
+                <Item Key="DynamicField_ChangeFieldName2" SelectedID="0"></Item>
             </Hash>
         </Value>
     </Setting>
