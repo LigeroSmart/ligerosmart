@@ -12,25 +12,22 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
+        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -44,10 +41,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get ticket object
-        my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
-        # create test ticket
+        # Create test ticket.
         my $TicketNumber = $TicketObject->TicketCreateNumber();
         my $TicketID     = $TicketObject->TicketCreate(
             TN           => $TicketNumber,
@@ -66,7 +60,7 @@ $Selenium->RunTest(
             "Ticket ID $TicketID is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users', 'itsm-change', 'itsm-change-builder', 'itsm-change-manager' ]
         ) || die "Did not get test user";
@@ -77,32 +71,34 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMChangeZoom of created test change
+        # Navigate to AgentITSMChangeZoom of created test change.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
-        # click on 'Link' and switch screens
+        # Click on 'Link' and switch screens.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=ITSMChange' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length;' );
 
-        # select test created ticket to link with test created change
+        # Select test created ticket to link with test created change.
         $Selenium->find_element("//input[\@name='SEARCH::TicketNumber']")->send_keys($TicketNumber);
 
         sleep(2);
 
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->click();
-        $Selenium->WaitFor( JavaScript => "return \$('input#LinkTargetKeys').length" );
+        $Selenium->WaitFor( JavaScript => "return \$('#LinkTargetKeys').length;" );
+        sleep 1;
 
-        $Selenium->find_element("//input[\@id='LinkTargetKeys']")->click();
-        $Selenium->find_element("//button[\@id='AddLinks'][\@type='submit']")->VerifiedClick();
+        $Selenium->find_element( "#LinkTargetKeys", 'css' )->click();
+        sleep 1;
+        $Selenium->find_element( "#AddLinks", 'css' )->VerifiedClick();
+        sleep 1;
         $Selenium->find_element( "#LinkAddCloseLink", 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
@@ -110,15 +106,17 @@ $Selenium->RunTest(
 
         sleep(2);
 
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length;' );
 
-        # verify test change is linked with test ticket
+        # Verify test change is linked with test ticket.
         $Self->True(
-            index( $Selenium->get_page_source(), $TicketNumber ) > -1,
-            "Test ticket number $TicketNumber is found",
+            $Selenium->execute_script(
+                "return \$('#Ticket tbody a[href*=\"Action=AgentTicketZoom;TicketID=$TicketID\"]').length;"
+            ),
+            "TicketID $TicketID is found",
         );
 
-        # click on 'Link' and switch screens
+        # Click on 'Link' and switch screens.
         $Selenium->VerifiedRefresh();
         $Selenium->execute_script('$("a[href*=\'Action=AgentLinkObject;SourceObject=ITSMChange\']").click();');
 
@@ -126,14 +124,15 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length' );
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length;' );
 
         sleep(2);
 
         # Delete link relation.
         $Selenium->execute_script('$("a[href*=\'Subaction=LinkDelete\']").click();');
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#LinkDeleteIdentifier').length;" );
+        sleep 1;
         $Selenium->execute_script('$("#LinkDeleteIdentifier").click();');
         sleep 1;
         $Selenium->execute_script('$("button[title=\'Delete links\']").click();');
@@ -146,11 +145,13 @@ $Selenium->RunTest(
         # Verify that link has been removed.
         $Selenium->VerifiedRefresh();
         $Self->True(
-            index( $Selenium->get_page_source(), $TicketNumber ) == -1,
-            "Test ticket number $TicketNumber is not found",
+            $Selenium->execute_script(
+                "return !\$('#Ticket tbody a[href*=\"Action=AgentTicketZoom;TicketID=$TicketID\"]').length;"
+            ),
+            "TicketID $TicketID is not found",
         );
 
-        # delete test created change
+        # Delete test created change.
         my $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -160,7 +161,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # delete test created ticket
+        # Delete test created ticket.
         $Success = $TicketObject->TicketDelete(
             TicketID => $TicketID,
             UserID   => 1,
@@ -170,7 +171,7 @@ $Selenium->RunTest(
             "Ticket ID $TicketID is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
