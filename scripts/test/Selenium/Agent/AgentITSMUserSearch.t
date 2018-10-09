@@ -71,12 +71,13 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length;' );
+        sleep 2;
 
         # Input change manager.
         $Selenium->find_element( "#ChangeManager", 'css' )->send_keys($TestUserLogin);
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click()");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click();");
 
         # Submit and switch window.
         $Selenium->find_element("//button[\@type='submit'][\@value='Submit']")->click();
@@ -94,7 +95,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
         # Check manager change.
         my $ExpectedManagerMessage = "ChangeManager: (new=$TestUserLogin";
