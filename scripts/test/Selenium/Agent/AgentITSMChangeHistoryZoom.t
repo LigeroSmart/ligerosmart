@@ -66,16 +66,17 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
+        sleep 2;
 
         # Click on history show details to check AgentITSMChangeHistoryZoom screen.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistoryZoom;HistoryEntryID=' )]")
             ->VerifiedClick();
 
         # Check AgentITSMChangeHistoryZoom values.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
         $Self->Is(
-            $Selenium->execute_script("return \$('.Content h2').text()"),
+            $Selenium->execute_script("return \$('.Content h2').text().trim();"),
             'Detailed history information of ChangeUpdate',
             "Detailed history information of ChangeUpdate is found",
         );
