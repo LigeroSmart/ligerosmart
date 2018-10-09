@@ -105,7 +105,8 @@ $Selenium->RunTest(
 
         # Add new expression
         #   in change object for test change, look for priority value of '2 low'.
-        $Selenium->find_element("//button[\@name='AddExpressionButton'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@name='AddExpressionButton'][\@type='submit']")->VerifiedClick();
+        sleep 1;
         $Selenium->find_element( "#ExpressionID-NEW-ObjectID option[value='1']", 'css' )->click();
 
         # Wait for ajax response to fill next dropdown list with more than 1 value.
