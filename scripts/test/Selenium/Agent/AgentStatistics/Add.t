@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8a7022f5157475c7d8a5f4dd475a2af413efc8ea - scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: otrs - e4f4133977ea862c83334335fe4262e14473f100 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -207,7 +207,9 @@ $Selenium->RunTest(
             $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
             # Check X-axis configuration dialog.
-            $Selenium->find_element( ".EditXAxis", 'css' )->click();
+            $Selenium->VerifiedRefresh();
+            $Selenium->execute_script('$(".EditXAxis").click();');
+            sleep 2;
             $Selenium->WaitFor(
                 JavaScript =>
                     'return typeof($) === "function" && $(".Dialog.Modal").length && $("#DialogButton1").length;'
@@ -258,7 +260,9 @@ $Selenium->RunTest(
             }
 
             # Check Y-axis configuration dialog.
-            $Selenium->find_element( ".EditYAxis", 'css' )->click();
+            $Selenium->VerifiedRefresh();
+            $Selenium->execute_script('$(".EditYAxis").click();');
+            sleep 2;
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".Dialog.Modal").length;' );
             $Selenium->WaitFor( JavaScript => 'return $("#EditDialog select").length && $("#DialogButton1").length;' );
 
@@ -282,7 +286,8 @@ $Selenium->RunTest(
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".Dialog.Modal").length;' );
 
             # Check Restrictions configuration dialog.
-            $Selenium->find_element( ".EditRestrictions", 'css' )->click();
+            $Selenium->VerifiedRefresh();
+            $Selenium->execute_script('$(".EditRestrictions").click();');
             sleep 2;
             $Selenium->WaitFor(
                 JavaScript =>
