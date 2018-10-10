@@ -77,6 +77,7 @@ $Selenium->RunTest(
 
         # navigate to AgentITSMWorkOrderZoom for test created work order.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
+        sleep 1;
 
         # Click on 'Workorder Agent' and switch window
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderAgent;WorkOrderID=$WorkOrderID')]")
@@ -87,12 +88,13 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#User").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#User").length;' );
+        sleep 1;
 
         # Input work order agent.
         $Selenium->find_element( "#User", 'css' )->send_keys($TestUserLogin);
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click()");
+        $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click();");
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
@@ -110,7 +112,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
         # Verify work order agent change.
         my $HistoryAgentMessage
