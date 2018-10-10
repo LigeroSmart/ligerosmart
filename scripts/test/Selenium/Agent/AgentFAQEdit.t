@@ -100,7 +100,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length;' );
 
         # Verify stored values.
         for my $Stored ( sort keys %{ $Test{Stored} } ) {
@@ -132,8 +132,9 @@ $Selenium->RunTest(
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
             JavaScript =>
-                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=$ItemID\"]').length"
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=$ItemID\"]').length;"
         );
+        sleep 2;
 
         # Click on 'Edit' and switch window.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->click();
@@ -143,7 +144,7 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length;' );
 
         # Verify edited values.
         for my $Edited ( sort keys %{ $Test{Edited} } ) {
