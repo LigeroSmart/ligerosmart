@@ -124,9 +124,10 @@ $Selenium->RunTest(
         );
 
         $Selenium->WaitFor(
-            JavaScript => 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;'
         );
-        $Selenium->WaitFor( JavaScript => "return \$('#Description').length" );
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#Description').length;" );
 
         # Check edit user page.
         for my $EditUserPageID (
@@ -178,13 +179,13 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Description", 'css' )->send_keys($UserDescription);
 
         $Selenium->find_element( "#ShowOvertime", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => "return \$('#ShowOvertime:checked').length" );
+        $Selenium->WaitFor( JavaScript => "return \$('#ShowOvertime:checked').length;" );
 
         $Selenium->find_element( "#CreateProject", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => "return \$('#CreateProject:checked').length" );
+        $Selenium->WaitFor( JavaScript => "return \$('#CreateProject:checked').length;" );
 
         $Selenium->find_element( "#AllowSkip", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => "return \$('#AllowSkip:checked').length" );
+        $Selenium->WaitFor( JavaScript => "return \$('#AllowSkip:checked').length;" );
 
         $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
