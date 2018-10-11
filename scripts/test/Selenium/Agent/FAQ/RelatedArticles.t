@@ -182,6 +182,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedRefresh();
 
         # Set subject + body text.
+        sleep 1;
         $Selenium->find_element( "#Subject", 'css' )->send_keys($SubjectRandom);
         $Selenium->execute_script("CKEDITOR.instances.RichText.setData('$FAQArticles[1]->{Keyword}');");
 
@@ -275,6 +276,7 @@ $Selenium->RunTest(
 
         # Type in subject keyword to show two FAQ articles in widget hint.
         # One from 'Misc' category and second one from subcategory of 'Misc'.
+        sleep 1;
         $Selenium->find_element( "#Subject", 'css' )->send_keys($Keyword);
         $Selenium->find_element( "#Subject", 'css' )->send_keys("\N{U+E004}");
 
