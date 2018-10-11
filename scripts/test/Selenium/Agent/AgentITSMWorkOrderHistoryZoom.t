@@ -80,8 +80,12 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
-        sleep 2;
+        sleep 1;
+        $Selenium->VerifiedRefresh();
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $("a[href*=\'AgentITSMWorkOrderHistoryZoom;HistoryEntryID\']").length'
+        );
 
         # Click on history show details to check AgentITSMWorkOrderHistoryZoom screen.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderHistoryZoom;HistoryEntryID=' )]")
@@ -92,6 +96,7 @@ $Selenium->RunTest(
             index( $Selenium->get_page_source(), "Detailed history information of WorkOrderUpdate" ) > -1,
             "Detailed history information of WorkOrderUpdate is found",
         );
+
         $Self->True(
             index( $Selenium->get_page_source(), "WorkOrderTitle" ) > -1,
             "WorkOrderTitle is found",

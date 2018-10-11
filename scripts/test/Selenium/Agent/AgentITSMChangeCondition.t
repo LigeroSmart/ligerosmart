@@ -211,6 +211,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor(
             JavaScript => 'return typeof($) === "function" && $("body").length && $("#ImpactID").length;'
         );
+        $Selenium->VerifiedRefresh();
 
         $Selenium->execute_script(
             "\$('#ImpactID').val('$CatalogImpactDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
@@ -220,8 +221,14 @@ $Selenium->RunTest(
             JavaScript => "return \$('#ImpactID').val() == '$CatalogImpactDataRef->{ItemID}';"
         );
 
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#SubmitChangeEdit").length;'
+        );
+
         # Submit and change window.
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->execute_script('$("#SubmitChangeEdit").click();');
+        sleep 2;
+
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
