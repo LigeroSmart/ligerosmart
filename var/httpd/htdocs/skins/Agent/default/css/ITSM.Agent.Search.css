@@ -22,8 +22,4 @@ did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
     z-index: 100000 !important;
 }
 
-.InputField_InputContainer .InputField_Search{
-    min-width: 0px;
-}
-
 }
