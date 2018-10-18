@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 3436fac0ca3215382993b7cf0589910f951a3c24 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -261,28 +261,29 @@ sub Run {
                 UserID   => $Self->{UserID}
             );
 
-            # Set new owner if ticket owner is different then logged user.
-            if ( $Lock && ( $Ticket{OwnerID} != $Self->{UserID} ) ) {
+            if ($Lock) {
 
-                # Remember previous owner, which will be used to restore ticket owner on undo action.
-                $Param{PreviousOwner} = $Ticket{OwnerID};
+                # Set new owner if ticket owner is different then logged user.
+                if ( $Ticket{OwnerID} != $Self->{UserID} ) {
 
-                my $Success = $TicketObject->TicketOwnerSet(
-                    TicketID  => $Self->{TicketID},
-                    UserID    => $Self->{UserID},
-                    NewUserID => $Self->{UserID},
-                );
+                    # Remember previous owner, which will be used to restore ticket owner on undo action.
+                    $Param{PreviousOwner} = $Ticket{OwnerID};
 
-                # Show lock state.
-                if ($Success) {
-                    $LayoutObject->Block(
-                        Name => 'PropertiesLock',
-                        Data => {
-                            %Param,
-                            TicketID => $Self->{TicketID},
-                        },
+                    $TicketObject->TicketOwnerSet(
+                        TicketID  => $Self->{TicketID},
+                        UserID    => $Self->{UserID},
+                        NewUserID => $Self->{UserID},
                     );
                 }
+
+                # Show lock state.
+                $LayoutObject->Block(
+                    Name => 'PropertiesLock',
+                    Data => {
+                        %Param,
+                        TicketID => $Self->{TicketID},
+                    },
+                );
             }
         }
         else {
