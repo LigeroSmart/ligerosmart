@@ -176,13 +176,14 @@ $Selenium->RunTest(
             JavaScript =>
                 "return typeof(\$) === 'function' && \$('a:contains(\"$TicketNumbers[0]\")').length && \$('a:contains(\"$TicketNumbers[1]\")').length"
         );
+        $Selenium->VerifiedRefresh();
 
         # Check for test created tickets on screen.
         for my $TicketNumber (@TicketNumbers) {
             $Self->True(
                 $Selenium->execute_script("return \$('a:contains(\"$TicketNumber\")').length"),
                 "Test ticket number $TicketNumber - found",
-            );
+            ) || die;
         }
 
         # Delete created test tickets.
