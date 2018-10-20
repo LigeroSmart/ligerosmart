@@ -169,14 +169,14 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#$ReviewRequiredID').val('Yes').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element( "#SearchFormSubmit", 'css' )->click();
+        $Selenium->execute_script('$("#SearchFormSubmit").click();');
 
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && !\$('.Dialog.Modal').length" );
         $Selenium->WaitFor(
             JavaScript =>
                 "return typeof(\$) === 'function' && \$('a:contains(\"$TicketNumbers[0]\")').length && \$('a:contains(\"$TicketNumbers[1]\")').length"
         );
-        $Selenium->VerifiedRefresh();
+        sleep 2;
 
         # Check for test created tickets on screen.
         for my $TicketNumber (@TicketNumbers) {
