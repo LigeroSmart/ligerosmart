@@ -510,10 +510,10 @@ sub Run {
             $NewAttachment{$Key} = $Attachment;
         }
 
-        # Get all existing attachments, without inline attachments.
+        # Get all existing attachments.
         my @ExistingAttachments = $FAQObject->AttachmentIndex(
             ItemID     => $GetParam{ItemID},
-            ShowInline => 0,
+            ShowInline => 1,
             UserID     => $Self->{UserID},
         );
 
