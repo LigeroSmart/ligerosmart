@@ -946,11 +946,18 @@ for my $Test (@SendConditionTests) {
         );
     }
     else {
-
-        $Self->False(
-            $Response,
-            "$Test->{Name} RequestSend() - no survey got sent",
-        );
+        if ( $Response eq 'Queue' || $Response eq 'Service' || $Response eq 'Type' ) {
+            $Self->True(
+                $Response,
+                "$Test->{Name} RequestSend() - no survey got sent",
+            );
+        }
+        else {
+            $Self->False(
+                $Response,
+                "$Test->{Name} RequestSend() - no survey got sent",
+            );
+        }
     }
 
     my $Delete = $TicketObject->TicketDelete(

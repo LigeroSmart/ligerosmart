@@ -1,4 +1,6 @@
 #6.0.8 2018-??-??
+ - 2018-10-26 Fixed bug#[14080](https://bugs.otrs.org/show_bug.cgi?id=14080) - Survey request malfunction when ticket is removed.
+
 
 #6.0.7 2018-10-05
  - 2018-09-28 Code cleanup.

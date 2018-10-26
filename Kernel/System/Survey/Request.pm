@@ -225,7 +225,7 @@ sub RequestSend {
             last QUEUE;
         }
 
-        return if !$Found;
+        return 'Queue' if !$Found;
     }
 
     # get config object
@@ -248,7 +248,7 @@ sub RequestSend {
                 last TICKETTYPE;
             }
 
-            return if !$Found;
+            return 'Type' if !$Found;
         }
     }
 
@@ -269,7 +269,7 @@ sub RequestSend {
                 last SERVICE;
             }
 
-            return if !$Found;
+            return 'Service' if !$Found;
         }
     }
 
