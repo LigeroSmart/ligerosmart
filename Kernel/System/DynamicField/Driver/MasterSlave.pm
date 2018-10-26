@@ -635,28 +635,22 @@ sub SearchFieldRender {
                     UserID       => 1,
                 );
 
-                my %Ticket = $TicketObject->TicketGet(
-                    TicketID => $TicketID
-                );
+                my %Ticket;
+                if ($TicketID) {
+                    %Ticket = $TicketObject->TicketGet(
+                        TicketID => $TicketID
+                    );
+                }
 
                 next VALUE if !%Ticket;
 
-                $HistoricalValues->{$ValueKey} = $LanguageObject->Translate(
+                $SelectionData->{$ValueKey} = $LanguageObject->Translate(
                     'Slave of %s%s%s: %s',
                     $TicketHook,
                     $TicketHookDivider,
                     $Ticket{TicketNumber},
                     $Ticket{Title},
                 );
-            }
-        }
-    }
-
-    # add historic values to current values (if they don't exist anymore)
-    if ( IsHashRefWithData($HistoricalValues) ) {
-        for my $Key ( sort keys %{$HistoricalValues} ) {
-            if ( !$SelectionData->{$Key} ) {
-                $SelectionData->{$Key} = $HistoricalValues->{$Key};
             }
         }
     }
