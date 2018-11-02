@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-09-15 05:04+0000\n"
-"PO-Revision-Date: 2018-09-15 05:06+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-09-28 09:08+0000\n"
+"Last-Translator: Fernando Casal <fernando.casal@serviciomovil.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,7 +96,7 @@ msgstr "Define el bloqueo requerido in la pantalla de ticket Maestro-Esclavo en 
 #. SysConfig
 msgid ""
 "Defines if the MasterSlave note is visible for the customer by default."
-msgstr ""
+msgstr "Define si la nota MaestroEsclavo es visible para el cliente por defecto."
 
 #. SysConfig
 msgid ""

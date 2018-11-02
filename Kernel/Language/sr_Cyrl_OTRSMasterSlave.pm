@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Одређује да ли је потребно закључати главни/зависни екран тикета на детаљном приказу тикета у интерфејсу оператера (ако тикет још увек није закључан, тикет ће добити статус закључан и тренутни оператер ће бити аутоматски постављен као власник).';
     $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
-        '';
+        'Дефинише уколико је MasterSlave напомена подразумевано видљива за клијент кориснике.';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Одређује подразумевани наредни статус тикета после додаваља белешке, на главни/зависни екрану детаљног приказа тикета у интерфејсу оператера.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

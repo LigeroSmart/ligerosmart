@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Meghatározza, hogy szükséges-e jegyzárolás egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen (ha a jegy még nincs zárolva, akkor a jegy zárolva lesz, és az aktuális ügyintéző automatikusan annak tulajdonosaként lesz beállítva).';
     $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
-        '';
+        'Meghatározza, hogy a mester-alárendelt jegyzet alapértelmezetten látható legyen az ügyfélnek.';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Meghatározza egy jegy alapértelmezett következő állapotát egy jegyzet hozzáadása után egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =

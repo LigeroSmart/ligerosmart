@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-09-15 05:04+0000\n"
-"PO-Revision-Date: 2018-09-15 05:06+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2018-09-17 07:06+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -92,7 +92,7 @@ msgstr "Одређује да ли је потребно закључати гл
 #. SysConfig
 msgid ""
 "Defines if the MasterSlave note is visible for the customer by default."
-msgstr ""
+msgstr "Дефинише уколико је MasterSlave напомена подразумевано видљива за клијент кориснике."
 
 #. SysConfig
 msgid ""
