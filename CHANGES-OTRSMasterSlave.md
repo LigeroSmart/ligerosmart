@@ -1,4 +1,5 @@
 #6.0.10 2018-??-??
+ - 2018-11-01 Updated framework files to OTRS 6.0.13.
  - 2018-10-26 Fixed bug#[14082](https://bugs.otrs.org/show_bug.cgi?id=14082) - Generic Agent log errors when master ticket is not available.
 
 #6.0.9 2018-09-21
