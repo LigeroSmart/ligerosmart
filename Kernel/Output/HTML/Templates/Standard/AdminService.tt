@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - Kernel/Output/HTML/Templates/Standard/AdminService.tt
+# $origin: otrs - 6500c80e9723051d2c692eba2b51ef3386afddfe - Kernel/Output/HTML/Templates/Standard/AdminService.tt
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -45,7 +45,7 @@
 [% RenderBlockEnd("ActionOverview") %]
 [% RenderBlockStart("ActionAdd") %]
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ServiceEdit;ServiceID=NEW" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square"></i>[% Translate("Add service") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ServiceEdit;ServiceID=NEW" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square"></i>[% Translate("Add Service") | html %]</span></a>
                     </li>
 [% RenderBlockEnd("ActionAdd") %]
                 </ul>
@@ -114,7 +114,7 @@
             [% IF Data.ServiceID == 'NEW' %]
                 <h2>[% Translate("Add Service") | html %]</h2>
             [% ELSE %]
-                <h2>[% Translate("Edit Service") | html %] : [% Data.Name | html %]</h2>
+                <h2>[% Translate("Edit Service") | html %]</h2>
             [% END %]
             </div>
             <div class="Content">
