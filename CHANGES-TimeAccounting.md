@@ -1,4 +1,5 @@
 #6.0.8 2018-??-??
+- 2018-11-05 Updated translations, thanks to all translators.
 
 #6.0.7 2018-10-05
  - 2018-09-28 Code cleanup.

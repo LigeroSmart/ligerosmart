@@ -125,12 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar horas extra';
     $Self->{Translation}->{'User is allowed to create projects'} = 'El usuario tiene permitido crear proyectos';
     $Self->{Translation}->{'Allow project creation'} = 'Permitir creación de proyectos';
-    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
-    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = 'El usuario está autorizado a contabilizar el tiempo ';
+    $Self->{Translation}->{'Allow time accounting skipping'} = 'Permitir saltar la contabilización del tiempo';
     $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
-        '';
+        'Si esta opción está marcada, la contabilización del tiempo se convierte en opcional para el usuario';
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
-        '';
+        'No habrá advertencias acerca de las entradas que faltan y no habrá entradas de aplicación';
     $Self->{Translation}->{'Time Spans'} = 'Lapso de tiempo';
     $Self->{Translation}->{'Period Begin'} = 'Periodo de inicio';
     $Self->{Translation}->{'Period End'} = 'Periodo de finalización';

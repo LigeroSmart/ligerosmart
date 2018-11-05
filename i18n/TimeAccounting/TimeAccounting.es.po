@@ -2,6 +2,7 @@
 # Translators:
 # Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2017
 # Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2017
+# Aritza Mardaras <amardaras@didaktiker.com>, 2018
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
@@ -10,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-07-17 14:02+0000\n"
-"PO-Revision-Date: 2018-07-17 14:03+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2018-09-15 02:37+0000\n"
+"PO-Revision-Date: 2018-09-18 16:54+0000\n"
+"Last-Translator: Aritza Mardaras <amardaras@didaktiker.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -388,22 +389,22 @@ msgstr "Permitir creación de proyectos"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to skip time accounting"
-msgstr ""
+msgstr "El usuario está autorizado a contabilizar el tiempo "
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow time accounting skipping"
-msgstr ""
+msgstr "Permitir saltar la contabilización del tiempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid ""
 "If this option is selected, time accounting is effectively optional for the "
 "user."
-msgstr ""
+msgstr "Si esta opción está marcada, la contabilización del tiempo se convierte en opcional para el usuario"
 
 #. Template: AgentTimeAccountingSetting
 msgid ""
 "There will be no warnings about missing entries and no entry enforcement."
-msgstr ""
+msgstr "No habrá advertencias acerca de las entradas que faltan y no habrá entradas de aplicación"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
@@ -512,10 +513,6 @@ msgid "Incomplete Working Days"
 msgstr "Días Laborales Incompletos"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please insert your working hours!"
-msgstr "¡Por favor inserte sus horas de trabajo!"
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
 msgstr "¡Inserción exitosa!"
 
@@ -622,6 +619,10 @@ msgstr "Estado del período"
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
 msgstr "Ver: ¡Necesita %s!"
+
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "¡Por favor inserte sus horas de trabajo!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
