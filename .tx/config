@@ -1,5 +1,7 @@
-[main]
-host = https://www.transifex.com
+# TRANSIFEX DISABLED
+
+#[main]
+#host = https://www.transifex.com
 
 [OTRS.ImportExport]
 file_filter = i18n/ImportExport/ImportExport.<lang>.po
