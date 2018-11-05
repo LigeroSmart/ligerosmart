@@ -2,14 +2,15 @@
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017
 # Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014-2015,2017
+# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2018
 # Kozo Sakurai <sakurai@io-architect.com>, 2017
 # Norihiro Tanaka <noritnk@kcn.ne.jp>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 16:43+0000\n"
-"PO-Revision-Date: 2018-05-12 00:38+0000\n"
-"Last-Translator: Kozo Sakurai <sakurai@io-architect.com>\n"
+"POT-Creation-Date: 2018-11-05 19:59+0000\n"
+"PO-Revision-Date: 2018-11-05 20:00+0000\n"
+"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -542,6 +543,10 @@ msgid "Delete Language %s"
 msgstr "言語を削除 %s"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "結果"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
 msgstr "最終更新日"
 
@@ -551,11 +556,11 @@ msgstr "FAQ ダイナミック・フィールド"
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "%s  が不足しています。"
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "Can't load LanguageObject!"
-msgstr ""
+msgstr "LanguageObject (言語オブジェクト)が読み込めません"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
@@ -587,7 +592,7 @@ msgstr "FAQ項目変更日時 (期間指定)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Equals"
-msgstr ""
+msgstr "等しい"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than"
@@ -687,7 +692,7 @@ msgstr "%s - 公開 (FAQ全文)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Need rate!"
-msgstr ""
+msgstr "評価してください。"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -967,11 +972,11 @@ msgstr "この記事を削除"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
-msgstr ""
+msgstr "担当者インタフェースの FAQ 追加画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
-msgstr ""
+msgstr "担当者インタフェースの FAQ 編集画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid ""
@@ -985,7 +990,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
-msgstr ""
+msgstr "担当者インタフェースの FAQ 印刷画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid ""
@@ -998,7 +1003,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
-msgstr ""
+msgstr "担当者インタフェースの FAQ 検索画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid ""

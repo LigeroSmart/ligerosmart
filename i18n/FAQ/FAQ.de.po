@@ -18,9 +18,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 16:43+0000\n"
-"PO-Revision-Date: 2018-04-25 12:13+0000\n"
-"Last-Translator: christopher.kuhn <christopher.kuhn@otrs.com>\n"
+"POT-Creation-Date: 2018-11-05 19:59+0000\n"
+"PO-Revision-Date: 2018-11-05 20:00+0000\n"
+"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -553,6 +553,10 @@ msgid "Delete Language %s"
 msgstr "Sprache Löschen %s"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "Ergebnis"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
 msgstr "Letzte Aktualisierung"
 
@@ -833,7 +837,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Definieren Sie Actions, in denen im Verknüpfte-Objekte-Widget ein Einstellungen-Knopf verfügbar sein soll (LinkObject::ViewMode = \"complex\"). Bitte beachten Sie, dass für diese Actions die folgenden JS- und CSS-Dateien registriert sein müssen:  Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js und Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -845,7 +849,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Definieren Sie, welche Spalten im verlinkte FAQ-Widget sichtbar sein sollen (LinkObject::ViewMode = \"complex\"). Hinweis: Nur FAQ-Attribute und dynamische Felder (DynamicField_NameX) sind als Standard-Spalten erlaubt. Mögliche Einstellungen: 0 = inaktiv, 1 = verfügbar, 2 = standardmäßig aktiv."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1148,7 +1152,7 @@ msgstr "Sprachen-Verwaltung."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
+msgstr "Limit für die Suche beim Erzeugen der Schlüsselwort-FAQ-Artikel-Liste."
 
 #. SysConfig
 msgid "Limit."
@@ -1160,7 +1164,7 @@ msgstr "Diese FAQ mit einem anderen Objekt verknüpfen"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
-msgstr ""
+msgstr "Liste der Queue-Namen für welche die zugehörigen Artikel-Feature aktiviert wurden."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
@@ -1276,7 +1280,7 @@ msgstr "Modul zum Generieren des HTML \"OpenSearch\" Profils zur FAQ-Suche in de
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
-msgstr ""
+msgstr "Modul zum Generieren des HTML \"OpenSearch\"-Profils zur FAQ-Suche über das Browser-Suchfeld."
 
 #. SysConfig
 msgid "New FAQ Article."
@@ -1328,7 +1332,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
-msgstr ""
+msgstr "Ausgabe-Limit der zugehörigen FAQ-Artikel."
 
 #. SysConfig
 msgid ""
@@ -1444,7 +1448,7 @@ msgstr "FAQ Pfad anzeigen ja/nein."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Zeige ungültige Items im FAQ-Explorer-Ergebnis der Agenten-Oberfläche."
 
 #. SysConfig
 msgid "Show items of subcategories."

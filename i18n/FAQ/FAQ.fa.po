@@ -3,15 +3,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 16:43+0000\n"
-"PO-Revision-Date: 2018-04-24 16:44+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2018-11-05 19:59+0000\n"
+"PO-Revision-Date: 2018-11-05 20:00+0000\n"
+"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fa\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -536,6 +536,10 @@ msgstr ""
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
 msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "نتیجه"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"

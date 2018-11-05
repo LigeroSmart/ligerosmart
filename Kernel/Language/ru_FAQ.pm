@@ -209,6 +209,7 @@ sub Data {
     $Self->{Translation}->{'Delete Language %s'} = 'Удалить язык %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Result'} = 'Результат';
     $Self->{Translation}->{'Last update'} = 'Последнее обновление';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'Динамические поля для FAQ';
 

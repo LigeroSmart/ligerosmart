@@ -209,6 +209,7 @@ sub Data {
     $Self->{Translation}->{'Delete Language %s'} = 'Futa Lugha';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Result'} = 'Matokeo';
     $Self->{Translation}->{'Last update'} = 'Mabadiliko ya mwisho';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = '';
 

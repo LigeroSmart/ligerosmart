@@ -209,6 +209,7 @@ sub Data {
     $Self->{Translation}->{'Delete Language %s'} = 'Excluir idioma %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Result'} = 'Resultado';
     $Self->{Translation}->{'Last update'} = 'Última atualização';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'Campos dinâmicos da FAQ';
 
@@ -401,7 +402,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Area.'} = 'Área FAQ.';
     $Self->{Translation}->{'FAQ Delete.'} = 'Deletar FAQ.';
     $Self->{Translation}->{'FAQ Edit.'} = 'Editar FAQ.';
-    $Self->{Translation}->{'FAQ History.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = 'Histórico de FAQ.';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'Limite da Visão Geral "Pequeno" do Jornal FAQ';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'Limite da Visão Geral FAQ "Pequeno"';
     $Self->{Translation}->{'FAQ Print.'} = 'imprimir FAQ.';
@@ -463,7 +464,7 @@ sub Data {
         'Módulo para gerar perfil HTML OpenSearch para pesquisas curtas de FAQ na interface pública.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article.'} = '';
+    $Self->{Translation}->{'New FAQ Article.'} = 'Novo Artigo de FAQ.';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Novos artigos FAQ precisam de aprovação antes de ser publicados.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         'Número de artigos FAQ para ser exibido no Gerenciador FAQ da interface do cliente';

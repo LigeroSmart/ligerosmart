@@ -15,9 +15,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-04-24 16:43+0000\n"
-"PO-Revision-Date: 2018-04-24 16:44+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"POT-Creation-Date: 2018-11-05 19:59+0000\n"
+"PO-Revision-Date: 2018-11-05 20:00+0000\n"
+"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -548,6 +548,10 @@ msgstr "Idioma de FAQ adicionado!"
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
 msgstr "Excluir idioma %s"
+
+#. Perl Module: Kernel/Modules/AgentFAQPrint.pm
+msgid "Result"
+msgstr "Resultado"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Last update"
@@ -1081,7 +1085,7 @@ msgstr "Editar FAQ."
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "Histórico de FAQ."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1277,7 +1281,7 @@ msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "Novo Artigo de FAQ."
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."

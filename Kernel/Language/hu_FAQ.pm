@@ -209,6 +209,7 @@ sub Data {
     $Self->{Translation}->{'Delete Language %s'} = '%s nyelv törlése';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Result'} = 'Eredmény';
     $Self->{Translation}->{'Last update'} = 'Utolsó frissítés';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'GyIK dinamikus mezők';
 

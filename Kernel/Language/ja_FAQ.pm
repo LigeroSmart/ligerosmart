@@ -209,12 +209,13 @@ sub Data {
     $Self->{Translation}->{'Delete Language %s'} = '言語を削除 %s';
 
     # Perl Module: Kernel/Modules/AgentFAQPrint.pm
+    $Self->{Translation}->{'Result'} = '結果';
     $Self->{Translation}->{'Last update'} = '最終更新日';
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ ダイナミック・フィールド';
 
     # Perl Module: Kernel/Modules/AgentFAQRichText.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
-    $Self->{Translation}->{'Can\'t load LanguageObject!'} = '';
+    $Self->{Translation}->{'No %s is given!'} = '%s  が不足しています。';
+    $Self->{Translation}->{'Can\'t load LanguageObject!'} = 'LanguageObject (言語オブジェクト)が読み込めません';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
     $Self->{Translation}->{'No Result!'} = '結果がありません。';
@@ -224,7 +225,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ項目作成日時 (期間指定)';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ項目変更日時 (以前/以後)';
     $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'FAQ項目変更日時 (期間指定)';
-    $Self->{Translation}->{'Equals'} = '';
+    $Self->{Translation}->{'Equals'} = '等しい';
     $Self->{Translation}->{'Greater than'} = '超';
     $Self->{Translation}->{'Greater than equals'} = '以上';
     $Self->{Translation}->{'Smaller than'} = '未満';
@@ -269,7 +270,7 @@ sub Data {
     $Self->{Translation}->{'%s - Public (FAQFulltext)'} = '%s - 公開 (FAQ全文)';
 
     # Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
-    $Self->{Translation}->{'Need rate!'} = '';
+    $Self->{Translation}->{'Need rate!'} = '評価してください。';
     $Self->{Translation}->{'This article is empty!'} = 'この記事は空です!';
     $Self->{Translation}->{'Latest created FAQ articles'} = '最後に作成されたFAQ項目';
     $Self->{Translation}->{'Latest updated FAQ articles'} = '最後に更新されたFAQ項目';
@@ -362,21 +363,21 @@ sub Data {
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'FAQのフリーテキストフィールドの定義。';
     $Self->{Translation}->{'Delete this FAQ'} = 'この記事を削除';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの FAQ 追加画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの FAQ 編集画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの FAQ 印刷画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
-        '';
+        '担当者インタフェースの FAQ 検索画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
