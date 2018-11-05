@@ -1,4 +1,6 @@
-#6.0.12 2018-??-??
+#6.0.13 2018-??-??
+
+#6.0.12 2018-11-09
  - 2018-11-05 Updated translations, thanks to all translators.
  - 2018-10-23 Fixed bug#[13871](https://bugs.otrs.org/show_bug.cgi?id=13871) - After deleting image from the FAQ article, it's still stored in the DB.
 
