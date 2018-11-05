@@ -305,7 +305,7 @@ sub Data {
     $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'Change "%s" not found in the database!'} = '';
     $Self->{Translation}->{'Unknown type "%s" encountered!'} = '';
-    $Self->{Translation}->{'Change History'} = '';
+    $Self->{Translation}->{'Change History'} = 'Alterar Histórico';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
     $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = '';
@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen'} = 'Ecran';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Tela Após Criar Ordem de Serviço';
     $Self->{Translation}->{'Search Changes'} = 'Procurar alterações';
     $Self->{Translation}->{'Search Changes.'} = '';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

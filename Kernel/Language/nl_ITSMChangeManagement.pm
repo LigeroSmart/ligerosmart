@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen'} = '';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Search Changes'} = 'Zoek Changes';
     $Self->{Translation}->{'Search Changes.'} = '';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

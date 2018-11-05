@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 13:53+0000\n"
-"PO-Revision-Date: 2018-06-11 14:43+0000\n"
+"POT-Creation-Date: 2018-11-05 12:00+0000\n"
+"PO-Revision-Date: 2018-11-05 12:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Persian (http://www.transifex.com/otrs/OTRS/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -2904,10 +2904,6 @@ msgstr ""
 #. SysConfig
 msgid "Schedule"
 msgstr ""
-
-#. SysConfig
-msgid "Screen"
-msgstr "صفحه نمایش"
 
 #. SysConfig
 msgid "Screen after creating a workorder"

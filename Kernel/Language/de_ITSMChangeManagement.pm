@@ -641,7 +641,7 @@ sub Data {
     $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} =
         'Standardtyp für einen Arbeitsauftrag. Dieser Eintrag muss in der General Catalog Klasse \'ITSM::ChangeManagement::WorkOrder::Type\' existieren.';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Definieren Sie Actions, in denen im Verknüpfte-Objekte-Widget ein Einstellungen-Knopf verfügbar sein soll (LinkObject::ViewMode = "complex"). Bitte beachten Sie, dass für diese Actions die folgenden JS- und CSS-Dateien registriert sein müssen:  Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js und Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Definieren eines Signals für einen Arbeitsauftragsstatus.';
     $Self->{Translation}->{'Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = "complex"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         '';
@@ -982,8 +982,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
-    $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen'} = 'Bildschirm';
+    $Self->{Translation}->{'Schedule'} = 'Zeitplan';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Ansicht nach Workorder-Erstellung';
     $Self->{Translation}->{'Search Changes'} = 'Suche Changes';
     $Self->{Translation}->{'Search Changes.'} = '';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

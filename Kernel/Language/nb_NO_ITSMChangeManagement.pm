@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = 'Lagre Endring som mal.';
     $Self->{Translation}->{'Save workorder as a template.'} = 'Lagre Arbeidsordre som mal.';
     $Self->{Translation}->{'Schedule'} = 'Tidsplan';
-    $Self->{Translation}->{'Screen'} = 'Skjerm';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Search Changes'} = 'Søk i Endringer';
     $Self->{Translation}->{'Search Changes.'} = 'Søk i Endringer.';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

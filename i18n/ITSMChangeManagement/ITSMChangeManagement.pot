@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMChangeManagement\n"
-"POT-Creation-Date: 2018-07-17 10:57+0000\n"
+"POT-Creation-Date: 2018-11-05 12:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2688,10 +2688,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Schedule"
-msgstr ""
-
-#. SysConfig
-msgid "Screen"
 msgstr ""
 
 #. SysConfig

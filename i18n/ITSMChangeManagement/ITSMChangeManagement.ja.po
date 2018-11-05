@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 13:53+0000\n"
-"PO-Revision-Date: 2018-06-11 14:43+0000\n"
+"POT-Creation-Date: 2018-11-05 12:00+0000\n"
+"PO-Revision-Date: 2018-11-05 12:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -728,7 +728,7 @@ msgstr "条件ID %s を削除できませんでした！"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "%s   が不足しています。"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
@@ -2907,10 +2907,6 @@ msgstr ""
 #. SysConfig
 msgid "Schedule"
 msgstr "スケジュール"
-
-#. SysConfig
-msgid "Screen"
-msgstr "画面"
 
 #. SysConfig
 msgid "Screen after creating a workorder"

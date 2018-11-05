@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '保存变更为模板。';
     $Self->{Translation}->{'Save workorder as a template.'} = '保存工作指令为模板。';
     $Self->{Translation}->{'Schedule'} = '计划表';
-    $Self->{Translation}->{'Screen'} = '窗口';
     $Self->{Translation}->{'Screen after creating a workorder'} = '创建工作指令后的窗口';
     $Self->{Translation}->{'Search Changes'} = '搜索变更';
     $Self->{Translation}->{'Search Changes.'} = '搜索变更。';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

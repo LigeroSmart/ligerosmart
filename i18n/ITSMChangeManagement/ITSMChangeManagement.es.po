@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 13:53+0000\n"
-"PO-Revision-Date: 2018-06-11 14:43+0000\n"
+"POT-Creation-Date: 2018-11-05 12:00+0000\n"
+"PO-Revision-Date: 2018-11-05 12:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -1559,15 +1559,15 @@ msgstr "configurada"
 
 #. JS File: ITSM.Agent.ChangeManagement.Condition
 msgid "Do you really want to delete this expression?"
-msgstr ""
+msgstr "¿De verdad quieres eliminar esta expresión?"
 
 #. JS File: ITSM.Agent.ChangeManagement.Condition
 msgid "Do you really want to delete this action?"
-msgstr ""
+msgstr "¿De verdad quieres eliminar esta acción?"
 
 #. JS File: ITSM.Agent.ChangeManagement.Condition
 msgid "Do you really want to delete this condition?"
-msgstr ""
+msgstr "¿De verdad quieres eliminar esta condición?"
 
 #. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
 msgid "Ok"
@@ -2441,7 +2441,7 @@ msgstr "Editar la orden de trabajo."
 msgid ""
 "Enables the minimal change counter size (if \"Date\" was selected as "
 "ITSMChange::NumberGenerator)."
-msgstr ""
+msgstr "Habilita el tamaño mínimo del contador de cambios (Si \"Fecha\" estaba seleccionado como ITSMChange::NumberGenerator)."
 
 #. SysConfig
 msgid "Forward schedule of changes. Overview over approved changes."
@@ -2579,11 +2579,11 @@ msgstr "Enlazar otro objecto a la orden de trabajo."
 
 #. SysConfig
 msgid "List of all change events to be displayed in the GUI."
-msgstr ""
+msgstr "La lista de todos los eventos de cambio se mostrará en el GUI."
 
 #. SysConfig
 msgid "List of all workorder events to be displayed in the GUI."
-msgstr ""
+msgstr "La lista de todas las órdenes de trabajo se mostrará en el GUI."
 
 #. SysConfig
 msgid "Lookup of CAB members for autocompletion."
@@ -2912,10 +2912,6 @@ msgid "Schedule"
 msgstr "Programar"
 
 #. SysConfig
-msgid "Screen"
-msgstr "Pantalla"
-
-#. SysConfig
 msgid "Screen after creating a workorder"
 msgstr "Pantalla posterior a la creación de una orden de trabajo"
 
@@ -2982,7 +2978,7 @@ msgstr "Muestra una casilla de verificación en la pantalla de edición de órde
 msgid ""
 "Shows a link in the menu that allows changing the workorder agent, in the "
 "zoom view of the workorder of the agent interface."
-msgstr ""
+msgstr "Muestra un enlace en el menú que permite cambiar el agente de la orden de trabajo, en la vista ampliada de la orden de trabajo de la interfaz del agente."
 
 #. SysConfig
 msgid ""
@@ -3000,7 +2996,7 @@ msgstr "Muestra un enlace en el menú que permite definir una orden de trabajo c
 msgid ""
 "Shows a link in the menu that allows editing the report of a workorder, in "
 "the zoom view of the workorder of the agent interface."
-msgstr ""
+msgstr "Muestra un enlace en el menú que permite editar el informe de una orden de trabajo, en la vista ampliada de la orden de trabajo de la interfaz del agente. "
 
 #. SysConfig
 msgid ""
@@ -3012,7 +3008,7 @@ msgstr "Muestra un link en el menú para vincular un cambio con otro objeto, en 
 msgid ""
 "Shows a link in the menu that allows linking a workorder with another object"
 " in the zoom view of the workorder of the agent interface."
-msgstr ""
+msgstr "Muestra un enlace en el menú que permite vincular una orden de trabajo con otro objeto en la vista ampliada de la orden del trabajo de la interfaz del agente."
 
 #. SysConfig
 msgid ""
@@ -3108,7 +3104,7 @@ msgstr "Muestra un vínculo en el menú para reajustar un cambio y sus ordenes d
 msgid ""
 "Shows a link in the menu to show the involved persons in a change, in the "
 "zoom view of the change in the agent interface."
-msgstr ""
+msgstr "Muesta un enlace en el menú que muestra a las personas implicadas en el cambio, en la vista ampliada del cambio en la interfaz del agente."
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."

@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = 'Сохранить изменение как шаблон.';
     $Self->{Translation}->{'Save workorder as a template.'} = 'Сохранить задачу как шаблон.';
     $Self->{Translation}->{'Schedule'} = 'Расписание';
-    $Self->{Translation}->{'Screen'} = 'Экран';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Показать этот экран после создания новой задачи';
     $Self->{Translation}->{'Search Changes'} = 'Поиск изменений';
     $Self->{Translation}->{'Search Changes.'} = 'Поиск изменений.';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

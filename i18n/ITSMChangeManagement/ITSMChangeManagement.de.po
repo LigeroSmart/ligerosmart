@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 13:53+0000\n"
-"PO-Revision-Date: 2018-06-11 14:43+0000\n"
+"POT-Creation-Date: 2018-11-05 12:00+0000\n"
+"PO-Revision-Date: 2018-11-05 12:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -1809,7 +1809,7 @@ msgid ""
 "must have registered the following JS and CSS files: "
 "Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
 "Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
+msgstr "Definieren Sie Actions, in denen im Verknüpfte-Objekte-Widget ein Einstellungen-Knopf verfügbar sein soll (LinkObject::ViewMode = \"complex\"). Bitte beachten Sie, dass für diese Actions die folgenden JS- und CSS-Dateien registriert sein müssen:  Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js und Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
@@ -2912,11 +2912,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Schedule"
-msgstr ""
-
-#. SysConfig
-msgid "Screen"
-msgstr "Bildschirm"
+msgstr "Zeitplan"
 
 #. SysConfig
 msgid "Screen after creating a workorder"

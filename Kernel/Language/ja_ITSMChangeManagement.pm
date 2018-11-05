@@ -281,7 +281,7 @@ sub Data {
     $Self->{Translation}->{'Could not delete ConditionID %s!'} = '条件ID %s を削除できませんでした！';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-    $Self->{Translation}->{'No %s is given!'} = '';
+    $Self->{Translation}->{'No %s is given!'} = '%s   が不足しています。';
     $Self->{Translation}->{'Could not create new condition!'} = '新しい条件を作成できませんでした！';
     $Self->{Translation}->{'Could not update ConditionID %s!'} = '条件ID %s を更新できませんでした！';
     $Self->{Translation}->{'Could not update ExpressionID %s!'} = '';
@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = 'スケジュール';
-    $Self->{Translation}->{'Screen'} = '画面';
     $Self->{Translation}->{'Screen after creating a workorder'} = '';
     $Self->{Translation}->{'Search Changes'} = '変更管理項目を検索';
     $Self->{Translation}->{'Search Changes.'} = '変更管理項目を検索します。';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = '';
     $Self->{Translation}->{'Save workorder as a template.'} = '';
     $Self->{Translation}->{'Schedule'} = '';
-    $Self->{Translation}->{'Screen'} = 'สกรีน';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'หน้าจอหลังจากที่สร้างใบสั่งงาน';
     $Self->{Translation}->{'Search Changes'} = 'ค้นหาChange ';
     $Self->{Translation}->{'Search Changes.'} = '';
@@ -1089,6 +1088,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

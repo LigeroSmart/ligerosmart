@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = 'Változás mentése sablonként.';
     $Self->{Translation}->{'Save workorder as a template.'} = 'Munkamegrendelés mentése sablonként.';
     $Self->{Translation}->{'Schedule'} = 'Ütemterv';
-    $Self->{Translation}->{'Screen'} = 'Képernyő';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Egy munkamegrendelés létrehozása utáni képernyő';
     $Self->{Translation}->{'Search Changes'} = 'Változások keresése';
     $Self->{Translation}->{'Search Changes.'} = 'Változások keresése.';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',

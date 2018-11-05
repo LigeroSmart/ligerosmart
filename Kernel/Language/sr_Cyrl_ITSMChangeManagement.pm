@@ -983,7 +983,6 @@ sub Data {
     $Self->{Translation}->{'Save change as a template.'} = 'Сачувај промену као шаблон.';
     $Self->{Translation}->{'Save workorder as a template.'} = 'Сачувај радни налог као шаблон.';
     $Self->{Translation}->{'Schedule'} = 'Распоред';
-    $Self->{Translation}->{'Screen'} = 'Екран';
     $Self->{Translation}->{'Screen after creating a workorder'} = 'Екран после креирања радног налога';
     $Self->{Translation}->{'Search Changes'} = 'Претражи промене';
     $Self->{Translation}->{'Search Changes.'} = 'Претражи промене.';
@@ -1087,6 +1086,7 @@ sub Data {
     'Do you really want to delete this notification?',
     'No',
     'Ok',
+    'Please enter at least one search value or * to find anything.',
     'Settings',
     'Submit',
     'Yes',
