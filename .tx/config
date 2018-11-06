@@ -1,5 +1,7 @@
-[main]
-host = https://www.transifex.com
+# TRANSIFEX DISABLED, SWITCHED TO NEWER VERSION OF OTRS
+
+#[main]
+#host = https://www.transifex.com
 
 [OTRS.SystemMonitoring]
 file_filter = i18n/SystemMonitoring/SystemMonitoring.<lang>.po
