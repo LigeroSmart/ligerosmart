@@ -274,6 +274,12 @@ sub Run {
 
         # set the selected impact
         $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
+
+        # Send config data to JS.
+        $LayoutObject->AddJSData(
+            Key   => $Self->{Action} . 'ShowIncidentState',
+            Value => $Config->{ShowIncidentState},
+        );
     }
 
 # ---

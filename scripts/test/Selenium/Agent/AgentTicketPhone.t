@@ -430,6 +430,30 @@ $Selenium->RunTest(
             'Queue #2 is selected.',
         );
 
+# ---
+# ITSMIncidentProblemManagement
+# ---
+        # Verify Service Incident State is not available when config 'Ticket::Frontend::AgentTicketPhone###ShowIncidentState'
+        #   is disabled. See bug#14150 (https://bugs.otrs.org/show_bug.cgi?id=14150)
+        $Helper->ConfigSettingChange(
+            Key   => 'Ticket::Frontend::AgentTicketPhone###ShowIncidentState',
+            Value => 0,
+        );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
+
+        $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCustomer)').click()");
+
+        $Selenium->WaitFor( JavaScript => "return \$('#ServiceID option[value=\"$ServiceID\"]').length;" );
+        $Selenium->execute_script("\$('#ServiceID').val('$ServiceID').trigger('redraw.InputField').trigger('change');");
+
+        $Self->False(
+            $Selenium->execute_script("return \$('#ServiceIncidentStateContainer').length;"),
+            "Service Incident State is not available when config ShowIncidentState is disabled."
+        );
+# ---
+
         # Delete Queues.
         my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL  => "DELETE FROM queue WHERE id IN (?, ?)",

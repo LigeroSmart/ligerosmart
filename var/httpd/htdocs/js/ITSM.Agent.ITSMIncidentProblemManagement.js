@@ -71,36 +71,41 @@ ITSM.Agent.ITSMIncidentProblemManagement = (function (TargetNS) {
     TargetNS.Init = function() {
 
         // load template for incident state and signal and attach at to the DOM after the service
-        var ServiceIncidentStateHTML = Core.Template.Render('Agent/ITSMIncidentProblemManagement/ServiceIncidentState');
+        var ServiceIncidentStateHTML = Core.Template.Render('Agent/ITSMIncidentProblemManagement/ServiceIncidentState'),
+            ActionShowIncidentState = Core.Config.Get('Action') + 'ShowIncidentState';
 
-        // insert template to page
-        $(ServiceIncidentStateHTML).insertBefore($('label[for=SLAID]'));
+        // Show Service Incident State if config is enabled.
+        if (Core.Config.Get(ActionShowIncidentState)) {
 
-        // update the service incident state and signal when service is changed
-        $('#ServiceID').on('change', function () {
+            // insert template to page
+            $(ServiceIncidentStateHTML).insertBefore($('label[for=SLAID]'));
+
+            // update the service incident state and signal when service is changed
+            $('#ServiceID').on('change', function () {
+
+                // show service incident state and signal for the selected service
+                ITSM.Agent.ITSMIncidentProblemManagement.ShowIncidentState({
+                    TicketID: $('input[type=hidden][name=TicketID]').val(),
+                    ServiceID: $('#ServiceID').val()
+                });
+            });
 
             // show service incident state and signal for the selected service
-            ITSM.Agent.ITSMIncidentProblemManagement.ShowIncidentState({
-                TicketID: $('input[type=hidden][name=TicketID]').val(),
-                ServiceID: $('#ServiceID').val()
-            });
-        });
+            //   (this part here is important if the page is reloaded due to e.g. attachment upload
+            //   or on first load for AgentTicketActionCommon)
+            if ($('#ServiceID').val()) {
+                ITSM.Agent.ITSMIncidentProblemManagement.ShowIncidentState({
+                    TicketID: $('input[type=hidden][name=TicketID]').val(),
+                    ServiceID: $('#ServiceID').val()
+                });
+            }
+        }
 
         // open some links as pop up
         $('a.AsPopup').on('click', function () {
             Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
             return false;
         });
-
-        // show service incident state and signal for the selected service
-        //   (this part here is important if the page is reloaded due to e.g. attachment upload
-        //   or on first load for AgentTicketActionCommon)
-        if ($('#ServiceID').val()) {
-            ITSM.Agent.ITSMIncidentProblemManagement.ShowIncidentState({
-                TicketID: $('input[type=hidden][name=TicketID]').val(),
-                ServiceID: $('#ServiceID').val()
-            });
-        }
     };
 
     Core.Init.RegisterNamespace(TargetNS, 'APP_MODULE');
