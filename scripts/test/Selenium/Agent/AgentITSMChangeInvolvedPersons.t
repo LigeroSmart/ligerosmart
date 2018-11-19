@@ -181,6 +181,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
+        # Refresh screen.
+        $Selenium->VerifiedRefresh();
+
         $Selenium->WaitFor(
             JavaScript =>
                 "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMChangeHistory;ChangeID=$ChangeID\"]').length"
@@ -213,7 +216,7 @@ $Selenium->RunTest(
         );
 
         # Close popup.
-        $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+        $Selenium->close();
         $Selenium->WaitFor( WindowCount => 1 );
 
         # Delete created test change.
