@@ -176,7 +176,7 @@ $Selenium->RunTest(
         );
 
         # Close history window.
-        $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
+        $Selenium->close();
 
         # Switch window back to agent ticket zoom view of the first created test ticket.
         $Selenium->WaitFor( WindowCount => 1 );
