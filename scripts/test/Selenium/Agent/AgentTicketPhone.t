@@ -452,8 +452,8 @@ $Selenium->RunTest(
             $Selenium->execute_script("return \$('#ServiceIncidentStateContainer').length;"),
             "Service Incident State is not available when config ShowIncidentState is disabled."
         );
-# ---
 
+# ---
         # Delete Queues.
         my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL  => "DELETE FROM queue WHERE id IN (?, ?)",
