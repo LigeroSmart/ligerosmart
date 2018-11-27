@@ -60,6 +60,7 @@ $Selenium->RunTest(
         );
 
         # Create test FAQ.
+        my @ItemIDs;
         my $ItemID = $FAQObject->FAQAdd(
             %{ $Test{Stored} },
             UserID => 1,
@@ -69,6 +70,8 @@ $Selenium->RunTest(
             $ItemID,
             "FAQ is created - ID $ItemID",
         );
+
+        push @ItemIDs, $ItemID;
 
         # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
@@ -115,14 +118,23 @@ $Selenium->RunTest(
 
         # Edit test FAQ.
         $Selenium->find_element( "#Title", 'css' )->send_keys(' Edit');
-        $Selenium->execute_script("\$('#StateID').val('2').trigger('redraw.InputField').trigger('change');");
-        $Selenium->execute_script("\$('#LanguageID').val('2').trigger('redraw.InputField').trigger('change');");
+        $Selenium->InputFieldValueSet(
+            Element => '#StateID',
+            Value   => 2,
+        );
+        $Selenium->InputFieldValueSet(
+            Element => '#LanguageID',
+            Value   => 2,
+        );
         $Selenium->find_element( "#Keywords", 'css' )->send_keys(' Edit');
         $Selenium->find_element( "#Field1",   'css' )->send_keys(' Edit');
         $Selenium->find_element( "#Field2",   'css' )->send_keys(' Edit');
         $Selenium->find_element( "#Field3",   'css' )->send_keys(' Edit');
         $Selenium->find_element( "#Field6",   'css' )->send_keys(' Edit');
-        $Selenium->execute_script("\$('#ValidID').val('2').trigger('redraw.InputField').trigger('change');");
+        $Selenium->InputFieldValueSet(
+            Element => '#ValidID',
+            Value   => 2,
+        );
 
         # Submit and switch back window.
         $Selenium->find_element( "#FAQSubmit", 'css' )->click();
@@ -160,15 +172,166 @@ $Selenium->RunTest(
         # Close 'Edit' pop-up window.
         $Selenium->close();
 
-        # Delete test created FAQ.
-        my $Success = $FAQObject->FAQDelete(
-            ItemID => $ItemID,
-            UserID => 1,
+        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
+        $Selenium->switch_to_window( $Handles->[0] );
+
+        # Enable RichText.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Frontend::RichText',
+            Value => 1,
+        );
+
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQAdd");
+
+        # Wait until jQuery is loaded.
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function';" );
+
+        my $UploadCacheObject = $Kernel::OM->Get('Kernel::System::Web::UploadCache');
+        my $ConfigObject      = $Kernel::OM->Get('Kernel::Config');
+        my $EncodeObject      = $Kernel::OM->Get('Kernel::System::Encode');
+        my $MainObject        = $Kernel::OM->Get('Kernel::System::Main');
+
+        # Create FAQ item with inline attachment.
+        my $Location = $ConfigObject->Get('Home')
+            . "/scripts/test/sample/WebUploadCache/WebUploadCache-Test1.png";
+        my $ContentRef = $MainObject->FileRead(
+            Location => $Location,
+            Mode     => 'binmode',
+        );
+        my $Content = ${$ContentRef};
+        $EncodeObject->EncodeOutput( \$Content );
+
+        my $FormID      = $Selenium->execute_script("return \$('input[name=FormID]').val();");
+        my $Filename    = 'Inline' . $Helper->GetRandomID();
+        my $ContentID   = $Helper->GetRandomID();
+        my $Disposition = 'inline';
+
+        # Add picture to upload cache.
+        my $Add = $UploadCacheObject->FormIDAddFile(
+            FormID      => $FormID,
+            Filename    => "$Filename.png",
+            Content     => $Content,
+            ContentType => 'text/html',
+            ContentID   => $ContentID,
+            Disposition => $Disposition,
         );
         $Self->True(
-            $Success,
-            "FAQ item is deleted - ID $ItemID",
+            $Add,
+            "Inline picture is added to upload cache successfully",
         );
+
+        my $Field1HTML =
+            '<!DOCTYPE html><html><body>' .
+            '<img alt="" src="/' . $ScriptAlias . 'index.pl?Action=PictureUpload;FormID=' . $FormID .
+            ';ContentID=' . $ContentID . '" /></body></html>';
+
+        $Selenium->find_element( "#Title", 'css' )->send_keys('Test Title');
+        $Selenium->InputFieldValueSet(
+            Element => '#CategoryID',
+            Value   => 1,
+        );
+        $Selenium->InputFieldValueSet(
+            Element => '#StateID',
+            Value   => 2,
+        );
+        $Selenium->InputFieldValueSet(
+            Element => '#StateID',
+            Value   => 1,
+        );
+
+        # Wait until CKEDITOR is loaded (there are 4 editors in the screen).
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('body.cke_editable', \$('.cke_wysiwyg_frame').contents()).length === 4;"
+        );
+
+        $Selenium->execute_script("CKEDITOR.instances.Field1.setData('$Field1HTML');");
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return CKEDITOR.instances.Field1.getData().indexOf('FormID=$FormID;ContentID=$ContentID') > -1;"
+        );
+
+        $Selenium->InputFieldValueSet(
+            Element => '#ValidID',
+            Value   => 1,
+        );
+
+        # Submit and switch back window.
+        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=\"]').length" );
+
+        # Get ItemID.
+        my @FAQ = split( 'ItemID=', $Selenium->get_current_url() );
+        push @ItemIDs, $FAQ[1];
+
+        # Get attachments before Edit screen.
+        my @ExistingAttachments = $FAQObject->AttachmentIndex(
+            ItemID     => $ItemIDs[1],
+            ShowInline => 1,
+            UserID     => 1,
+        );
+
+        $Self->Is(
+            scalar @ExistingAttachments,
+            1,
+            "Before Edit screen - there is one Inline attachment",
+        );
+        $Self->Is(
+            $ExistingAttachments[0]->{Filename},
+            "$Filename.png",
+            "Before Edit screen - Inline attachment $Filename.png is found",
+        );
+
+        # Click on 'Edit' and switch window.
+        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemIDs[1]' )]")->click();
+
+        $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created.";
+        $Handles = $Selenium->get_window_handles();
+        $Selenium->switch_to_window( $Handles->[1] );
+
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function";' );
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#FAQSubmit",
+        );
+
+        # Submit and switch back main window.
+        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
+        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
+        $Selenium->switch_to_window( $Handles->[0] );
+
+        $Selenium->VerifiedRefresh();
+
+        # Get attachments after Edit screen.
+        @ExistingAttachments = $FAQObject->AttachmentIndex(
+            ItemID     => $ItemIDs[1],
+            ShowInline => 1,
+            UserID     => 1,
+        );
+
+        $Self->Is(
+            scalar @ExistingAttachments,
+            1,
+            "After Edit screen - there is one Inline attachment",
+        );
+        $Self->Is(
+            $ExistingAttachments[0]->{Filename},
+            "$Filename.png",
+            "After Edit screen - Inline attachment $Filename.png is found",
+        );
+
+        # Delete test created FAQs.
+        for my $ItemID (@ItemIDs) {
+            my $Success = $FAQObject->FAQDelete(
+                ItemID => $ItemID,
+                UserID => 1,
+            );
+            $Self->True(
+                $Success,
+                "FAQ item is deleted - ID $ItemID",
+            );
+        }
 
         # Make sure the cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => "FAQ" );
