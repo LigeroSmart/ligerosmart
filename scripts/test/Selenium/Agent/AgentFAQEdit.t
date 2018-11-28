@@ -259,7 +259,9 @@ $Selenium->RunTest(
 
         # Submit and switch back window.
         $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
-        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=\"]').length" );
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=\"]').length"
+        );
 
         # Get ItemID.
         my @FAQ = split( 'ItemID=', $Selenium->get_current_url() );
@@ -291,17 +293,18 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function";' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQSubmit").length;' );
         $Selenium->WaitForjQueryEventBound(
             CSSSelector => "#FAQSubmit",
         );
 
         # Submit and switch back main window.
-        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
+        $Selenium->execute_script('$("#FAQSubmit").click();');
         $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
         $Selenium->switch_to_window( $Handles->[0] );
 
-        $Selenium->VerifiedRefresh();
+        # Waiting just to be sure attachment is stored.
+        sleep 1;
 
         # Get attachments after Edit screen.
         @ExistingAttachments = $FAQObject->AttachmentIndex(
