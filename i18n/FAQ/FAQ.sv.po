@@ -4,12 +4,13 @@
 # andreasberger <andreas.berger@hagfors.se>, 2014
 # Anthon Nilsson <superdos@gmail.com>, 2015,2017
 # Mikael Mattsson <sprouts@tnorala.net>, 2016
+# Tobias Andersson <tobias@piratbyran.org>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2018-11-05 20:00+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"PO-Revision-Date: 2018-11-08 10:51+0000\n"
+"Last-Translator: Tobias Andersson <tobias@piratbyran.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,11 +40,11 @@ msgstr "FAQ kategorihantering"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "Lägg till FAQ-kategori"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "Redigera FAQ-kategori"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -435,11 +436,11 @@ msgstr "Inga kategorier hittades där användaren har läs/skriv-rättigheter"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
-msgstr ""
+msgstr "Standard-språk saknas och nytt kan ej skapas"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
-msgstr ""
+msgstr "Kategori-ID krävs!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "A category should have a name!"
@@ -451,15 +452,15 @@ msgstr "Denna kategori finns redan!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
-msgstr ""
+msgstr "Denna kategori finns redan!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
-msgstr ""
+msgstr "Inget ÄrendeID är angivet!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
-msgstr ""
+msgstr "Systemet kunde inte ta bort kategorin"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "FAQ category updated!"

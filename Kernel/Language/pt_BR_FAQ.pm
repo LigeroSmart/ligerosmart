@@ -363,29 +363,29 @@ sub Data {
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definição de campos de texto livre.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Excluir este FAQ!';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos exibidos na tela de adicionar FAQ da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos exibidos na tela de editar FAQ da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos exibidos na tela de imprimir FAQ da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos mostrados na tela de pesquisa de FAQ da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos exibidos na tela visão geral de FAQ em formato pequeno da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
-        '';
+        'Campos dinâmicos exibidos na tela de zoom de FAQ da interface de agente.';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
@@ -418,7 +418,7 @@ sub Data {
     $Self->{Translation}->{'Journal'} = 'Jornal';
     $Self->{Translation}->{'Language Management'} = 'Gestão de idiomas';
     $Self->{Translation}->{'Language Management.'} = 'Gerenciamento de Idiomas.';
-    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
+    $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Limite para a pesquisa construir a lista de palavras-chave de FAQ.';
     $Self->{Translation}->{'Limit.'} = 'Limite.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Link de outro artigo para este item FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
@@ -493,8 +493,8 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Condição para a avaliação. Chave deve ser em percentual.';
     $Self->{Translation}->{'S'} = 'S';
     $Self->{Translation}->{'Search FAQ'} = 'Pesquisa FAQ';
-    $Self->{Translation}->{'Search FAQ Small.'} = '';
-    $Self->{Translation}->{'Search FAQ.'} = '';
+    $Self->{Translation}->{'Search FAQ Small.'} = 'Pesquisar FAQ Pequena';
+    $Self->{Translation}->{'Search FAQ.'} = 'Pesquisar FAQ.';
     $Self->{Translation}->{'Select how many items should be shown in Journal Overview "Small" by default.'} =
         'Selecione quantos itens devem ser mostrados na visão geral do diário "Small" por padrão.';
     $Self->{Translation}->{'Select how many items should be shown in Overview "Small" by default.'} =
@@ -516,7 +516,7 @@ sub Data {
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Mostrar artigo FAQ com HTML.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Mostrar caminho FAQ sim / não.';
     $Self->{Translation}->{'Show invalid items in the FAQ Explorer result of the agent interface.'} =
-        '';
+        'Mostrar itens inválidos no resultado do Explorador de FAQ na interface de agente.';
     $Self->{Translation}->{'Show items of subcategories.'} = 'Mostrar itens de subcategorias.';
     $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'Mostrar as últimas alterações de itens em interfaces definidas.';
     $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'Mostrar os últimos itens criados em interfaces definidas.';

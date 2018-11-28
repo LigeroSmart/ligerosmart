@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ kategorihantering';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'Lägg till FAQ-kategori';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'Redigera FAQ-kategori';
     $Self->{Translation}->{'Add category'} = 'Skapa kategori';
     $Self->{Translation}->{'Add Category'} = 'Skapa kategori';
     $Self->{Translation}->{'Edit Category'} = 'Redigera kategori';
@@ -167,15 +167,15 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
     $Self->{Translation}->{'You need rw permission!'} = 'Du behöver rw-behörighet';
     $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Inga kategorier hittades där användaren har läs/skriv-rättigheter';
-    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'Standard-språk saknas och nytt kan ej skapas';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
-    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'Need CategoryID!'} = 'Kategori-ID krävs!';
     $Self->{Translation}->{'A category should have a name!'} = 'En kategori behöver ett namn!';
     $Self->{Translation}->{'This category already exists'} = 'Denna kategori finns redan!';
-    $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'No CategoryID is given!'} = '';
-    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'This category already exists!'} = 'Denna kategori finns redan!';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'Inget ÄrendeID är angivet!';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Systemet kunde inte ta bort kategorin';
     $Self->{Translation}->{'FAQ category updated!'} = 'FAQ-kategori uppdaterad!';
     $Self->{Translation}->{'FAQ category added!'} = 'FAQ-kategori tillagd!';
     $Self->{Translation}->{'Delete Category'} = 'Ta bort kategori';

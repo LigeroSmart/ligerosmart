@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2018-11-05 20:00+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"PO-Revision-Date: 2018-11-19 19:52+0000\n"
+"Last-Translator: Ricardo von Staa <ricardo.von.staa@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -979,11 +979,11 @@ msgstr "Excluir este FAQ!"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos exibidos na tela de adicionar FAQ da interface de agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos exibidos na tela de editar FAQ da interface de agente."
 
 #. SysConfig
 msgid ""
@@ -997,7 +997,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos exibidos na tela de imprimir FAQ da interface de agente."
 
 #. SysConfig
 msgid ""
@@ -1010,7 +1010,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos mostrados na tela de pesquisa de FAQ da interface de agente."
 
 #. SysConfig
 msgid ""
@@ -1025,11 +1025,11 @@ msgstr ""
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr ""
+msgstr "Campos dinâmicos exibidos na tela visão geral de FAQ em formato pequeno da interface de agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr ""
+msgstr "Campos dinâmicos exibidos na tela de zoom de FAQ da interface de agente."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
@@ -1149,7 +1149,7 @@ msgstr "Gerenciamento de Idiomas."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
+msgstr "Limite para a pesquisa construir a lista de palavras-chave de FAQ."
 
 #. SysConfig
 msgid "Limit."
@@ -1381,11 +1381,11 @@ msgstr "Pesquisa FAQ"
 
 #. SysConfig
 msgid "Search FAQ Small."
-msgstr ""
+msgstr "Pesquisar FAQ Pequena"
 
 #. SysConfig
 msgid "Search FAQ."
-msgstr ""
+msgstr "Pesquisar FAQ."
 
 #. SysConfig
 msgid ""
@@ -1445,7 +1445,7 @@ msgstr "Mostrar caminho FAQ sim / não."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr ""
+msgstr "Mostrar itens inválidos no resultado do Explorador de FAQ na interface de agente."
 
 #. SysConfig
 msgid "Show items of subcategories."
