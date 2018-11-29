@@ -1,4 +1,5 @@
 #6.0.14 2018-??-??
+ - 2018-11-29 Set minimum framework version back to 6.0.13.
 
 #6.0.13 2018-11-30
  - 2018-11-28 Updated translations, thanks to all translators.
