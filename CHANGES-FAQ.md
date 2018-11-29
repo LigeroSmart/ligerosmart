@@ -1,4 +1,6 @@
-#6.0.13 2018-??-??
+#6.0.14 2018-??-??
+
+#6.0.13 2018-11-30
  - 2018-11-28 Updated translations, thanks to all translators.
  - 2018-11-27 Fixed bug#[14232](https://bugs.otrs.org/show_bug.cgi?id=14232) - Editing FAQ article deletes before stored inline picture.
 
