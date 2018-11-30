@@ -111,6 +111,13 @@
                             </td>
                         </tr>
 [% RenderBlockEnd("OverviewClassList") %]
+[% RenderBlockStart("NoDataFoundMsg") %]
+                        <tr>
+                            <td>
+                                [% Translate("No data found.") | html %]
+                            </td>
+                        </tr>
+[% RenderBlockEnd("NoDataFoundMsg") %]
                     </tbody>
                 </table>
             </div>

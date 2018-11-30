@@ -412,14 +412,24 @@ sub Run {
         # get catalog class list
         my $ClassList = $GeneralCatalogObject->ClassList();
 
-        for my $Class ( @{$ClassList} ) {
+        if ( @{$ClassList} ) {
 
-            # output overview class list
+            for my $Class ( @{$ClassList} ) {
+
+                # output overview class list
+                $LayoutObject->Block(
+                    Name => 'OverviewClassList',
+                    Data => {
+                        Class => $Class,
+                    },
+                );
+            }
+        }
+
+        # otherwise it displays a no data found message
+        else {
             $LayoutObject->Block(
-                Name => 'OverviewClassList',
-                Data => {
-                    Class => $Class,
-                },
+                Name => 'NoDataFoundMsg',
             );
         }
 
