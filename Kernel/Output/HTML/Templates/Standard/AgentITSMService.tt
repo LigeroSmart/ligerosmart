@@ -47,7 +47,7 @@
 [% RenderBlockEnd("OverviewRow") %]
 [% RenderBlockStart("NoDataFoundMsg") %]
                         <tr>
-                            <td colspan="5">
+                            <td colspan="6">
                                 [% Translate("No data found.") | html %]
                             </td>
                         </tr>
