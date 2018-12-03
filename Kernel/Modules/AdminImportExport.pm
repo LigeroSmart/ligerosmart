@@ -1252,11 +1252,32 @@ sub Run {
         # get object list
         my $ObjectList = $ImportExportObject->ObjectList();
 
+        # show a note that the user needs to insatll any module that provides an import/export backend.
         if ( !$ObjectList ) {
-            $LayoutObject->FatalError(
-                Message => Translatable('No object backend found!'),
+
+            # output overview
+            $LayoutObject->Block(
+                Name => 'Overview',
+                Data => {
+                    %Param,
+                },
             );
-            return;
+
+            $LayoutObject->Block( Name => 'NoteObjectBackend' );
+
+            # output header and navbar
+            my $Output = $LayoutObject->Header();
+            $Output .= $LayoutObject->NavigationBar();
+
+            # start template output
+            $Output .= $LayoutObject->Output(
+                TemplateFile => 'AdminImportExport',
+                Data         => \%Param,
+            );
+
+            $Output .= $LayoutObject->Footer();
+            return $Output;
+
         }
 
         # get format list
@@ -1279,6 +1300,7 @@ sub Run {
 
         $LayoutObject->Block( Name => 'ActionList' );
         $LayoutObject->Block( Name => 'ActionAdd' );
+        $LayoutObject->Block( Name => 'NoteCreateTemplate' );
 
         $LayoutObject->Block(
             Name => 'OverviewResult',
@@ -1662,6 +1684,7 @@ sub _MaskTemplateEdit2 {
                 InputStrg    => $InputString,
                 ID           => $ID,
                 ErrorMessage => $ErrorMessage,
+                Mandatory    => $Item->{Input}->{Required} ? 1 : 0,
             },
         );
     }
@@ -1792,6 +1815,7 @@ sub _MaskTemplateEdit3 {
                 Name      => $Item->{Name} || '',
                 InputStrg => $InputString,
                 ID        => $ID,
+                Mandatory => $Item->{Input}->{Required} ? 1 : 0,
             },
         );
 
