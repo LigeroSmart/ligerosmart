@@ -579,7 +579,7 @@ sub ConditionList {
     # get only valid condition ids
     if ( $Param{Valid} ) {
 
-        my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+        my @ValidIDs      = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
         $SQL .= "AND valid_id IN ( $ValidIDString ) ";

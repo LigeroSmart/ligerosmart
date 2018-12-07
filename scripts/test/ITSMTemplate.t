@@ -429,7 +429,7 @@ my %ConditionDefinitions = (
             Selector    => $CreatedChangeID{BaseChange},
             ActionValue => 'New Change Title' . $UniqueSignature . $RandomID,
             UserID      => 1,
-            }
+        }
     },
 );
 
@@ -452,10 +452,10 @@ for my $ConditionName ( sort keys %ConditionDefinitions ) {
     $CreatedConditionID{$ConditionName} = $ConditionID;
 
     my $ExpressionData = $ConditionDefinitions{$ConditionName}->{ExpressionAdd};
-    my $ExpressionID = _ExpressionAdd( $ExpressionData, $ConditionID );
+    my $ExpressionID   = _ExpressionAdd( $ExpressionData, $ConditionID );
 
     my $ActionData = $ConditionDefinitions{$ConditionName}->{ActionAdd};
-    my $ActionID = _ActionAdd( $ActionData, $ConditionID );
+    my $ActionID   = _ActionAdd( $ActionData, $ConditionID );
 }
 continue {
     $TestCount++;
@@ -630,7 +630,7 @@ for my $ChangeTemplateName ( sort keys %CreatedChangeID ) {
     for my $Attribute (qw(Description Justification)) {
         next ARGUMENT if !$ChangeDefinitions{$ChangeTemplateName}->{$Attribute};
 
-        my $ChangeAttribute = $Change->{"${Attribute}Plain"} || '';
+        my $ChangeAttribute    = $Change->{"${Attribute}Plain"} || '';
         my $ReferenceAttribute = $HTMLUtilsObject->ToAscii(
             String => $ChangeDefinitions{$ChangeTemplateName}->{$Attribute},
         );

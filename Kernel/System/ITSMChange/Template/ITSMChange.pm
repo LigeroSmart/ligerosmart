@@ -498,7 +498,7 @@ sub _GetTimeDifference {
         'Kernel::System::DateTime',
         ObjectParams => {
             String => $Param{CurrentTime},
-            }
+        }
     )->ToEpoch();
 
     my $DiffSeconds = $Param{NewTimeInEpoche} - $CurrentSystemTime;

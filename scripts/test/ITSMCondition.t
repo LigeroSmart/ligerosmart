@@ -162,14 +162,14 @@ for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
             'Kernel::System::DateTime',
             ObjectParams => {
                 Epoch => $DateTimeObject->ToEpoch() + 100,
-                }
+            }
         )->ToString(),
         ActualStartTime => $DateTimeObject->ToString(),
         ActualEndTime   => $Kernel::OM->Create(
             'Kernel::System::DateTime',
             ObjectParams => {
                 Epoch => $DateTimeObject->ToEpoch() + 100,
-                }
+            }
         )->ToString(),
         UserID => 1,
     );
@@ -1244,7 +1244,7 @@ my @ExpressionTests = (
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         Epoch => $DateTimeObject->ToEpoch() + 10,
-                        }
+                    }
                 )->ToString(),
                 UserID => 1,
             },
@@ -1277,7 +1277,7 @@ my @ExpressionTests = (
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         Epoch => $SystemTimeBeforeAdding,
-                        }
+                    }
                 )->ToString(),
                 UserID => 1,
             },
@@ -1310,7 +1310,7 @@ my @ExpressionTests = (
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         Epoch => $SystemTimeBeforeAdding,
-                        }
+                    }
                 )->ToString(),
                 UserID => 1,
             },
@@ -1343,7 +1343,7 @@ my @ExpressionTests = (
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         Epoch => $DateTimeObject->ToEpoch() + 10,
-                        }
+                    }
                 )->ToString(),
                 UserID => 1,
             },

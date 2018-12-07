@@ -454,7 +454,7 @@ sub ITSMChangeListShow {
     }
 
     # set page limit and build page nav
-    my $Limit = $Param{Limit} || 20_000;
+    my $Limit   = $Param{Limit} || 20_000;
     my %PageNav = $LayoutObject->PageNavBar(
         Limit     => $Limit,
         StartHit  => $StartHit,
@@ -684,7 +684,7 @@ sub _ITSMChangeGetChangeTicks {
 
     # make sure we got integers
     return if $Param{Start} !~ m{ \A \d+ \z }xms;
-    return if $Param{End} !~ m{ \A \d+ \z }xms;
+    return if $Param{End}   !~ m{ \A \d+ \z }xms;
 
     # calculate time span in sec
     my $Ticks = $Param{End} - $Param{Start};
@@ -727,7 +727,7 @@ sub _ITSMChangeGetChangeScale {
     map {
         $ScaleName{$_} = $Self->_Epoch2TimeStamp(
             Epoch => $ScaleName{$_},
-            )
+        )
     } keys %ScaleName;
 
     # create scale block
@@ -922,7 +922,7 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # get the workorder attribute names that should be shown in the tooltip
     my %TooltipAttributes = %{ $ChangeZoomConfig->{'Tooltip::WorkOrderAttributes'} };
-    my @ShowAttributes = grep { $TooltipAttributes{$_} } keys %TooltipAttributes;
+    my @ShowAttributes    = grep { $TooltipAttributes{$_} } keys %TooltipAttributes;
 
     # build attribut blocks
     if (@ShowAttributes) {

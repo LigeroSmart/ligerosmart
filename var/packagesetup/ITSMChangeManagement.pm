@@ -1027,14 +1027,14 @@ sub _StateMachineDefaultSet {
     my %Name2ChangeStateID = reverse %{
         $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::Change::State',
-            )
+        )
     };
 
     # get the workorder states from the general catalog
     my %Name2WorkOrderStateID = reverse %{
         $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
             Class => 'ITSM::ChangeManagement::WorkOrder::State',
-            )
+        )
     };
 
     # define ChangeState transitions

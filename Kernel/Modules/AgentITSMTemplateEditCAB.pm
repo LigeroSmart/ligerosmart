@@ -106,7 +106,7 @@ sub Run {
     if (%DeleteMember) {
 
         # find users who are still member of CAB
-        my $Type = $DeleteMember{Type};
+        my $Type         = $DeleteMember{Type};
         my @StillMembers = grep { $_ ne $DeleteMember{ID} } @{ $CABReference->{CABAdd}->{$Type} };
 
         # store the remaining members

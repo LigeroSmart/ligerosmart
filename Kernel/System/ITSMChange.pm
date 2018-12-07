@@ -751,7 +751,7 @@ sub ChangeGet {
     );
 
     # add result to change data
-    $ChangeData{WorkOrderIDs} = $WorkOrderIDsRef || [];
+    $ChangeData{WorkOrderIDs}   = $WorkOrderIDsRef || [];
     $ChangeData{WorkOrderCount} = scalar @{ $ChangeData{WorkOrderIDs} };
 
     # get planned effort and accounted time for the change
@@ -2023,7 +2023,7 @@ sub ChangeSearch {
         }
 
         # create string
-        my $InString = join ', ', @{ $Param{$WorkOrderParam} };
+        my $InString   = join ', ', @{ $Param{$WorkOrderParam} };
         my $ColumnName = $WorkOrderArrayParams{$WorkOrderParam};
 
         push @SQLWhere,        "wo2.$ColumnName IN ( $InString )";

@@ -73,7 +73,7 @@ sub Run {
 
     # sort by change number first if user wants to sort by workorder number
     if ( $SortBy eq 'WorkOrderNumber' ) {
-        @SortByArray = ( 'ChangeNumber', 'WorkOrderNumber' );
+        @SortByArray  = ( 'ChangeNumber', 'WorkOrderNumber' );
         @OrderByArray = ( $OrderBy, $OrderBy );
     }
 

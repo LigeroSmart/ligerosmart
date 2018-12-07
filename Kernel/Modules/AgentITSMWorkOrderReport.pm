@@ -650,7 +650,7 @@ sub Run {
     $Param{AttachmentList} = [
         $UploadCacheObject->FormIDGetAllFilesMeta(
             FormID => $Self->{FormID},
-            )
+        )
     ];
 
     # show the attachment upload button

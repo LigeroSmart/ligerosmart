@@ -68,7 +68,7 @@ $Self->Is(
 my %Name2ChangeStateID = reverse %{
     $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
-        )
+    )
 };
 
 # add zero entry for the initial state
@@ -100,7 +100,7 @@ my %DefaultChangeStateTransitions = (
 my %Name2WorkOrderStateID = reverse %{
     $GeneralCatalogObject->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
-        )
+    )
 };
 
 # add zero entry for the initial state

@@ -3047,7 +3047,7 @@ for my $KeyTestedChangeID ( sort keys %TestedChangeID ) {
 }
 
 # count all tests that are required to and planned for fail
-my $Fails = scalar grep { $_->{Fails} } @ChangeTests;
+my $Fails           = scalar grep { $_->{Fails} } @ChangeTests;
 my $NrCreateChanges = ( scalar @ChangeTests ) - $Fails;
 
 # test if the changes were created
@@ -3096,7 +3096,7 @@ my @ChangeSearchTests = (
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     Epoch => $SystemTime - ( 60 * 60 )
-                    }
+                }
             )->ToString(),
         },
         ResultData => {
@@ -3112,7 +3112,7 @@ my @ChangeSearchTests = (
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     Epoch => $SystemTime + ( 60 * 60 )
-                    }
+                }
             )->ToString(),
         },
         ResultData => {
@@ -3218,7 +3218,7 @@ my @ChangeSearchTests = (
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     Epoch => $SystemTime - ( 60 * 60 )
-                    }
+                }
             )->ToString(),
         },
         ResultData => {
@@ -3234,7 +3234,7 @@ my @ChangeSearchTests = (
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     Epoch => $SystemTime + ( 60 * 60 )
-                    }
+                }
             )->ToString(),
         },
         ResultData => {
@@ -3397,13 +3397,13 @@ my @ChangeSearchTests = (
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     Epoch => $SystemTime - ( 60 * 60 )
-                    }
+                }
             )->ToString(),
             ChangeTimeOlderDate => $Kernel::OM->Create(
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     Epoch => $SystemTime + ( 60 * 60 )
-                    }
+                }
             )->ToString(),
         },
         ResultData => {
@@ -4280,7 +4280,7 @@ for my $Test (@ChangeSearchTests) {
         );
     }
 
-    $ChangeIDs ||= [];
+    $ChangeIDs      ||= [];
     $CountChangeIDs ||= 0;
 
     if ( $Test->{ResultData}->{TestCount} ) {
@@ -4314,7 +4314,7 @@ for my $Test (@ChangeSearchTests) {
     if ( $Test->{ResultData}->{TestExistence} ) {
 
         # check if all ids that belongs to this searchtest are returned
-        my @ChangeIDs = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
+        my @ChangeIDs        = keys %{ $ChangeIDForSearchTest{$SearchTestCount} };
         my %ReturnedChangeID = map { $_ => 1 } @{$ChangeIDs};
         for my $ChangeID (@ChangeIDs) {
             $Self->True(
@@ -5472,7 +5472,7 @@ my %WorkOrderStateTestMap;
 
 WOSTATETEST:
 for my $WorkOrderStateTest (@WOStateTests) {
-    my $SourceData = $WorkOrderStateTest->{SourceData};
+    my $SourceData    = $WorkOrderStateTest->{SourceData};
     my $ReferenceData = $WorkOrderStateTest->{ReferenceData} || [];
 
     my $ChangeID;

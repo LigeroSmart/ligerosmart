@@ -82,13 +82,13 @@ sub Run {
             reverse $GroupObject->PermissionUserGet(
                 UserID => $Self->{UserID},
                 Type   => 'ro',
-                )
+            )
         };
         $Groups{Group} = {
             reverse $GroupObject->PermissionUserGet(
                 UserID => $Self->{UserID},
                 Type   => 'rw',
-                )
+            )
         };
 
         my $AccessOk;

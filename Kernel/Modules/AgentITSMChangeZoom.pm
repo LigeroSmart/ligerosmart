@@ -177,7 +177,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # get data for attachment
-        my $Filename = $ParamObject->GetParam( Param => 'Filename' );
+        my $Filename       = $ParamObject->GetParam( Param => 'Filename' );
         my $AttachmentData = $ChangeObject->ChangeAttachmentGet(
             ChangeID => $ChangeID,
             Filename => $Filename,
@@ -812,7 +812,7 @@ sub Run {
 
     for my $HeightSetting (qw(Default Max)) {
         my $FullSetting = 'ITSMChange::Frontend::AgentHTMLFieldHeight' . $HeightSetting;
-        my $Value = int( $ConfigObject->Get($FullSetting) || 0 );
+        my $Value       = int( $ConfigObject->Get($FullSetting) || 0 );
 
         $LayoutObject->AddJSData(
             Key   => $FullSetting,

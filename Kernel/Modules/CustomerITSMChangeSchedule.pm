@@ -306,7 +306,7 @@ sub Run {
         my $ClassLI = '';
         my $ClassA  = '';
         if ( $FilterName eq $Self->{Filter} ) {
-            $ClassA = 'Selected';
+            $ClassA     = 'Selected';
             $AllChanges = $Count || 0;
         }
         if ( $NumberOfFilters == $Counter ) {

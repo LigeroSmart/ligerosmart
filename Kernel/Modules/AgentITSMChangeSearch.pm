@@ -1073,7 +1073,7 @@ sub _MaskForm {
     # get config object
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    my $Profile = $ParamObject->GetParam( Param => 'Profile' ) || '';
+    my $Profile     = $ParamObject->GetParam( Param => 'Profile' ) || '';
     my $EmptySearch = $ParamObject->GetParam( Param => 'EmptySearch' );
     if ( !$Profile ) {
         $EmptySearch = 1;

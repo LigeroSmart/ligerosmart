@@ -968,7 +968,7 @@ sub _OperatorIsBefore {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Param{$Date}
-                }
+            }
         )->ToEpoch();
 
         # check for time

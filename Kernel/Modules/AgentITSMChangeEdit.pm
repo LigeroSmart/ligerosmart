@@ -405,7 +405,7 @@ sub Run {
                         . "Filename=$Attachment->{Filename};ChangeID=$ChangeID";
 
                     # replace urls
-                    $GetParam{Description} =~ s{$Search}{$Replace}xms;
+                    $GetParam{Description}   =~ s{$Search}{$Replace}xms;
                     $GetParam{Justification} =~ s{$Search}{$Replace}xms;
 
                     # update change

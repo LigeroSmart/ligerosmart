@@ -451,7 +451,7 @@ sub TemplateList {
     # get only valid template ids
     if ( $Param{Valid} ) {
 
-        my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+        my @ValidIDs      = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
         push @SQLWhere, "valid_id IN ( $ValidIDString )";
@@ -487,7 +487,7 @@ sub TemplateList {
             my $Ellipsis = $Param{CommentLength} > length $Comment
                 ? ''
                 : '...';
-            $Comment = substr $Comment, 0, $Length;
+            $Comment       = substr $Comment, 0, $Length;
             $CommentAppend = ' (' . $Comment . $Ellipsis . ')';
         }
 

@@ -164,7 +164,7 @@ sub Run {
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     String => $PlannedTime,
-                    }
+                }
             );
 
             $PlannedSystemTime = $DateTimeObject->ToEpoch();
@@ -198,7 +198,7 @@ sub Run {
                 ObjectParams => {
                     String   => $CurrentPlannedTime,
                     TimeZone => $ConfigObject->Get('TimeZoneUser'),
-                    }
+                }
             );
             my $CurrentPlannedSystemTime = $DateTimeObject->ToEpoch();
 
@@ -227,7 +227,7 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Change->{ $GetParam{MoveTimeType} },
-                }
+            }
         );
         my $SystemTime = $DateTimeObject->ToEpoch();
 
@@ -286,7 +286,7 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Change->{ $GetParam{MoveTimeType} }
-                }
+            }
         );
         my $SystemTime = $DateTimeObject->ToEpoch();
 
@@ -388,7 +388,7 @@ sub _MoveWorkOrders {
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     String => $WorkOrder->{$Type},
-                    }
+                }
             );
             next TYPE if !$DateTimeObject;
 

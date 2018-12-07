@@ -347,7 +347,7 @@ sub Run {
         }
 
         # start a new page for every workorder
-        my $HeaderArea = $LayoutObject->{LanguageObject}->Translate('ITSM Workorder');
+        my $HeaderArea  = $LayoutObject->{LanguageObject}->Translate('ITSM Workorder');
         my $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{ Translatable('WorkOrderNumber') };
 
         $Output .= $Self->_OutputHeadline(
@@ -447,7 +447,7 @@ sub _StartDocument {
 
     # title of the PDF-Document
     my $Product = $Kernel::OM->Get('Kernel::Config')->Get('Product');
-    my $Title = sprintf '%s: %s#%s', $Product, $Param{HeaderArea}, $Param{HeaderValue};
+    my $Title   = sprintf '%s: %s#%s', $Product, $Param{HeaderArea}, $Param{HeaderValue};
 
     # create new PDF document
     $Kernel::OM->Get('Kernel::System::PDF')->DocumentNew(
@@ -1365,7 +1365,7 @@ sub _OutputLinkedObjects {
     for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %{ $Param{LinkData} } ) {
 
         # investigate link type name
-        my @LinkData = split q{::}, $LinkTypeLinkDirection;
+        my @LinkData     = split q{::}, $LinkTypeLinkDirection;
         my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
         $LinkTypeName = $LayoutObject->{LanguageObject}->Translate($LinkTypeName);
 
