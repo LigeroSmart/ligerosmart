@@ -239,8 +239,8 @@ sub DataTransfer {
             DBObject => $SourceDBObject,
         );
         my $ColumnsString = join( ', ', @Columns );
-        my $BindString = join ', ', map {'?'} @Columns;
-        my $SQL = "INSERT INTO $Table ($ColumnsString) VALUES ($BindString)";
+        my $BindString    = join ', ', map {'?'} @Columns;
+        my $SQL           = "INSERT INTO $Table ($ColumnsString) VALUES ($BindString)";
 
         my $RowCount = $Self->RowCount(
             DBObject => $SourceDBObject,
