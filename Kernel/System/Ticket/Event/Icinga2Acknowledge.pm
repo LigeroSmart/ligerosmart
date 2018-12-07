@@ -204,7 +204,7 @@ sub _HTTP {
         ssl_opts => {
             verify_hostname => 0,
             SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE,
-            }
+        }
     );
     my $Request = HTTP::Request->new( POST => $URL );
     $Request->authorization_basic( $User, $Pw );

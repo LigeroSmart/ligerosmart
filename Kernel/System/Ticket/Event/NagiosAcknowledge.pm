@@ -175,7 +175,7 @@ sub _Pipe {
         # strip not allowed characters
         $Ticket{$Key} =~ s/'//g;
         $Ticket{$Key} =~ s/;//g;
-        $Data =~ s/<$Key>/$Ticket{$Key}/g;
+        $Data         =~ s/<$Key>/$Ticket{$Key}/g;
     }
 
     # replace config tags
