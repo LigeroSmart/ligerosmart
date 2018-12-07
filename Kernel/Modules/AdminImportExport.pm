@@ -1756,6 +1756,21 @@ sub _MaskTemplateEdit3 {
         Data => \%Param,
     );
 
+    $LayoutObject->AddJSData(
+        Key   => 'BackURL',
+        Value => $Param{BackURL},
+    );
+
+    $LayoutObject->AddJSData(
+        Key   => 'BaseLink',
+        Value => $LayoutObject->{Baselink},
+    );
+
+    $LayoutObject->AddJSData(
+        Key   => 'TemplateOverview',
+        Value => 1,
+    );
+
     $LayoutObject->Block( Name => 'ActionList' );
     $LayoutObject->Block( Name => 'ActionOverview' );
 
