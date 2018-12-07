@@ -313,8 +313,18 @@ $Selenium->RunTest(
         # navigate to AdminImportExport screen
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminImportExport");
 
-        # click to delete test template
-        $Selenium->find_element( "#DeleteTemplateID$TemplateID", 'css' )->VerifiedClick();
+        # Click on delete icon.
+        $Selenium->find_element( "#DeleteTemplateID$TemplateID", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => 'return $("#DialogButton1").length' );
+
+        $Selenium->find_element( "#DialogButton1", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => "return !\$('.Dialog.Modal').length" );
+
+        # Verify test created category is deleted.
+        $Self->True(
+            index( $Selenium->get_page_source(), $ConfigItemNumber ) == -1,
+            "$ConfigItemNumber is not found",
+        );
 
         # delete test imported ConfigItem
         $Success = $ConfigItemObject->ConfigItemDelete(

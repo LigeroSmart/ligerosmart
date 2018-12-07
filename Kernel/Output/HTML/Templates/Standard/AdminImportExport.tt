@@ -91,7 +91,7 @@
                         </tr>
 [% RenderBlockEnd("NoDataFoundMsg") %]
 [% RenderBlockStart("OverviewListRow") %]
-                        <tr [% IF Data.ValidID != 1%]class="Invalid"[% END %]>
+                        <tr [% IF Data.ValidID != 1%]class="Invalid"[% END %]  id="TemplateID_[% Data.TemplateID %]">
                             <td>
                                 <a class="AsBlock" href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=TemplateEdit1;TemplateID=[% Data.TemplateID | uri %]">
                                     [% Data.Number | html %]
@@ -100,11 +100,12 @@
                             <td>[% Data.Name | html %]</td>
                             <td>[% Translate(Data.FormatName) | html %]</td>
                             <td>[% Translate(Data.Valid) | html %]</td>
+
+
                             <td class="Center">
-                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=TemplateDelete;TemplateID=[% Data.TemplateID | uri %]" title="[% Translate("Delete") | html %]">
-                                    <i id="DeleteTemplateID[% Data.TemplateID | html %]" class="fa fa-trash-o">
-                                        <span class="InvisibleText">[% Translate("Delete") | html %]</span>
-                                    </i>
+                                <a id="DeleteTemplateID[% Data.TemplateID %]" class="TrashCan ImportExportDelete" href="#" data-id="[% Data.TemplateID %]" title="[% Translate("Delete this template") | html %]">
+                                    [% Translate("Delete this template") | html %]
+                                    <i class="fa fa-trash-o"></i>
                                 </a>
                             </td>
                             <td>
@@ -549,3 +550,10 @@
     </div>
 </div>
 [% RenderBlockEnd("ImportResult") %]
+
+<div class="Hidden" id="DeleteImportExportDialogContainer">
+    <div id ="DeleteImportExportDialog" class="InnerContent">
+        <p class="Center Spacing">[% Translate("Do you really want to delete this template item?") | html %]</p>
+        <div class="SpacingTop"></div>
+    </div>
+</div>

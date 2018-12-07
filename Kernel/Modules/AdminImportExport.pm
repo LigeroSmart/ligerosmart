@@ -982,13 +982,17 @@ sub Run {
         my $TemplateID = $ParamObject->GetParam( Param => 'TemplateID' );
 
         # delete template from database
-        $ImportExportObject->TemplateDelete(
+        my $Delete = $ImportExportObject->TemplateDelete(
             TemplateID => $TemplateID,
             UserID     => $Self->{UserID},
         );
 
-        # redirect to overview
-        return $LayoutObject->Redirect( OP => "Action=$Self->{Action}" );
+        return $LayoutObject->Attachment(
+            ContentType => 'text/html',
+            Content     => ($Delete) ? $TemplateID : 0,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
     }
 
     # ------------------------------------------------------------ #
