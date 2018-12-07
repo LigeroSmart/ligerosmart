@@ -109,7 +109,7 @@ for my $ObjectDataValue (qw( Name DeplState InciState )) {
     );
 
     my %MappingObjectData = ( Key => $ObjectDataValue );
-    my $Success = $ImportExportObject->MappingObjectDataSave(
+    my $Success           = $ImportExportObject->MappingObjectDataSave(
         MappingID         => $MappingID,
         MappingObjectData => \%MappingObjectData,
         UserID            => 1,

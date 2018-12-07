@@ -91,7 +91,7 @@ sub FormInputCreate {
     }
 
     # prepare data
-    my $ID = ( $Param{Prefix} || '' ) . ( $Param{Item}->{Key} );
+    my $ID   = ( $Param{Prefix} || '' ) . ( $Param{Item}->{Key} );
     my $Name = ( $Param{Prefix} || '' ) . ( $Param{Name} || $ID );
     my $Class = ( $SizeClass || '' ) . ( $Param{Class} || '' );
 

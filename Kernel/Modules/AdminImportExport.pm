@@ -1844,7 +1844,7 @@ sub _MaskTemplateEdit3 {
                 Name => 'TemplateEdit3ElementRequired',
                 Data => {
                     Name => $Item->{Name} || '',
-                    ID => $ID,
+                    ID   => $ID,
                 },
             );
         }
