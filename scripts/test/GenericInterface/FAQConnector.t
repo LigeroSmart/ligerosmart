@@ -520,7 +520,7 @@ my @Tests = (
                 Error => {
                     ErrorCode    => 'PublicFAQGet.MissingParameter',
                     ErrorMessage => 'PublicFAQGet: Got no ItemID!'
-                    }
+                }
             },
             Success => 1
 
@@ -530,7 +530,7 @@ my @Tests = (
                 Error => {
                     ErrorCode    => 'PublicFAQGet.MissingParameter',
                     ErrorMessage => 'PublicFAQGet: Got no ItemID!'
-                    }
+                }
             },
             Success => 1
 
@@ -550,7 +550,7 @@ my @Tests = (
                     ErrorCode => 'PublicFAQGet.NotValidFAQID',
                     ErrorMessage =>
                         'PublicFAQGet: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()'
-                    }
+                }
             },
             Success => 1
 
@@ -561,7 +561,7 @@ my @Tests = (
                     ErrorCode => 'PublicFAQGet.NotValidFAQID',
                     ErrorMessage =>
                         'PublicFAQGet: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()'
-                    }
+                }
             },
             Success => 1
 
@@ -610,7 +610,7 @@ my @Tests = (
                     ErrorCode => 'PublicFAQSearch.NotFAQData',
                     ErrorMessage =>
                         'PublicFAQSearch: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()'
-                    }
+                }
             },
             Success => 1
         },
@@ -620,7 +620,7 @@ my @Tests = (
                     ErrorCode => 'PublicFAQSearch.NotFAQData',
                     ErrorMessage =>
                         'PublicFAQSearch: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()'
-                    }
+                }
             },
             Success => 1
         },
@@ -638,7 +638,7 @@ my @Tests = (
                     ErrorCode => 'PublicFAQSearch.NotFAQData',
                     ErrorMessage =>
                         'PublicFAQSearch: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()'
-                    }
+                }
             },
             Success => 1
         },
@@ -648,7 +648,7 @@ my @Tests = (
                     ErrorCode => 'PublicFAQSearch.NotFAQData',
                     ErrorMessage =>
                         'PublicFAQSearch: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQSearch::Run()'
-                    }
+                }
             },
             Success => 1
         },

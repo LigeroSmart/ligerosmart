@@ -46,7 +46,7 @@ sub Run {
 
     $Self->Print("<yellow>Setting content type of FAQ items...</yellow>\n");
 
-    my @FAQItemIDs = @{ $Self->GetOption('faq-item-id') // [] };
+    my @FAQItemIDs  = @{ $Self->GetOption('faq-item-id') // [] };
     my $ContentType = $Self->GetOption('content-type') // '';
 
     my %FunctionParams;

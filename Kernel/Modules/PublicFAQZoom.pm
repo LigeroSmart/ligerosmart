@@ -65,7 +65,7 @@ sub Run {
     }
 
     # get the valid ids
-    my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+    my @ValidIDs      = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
     my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');

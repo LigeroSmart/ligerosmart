@@ -278,14 +278,14 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $FAQData{Changed} || '',
-                }
+            }
         )->ToEpoch();
 
         my $VoteCreatedSystemTime = $Kernel::OM->Create(
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $VoteData->{Created} || '',
-                }
+            }
         )->ToEpoch();
 
         if ( $ItemChangedSystemTime <= $VoteCreatedSystemTime ) {

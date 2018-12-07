@@ -99,7 +99,7 @@ sub Run {
     my $FrontendCustomerTicketMessageConfig      = $ConfigObject->Get("Ticket::Frontend::CustomerTicketMessage");
     my $FrontendCustomerFAQRelatedArticlesConfig = $ConfigObject->Get("FAQ::Frontend::CustomerFAQRelatedArticles");
 
-    my $QueuesEnabled = $FrontendCustomerFAQRelatedArticlesConfig->{'QueuesEnabled'} || '';
+    my $QueuesEnabled     = $FrontendCustomerFAQRelatedArticlesConfig->{'QueuesEnabled'} || '';
     my $QueuesEnabledStrg = '';
     if ( IsArrayRefWithData($QueuesEnabled) ) {
 

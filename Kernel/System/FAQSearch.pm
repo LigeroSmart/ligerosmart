@@ -605,7 +605,7 @@ sub FAQSearch {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Param{ItemCreateTimeOlderDate},
-                }
+            }
         )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -641,7 +641,7 @@ sub FAQSearch {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Param{ItemCreateTimeNewerDate},
-                }
+            }
         )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -703,7 +703,7 @@ sub FAQSearch {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Param{ItemChangeTimeOlderDate},
-                }
+            }
         )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -739,7 +739,7 @@ sub FAQSearch {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Param{ItemChangeTimeNewerDate},
-                }
+            }
         )->ToEpoch();
         if ( !$Time ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(

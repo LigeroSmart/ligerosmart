@@ -87,7 +87,7 @@ sub Run {
     }
 
     # get the valid ids
-    my @ValidIDs = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
+    my @ValidIDs      = $Kernel::OM->Get('Kernel::System::Valid')->ValidIDsGet();
     my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
 
     # check user permission
@@ -259,14 +259,14 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $FAQData{Changed} || '',
-                }
+            }
         )->ToEpoch();
 
         my $VoteCreatedSystemTime = $Kernel::OM->Create(
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $VoteData->{Created} || '',
-                }
+            }
         )->ToEpoch();
 
         if ( $ItemChangedSystemTime <= $VoteCreatedSystemTime ) {

@@ -492,7 +492,7 @@ sub Run {
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
 
-        my $Notification = $ParamObject->GetParam( Param => 'Notification' ) || '';
+        my $Notification     = $ParamObject->GetParam( Param => 'Notification' ) || '';
         my %NotificationText = (
             Update => Translatable('FAQ category updated!'),
             Add    => Translatable('FAQ category added!'),

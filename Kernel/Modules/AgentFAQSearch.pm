@@ -1126,7 +1126,7 @@ sub _MaskForm {
 
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
-    my $Profile = $ParamObject->GetParam( Param => 'Profile' ) || '';
+    my $Profile     = $ParamObject->GetParam( Param => 'Profile' ) || '';
     my $EmptySearch = $ParamObject->GetParam( Param => 'EmptySearch' );
     if ( !$Profile ) {
         $EmptySearch = 1;
@@ -1485,7 +1485,7 @@ sub _MaskForm {
     );
 
     my $FrontendConfig = $ConfigObject->Get('Frontend::Module');
-    my $FAQAddGroups = $FrontendConfig->{AgentFAQAdd}->{Group} || [];
+    my $FAQAddGroups   = $FrontendConfig->{AgentFAQAdd}->{Group} || [];
 
     my %FAQAddUsers = %ShownUsers;
     if ( IsArrayRefWithData($FAQAddGroups) ) {
@@ -1496,7 +1496,7 @@ sub _MaskForm {
             my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
             my $GroupID = $GroupObject->GroupLookup( Group => $Group );
-            my %Users = $GroupObject->GroupMemberList(
+            my %Users   = $GroupObject->GroupMemberList(
                 GroupID => $GroupID,
                 Type    => 'rw',
                 Result  => 'HASH',
@@ -1531,7 +1531,7 @@ sub _MaskForm {
             my $GroupObject = $Kernel::OM->Get('Kernel::System::Group');
 
             my $GroupID = $GroupObject->GroupLookup( Group => $Group );
-            my %Users = $GroupObject->GroupMemberList(
+            my %Users   = $GroupObject->GroupMemberList(
                 GroupID => $GroupID,
                 Type    => 'rw',
                 Result  => 'HASH',

@@ -950,7 +950,7 @@ sub _MigratePermissions {
         my $SettingName = shift;
 
         my $Config = $Source;
-        my @Keys = split '###', $SettingName;
+        my @Keys   = split '###', $SettingName;
         while ( my $Key = shift @Keys ) {
             $Config = $Config->{$Key};
         }
@@ -1130,7 +1130,7 @@ sub _MigratePermissions {
     SETTING:
     for my $Setting (@SettingsToMigrate) {
         my $SettingOldConfig = $GetConfig->( $OldConfig, $Setting->{Name}, );
-        my $SettingDefaults = $Setting->{Defaults};
+        my $SettingDefaults  = $Setting->{Defaults};
 
         if ( $Setting->{Name} eq 'FAQ::ApprovalGroup' ) {
 

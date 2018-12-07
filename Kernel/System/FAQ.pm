@@ -351,7 +351,7 @@ sub FAQGet {
 
     # add voting information to FAQ item
     $Data{VoteResult} = $VoteResult;
-    $Data{Votes} = $VoteData->{Votes} || 0;
+    $Data{Votes}      = $VoteData->{Votes} || 0;
 
     # check if need to return DynamicFields
     if ( $Param{DynamicFields} ) {
@@ -999,7 +999,7 @@ sub AttachmentGet {
             . 'FROM faq_attachment '
             . 'WHERE id = ? AND faq_id = ? '
             . 'ORDER BY created',
-        Bind => [ \$Param{FileID}, \$Param{ItemID} ],
+        Bind   => [ \$Param{FileID}, \$Param{ItemID} ],
         Encode => [ 1, 1, 1, 0 ],
         Limit  => 1,
     );
@@ -1203,7 +1203,7 @@ sub FAQCount {
     }
 
     # set default value
-    my $Valid = $Param{Valid} ? 1 : 0;
+    my $Valid    = $Param{Valid} ? 1 : 0;
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
     my $CategoryIDString = '';
@@ -1577,7 +1577,7 @@ sub FAQJournalGet {
 
     return if !@CategoryIDs;
 
-    my @Bind = map { \$_ } @CategoryIDs;
+    my @Bind                 = map { \$_ } @CategoryIDs;
     my $CategoryPlaceholders = join ', ', ('?') x @CategoryIDs;
 
     # build SQL query
@@ -2659,7 +2659,7 @@ sub _FAQApprovalTicketCreate {
         # create from string
         my $From = "\"$User{UserFullname}\" <$User{UserEmail}>";
 
-        my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+        my $ArticleObject                = $Kernel::OM->Get('Kernel::System::Ticket::Article');
         my $InternalArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
 
         my $ArticleID = $InternalArticleBackendObject->ArticleCreate(
