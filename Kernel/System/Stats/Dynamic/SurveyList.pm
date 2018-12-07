@@ -87,7 +87,7 @@ sub GetObjectAttributes {
     my %SurveyList = $SurveyObject->SurveyList();
 
     my %SurveyAttributes = %{ $Self->_SurveyAttributes() };
-    my %OrderBy = map { $_ => $SurveyAttributes{$_} } grep { $_ ne 'Number' } keys %SurveyAttributes;
+    my %OrderBy          = map { $_ => $SurveyAttributes{$_} } grep { $_ ne 'Number' } keys %SurveyAttributes;
 
     # Get dynamic field backend object.
     my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
@@ -246,7 +246,7 @@ sub GetStatTable {
 
     # Set default values if no sort or order attribute is given.
     my $SortRef = first { $_->{Element} eq 'SortSequence' } @{ $Param{ValueSeries} };
-    my $Sort = $SortRef ? $SortRef->{SelectedValues}->[0] : 'Down';
+    my $Sort  = $SortRef ? $SortRef->{SelectedValues}->[0] : 'Down';
     my $Limit = $Param{Restrictions}->{Limit};
 
     $Param{Restrictions}->{Limit} = $Limit || 100_000_000;

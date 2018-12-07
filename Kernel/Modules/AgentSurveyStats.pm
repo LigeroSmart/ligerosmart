@@ -111,7 +111,7 @@ sub Run {
             Data => {
                 %Survey,
                 ShowDelete => $ShowDelete,
-                }
+            }
         );
         my @List = $SurveyObject->VoteList(
             SurveyID => $SurveyID,

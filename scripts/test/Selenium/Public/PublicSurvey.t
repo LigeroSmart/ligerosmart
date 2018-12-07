@@ -412,7 +412,7 @@ $Selenium->RunTest(
         for my $Delete (@CleanData) {
             if ( IsArrayRefWithData( $Delete->{ID} ) ) {
 
-                my $IDs = join ', ', @{ $Delete->{ID} };
+                my $IDs      = join ', ', @{ $Delete->{ID} };
                 my $SQLWhere = "WHERE $Delete->{SQLID} IN ( $IDs )";
 
                 $Success = $DBObject->Do(

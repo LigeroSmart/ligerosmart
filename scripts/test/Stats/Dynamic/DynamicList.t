@@ -262,7 +262,7 @@ my $UpdateSuccess = $StatsObject->StatsUpdate(
                 Translation    => 1,
                 SelectedValues => [
                     'Created',
-                    ]
+                ]
             }
         ],
         UseAsValueSeries => [
@@ -277,7 +277,7 @@ my $UpdateSuccess = $StatsObject->StatsUpdate(
                 Element  => 'SortSequence',
                 Values   => {
                     'Up' => 'ascending'
-                    }
+                }
             }
         ],
         UseAsRestriction => [

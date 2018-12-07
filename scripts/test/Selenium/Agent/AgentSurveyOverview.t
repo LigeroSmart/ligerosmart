@@ -101,7 +101,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return !$(".Dialog.Modal").length' );
 
         my $LinkSurveyID = $Selenium->find_element( '.MasterActionLink', 'css' )->get_attribute('innerHTML');
-        my $LinkContent = '';
+        my $LinkContent  = '';
 
         if ( $LinkSurveyID =~ m{^\s*(\d+)\s*$} ) {
             $LinkContent = $1;

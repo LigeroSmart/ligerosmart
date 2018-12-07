@@ -267,7 +267,7 @@ sub Run {
     $Survey{RequestComplete} = $RequestComplete;
 
     # get selected queues
-    my %Queues = $Kernel::OM->Get('Kernel::System::Queue')->GetAllQueues();
+    my %Queues    = $Kernel::OM->Get('Kernel::System::Queue')->GetAllQueues();
     my @QueueList = map { $Queues{$_} } @{ $Survey{Queues} };
     @QueueList = sort { lc $a cmp lc $b } @QueueList;
     my $QueueListString = join q{, }, @QueueList;
@@ -296,7 +296,7 @@ sub Run {
     if ( $ConfigObject->Get('Survey::CheckSendConditionTicketType') ) {
 
         # get selected ticket types
-        my %TicketTypes = $Kernel::OM->Get('Kernel::System::Type')->TypeList();
+        my %TicketTypes    = $Kernel::OM->Get('Kernel::System::Type')->TypeList();
         my @TicketTypeList = map { $TicketTypes{$_} ? $TicketTypes{$_} : () } @{ $Survey{TicketTypeIDs} };
         @TicketTypeList = sort { lc $a cmp lc $b } @TicketTypeList;
         my $TicketTypeListString = join q{, }, @TicketTypeList;
