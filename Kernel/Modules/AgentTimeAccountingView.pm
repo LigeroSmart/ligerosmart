@@ -95,7 +95,7 @@ sub Run {
             Year  => $Param{Year},
             Month => $Param{Month},
             Day   => $Param{Day},
-            }
+        }
     );
 
     my $DateTimeObjectAllowed = $Kernel::OM->Create(
@@ -104,7 +104,7 @@ sub Run {
             Year  => $Param{YearAllowed},
             Month => $Param{MonthAllowed},
             Day   => $Param{DayAllowed},
-            }
+        }
     );
 
     if (

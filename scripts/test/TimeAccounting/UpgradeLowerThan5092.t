@@ -83,7 +83,7 @@ my $GetConfig = sub {
     my $SettingName = shift;
 
     my $Config = $Source;
-    my @Keys = split '###', $SettingName;
+    my @Keys   = split '###', $SettingName;
     while ( my $Key = shift @Keys ) {
         $Config = $Config->{$Key};
     }

@@ -167,12 +167,12 @@ sub Run {
             Calendar => $UserData{Calendar},
         );
 
-        my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Day );
+        my $Date                = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Day );
         my $DateTimeObjectStart = $Kernel::OM->Create(
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Date . ' 00:00:00',
-                }
+            }
         );
         my $DayStartTime = $DateTimeObjectStart->ToEpoch();
 
@@ -180,13 +180,13 @@ sub Run {
             'Kernel::System::DateTime',
             ObjectParams => {
                 String => $Date . ' 23:59:59',
-                }
+            }
         );
         my $DayStopTime = $DateTimeObjectStop->ToEpoch();
 
         # add time zone to calculation
         my $UserCalendar = $UserData{Calendar} || '';
-        my $Zone = $Kernel::OM->Get('Kernel::Config')->Get( "TimeZone::Calendar" . $UserCalendar );
+        my $Zone         = $Kernel::OM->Get('Kernel::Config')->Get( "TimeZone::Calendar" . $UserCalendar );
         if ($Zone) {
             my $ZoneSeconds = $Zone * 60 * 60;
             $DayStartTime = $DayStartTime - $ZoneSeconds;
@@ -290,7 +290,7 @@ sub Run {
             my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
-            $Param{Status} = $ProjectRef->{Status} ? '' : 'passiv';
+            $Param{Status}  = $ProjectRef->{Status} ? '' : 'passiv';
 
             my $Total      = 0;
             my $TotalTotal = 0;

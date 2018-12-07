@@ -255,7 +255,7 @@ sub Run {
         my ( %GetParam, %Errors );
 
         # get parameters
-        $GetParam{ID} = $ParamObject->GetParam( Param => 'ID' ) || '';
+        $GetParam{ID}            = $ParamObject->GetParam( Param => 'ID' ) || '';
         $GetParam{ProjectStatus} = $ParamObject->GetParam( Param => 'ProjectStatus' )
             || '0';
         for my $Parameter (qw(Project ProjectDescription)) {
@@ -361,7 +361,7 @@ sub Run {
         my ( %GetParam, %Errors );
 
         # get parameters
-        $GetParam{Task} = $ParamObject->GetParam( Param => 'Task' ) || '';
+        $GetParam{Task}       = $ParamObject->GetParam( Param => 'Task' ) || '';
         $GetParam{TaskStatus} = $ParamObject->GetParam( Param => 'TaskStatus' )
             || '0';
 
@@ -627,7 +627,7 @@ sub Run {
             );
         }
 
-        my $NewTimePeriod = $ParamObject->GetParam( Param => 'NewTimePeriod' );
+        my $NewTimePeriod    = $ParamObject->GetParam( Param => 'NewTimePeriod' );
         my $LastPeriodNumber = $TimeAccountingObject->UserLastPeriodNumberGet(
             UserID => $ID,
         );
@@ -1178,7 +1178,7 @@ sub _UserSettingsEdit {
 
     # fill up the calendar list
     my $CalendarListRef = { 0 => 'Default' };
-    my $CalendarIndex = 1;
+    my $CalendarIndex   = 1;
     while ( $ConfigObject->Get( "TimeZone::Calendar" . $CalendarIndex . "Name" ) ) {
         $CalendarListRef->{$CalendarIndex} = $ConfigObject->Get( "TimeZone::Calendar" . $CalendarIndex . "Name" );
         $CalendarIndex++;
@@ -1215,7 +1215,7 @@ sub _UserSettingsEdit {
             AllowSkip => ( $GetParam{AllowSkip} || $UserData{AllowSkip} )
             ? 'checked="checked"'
             : '',
-            }
+        }
     );
 
     # if there are errors to show
@@ -1243,7 +1243,7 @@ sub _UserSettingsEdit {
                     Period           => $Period,
                     DateStartInvalid => $Param{Errors}->{ 'DateStart-' . $Period . 'Invalid' }
                         || '',
-                    DateEndInvalid => $Param{Errors}->{ 'DateEnd-' . $Period . 'Invalid' } || '',
+                    DateEndInvalid   => $Param{Errors}->{ 'DateEnd-' . $Period . 'Invalid' } || '',
                     LeaveDaysInvalid => $Param{Errors}->{ 'LeaveDays-' . $Period . 'Invalid' }
                         || '',
                     DateStart          => $GetParam{DateStart},

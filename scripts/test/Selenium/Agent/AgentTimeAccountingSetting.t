@@ -56,7 +56,7 @@ $Selenium->RunTest(
             )
         {
             my $Selector = ( $SettingPage =~ m/^[a-zA-Z0-9]/ ? '#' : '' ) . $SettingPage;
-            my $Element = $Selenium->find_element( $Selector, 'css' );
+            my $Element  = $Selenium->find_element( $Selector, 'css' );
             $Element->is_enabled();
             $Element->is_displayed();
         }

@@ -149,7 +149,7 @@ $Selenium->RunTest(
 
         # verify AgentTimeAccountingOverview values
         my @WeekdayArray = ( 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', );
-        my @Test = (
+        my @Test         = (
             $ProjectTitle, $ActionTitle, 'Time reporting monthly overview', 'On overtime leave', 'Overtime (Hours)',
             'Vacation (Days)', 'Sick Leave (Days)', @WeekdayArray
         );
