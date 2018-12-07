@@ -457,7 +457,7 @@ sub Run {
                     'Kernel::System::DateTime',
                     ObjectParams => {
                         Epoch => $Ticket{RealTillTimeNotUsed},
-                        }
+                    }
                 );
 
                 $TimeStamp = $DateTimeObject->ToString();
@@ -632,7 +632,7 @@ sub _LoopCheck {
                 'Kernel::System::DateTime',
                 ObjectParams => {
                     String => $Data->{CreateTime},
-                    }
+                }
             );
             $DateTimeObject->Add(
                 Seconds => 15,

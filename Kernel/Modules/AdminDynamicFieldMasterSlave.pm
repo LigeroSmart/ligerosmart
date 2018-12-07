@@ -128,7 +128,7 @@ sub _AddAction {
             $DynamicFieldObject->DynamicFieldList(
                 Valid      => 0,
                 ResultType => 'HASH',
-                )
+            )
         };
 
         %DynamicFieldsList = reverse %DynamicFieldsList;
@@ -312,7 +312,7 @@ sub _ChangeAction {
             $DynamicFieldObject->DynamicFieldList(
                 Valid      => 0,
                 ResultType => 'HASH',
-                )
+            )
         };
 
         %DynamicFieldsList = reverse %DynamicFieldsList;
