@@ -1,4 +1,5 @@
 #6.0.9 2018-??-??
+ - 2018-12-10 Set minimum framework version to OTRS 6.0.13.
 
 #6.0.8 2018-11-09
  - 2018-11-05 Code cleanup.
