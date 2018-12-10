@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -455,7 +455,7 @@ sub Run {
         if (
             $Self->{LastScreenOverview}
             && $Self->{LastScreenOverview} !~ /Action=AgentTicketEmail/
-            && $Self->{RequestedURL} !~ /Action=AgentTicketEmail.*LinkTicketID=/
+            && $Self->{RequestedURL}       !~ /Action=AgentTicketEmail.*LinkTicketID=/
             )
         {
             $Kernel::OM->Get('Kernel::System::AuthSession')->UpdateSessionID(
@@ -943,7 +943,7 @@ sub Run {
             QueueID        => $Self->{QueueID}         || 1,
         );
         my $SLAs = $Self->_GetSLAs(
-            QueueID => $Self->{QueueID} || 1,
+            QueueID  => $Self->{QueueID} || 1,
             Services => $Services,
             %GetParam,
             %ACLCompatGetParam,
@@ -997,7 +997,7 @@ sub Run {
                 %ACLCompatGetParam,
                 %SplitTicketParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
-                QueueID => $Self->{QueueID}
+                QueueID        => $Self->{QueueID}
             ),
             TimeUnits => $Self->_GetTimeUnits(
                 %GetParam,
@@ -1033,7 +1033,7 @@ sub Run {
     # deliver signature
     elsif ( $Self->{Subaction} eq 'Signature' ) {
         my $CustomerUser = $ParamObject->GetParam( Param => 'SelectedCustomerUser' ) || '';
-        my $QueueID = $ParamObject->GetParam( Param => 'QueueID' );
+        my $QueueID      = $ParamObject->GetParam( Param => 'QueueID' );
         if ( !$QueueID ) {
             my $Dest = $ParamObject->GetParam( Param => 'Dest' ) || '';
             ($QueueID) = split( /\|\|/, $Dest );
@@ -1108,7 +1108,7 @@ sub Run {
             || $ParamObject->GetParam( Param => 'PreSelectedCustomerUser' )
             || $ParamObject->GetParam( Param => 'SelectedCustomerUser' )
             || '';
-        my $CustomerID = $ParamObject->GetParam( Param => 'CustomerID' ) || '';
+        my $CustomerID           = $ParamObject->GetParam( Param => 'CustomerID' ) || '';
         my $SelectedCustomerUser = $ParamObject->GetParam( Param => 'SelectedCustomerUser' )
             || '';
         my $ExpandCustomerName = $ParamObject->GetParam( Param => 'ExpandCustomerName' )
@@ -1586,7 +1586,7 @@ sub Run {
             my $SLAs = $Self->_GetSLAs(
                 %GetParam,
                 %ACLCompatGetParam,
-                QueueID => $NewQueueID || 1,
+                QueueID  => $NewQueueID || 1,
                 Services => $Services,
             );
 
@@ -1804,7 +1804,7 @@ sub Run {
             UserID  => $Self->{UserID},
         );
 
-        my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+        my $ArticleObject        = $Kernel::OM->Get('Kernel::System::Ticket::Article');
         my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Email' );
 
         # send email
@@ -2058,7 +2058,7 @@ sub Run {
             %GetParam,
             %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID => $QueueID,
+            QueueID        => $QueueID,
         );
 
         my $NewTos;
@@ -2490,7 +2490,7 @@ sub _GetUsers {
 
     # show all users who are owner or rw in the queue group
     elsif ( $Param{QueueID} ) {
-        my $GID = $Kernel::OM->Get('Kernel::System::Queue')->GetQueueGroupID( QueueID => $Param{QueueID} );
+        my $GID        = $Kernel::OM->Get('Kernel::System::Queue')->GetQueueGroupID( QueueID => $Param{QueueID} );
         my %MemberList = $Kernel::OM->Get('Kernel::System::Group')->PermissionGroupGet(
             GroupID => $GID,
             Type    => 'owner',
@@ -2553,7 +2553,7 @@ sub _GetResponsibles {
 
     # show all users who are responsible or rw in the queue group
     elsif ( $Param{QueueID} ) {
-        my $GID = $Kernel::OM->Get('Kernel::System::Queue')->GetQueueGroupID( QueueID => $Param{QueueID} );
+        my $GID        = $Kernel::OM->Get('Kernel::System::Queue')->GetQueueGroupID( QueueID => $Param{QueueID} );
         my %MemberList = $Kernel::OM->Get('Kernel::System::Group')->PermissionGroupGet(
             GroupID => $GID,
             Type    => 'responsible',

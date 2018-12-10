@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 0b97043e59abfa00602fac482b8e72d5399d7d17 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -298,7 +298,7 @@ sub Run {
             ActivityDialogObject   => $ActivityDialogObject,
             TransitionObject       => $Kernel::OM->Get('Kernel::System::ProcessManagement::Transition'),
             TransitionActionObject => $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction'),
-            }
+        }
     );
     my $ProcessObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::Process');
 
@@ -947,7 +947,7 @@ sub _GetParam {
             ActivityDialogObject   => $ActivityDialogObject,
             TransitionObject       => $Kernel::OM->Get('Kernel::System::ProcessManagement::Transition'),
             TransitionActionObject => $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction'),
-            }
+        }
     );
     my $ProcessObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::Process');
 
@@ -1407,7 +1407,7 @@ sub _OutputActivityDialog {
             ActivityDialogObject   => $ActivityDialogObject,
             TransitionObject       => $Kernel::OM->Get('Kernel::System::ProcessManagement::Transition'),
             TransitionActionObject => $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction'),
-            }
+        }
     );
     my $ProcessObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::Process');
 
@@ -1566,7 +1566,7 @@ sub _OutputActivityDialog {
                 Name =>
                     $LayoutObject->{LanguageObject}->Translate( $ActivityDialog->{Name} )
                     || '',
-                }
+            }
         );
     }
     elsif (
@@ -4779,7 +4779,7 @@ sub _StoreActivityDialog {
             ActivityDialogObject   => $ActivityDialogObject,
             TransitionObject       => $Kernel::OM->Get('Kernel::System::ProcessManagement::Transition'),
             TransitionActionObject => $Kernel::OM->Get('Kernel::System::ProcessManagement::TransitionAction'),
-            }
+        }
     );
     my $ProcessObject = $Kernel::OM->Get('Kernel::System::ProcessManagement::Process');
 
@@ -5147,7 +5147,7 @@ sub _StoreActivityDialog {
         }
 
         if ( $CurrentField =~ m{^DynamicField_(.*)}xms ) {
-            my $DynamicFieldName = $1;
+            my $DynamicFieldName   = $1;
             my $DynamicFieldConfig = ( grep { $_->{Name} eq $DynamicFieldName } @{$DynamicField} )[0];
 
             if ( !IsHashRefWithData($DynamicFieldConfig) ) {
@@ -5988,13 +5988,13 @@ sub _GetResponsibles {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # Get available permissions and set permission group type accordingly.
-    my $ConfigPermissions = $ConfigObject->Get('System::Permission');
+    my $ConfigPermissions   = $ConfigObject->Get('System::Permission');
     my $PermissionGroupType = ( grep { $_ eq 'responsible' } @{$ConfigPermissions} ) ? 'responsible' : 'rw';
 
     # if we are updating a ticket show the full list of possible responsibles
     if ( $Param{TicketID} ) {
         if ( $Param{QueueID} && !$Param{AllUsers} ) {
-            my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
+            my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
                 Type    => $PermissionGroupType,
@@ -6009,7 +6009,7 @@ sub _GetResponsibles {
         # the StartActivityDialog does not provide a TicketID and it could be that also there
         # is no QueueID information. Get the default QueueID for this matters.
         if ( !$Param{QueueID} ) {
-            my $Queue = $ConfigObject->Get("Process::DefaultQueue");
+            my $Queue   = $ConfigObject->Get("Process::DefaultQueue");
             my $QueueID = $QueueObject->QueueLookup( Queue => $Queue );
             if ($QueueID) {
                 $Param{QueueID} = $QueueID;
@@ -6039,7 +6039,7 @@ sub _GetResponsibles {
 
         # show all subscribed users who have the appropriate permission in the queue group
         elsif ( $Param{QueueID} ) {
-            my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
+            my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
                 Type    => $PermissionGroupType,
@@ -6084,13 +6084,13 @@ sub _GetOwners {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # Get available permissions and set permission group type accordingly.
-    my $ConfigPermissions = $ConfigObject->Get('System::Permission');
+    my $ConfigPermissions   = $ConfigObject->Get('System::Permission');
     my $PermissionGroupType = ( grep { $_ eq 'owner' } @{$ConfigPermissions} ) ? 'owner' : 'rw';
 
     # if we are updating a ticket show the full list of possible owners
     if ( $Param{TicketID} ) {
         if ( $Param{QueueID} && !$Param{AllUsers} ) {
-            my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
+            my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
                 Type    => $PermissionGroupType,
@@ -6105,7 +6105,7 @@ sub _GetOwners {
         # the StartActivityDialog does not provide a TicketID and it could be that also there
         # is no QueueID information. Get the default QueueID for this matters.
         if ( !$Param{QueueID} ) {
-            my $Queue = $ConfigObject->Get("Process::DefaultQueue");
+            my $Queue   = $ConfigObject->Get("Process::DefaultQueue");
             my $QueueID = $QueueObject->QueueLookup( Queue => $Queue );
             if ($QueueID) {
                 $Param{QueueID} = $QueueID;
@@ -6135,7 +6135,7 @@ sub _GetOwners {
 
         # show all subscribed users who have the appropriate permission in the queue group
         elsif ( $Param{QueueID} ) {
-            my $GID = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
+            my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Param{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
                 Type    => $PermissionGroupType,

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/Selenium/Agent/AgentTicketEmail.t
+# $origin: otrs - 114796cddcef9760b445844a00011c0326b715c4 - scripts/test/Selenium/Agent/AgentTicketEmail.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -194,9 +194,14 @@ $Selenium->RunTest(
 
         # Verify signature tags like <OTRS_CUSTOMER_DATA_*>, please see bug#12853 for more information.
         #   Select first queue.
-        $Selenium->execute_script(
-            "\$('#Dest').val(\$('#Dest option').filter(function () { return \$(this).html() == '$QueueNames[0]'; } ).val() ).trigger('redraw.InputField').trigger('change');"
+        my $Option = $Selenium->execute_script(
+            "return \$('#Dest option').filter(function () { return \$(this).html() == '$QueueNames[0]'; }).val();"
         );
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => $Option,
+        );
+
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
         # There is no selected customer, should be no replaced tags in signature.
@@ -270,8 +275,12 @@ $Selenium->RunTest(
         );
 
         # Change queue, trigger new signature.
-        $Selenium->execute_script(
-            "\$('#Dest').val(\$('#Dest option').filter(function () { return \$(this).html() == '$QueueNames[1]'; } ).val() ).trigger('redraw.InputField').trigger('change');"
+        $Option = $Selenium->execute_script(
+            "return \$('#Dest option').filter(function () { return \$(this).html() == '$QueueNames[1]'; }).val();"
+        );
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => $Option,
         );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
@@ -436,8 +445,12 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Password",    'css' )->send_keys($TestUserLogin);
         $Selenium->find_element( "#LoginButton", 'css' )->VerifiedClick();
 
-        $Selenium->execute_script(
-            "\$('#Dest').val(\$('#Dest option').filter(function () { return \$(this).html() == '$QueueNames[0]'; } ).val() ).trigger('redraw.InputField').trigger('change');"
+        my $DestValue = $Selenium->execute_script(
+            "return \$('#Dest option').filter(function () { return \$(this).html() == '$QueueNames[0]'; } ).val();"
+        );
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => $DestValue,
         );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 

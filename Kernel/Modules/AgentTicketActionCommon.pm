@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 3436fac0ca3215382993b7cf0589910f951a3c24 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -2136,7 +2136,7 @@ sub _Mask {
             %ShownUsers = %AllGroupsMembers;
         }
         else {
-            my $GID = $QueueObject->GetQueueGroupID( QueueID => $Ticket{QueueID} );
+            my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Ticket{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
                 Type    => 'owner',
@@ -2243,7 +2243,7 @@ sub _Mask {
             %ShownUsers = %AllGroupsMembers;
         }
         else {
-            my $GID = $QueueObject->GetQueueGroupID( QueueID => $Ticket{QueueID} );
+            my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Ticket{QueueID} );
             my %MemberList = $GroupObject->PermissionGroupGet(
                 GroupID => $GID,
                 Type    => 'responsible',
@@ -2470,7 +2470,7 @@ sub _Mask {
             Type  => 'Long',
             Valid => 1,
         );
-        my $GID = $QueueObject->GetQueueGroupID( QueueID => $Ticket{QueueID} );
+        my $GID        = $QueueObject->GetQueueGroupID( QueueID => $Ticket{QueueID} );
         my %MemberList = $GroupObject->PermissionGroupGet(
             GroupID => $GID,
             Type    => 'note',
@@ -3065,7 +3065,7 @@ sub _GetQuotedReplyBody {
         if ( $Param{Body} ) {
             $Param{Body} =~ s/\t/ /g;
             my $Quote = $LayoutObject->Ascii2Html(
-                Text => $ConfigObject->Get('Ticket::Frontend::Quote') || '',
+                Text           => $ConfigObject->Get('Ticket::Frontend::Quote') || '',
                 HTMLResultMode => 1,
             );
             if ($Quote) {

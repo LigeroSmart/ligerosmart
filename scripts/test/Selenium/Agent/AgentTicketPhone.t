@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: otrs - 114796cddcef9760b445844a00011c0326b715c4 - scripts/test/Selenium/Agent/AgentTicketPhone.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -235,7 +235,10 @@ $Selenium->RunTest(
             "#PriorityID updated value",
         );
 # ---
-        $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => '2||Raw',
+        );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
 
         $Selenium->find_element( "#Subject",  'css' )->send_keys($TicketSubject);
@@ -394,7 +397,10 @@ $Selenium->RunTest(
 
         # Select <Queue>.
         my $QueueValue = "$QueueID1||<Queue>$RandomID";
-        $Selenium->execute_script("\$('#Dest').val('$QueueValue').trigger('redraw.InputField').trigger('change');");
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => $QueueValue,
+        );
 
         # Wait for loader.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
@@ -418,7 +424,10 @@ $Selenium->RunTest(
         # Navigate to AgentTicketPhone screen again to check selecting a queue after loading screen.
         $QueueValue = $QueueID2 . "||Junk::SubQueue $RandomID  $RandomID";
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
-        $Selenium->execute_script("\$('#Dest').val('$QueueValue').trigger('redraw.InputField').trigger('change');");
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => $QueueValue,
+        );
 
         # Wait for loader.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
