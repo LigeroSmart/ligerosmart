@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -556,7 +556,7 @@ $Self->True(
     "TicketCreate() successful for Ticket Four ID $TicketID4",
 );
 
-my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+my $ArticleObject        = $Kernel::OM->Get('Kernel::System::Ticket::Article');
 my $ArticleBackendObject = $ArticleObject->BackendForChannel( ChannelName => 'Internal' );
 
 # first article
@@ -2024,7 +2024,7 @@ for my $Test (@Tests) {
             SessionID => $NewSessionID,
             TicketID  => [ $TicketID1, $TicketID2, $TicketID3, $TicketID4 ],
             %{ $Test->{RequestData} },
-            }
+        }
     );
 
     # check result

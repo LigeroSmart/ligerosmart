@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - Kernel/Modules/AdminSLA.pm
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - Kernel/Modules/AdminSLA.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -292,7 +292,7 @@ sub Run {
                     Data => {
                         %SLAData,
                         Service => $ServiceList[0] || '-',
-                        Valid => $ValidList{ $SLAData{ValidID} },
+                        Valid   => $ValidList{ $SLAData{ValidID} },
                     },
                 );
 

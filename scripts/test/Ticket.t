@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/Ticket.t
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - scripts/test/Ticket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -297,7 +297,7 @@ $ArticleObject->ArticleSearchIndexBuild(
 );
 
 my $TicketSearchTicketNumber = substr $Ticket{TicketNumber}, 0, 10;
-my %TicketIDs = $TicketObject->TicketSearch(
+my %TicketIDs                = $TicketObject->TicketSearch(
     Result       => 'HASH',
     Limit        => 100,
     TicketNumber => [ $TicketSearchTicketNumber . '%', '%not exisiting%' ],
@@ -358,6 +358,25 @@ $Self->True(
 $Self->True(
     $TicketIDs{$TicketID},
     'TicketSearch() (HASH:TicketID as ARRAYREF)',
+);
+
+my $ErrorOutput = '';
+
+{
+    local *STDERR;
+    open STDERR, ">>", \$ErrorOutput;
+
+    %TicketIDs = $TicketObject->TicketSearch(
+        TicketID => [],
+        UserID   => 1,
+    );
+}
+
+# Verify that search does not fail SQL syntax check when an empty array reference is passed for the TicketID param.
+#   Please see bug#14227 for more information.
+$Self->False(
+    ( $ErrorOutput =~ m{you have an error in your sql syntax}i ) // 1,
+    'TicketSearch() (HASH:TicketID as an empty ARRAYREF)'
 );
 
 my $Count = $TicketObject->TicketSearch(
@@ -2000,7 +2019,7 @@ my $PendingUntilTime = $Kernel::OM->Create(
         Hour   => '22',
         Minute => '05',
         Second => '00',
-        }
+    }
 )->ToEpoch();
 
 $PendingUntilTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch() - $PendingUntilTime;
@@ -2057,7 +2076,7 @@ $PendingUntilTime = $Kernel::OM->Create(
     'Kernel::System::DateTime',
     ObjectParams => {
         String => '2003-09-14 22:05:00',
-        }
+    }
 )->ToEpoch();
 
 $PendingUntilTime = $Kernel::OM->Create('Kernel::System::DateTime')->ToEpoch() - $PendingUntilTime;

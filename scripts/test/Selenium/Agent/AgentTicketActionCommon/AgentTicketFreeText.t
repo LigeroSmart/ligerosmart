@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - f2d522e3bce54a17870cf51c27f62206d7537b06 - scripts/test/Selenium/Agent/AgentTicketFreeText.t
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - scripts/test/Selenium/Agent/AgentTicketFreeText.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -217,7 +217,7 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 NewOwnerID       => 'OwnerMandatory',
                 NewResponsibleID => 'ResponsibleMandatory',
                 NewStateID       => 'StateMandatory',
-                }
+            }
         );
 
         my @Tests = (
@@ -376,8 +376,9 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
 
             next FREETEXTFIELDS if $FieldID eq 'SLAID';
 
-            $Selenium->execute_script(
-                "\$('#$FieldID').val('$SetFreeTextFields{$FieldID}').trigger('redraw.InputField').trigger('change');"
+            $Selenium->InputFieldValueSet(
+                Element => "#$FieldID",
+                Value   => $SetFreeTextFields{$FieldID},
             );
 
             # Wait for AJAX to finish.
@@ -385,8 +386,9 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
 
             if ( $FieldID eq 'ServiceID' ) {
 
-                $Selenium->execute_script(
-                    "\$('#SLAID').val('$SetFreeTextFields{SLAID}').trigger('redraw.InputField').trigger('change');"
+                $Selenium->InputFieldValueSet(
+                    Element => "#SLAID",
+                    Value   => $SetFreeTextFields{SLAID},
                 );
 
                 # Wait for AJAX to finish.
@@ -451,8 +453,9 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                     $ExpectedErrorFieldID = $FieldID;
                 }
 
-                $Selenium->execute_script(
-                    "\$('#$FieldID').val('$Test->{$FieldID}').trigger('redraw.InputField').trigger('change');"
+                $Selenium->InputFieldValueSet(
+                    Element => "#$FieldID",
+                    Value   => $Test->{$FieldID},
                 );
 
                 # Wait for AJAX to finish.

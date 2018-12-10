@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
+# $origin: otrs - 114796cddcef9760b445844a00011c0326b715c4 - scripts/test/Selenium/Output/Preferences/Agent/CustomService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -139,8 +139,9 @@ $Selenium->RunTest(
         );
 
         # add child service to 'My Services' preference
-        $Selenium->execute_script(
-            "\$('#ServiceID').val('$ServiceIDs[1]').trigger('redraw.InputField').trigger('change');"
+        $Selenium->InputFieldValueSet(
+            Element => '#ServiceID',
+            Value   => $ServiceIDs[1],
         );
 
         # save the setting, wait for the ajax call to finish and check if success sign is shown

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 87629f00b8a02498bf28c802419865b3286ead2e - scripts/test/Console/Command/Admin/Service/Add.t
+# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - scripts/test/Console/Command/Admin/Service/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -120,7 +120,7 @@ $Self->Is(
 # ---
 # ITSMCore
 # ---
-#$ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName );
+#$ExitCode    = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName );
 $ExitCode = $CommandObject->Execute( '--name', $ParentServiceName, '--parent-name', $ServiceName, '--criticality', '3 normal', '--type', 'Demonstration' );
 # ---
 $ServiceName = $ServiceName . '::' . $ParentServiceName;
