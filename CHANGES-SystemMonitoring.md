@@ -1,3 +1,6 @@
+#6.0.5 2018-12-14
+ - Tidied.
+
 #6.0.4 2018-09-15
  - Updated license information.
 
