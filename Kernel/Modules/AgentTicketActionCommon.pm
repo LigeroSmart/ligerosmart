@@ -407,12 +407,13 @@ sub Run {
     if ( $Self->{ITSMIncidentProblemManagement} ) {
 
         # get needed stuff
-        $GetParam{DynamicField_ITSMImpact} = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
-        $GetParam{PriorityRC}              = $ParamObject->GetParam(Param => 'PriorityRC');
-        $GetParam{ElementChanged}          = $ParamObject->GetParam(Param => 'ElementChanged') || '';
+        $GetParam{DynamicField_ITSMCriticality} = $ParamObject->GetParam(Param => 'DynamicField_ITSMCriticality');
+        $GetParam{DynamicField_ITSMImpact}      = $ParamObject->GetParam(Param => 'DynamicField_ITSMImpact');
+        $GetParam{PriorityRC}                   = $ParamObject->GetParam(Param => 'PriorityRC');
+        $GetParam{ElementChanged}               = $ParamObject->GetParam(Param => 'ElementChanged') || '';
 
         # check if priority needs to be recalculated
-        if ( $GetParam{ElementChanged} eq 'ServiceID' || ( $GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' ) ) {
+        if ( $GetParam{ElementChanged} eq 'ServiceID' || $GetParam{ElementChanged} eq 'DynamicField_ITSMImpact' || $GetParam{ElementChanged} eq 'DynamicField_ITSMCriticality' ) {
             $GetParam{PriorityRC} = 1;
         }
 
@@ -426,6 +427,11 @@ sub Run {
             $GetParam{DynamicField_ITSMImpact} = $Ticket{DynamicField_ITSMImpact};
         }
 
+        # set criticality from ticket
+        if ( !defined $GetParam{DynamicField_ITSMCriticality} ) {
+            $GetParam{DynamicField_ITSMCriticality} = $Ticket{DynamicField_ITSMCriticality};
+        }
+
         if ( $GetParam{ServiceID} ) {
 
             # get service
@@ -434,6 +440,10 @@ sub Run {
                 IncidentState => $Config->{ShowIncidentState} || 0,
                 UserID        => $Self->{UserID},
             );
+
+            if ( $GetParam{ElementChanged} eq 'ServiceID' ) {
+                $GetParam{DynamicField_ITSMCriticality} = $Service{Criticality};
+            }
 
             # recalculate impact if impact is not set until now
             if ( !$GetParam{DynamicField_ITSMImpact} && $GetParam{ElementChanged} ne 'DynamicField_ITSMImpact' ) {
@@ -455,14 +465,10 @@ sub Run {
                 if ( $GetParam{DynamicField_ITSMImpact} ) {
 
                     # get priority
-                    $GetParam{PriorityIDFromImpact} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
-                        Criticality => $Service{Criticality},
+                    $GetParam{NewPriorityID} = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
+                        Criticality => $GetParam{DynamicField_ITSMCriticality} || $Service{Criticality},
                         Impact      => $GetParam{DynamicField_ITSMImpact},
                     );
-
-                    if ( $GetParam{PriorityIDFromImpact} ) {
-                        $GetParam{NewPriorityID} = $GetParam{PriorityIDFromImpact};
-                    }
                 }
                 else {
                     $GetParam{NewPriorityID} = '';
@@ -481,8 +487,9 @@ sub Run {
             $GetParam{DynamicField_ITSMImpact} = '';
         }
 
-        # set the selected impact
-        $DynamicFieldValues{ITSMImpact} = $GetParam{DynamicField_ITSMImpact};
+        # set the selected impact and criticality
+        $DynamicFieldValues{ITSMCriticality} = $GetParam{DynamicField_ITSMCriticality} || $Service{Criticality};
+        $DynamicFieldValues{ITSMImpact}      = $GetParam{DynamicField_ITSMImpact};
 
         # Send config data to JS.
         $LayoutObject->AddJSData(
@@ -1354,7 +1361,7 @@ sub Run {
 # ---
 # ITSMIncidentProblemManagement
 # ---
-        if ( $Self->{ITSMIncidentProblemManagement} && ( ($GetParam{ServiceID} && $Service{Criticality} ) || !$GetParam{ServiceID} ) ) {
+        if ( $Self->{ITSMIncidentProblemManagement} && ( $GetParam{DynamicField_ITSMCriticality} || $Service{Criticality} ) ) {
 
             # get config for criticality dynamic field
             my $CriticalityDynamicFieldConfig = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
@@ -1369,11 +1376,16 @@ sub Run {
             # reverse the list to find out the key
             my %ReverseCriticalityPossibleValues = reverse %{ $CriticalityPossibleValues };
 
+            my $Criticality = $Service{Criticality} || '';
+            if ( $Config->{DynamicField}->{ITSMCriticality} ) {
+                $Criticality = $GetParam{DynamicField_ITSMCriticality} || '';
+            }
+
             # set the criticality
             $DynamicFieldBackendObject->ValueSet(
                 DynamicFieldConfig => $CriticalityDynamicFieldConfig,
                 ObjectID           => $Self->{TicketID},
-                Value              => $ReverseCriticalityPossibleValues{ $Service{Criticality} || '' },
+                Value              => $ReverseCriticalityPossibleValues{ $Criticality },
                 UserID             => $Self->{UserID},
             );
         }

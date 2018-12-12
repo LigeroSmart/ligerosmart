@@ -205,6 +205,25 @@ END
         }
     }
 
+    # Define criticality field search pattern, use without the x modifier and non greedy match (.+?)
+    my $CriticalityFieldPattern = '<div class="Row Row_DynamicField_ITSMCriticality">.+?<div class="Clear"></div>\s*</div>';
+
+    # Find criticality field and move before the priority field
+    if ( ${ $Param{Data} } =~ m{($CriticalityFieldPattern)}ms ) {
+
+        my $CriticalityField = $1;
+
+        # Only if priority is visible on the screen
+        if ( ${ $Param{Data} } =~ m{<label for="$PriorityFieldName">.+?</label>}ms ) {
+
+            # remove criticality from the old position
+            ${ $Param{Data} } =~ s{$CriticalityFieldPattern}{}ms;
+
+            # add before the priority field
+            ${ $Param{Data} } =~ s{(<label for="$PriorityFieldName">.+?</label>)}{$CriticalityField\n$1}ms;
+        }
+    }
+
     # Define impact field search pattern, use without the x modifier and non greedy match (.+?)
     my $ImpactFieldPattern = '<div class="Row Row_DynamicField_ITSMImpact">.+?<div class="Clear"></div>\s*</div>';
 
@@ -216,7 +235,7 @@ END
         # Only if priority is visible on the screen
         if ( ${ $Param{Data} } =~ m{<label for="$PriorityFieldName">.+?</label>}ms ) {
 
-            # remove Impact from the old position
+            # remove impact from the old position
             ${ $Param{Data} } =~ s{$ImpactFieldPattern}{}ms;
 
             # add before the priority field

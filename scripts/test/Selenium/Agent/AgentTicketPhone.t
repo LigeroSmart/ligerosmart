@@ -53,6 +53,20 @@ $Selenium->RunTest(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
+# ---
+# ITSMIncidentProblemManagement
+# ---
+
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Ticket::Frontend::AgentTicketPhone###DynamicField',
+            Value => {
+                'ITSMCriticality' => 1,
+                'ITSMDueDate'     => 1,
+                'ITSMImpact'      => 1,
+            },
+        );
+# ---
 
         # Do not check service and type.
         $Helper->ConfigSettingChange(
@@ -129,7 +143,7 @@ $Selenium->RunTest(
 # ---
 # ITSMIncidentProblemManagement
 # ---
-            , qw(TypeID ServiceID OptionLinkTicket DynamicField_ITSMImpact)
+            , qw(TypeID ServiceID OptionLinkTicket DynamicField_ITSMImpact DynamicField_ITSMCriticality)
 # ---
             )
         {
@@ -216,6 +230,14 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( JavaScript => "return \$('#DynamicField_ITSMImpact option[value=\"3 normal\"]').length;" );
         $Selenium->WaitFor( JavaScript => "return \$('#PriorityID option[value=\"4\"]').length;" );
+
+        # Check if ITSMCriticality has correct value, see bug#10550.
+        $Self->Is(
+            $Selenium->find_element( '#DynamicField_ITSMCriticality', 'css' )->get_value(),
+            '5 very high',
+            "#DynamicField_ITSMCriticality updated value",
+        );
+
 
         # Test priority update based on impact value.
         $Self->Is(
@@ -461,7 +483,6 @@ $Selenium->RunTest(
             $Selenium->execute_script("return \$('#ServiceIncidentStateContainer').length;"),
             "Service Incident State is not available when config ShowIncidentState is disabled."
         );
-
 # ---
         # Delete Queues.
         my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
