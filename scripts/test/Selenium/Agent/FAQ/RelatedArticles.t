@@ -18,6 +18,19 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
+        # OTRSBusiness package is required for this test. Skip if it is not available.
+        my $BusinessInstalled = $Kernel::OM->Get('Kernel::System::Main')->Require(
+            'Kernel::Output::HTML::FilterElementPost::FAQAgentRelatedArticles',
+            Silent => 1
+        );
+        if ( !$BusinessInstalled ) {
+            $Self->True(
+                1,
+                "OTRSBusiness is not installed, skip this test."
+            );
+            return 1;
+        }
+
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
         $Helper->ConfigSettingChange(
