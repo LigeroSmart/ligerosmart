@@ -173,6 +173,13 @@ $Selenium->RunTest(
             "#Comment updated value",
         );
 
+        # Click on 'cancel' and verify correct link.
+        $Selenium->find_element( "Cancel", 'link_text' )->VerifiedClick();
+        $Self->True(
+            $Selenium->find_element( $EditCatalogClassItem, 'link_text' ),
+            "Cancel link is correct."
+        );
+
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
         # Delete created test catalog class.

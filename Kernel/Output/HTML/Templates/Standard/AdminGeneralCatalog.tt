@@ -275,13 +275,15 @@
                         <div class="Field SpacingTop">
                             [% IF (Data.Class && Data.Class == 'NEW') || Data.ItemID == 'NEW' %]
                                 <button name="Submit" class="CallForAction Primary" id="Submit" type="submit" value="Submit"><span>[% Translate("Save") | html %]</span></button>
+                                [% Translate("or") | html %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                             [% ELSE %]
                                 <button name="SubmitAndContinue" class="CallForAction Primary" id="SubmitAndContinue" type="button" value="Submit"><span>[% Translate("Save") | html %]</span></button>
                                 [% Translate("or") | html %]
                                 <button name="Submit" class="CallForAction Primary" id="Submit" type="submit" value="Submit"><span>[% Translate("Save and finish") | html %]</span></button>
+                                [% Translate("or") | html %]
+                                <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=ItemList;Class=[% Data.Class %]">[% Translate("Cancel") | html %]</a>
                             [% END %]
-                            [% Translate("or") | html %]
-                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
                         </div>
                         <div class="Clear"></div>
 
