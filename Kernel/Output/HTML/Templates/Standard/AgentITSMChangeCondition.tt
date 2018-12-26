@@ -46,7 +46,7 @@
                                         [% Data.Name | html %]
                                     </a>
                                 </td>
-                                <td>[% Translate(Data.Comment) | html %]</td>
+                                <td>[% Translate(Data.Comment) | truncate(20) | html %]</td>
                                 <td class="Center">[% Translate(Data.Valid) | html %]</td>
                                 <td>[% Data.ChangeTime | Localize("TimeLong") %]</td>
                                 <td class="Center">

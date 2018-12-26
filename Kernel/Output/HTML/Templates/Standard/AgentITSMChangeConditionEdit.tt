@@ -67,7 +67,7 @@
 
                         <label  for="Comment">[% Translate("Comment") | html %]:</label>
                         <div class="Field">
-                            <input type="text" id="Comment" name="Comment" value="[% Data.Comment | html %]" class="W50pc" maxlength="250" />
+                            <textarea id="Comment" name="Comment" class="W50pc" rows="5" cols="60" maxlength="250">[% Data.Comment | html %]</textarea>
                         </div>
                         <div class="Clear"></div>
 
