@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - cbbafc16c1bd8aa7f1651ed93e48a7977de738ae - Kernel/Modules/AgentTicketProcess.pm - rel-6_0_16
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -4867,6 +4867,7 @@ sub _StoreActivityDialog {
             }
 
             # create a new ticket
+            $TicketParam{OwnerID} = 1;
             $TicketID = $TicketObject->TicketCreate(%TicketParam);
 
             if ( !$TicketID ) {
@@ -5565,6 +5566,21 @@ sub _StoreActivityDialog {
             Type         => $Config->{SplitLinkType}->{LinkType} || 'Normal',
             State        => 'Valid',
             UserID       => $Self->{UserID},
+        );
+    }
+
+    if ( $Param{GetParam}->{OwnerID} ) {
+        $TicketObject->TicketOwnerSet(
+            TicketID  => $TicketID,
+            NewUserID => $Param{GetParam}->{OwnerID},
+            UserID    => $Self->{UserID},
+        );
+
+        # set lock
+        $TicketObject->TicketLockSet(
+            TicketID => $TicketID,
+            Lock     => 'lock',
+            UserID   => $Self->{UserID},
         );
     }
 
