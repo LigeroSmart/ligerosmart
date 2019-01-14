@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8ce19805570da1d4442f32f839a33057131e6335 - Kernel/Modules/CustomerTicketProcess.pm
+# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - Kernel/Modules/CustomerTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
