@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - f69ee36c77a8f0e4c60d35cec96a87f162b313e9 - scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t
+# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Stats/TicketSolutionResponseTimeGetStatElement.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
