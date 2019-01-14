@@ -40,6 +40,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t" />
+        <File Permission="660" Location="scripts/test/Ticket/Event/MasterSlave/ReplaceCustomerRealName.t" />
         <File Permission="660" Location="scripts/test/Ticket/Event/MasterSlave.t" />
         <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.Admin.DynamicFieldMasterSlave.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/Core.Agent.TicketMasterSlave.js" />

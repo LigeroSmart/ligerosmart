@@ -436,7 +436,7 @@
         </Value>
     </Setting>
     <Setting Name="ReplaceCustomerRealNameOnSlaveArticleTypes" Required="0" Valid="1">
-        <Description Translatable="1">Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.</Description>
+        <Description Translatable="1">This setting is deprecated and will be removed in further versions of OTRSMasterSlave.</Description>
         <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
         <Value>
             <Hash>
@@ -454,6 +454,17 @@
             </Hash>
         </Value>
     </Setting>
+
+    <Setting Name="ReplaceCustomerRealNameOnSlaveArticleCommunicationChannels" Required="0" Valid="1">
+        <Description Translatable="1">Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.</Description>
+        <Navigation>Frontend::Agent::View::TicketMasterSlave</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Email">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
     <Setting Name="ACLKeysLevel3::Actions###888-OTRSMasterSlave" Required="0" Valid="1">
         <Description Translatable="1">Defines which items are available for 'Action' in third level of the ACL structure.</Description>
         <Navigation>Core::Ticket::ACL</Navigation>

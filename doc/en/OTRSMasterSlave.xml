@@ -333,8 +333,13 @@ shell> bin/otrs.Console.pl Admin::Package::Install /path/to/$Name-$Version.opm
     </section>
     <section>
         <title>ReplaceCustomerRealNameOnSlaveArticleTypes.</title>
-        <para>Navigation: Frontend::Agent::View::TicketMasterSlave.</para>
-        <para>Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.</para>
+        <para>Group: MasterSlave, Subgroup: Frontend::Agent::Ticket::ViewMasterSlave.</para>
+        <para>This setting is deprecated and will be removed in further versions of OTRSMasterSlave.</para>
+    </section>
+    <section>
+        <title>ReplaceCustomerRealNameOnSlaveArticleCommunicationChannels.</title>
+        <para>Group: MasterSlave, Subgroup: Frontend::Agent::Ticket::ViewMasterSlave.</para>
+        <para>Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.</para>
     </section>
     <section>
         <title>Ticket::EventModulePost###MasterSlave.</title>
@@ -746,6 +751,7 @@ shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --directory DynamicField/Mast
         <screen>
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test AgentTicketCreateMasterSlave --test AgentTicketMasterSlave
 shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test TicketBulk/MasterSlave
+shell> perl bin/otrs.Console.pl Dev::UnitTest::Run --test Ticket/Event/MasterSlave/ReplaceCustomerRealName
         </screen>
         <para>Run all available unit tests</para>
         <para>

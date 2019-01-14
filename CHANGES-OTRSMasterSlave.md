@@ -1,4 +1,5 @@
 #6.0.12 20??-??-??
+ - 2019-01-14 Fixed bug#[14350](https://bugs.otrs.org/show_bug.cgi?id=14350) - ReplaceCustomerRealName is not working.
 
 #6.0.11 2018-12-14
  - 2018-12-10 Code cleanup.

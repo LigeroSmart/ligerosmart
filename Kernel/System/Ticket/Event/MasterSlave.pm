@@ -285,10 +285,13 @@ sub Run {
             );
 
             # exchange Customer from MasterTicket for the one into the SlaveTicket
-            my $ReplaceOnNoteTypes = $ConfigObject->Get('ReplaceCustomerRealNameOnSlaveArticleTypes');
+            my $ReplaceOnCommunicationChannels
+                = $ConfigObject->Get('ReplaceCustomerRealNameOnSlaveArticleCommunicationChannels');
+            my $ChannelName = $ArticleBackendObject->ChannelNameGet();
+
             if (
-                defined $ReplaceOnNoteTypes->{ $Article{ArticleType} } &&
-                $ReplaceOnNoteTypes->{ $Article{ArticleType} } eq '1'
+                defined $ReplaceOnCommunicationChannels->{$ChannelName} &&
+                $ReplaceOnCommunicationChannels->{$ChannelName} eq '1'
                 )
             {
                 if ($FirstSlaveTicket) {
@@ -302,7 +305,7 @@ sub Run {
                 }
 
                 my $Search = $CustomerUserObject->CustomerName(
-                    UserLogin => $Article{CustomerUserID},
+                    UserLogin => $Ticket{CustomerUserID},
                 ) || '';
                 my $Replace = $CustomerUserObject->CustomerName(
                     UserLogin => $TicketSlave{CustomerUserID},
