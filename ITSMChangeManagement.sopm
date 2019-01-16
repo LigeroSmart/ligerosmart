@@ -264,6 +264,7 @@
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.CABTemplateEdit.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Condition.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.ConfirmDialog.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.History.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.InvolvedPersons.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.NotificationEvent.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Overview.js" />

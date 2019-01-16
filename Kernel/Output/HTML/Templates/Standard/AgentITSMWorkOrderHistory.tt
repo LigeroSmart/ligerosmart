@@ -56,7 +56,7 @@
                             </td>
                             <td align="center">
 [% RenderBlockStart("ShowWorkOrderZoom") %]
-                                <a class="AsBlock" href="[% Env("Baselink") %]Action=AgentITSMWorkOrderZoom;WorkOrderID=[% Data.WorkOrderID %]">[% Translate("Show workorder") | html %]</a>
+                                <a class="LinkITSMWorkOrderZoomView AsBlock" href="[% Env("Baselink") %]Action=AgentITSMWorkOrderZoom;WorkOrderID=[% Data.WorkOrderID %]">[% Translate("Show workorder") | html %]</a>
 [% RenderBlockEnd("ShowWorkOrderZoom") %]
                             </td>
                             <td>
