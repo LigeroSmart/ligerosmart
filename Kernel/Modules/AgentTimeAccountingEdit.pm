@@ -11,6 +11,7 @@ package Kernel::Modules::AgentTimeAccountingEdit;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(IsArrayRefWithData);
 use Kernel::Language qw(Translatable);
 
 our $ObjectManagerDisabled = 1;
@@ -1211,7 +1212,7 @@ sub Run {
 
     # show "other times" block, if necessary
     if (
-        @{ $CalendarWorkingHours->{ $WeekdayArray[ $Param{Weekday} - 1 ] } }
+        IsArrayRefWithData( $CalendarWorkingHours->{ $WeekdayArray[ $Param{Weekday} - 1 ] } )
         && !$VacationCheck
         )
     {
