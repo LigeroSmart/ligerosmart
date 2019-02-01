@@ -238,7 +238,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         var RemarkRegExpContent = Core.Config.Get('RemarkRegExpContent'),
             // Add some special validation methods for the edit screen
             // Define all available elements (only the prefixes) in a row
-            ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'];
+            ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'],
+            Checked;
 
         // Validates the project: if some other field in this row is filled, the project select must be filled, too
         Core.Form.Validate.AddMethod('Validate_TimeAccounting_Project', function (Value, Element) {
@@ -336,8 +337,9 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
         // Select only one checkbox in the group 'Absence'
         $(".Absence input:checkbox").click(function () {
+            Checked = $(this).prop("checked");
             $(".Absence input:checkbox").prop("checked", false);
-            $(this).prop("checked", true);
+            $(this).prop("checked", Checked);
         });
     };
 

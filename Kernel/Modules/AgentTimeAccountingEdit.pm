@@ -1018,7 +1018,8 @@ sub Run {
             && $Param{Sick}
             )
         {
-            $Param{BlockName} = 'SickLeaveMessage';
+            $Param{BlockName} = $LayoutObject->{LanguageObject}
+                ->Translate('Are you sure you want to use sick leave with time record?');
         }
         elsif (
             $Param{InsertWorkingUnits}
@@ -1027,7 +1028,8 @@ sub Run {
             && $Param{LeaveDay}
             )
         {
-            $Param{BlockName} = 'VacationMessage';
+            $Param{BlockName} = $LayoutObject->{LanguageObject}
+                ->Translate('Are you sure you want to use vacation leave with time record?');
         }
         elsif (
             $Param{InsertWorkingUnits}
@@ -1036,7 +1038,8 @@ sub Run {
             && $Param{Overtime}
             )
         {
-            $Param{BlockName} = 'OvertimeMessage';
+            $Param{BlockName} = $LayoutObject->{LanguageObject}
+                ->Translate('Are you sure you want to use overtime leave with time record?');
         }
     }
 
