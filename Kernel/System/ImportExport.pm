@@ -2334,9 +2334,6 @@ sub Import {
         );
     }
 
-    # Cleanup the cache after import.
-    $CacheObject->CleanUp();
-
     return \%Result;
 }
 
