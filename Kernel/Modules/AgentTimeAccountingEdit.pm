@@ -1019,7 +1019,7 @@ sub Run {
             )
         {
             $Param{BlockName} = $LayoutObject->{LanguageObject}
-                ->Translate('Are you sure you want to use sick leave with time record?');
+                ->Translate('Are you sure that you worked while you were on sick leave?');
         }
         elsif (
             $Param{InsertWorkingUnits}
@@ -1029,7 +1029,7 @@ sub Run {
             )
         {
             $Param{BlockName} = $LayoutObject->{LanguageObject}
-                ->Translate('Are you sure you want to use vacation leave with time record?');
+                ->Translate('Are you sure that you worked while you were on vacation?');
         }
         elsif (
             $Param{InsertWorkingUnits}
@@ -1039,7 +1039,7 @@ sub Run {
             )
         {
             $Param{BlockName} = $LayoutObject->{LanguageObject}
-                ->Translate('Are you sure you want to use overtime leave with time record?');
+                ->Translate('Are you sure that you worked while you were on overtime leave?');
         }
     }
 
@@ -1057,7 +1057,8 @@ sub Run {
         $ErrorNote = Translatable('Can\'t save settings, because a day has only 24 hours!');
     }
     elsif ( $Param{InsertWorkingUnits} && $Param{Total} && $Param{Total} > 16 ) {
-        $Param{BlockName} = 'More16HoursMessage';
+        $Param{BlockName}
+            = $LayoutObject->{LanguageObject}->Translate('Are you sure that you worked more than 16 hours?');
     }
     if ($ErrorNote) {
         if (
