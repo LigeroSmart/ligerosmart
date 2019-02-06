@@ -113,7 +113,10 @@ $Selenium->RunTest(
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#NewCABMember").length;' );
-        sleep 2;
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#NewCABMember',
+            Event       => 'change',
+        );
 
         # Add test created CAB user to test CAB template.
         my $AutoCompleteStringCABUser
@@ -125,6 +128,11 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor(
             JavaScript => "return typeof(\$) === 'function' && \$('#CABAgents$TestUserCABID').length;"
+        );
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#CABAgents$TestUserCABID.DeleteCABMember",
+            Event       => 'click',
         );
 
         # Add test created CAB customer to test CAB template.
@@ -139,15 +147,16 @@ $Selenium->RunTest(
             JavaScript => "return typeof(\$) === 'function' && \$('#CABCustomers$TestCustomerCAB').length;"
         );
 
-        sleep 1;
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#CABCustomers$TestCustomerCAB.DeleteCABMember",
+            Event       => 'click',
+        );
 
         # Save edited CAB template and switch window.
         $Selenium->find_element("//button[\@type='submit'][\@name='Submit']")->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
-
-        sleep(1);
 
         # Navigate to created test change.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
@@ -162,7 +171,10 @@ $Selenium->RunTest(
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeManager").length;' );
-        sleep 2;
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#ChangeManager',
+            Event       => 'change',
+        );
 
         # Input change manager.
         my $AutoCompleteStringManager
