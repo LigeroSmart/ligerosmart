@@ -132,6 +132,7 @@ $Selenium->RunTest(
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketPrint;TicketID=$TicketID\' )]")->click();
 
         # switch to another window
+        $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
