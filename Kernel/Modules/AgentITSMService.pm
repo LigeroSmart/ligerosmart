@@ -11,6 +11,8 @@ package Kernel::Modules::AgentITSMService;
 use strict;
 use warnings;
 
+use Kernel::Language qw(Translatable);
+
 our $ObjectManagerDisabled = 1;
 
 sub new {
@@ -42,9 +44,9 @@ sub Run {
 
     # set incident signal
     my %InciSignals = (
-        operational => 'greenled',
-        warning     => 'yellowled',
-        incident    => 'redled',
+        Translatable('operational') => 'greenled',
+        Translatable('warning')     => 'yellowled',
+        Translatable('incident')    => 'redled',
     );
 
     if ( @{$ServiceList} ) {
