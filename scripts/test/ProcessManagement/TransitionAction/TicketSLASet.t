@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
+# $origin: otrs - 22d4d836f2843dfaa95b6cb1b613424f032f0b9b - scripts/test/ProcessManagement/TransitionAction/TicketSLASet.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -40,10 +40,7 @@ my $RandomID   = $Helper->GetRandomID();
 my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate();
 
 # set user details
-my $TestUserLogin = $Helper->TestUserCreate();
-my $TestUserID    = $Kernel::OM->Get('Kernel::System::User')->UserLookup(
-    UserLogin => $TestUserLogin,
-);
+my ( $TestUserLogin, $TestUserID ) = $Helper->TestUserCreate();
 # ---
 # ITSMCore
 # ---

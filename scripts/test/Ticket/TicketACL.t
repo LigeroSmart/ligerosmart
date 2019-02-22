@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Ticket/TicketACL.t
+# $origin: otrs - 22d4d836f2843dfaa95b6cb1b613424f032f0b9b - scripts/test/Ticket/TicketACL.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -41,22 +41,14 @@ my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
 %ValidList = reverse %ValidList;
 
 # set user options
-my $UserLogin = $Helper->TestUserCreate(
+my ( $UserLogin, $UserID ) = $Helper->TestUserCreate(
     Groups => ['admin'],
-) || die "Did not get test user";
-
-my $UserID = $UserObject->UserLookup(
-    UserLogin => $UserLogin,
 );
 my %UserData = $UserObject->GetUserData(
     UserID => $UserID,
 );
-my $NewUserLogin = $Helper->TestUserCreate(
+my ( $NewUserLogin, $NewUserID ) = $Helper->TestUserCreate(
     Groups => ['admin'],
-) || die "Did not get test user";
-
-my $NewUserID = $UserObject->UserLookup(
-    UserLogin => $NewUserLogin,
 );
 my %NewUserData = $UserObject->GetUserData(
     UserID => $NewUserID,
