@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2018-11-19 19:52+0000\n"
+"PO-Revision-Date: 2019-01-25 13:18+0000\n"
 "Last-Translator: Ricardo von Staa <ricardo.von.staa@otrs.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/otrs/OTRS/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -595,7 +595,7 @@ msgstr "FAQ Tempo de Alteração do Item (entre)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (between)"
-msgstr ""
+msgstr "Tempo de Alteração de FAQ (entre)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Equals"
@@ -846,7 +846,7 @@ msgid ""
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
 "Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
 "settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr ""
+msgstr "Definir quais colunas são apresentadas no widget de FAQ associado (LinkObject::ViewMode = \"complex\"). Observação: Somente atributos de FAQ e Campos Dinâmicos (DynamicField_NomeX) são permitidos para Colunas Padrão. Definições Possíveis: 0 = Inativo, 1 = Ativo, 2 = Ativado como padrão."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."

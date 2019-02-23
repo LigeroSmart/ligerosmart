@@ -429,7 +429,7 @@ sub Data {
         'Lista de tipos de estado que pueden ser usados en la interface de clientes.';
     $Self->{Translation}->{'List of state types which can be used in the public interface.'} =
         'Lista de tipos de estado que pueden ser usados en la interface pública.';
-    $Self->{Translation}->{'Loader module registration for the public interface.'} = 'Registro de módulo "Loader" en la interfaz pública.';
+    $Self->{Translation}->{'Loader module registration for the public interface.'} = 'Registro del módulo cargador para la interfaz pública.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} =
         'Número máximo de artículos FAQ a mostrar en los resultados del explorador FAQ de la interfaz del agente.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} =

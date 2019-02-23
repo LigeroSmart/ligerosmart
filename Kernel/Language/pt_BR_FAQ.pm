@@ -224,7 +224,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'FAQ Tempo de Criação de Item (antes/depois)';
     $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'FAQ Tempo de Criação de Item (entre)';
     $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'FAQ Tempo de Alteração do Item (entre)';
-    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'Tempo de Alteração de FAQ (entre)';
     $Self->{Translation}->{'Equals'} = 'Iguais';
     $Self->{Translation}->{'Greater than'} = 'Maior que';
     $Self->{Translation}->{'Greater than equals'} = 'Maior-igual que';
@@ -318,7 +318,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Define se o título do FAQ deve ser concatenado ao assunto do artigo.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '';
+        'Definir quais colunas são apresentadas no widget de FAQ associado (LinkObject::ViewMode = "complex"). Observação: Somente atributos de FAQ e Campos Dinâmicos (DynamicField_NomeX) são permitidos para Colunas Padrão. Definições Possíveis: 0 = Inativo, 1 = Ativo, 2 = Ativado como padrão.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Define um módulo de resumo para mostrar a visualização pequena de um jornal FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
