@@ -310,7 +310,9 @@ sub _BuildRelatedFAQArticleList {
 
     # Sort the results from the plug-ins by 'keyword quantifier', 'change time' and 'id (create time)'.
     @RelatedFAQArticleList = sort {
-        $b->{KeywordCounter} <=> $a->{KeywordCounter} || $b->{Changed} cmp $a->{Changed} || $b->{ID} cmp $a->{ID}
+        $b->{KeywordCounter} <=> $a->{KeywordCounter}
+            || $b->{Changed} cmp $a->{Changed}
+            || int $b->{ID} <=> int $a->{ID}
     } @RelatedFAQArticleList;
 
     # Cut the not needed articles from the array, if a limit is given.
