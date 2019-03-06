@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
+# $origin: otrs - 0570415c38f4763c035b8dfd2166e24f5697287c - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1438,7 +1438,7 @@ my @Tests = (
             TicketCreateTimeNewerDate => $Kernel::OM->Create(
                 'Kernel::System::DateTime',
                 ObjectParams => {
-                    Epoch => $StartTime->ToEpoch() + 10,
+                    Epoch => $StartTime->ToEpoch() + 100,
                 },
             )->ToString(),
             SortBy  => 'Ticket',    # force order, because the Age (default) can be the same

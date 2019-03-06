@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Output/PDFTicket.t
+# $origin: otrs - c0be9f23c12e8b0ffd1c672966c2025c05309e1a - scripts/test/Selenium/Output/PDFTicket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1063,6 +1063,15 @@ $Helper->ConfigSettingChange(
                 TicketID => $Ticket->{ID},
                 UserID   => 1,
             );
+
+            # Ticket deletion could fail if apache still writes to ticket history. Try again in this case.
+            if ( !$Success ) {
+                sleep 3;
+                $Success = $TicketObject->TicketDelete(
+                    TicketID => $Ticket->{ID},
+                    UserID   => 1,
+                );
+            }
             $Self->True(
                 $Success,
                 "TicketID $Ticket->{ID} is deleted",
