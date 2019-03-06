@@ -65,7 +65,6 @@ $Selenium->RunTest(
             JavaScript =>
                 'return typeof($) === "function" && $("a[href*=\'Action=AgentLinkObject;SourceObject=FAQ\']").length;'
         );
-        sleep 1;
 
         # Click on 'Link'.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->click();
@@ -74,12 +73,19 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length;' );
+
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $("input[name=\'SEARCH::Title\']").length && $("button[type=submit]").length;'
+        );
 
         # Link two test created FAQs.
         $Selenium->find_element("//input[\@name='SEARCH::Title']")->send_keys( $FAQTitles[1] );
         $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
-        sleep 1;
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#LinkTargetKeys",
+        );
 
         $Selenium->find_element( "#LinkTargetKeys", 'css' )->click();
         $Selenium->WaitFor( JavaScript => 'return $("#LinkTargetKeys:checked").length;' );
@@ -98,7 +104,6 @@ $Selenium->RunTest(
             JavaScript =>
                 'return typeof($) === "function" && $("a[href*=\'Action=AgentLinkObject;SourceObject=FAQ\']").length;'
         );
-        sleep 1;
 
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) > -1,
@@ -114,7 +119,6 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[1] );
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a[href*=\'#ManageLinks\']").length;' );
-        sleep 1;
 
         # Delete link relation.
         $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->click();
