@@ -95,11 +95,9 @@ $Selenium->RunTest(
         # Navigate to zoom view of created test FAQ item.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof($) === "function" && $("a[href*=\'Action=AgentLinkObject;SourceObject=FAQ;\']").length;'
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "a[href*='Action=AgentLinkObject;SourceObject=FAQ']",
         );
-        sleep 1;
 
         # Click on 'Link'.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->click();
@@ -112,8 +110,12 @@ $Selenium->RunTest(
 
         # Search for second created test faq.
         $Selenium->find_element(".//*[\@id='SEARCH::Number']")->send_keys( $FAQNumbers[1] );
+
         $Selenium->find_element( '#SubmitSearch', 'css' )->VerifiedClick();
-        sleep 1;
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "input[value='$ItemIDs[1]'][type='checkbox']",
+        );
 
         # Link created test FAQ items.
         $Selenium->find_element("//input[\@value='$ItemIDs[1]'][\@type='checkbox']")->click();
@@ -124,8 +126,14 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#TypeIdentifier').val('ParentChild::Target').trigger('redraw.InputField').trigger('change');"
         );
-        sleep 1;
-        $Selenium->find_element("//button[\@type='submit'][\@name='AddLinks']")->VerifiedClick();
+
+        $Selenium->WaitFor( JavaScript => 'return $("#TypeIdentifier").val() === "ParentChild::Target";' );
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#AddLinks",
+        );
+
+        $Selenium->find_element( "#AddLinks", 'css' )->VerifiedClick();
 
         # Close link object window and switch back to agent FAQ zoom.
         $Selenium->close();
@@ -338,8 +346,13 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a[href=\'#ManageLinks\']").length;' );
-        sleep 1;
+
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("div[data-id=ManageLinks]").length;'
+        );
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "a[href='#ManageLinks']",
+        );
 
         # Click on 'go to link delete screen'.
         $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->click();
@@ -361,7 +374,11 @@ $Selenium->RunTest(
             "$ShortTitle - found in LinkDelete screen",
         );
 
-        $Selenium->find_element("//input[\@id='SelectAllLinks0']")->click();
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#SelectAllLinks0",
+        );
+
+        $Selenium->find_element( "#SelectAllLinks0", 'css' )->click();
         $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length;' );
 
         $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
