@@ -85,10 +85,19 @@ $Selenium->RunTest(
 
         $Selenium->WaitForjQueryEventBound(
             CSSSelector => "#LinkTargetKeys",
+            Event       => 'click',
+        );
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#LinkTargetKeys",
+            Event       => 'change',
         );
 
         $Selenium->find_element( "#LinkTargetKeys", 'css' )->click();
         $Selenium->WaitFor( JavaScript => 'return $("#LinkTargetKeys:checked").length;' );
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#AddLinks",
+        );
 
         $Selenium->find_element( "#AddLinks", 'css' )->VerifiedClick();
         $Selenium->close();
@@ -118,11 +127,20 @@ $Selenium->RunTest(
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("a[href*=\'#ManageLinks\']").length;' );
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("div[data-id=ManageLinks]").length;'
+        );
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "a[href='#ManageLinks']",
+        );
 
         # Delete link relation.
         $Selenium->find_element("//a[contains(\@href, \'#ManageLinks' )]")->click();
         $Selenium->WaitFor( JavaScript => 'return $("div[data-id=ManageLinks].Active").length;' );
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#SelectAllLinks0",
+        );
 
         $Selenium->find_element( "#SelectAllLinks0", 'css' )->click();
         $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length;' );
