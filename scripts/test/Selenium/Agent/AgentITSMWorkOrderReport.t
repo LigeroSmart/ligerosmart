@@ -75,27 +75,10 @@ $Selenium->RunTest(
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # Navigate to AgentITSMWorkOrderZoom for test created work order.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
-
         # Get work order states.
         my @WorkOrderStates = ( 'accepted', 'ready', 'in progress', 'closed' );
 
         for my $WorkOrderState (@WorkOrderStates) {
-
-            # Click on 'Report' and switch window.
-            $Selenium->find_element(
-                "//a[contains(\@href, \'Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID')]"
-            )->click();
-
-            $Selenium->WaitFor( WindowCount => 2 );
-            my $Handles = $Selenium->get_window_handles();
-            $Selenium->switch_to_window( $Handles->[1] );
-
-            # Wait until page has loaded, if necessary.
-            $Selenium->WaitFor(
-                JavaScript => 'return typeof($) === "function" && $("#SubmitWorkOrderEditReport").length;'
-            );
 
             # Get work order state data.
             my $ItemGetState          = lc $WorkOrderState;
@@ -104,33 +87,29 @@ $Selenium->RunTest(
                 Name  => $ItemGetState,
             );
 
-            # Input text in report and select next work order state.
-            $Selenium->find_element( "#RichText", 'css' )->clear();
-            $Selenium->find_element( "#RichText", 'css' )->send_keys("$WorkOrderState");
-            $Selenium->execute_script(
-                "\$('#WorkOrderStateID').val('$WorkOrderStateDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
-            );
-
-            # Submit and switch back window.
-            $Selenium->find_element( "#SubmitWorkOrderEditReport", 'css' )->click();
-
-            $Selenium->WaitFor( WindowCount => 1 );
-            $Selenium->switch_to_window( $Handles->[0] );
+            # Navigate to AgentITSMWorkOrderReport for test created work order.
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID");
 
             $Selenium->WaitFor(
                 JavaScript =>
-                    "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID\"]').length"
+                    'return typeof($) === "function" && $("#SubmitWorkOrderEditReport").length && $("#WorkOrderStateID").length;'
             );
-            sleep 2;
+            $Selenium->execute_script(
+                "\$('#WorkOrderStateID').val('$WorkOrderStateDataRef->{ItemID}').trigger('redraw.InputField').trigger('change');"
+            );
+            $Selenium->WaitFor(
+                JavaScript => "return \$('#WorkOrderStateID').val() === '$WorkOrderStateDataRef->{ItemID}';"
+            );
 
-            # Click on 'History' and switch window.
-            $Selenium->find_element(
-                "//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]"
-            )->click();
+            # Input text in report and select next work order state.
+            $Selenium->find_element( "#RichText", 'css' )->clear();
+            $Selenium->find_element( "#RichText", 'css' )->send_keys("$WorkOrderState");
 
-            $Selenium->WaitFor( WindowCount => 2 );
-            $Handles = $Selenium->get_window_handles();
-            $Selenium->switch_to_window( $Handles->[1] );
+            # Submit and switch back window.
+            $Selenium->find_element( "#SubmitWorkOrderEditReport", 'css' )->VerifiedClick();
+
+            # Navigate to AgentITSMWorkOrderZoom for test created work order.
+            $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID");
 
             # Wait until page has loaded, if necessary.
             $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
@@ -142,14 +121,6 @@ $Selenium->RunTest(
                 index( $Selenium->get_page_source(), $ReportUpdateMessage ) > -1,
                 "$ReportUpdateMessage is found",
             );
-
-            # Close history pop up and switch window.
-            $Selenium->find_element( ".CancelClosePopup", 'css' )->click();
-
-            $Selenium->WaitFor( WindowCount => 1 );
-            $Selenium->switch_to_window( $Handles->[0] );
-
-            $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length;' );
         }
 
         # Delete test created work order.
