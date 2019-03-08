@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 0570415c38f4763c035b8dfd2166e24f5697287c - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t
+# $origin: otrs - 0570415c38f4763c035b8dfd2166e24f5697287c - scripts/test/GenericInterface/Operation/Ticket/TicketSearch.t - rel-6_0_18
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
