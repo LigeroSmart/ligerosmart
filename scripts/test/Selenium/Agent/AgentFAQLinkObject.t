@@ -111,7 +111,7 @@ $Selenium->RunTest(
         # Search for second created test faq.
         $Selenium->find_element(".//*[\@id='SEARCH::Number']")->send_keys( $FAQNumbers[1] );
 
-        $Selenium->find_element( '#SubmitSearch', 'css' )->VerifiedClick();
+        $Selenium->execute_script("\$('#SubmitSearch').click();");
 
         $Selenium->WaitForjQueryEventBound(
             CSSSelector => "input[value='$ItemIDs[1]'][type='checkbox']",
