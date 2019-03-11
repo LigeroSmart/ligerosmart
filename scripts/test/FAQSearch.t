@@ -900,7 +900,7 @@ $Self->True(
     $Helper->FixedTimeAddSeconds(60);
 
     my $ItemID2 = $FAQObject->FAQAdd(
-        Title       => 'Title',
+        Title       => 'Title' . $RandomID,
         CategoryID  => 1,
         StateID     => 1,
         LanguageID  => 1,
@@ -1122,7 +1122,8 @@ $Self->True(
         {
             Name   => 'Title',
             Config => {
-                Title   => 'tITLe',
+                Title => 'tITLe' . $RandomID,
+                ,
                 What    => 'l',
                 OrderBy => ['Created'],
             },
