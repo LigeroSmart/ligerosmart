@@ -92,20 +92,9 @@ $Selenium->RunTest(
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # Navigate to zoom view of created test FAQ item.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
+        # Navigate to link object screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentLinkObject;SourceObject=FAQ;SourceKey=$ItemIDs[0]");
 
-        $Selenium->WaitForjQueryEventBound(
-            CSSSelector => "a[href*='Action=AgentLinkObject;SourceObject=FAQ']",
-        );
-
-        # Click on 'Link'.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->click();
-
-        # Switch to link object window.
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#SubmitSearch").length;' );
 
         # Search for second created test faq.
@@ -113,8 +102,13 @@ $Selenium->RunTest(
 
         $Selenium->execute_script("\$('#SubmitSearch').click();");
 
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('#WidgetFAQ').length && \$('input[value=$ItemIDs[1]][type=checkbox]').length;"
+        );
+
         $Selenium->WaitForjQueryEventBound(
-            CSSSelector => "input[value='$ItemIDs[1]'][type='checkbox']",
+            CSSSelector => "#AddLinks",
         );
 
         # Link created test FAQ items.
@@ -129,18 +123,10 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( JavaScript => 'return $("#TypeIdentifier").val() === "ParentChild::Target";' );
 
-        $Selenium->WaitForjQueryEventBound(
-            CSSSelector => "#AddLinks",
-        );
-
         $Selenium->find_element( "#AddLinks", 'css' )->VerifiedClick();
 
-        # Close link object window and switch back to agent FAQ zoom.
-        $Selenium->close();
-        $Selenium->switch_to_window( $Handles->[0] );
-
-        # Refresh agent FAQ zoom.
-        $Selenium->VerifiedRefresh();
+        # Navigate to zoom view of created test FAQ item.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
         # Verify that parent test FAQ is linked with child test FAQ.
         $Self->True(
@@ -339,13 +325,8 @@ $Selenium->RunTest(
             );
         }
 
-        # Click on 'Link'.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ;' )]")->click();
-
-        # Switch to link object window.
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to link object screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentLinkObject;SourceObject=FAQ;SourceKey=$ItemIDs[0]");
 
         $Selenium->WaitFor(
             JavaScript => 'return typeof($) === "function" && $("div[data-id=ManageLinks]").length;'
@@ -382,13 +363,6 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length;' );
 
         $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
-        $Selenium->close();
-
-        # Wait till popup is closed.
-        $Selenium->WaitFor( WindowCount => 1 );
-
-        # Switch to 1st window.
-        $Selenium->switch_to_window( $Handles->[0] );
 
         # Delete created test tickets.
         for my $ItemID (@ItemIDs) {
