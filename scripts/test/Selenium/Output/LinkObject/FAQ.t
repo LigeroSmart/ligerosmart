@@ -58,21 +58,8 @@ $Selenium->RunTest(
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # Navigate to AgentFAQZoom of created FAQ.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
-
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof($) === "function" && $("a[href*=\'Action=AgentLinkObject;SourceObject=FAQ\']").length;'
-        );
-
-        # Click on 'Link'.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->click();
-
-        # Switch to link object window.
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to link object screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentLinkObject;SourceObject=FAQ;SourceKey=$ItemIDs[0]");
 
         $Selenium->WaitFor(
             JavaScript =>
@@ -100,32 +87,17 @@ $Selenium->RunTest(
         );
 
         $Selenium->find_element( "#AddLinks", 'css' )->VerifiedClick();
-        $Selenium->close();
 
-        # Back to AgentFAQZoom.
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
-
-        # Verify FAQ link.
-        $Selenium->VerifiedRefresh();
-
-        $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof($) === "function" && $("a[href*=\'Action=AgentLinkObject;SourceObject=FAQ\']").length;'
-        );
+        # Navigate to AgentFAQZoom of created FAQ.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) > -1,
             "Test ticket title $FAQTitles[1] is found",
         );
 
-        # Click on 'Link' and switch screens.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentLinkObject;SourceObject=FAQ' )]")->click();
-
-        # Switch to link object window.
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to link object screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentLinkObject;SourceObject=FAQ;SourceKey=$ItemIDs[0]");
 
         $Selenium->WaitFor(
             JavaScript => 'return typeof($) === "function" && $("div[data-id=ManageLinks]").length;'
@@ -146,14 +118,11 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return $("#FAQ .DataTable input[type=checkbox]:checked").length;' );
 
         $Selenium->find_element("//button[\@title='Delete links']")->VerifiedClick();
-        $Selenium->close();
 
-        # Back to AgentFAQZoom.
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
+        # Navigate to AgentFAQZoom of created FAQ.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQZoom;ItemID=$ItemIDs[0]");
 
         # Verify that link has been removed.
-        $Selenium->VerifiedRefresh();
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitles[1] ) == -1,
             "$FAQTitles[1] is not found",
