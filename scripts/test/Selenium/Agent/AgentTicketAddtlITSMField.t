@@ -102,14 +102,7 @@ $Selenium->RunTest(
             JavaScript => 'return typeof($) === "function" && $(".Cluster").length'
         );
 
-        # force sub menus to be visible in order to be able to click one of the links
-        $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
-
-        # click on history link and switch window
-        $Selenium->find_element("//*[text()='History']")->click();
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketID");
 
         # wait until page has loaded, if necessary
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
