@@ -17,15 +17,15 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 $Selenium->RunTest(
     sub {
 
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper          = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $ChangeObject    = $Kernel::OM->Get('Kernel::System::ITSMChange');
+        my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
         # Get change state data.
         my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
-
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
         # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
@@ -40,8 +40,6 @@ $Selenium->RunTest(
             $ChangeID,
             "$ChangeTitleRandom is created",
         );
-
-        my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
         # Create test work order.
         my $WorkOrderTitleRandom = 'Selenium Work Order ' . $Helper->GetRandomID();
@@ -75,41 +73,22 @@ $Selenium->RunTest(
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMWorkOrderZoom for test created work order.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID");
-        sleep 1;
+        # Navigate to AgentITSMWorkOrderAgent screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderAgent;WorkOrderID=$WorkOrderID");
 
-        # Click on 'Workorder Agent' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderAgent;WorkOrderID=$WorkOrderID')]")
-            ->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#User").length;' );
-        sleep 1;
 
         # Input work order agent.
         $Selenium->find_element( "#User", 'css' )->send_keys($TestUserLogin);
         $Selenium->WaitFor( JavaScript => 'return $("li.ui-menu-item:visible").length;' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestUserLogin)').click();");
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->WaitFor( JavaScript => "return \$('#User').val().length;" );
 
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        $Selenium->VerifiedRefresh();
-
-        # Click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID')]")
-            ->click();
-        sleep 1;
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to AgentITSMWorkOrderHistory screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderHistory;WorkOrderID=$WorkOrderID");
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
