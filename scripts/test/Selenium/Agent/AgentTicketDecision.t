@@ -87,7 +87,7 @@ $Selenium->RunTest(
         # Check for decision TicketDynamicFieldUpdates.
         for my $UpdateText (qw(Result Date)) {
             $Self->True(
-                index( $Selenium->get_page_source(), "Updated: FieldName=ITSMDecision$UpdateText" ) > -1,
+                index( $Selenium->get_page_source(), "Changed dynamic field ITSMDecision$UpdateText" ) > -1,
                 "DynamicFieldUpdate decision $UpdateText - found",
             ) || die;
         }
