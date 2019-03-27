@@ -89,7 +89,7 @@ $Selenium->RunTest(
             $Self->True(
                 index( $Selenium->get_page_source(), "Updated: FieldName=ITSMDecision$UpdateText" ) > -1,
                 "DynamicFieldUpdate decision $UpdateText - found",
-            );
+            ) || die;
         }
 
         # Delete test tickets.
