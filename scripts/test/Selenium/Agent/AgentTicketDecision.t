@@ -75,6 +75,7 @@ $Selenium->RunTest(
             "\$('#DynamicField_ITSMDecisionResult').val('Rejected').trigger('redraw.InputField').trigger('change');"
         );
         $Selenium->find_element( "#DynamicField_ITSMDecisionDateUsed", 'css' )->click();
+        $Selenium->WaitFor( JavaScript => 'return $("#DynamicField_ITSMDecisionDateUsed").prop("checked") === true;' );
         $Selenium->find_element("//button[\@type='submit']")->VerifiedClick();
 
         # Navigate to AgentTicketHistory screen.
