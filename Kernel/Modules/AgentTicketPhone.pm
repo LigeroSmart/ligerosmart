@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - dae8a22b47fc5d073beefc863de22a1172c22141 - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -513,7 +513,7 @@ sub Run {
             my $CustomerError    = '';
             my $CustomerErrorMsg = 'CustomerGenericServerErrorMsg';
             my $CustomerDisabled = '';
-            my $CustomerSelected = ( $CountFrom eq '1' ? 'checked="checked"' : '' );
+            my $CustomerSelected = $CountFrom eq '1' ? 'checked="checked"' : '';
             my $EmailAddress     = $Email->address();
             if ( !$CheckItemObject->CheckEmail( Address => $EmailAddress ) )
             {
@@ -533,6 +533,11 @@ sub Run {
                 $CountAux         = $CountFrom . 'Error';
             }
 
+            my $Phrase = '';
+            if ( $Email->phrase() ) {
+                $Phrase = $Email->phrase();
+            }
+
             my $CustomerKey = '';
             if (
                 defined $CustomerDataFrom{UserEmail}
@@ -541,10 +546,29 @@ sub Run {
             {
                 $CustomerKey = $Article{CustomerUserID};
             }
+            elsif ($EmailAddress) {
+                my %List = $CustomerUserObject->CustomerSearch(
+                    PostMasterSearch => $EmailAddress,
+                );
+
+                for my $UserLogin ( sort keys %List ) {
+
+                    # Set right one if there is more than one customer user with the same email address.
+                    if ( $Phrase && $List{$UserLogin} =~ /$Phrase/ ) {
+                        $CustomerKey = $UserLogin;
+                    }
+                }
+            }
 
             my $CustomerElement = $EmailAddress;
-            if ( $Email->phrase() ) {
-                $CustomerElement = $Email->phrase() . " <$EmailAddress>";
+            if ($Phrase) {
+                $CustomerElement = $Phrase . " <$EmailAddress>";
+            }
+
+            if ( $CustomerSelected && $CustomerKey ) {
+                %CustomerData = $CustomerUserObject->CustomerUserDataGet(
+                    User => $CustomerKey,
+                );
             }
 
             push @MultipleCustomer, {
