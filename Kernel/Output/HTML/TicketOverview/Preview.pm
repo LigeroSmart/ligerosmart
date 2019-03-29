@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - Kernel/Output/HTML/TicketOverview/Preview.pm
+# $origin: otrs - 18b4b20d0d11ef62f20a9250388c8aa37700e87f - Kernel/Output/HTML/TicketOverview/Preview.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -259,6 +259,22 @@ sub Run {
     my $CounterOnSite = 0;
     my @TicketIDsShown;
 
+    my $ArticleObject             = $Kernel::OM->Get('Kernel::System::Ticket::Article');
+    my $PreviewArticleSenderTypes = $ConfigObject->Get('Ticket::Frontend::Overview::PreviewArticleSenderTypes');
+    my %PreviewArticleSenderTypeIDs;
+    if ( IsHashRefWithData($PreviewArticleSenderTypes) ) {
+
+        KEY:
+        for my $Key ( %{$PreviewArticleSenderTypes} ) {
+            next KEY if !$PreviewArticleSenderTypes->{$Key};
+
+            my $ID = $ArticleObject->ArticleSenderTypeLookup( SenderType => $Key );
+            if ($ID) {
+                $PreviewArticleSenderTypeIDs{$ID} = 1;
+            }
+        }
+    }
+
     # check if there are tickets to show
     if ( scalar @{ $Param{TicketIDs} } ) {
 
@@ -271,11 +287,12 @@ sub Run {
             {
                 push @TicketIDsShown, $TicketID;
                 my $Output = $Self->_Show(
-                    TicketID => $TicketID,
-                    Counter  => $CounterOnSite,
-                    Bulk     => $BulkFeature,
-                    Config   => $Param{Config},
-                    Output   => $Param{Output} || '',
+                    TicketID                    => $TicketID,
+                    Counter                     => $CounterOnSite,
+                    Bulk                        => $BulkFeature,
+                    Config                      => $Param{Config},
+                    Output                      => $Param{Output} || '',
+                    PreviewArticleSenderTypeIDs => \%PreviewArticleSenderTypeIDs,
                 );
                 $CounterOnSite++;
                 if ( !$Param{Output} ) {
@@ -383,7 +400,15 @@ sub _Show {
 
     my @ArticleBody;
     my %Article;
+
+    ARTICLE:
     for my $Article (@Articles) {
+
+        # Check if certain article sender types should be excluded from preview.
+        next ARTICLE
+            if IsHashRefWithData( $Param{PreviewArticleSenderTypeIDs} )
+            && !$Param{PreviewArticleSenderTypeIDs}->{ $Article->{SenderTypeID} };
+
         my $ArticleBackendObject = $ArticleObject->BackendForArticle( %{$Article} );
 
         my %ArticleData = $ArticleBackendObject->ArticleGet(
