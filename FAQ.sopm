@@ -327,14 +327,6 @@
                 <IndexColumn Name="item_id" />
             </Index>
         </TableCreate>
-        <Insert Table="faq_history">
-            <Data Key="name" Type="Quote">Created</Data>
-            <Data Key="item_id">1</Data>
-            <Data Key="created">current_timestamp</Data>
-            <Data Key="created_by">1</Data>
-            <Data Key="changed">current_timestamp</Data>
-            <Data Key="changed_by">1</Data>
-        </Insert>
         <TableCreate Name="faq_attachment">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT" />
             <Column Name="faq_id" Required="true" Type="BIGINT" />
