@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2018-06-06 13:57+0000\n"
+"POT-Creation-Date: 2019-04-02 06:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,15 @@ msgid "Import/Export Management"
 msgstr ""
 
 #. Template: AdminImportExport
+msgid "Add template"
+msgstr ""
+
+#. Template: AdminImportExport
 msgid "Create a template to import and export object information."
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
 msgstr ""
 
 #. Template: AdminImportExport
@@ -24,6 +32,10 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Start Export"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Delete this template"
 msgstr ""
 
 #. Template: AdminImportExport
@@ -104,6 +116,10 @@ msgstr ""
 
 #. Template: AdminImportExport
 msgid "Ok"
+msgstr ""
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
@@ -200,6 +216,18 @@ msgstr ""
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "There was an error deleting the template. Please check the logs for more information."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
 msgstr ""
 
 #. SysConfig

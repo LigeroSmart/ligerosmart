@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Увоз/Извоз управљање';
+    $Self->{Translation}->{'Add template'} = 'Додај шаблон';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Креирај шаблон за увоз и извоз информација о објекту.';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        'За коришћење овог модула, морате инсталирати ITSMConfigurationManagement или неки други пакет који обезбеђује позадинске модуле за ентитете увоза и извоза.';
     $Self->{Translation}->{'Start Import'} = 'Почни увоз';
     $Self->{Translation}->{'Start Export'} = 'Почни извоз';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Корак 1 од 5 - Уреди заједничке информације';
     $Self->{Translation}->{'Name is required!'} = 'Име је обавезно!';
     $Self->{Translation}->{'Object is required!'} = 'Објект је обавезан!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Дупликат имена';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Број последње обрађене линије увезене датотеке';
     $Self->{Translation}->{'Ok'} = 'У реду';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = 'Да ли стварно желите да обришете овај шаблон?';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = 'Није пронађен позадински модул објекта!';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Укључи наслове колона';
     $Self->{Translation}->{'Column'} = 'Колона';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = 'Брисање шаблона...';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        'Грешка приликом брисања шаблона. Молимо проверите лог датотеку за више информација.';
+    $Self->{Translation}->{'Template was deleted successfully.'} = 'Шаблон је успешно обрисан.';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Формат регистрације „backend” модула за увоз/извоз модул.';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

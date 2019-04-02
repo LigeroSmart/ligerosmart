@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Usimamizi wa kuleta/Hamisha';
+    $Self->{Translation}->{'Add template'} = 'Ongeza kielezo';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tengeneza kiolezo kuleta na kuhamisha taarifa za kipengee';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'Anza kuleta';
     $Self->{Translation}->{'Start Export'} = 'Anza kuhamisha';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = 'Jina linahitajika!';
     $Self->{Translation}->{'Object is required!'} = 'Kipengee kinahitajika!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Jina limejirudia:';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Namba ya mstari unaokatika mchakato wa mwisho wa faili lililoletwa';
     $Self->{Translation}->{'Ok'} = 'Sawa';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Ambatisha vichwa vya habari vya safuwima';
     $Self->{Translation}->{'Column'} = 'Safuwima';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Umbiza usajili wa moduli wa mazingira ya nyuma kwa ajili ya moduli ya kuleta/kuhamisha';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

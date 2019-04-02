@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = '导入/导出管理';
+    $Self->{Translation}->{'Add template'} = '添加模板';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '创建模板导入和导出对象信息。';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = '开始导入';
     $Self->{Translation}->{'Start Export'} = '开始导出';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '步骤 1/5 - 编辑通用信息';
     $Self->{Translation}->{'Name is required!'} = '命名是必需的！';
     $Self->{Translation}->{'Object is required!'} = '对象是必需的！';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = '重复的名称';
     $Self->{Translation}->{'Last processed line number of import file'} = '导入文件最后处理的行数';
     $Self->{Translation}->{'Ok'} = '确定';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '没有找到对象的后端！';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = '包括列标题';
     $Self->{Translation}->{'Column'} = '列';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         '为导入/导出模块的格式后端模块注册。';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

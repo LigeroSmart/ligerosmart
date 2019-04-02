@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Quản lý Nhập/Xuất';
+    $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Tạo một mẫu để nhập và xuất thông tin đối tượng.';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'Bắt đầu nhập vào';
     $Self->{Translation}->{'Start Export'} = 'Bắt đầu xuất ra';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = 'Yêu cầu phải có tên!';
     $Self->{Translation}->{'Object is required!'} = 'Yêu cầu phải có đối tượng!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Trùng tên';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Dòng cuối cùng được xử lý trong tệp nhập vào';
     $Self->{Translation}->{'Ok'} = 'Đồng ý';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Gồm tiêu đề cột';
     $Self->{Translation}->{'Column'} = 'Cột';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Đăng ký mô-đun định dạng nền cho mô-đun nhập/xuất';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

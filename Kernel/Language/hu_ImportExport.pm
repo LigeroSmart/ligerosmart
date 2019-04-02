@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Importálás/exportálás kezelés';
+    $Self->{Translation}->{'Add template'} = 'Sablon hozzáadása';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Sablon létrehozása objektuminformációk importálásához és exportálásához.';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        'A modul használatához telepítenie kell az ITSMConfigurationManagement csomagot vagy bármilyen egyéb csomagot, amely háttérprogramot biztosít az objektumok importálásához és exportálásához.';
     $Self->{Translation}->{'Start Import'} = 'Importálás indítása';
     $Self->{Translation}->{'Start Export'} = 'Exportálás indítása';
+    $Self->{Translation}->{'Delete this template'} = 'Sablon törlése';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '1. lépés az 5-ből - közös információk szerkesztése';
     $Self->{Translation}->{'Name is required!'} = 'A név kötelező!';
     $Self->{Translation}->{'Object is required!'} = 'Az objektum kötelező!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Nevek kettőzése';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Az importfájl utolsó feldolgozott sorszáma';
     $Self->{Translation}->{'Ok'} = 'OK';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = 'Valóban törölni szeretné ezt a sablonelemet?';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = 'Nem található objektum-háttérprogram!';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Oszlopfejlécek felvétele';
     $Self->{Translation}->{'Column'} = 'Oszlop';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = 'Sablon törlése…';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        'Hiba történt a sablon törlésekor. További információkért nézze meg a naplókat.';
+    $Self->{Translation}->{'Template was deleted successfully.'} = 'A sablon sikeresen törölve lett.';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Formátum háttérprogram modul regisztráció az importálás/exportálás modulhoz.';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

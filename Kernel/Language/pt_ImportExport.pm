@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestão de Importação/Exportação';
+    $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Criar um modelo para importar e exportar informações de objeto.';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'Iniciar Importação';
     $Self->{Translation}->{'Start Export'} = 'Iniciar Exportação';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = 'Nome é obrigatório!';
     $Self->{Translation}->{'Object is required!'} = 'Objeto é obrigatório!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Nomes duplicados';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Último número de linha processada do arquivo de importação';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Incluir Cabeçalhos de Colunas';
     $Self->{Translation}->{'Column'} = 'Coluna';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Formatar módulo de registo backend do módulo de importação / exportação.';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

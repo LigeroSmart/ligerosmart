@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Uvoz/Izvoz upravljanje';
+    $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Kreiraj šablon za uvoz i izvoz informacija o objektu.';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'Počni uvoz';
     $Self->{Translation}->{'Start Export'} = 'Počni izvoz';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Korak 1 od 5 - Uredi zajedničke informacije';
     $Self->{Translation}->{'Name is required!'} = 'Ime je obavezno!';
     $Self->{Translation}->{'Object is required!'} = 'Objekt je obavezan!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Duplikat imena';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Broj poslednje obrađene linije uvezene datoteke';
     $Self->{Translation}->{'Ok'} = 'U redu';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = 'Nije pronađen pozadinski modul objekta!';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Uključi naslove kolona';
     $Self->{Translation}->{'Column'} = 'Kolona';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Format registracije „backend” modula za uvoz/izvoz modul.';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

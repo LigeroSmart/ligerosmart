@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestion de l\'importation/exportation';
+    $Self->{Translation}->{'Add template'} = 'Ajouter un modèle';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Créer un modèle pour importer et exporter les informations d\'objet';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'Démarrer l\'import';
     $Self->{Translation}->{'Start Export'} = 'Démarrer l\'export';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Étape 1 sur 5 - Éditer les information communes';
     $Self->{Translation}->{'Name is required!'} = 'Un nom est requis !';
     $Self->{Translation}->{'Object is required!'} = 'Un objet est requis !';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Noms en double';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Numéro de la dernière ligne traitée dans le fichier d\'importation';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = 'Aucun objet "backend" n\'a été trouvé !';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Inclure les en-têtes de colonnes';
     $Self->{Translation}->{'Column'} = 'Colonne';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Enregistrement du module "Format backend" pour le module d\'importation/exportation';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

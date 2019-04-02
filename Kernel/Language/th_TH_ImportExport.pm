@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'การจัดการ นำเข้า/ส่งออก';
+    $Self->{Translation}->{'Add template'} = 'เพิ่มแม่แบบ';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'สร้างแม่แบบเพื่อนำเข้าและส่งออกข้อมูลออบเจกต์';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'เริ่มนำเข้า';
     $Self->{Translation}->{'Start Export'} = 'เริ่มส่งออก';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
     $Self->{Translation}->{'Name is required!'} = 'ต้องระบุชื่อ!';
     $Self->{Translation}->{'Object is required!'} = 'ต้องระบุออบเจกต์!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'ชื่อซ้ำ';
     $Self->{Translation}->{'Last processed line number of import file'} = 'หมายเลขของการประมวลครั้งสุดท้ายของการนำไฟล์เข้า';
     $Self->{Translation}->{'Ok'} = 'โอเค';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'รวมทั้งส่วนหัวของคอลัมน์';
     $Self->{Translation}->{'Column'} = 'คอลัมน์';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'รูปแบบการลงทะเบียนโมดูล backend สำหรับโมดูลการนำเข้า / ส่งออก';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

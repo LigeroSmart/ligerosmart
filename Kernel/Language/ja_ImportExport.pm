@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'インポート/エクスポートの管理';
+    $Self->{Translation}->{'Add template'} = 'テンプレートを追加';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'オブジェクトのインポート・エクスポート用のテンプレートを作成する';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'インポート開始';
     $Self->{Translation}->{'Start Export'} = 'エクスポート開始';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Step 1 of 5 - 基本情報の設定';
     $Self->{Translation}->{'Name is required!'} = '名称は必須です!';
     $Self->{Translation}->{'Object is required!'} = 'オブジェクトは必須です!';
@@ -40,6 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = '名前が重複しています';
     $Self->{Translation}->{'Last processed line number of import file'} = '読み込み済みファイルの最終実行行数';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '指定されたオブジェクトのバックエンドが見つかりません！';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'ヘッダ情報を含む';
     $Self->{Translation}->{'Column'} = '桁';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'import/exportモジュールのバックエンドモジュールを登録';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }

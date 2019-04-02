@@ -17,9 +17,13 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestión de Importación/Exportación';
+    $Self->{Translation}->{'Add template'} = 'Agregar plantilla';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crear una plantilla para importar y exportar informacion del objeto.';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
     $Self->{Translation}->{'Start Import'} = 'Iniciar Importación';
     $Self->{Translation}->{'Start Export'} = 'Iniciar Exportación';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = 'Paso 1 de 5 - Editar información común';
     $Self->{Translation}->{'Name is required!'} = '¡Se requiere Nombre!';
     $Self->{Translation}->{'Object is required!'} = '¡Debe especificar Objeto!';
@@ -39,12 +43,13 @@ sub Data {
     $Self->{Translation}->{'Success'} = 'Éxito';
     $Self->{Translation}->{'Duplicate names'} = 'Nombres duplicados';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Última número de línea procesada del archivo importar';
-    $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'Ok'} = 'Aceptar';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '¡No se encontró ningún objeto backend!';
     $Self->{Translation}->{'No format backend found!'} = 'No se encontró ningún formato backend!';
-    $Self->{Translation}->{'Template not found!'} = '¡Plantilla no encontrada!';
+    $Self->{Translation}->{'Template not found!'} = '¡No se encontró la plantilla!';
     $Self->{Translation}->{'Can\'t insert/update template!'} = '¡No se puede insertar/actualizar la plantilla!';
     $Self->{Translation}->{'Needed TemplateID!'} = 'Se necesita IDPlantilla!';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = 'Ocurrió un error!. Imposible importar! Vea Syslog para detalles.';
@@ -69,6 +74,12 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = 'Incluir Cabecera de la Columna';
     $Self->{Translation}->{'Column'} = 'Columna';
 
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
         'Registro de módulo de formato backend para el módulo import/export.';
@@ -77,6 +88,12 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
     );
 
 }
