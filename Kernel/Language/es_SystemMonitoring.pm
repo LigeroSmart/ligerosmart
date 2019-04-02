@@ -22,12 +22,12 @@ sub Data {
         'Interfaz de correo básico para el System Monitoring Suites. Utilice este bloque si el filtro debe funcionar ANTES del PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Define el tipo de reconocimiento de Nagios.';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = 'Icinga API URL.';
+    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = 'Icinga2 autor de reconocimiento.';
+    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = 'Icinga2 comentario de reconocimiento.';
+    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = 'Icinga2  ¿Reconocimiento habilitado?';
+    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = 'Icinga2 notificación de reconocimiento.';
+    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = 'Icinga2 adhesivo de reconocimiento.';
     $Self->{Translation}->{'Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.'} =
         'Enlace un ticket de incidente ya abierto con el CI afectado. Esto sólo es posible cuando llega un correo electrónico de seguimiento del sistema posterior.';
     $Self->{Translation}->{'Name of the Dynamic Field for Host.'} = 'Nombre del campo dinámico para el host.';
@@ -40,7 +40,7 @@ sub Data {
     $Self->{Translation}->{'The HTTP acknowledge URL.'} = 'El HTTP reconoce la URL.';
     $Self->{Translation}->{'The HTTP acknowledge password.'} = 'El HTTP reconoce la contraseña.';
     $Self->{Translation}->{'The HTTP acknowledge user.'} = 'El HTTP reconoce al usuario.';
-    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = '';
+    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = 'Módulo de evento de ticket para enviar un reconocimiento a Icinga2.';
     $Self->{Translation}->{'Ticket event module to send an acknowledge to Nagios.'} = 'Modulo de Ticket de eventos para enviar un reconocimiento a Nagios.';
     $Self->{Translation}->{'pipe'} = 'pipe';
 
