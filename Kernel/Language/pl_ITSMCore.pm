@@ -18,7 +18,7 @@ sub Data {
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality ↔ Impact ↔ Priority'} = 'Krytyczność ↔ Wpływ ↔ Priorytet';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality ↔ Impact.'} =
-        'Zarządzanie wartością priorytetu dla kombinacji Krytyczność ↔ Wpływ.';
+        'Zarządzaj wynikowym priorytetem z kombinacji Krytyczność ↔ Wpływ';
     $Self->{Translation}->{'Priority allocation'} = 'Alokacja priorytetu';
 
     # Template: AdminSLA
@@ -45,6 +45,11 @@ sub Data {
     $Self->{Translation}->{'No SLAID is given!'} = '';
     $Self->{Translation}->{'SLAID %s not found in database!'} = '';
     $Self->{Translation}->{'Calendar Default'} = '';
+
+    # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+    $Self->{Translation}->{'operational'} = '';
+    $Self->{Translation}->{'warning'} = '';
+    $Self->{Translation}->{'incident'} = '';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = '';

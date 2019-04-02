@@ -46,6 +46,11 @@ sub Data {
     $Self->{Translation}->{'SLAID %s not found in database!'} = '¡SLAID %s no se encontró en la base de datos!';
     $Self->{Translation}->{'Calendar Default'} = 'Calendario por defecto';
 
+    # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+    $Self->{Translation}->{'operational'} = '';
+    $Self->{Translation}->{'warning'} = '';
+    $Self->{Translation}->{'incident'} = '';
+
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = '¡No se ha facilitado el ServiceID!';
     $Self->{Translation}->{'ServiceID %s not found in database!'} = 'ServiceID %s no se encontró en la base de datos!';
@@ -79,7 +84,7 @@ sub Data {
     $Self->{Translation}->{'Both'} = 'Ambos';
     $Self->{Translation}->{'Connected to'} = 'Conectado a';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        'Definir acciones donde está disponible un botón de configuración en el widget de objetos vinculados (LinkObject::ViewMode = "complex"). Tenga en cuenta que estas acciones deben haber registrado los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js y Core.Agent.LinkObject.js.';
+        'Define las Acciones donde el botón de configuraciones esta disponible en el "widget" de objetos vinculados (LinkObject::ViewMode = "complex"). Por favor note que dichas Acciones deben tener registrados los siguientes archivos JS y CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define which columns are shown in the linked Services widget (LinkObject::ViewMode = "complex"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Defina qué columnas se muestran en el widget de servicios vinculados (LinkObject::ViewMode = "complex"). Nota: Sólo se permiten atributos de servicio para columnas predeterminadas. Ajustes posibles: 0 = Desactivado, 1 = Disponible, 2 = Activado de forma predeterminada.';
     $Self->{Translation}->{'Depends on'} = 'Depende de';
@@ -102,7 +107,7 @@ sub Data {
     $Self->{Translation}->{'Incident State Type'} = 'Tipo de Estado de Incidente';
     $Self->{Translation}->{'Includes'} = 'Incluye';
     $Self->{Translation}->{'Manage priority matrix.'} = 'Administrar la matríz de prioridades.';
-    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = '';
+    $Self->{Translation}->{'Manage the criticality - impact - priority matrix.'} = 'Gestionar la matriz Criticidad - Impacto - Prioridad.';
     $Self->{Translation}->{'Module to show the Back menu item in SLA menu.'} = 'Módulo para mostrar el elemento de menú Volver en el menú SLA';
     $Self->{Translation}->{'Module to show the Back menu item in service menu.'} = 'Módulo para mostrar el elemento de menú Volver en menú servicio.';
     $Self->{Translation}->{'Module to show the Link menu item in service menu.'} = 'Módulo para mostrar el enlace al menú elemento en menú servicio.';

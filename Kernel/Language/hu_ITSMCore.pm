@@ -46,6 +46,11 @@ sub Data {
     $Self->{Translation}->{'SLAID %s not found in database!'} = 'A(z) %s SLA-azonosító nem található az adatbázisban!';
     $Self->{Translation}->{'Calendar Default'} = 'Alapértelmezett naptár';
 
+    # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+    $Self->{Translation}->{'operational'} = 'üzemképes';
+    $Self->{Translation}->{'warning'} = 'figyelmeztetés';
+    $Self->{Translation}->{'incident'} = 'incidens';
+
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = 'Nincs szolgáltatásazonosító megadva!';
     $Self->{Translation}->{'ServiceID %s not found in database!'} = 'A(z) %s szolgáltatásazonosító nem található az adatbázisban!';

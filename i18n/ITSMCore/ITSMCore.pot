@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ITSMCore\n"
-"POT-Creation-Date: 2018-09-14 12:24+0000\n"
+"POT-Creation-Date: 2019-04-02 05:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,6 +72,18 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "Calendar Default"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "operational"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "warning"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "incident"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm

@@ -46,6 +46,11 @@ sub Data {
     $Self->{Translation}->{'SLAID %s not found in database!'} = 'SLAID %s はデータベースにありません！';
     $Self->{Translation}->{'Calendar Default'} = 'カレンダー・デフォルト';
 
+    # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+    $Self->{Translation}->{'operational'} = '';
+    $Self->{Translation}->{'warning'} = '';
+    $Self->{Translation}->{'incident'} = '';
+
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = 'ServiceIDは指定されていません！';
     $Self->{Translation}->{'ServiceID %s not found in database!'} = 'ServiceID %s はデータベースにありません！';
