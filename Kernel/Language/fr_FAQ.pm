@@ -119,7 +119,7 @@ sub Data {
     $Self->{Translation}->{'Votes'} = 'Votes';
     $Self->{Translation}->{'No votes found!'} = 'Aucuns votes trouvés !';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Aucuns votes ! Soyez le premier à noter cet article.';
-    $Self->{Translation}->{'Download Attachment'} = 'Télécharger un fichier joint';
+    $Self->{Translation}->{'Download Attachment'} = 'Télécharger le fichier joint';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
         'Pour ouvrir les liens dans les blocs de description suivantes, vous pourriez avoir besoin d\'appuyer sur Ctrl ou Cmd ou Maj tout en cliquant sur le lien (en fonction de votre navigateur et OS).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =

@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'Add FAQ Article'} = 'Ongeza makala ya maswali';
     $Self->{Translation}->{'Keywords'} = 'Maneno makuu';
     $Self->{Translation}->{'A category is required.'} = 'Sehemu inahitajika';
-    $Self->{Translation}->{'Approval'} = 'Idhini';
+    $Self->{Translation}->{'Approval'} = 'Kibali';
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Sehemu ya menejimenti ya maswali';
