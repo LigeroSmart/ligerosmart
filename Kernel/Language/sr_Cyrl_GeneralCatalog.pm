@@ -33,7 +33,6 @@ sub Data {
     $Self->{Translation}->{'Comment 2'} = 'Коментар 2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Креирање и управљање општим каталогом.';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Дефинише коментар 2 у општем каталогу.';
-    $Self->{Translation}->{'Define the group with permissions.'} = 'Дефинише групу са дозволама.';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Дефинише URL путању за JS Color Picker.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Регистрација приступног модула за AdminGeneralCatalog у интерфејсу администратора.';
@@ -42,6 +41,7 @@ sub Data {
         'Параметри за пример коментара 2 атрибута општег каталога.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Параметри за пример групе за дозволе атрибута општег каталога.';
+    $Self->{Translation}->{'Permission Group'} = 'Група приступа';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

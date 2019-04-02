@@ -33,7 +33,6 @@ sub Data {
     $Self->{Translation}->{'Comment 2'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Tạo và quản lý danh mục chung';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = '';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Đăng ký mô-đun để cấu hình AdminGeneralCatalog trong giao diện quản trị';
@@ -42,6 +41,7 @@ sub Data {
         'Tham số cho chú thích thứ 2 của thuộc tính danh mục chung.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Tham số cho nhóm cấp phép của thuộc tính danh mục chung.';
+    $Self->{Translation}->{'Permission Group'} = '';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

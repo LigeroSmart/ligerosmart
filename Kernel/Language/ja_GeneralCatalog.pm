@@ -33,7 +33,6 @@ sub Data {
     $Self->{Translation}->{'Comment 2'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'ジャネラル・カタログの作成と管理';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = '権限を持つグループを定義します。';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'URL JS カラーピッカーのパスを定義します。';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         '管理エリアでのAdminGeneralCatalogのフロントエンドモジュールの登録';
@@ -42,6 +41,7 @@ sub Data {
         'ジェネラル・カタログ属性のコメント例 2　の設定値';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'ジェネラル・カタログ属性の権限グループ　の設定値';
+    $Self->{Translation}->{'Permission Group'} = '';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

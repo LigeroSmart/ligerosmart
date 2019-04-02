@@ -33,7 +33,6 @@ sub Data {
     $Self->{Translation}->{'Comment 2'} = '';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Genel Katalog yönetimi.';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = '';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Yönetim bölümüneki AdminGeneralCatalog ayarları için önyüz modül kaydı.';
@@ -42,6 +41,7 @@ sub Data {
         'Genel katalog özniteliklerinin ikinci örnek yorumunun parametreleri.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Genel katalog özniteliklerinin örnek izin gruplarının parametreleri.';
+    $Self->{Translation}->{'Permission Group'} = '';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

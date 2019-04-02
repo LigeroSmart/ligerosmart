@@ -33,7 +33,6 @@ sub Data {
     $Self->{Translation}->{'Comment 2'} = '注释2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录';
     $Self->{Translation}->{'Define the general catalog comment 2.'} = '定义通用目录注释2。';
-    $Self->{Translation}->{'Define the group with permissions.'} = '定义有权限的组。';
     $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '定义JS颜色选择器的路径URL。';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         '在系统管理中注册目录管理模块AdminGeneralCatalog的前端模块。';
@@ -42,6 +41,7 @@ sub Data {
         '目录属性样例-注释2的参数设置。';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         '目录属性样例-权限组的参数。';
+    $Self->{Translation}->{'Permission Group'} = '权限组';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

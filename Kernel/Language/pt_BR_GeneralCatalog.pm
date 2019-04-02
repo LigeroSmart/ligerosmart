@@ -32,9 +32,8 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = 'Comentário 2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Criar e gerenciar o Catálogo Geral.';
-    $Self->{Translation}->{'Define the general catalog comment 2.'} = '';
-    $Self->{Translation}->{'Define the group with permissions.'} = 'Definir o grupo de permissionamento.';
-    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = '';
+    $Self->{Translation}->{'Define the general catalog comment 2.'} = 'Defina o comentário 2 do catálogo genérico.';
+    $Self->{Translation}->{'Defines the URL JS Color Picker path.'} = 'Define o caminho URL JS Color Picket.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} =
         'Módulo de registo da interface para a configuração AdminGeneralCatalog na área administrativa.';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo Geral';
@@ -42,6 +41,7 @@ sub Data {
         'Parâmetros para o comentário de exemplo 2 dos atributos do catálogo geral.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parâmetros do grupos de permissão de exemplo dos atributos do catálogo geral.';
+    $Self->{Translation}->{'Permission Group'} = '';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
