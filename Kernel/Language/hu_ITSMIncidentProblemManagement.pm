@@ -28,14 +28,14 @@ sub Data {
     $Self->{Translation}->{'Change ITSM fields of %s%s%s'} = '%s%s%s ITSM mezőinek megváltoztatása';
 
     # Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
-    $Self->{Translation}->{'Review Required'} = 'Áttekintés szükséges';
+    $Self->{Translation}->{'Review Required'} = 'Vizsgálat szükséges';
     $Self->{Translation}->{'Decision Result'} = 'Döntés eredménye';
     $Self->{Translation}->{'Approved'} = 'Jóváhagyva';
     $Self->{Translation}->{'Postponed'} = 'Elhalasztva';
     $Self->{Translation}->{'Pre-approved'} = 'Előzetesen jóváhagyva';
     $Self->{Translation}->{'Rejected'} = 'Elutasítva';
-    $Self->{Translation}->{'Repair Start Time'} = 'Javítás indítási ideje';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Visszaállítás indítási ideje';
+    $Self->{Translation}->{'Repair Start Time'} = 'Javítás kezdési ideje';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Visszaállítás kezdési ideje';
     $Self->{Translation}->{'Decision Date'} = 'Döntés dátuma';
     $Self->{Translation}->{'Due Date'} = 'Határidő';
 
