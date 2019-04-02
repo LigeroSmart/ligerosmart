@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Određuje da li je potrebno zaključati glavni/zavisni ekran tiketa na detaljnom prikazu tiketa u interfejsu operatera (ako tiket još uvek nije zaključan, tiket će dobiti status zaključan i trenutni operater će biti automatski postavljen kao vlasnik).';
     $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
-        '';
+        'Definiše ukoliko je MasterSlave napomena podrazumevano vidljiva za klijent korisnike.';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Određuje podrazumevani naredni status tiketa posle dodavalja beleške, na glavni/zavisni ekranu detaljnog prikaza tiketa u interfejsu operatera.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -107,10 +107,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Prikazuje naslovna polja na ekranu glavni/zavisni tiketa u interfejsu operatera.';
     $Self->{Translation}->{'Slave Tickets'} = 'Zavisni tiketi';
-    $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        'Navodi razne tipove članaka gde će stvarno ime sa glavnog tiketa biti zamenjeno sa jednim na zavisnom tiketu.';
+    $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
+        '';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ovaj modul aktivira polje glavni/zavisni na ekranu novih imejl tiketa i tiketa poziva.';
+    $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
+        '';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Tiket glavni/zavisni.';
 
 

@@ -107,10 +107,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Zeigt das Titel-Feld in der MasterSlave-Oberfläche eines aufgerufenen Tickets im Agenten-Interface an. ';
     $Self->{Translation}->{'Slave Tickets'} = 'Slave-Tickets';
-    $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        'Definiert die verschiedene Artikeltypen in denen der reale Name des Master-Tickets mit denen des Slave-Tickets ersetzt wird.';
+    $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
+        '';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Dieses Modul aktiviert das Master/Slave-Feld in der Anzeige für ein neues Email- oder Telefon-Ticket.';
+    $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
+        '';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Ticket MasterSlave.';
 
 

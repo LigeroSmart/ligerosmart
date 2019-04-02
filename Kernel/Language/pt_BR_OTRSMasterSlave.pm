@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Define se um bloqueio de ticket é requerido na tela MasterSlave de um ticket detalhado na interface de agente (se o ticket ainda não estiver bloqueado, o ticket será bloqueado e o agente corrente será automaticamente definido como o seu proprietário).';
     $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
-        '';
+        'Define se a nota MestreEscravo fica visível para o cliente como padrão.';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Define o próximo estado padrão de um ticket após uma nota ter sido adicionada, na tela MasterSlave de um ticket detalhado na interface de agente.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -107,10 +107,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Mostra o título na tela de um chamado MestreEscravo de um chamado aberto na interface de agente.';
     $Self->{Translation}->{'Slave Tickets'} = 'Chamados Escravos';
-    $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        'Especifica os diferentes tipos de artigo onde o nome real do ticket Master será substituído com o nome do ticket escravo.';
+    $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
+        '';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Este módulo ativa o campo Mestre/Escravo nas telas de novo chamado fone/e-mail.';
+    $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
+        '';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Chamado MestreEscravo';
 
 

@@ -107,10 +107,12 @@ sub Data {
     $Self->{Translation}->{'Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Megjeleníti a címmezőt egy nagyított jegynek a jegy mester-alárendelt képernyőjén az ügyintézői felületen.';
     $Self->{Translation}->{'Slave Tickets'} = 'Alárendelt jegyek';
-    $Self->{Translation}->{'Specifies the different article types where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        'Megadja a különböző bejegyzéstípusokat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';
+    $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
+        'Megadja a különböző bejegyzés kommunikációs csatornákat, ahol a mesterjegyben lévő valódi név ki lesz cserélve az alárendelt jegyben lévővel.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ez a modul bekapcsolja a mester/alárendelt mezőt az új e-mail és telefonos jegy képernyőkön.';
+    $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
+        'Ez a beállítás elavult, és el lesz távolítva az OTRSMasterSlave későbbi verzióiból.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Jegy mester-alárendelt.';
 
 
