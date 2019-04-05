@@ -159,7 +159,7 @@ sub Data {
     $Self->{Translation}->{'Search for articles with keyword'} = 'Szukaj artykułów za pomocą słowa kluczowego';
 
     # Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
-    $Self->{Translation}->{'Public'} = 'Publiczne';
+    $Self->{Translation}->{'Public'} = 'Pobliczne';
 
     # Template: PublicFAQSearchResultShort
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Wróć do Przeglądu FAQ';

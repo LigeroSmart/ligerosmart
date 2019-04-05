@@ -55,7 +55,7 @@ sub Data {
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'Istorija od';
-    $Self->{Translation}->{'History Content'} = 'Sadržaj istorije';
+    $Self->{Translation}->{'History Content'} = 'Sadržaj istorijata';
     $Self->{Translation}->{'Createtime'} = 'Vreme kreiranja';
 
     # Template: AgentFAQJournalOverviewSmall
@@ -121,7 +121,7 @@ sub Data {
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Glasovi nisu pronađeni! Budite prvi koji će oceniti ovaj FAQ članak.';
     $Self->{Translation}->{'Download Attachment'} = 'Preuzmi prilog';
     $Self->{Translation}->{'To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS).'} =
-        'Da biste otvorili veze u sledećim blokovima opisa, možda ćete trebati da pritisnete „Ctrl” ili „Cmd” ili „Shift” taster dok istovremeno kliknete na vezu (zavisi od vašeg OS i pregledača).';
+        'Da biste otvorili veze u sledećim blokovima opisa, možda ćete trebati da pritisnete "Ctrl" ili "Cmd" ili "Shift" taster dok istovremeno kliknete na vezu (zavisi od vašeg operativnog sistema i pretraživača).';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} =
         'Koliko je koristan ovaj članak? Molimo vas da date vašu ocenu i pomognete podizanju kvalitata baze često postavljanih pitanja. Hvala Vam! ';
     $Self->{Translation}->{'not helpful'} = 'nije korisno';
@@ -314,51 +314,51 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         'Podrazumevana vrednost za „Action” parametar u javnom frontendu. Ovaj parametar koriste skripte sistema. ';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        'Definiše Akcije gde je dugme postavki dostupno u povezanom grafičkom elementu objekta (LinkObject::ViewMode = "complex"). Molimo da imate na umu da ove Akcije moraju da budu registrovane u sledećim JS i CSS datotekama: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js i Core.Agent.LinkObject.js.';
+        'Definiše akcije gde je dugme postavki dostupno u povezanom grafičkom elementu objekta (LinkObject::ViewMode = "complex"). Molimo da imate na umu da ove Akcije moraju da budu registrovane u sledećim JS i CSS datotekama: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js i Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Određuje da li naslov FAQ treba da bude dodat na temu članka.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
         'Definiše koje kolone su prikazane u povezanom FAQ grafičkom elementu (LinkObject::ViewMode = "complex"). Napomena: samo FAQ atributi i dinamička polja (DynamicField_NameX) su dozvoljeni za podrazumevane kolone. Moguće postavke: 0 = isključeno, 1 = uključeno, 2 = podrazumevano uključeno.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
-        'Definiše modul pregleda za mali prikaz FAQ dnevnika. ';
+        'Određuje modul pregleda za mali prikaz FAQ dnevnika. ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
-        'Definiše modul pregleda za mali prikaz FAQ liste. ';
+        'Određuje modul pregleda za mali prikaz FAQ liste. ';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} =
-        'Definiše podrazumevani atribut za sortiranje FAQ pretrazi FAQ  u interfejsu  operatera.';
+        'Određuje podrazumevani atribut za sortiranje u pretrazi FAQ u interfejsu operatera.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} =
         'Definiše podrazumevani atribut za sortiranje FAQ u pretrazi FAQ  u interfejsu klijenta.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} =
         'Definiše podrazumevani atribut za sortiranje FAQ u pretrazi FAQ  u javnom interfejsu.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.'} =
-        'Definiše podrazumevani atribut za sortiranje FAQ u FAQ pretraživaču u interfejsu operatera.';
+        'Određuje podrazumevani atribut za sortiranje u FAQ pretraživaču u interfejsu operatera.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.'} =
         'Definiše podrazumevani atribut za sortiranje FAQ u FAQ pretraživaču u interfejsu klijenta.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} =
         'Definiše podrazumevani atribut za sortiranje FAQ u FAQ pretraživaču u javnom interfejsu.';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiše podrazumevani redosled FAQ u rezultatima FAQ pretraživača u interfejsu opreratera. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
+        'Određuje podrazumevani redosled u rezultatima FAQ pretraživača u interfejsu opreratera. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} =
         'Definiše podrazumevani redosled FAQ u rezultatima FAQ pretraživača u interfejsu klijenta. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
     $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} =
         'Definiše podrazumevani redosled FAQ rezultatima FAQ pretraživača u javnom interfejsu. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} =
-        'Definiše podrazumevani redosled FAQ u rezultatima pretrage u interfejsu opreratera. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
+        'Određuje podrazumevani redosled FAQ u rezultatima pretrage u interfejsu opreratera. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} =
         'Definiše podrazumevani redosled FAQ u rezultatima pretrage u interfejsu klijenta. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} =
         'Definiše podrazumevani redosled FAQ u rezultatima pretrage u javnom interfejsu. Gore: najstariji na vrhu. Dole: najnovije na vrhu.';
     $Self->{Translation}->{'Defines the default shown FAQ search attribute for FAQ search screen.'} =
-        'Definiše podrazumevani prikazani FAQ atribut pretrage za FAQ prozor za pretragu. ';
+        'Određuje podrazumevani prikazani FAQ atribut pretrage za FAQ prozor za pretragu. ';
     $Self->{Translation}->{'Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.'} =
-        'Određuje informacije koje će biti ubačene u FAQ bazirani tiket. "Kompletan FAQ" uključuje tekst, priloge i umetnute slike.';
+        'Određuje informacije koje će biti ubačene tiket baziran na FAQ. "Kompletan FAQ" uključuje tekst, priloge i umetnute slike.';
     $Self->{Translation}->{'Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
-        'Definiše pozadinske parametre za kontrolnu tablu. "Limit" definiše broj podrezumevano prikazanih unosa. "Grupa" se koristi da ograniči pristup dodatku (npr. Grupa: admin;group1;group2;)."Podrazumevano" ukazuje na to da li je dodatak podrazumevano aktiviran ili da je potrebno da ga korisnik manuelno aktivira.';
+        'Određuje parametre za dodatak kontrolne table.  "Limit" definiše podrazumevani broj prikazanih stavki. "Group" se koristi da ograniči pristup dodatku (npr. Group: admin;group1;group2;). "Default" određuje da li je dodatak podrazumevano aktiviran ili da je neophodno da ga korisnik manuelno aktivira.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.'} =
-        'Definiše prikazane kolone u FAQ pretraživaču. Ova opcija nema uticaj na pozicije kolona.';
+        'Određuje prikazane kolone u FAQ pretraživaču. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.'} =
-        'Definiše prikazane kolone u FAQ dnevniku. Ova opcija nema uticaj na pozicije kolona.';
+        'Određuje prikazane kolone u FAQ dnevniku. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} =
-        'Definiše prikazane kolone u FAQ pretrazi. Ova opcija nema uticaj na pozicije kolona.';
+        'Određuje prikazane kolone u FAQ pretrazi. Ova opcija nema uticaj na pozicije kolona.';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Definiše gde će "Ubaci FAQ" veza biti prikazana.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definicija polja slobodnog teksta za FAQ stavku.';
     $Self->{Translation}->{'Delete this FAQ'} = 'Obriši ovaj FAQ';
@@ -397,7 +397,7 @@ sub Data {
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Aktiviranje mehanizma za glasanje na FAQ modulu.';
     $Self->{Translation}->{'Explorer'} = 'Istraživač';
     $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX odgovarač';
-    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = 'FAQ AJAX odgovarač za FAQ.';
+    $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = 'FAQ AJAX modul za obogaćeni tekst.';
     $Self->{Translation}->{'FAQ Area'} = 'FAQ prostor';
     $Self->{Translation}->{'FAQ Area.'} = 'FAQ prostor.';
     $Self->{Translation}->{'FAQ Delete.'} = 'Obriši FAQ.';
@@ -543,13 +543,13 @@ sub Data {
     $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} =
         'Identifikator za FAQ, npr. FAQ#, KB#, MyFAQ#. Podrazumevano je FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} =
-        'Ovo podešavanje definiše da FAQ objekt može da se poveže sa drugim FAQ objektima koristeći vezu tipa \'Normal\'.';
+        'Ovo opcija određuje da FAQ objekt može da se poveže sa drugim FAQ objektima koristeći vezu tipa \'Normal\'.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'ParentChild\' link type.'} =
-        'Ovo podešavanje definiše da FAQ objekat može da se poveže sa drugim FAQ objektima koristeći vezu tipa \'ParentChild\'.';
+        'Ovo opcija određuje da FAQ objekat može da se poveže sa drugim FAQ objektima koristeći vezu tipa \'ParentChild\'.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'Ticket\' objects using the \'Normal\' link type.'} =
-        'Ovo podešavanje definiše da FAQ objekt može da se poveže sa drugim tiket objektima koristeći vezu tipa \'Normal\'.';
+        'Ovo opcija određuje da FAQ objekt može da se poveže sa drugim tiket objektima koristeći vezu tipa \'Normal\'.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'Ticket\' objects using the \'ParentChild\' link type.'} =
-        'Ovo podešavanje definiše da FAQ objekt može da se poveže sa drugim tiket objektima koristeći vezu tipa \'ParentChild\'.';
+        'Ovo opcija određuje da FAQ objekt može da se poveže sa drugim tiket objektima koristeći vezu tipa \'ParentChild\'.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Sadržaj tiketa za odobravanje FAQ članaka.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Predmet tiketa za odobravanje FAQ članaka.';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = 'Stavka alatne linije za skraćenicu.';

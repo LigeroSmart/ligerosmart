@@ -214,7 +214,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Dynamic Fields'} = 'FAQ ダイナミック・フィールド';
 
     # Perl Module: Kernel/Modules/AgentFAQRichText.pm
-    $Self->{Translation}->{'No %s is given!'} = '%s   が不足しています。';
+    $Self->{Translation}->{'No %s is given!'} = '%s  が不足しています。';
     $Self->{Translation}->{'Can\'t load LanguageObject!'} = 'LanguageObject (言語オブジェクト)が読み込めません';
 
     # Perl Module: Kernel/Modules/AgentFAQSearch.pm
@@ -363,21 +363,21 @@ sub Data {
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'FAQのフリーテキストフィールドの定義。';
     $Self->{Translation}->{'Delete this FAQ'} = 'この記事を削除';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ add screen of the agent interface.'} =
-        '担当者インターフェイス の FAQ 追加画面に表示する ダイナミック・フィールド';
+        '担当者インタフェースの FAQ 追加画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
-        '担当者インターフェイス の FAQ 編集画面に表示する ダイナミック・フィールド';
+        '担当者インタフェースの FAQ 編集画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
-        '担当者インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド';
+        '担当者インタフェースの FAQ 印刷画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
-        '担当者インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド';
+        '担当者インタフェースの FAQ 検索画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
         '';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =

@@ -90,7 +90,7 @@ sub Data {
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = '投票数 (例如，= 10 或 >= 60)';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = '评分 (例如，= 10% 或 >= 75%)';
     $Self->{Translation}->{'Approved'} = '通过审批';
-    $Self->{Translation}->{'Last changed by'} = '最后修改人';
+    $Self->{Translation}->{'Last changed by'} = '上次修改人';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ文章创建时间(相对)';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ文章创建时间(绝对)';
     $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ文章修改时间(相对)';
@@ -281,7 +281,7 @@ sub Data {
 
     # Database XML Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = '内部';
-    $Self->{Translation}->{'external'} = '外部人员';
+    $Self->{Translation}->{'external'} = '外部';
     $Self->{Translation}->{'public'} = '公开';
 
     # JS File: FAQ.Agent.ConfirmationDialog
@@ -553,7 +553,7 @@ sub Data {
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'FAQ 文章审批请求的工单正文。';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'FAQ 文章审批请求的工单标题。';
     $Self->{Translation}->{'Toolbar Item for a shortcut.'} = '快捷键的工具栏条目。';
-    $Self->{Translation}->{'external (customer)'} = '外部人员(用户)';
+    $Self->{Translation}->{'external (customer)'} = '外部(用户)';
     $Self->{Translation}->{'internal (agent)'} = '内部(服务人员)';
     $Self->{Translation}->{'public (all)'} = '公开(内外)';
     $Self->{Translation}->{'public (public)'} = '公开（公开）';
