@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Agent/Admin/AdminUser.t
+# $origin: otrs - de614076273ecfa45e45615ef21fc1de40e90151 - scripts/test/Selenium/Agent/Admin/AdminUser.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -300,6 +300,9 @@ $Selenium->RunTest(
 
         # Navigate to AdminUser screen.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminUser");
+        $Selenium->find_element( "#Search", 'css' )->clear();
+        $Selenium->find_element( "#Search", 'css' )->send_keys($TestUserLogin);
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
         $Selenium->find_element( $TestUserLogin, 'link_text' )->VerifiedClick();
 
         # Submit not changed Agent data.

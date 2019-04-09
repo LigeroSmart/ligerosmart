@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Agent/AgentStatistics/Add.t
+# $origin: otrs - 8a489236336ddc82e745c27abb32dfa1ceefb0f4 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -144,13 +144,14 @@ $Selenium->RunTest(
                 Restrictionvalue => $ServiceIDs[0],
             },
             {
-                Title            => 'Statistic - TicketList' . $Helper->GetRandomID(),
-                Object           => 'Kernel::System::Stats::Dynamic::TicketList',
-                Type             => 'DynamicList',
-                YAxis            => 'YAxisOrderBy',
-                OrderBy          => 'TicketNumber',
-                RestrictionID    => 'RestrictionsServiceIDs',
-                Restrictionvalue => $ServiceIDs[0],
+                Title              => 'Statistic - TicketList' . $Helper->GetRandomID(),
+                Object             => 'Kernel::System::Stats::Dynamic::TicketList',
+                Type               => 'DynamicList',
+                YAxis              => 'YAxisOrderBy',
+                OrderBy            => 'TicketNumber',
+                RestrictionID      => 'RestrictionsServiceIDs',
+                Restrictionvalue   => $ServiceIDs[0],
+                CheckInvalidFormat => 1,
             },
         );
 
@@ -397,6 +398,58 @@ $Selenium->RunTest(
                 index( $Selenium->get_page_source(), $StatsData->{Title} ) > -1,
                 "Test statistic is created - $StatsData->{Title} "
             );
+
+            # Check handling of invalid formats in the edit screen.
+            if ( $StatsData->{CheckInvalidFormat} ) {
+                my $Stat = $StatsObject->StatsGet(
+                    StatID => $StatsIDLast,
+                );
+
+                # Prepare stat data for an update.
+                my %Data = (
+                    Title                 => $Stat->{Title},
+                    Description           => $Stat->{Description},
+                    Valid                 => $Stat->{Valid},
+                    TimeZone              => $Stat->{TimeZone},
+                    SumRow                => $Stat->{SumRow},
+                    SumCol                => $Stat->{SumCol},
+                    Cache                 => $Stat->{Cache},
+                    ShowAsDashboardWidget => $Stat->{ShowAsDashboardWidget},
+                    Permission            => $Stat->{Permission},
+                    Format                => [
+
+                        # Invalid format.
+                        'D3::BarChart "><br />',
+                    ],
+                );
+
+                my $Success = $StatsObject->StatsUpdate(
+                    StatID => $StatsIDLast,
+                    Hash   => \%Data,
+                    UserID => 1,
+                );
+                $Self->True(
+                    $Success // 0,
+                    'StatsUpdate() - add invalid format'
+                );
+
+                # Go to the stat edit screen.
+                $Selenium->VerifiedGet(
+                    "${ScriptAlias}index.pl?Action=AgentStatistics;Subaction=Edit;StatID=$StatsIDLast"
+                );
+
+                # Check if the button contains expected format attribute value.
+                $Self->Is(
+                    $Selenium->execute_script('return $("button.SwitchPreviewFormat").data("format")') // '',
+                    'D3::BarChart "><br />',
+                    'Preview button format attribute'
+                );
+
+                # Go back to the stats overview screen.
+                $Selenium->VerifiedGet(
+                    "${ScriptAlias}index.pl?Action=AgentStatistics;Subaction=Overview;Direction=DESC;OrderBy=ID;StartHit=1"
+                );
+            }
 
             # Delete created test statistics.
             $Selenium->find_element(
