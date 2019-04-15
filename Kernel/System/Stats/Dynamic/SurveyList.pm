@@ -285,23 +285,54 @@ sub GetStatTable {
         );
     }
 
+    # Create lookup hash for TicketIDs due to performance reasons.
+    my %TicketIDs = map { $_ => 1 } @TicketIDs;
+
     # Get the survey data.
     my @SurveyIDs;
     my @StatArray;
 
-    @SurveyIDs = $SurveyObject->SurveySearch(
-        UserID => 1,
-        %{ $Param{Restrictions} },
-    );
+    if ($Preview) {
+
+        @SurveyIDs = $SurveyObject->SurveySearch(
+            UserID => 1,
+            Limit  => 10,
+        );
+    }
+    else {
+
+        @SurveyIDs = $SurveyObject->SurveySearch(
+            UserID => 1,
+            %{ $Param{Restrictions} },
+        );
+    }
+
+    # Get needed data and create lookup tables.
+    my %SurveyRawData;
+    my %Questions;
 
     my $StatsObject = $Kernel::OM->Get('Kernel::System::Stats');
 
-    SURVEY:
+    SURVEYID:
     for my $SurveyID (@SurveyIDs) {
 
         # Check survey restriction.
         # Can't done by SurveySearch.
-        next SURVEY if $Param{Restrictions}{SurveyIDs} && $Param{Restrictions}{SurveyIDs} ne $SurveyID;
+        next SURVEYID if $Param{Restrictions}->{SurveyIDs} && $Param{Restrictions}->{SurveyIDs} ne $SurveyID;
+
+        # Survey raw data.
+        my %SurveyRaw = $SurveyObject->SurveyGet(
+            SurveyID => $SurveyID,
+        );
+
+        $SurveyRawData{$SurveyID} = \%SurveyRaw;
+
+        # Question data.
+        my @QuestionsList = $SurveyObject->QuestionList(
+            SurveyID => $SurveyID,
+        );
+
+        $Questions{$SurveyID} = \@QuestionsList;
 
         # Get public survey keys.
         my $PublicSurveyKeys;
@@ -327,84 +358,83 @@ sub GetStatTable {
             );
 
             # Skip if no survey request data found (e.g. send time filter).
-            next PUBLICKEY if !IsHashRefWithData {%SurveyRequest};
+            next PUBLICKEY if !IsHashRefWithData( \%SurveyRequest );
 
             # Skip if ticket specific filters are set.
-            next PUBLICKEY if !grep { $_ eq $SurveyRequest{TicketID} } @TicketIDs;
+            next PUBLICKEY if !$TicketIDs{ $SurveyRequest{TicketID} };
 
-            # Get question list.
-            my @QuestionList = $SurveyObject->QuestionList(
-                SurveyID => $SurveyRequest{SurveyID},
+            # Get all votes for this request.
+            my @RequestVoteList = $SurveyObject->VoteGetAll(
+                RequestID => $SurveyRequest{RequestID},
             );
 
             my @Questions;
-            my %VoteResult;
-            QUESTION:
-            for my $QuestionData (@QuestionList) {
 
-                # Skip question block if no survey filter is set.
-                next QUESTION if !$Param{Restrictions}{SurveyIDs};
+            # Loop through vote data to merge votes into survey request hash.
+            VOTEDATA:
+            for my $VoteData (@RequestVoteList) {
 
-                # Get votes for question and request.
-                my @AnswerList = $SurveyObject->VoteGet(
-                    RequestID  => $SurveyRequest{RequestID},
-                    QuestionID => $QuestionData->{QuestionID},
-                );
+                my $Question     = $VoteData->{Question};
+                my $QuestionID   = $VoteData->{QuestionID};
+                my $QuestionType = $VoteData->{QuestionType};
+                my $VoteValue    = $VoteData->{VoteValue};
 
-                # Push questions into array for later use.
-                push @Questions, $QuestionData->{Question};
+                if (
+                    $QuestionType eq 'NPS'
+                    || $QuestionType eq 'Radio'
+                    || $QuestionType eq 'Checkbox'
+                    )
+                {
+                    my %Answer = $SurveyObject->AnswerGet(
+                        AnswerID => $VoteValue,
+                    );
 
-                # Loop through vote data to merge votes into survey request hash.
-                if (@AnswerList) {
-                    for my $VoteData (@AnswerList) {
+                    if ( $QuestionType eq 'Checkbox' ) {
 
-                        if (
-                            $QuestionData->{Type} eq 'NPS'
-                            || $QuestionData->{Type} eq 'Radio'
-                            || $QuestionData->{Type} eq 'Checkbox'
-                            )
-                        {
-                            my %Answer = $SurveyObject->AnswerGet(
-                                AnswerID => $VoteData->{VoteValue},
-                            );
+                        my $CountAnswer = $SurveyObject->AnswerCount(
+                            QuestionID => $QuestionID,
+                        );
 
-                            if ( $QuestionData->{Type} eq 'Checkbox' ) {
-
-                                my $CountAnswer = $SurveyObject->AnswerCount(
-                                    QuestionID => $QuestionData->{QuestionID},
-                                );
-
-                                # If we have only one answer use Checked.
-                                if ( $CountAnswer == 1 ) {
-                                    $Answer{Answer} = Translatable('Checked');
-                                }
-                            }
-
-                            if ( scalar @AnswerList > 1 ) {
-                                $SurveyRequest{ $QuestionData->{Question} } .= $Answer{Answer} . "\n";
-                            }
-                            else {
-                                $SurveyRequest{ $QuestionData->{Question} } = $Answer{Answer};
-                            }
-                        }
-                        elsif ( $QuestionData->{Type} eq 'YesNo' || $QuestionData->{Type} eq 'Textarea' ) {
-
-                            if ( $QuestionData->{Type} eq 'Textarea' ) {
-                                $VoteData->{VoteValue} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
-                                $VoteData->{VoteValue} = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
-                                    String => $VoteData->{VoteValue},
-                                );
-
-                                $SurveyRequest{ $QuestionData->{Question} } = $VoteData->{VoteValue};
-                            }
-                            else {
-                                $SurveyRequest{ $QuestionData->{Question} } = $VoteData->{VoteValue};
-                            }
+                        # If we have only one answer use Checked.
+                        if ( $CountAnswer == 1 ) {
+                            $Answer{Answer} = Translatable('Checked');
                         }
                     }
+
+                    if ( $SurveyRequest{$Question} ) {
+
+                        $SurveyRequest{$Question} .= $Answer{Answer} . "\n";
+                    }
+                    else {
+
+                        $SurveyRequest{$Question} = $Answer{Answer};
+                    }
                 }
-                else {
-                    $SurveyRequest{ $QuestionData->{Question} } = " ";
+                elsif ( $QuestionType eq 'YesNo' || $QuestionType eq 'Textarea' ) {
+
+                    if ( $QuestionType eq 'Textarea' ) {
+
+                        $VoteValue =~ s{ \A \$html\/text\$ \s* (.*) }{$1}xms;
+                        $VoteValue = $Kernel::OM->Get('Kernel::System::HTMLUtils')->ToAscii(
+                            String => $VoteValue,
+                        );
+                    }
+
+                    $SurveyRequest{$Question} = $VoteValue;
+                }
+            }
+
+            # Get question list.
+            my $QuestionsList = $Questions{ $SurveyRequest{SurveyID} };
+            for my $Question ( @{$QuestionsList} ) {
+
+                # Push questions into array for later use.
+                push @Questions, $Question->{Question};
+
+                # Default value.
+                if ( !defined $SurveyRequest{ $Question->{Question} } ) {
+
+                    $SurveyRequest{ $Question->{Question} } = " ";
                 }
             }
 
@@ -419,13 +449,8 @@ sub GetStatTable {
             # Merge ticket and survey request data.
             my %SurveyData = ( %SurveyRequest, %Ticket );
 
-            # Get Survey raw data.
-            my %SurveyRaw = $SurveyObject->SurveyGet(
-                SurveyID => $SurveyRequest{SurveyID},
-            );
-
             # Merge SurveyTitle into SurveyData.
-            $SurveyData{SurveyTitle} = $SurveyRaw{Title};
+            $SurveyData{SurveyTitle} = $SurveyRawData{$SurveyID}->{Title};
 
             ATTRIBUTE:
             for my $Attribute ( @{$SortedAttributesRef} ) {

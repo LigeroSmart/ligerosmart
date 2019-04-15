@@ -70,6 +70,7 @@
         <File Permission="660" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm" />
         <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsDelete.t" />
         <File Permission="660" Location="scripts/test/Console/Command/Maint/Survey/RequestsSend.t" />
+        <File Permission="660" Location="scripts/test/Survey/Vote/VoteGetAll.t" />
         <File Permission="660" Location="scripts/test/Survey/GetRequestRecipient.t" />
         <File Permission="660" Location="scripts/test/Survey/PublicAnswerSet.t" />
         <File Permission="660" Location="scripts/test/Survey.t" />

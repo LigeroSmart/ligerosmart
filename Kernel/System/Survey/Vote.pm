@@ -85,6 +85,75 @@ sub VoteGet {
     return @List;
 }
 
+=head2 VoteGetAll()
+
+to get all votes for a request id, including question data
+
+    my @List = $SurveyObject->VoteGetAll(
+        RequestID => 1,
+    );
+
+    Returns:
+        [
+            {
+                'VoteID'       => 1,
+                'VoteValue'    => 'Testvalue',
+                'QuestionID'   => 1,
+                'Question'     => 'Funny question #1',
+                'QuestionType' => 'Checkbox',
+            },
+            ...
+        ]
+
+=cut
+
+sub VoteGetAll {
+    my ( $Self, %Param ) = @_;
+
+    for my $Argument (qw(RequestID)) {
+        if ( !$Param{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+
+    return if !$DBObject->Prepare(
+        SQL => '
+            SELECT
+                svote.id, svote.question_id, svote.vote_value,
+                squestion.question, squestion.question_type
+            FROM
+                survey_vote svote,
+                survey_question squestion
+            WHERE
+                svote.request_id = ? AND svote.question_id = squestion.id
+            ORDER BY svote.question_id ASC',
+        Bind => [ \$Param{RequestID}, ],
+    );
+
+    my @List;
+
+    while ( my @Row = $DBObject->FetchrowArray() ) {
+
+        my %VoteData = (
+            VoteID       => $Row[0],
+            VoteValue    => $Row[2] || '-',
+            QuestionID   => $Row[1],
+            Question     => $Row[3],
+            QuestionType => $Row[4],
+        );
+
+        push @List, \%VoteData;
+    }
+
+    return @List;
+}
+
 =head2 VoteList()
 
 to get a array list of all vote items
