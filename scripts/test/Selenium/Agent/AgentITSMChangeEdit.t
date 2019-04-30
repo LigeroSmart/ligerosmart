@@ -12,34 +12,28 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
-        my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $Helper               = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+        my $ChangeObject         = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # get general catalog object
-        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'pending pir',
         );
 
-        # get change object
-        my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
-
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -53,7 +47,7 @@ $Selenium->RunTest(
             "Change in Pending PIR state is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-builder', 'itsm-change-manager' ]
         ) || die "Did not get test user";
@@ -64,23 +58,15 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMChangeZoom of created test change
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
+        # Navigate to AgentITSMChangeEdit of created test change.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeEdit;ChangeID=$ChangeID");
 
-        # click on 'Edit' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeEdit;ChangeID=$ChangeID' )]")->click();
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeTitle").length;' );
 
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeTitle").length' );
-
-        # get general catalog category, impact and priority ID for '3 normal'
+        # Get general catalog category, impact and priority ID for '3 normal'.
         my @StoredIDs;
         for my $GeneralCatalogStored (qw(Category Impact Priority)) {
             my $CatalogDataRef = $GeneralCatalogObject->ItemGet(
@@ -90,7 +76,7 @@ $Selenium->RunTest(
             push @StoredIDs, $CatalogDataRef->{ItemID};
         }
 
-        # get general catalog category, impact and priority ID for '4 high'
+        # Get general catalog category, impact and priority ID for '4 high'.
         my @EditIDs;
         for my $GeneralCatalogEdit (qw(Category Impact Priority)) {
             my $CatalogDataRef = $GeneralCatalogObject->ItemGet(
@@ -100,7 +86,7 @@ $Selenium->RunTest(
             push @EditIDs, $CatalogDataRef->{ItemID};
         }
 
-        # check stored values
+        # Check stored values.
         $Self->Is(
             $Selenium->find_element( '#ChangeTitle', 'css' )->get_value(),
             $ChangeTitleRandom,
@@ -132,7 +118,7 @@ $Selenium->RunTest(
             "#PriorityID stored value",
         );
 
-        # edit fields and submit
+        # Edit fields and submit.
         $Selenium->find_element( "#ChangeTitle", 'css' )->send_keys(" edit");
         $Selenium->find_element( "#RichText1",   'css' )->send_keys(" edit");
         $Selenium->find_element( "#RichText2",   'css' )->send_keys(" edit");
@@ -143,27 +129,15 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#PriorityID').val('$EditIDs[2]').trigger('redraw.InputField').trigger('change');"
         );
-        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Submit'][\@type='submit']")->VerifiedClick();
 
-        # switch back window
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
+        # Navigate to AgentITSMChangeEdit of created test change.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeEdit;ChangeID=$ChangeID");
 
-        sleep(1);
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeTitle").length;' );
 
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
-
-        # click on 'Edit' and switch screens
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeEdit;ChangeID=$ChangeID' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ChangeTitle").length' );
-
-        # check edited values
+        # Check edited values.
         $Self->Is(
             $Selenium->find_element( '#ChangeTitle', 'css' )->get_value(),
             $ChangeTitleRandom . ' edit',
@@ -195,7 +169,7 @@ $Selenium->RunTest(
             "#PriorityID edited value",
         );
 
-        # delete test created change
+        # Delete test created change.
         my $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -205,7 +179,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom edit is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 
