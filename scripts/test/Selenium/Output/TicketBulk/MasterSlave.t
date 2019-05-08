@@ -90,7 +90,7 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketSearch");
 
         # Wait until form has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#SearchProfile').length" );
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#Attribute').length;" );
 
         # Search test created tickets by title.
         $Selenium->execute_script("\$('#Attribute').val('Title').trigger('redraw.InputField').trigger('change');");
@@ -98,11 +98,14 @@ $Selenium->RunTest(
         $Selenium->find_element( "Title", 'name' )->send_keys($TicketTitle);
         $Selenium->find_element("//button[\@id='SearchFormSubmit'][\@value='Run search']")->VerifiedClick();
 
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[0]]').length;"
+        );
+
         # Select first test created ticket.
         $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[0]]').click();");
-        sleep 1;
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[0]]:checked').length"
+            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[0]]:checked').length;"
         );
 
         # Click on bulk and switch screen.
@@ -115,7 +118,12 @@ $Selenium->RunTest(
         # Wait until popup is completely loaded.
         $Selenium->WaitFor(
             JavaScript =>
-                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;',
+        );
+
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length && \$('#submitRichText').length;"
         );
 
         # Set test ticket as master ticket.
@@ -130,16 +138,21 @@ $Selenium->RunTest(
         # Wait until popup is completely loaded.
         $Selenium->VerifiedRefresh();
 
-        # Select second and third test created ticket
-        $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[1]]').click();");
-        sleep 1;
+        # Select second and third test created ticket.
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[1]]:checked').length"
+            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[1]]:checked').length;"
+        );
+        $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[1]]').click();");
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[1]]:checked').length;"
+        );
+
+        $Selenium->WaitFor(
+            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[2]]:checked').length;"
         );
         $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[2]]').click();");
-        sleep 1;
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[2]]:checked').length"
+            JavaScript => "return typeof(\$) === 'function' && \$('input[value=$TicketIDs[2]]:checked').length;"
         );
 
         # Click on bulk and switch screen.
@@ -152,7 +165,12 @@ $Selenium->RunTest(
         # Wait until popup is completely loaded.
         $Selenium->WaitFor(
             JavaScript =>
-                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete',
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;',
+        );
+
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('#DynamicField_MasterSlave').length && \$('#submitRichText').length;"
         );
 
         # Set test tickets as slave tickets.
