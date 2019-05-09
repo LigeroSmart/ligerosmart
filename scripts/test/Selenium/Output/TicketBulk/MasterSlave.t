@@ -140,7 +140,7 @@ $Selenium->RunTest(
 
         # Select second and third test created ticket.
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[1]]:checked').length;"
+            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[1]]').length;"
         );
         $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[1]]').click();");
         $Selenium->WaitFor(
@@ -148,7 +148,7 @@ $Selenium->RunTest(
         );
 
         $Selenium->WaitFor(
-            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[2]]:checked').length;"
+            JavaScript => "return typeof(\$) === 'function' && \$('.Checkbox[value=$TicketIDs[2]]').length;"
         );
         $Selenium->execute_script("\$('.Checkbox[value=$TicketIDs[2]]').click();");
         $Selenium->WaitFor(
