@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - dae8a22b47fc5d073beefc863de22a1172c22141 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - 4e06ef439c33e7d90af16451719415c780e0c29c - Kernel/Modules/AgentTicketPhone.pm - rel-7_0_8
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -472,6 +472,15 @@ sub Run {
             }
             else {
                 $Article{ContentType} = 'text/plain';
+            }
+
+            # Strip out external content if BlockLoadingRemoteContent is enabled.
+            if ( $ConfigObject->Get('Ticket::Frontend::BlockLoadingRemoteContent') ) {
+                my %SafetyCheckResult = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
+                    String       => $Article{Body},
+                    NoExtSrcLoad => 1,
+                );
+                $Article{Body} = $SafetyCheckResult{String};
             }
 
             # show customer info
@@ -2019,8 +2028,9 @@ sub Run {
 
                 # set template text, replace smart tags (limited as ticket is not created)
                 $TemplateText = $TemplateGenerator->Template(
-                    TemplateID => $GetParam{StandardTemplateID},
-                    UserID     => $Self->{UserID},
+                    TemplateID     => $GetParam{StandardTemplateID},
+                    UserID         => $Self->{UserID},
+                    CustomerUserID => $CustomerUser,
                 );
 
                 # create StdAttachmentObject

@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 4aa503cca51dbe1292357579fb0464c7f59874b4 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 7aa9e8dc4facb3315596eeaa898e8145026cc7b7 - Kernel/Modules/AgentTicketProcess.pm - rel-7_0_8
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -2718,8 +2718,8 @@ sub _RenderTitle {
 sub _RenderArticle {
     my ( $Self, %Param ) = @_;
 
-    # get layout object
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     for my $Needed (qw(FormID Ticket)) {
         if ( !$Param{$Needed} ) {
@@ -2758,6 +2758,15 @@ sub _RenderArticle {
             UploadCacheObject  => $Kernel::OM->Get('Kernel::System::Web::UploadCache'),
             AttachmentsInclude => 1,
         );
+
+        # Strip out external content if BlockLoadingRemoteContent is enabled.
+        if ( $ConfigObject->Get('Ticket::Frontend::BlockLoadingRemoteContent') ) {
+            my %SafetyCheckResult = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
+                String       => $Param{GetParam}->{Body},
+                NoExtSrcLoad => 1,
+            );
+            $Param{GetParam}->{Body} = $SafetyCheckResult{String};
+        }
     }
 
     # get all attachments meta data
@@ -2867,7 +2876,7 @@ sub _RenderArticle {
         my $GID = $Kernel::OM->Get('Kernel::System::Queue')->GetQueueGroupID( QueueID => $Param{Ticket}->{QueueID} );
         my %MemberList = $Kernel::OM->Get('Kernel::System::Group')->PermissionGroupGet(
             GroupID => $GID,
-            Type    => 'note',
+            Type    => 'ro',
         );
         for my $UserID ( sort keys %MemberList ) {
             $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
@@ -2890,9 +2899,6 @@ sub _RenderArticle {
     if ( IsHashRefWithData( $Param{Error} ) && $Param{Error}->{'TimeUnits'} ) {
         $Param{TimeUnitsInvalid} = 'ServerError';
     }
-
-    # get config object
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     # show time units
     if (
@@ -3049,6 +3055,10 @@ sub _RenderCustomer {
         Value => $Param{AJAXUpdatableFields},
     );
 
+    if ( $Param{DescriptionShort} ) {
+        $Data{DescriptionShort} = $Param{DescriptionShort};
+    }
+
     $LayoutObject->Block(
         Name => $Param{ActivityDialogField}->{LayoutBlock} || 'rw:Customer',
         Data => \%Data,
@@ -3059,15 +3069,6 @@ sub _RenderCustomer {
         $LayoutObject->Block(
             Name => 'LabelSpanCustomerUser',
             Data => {},
-        );
-    }
-
-    if ( $Param{DescriptionShort} ) {
-        $LayoutObject->Block(
-            Name => $Param{ActivityDialogField}->{LayoutBlock} || 'rw:Customer:DescriptionShort',
-            Data => {
-                DescriptionShort => $Param{DescriptionShort},
-            },
         );
     }
 

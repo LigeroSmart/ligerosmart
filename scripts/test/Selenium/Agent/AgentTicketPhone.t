@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Agent/AgentTicketPhone.t
+# $origin: otrs - 2b2f3baaf884467a9e62d92d035e9f9a15deca8d - scripts/test/Selenium/Agent/AgentTicketPhone.t - rel-7_0_8
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -111,7 +111,7 @@ $Selenium->RunTest(
         my $TestCustomer       = 'Customer' . $RandomID;
         my $TestCustomerUserID = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserAdd(
             Source         => 'CustomerUser',
-            UserFirstname  => $TestCustomer,
+            UserFirstname  => 'FirstName' . $TestCustomer,
             UserLastname   => $TestCustomer,
             UserCustomerID => $TestCustomer,
             UserLogin      => $TestCustomer,
@@ -122,6 +122,37 @@ $Selenium->RunTest(
         $Self->True(
             $TestCustomerUserID,
             "CustomerUserAdd - ID $TestCustomerUserID"
+        );
+
+        # Add test template of type 'Create'.
+        my $TemplateText           = 'This is selected customer user first name: "<OTRS_CUSTOMER_DATA_UserFirstname>"';
+        my $StandardTemplateObject = $Kernel::OM->Get('Kernel::System::StandardTemplate');
+        my $TemplateID             = $StandardTemplateObject->StandardTemplateAdd(
+            Name         => 'CreateTemplate' . $RandomID,
+            Template     => $TemplateText,
+            ContentType  => 'text/plain; charset=utf-8',
+            TemplateType => 'Create',
+            ValidID      => 1,
+            UserID       => $TestUserID,
+        );
+        $Self->True(
+            $TemplateID,
+            "Template ID $TemplateID is created.",
+        );
+
+        my $QueueObject = $Kernel::OM->Get('Kernel::System::Queue');
+        my $QueueID     = $QueueObject->QueueLookup( Queue => 'Raw' );
+
+        # Assign test template to queue 'Raw'.
+        my $Success = $QueueObject->QueueStandardTemplateMemberAdd(
+            QueueID            => $QueueID,
+            StandardTemplateID => $TemplateID,
+            Active             => 1,
+            UserID             => $TestUserID,
+        );
+        $Self->True(
+            $Success,
+            "Template ID $TemplateID got assigned to queue 'Raw'",
         );
 
         # Login as test user.
@@ -156,11 +187,11 @@ $Selenium->RunTest(
         my $Element = $Selenium->find_element( "#Subject", 'css' );
         $Element->send_keys("");
         $Selenium->find_element( "#submitRichText", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject.Error").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject.Error").length;' );
 
         $Self->Is(
             $Selenium->execute_script(
-                "return \$('#Subject').hasClass('Error')"
+                "return \$('#Subject').hasClass('Error');"
             ),
             '1',
             'Client side validation correctly detected missing input value',
@@ -213,8 +244,8 @@ $Selenium->RunTest(
 
 # ---
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCustomer)').click()");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCustomer)').click();");
 # ---
 # ITSMIncidentProblemManagement
 # ---
@@ -261,19 +292,34 @@ $Selenium->RunTest(
             Element => '#Dest',
             Value   => '2||Raw',
         );
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length;' );
+
+        # Select test created template and verify selected customer information is correctly replaced. See bug#14455.
+        $Selenium->InputFieldValueSet(
+            Element => '#StandardTemplateID',
+            Value   => $TemplateID,
+        );
+
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length;' );
+
+        $Self->Is(
+            $Selenium->execute_script("return \$('#RichText').val().trim();"),
+            "This is selected customer user first name: \"FirstName$TestCustomer\"",
+            "Template type 'Create' has customer information correct"
+        );
 
         $Selenium->find_element( "#Subject",  'css' )->send_keys($TicketSubject);
+        $Selenium->find_element( "#RichText", 'css' )->clear();
         $Selenium->find_element( "#RichText", 'css' )->send_keys($TicketBody);
 
         # Wait for "Customer Information".
         $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset .Value").length'
+            JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset .Value").length;'
         );
 
         # Make sure that Customer email is link.
         my $LinkVisible = $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset a.AsPopup:visible").length'
+            JavaScript => 'return typeof($) === "function" && $(".SidebarColumn fieldset a.AsPopup:visible").length;'
         );
         $Self->True(
             $LinkVisible,
@@ -303,8 +349,8 @@ $Selenium->RunTest(
 
         # Add customer again.
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
-        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCustomer)').click()");
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length;' );
+        $Selenium->execute_script("\$('li.ui-menu-item:contains($TestCustomer)').click();");
 
         # Make sure that Customer email is not a link.
         $LinkVisible = $Selenium->execute_script("return \$('.SidebarColumn fieldset a.AsPopup').length;");
@@ -317,7 +363,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Subject", 'css' )->send_keys("\N{U+E007}");
         $Selenium->WaitFor(
             JavaScript =>
-                'return typeof($) === "function" && $(".MessageBox a[href*=\'AgentTicketZoom;TicketID=\']").length !== 0'
+                'return typeof($) === "function" && $(".MessageBox a[href*=\'AgentTicketZoom;TicketID=\']").length !== 0;'
         );
 
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -425,7 +471,7 @@ $Selenium->RunTest(
         );
 
         # Wait for loader.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length;' );
 
         # Check Queue #1 is displayed as selected.
         $Self->Is(
@@ -452,7 +498,7 @@ $Selenium->RunTest(
         );
 
         # Wait for loader.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length' );
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length;' );
 
         # Check SubQueue is displayed properly.
         $Self->Is(
@@ -485,13 +531,13 @@ $Selenium->RunTest(
         );
 # ---
         # Delete Queues.
-        my $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
+        $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL  => "DELETE FROM queue WHERE id IN (?, ?)",
             Bind => [ \$QueueID1, \$QueueID2 ],
         );
         $Self->True(
             $Success,
-            "Queues deleted",
+            "Queues deleted.",
         );
 
         # Delete created test ticket.
@@ -510,7 +556,7 @@ $Selenium->RunTest(
         }
         $Self->True(
             $Success,
-            "Ticket with ticket ID $TicketID is deleted",
+            "Ticket with ticket ID $TicketID is deleted.",
         );
 # ---
 # ITSMIncidentProblemManagement
@@ -552,7 +598,16 @@ $Selenium->RunTest(
         );
         $Self->True(
             $Success,
-            "Delete customer user - $TestCustomer",
+            "Customer user $TestCustomer is deleted.",
+        );
+
+        # Delete test created template.
+        $Success = $StandardTemplateObject->StandardTemplateDelete(
+            ID => $TemplateID,
+        );
+        $Self->True(
+            $Success,
+            "Template ID $TemplateID is deleted.",
         );
 
         my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
