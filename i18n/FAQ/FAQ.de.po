@@ -1,25 +1,63 @@
 # 
 # Translators:
+# 3Stadt <matthieu@3-stadt.de>, 2017
 # Antonius Klockenkämper, 2017
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2017
+# Christian Mikschik, 2017
+# Christian Widauer <christian.widauer@fh-rosenheim.de>, 2017
+# christopher.kuhn <christopher.kuhn@otrs.com>, 2016
 # christopher.kuhn <christopher.kuhn@otrs.com>, 2018
+# Christoph Keßler, 2017,2019
+# Daniel Schliemann <daniel.schliemann@googlemail.com>, 2016
+# Dominik <dominik@reichardt-online.it>, 2015
+# dominikklein <mail@dominik-klein.de>, 2017
+# Dorothea Doerffel <dorothea.doerffel@cape-it.de>, 2017
 # Ettore Atalan <atalanttore@googlemail.com>, 2014-2016
+# Felix Brinkmann <payartz12@gmail.com>, 2018
+# Felix Schäfer <web.otrs@yorfeix.de>, 2017
+# Florian Liebe, 2017
+# Gunther Müller <anonym50000@gmail.com>, 2016
 # Harald Eisenmenger <harald.eisenmenger@otrs.com>, 2017
+# jb_otrs <jens.bothe@otrs.com>, 2014,2016
 # Jonas Kohls <Jonas.kohls@outlook.de>, 2016
+# Lars Glinker <lassak26@googlemail.com>, 2017
+# Lukas, 2017
 # eliasp <mail@eliasprobst.eu>, 2015
 # Mainboarder, 2014
 # mainboarder, 2014
+# Marc A. Bonsels, 2014
+# Marco Buchholz <mabu@debian-admin.de>, 2018
 # Martin Gruner <martin.gruner@otrs.com>, 2014
+# mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
 # mathiasbraeunling <mathias.braeunling@otrs.com>, 2015
+# Matthias Freitag, 2018
 # Matthias Freitag, 2017
+# Matze208, 2015
+# mbank <michael.bank@fh-koeln.de>, 2015
+# Michael Reuther <michael.reuther@otrs.com>, 2019
+# Patrick Pfeifer <pp@kraemer-automotive.com>, 2014
+# Patrik Z., 2016
+# Philip Heinrich <philip.heinrich@it-verbund-uelzen.de>, 2017
+# Ralf Hildebrandt (hildeb) <ralf.hildebrandt@gmail.com>, 2016
+# Ricardo von Staa <ricardo.von.staa@otrs.com>, 2018
+# Ricky Kaiser <ricky.kaiser@cape-it.de>, 2017
+# Rik sof <khan.jonas@riksof.com>, 2017
 # ru_otrs <robert.ullrich@otrs.com>, 2014-2015
+# Rudi Schloesser <schloesser@atecom.com>, 2017
 # Rudy R <rudy.rohde@googlemail.com>, 2015
 # ru_otrs <robert.ullrich@otrs.com>, 2014
+# sb_otrs <stefan.bedorf@otrs.com>, 2017
+# Sebastian Hellwig <sebastian@furufuru.cc>, 2017
+# Simone Niederle <sniederle@starface.de>, 2017
 # Stefan Hagl <stefan.hagl@gmx.at>, 2018
+# Stefan Simmerstatter, 2015
+# Udo Bretz, 2018
+# zottto <mail@marcnilius.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-04-01 18:37+0000\n"
+"PO-Revision-Date: 2019-04-16 07:25+0000\n"
 "Last-Translator: Michael Reuther <michael.reuther@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +84,7 @@ msgstr "Freigabe"
 
 #. Template: AgentFAQCategory
 msgid "FAQ Category Management"
-msgstr "FAQ-Kategorien-Verwaltung"
+msgstr "FAQ-Kategorienverwaltung"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
@@ -100,7 +138,7 @@ msgstr "Diese Kategorie wird in den folgenden FAQ-Artikeln verwendet"
 
 #. Template: AgentFAQCategory
 msgid "This category is parent of the following subcategories"
-msgstr "Diese Kategorie ist eine Eltern-Kategorie für folgende Kategorien"
+msgstr "Diese Kategorie ist eine Unterkategorie für folgende Kategorien"
 
 #. Template: AgentFAQDelete
 msgid "Do you really want to delete this FAQ article?"
@@ -156,7 +194,7 @@ msgstr "Keine FAQ-Journaldaten gefunden."
 
 #. Template: AgentFAQLanguage
 msgid "FAQ Language Management"
-msgstr "FAQ-Sprachen-Verwaltung"
+msgstr "FAQ-Sprachenverwaltung"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
@@ -180,7 +218,7 @@ msgstr "Sprache hinzufügen"
 
 #. Template: AgentFAQLanguage
 msgid "Edit Language"
-msgstr "Sprache Bearbeiten"
+msgstr "Sprache bearbeiten"
 
 #. Template: AgentFAQLanguage
 msgid "Do you really want to delete this language?"
@@ -265,7 +303,7 @@ msgstr "Abstimmen"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr "Keine Abstimmungseinstellung"
+msgstr "Keine Einstellung für Abstimmung"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
@@ -281,7 +319,7 @@ msgstr "Anteil"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr "Keine Anteil-Einstellungen"
+msgstr "Keine Einstellungen für Anteil"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
@@ -297,7 +335,7 @@ msgstr "Erstellzeit des FAQ-Artikel"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr "letzte Änderung des FAQ-Artikel"
+msgstr "Letzte Änderung des FAQ-Artikel"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
@@ -321,7 +359,7 @@ msgstr "Keine Bewertungen gefunden! Seien Sie der erste der diesen FAQ-Artikel b
 
 #. Template: AgentFAQZoom
 msgid "Download Attachment"
-msgstr "Attachment Herunterladen"
+msgstr "Anhang herunterladen"
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -346,7 +384,7 @@ msgstr "sehr hilfreich"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr "Füge den FAQ-Titel als Artikelbetreff hinzu."
+msgstr "FAQ-Titel als Artikelbetreff hinzufügen"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
@@ -442,7 +480,7 @@ msgstr "Sie benötigen Lese- und Schreibrechte!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr "Keine Katgorien gefunden in denen der Benutzer Lese-/Schreibrechte besitzt!"
+msgstr "Keine Kategorien gefunden, in denen der Benutzer Lese-/Schreibrechte besitzt!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
@@ -450,7 +488,7 @@ msgstr "Standardsprache wurde nicht gefunden. Neue Standardsprache konnte nicht 
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
-msgstr "Benötige KategorieID!"
+msgstr "Benötige Kategorie-ID!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "A category should have a name!"
@@ -466,7 +504,7 @@ msgstr "Diese Kategorie existiert bereits!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
-msgstr "Es wurde keine KategorieID vergeben!"
+msgstr "Es wurde keine Kategorie-ID vergeben!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
@@ -486,7 +524,7 @@ msgstr "Kategorie löschen"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
-msgstr "Es wurde keine ItemID vergeben!"
+msgstr "Es wurde keine Eintrag-ID vergeben!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
@@ -498,15 +536,15 @@ msgstr "FAQ Artikel %s konnte nicht gelöscht werden!"
 
 #. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
 msgid "The CategoryID %s is invalid."
-msgstr "Die KategorieID %s ist ungültig."
+msgstr "Die Kategorie-ID %s ist ungültig."
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
-msgstr "Kann History nicht anzeigen, keine ItemID übermittelt!"
+msgstr "Kann History nicht anzeigen, keine Eintrag-ID übermittelt!"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr "FAQ Verlauf"
+msgstr "FAQ Historie"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -618,11 +656,11 @@ msgstr "Kleiner als"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than equals"
-msgstr "ist kleiner/gleich"
+msgstr "Kleiner/gleich"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Need FileID!"
-msgstr "Benötige DateiID"
+msgstr "Benötige Datei-ID"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Thanks for your vote!"
@@ -642,7 +680,7 @@ msgstr "Abstimmungsfunktion ist nicht aktiviert."
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The vote rate is not defined!"
-msgstr ""
+msgstr "Die Abstimmungsrate ist nicht definiert!"
 
 #. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
 msgid "FAQ Article Print"
@@ -762,7 +800,7 @@ msgstr "Cachezeit für FAQ-Artikel."
 
 #. SysConfig
 msgid "Category Management"
-msgstr "Kategorien-Verwaltung"
+msgstr "Kategorienverwaltung"
 
 #. SysConfig
 msgid "Category Management."
@@ -774,11 +812,11 @@ msgstr "Kunden-FAQ Drucken."
 
 #. SysConfig
 msgid "Customer FAQ Related Articles"
-msgstr ""
+msgstr "Kunden-FAQ-bezogene Artikel"
 
 #. SysConfig
 msgid "Customer FAQ Related Articles."
-msgstr ""
+msgstr "Kunden-FAQ-bezogene Artikel."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
@@ -1052,7 +1090,7 @@ msgstr "Multiple Sprachen im FAQ-Modul aktivieren."
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
-msgstr ""
+msgstr "Aktivieren Sie die zugehörige Artikelfunktion für das Kunden-Frontend."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
@@ -1144,15 +1182,15 @@ msgstr "Journal"
 
 #. SysConfig
 msgid "Language Management"
-msgstr "Sprachen-Verwaltung"
+msgstr "Sprachenverwaltung"
 
 #. SysConfig
 msgid "Language Management."
-msgstr "Sprachen-Verwaltung."
+msgstr "Sprachenverwaltung."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr "Limit für die Suche beim Erzeugen der Schlüsselwort-FAQ-Artikel-Liste."
+msgstr "Limit für die Suche beim Erstellen der Schlüsselwort-FAQ-Artikel-Liste."
 
 #. SysConfig
 msgid "Limit."
@@ -1180,7 +1218,7 @@ msgstr "Liste der Statustypen, die in der öffentlichen Oberfläche genutzt werd
 
 #. SysConfig
 msgid "Loader module registration for the public interface."
-msgstr ""
+msgstr "Lade-Modulregistrierung für das öffentliche Interface."
 
 #. SysConfig
 msgid ""
@@ -1270,7 +1308,7 @@ msgstr "Maximale Größe von Titeln in Häufig-gestellten-Fragen-Beiträgen welc
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "customer interface."
-msgstr ""
+msgstr "Modul zum Erzeugen des HTML OpenSearch-Profils für die kurze FAQ-Suche im Kunden-Interface."
 
 #. SysConfig
 msgid ""
@@ -1328,7 +1366,7 @@ msgstr "Anzahl der anzuzeigenden Artikel im Top 10 Feature."
 
 #. SysConfig
 msgid "Output filter to add Java-script to CustomerTicketMessage screen."
-msgstr ""
+msgstr "Ausgabefilter zum Hinzufügen von JavaScript zur Kunden-Ticket-Ansicht."
 
 #. SysConfig
 msgid "Output limit for the related FAQ articles."
@@ -1448,7 +1486,7 @@ msgstr "FAQ Pfad anzeigen ja/nein."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr "Zeige ungültige Items im FAQ-Explorer-Ergebnis der Agenten-Oberfläche."
+msgstr "Zeige ungültige Einträge im FAQ-Explorer-Ergebnis der Agenten-Oberfläche."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1466,7 +1504,7 @@ msgstr "Interfaces in denen das LastCreate Feature angezeigt werden soll."
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr ""
+msgstr "Zeigt die Sterne für die Artikel mit einer Bewertung gleich oder größer wie der definierte Wert an (Setzen Sie den Wert auf '0' zum Deaktivieren der Ausgabe)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
