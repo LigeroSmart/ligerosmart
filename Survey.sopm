@@ -30,8 +30,8 @@
         <File Permission="660" Location="Kernel/Language/nb_NO_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/nl_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/pl_Survey.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_Survey.pm" />
-        <File Permission="660" Location="Kernel/Language/pt_PT_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/ru_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_Survey.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_Survey.pm" />
