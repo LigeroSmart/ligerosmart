@@ -12,16 +12,14 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get change reset menu module default config
+        # Get change reset menu module default config.
         my %ChangeResetMenu = $Kernel::OM->Get('Kernel::System::SysConfig')->SettingGet(
             Name    => 'ITSMChange::Frontend::MenuModule###110-ChangeReset',
             Default => 1,
@@ -33,7 +31,7 @@ $Selenium->RunTest(
             Valid => 1,
         );
 
-        # get AgemtITSMChangeReset frontend module sysconfig
+        # Get AgemtITSMChangeReset frontend module sysconfig.
         my %ChangeResetFrontendUpdate = (
             'Description' => 'Reset a change and its workorders',
             'GroupRo'     => [
@@ -43,17 +41,16 @@ $Selenium->RunTest(
             'Title'      => 'Reset',
         );
 
-        # set AgemtITSMChangeReset frontend module on valid
+        # Set AgemtITSMChangeReset frontend module on valid.
         $Helper->ConfigSettingChange(
             Key   => 'Frontend::Module###AgentITSMChangeReset',
             Value => \%ChangeResetFrontendUpdate,
             Valid => 1,
         );
 
-        # get general catalog object
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
 
-        # get change state data
+        # Get change state data.
         my @ChangeStateIDs;
         for my $ChangeState (qw(requested approved)) {
             my $ChangeStateDataRef = $GeneralCatalogObject->ItemGet(
@@ -63,10 +60,9 @@ $Selenium->RunTest(
             push @ChangeStateIDs, $ChangeStateDataRef->{ItemID};
         }
 
-        # get change object
         my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Approved ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -80,7 +76,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get work order state data
+        # Get work order state data.
         my @WorkOrderStateIDs;
         for my $WorkOrderState (qw(created accepted)) {
             my $WorkOrderStateDataRef = $GeneralCatalogObject->ItemGet(
@@ -90,10 +86,9 @@ $Selenium->RunTest(
             push @WorkOrderStateIDs, $WorkOrderStateDataRef->{ItemID};
         }
 
-        # get work order object
         my $WorkOrderObject = $Kernel::OM->Get('Kernel::System::ITSMChange::ITSMWorkOrder');
 
-        # create test work order
+        # Create test work order.
         my $WorkOrderTitleRandom = 'Selenium Work Order ' . $Helper->GetRandomID();
         my $WorkOrderID          = $WorkOrderObject->WorkOrderAdd(
             ChangeID         => $ChangeID,
@@ -110,7 +105,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-builder', 'itsm-change-manager' ]
         ) || die "Did not get test user";
@@ -121,35 +116,37 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMChangeZoom of created test change
+        # Navigate to AgentITSMChangeZoom of created test change.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeID");
 
-        # click on 'Reset'
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMChangeReset;ChangeID=$ChangeID\"]').length;"
+        );
+
+        # Click on 'Reset'.
         $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeReset;ChangeID=$ChangeID')]")->click();
 
-        # wait for confirm button to show up and confirm reset action
+        # Wait for confirm button to show up and confirm reset action.
         $Selenium->WaitFor( JavaScript => "return \$('.Dialog button.Primary.CallForAction:visible').length;" );
         $Selenium->find_element( ".Dialog button.Primary.CallForAction", 'css' )->VerifiedClick();
 
-        sleep(1);
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMChangeReset;ChangeID=$ChangeID\"]').length;"
+        );
 
-        # # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        # Navigate to AgentITSMChangeHistory of created test change.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeHistory;ChangeID=$ChangeID");
 
-        # click on 'History' and switch window
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID')]")->click();
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
-
-        # verify that change state is reseted
+        # Verify that change state is reseted.
         my $WorkOrderResetMessage
             = "(ID=$WorkOrderID) WorkOrderState: (new=created (ID=$WorkOrderStateIDs[0]), old=accepted (ID=$WorkOrderStateIDs[1]))";
         my $ChangeResetMessage
@@ -163,7 +160,7 @@ $Selenium->RunTest(
             "$ChangeResetMessage is found",
         );
 
-        # delete test created work order
+        # Delete test created work order.
         my $Success = $WorkOrderObject->WorkOrderDelete(
             WorkOrderID => $WorkOrderID,
             UserID      => 1,
@@ -173,7 +170,7 @@ $Selenium->RunTest(
             "$WorkOrderTitleRandom is deleted",
         );
 
-        # delete test created change
+        # Delete test created change.
         $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -183,7 +180,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
