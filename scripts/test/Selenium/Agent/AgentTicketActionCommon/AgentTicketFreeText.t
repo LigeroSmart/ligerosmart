@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Agent/AgentTicketFreeText.t
+# $origin: otrs - 23605d3bb5380943e245826ffa18a12126db777b - scripts/test/Selenium/Agent/AgentTicketFreeText.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -486,6 +486,10 @@ my %SLATypeName2ID = reverse %{ $SLATypeList };
                 # Switch back to the main window.
                 $Selenium->WaitFor( WindowCount => 1 );
                 $Selenium->switch_to_window( $Handles->[0] );
+
+                $Selenium->WaitFor(
+                    JavaScript => "return typeof(\$) === 'function' && \$.active == 0;"
+                );
             }
         }
 
