@@ -61,7 +61,7 @@ sub PreRun {
     if (
         $IncompleteWorkingDays{EnforceInsert}
         && $Self->{Action} ne 'AgentTimeAccountingEdit'
-        && $Self->{Action} =~ /AgentTimeAccounting/
+        && $Self->{Action} !~ /AgentTimeAccounting/
         )
     {
 

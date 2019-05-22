@@ -196,13 +196,13 @@ $Selenium->RunTest(
 
         $Selenium->find_element( "#SubmitUserData", 'css' )->click();
 
-        # Check if notification is shown on page.
+        # Check if error notification is shown on page.
         $Self->Is(
             $Selenium->execute_script(
                 "return \$('.MessageBox.Error a[href*=\"Action=AgentTimeAccountingEdit\"]').text().trim();"
             ),
             "Please insert your working hours!",
-            'Link for AgentTimeAccountingEdit is found',
+            'Error notification for inserting working hours is found',
         );
 
         # Checks if Incomplete working days is shown.
@@ -212,6 +212,48 @@ $Selenium->RunTest(
             ),
             $Interval,
             "$Interval incomplete working days is found in toolbar counter",
+        );
+
+        # Try to navigate to AgentDashboard.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentDashboard");
+
+        $Self->False(
+            index( $Selenium->get_current_url(), 'Action=AgentDashboard' ) > -1,
+            "User is bloked to use application, it is needed to insert working hours",
+        );
+
+        # Disable MassEntry features.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'TimeAccounting::MaxIntervalOfIncompleteDays',
+            Value => 15,
+        );
+
+        # Disable MassEntry features.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning',
+            Value => 5,
+        );
+
+        # Refresh the screen to load new notification after changing config.
+        $Selenium->VerifiedRefresh();
+
+        # Check if warrning notification is shown on page.
+        $Self->Is(
+            $Selenium->execute_script(
+                "return \$('.MessageBox.Notice a[href*=\"Action=AgentTimeAccountingEdit\"]').text().trim();"
+            ),
+            "Please insert your working hours!",
+            'Warrning notification for inserting working hours is found',
+        );
+
+        # Try to navigate to AgentDashboard.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentDashboard");
+
+        $Self->True(
+            index( $Selenium->get_current_url(), 'Action=AgentDashboard' ) > -1,
+            "User is not bloked to use application",
         );
 
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
