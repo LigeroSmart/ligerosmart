@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 7aa9e8dc4facb3315596eeaa898e8145026cc7b7 - Kernel/Modules/AgentTicketActionCommon.pm
+# $origin: otrs - 4e06ef439c33e7d90af16451719415c780e0c29c - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -2532,20 +2532,12 @@ sub _Mask {
         if ( $Config->{InformAgent} ) {
 
             # get inform user list
-            my %InformAgents;
-            my @InformUserID    = $ParamObject->GetArray( Param => 'InformUserID' );
-            my %InformAgentList = $GroupObject->PermissionGroupGet(
-                GroupID => $GID,
-                Type    => 'ro',
-            );
-            for my $UserID ( sort keys %InformAgentList ) {
-                $InformAgents{$UserID} = $AllGroupsMembers{$UserID};
-            }
+            my @InformUserID = $ParamObject->GetArray( Param => 'InformUserID' );
 
             if ( $Self->{ReplyToArticle} ) {
 
                 # get email address of all users and compare to replyto-addresses
-                for my $UserID ( sort keys %InformAgents ) {
+                for my $UserID ( sort keys %ShownUsers ) {
                     if ( $ReplyToUserIDs{$UserID} ) {
                         push @InformUserID, $UserID;
                         delete $ReplyToUserIDs{$UserID};
@@ -2556,7 +2548,7 @@ sub _Mask {
             my $InformAgentSize = $ConfigObject->Get('Ticket::Frontend::InformAgentMaxSize')
                 || 3;
             $Param{OptionStrg} = $LayoutObject->BuildSelection(
-                Data       => \%InformAgents,
+                Data       => \%ShownUsers,
                 SelectedID => \@InformUserID,
                 Name       => 'InformUserID',
                 Class      => 'Modernize',
