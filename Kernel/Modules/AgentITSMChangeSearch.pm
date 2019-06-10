@@ -39,9 +39,9 @@ sub Run {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get confid data
-    $Self->{StartHit} = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    $Self->{StartHit}    = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
-    $Self->{SortBy} = $ParamObject->GetParam( Param => 'SortBy' )
+    $Self->{SortBy}      = $ParamObject->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
         || 'ChangeID';
     $Self->{OrderBy} = $ParamObject->GetParam( Param => 'OrderBy' )

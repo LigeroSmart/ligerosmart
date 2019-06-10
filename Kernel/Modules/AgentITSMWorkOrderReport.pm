@@ -608,8 +608,8 @@ sub Run {
                 Format                => 'DateInputFormatLong',
                 Prefix                => $TimeType,
                 "${TimeType}Optional" => 1,
-                $TimeType . 'Class' => $ValidationError{ $TimeType . 'Invalid' } || '',
-                Validate => 1,
+                $TimeType . 'Class'   => $ValidationError{ $TimeType . 'Invalid' } || '',
+                Validate              => 1,
                 %TimePeriod,
             );
 

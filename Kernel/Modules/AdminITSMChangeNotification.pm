@@ -54,7 +54,7 @@ sub Run {
     # change
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
-        my $ID = $ParamObject->GetParam( Param => 'ID' ) || '';
+        my $ID   = $ParamObject->GetParam( Param => 'ID' ) || '';
         my $Data = $NotificationObject->NotificationRuleGet( ID => $ID );
 
         $Self->_Edit(
@@ -569,7 +569,7 @@ sub _Overview {
     my %ValidList = $Kernel::OM->Get('Kernel::System::Valid')->ValidList();
     for my $RuleID ( @{$RuleIDs} ) {
 
-        my $Data = $NotificationObject->NotificationRuleGet( ID => $RuleID );
+        my $Data       = $NotificationObject->NotificationRuleGet( ID => $RuleID );
         my $Recipients = join ', ', @{ $Data->{Recipients} || [] };
 
         $LayoutObject->Block(
