@@ -246,8 +246,8 @@ sub GetStatTable {
 
     # Set default values if no sort or order attribute is given.
     my $SortRef = first { $_->{Element} eq 'SortSequence' } @{ $Param{ValueSeries} };
-    my $Sort  = $SortRef ? $SortRef->{SelectedValues}->[0] : 'Down';
-    my $Limit = $Param{Restrictions}->{Limit};
+    my $Sort    = $SortRef ? $SortRef->{SelectedValues}->[0] : 'Down';
+    my $Limit   = $Param{Restrictions}->{Limit};
 
     $Param{Restrictions}->{Limit} = $Limit || 100_000_000;
 
