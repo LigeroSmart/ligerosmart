@@ -70,10 +70,10 @@ sub Run {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # get config data
-    my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
-    my $SearchLimit     = $Config->{SearchLimit}     || 200;
+    my $StartHit        = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    my $SearchLimit     = $Config->{SearchLimit} || 200;
     my $SearchPageShown = $Config->{SearchPageShown} || 40;
-    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
+    my $SortBy          = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
         || 'FAQID';
     my $OrderBy = $ParamObject->GetParam( Param => 'Order' )

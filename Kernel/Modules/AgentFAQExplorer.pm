@@ -46,11 +46,11 @@ sub Run {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     # Get config data.
-    my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    my $StartHit    = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     my $SearchLimit = $Config->{SearchLimit} || 500;
-    my $Filter = $ParamObject->GetParam( Param => 'Filter' ) || '';
-    my $View   = $ParamObject->GetParam( Param => 'View' )   || '';
-    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
+    my $Filter      = $ParamObject->GetParam( Param => 'Filter' ) || '';
+    my $View        = $ParamObject->GetParam( Param => 'View' ) || '';
+    my $SortBy      = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
         || 'FAQID';
     my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )

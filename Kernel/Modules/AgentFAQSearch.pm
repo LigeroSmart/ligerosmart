@@ -47,9 +47,9 @@ sub Run {
     my $Config = $Self->{Config};
 
     # Get config data.
-    my $StartHit = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
+    my $StartHit    = int( $ParamObject->GetParam( Param => 'StartHit' ) || 1 );
     my $SearchLimit = $Config->{SearchLimit} || 500;
-    my $SortBy = $ParamObject->GetParam( Param => 'SortBy' )
+    my $SortBy      = $ParamObject->GetParam( Param => 'SortBy' )
         || $Config->{'SortBy::Default'}
         || 'FAQID';
     my $OrderBy = $ParamObject->GetParam( Param => 'OrderBy' )
