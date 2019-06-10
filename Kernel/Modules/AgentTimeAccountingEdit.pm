@@ -818,7 +818,7 @@ sub Run {
         );
 
         my $EnableAutoCompletion = $ConfigObject->Get("TimeAccounting::EnableAutoCompletion") || 0;
-        my $Class = $EnableAutoCompletion ? ' Modernize' : '';
+        my $Class                = $EnableAutoCompletion ? ' Modernize' : '';
 
         # set params for modern inputs
         $ProjectOptionParams{Class} .= $Class;
