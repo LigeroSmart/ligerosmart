@@ -11,6 +11,8 @@ package Kernel::System::FAQ::State;
 use strict;
 use warnings;
 
+use Kernel::System::VariableCheck qw(:all);
+
 our @ObjectDependencies = (
     'Kernel::System::Cache',
     'Kernel::System::DB',
@@ -132,6 +134,13 @@ get the state list as hash
         UserID => 1,
     );
 
+optional, get state list for some state types:
+
+    my $StateTypeHashRef = $FAQObject->StateTypeList(
+        Types  => [ 'public', 'internal'],
+        UserID => 1,
+    );
+
 Returns:
 
     %States = (
@@ -156,12 +165,22 @@ sub StateList {
 
     my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-    # SQL
-    return if !$DBObject->Prepare(
-        SQL => '
-            SELECT id, name
-            FROM faq_state'
-    );
+    my $SQL = '
+        SELECT id, name
+        FROM faq_state';
+
+    # Filter state list by type id if available.
+    if ( IsArrayRefWithData( $Param{Types} ) ) {
+        my $StateTypeHashRef = $Self->StateTypeList(
+            Types  => $Param{Types},
+            UserID => $Param{UserID},
+        );
+        if ( IsHashRefWithData($StateTypeHashRef) ) {
+            $SQL .= ' WHERE type_id IN ( ' . join( ', ', sort keys %{$StateTypeHashRef} ) . ' )';
+        }
+    }
+
+    return if !$DBObject->Prepare( SQL => $SQL );
 
     my %List;
     while ( my @Row = $DBObject->FetchrowArray() ) {
@@ -359,7 +378,7 @@ sub StateTypeList {
 
         # call StateTypeList without parameters to validate Types
         my $StateTypeList = $Self->StateTypeList( UserID => $Param{UserID} );
-        my %StateTypes    = reverse %{ $StateTypeList || {} };
+        my %StateTypes = reverse %{ $StateTypeList || {} };
         my @Types;
 
         # only add types to list that exist

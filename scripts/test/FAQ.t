@@ -693,6 +693,46 @@ for my $StateID ( sort keys %States ) {
     );
 }
 
+%States = $FAQObject->StateList(
+    Types  => ['internal'],
+    UserID => 1,
+);
+
+$Self->Is(
+    scalar keys %States,
+    1,
+    "StateList() has 1 key",
+);
+
+$Self->Is(
+    $States{2},
+    'internal (agent)',
+    "StateList() 2 is internal",
+);
+
+%States = $FAQObject->StateList(
+    Types  => [ 'public', 'external' ],
+    UserID => 1,
+);
+
+$Self->Is(
+    scalar keys %States,
+    2,
+    "StateList() has 2 keys",
+);
+
+$Self->Is(
+    $States{1},
+    'external (customer)',
+    "StateList() 1 is external",
+);
+
+$Self->Is(
+    $States{3},
+    'public (all)',
+    "StateList() 3 is public",
+);
+
 my $StateTypeList = $FAQObject->StateTypeList(
     UserID => 1,
 );

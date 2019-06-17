@@ -475,11 +475,13 @@ sub _MaskNew {
         Class         => 'Modernize',
     );
 
-    my %States = $FAQObject->StateList(
+    my @StateTypes = $ConfigObject->Get('FAQ::Agent::StateTypes');
+    my %States     = $FAQObject->StateList(
+        Types  => @StateTypes,
         UserID => $Self->{UserID},
     );
 
-    # Get the selected state/
+    # Get the selected state.
     my $SelectedState;
     if ( $Param{StateID} && $States{ $Param{StateID} } ) {
 
@@ -629,7 +631,7 @@ sub _MaskNew {
 
     # Set default interface settings.
     my $InterfaceStates = $FAQObject->StateTypeList(
-        Types  => $ConfigObject->Get('FAQ::Agent::StateTypes'),
+        Types  => @StateTypes,
         UserID => $Self->{UserID},
     );
 

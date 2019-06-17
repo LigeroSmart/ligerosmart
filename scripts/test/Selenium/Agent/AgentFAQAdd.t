@@ -22,14 +22,21 @@ $Selenium->RunTest(
         # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Frontend::RichText',
             Value => 0,
         );
 
-        # create test user and login
+        # Modify "FAQ::Agent::StateTypes" to only show 'internal' and 'public' FAQ state types in agent interface.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'FAQ::Agent::StateTypes',
+            Value => [ 'internal', 'public' ],
+        );
+
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -40,13 +47,13 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
+        # Get script alias.
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentFAQAdd
+        # Navigate to AgentFAQAdd.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQAdd");
 
-        # check page
+        # Check page.
         for my $ID (
             qw(Title Keywords CategoryID StateID ValidID LanguageID FileUpload
             Field1 Field2 Field3 Field6 FAQSubmit)
@@ -57,14 +64,35 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
-        # test params
+        # Verify only 'internal (agent)' and 'public (all)' FAQ state types are available.
+        # There is no 'external (customer)' FAQ state option. See bug#14515.
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#StateID option[Value=2]').length;"
+            ),
+            "FAQ state 'internal (agent)' is available as option."
+        );
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#StateID option[Value=3]').length;"
+            ),
+            "FAQ state 'public (all)' is available as option."
+        );
+        $Self->False(
+            $Selenium->execute_script(
+                "return \$('#StateID option[Value=1]').length;"
+            ),
+            "FAQ state 'external (customer)' is not available as option."
+        );
+
+        # Test params.
         my $FAQTitle    = 'FAQ ' . $Helper->GetRandomID();
         my $FAQSymptom  = 'Selenium Symptom';
         my $FAQProblem  = 'Selenium Problem';
         my $FAQSolution = 'Selenium Solution';
         my $FAQComment  = 'Selenium Comment';
 
-        # create test FAQ
+        # Create test FAQ.
         $Selenium->find_element( "#Title",    'css' )->send_keys($FAQTitle);
         $Selenium->find_element( "#Keywords", 'css' )->send_keys('Selenium');
         $Selenium->execute_script("\$('#CategoryID').val('1').trigger('redraw.InputField').trigger('change');");
@@ -79,7 +107,7 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQBody").length' );
 
-        # verify test FAQ is created
+        # Verify test FAQ is created.
         $Self->True(
             index( $Selenium->get_page_source(), $FAQTitle ) > -1,
             "$FAQTitle is found",
@@ -95,7 +123,7 @@ $Selenium->RunTest(
         # get DB object
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
-        # get test created FAQ ID
+        # Get test created FAQ ID.
         my $FAQItem = $DBObject->Quote($FAQTitle);
         $DBObject->Prepare(
             SQL  => "SELECT id FROM faq_item WHERE f_subject = ?",
@@ -106,7 +134,7 @@ $Selenium->RunTest(
             $ItemID = $Row[0];
         }
 
-        # delete test created FAQ
+        # Delete test created FAQ.
         my $Success = $Kernel::OM->Get('Kernel::System::FAQ')->FAQDelete(
             ItemID => $ItemID,
             UserID => 1,
