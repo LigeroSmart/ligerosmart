@@ -179,6 +179,8 @@ sub FAQListShow {
         SelectedID  => $PageShown,
         Data        => \%Data,
         Translation => 0,
+        Sort        => 'NumericValue',
+        Class       => 'Modernize',
     );
 
     # build navigation bar content
