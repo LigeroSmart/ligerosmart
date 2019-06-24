@@ -556,11 +556,12 @@ sub _Edit {
 
     # Build the group selection.
     $Data{GroupOption} = $LayoutObject->BuildSelection(
-        Data       => \%Groups,
-        Name       => 'PermissionGroups',
-        Multiple   => 1,
-        Class      => 'Validate_Required Modernize ' . $Param{PermissionGroupsServerError},
-        SelectedID => $Param{PermissionGroups},
+        Data        => \%Groups,
+        Name        => 'PermissionGroups',
+        Multiple    => 1,
+        Translation => 0,
+        Class       => 'Validate_Required Modernize ' . $Param{PermissionGroupsServerError},
+        SelectedID  => $Param{PermissionGroups},
     );
 
     # Get all categories with their long names.
