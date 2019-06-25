@@ -1,31 +1,14 @@
-# 
-# Translators:
-# Daniel Schliemann <daniel.schliemann@googlemail.com>, 2016
-# Ettore Atalan <atalanttore@googlemail.com>, 2014-2015
-# dominikklein <mail@dominik-klein.de>, 2017
-# mainboarder, 2014
-# mainboarder, 2014
-# Martin Gruner <martin.gruner@otrs.com>, 2016-2017
-# mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
-# mathiasbraeunling <mathias.braeunling@otrs.com>, 2014
-# Matthias Freitag, 2017
-# Philip Heinrich <philip.heinrich@it-verbund-uelzen.de>, 2017
-# ru_otrs <robert.ullrich@otrs.com>, 2014-2015
-# Rudy R <rudy.rohde@googlemail.com>, 2015
-# ru_otrs <robert.ullrich@otrs.com>, 2014
-# Tamer Kor <tk@kor.de>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-07-17 14:02+0000\n"
-"PO-Revision-Date: 2018-07-17 14:03+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
+"Project-Id-Version: TimeAccounting\n"
+"POT-Creation-Date: 2019-06-25 14:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -37,7 +20,7 @@ msgstr "Zeitabrechnung bearbeiten"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Go to settings"
-msgstr "Gehe zu Einstellungen"
+msgstr "Zu Einstellungen gehen"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
@@ -45,7 +28,7 @@ msgstr "Datumsnavigation"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
-msgstr "Nicht ausgefüllte Tage"
+msgstr "Tage ohne Einträge"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Select all days"
@@ -129,7 +112,7 @@ msgstr "Ungültige Angabe. Ein Tag hat nur 24 Stunden."
 
 #. Template: AgentTimeAccountingEdit
 msgid "A valid period must be greater than zero."
-msgstr "Eine gültige Zeitdauer muss größer als Null sein."
+msgstr "Eine gültige Zeitspanne muss größer als Null sein."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid period! Negative periods are not allowed."
@@ -161,7 +144,7 @@ msgstr "Sind Sie sicher, dass Sie mehr als 16 Stunden gearbeitet haben?"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Time reporting monthly overview"
-msgstr "Monatsübersicht Zeitberichterstattung"
+msgstr "Zeiterfassung - Monatsübersicht"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (Hours)"
@@ -245,7 +228,7 @@ msgstr "Summe"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Time reporting"
-msgstr "Zeitberichterstattung"
+msgstr "Zeiterfassung"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Month Navigation"
@@ -293,18 +276,14 @@ msgstr "Projektübersicht"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Go to reporting overview"
-msgstr "Zur Berichterstattungsübersicht gehen"
+msgstr "Zur Berichtsübersicht"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid ""
-"Currently only active users in this project are shown. To change this "
-"behavior, please update setting:"
+msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
 msgstr "Derzeit werden in diesem Projekt nur aktive Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:"
 
 #. Template: AgentTimeAccountingReportingProject
-msgid ""
-"Currently all time accounting users are shown. To change this behavior, "
-"please update setting:"
+msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
 msgstr "Derzeit werden alle zeiterfassenden Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:"
 
 #. Template: AgentTimeAccountingSetting
@@ -328,13 +307,12 @@ msgid "Edit Project Settings"
 msgstr "Projekteinstellungen bearbeiten"
 
 #. Template: AgentTimeAccountingSetting
-msgid ""
-"There is already a project with this name. Please, choose a different one."
+msgid "There is already a project with this name. Please, choose a different one."
 msgstr "Ein Projekt mit gleichem Namen existiert bereits. Bitte wählen Sie einen anderen Namen."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Settings"
-msgstr "Zeitabrechnungseinstellungen bearbeiten"
+msgstr "Zeitabrechnungs-Einstellungen bearbeiten"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add task"
@@ -365,8 +343,7 @@ msgid "Edit Task Settings"
 msgstr "Tätigkeitseinstellungen bearbeiten"
 
 #. Template: AgentTimeAccountingSetting
-msgid ""
-"There is already a task with this name. Please, choose a different one."
+msgid "There is already a task with this name. Please, choose a different one."
 msgstr "Eine Tätigkeit mit gleichem Namen existiert bereits. Bitte wählen Sie einen anderen Namen."
 
 #. Template: AgentTimeAccountingSetting
@@ -395,22 +372,19 @@ msgstr "Projekt erstellen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to skip time accounting"
-msgstr ""
+msgstr "Dem Benutzer ist erlaubt, die Zeiterfassung zu überspringen."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow time accounting skipping"
-msgstr ""
+msgstr "Überspringen der Zeiterfassung erlauben"
 
 #. Template: AgentTimeAccountingSetting
-msgid ""
-"If this option is selected, time accounting is effectively optional for the "
-"user."
-msgstr ""
+msgid "If this option is selected, time accounting is effectively optional for the user."
+msgstr "Wenn diese Option ausgewählt ist, ist die Zeiterfassung für den Benutzer effektiv optional."
 
 #. Template: AgentTimeAccountingSetting
-msgid ""
-"There will be no warnings about missing entries and no entry enforcement."
-msgstr ""
+msgid "There will be no warnings about missing entries and no entry enforcement."
+msgstr "Es gibt keine Warnungen vor fehlenden Einträgen und keinen Zwang zum Eintragen. "
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"
@@ -509,18 +483,12 @@ msgid "Can't delete Working Units!"
 msgstr "Kann Arbeitseinheiten nicht löschen!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid ""
-"This Date is out of limit, but you haven't insert this day yet, so you get "
-"one(!) chance to insert"
+msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
 msgstr "Dieses Datum ist außerhalb des Grenzwertes, aber Sie haben diesen Tag bis jetzt noch nicht eingefügt, also bekommen Sie dafür eine(!) Chance."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
 msgstr "Unvollständige Arbeitstage"
-
-#. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid "Please insert your working hours!"
-msgstr "Bitte die Arbeitsstunden eintragen!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
@@ -539,15 +507,11 @@ msgid "Entered date was invalid! Date was changed to today."
 msgstr "Eingegebenes Datum ungültig! Datum wurde auf 'heute' geändert."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid ""
-"No time period configured, or the specified date is outside of the defined "
-"time periods."
+msgid "No time period configured, or the specified date is outside of the defined time periods."
 msgstr "Es ist keine Zeitperiode konfiguriert, oder das angegebene Datum liegt außerhalb der konfigurierten Zeitperioden."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
-msgid ""
-"Please contact the time accounting administrator to update your time "
-"periods!"
+msgid "Please contact the time accounting administrator to update your time periods!"
 msgstr "Bitte kontaktieren Sie ihren Zeiterfassungs-Administrator, um die Zeitperioden zu aktualisieren."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -630,6 +594,10 @@ msgstr "Status des Zeitraums"
 msgid "View: Need %s!"
 msgstr "Ansicht: Benötige %s!"
 
+#. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
+msgid "Please insert your working hours!"
+msgstr "Bitte die Arbeitsstunden eintragen!"
+
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
 msgstr "Unvollständige Arbeitstage"
@@ -655,9 +623,7 @@ msgid "Confirm insert"
 msgstr "Eingabe bestätigen"
 
 #. SysConfig
-msgid ""
-"Agent interface notification module to see the number of incomplete working "
-"days for the user."
+msgid "Agent interface notification module to see the number of incomplete working days for the user."
 msgstr "Modul zum Anzeigen der Anzahl der unvollständigen Arbeitstage des Benutzers."
 
 #. SysConfig
@@ -705,16 +671,11 @@ msgid "Default status for new users."
 msgstr "Anfangsstatus eines neuen Benutzers."
 
 #. SysConfig
-msgid ""
-"Defines the projects for which a remark is required. If the RegExp matches "
-"on the project, you have to insert a remark too. The RegExp use the smx "
-"parameter."
+msgid "Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter."
 msgstr "Innerhalb dieser Konfigurationsoption kann eine RegExp definiert werden, die festlegt, bei welchen Projekten eine Bemerkung eingetragen werden muss (die RegExp arbeitet mit smx-Parametern)."
 
 #. SysConfig
-msgid ""
-"Determines if the statistics module may generate time accounting "
-"information."
+msgid "Determines if the statistics module may generate time accounting information."
 msgstr "Bestimmt, ob das Statistik-Modul Informationen zur Zeitabrechnung generieren kann."
 
 #. SysConfig
@@ -730,47 +691,31 @@ msgid "For how many days ago you can insert working units."
 msgstr "Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z. B. 10 Tage zurückliegend)."
 
 #. SysConfig
-msgid ""
-"If enabled, only users that has added working time to the selected project "
-"are shown."
+msgid "If enabled, only users that has added working time to the selected project are shown."
 msgstr "Wenn aktiviert, werden nur User angezeigt die Arbeitszeiten zu dem gewählten Projekt hinzugefügt haben."
 
 #. SysConfig
-msgid ""
-"If enabled, the dropdown elements in the edit screen are changed to "
-"modernized autocompletion fields."
+msgid "If enabled, the dropdown elements in the edit screen are changed to modernized autocompletion fields."
 msgstr "Wenn aktiviert werden die Dropdown-Felder im der Editier-Oberfläche in der neuen Form als Feld mit Auto-Vervollständigen angezeigt."
 
 #. SysConfig
-msgid ""
-"If enabled, the filter for the previous projects can be used instead two "
-"list of projects (last and all ones). It could be used only if "
-"TimeAccounting::EnableAutoCompletion is enabled."
+msgid "If enabled, the filter for the previous projects can be used instead two list of projects (last and all ones). It could be used only if TimeAccounting::EnableAutoCompletion is enabled."
 msgstr "Der Filter bei vorherigen Projekten kann bei Aktivierung genutzt werden, anstelle das zwei Projekt Listen (letzte und alle) genutzt werden. Es kann allerdings nur genutzt werden wenn TimeAccounting::EnableAutoCompletion aktiviert ist."
 
 #. SysConfig
-msgid ""
-"If enabled, the filter for the previous projects is active by default if "
-"there are the previous projects. It could be used only if "
-"EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
+msgid "If enabled, the filter for the previous projects is active by default if there are the previous projects. It could be used only if EnableAutoCompletion and TimeAccounting::UseFilter are enabled."
 msgstr "Bei Aktivierung ist der Filter der vorherigen Projekte standardmässig aktiv falls vorherige Projekte vorhanden sind. Er kann nur genutzt werden wenn EnableAutoCompletion und  TimeAccounting::UseFilter aktiviert sind."
 
 #. SysConfig
-msgid ""
-"If enabled, the user is allowed to enter \"on vacation leave\", \"on sick "
-"leave\" and \"on overtime leave\" to multiple dates at once."
+msgid "If enabled, the user is allowed to enter \"on vacation leave\", \"on sick leave\" and \"on overtime leave\" to multiple dates at once."
 msgstr "Wenn aktiviert,  können Benutzer \"im Urlaub\", \"Erkrankt\" und \"Überstunden\" an mehreren Tagen auf einmal setzen."
 
 #. SysConfig
-msgid ""
-"Maximum number of working days after which the working units have to be "
-"inserted."
+msgid "Maximum number of working days after which the working units have to be inserted."
 msgstr "Maximale Anzahl von Arbeitstagen, nach der die Arbeitszeit eingetragen werden muss."
 
 #. SysConfig
-msgid ""
-"Maximum number of working days without working units entry after which a "
-"warning will be shown."
+msgid "Maximum number of working days without working units entry after which a warning will be shown."
 msgstr "Maximale Anzahl von Arbeitstagen ohne Arbeitszeiteinträge nach denen eine Warnung angezeigt wird."
 
 #. SysConfig
@@ -782,22 +727,15 @@ msgid "Project time reporting."
 msgstr "Projekt-Zeit-Reporting."
 
 #. SysConfig
-msgid ""
-"Regular expressions for constraining action list according to selected "
-"project. Key contains regular expression for project(s), content contains "
-"regular expressions for action(s)."
+msgid "Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s)."
 msgstr "Regulärer Ausdruck, um die Liste der Tätigkeiten bezüglich des ausgewählten Projekts einzuschränken. Der Schlüssel enthält einen Regulären Ausdruck für Projekte, der Wert einen Regulären Ausdruck für die Tätigkeiten."
 
 #. SysConfig
-msgid ""
-"Regular expressions for constraining project list according to user groups. "
-"Key contains regular expression for project(s), content contains comma "
-"separated list of groups."
+msgid "Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups."
 msgstr "Regulärer Ausdruck, um die Liste der Projekte bezüglich des aktiven Benutzers einzuschränken. Der Schlüssel enthält einen Regulären Ausdruck für Projekte, der Wert enthält eine komma-separierte Liste von Benutzergruppen."
 
 #. SysConfig
-msgid ""
-"Specifies if working hours can be inserted without start and end times."
+msgid "Specifies if working hours can be inserted without start and end times."
 msgstr "Gibt an, ob Arbeitsstunden ohne Start- und Endzeit eingegeben werden können."
 
 #. SysConfig
@@ -805,9 +743,7 @@ msgid "This module forces inserts in TimeAccounting."
 msgstr "Dieses Modul zwingt zur Eingabe von Stunden."
 
 #. SysConfig
-msgid ""
-"This notification module gives a warning if there are too many incomplete "
-"working days."
+msgid "This notification module gives a warning if there are too many incomplete working days."
 msgstr "Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden."
 
 #. SysConfig
@@ -839,7 +775,6 @@ msgid "Time accounting."
 msgstr "Zeitabrechnung"
 
 #. SysConfig
-msgid ""
-"To use if some actions reduced the working hours (for example, if only half "
-"of the traveling time is paid Key => traveling; Content => 50)."
+msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50)."
+

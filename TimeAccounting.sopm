@@ -13,24 +13,33 @@
         <File Permission="660" Location="doc/timeaccounting-database.png" />
         <File Permission="660" Location="Kernel/Config/Files/XML/TimeAccounting.xml" />
         <File Permission="660" Location="Kernel/Language/bg_TimeAccounting.pm" />
-        <File Permission="660" Location="Kernel/Language/de_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/da_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/de_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/es_MX_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/es_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/gl_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/hu_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/id_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/it_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/ja_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/ms_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/nb_NO_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/nl_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/pl_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/ru_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/sv_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/sw_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_TimeAccounting.pm" />
+        <File Permission="660" Location="Kernel/Language/zh_TW_TimeAccounting.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentTimeAccountingEdit.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentTimeAccountingOverview.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentTimeAccountingReporting.pm" />

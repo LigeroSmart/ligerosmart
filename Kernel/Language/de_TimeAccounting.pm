@@ -21,9 +21,9 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Zeitabrechnung bearbeiten';
-    $Self->{Translation}->{'Go to settings'} = 'Gehe zu Einstellungen';
+    $Self->{Translation}->{'Go to settings'} = 'Zu Einstellungen gehen';
     $Self->{Translation}->{'Date Navigation'} = 'Datumsnavigation';
-    $Self->{Translation}->{'Days without entries'} = 'Nicht ausgefüllte Tage';
+    $Self->{Translation}->{'Days without entries'} = 'Tage ohne Einträge';
     $Self->{Translation}->{'Select all days'} = 'Alle Tage auswählen';
     $Self->{Translation}->{'Mass entry'} = 'Masseneintrag';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
@@ -47,7 +47,7 @@ sub Data {
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Diese Endzeit wurde bereits in einem anderen Eintrag angegeben.';
     $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Ungültige Angabe. Ein Tag hat nur 24 Stunden.';
-    $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Eine gültige Zeitdauer muss größer als Null sein.';
+    $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Eine gültige Zeitspanne muss größer als Null sein.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Ungültige Angabe. Negative Zeitspannen sind nicht möglich.';
     $Self->{Translation}->{'Add one row'} = 'Eine Zeile hinzufügen';
     $Self->{Translation}->{'You can only select one checkbox element!'} = 'Sie können nur eine Checkbox markieren!';
@@ -58,7 +58,7 @@ sub Data {
     $Self->{Translation}->{'Are you sure that you worked more than 16 hours?'} = 'Sind Sie sicher, dass Sie mehr als 16 Stunden gearbeitet haben?';
 
     # Template: AgentTimeAccountingOverview
-    $Self->{Translation}->{'Time reporting monthly overview'} = 'Monatsübersicht Zeitberichterstattung';
+    $Self->{Translation}->{'Time reporting monthly overview'} = 'Zeiterfassung - Monatsübersicht';
     $Self->{Translation}->{'Overtime (Hours)'} = 'Überstunden (in Stunden)';
     $Self->{Translation}->{'Overtime (this month)'} = 'Überstunden (dieser Monat)';
     $Self->{Translation}->{'Overtime (total)'} = 'Überstunden (Summe)';
@@ -81,7 +81,7 @@ sub Data {
     $Self->{Translation}->{'Grand total'} = 'Summe';
 
     # Template: AgentTimeAccountingReporting
-    $Self->{Translation}->{'Time reporting'} = 'Zeitberichterstattung';
+    $Self->{Translation}->{'Time reporting'} = 'Zeiterfassung';
     $Self->{Translation}->{'Month Navigation'} = 'Datumsauswahl';
     $Self->{Translation}->{'Go to date'} = 'Gehe zu Datum';
     $Self->{Translation}->{'User reports'} = 'Nutzerberichte';
@@ -95,7 +95,7 @@ sub Data {
 
     # Template: AgentTimeAccountingReportingProject
     $Self->{Translation}->{'Project report'} = 'Projektübersicht';
-    $Self->{Translation}->{'Go to reporting overview'} = 'Zur Berichterstattungsübersicht gehen';
+    $Self->{Translation}->{'Go to reporting overview'} = 'Zur Berichtsübersicht';
     $Self->{Translation}->{'Currently only active users in this project are shown. To change this behavior, please update setting:'} =
         'Derzeit werden in diesem Projekt nur aktive Benutzer angezeigt. Um diese Einstellung zu ändern, bearbeiten Sie bitte:';
     $Self->{Translation}->{'Currently all time accounting users are shown. To change this behavior, please update setting:'} =
@@ -109,7 +109,7 @@ sub Data {
     $Self->{Translation}->{'Edit Project Settings'} = 'Projekteinstellungen bearbeiten';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
         'Ein Projekt mit gleichem Namen existiert bereits. Bitte wählen Sie einen anderen Namen.';
-    $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Zeitabrechnungseinstellungen bearbeiten';
+    $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Zeitabrechnungs-Einstellungen bearbeiten';
     $Self->{Translation}->{'Add task'} = 'Tätigkeit hinzufügen';
     $Self->{Translation}->{'Filter for projects, tasks or users'} = 'Filter für Projekte, Aufgaben oder Benutzer';
     $Self->{Translation}->{'Time periods can not be deleted.'} = 'Zeitfenster können nicht gelöscht werden.';
@@ -125,12 +125,12 @@ sub Data {
     $Self->{Translation}->{'Show Overtime'} = 'Überstunden anzeigen';
     $Self->{Translation}->{'User is allowed to create projects'} = 'Benutzer ist berechtigt Projekte zu erstellen';
     $Self->{Translation}->{'Allow project creation'} = 'Projekt erstellen';
-    $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
-    $Self->{Translation}->{'Allow time accounting skipping'} = '';
+    $Self->{Translation}->{'User is allowed to skip time accounting'} = 'Dem Benutzer ist erlaubt, die Zeiterfassung zu überspringen.';
+    $Self->{Translation}->{'Allow time accounting skipping'} = 'Überspringen der Zeiterfassung erlauben';
     $Self->{Translation}->{'If this option is selected, time accounting is effectively optional for the user.'} =
-        '';
+        'Wenn diese Option ausgewählt ist, ist die Zeiterfassung für den Benutzer effektiv optional.';
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
-        '';
+        'Es gibt keine Warnungen vor fehlenden Einträgen und keinen Zwang zum Eintragen. ';
     $Self->{Translation}->{'Time Spans'} = 'Zeitspannen';
     $Self->{Translation}->{'Period Begin'} = 'Datum Beginn';
     $Self->{Translation}->{'Period End'} = 'Datum Ende';
