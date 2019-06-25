@@ -1,18 +1,14 @@
-# 
-# Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-07-17 13:51+0000\n"
-"PO-Revision-Date: 2018-07-18 07:25+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
-"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
+"Project-Id-Version: Survey\n"
+"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -147,10 +143,7 @@ msgid "Survey overview options"
 msgstr "Kérdőív áttekintő lehetőségek"
 
 #. Template: AgentSurveyOverviewNavBar
-msgid ""
-"Searches in the attributes Number, Title, Introduction, Description, "
-"NotificationSender, NotificationSubject and NotificationBody, overriding "
-"other attributes with the same name."
+msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
 msgstr "A szám, cím, bevezetés, leírás, értesítés küldője, értesítés tárgya és értesítés törzse attribútumokban keres, felülbírálva az ugyanilyen nevű egyéb attribútumokat."
 
 #. Template: AgentSurveyOverviewNavBar
@@ -434,9 +427,7 @@ msgid "Invalid survey key."
 msgstr "Érvénytelen kérdőívkulcs."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
-msgid ""
-"The inserted survey key is invalid, if you followed a link maybe this is "
-"obsolete or broken."
+msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
 msgstr "A beszúrt kérdőívkulcs érvénytelen. Ha egy hivatkozást követett, akkor az talán elavult vagy sérült lehet."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
@@ -456,9 +447,7 @@ msgid "Survey List"
 msgstr "Kérdőívlista"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
-msgid ""
-"Do you really want to delete this question? ALL associated data will be "
-"LOST!"
+msgid "Do you really want to delete this question? ALL associated data will be LOST!"
 msgstr "Valóban törölni szeretné ezt a kérdést? MINDEN kapcsolódó adat el fog VESZNI!"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
@@ -478,9 +467,7 @@ msgid "All parameters for the Survey object in the agent interface."
 msgstr "Az összes paraméter a kérdőív objektumhoz az ügyintézői felületen."
 
 #. SysConfig
-msgid ""
-"Amount of days after sending a survey mail in which no new survey requests "
-"are sent to the same customer. Selecting 0 will always send the survey mail."
+msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
 msgstr "A napok száma egy olyan kérdőív levél kiküldése után, amelyben nincsenek új kérdőív kérések elküldve ugyanannak az ügyfélnek. A 0 választása mindig el fogja küldeni a kérdőív levelet."
 
 #. SysConfig
@@ -488,13 +475,11 @@ msgid "Default body for the notification email to customers about new survey."
 msgstr "Az ügyfeleknek az új kérdőívvel kapcsolatban elküldött értesítő e-mail alapértelmezett törzse."
 
 #. SysConfig
-msgid ""
-"Default sender for the notification email to customers about new survey."
+msgid "Default sender for the notification email to customers about new survey."
 msgstr "Az ügyfeleknek az új kérdőívvel kapcsolatban elküldött értesítő e-mail alapértelmezett küldője."
 
 #. SysConfig
-msgid ""
-"Default subject for the notification email to customers about new survey."
+msgid "Default subject for the notification email to customers about new survey."
 msgstr "Az ügyfeleknek az új kérdőívvel kapcsolatban elküldött értesítő e-mail alapértelmezett tárgya."
 
 #. SysConfig
@@ -502,9 +487,7 @@ msgid "Defines an overview module to show the small view of a survey list."
 msgstr "Egy áttekintő modult határoz meg egy kérdőívlista kis nézetének megjelenítéséhez."
 
 #. SysConfig
-msgid ""
-"Defines groups which have a permission to change survey status. Array is "
-"empty by default and agents from all groups can change survey status."
+msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
 msgstr "Meghatározza azokat a csoportokat, amelyeknek jogosultsága van a kérdőív állapotának megváltoztatására. Alapértelmezetten a tömb üres, és az ügyintézők az összes csoportból megváltoztathatják a kérdőív állapotát."
 
 #. SysConfig
@@ -512,23 +495,15 @@ msgid "Defines if survey requests will be only send to real customers."
 msgstr "Meghatározza, hogy a kérdőív kérések csak valódi ügyfeleknek legyenek kiküldve."
 
 #. SysConfig
-msgid ""
-"Defines maximum amount of surveys that get sent to a customer per 30 days. ("
-" 0 means no maximum, all survey requests will be sent)."
+msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
 msgstr "Meghatározza a kérdőívek legnagyobb mennyiségét, amelyet 30 naponta elküldhetnek egy ügyfélnek (a 0 azt jelenti, hogy nincs maximum, minden kérdőív kérés elküldésre kerül)."
 
 #. SysConfig
-msgid ""
-"Defines the amount in hours a ticket has to be closed to trigger the sending"
-" of a survey, ( 0 means send immediately after close ). Note: delayed survey"
-" sending is done by the OTRS Daemon, prior activation of "
-"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
+msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
 msgstr "Meghatározza azt a mennyiséget órában, amíg a jegyet le kell zárni, hogy aktiválja a kérdőív kiküldését (a 0 jelentése, hogy azonnal küldje a lezárás után). Megjegyzés: a késleltetett kérdőív kiküldését az OTRS démon végzi el a „Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend” beállítás előzetes bekapcsolása után."
 
 #. SysConfig
-msgid ""
-"Defines the columns for the dropdown list for building send conditions (0 =>"
-" inactive, 1 => active)."
+msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
 msgstr "Meghatározza az oszlopokat a legördülő listánál a küldési feltételek összeállításához (0 => inaktív, 1 => aktív)."
 
 #. SysConfig
@@ -544,9 +519,7 @@ msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
 msgstr "Meghatározza a Rich Text nézetek legnagyobb magasságát a kérdőív nagyítás elemeknél."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the survey overview. This option has no effect "
-"on the position of the columns."
+msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
 msgstr "Meghatározza a megjelenített oszlopokat a kérdőív áttekintőben. Ennek a beállításnak nincs hatása az oszlopok helyzetére."
 
 #. SysConfig
@@ -562,10 +535,7 @@ msgid "Edit survey questions."
 msgstr "Kérdőív kérdések szerkesztése."
 
 #. SysConfig
-msgid ""
-"Enable or disable the ShowVoteData screen in the public interface to show "
-"data of a specific survey result when the customer tries to answer a survey "
-"the second time."
+msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
 msgstr "A szavazási adatok megjelenítése képernyő engedélyezése vagy letiltása a nyilvános felületen egy adott kérdőíveredmény adatainak megjelenítéséhez, amikor az ügyfél másodszor próbál meg válaszolni a kérdőívre."
 
 #. SysConfig
@@ -593,9 +563,7 @@ msgid "Frontend module registration for survey zoom in the agent interface."
 msgstr "Előtétprogram modul regisztráció az ügyintézői felületen lévő kérdőív nagyításához."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the PublicSurvey object in the public "
-"Survey area."
+msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
 msgstr "Előtétprogram modul regisztráció a nyilvános kérdőív objektumhoz a nyilvános kérdőív területen."
 
 #. SysConfig
@@ -607,9 +575,7 @@ msgid "Limit."
 msgstr "Korlát."
 
 #. SysConfig
-msgid ""
-"Parameters for the pages (in which the surveys are shown) of the small "
-"survey overview."
+msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
 msgstr "Paraméterek a kis kérdőív áttekintő oldalaihoz (amelyekben a kérdőívek megjelennek)."
 
 #. SysConfig
@@ -617,34 +583,23 @@ msgid "Public Survey."
 msgstr "Nyilvános kérdőív."
 
 #. SysConfig
-msgid ""
-"Results older than the configured amount of days will be deleted. Note: "
-"delete results done by the OTRS Daemon, prior activation of "
-"'Task###SurveyRequestsDelete' setting."
+msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
 msgstr "A beállított napok számánál régebbi eredmények törlésre kerülnek. Megjegyzés: az eredmények törlését az OTRS démon végzi el a „Task###SurveyRequestsDelete” beállítás aktiválása előtt."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to edit a survey in its zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben egy kérdőív szerkesztéséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to edit survey questions in its zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben a kérdőív kérdéseinek szerkesztéséhez az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to go back in the survey zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben az ügyintézői felület kérdőív nagyítási nézetébe való visszatéréshez."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to zoom into the survey statistics details in its "
-"zoom view of the agent interface."
+msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben egy kérdőív statisztika részleteibe való nagyításhoz az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
@@ -680,15 +635,11 @@ msgid "Surveys will not be sent to the configured email addresses."
 msgstr "A kérdőívek nem kerülnek elküldésre a beállított e-mail címekre."
 
 #. SysConfig
-msgid ""
-"The identifier for a survey, e.g. Survey#, MySurvey#. The default is "
-"Survey#."
+msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
 msgstr "Egy kérdőív azonosítója, például Survey#, MySurvey#. Az alapértelmezett: Survey#."
 
 #. SysConfig
-msgid ""
-"Ticket event module to send automatically survey email requests to customers"
-" if a ticket is closed."
+msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
 msgstr "Jegy esemény modul automatikus kérdőív e-mail kérések küldéséhez az ügyfeleknek, ha egy jegy le van zárva."
 
 #. SysConfig
@@ -702,3 +653,4 @@ msgstr "Késleltetett kérdőívkérések küldésének aktiválása."
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr "Nagyítás a statisztikák részleteibe."
+

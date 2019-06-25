@@ -114,7 +114,7 @@ sub Data {
     $Self->{Translation}->{'Yes/No'} = 'Sim/Não';
     $Self->{Translation}->{'Radio (List)'} = 'Radio (Lista)';
     $Self->{Translation}->{'Checkbox (List)'} = 'Checkbox (Lista)';
-    $Self->{Translation}->{'Net Promoter Score'} = '';
+    $Self->{Translation}->{'Net Promoter Score'} = 'Pontuação líquida';
     $Self->{Translation}->{'Question Type'} = 'Tipo de questão';
     $Self->{Translation}->{'Complete'} = 'Completo';
     $Self->{Translation}->{'Incomplete'} = 'Incompleto';
@@ -221,7 +221,7 @@ sub Data {
         'Parâmetros para as páginas (nas quais as pesquisas são mostradas) da visão geral de pesquisa pequena.';
     $Self->{Translation}->{'Public Survey.'} = 'Pesquisa Pública';
     $Self->{Translation}->{'Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of \'Task###SurveyRequestsDelete\' setting.'} =
-        '';
+        'Resultados mais antigos que a quantidade configurada de dias serão excluídos. Nota: exclua resultados feitos pelo Daemon OTRS, ativação prévia da configuração \'Task###SurveyRequestsDelete\'.';
     $Self->{Translation}->{'Shows a link in the menu to edit a survey in its zoom view of the agent interface.'} =
         'Exibe um link no menu para editar uma pesquisa em sua visão de detalhes na interface de atendente.';
     $Self->{Translation}->{'Shows a link in the menu to edit survey questions in its zoom view of the agent interface.'} =

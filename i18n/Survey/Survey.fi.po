@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"POT-Creation-Date: 2019-06-25 13:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,27 +12,27 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr "สร้างแบบสอบถามใหม่"
+msgstr "Luo uusi kysely"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
-msgstr "บทนำ"
+msgstr "Esittely"
 
 #. Template: AgentSurveyAdd
 msgid "Survey Introduction"
-msgstr "คำนำแบบสอบถาม"
+msgstr "Kyselyn esittely"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
-msgstr "การแจ้งเตือนส่วนเนื้อเรื่อง"
+msgstr "Muistutuksen viesti"
 
 #. Template: AgentSurveyAdd
 msgid "Ticket Types"
-msgstr "ประเภทของตั๋ว"
+msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
-msgstr "รายละเอียดภายใน"
+msgstr "Sisäinen kuvaus"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
@@ -52,47 +52,47 @@ msgstr ""
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
-msgstr "แก้ไขข้อมูลทั่วไป"
+msgstr "Muokkaa tietoja"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr "แก้ไขคำถาม"
+msgstr "Muokkaa kysymyksiä"
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
-msgstr "คุณอยู่ที่นี่"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
-msgstr "คำถามแบบสอบถาม"
+msgstr "Kyselyn kysymykset"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
-msgstr "เพิ่มคำถาม"
+msgstr "Lisää kysymys"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Type the question"
-msgstr "ประเภทคำถาม"
+msgstr "Syötä kysymys"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
-msgstr "ต้องการคำตอบ"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
-msgstr "ไม่มีคำถามบันทึกในแบบสอบถามนี้"
+msgstr "Kyselyyn ei ole tallennettu kysymyksiä."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
-msgstr "คำถาม"
+msgstr "Kysymys"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
-msgstr "ต้องการคำตอบ"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
-msgstr "เมื่อคุณการแก้ไขคำถามในแบบสอบถามเสร็จสิ้นแล้วเพียงแค่ปิดหน้าจอนี้"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
@@ -100,43 +100,43 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
-msgstr "แก้ไขคำถาม"
+msgstr "Muokkaa kysymystä"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
-msgstr "กลับไปที่คำถาม"
+msgstr "mene takaisin kysymyksiin"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
-msgstr "คำถาม:"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Possible Answers For"
-msgstr "คำตอบที่เป็นไปได้"
+msgstr "Vastausvaihtoehdot"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Answer"
-msgstr "เพิ่มคำตอบ"
+msgstr "Lisää vastaus"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No answers saved for this question."
-msgstr "ไม่มีคำตอบบันทึกในคำถามนี้"
+msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
-msgstr "มีบางคำถามที่ยังไม่ตอบ textarea จะปรากฏ "
+msgstr "Tässä ei ole useita vastauksia, näytetään tekstialue."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
-msgstr "แก้ไขคำตอบ"
+msgstr "Muokkaa vastausta"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to edit question"
-msgstr "กลับไปที่แก้ไขคำถาม"
+msgstr "mene takaisin muokkaamaan kysymystä"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer:"
-msgstr "คำตอบ:"
+msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
@@ -160,27 +160,27 @@ msgstr ""
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
-msgstr "จำนวนสูงสุดที่จะแสดงแบบสอบถามในแต่ละหน้า"
+msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Sender"
-msgstr "การแจ้งเตือนผู้ส่ง"
+msgstr "Muistutuksen lähettäjä"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Notification Subject"
-msgstr "การแจ้งเตือนเรื่อง"
+msgstr "Muistutuksen otsikko"
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
-msgstr "เปลี่ยนแปลงโดย"
+msgstr "Muokkaaja"
 
 #. Template: AgentSurveyStats
 msgid "Stats Overview of"
-msgstr "สถิติภาพรวมของ"
+msgstr "Tulosten yhteenveto"
 
 #. Template: AgentSurveyStats
 msgid "Requests Table"
-msgstr "การร้องขอตาราง"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
@@ -188,11 +188,11 @@ msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
-msgstr "เวลาส่ง"
+msgstr "Lähetysaika"
 
 #. Template: AgentSurveyStats
 msgid "Vote Time"
-msgstr "เวลาโหวต"
+msgstr "Äänestysaika"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
@@ -200,7 +200,7 @@ msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "See Details"
-msgstr "ดูเนื้อหา"
+msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
@@ -208,11 +208,11 @@ msgstr ""
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
-msgstr "เนื้อหาของสถิติแบบสอบถาม"
+msgstr "Kyselyn tulosten yksityiskohdat"
 
 #. Template: AgentSurveyStats
 msgid "go back to stats overview"
-msgstr "กลับไปที่สถิติภาพรวม"
+msgstr "mene takaisin yhteenvetoon"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
@@ -224,55 +224,55 @@ msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
-msgstr "ข้อมูลแบบสอบถาม"
+msgstr "Kyselyn tiedot"
 
 #. Template: AgentSurveyZoom
 msgid "Sent requests"
-msgstr "ส่งคำร้อง"
+msgstr "Lähetettyjä kyselyitä"
 
 #. Template: AgentSurveyZoom
 msgid "Received surveys"
-msgstr "ได้รับแบบสอบถามแล้ว"
+msgstr "Vastausten määrä"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
-msgstr "เนื้อหาของแบบสอบถาม"
+msgstr "Kyselyn yksityiskohdat"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
-msgstr "การบริการของตั๋ว"
+msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Survey Results Graph"
-msgstr "กราฟคำตอบของแบบสอบถาม"
+msgstr "Tulosten graafit"
 
 #. Template: AgentSurveyZoom
 msgid "No stat results."
-msgstr "ไม่มีคำตอบของสถิติ"
+msgstr "Ei tuloksia."
 
 #. Template: PublicSurvey
 msgid "Survey"
-msgstr "แบบสอบถาม"
+msgstr "Kysely"
 
 #. Template: PublicSurvey
 msgid "Please answer these questions"
-msgstr "โปรดตอบคำถามเหล่านี้"
+msgstr "Vastaa seuraaviin kysymyksiin"
 
 #. Template: PublicSurvey
 msgid "Show my answers"
-msgstr "แสดงคำตอบของฉัน"
+msgstr "Näytä vastaukseni"
 
 #. Template: PublicSurvey
 msgid "These are your answers"
-msgstr "นี่คือคำตอบของคุณ"
+msgstr "Nämä ovat vastauksesi"
 
 #. Template: PublicSurvey
 msgid "Survey Title"
-msgstr "หัวข้อแบบสอบถาม"
+msgstr "Kyselyn otsikko"
 
 #. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
 msgid "Add New Survey"
-msgstr "เพิ่มแบบสอบถาม"
+msgstr "Lisää uusi kysely"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
@@ -284,7 +284,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
-msgstr "แก้ไขแบบสอบถาม"
+msgstr "Muokkaa kyselyä"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -296,19 +296,19 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Survey Edit Questions"
-msgstr "แบบสอบถามแก้ไขคำถาม"
+msgstr "Muokkaa kysymyksiä"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Yes/No"
-msgstr "ใช่/ไม่ใช่"
+msgstr "Kyllä / Ei"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Radio (List)"
-msgstr "เรดิโอ(รายชื่อ)"
+msgstr "Valitse yksi monesta (Lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Checkbox (List)"
-msgstr "กล่องตรวจสอบ (รายชื่อ)"
+msgstr "Valitse yksi tai useampia (Lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
@@ -316,27 +316,27 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
-msgstr "ประเภทของคำถาม"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Complete"
-msgstr "เสร็จ"
+msgstr "Valmis"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Incomplete"
-msgstr "ไม่เสร็จ"
+msgstr "Keskeneräinen"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Edit"
-msgstr "แก้ไขคำถาม"
+msgstr "Kysymysten muokkaus"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Answer Edit"
-msgstr "แก้ไขคำตอบ"
+msgstr "Vastausten muokkaus"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Overview"
-msgstr "สถิติภาพรวม"
+msgstr "Tulosten yhteenveto"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
@@ -344,11 +344,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Detail"
-msgstr "เนื้อหาสถิติ"
+msgstr "Yksityiskohtaiset tulokset"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! No questions defined."
-msgstr "ไม่สามารถตั้งค่าสถานภาพใหม่! ยังไม่ได้กำหนดคำถาม"
+msgstr "Uuden tilan asettaminen ei onnistu! Et ole määrittänyt kysymyksiä!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
@@ -356,11 +356,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Status changed."
-msgstr "สถานภาพเปลี่ยนแล้ว"
+msgstr "Tila muutettu."
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
-msgstr "- ไม่มีคิวที่ถูกเลือก -"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -372,39 +372,39 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- Change Status -"
-msgstr "- เปลี่ยนสถานะ -"
+msgstr "- Muuta tilaa -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Master"
-msgstr "มาสเตอร์"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Invalid"
-msgstr "ไม่ถูกต้อง"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
-msgstr "สถานะใหม่"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Survey Description"
-msgstr "คำอธิบายแบบสอบถาม"
+msgstr "Kyselyn kuvaus"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "answered"
-msgstr "ตอบแล้ว"
+msgstr "Vastasi"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "not answered"
-msgstr "ยังไม่ตอบ"
+msgstr "Ei vastannut"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Thank you for your feedback."
-msgstr "ขอบคุณสำหรับความคิดเห็นของคุณ"
+msgstr "Kiitos palautteestasi."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "The survey is finished."
-msgstr "แบบสอบถามเสร็จเรียบร้อยแล้ว"
+msgstr "Kysely on valmis."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -440,7 +440,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "You have already answered the survey."
-msgstr "คุณได้ตอบแบบสอบถามนี้แล้ว"
+msgstr "Olet jo vastannut tähän kyselyyn."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
@@ -448,43 +448,43 @@ msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this question? ALL associated data will be LOST!"
-msgstr "คุณแน่ใจหรือไม่ที่จะลบคำถามนี้? ข้อมูลที่เกี่ยวข้องทั้งหมดจะหายไป!"
+msgstr ""
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this answer?"
-msgstr "คุณต้องการลบการตอบนี้หรือไม่?"
+msgstr ""
 
 #. SysConfig
 msgid "A Survey Module."
-msgstr "โมดูลแบบสอบถาม"
+msgstr "Kyselyominaisuus"
 
 #. SysConfig
 msgid "A module to edit survey questions."
-msgstr "โมดูลสำหรับแก้ไขคำถามแบบสอบถาม"
+msgstr "Moduuli kyselyiden luontiin"
 
 #. SysConfig
 msgid "All parameters for the Survey object in the agent interface."
-msgstr "พารามิเตอร์ทั้งหมดสำหรับออบเจกต์ของแบบสอบถามในอินเตอร์เฟซเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail."
-msgstr "จํานวนวันหลังจากส่งอีเมล์ในการสอบถามที่ไม่มีการร้องขอการสอบถามครั้งใหม่จะถูกส่งไปยังลูกค้ารายเดียวกัน เลือก 0 เพื่อส่งอีเมล์ในการสอบถามตลอด"
+msgstr ""
 
 #. SysConfig
 msgid "Default body for the notification email to customers about new survey."
-msgstr "ค่าเริ่มต้นของส่วนเนื้อเรื่องสำหรับการแจ้งเตือนอีเมล์เกี่ยวกับแบบสอบถามใหม่ถึงลูกค้า"
+msgstr ""
 
 #. SysConfig
 msgid "Default sender for the notification email to customers about new survey."
-msgstr "ค่าเริ่มต้นของผู้ส่งสำหรับการแจ้งเตือนอีเมล์เกี่ยวกับแบบสอบถามใหม่ถึงลูกค้า"
+msgstr ""
 
 #. SysConfig
 msgid "Default subject for the notification email to customers about new survey."
-msgstr "ค่าเริ่มต้นของเนื้อหาสำหรับการแจ้งเตือนอีเมล์เกี่ยวกับแบบสอบถามใหม่ถึงลูกค้า"
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a survey list."
-msgstr "กำหนดโมดูลภาพรวมที่จะแสดงมุมมองเล็ก ๆ ของรายชื่อแบบสอบถาม"
+msgstr ""
 
 #. SysConfig
 msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
@@ -496,7 +496,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
-msgstr "กำหนดจำนวนสูงสุดของการสำรวจที่ได้รับการส่งให้กับลูกค้าภายใน 30 วัน (0 หมายถึงไม่มีการกำหนดจำนวนสูงสุด ซึ่งแบบสำรวจที่เรียกขอทั้งหมดจะถูกส่ง)"
+msgstr ""
 
 #. SysConfig
 msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
@@ -508,7 +508,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
-msgstr "กำหนดความสูงเริ่มต้นสำหรับมุมมอง Richtext สำหรับองค์ประกอบของ SurveyZoom"
+msgstr ""
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
@@ -520,7 +520,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมของแบบสอบถามตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+msgstr ""
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
@@ -536,39 +536,39 @@ msgstr ""
 
 #. SysConfig
 msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
-msgstr "เปิดหรือปิดการใช้งานสกรีน ที่แสดงข้อมูลการโหวตในอินเตอร์เฟซสาธารณะเพื่อจะแสดงผลของแบบสอบถาม เมื่อลูกค้าพยายามที่จะตอบแบบสอบถามครั้งที่สอง"
+msgstr ""
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
-msgstr "เปิดหรือปิดการตรวจสอบเงื่อนไขการส่งสำหรับการบริการ"
+msgstr ""
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the ticket type."
-msgstr "เปิดหรือปิดการตรวจสอบเงื่อนไขการส่งสำหรับประเภทของตั๋ว"
+msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr "การลงทะเบียนโมดูล Frontend สำหรับการเพิ่มแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr "การลงทะเบียนโมดูล Frontend สำหรับการแก้ไขแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr "การลงทะเบียนโมดูล Frontend สำหรับสถิติของแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
-msgstr "การลงทะเบียนโมดูล Frontend สำหรับการซูมแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Frontend module registration for the PublicSurvey object in the public Survey area."
-msgstr "การลงทะเบียนโมดูล Frontend สำหรับออบเจกค์แบบสอบถามทั่วไปในพื้นที่สำรวจสาธารณะ"
+msgstr ""
 
 #. SysConfig
 msgid "If this regex matches, no customer survey will be sent."
-msgstr "ถ้าหาก regex ตรงกัน จะไม่มีการส่งแบบสอบถามให้ลูกค้า"
+msgstr ""
 
 #. SysConfig
 msgid "Limit."
@@ -576,11 +576,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
-msgstr "พารามิเตอร์สำหรับเพจ (ซึ่งจะแสดงแบบสอบถาม) ของภาพรวมแบบสอบถามขนาดเล็ก"
+msgstr ""
 
 #. SysConfig
 msgid "Public Survey."
-msgstr "แบบสอบถามสาธารณะ"
+msgstr ""
 
 #. SysConfig
 msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
@@ -588,43 +588,43 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขแบบสอบถามในมุมมองการซูมในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขคำถามในแบบสอบถามในมุมมองการซูมในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อย้อนกลับในการซูมของอินเตอร์เฟซเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อซูฒไปที่รายละเอียดสถิติของแบบสอบถามในอินเตอร์เฟซของเอเย่นต์"
+msgstr ""
 
 #. SysConfig
 msgid "Stats Details"
-msgstr "เนื้อหาสถิติ"
+msgstr "Tulosten yksityiskohdat"
 
 #. SysConfig
 msgid "Survey Add Module."
-msgstr "แบบสอบถามเพิ่มโมดูล"
+msgstr ""
 
 #. SysConfig
 msgid "Survey Edit Module."
-msgstr "แบบสอบถามแก้ไขโมดูล"
+msgstr ""
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
-msgstr "การจำกัดภาพรวมของแบบสอบถาม \"ขนาดเล็ก\""
+msgstr ""
 
 #. SysConfig
 msgid "Survey Stats Module."
-msgstr "การสำรวจสถิติโมดูล"
+msgstr ""
 
 #. SysConfig
 msgid "Survey Zoom Module."
-msgstr "โมดูลซูมแบบสอบถาม"
+msgstr ""
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
@@ -632,15 +632,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
-msgstr "จะไม่มีการส่งแบบสอบถามที่อีเมลที่ถูกกำหนดค่า"
+msgstr ""
 
 #. SysConfig
 msgid "The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#."
-msgstr "ตัวบ่งชี้สำหรับแบบสอบถาม, ตัวอย่างเช่น แบบสอบถาม# แบบสอบถามของฉัน#. ค่าเริ่มต้นคือแบบสอบถาม#."
+msgstr ""
 
 #. SysConfig
 msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr "โมดูลตั๋วกิจกรรมที่จะส่งอีเมลแบบสอบถามของการร้องขออัตโนมัติให้ลูกค้าในกรณีที่ตั๋วถูกปิด"
+msgstr ""
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
@@ -648,7 +648,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr "การกระตุ้นการส่งการร้องขอแบบสอบที่ล่าช้า"
+msgstr ""
 
 #. SysConfig
 msgid "Zoom into statistics details."
