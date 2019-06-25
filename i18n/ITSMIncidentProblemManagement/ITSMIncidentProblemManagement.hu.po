@@ -1,18 +1,14 @@
-# 
-# Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-06 13:27+0000\n"
-"PO-Revision-Date: 2018-06-25 06:14+0000\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
-"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
+"Project-Id-Version: ITSMIncidentProblemManagement\n"
+"POT-Creation-Date: 2019-06-25 12:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTicketOverviewMedium
 msgid "Criticality"
@@ -26,24 +22,21 @@ msgstr "Hatás"
 msgid "Service Incident State"
 msgstr "Szolgáltatás incidensállapot"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Link ticket"
 msgstr "Jegy összekapcsolása"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change Decision of %s%s%s"
 msgstr "%s%s%s döntésének megváltoztatása"
 
-#. Perl Module:
-#. Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
 msgid "Change ITSM fields of %s%s%s"
 msgstr "%s%s%s ITSM mezőinek megváltoztatása"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Review Required"
-msgstr "Áttekintés szükséges"
+msgstr "Vizsgálat szükséges"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Result"
@@ -67,11 +60,11 @@ msgstr "Elutasítva"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Repair Start Time"
-msgstr "Javítás indítási ideje"
+msgstr "Javítás kezdési ideje"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Recovery Start Time"
-msgstr "Visszaállítás indítási ideje"
+msgstr "Visszaállítás kezdési ideje"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Date"
@@ -98,9 +91,7 @@ msgid "Additional ITSM ticket fields."
 msgstr "További ITSM jegymezők."
 
 #. SysConfig
-msgid ""
-"Allows adding notes in the additional ITSM field screen of the agent "
-"interface."
+msgid "Allows adding notes in the additional ITSM field screen of the agent interface."
 msgstr "Lehetővé teszi jegyzetek hozzáadását az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
@@ -108,8 +99,7 @@ msgid "Allows adding notes in the decision screen of the agent interface."
 msgstr "Lehetővé teszi jegyzetek hozzáadását az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Allows defining new types for ticket (if ticket type feature is enabled)."
+msgid "Allows defining new types for ticket (if ticket type feature is enabled)."
 msgstr "Lehetővé teszi új típusok meghatározását a jegyekhez (ha a jegytípus szolgáltatás engedélyezve van)."
 
 #. SysConfig
@@ -121,113 +111,75 @@ msgid "Decision"
 msgstr "Döntés"
 
 #. SysConfig
-msgid ""
-"Defines if a ticket lock is required in the additional ITSM field screen of "
-"the agent interface (if the ticket isn't locked yet, the ticket gets locked "
-"and the current agent will be set automatically as its owner)."
+msgid "Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
 msgstr "Meghatározza, hogy szükséges-e jegyzárolás az ügyintézői felület további ITSM mező képernyőjén (ha a jegy még nincs zárolva, akkor a jegy zárolva lesz, és az aktuális ügyintéző automatikusan annak tulajdonosaként lesz beállítva)."
 
 #. SysConfig
-msgid ""
-"Defines if a ticket lock is required in the decision screen of the agent "
-"interface (if the ticket isn't locked yet, the ticket gets locked and the "
-"current agent will be set automatically as its owner)."
+msgid "Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
 msgstr "Meghatározza, hogy szükséges-e jegyzárolás az ügyintézői felület döntési képernyőjén (ha a jegy még nincs zárolva, akkor a jegy zárolva lesz, és az aktuális ügyintéző automatikusan annak tulajdonosaként lesz beállítva)."
 
 #. SysConfig
-msgid ""
-"Defines if the service incident state should be shown during service "
-"selection in the agent interface."
+msgid "Defines if the service incident state should be shown during service selection in the agent interface."
 msgstr "Meghatározza, hogy a szolgáltatás incidensállapotát meg kell-e jeleníteni a szolgáltatás kiválasztása közben az ügyintézői felületen."
 
 #. SysConfig
-msgid ""
-"Defines the default body of a note in the additional ITSM field screen of "
-"the agent interface."
+msgid "Defines the default body of a note in the additional ITSM field screen of the agent interface."
 msgstr "Meghatározza egy jegyzet alapértelmezett törzsét az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default body of a note in the decision screen of the agent "
-"interface."
+msgid "Defines the default body of a note in the decision screen of the agent interface."
 msgstr "Meghatározza egy jegyzet alapértelmezett törzsét az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default next state of a ticket after adding a note, in the "
-"additional ITSM field screen of the agent interface."
+msgid "Defines the default next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface."
 msgstr "Meghatározza egy jegy alapértelmezett következő állapotát egy jegyzet hozzáadása után az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default next state of a ticket after adding a note, in the "
-"decision screen of the agent interface."
+msgid "Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface."
 msgstr "Meghatározza egy jegy alapértelmezett következő állapotát egy jegyzet hozzáadása után az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default subject of a note in the additional ITSM field screen of"
-" the agent interface."
+msgid "Defines the default subject of a note in the additional ITSM field screen of the agent interface."
 msgstr "Meghatározza egy jegyzet alapértelmezett tárgyát az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default subject of a note in the decision screen of the agent "
-"interface."
+msgid "Defines the default subject of a note in the decision screen of the agent interface."
 msgstr "Meghatározza egy jegyzet alapértelmezett tárgyát az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default ticket priority in the additional ITSM field screen of "
-"the agent interface."
+msgid "Defines the default ticket priority in the additional ITSM field screen of the agent interface."
 msgstr "Meghatározza az alapértelmezett jegy prioritást az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the default ticket priority in the decision screen of the agent "
-"interface."
+msgid "Defines the default ticket priority in the decision screen of the agent interface."
 msgstr "Meghatározza az alapértelmezett jegyprioritást az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the history comment for the additional ITSM field screen action, "
-"which gets used for ticket history."
+msgid "Defines the history comment for the additional ITSM field screen action, which gets used for ticket history."
 msgstr "Azt az előzmény megjegyzést határozza meg a további ITSM mező képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni."
 
 #. SysConfig
-msgid ""
-"Defines the history comment for the decision screen action, which gets used "
-"for ticket history."
+msgid "Defines the history comment for the decision screen action, which gets used for ticket history."
 msgstr "Azt az előzmény megjegyzést határozza meg a döntési képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni."
 
 #. SysConfig
-msgid ""
-"Defines the history type for the additional ITSM field screen action, which "
-"gets used for ticket history."
+msgid "Defines the history type for the additional ITSM field screen action, which gets used for ticket history."
 msgstr "Azt az előzmény típust határozza meg a további ITSM mező képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni."
 
 #. SysConfig
-msgid ""
-"Defines the history type for the decision screen action, which gets used for"
-" ticket history."
+msgid "Defines the history type for the decision screen action, which gets used for ticket history."
 msgstr "Azt az előzmény típust határozza meg a döntési képernyő műveleténél, amelyet a jegy előzményeinél szoktak használni."
 
 #. SysConfig
-msgid ""
-"Defines the next state of a ticket after adding a note, in the additional "
-"ITSM field screen of the agent interface."
+msgid "Defines the next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface."
 msgstr "Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Defines the next state of a ticket after adding a note, in the decision "
-"screen of the agent interface."
+msgid "Defines the next state of a ticket after adding a note, in the decision screen of the agent interface."
 msgstr "Meghatározza egy jegy következő állapotát egy jegyzet hozzáadása után az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the additional ITSM field screen of the agent "
-"interface."
+msgid "Dynamic fields shown in the additional ITSM field screen of the agent interface."
 msgstr "Az ügyintézői felület további ITSM mező képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
@@ -239,49 +191,35 @@ msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
 msgstr "Az ügyintézői felület jegynagyítás képernyőjén megjelenített dinamikus mezők."
 
 #. SysConfig
-msgid ""
-"Enables the stats module to generate statistics about the average of ITSM "
-"ticket first level solution rate."
+msgid "Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate."
 msgstr "Engedélyezi a statisztikák modult az ITSM jegy első szintű megoldási arányának átlagával kapcsolatos statisztikák előállításához."
 
 #. SysConfig
-msgid ""
-"Enables the stats module to generate statistics about the average of ITSM "
-"ticket solution."
+msgid "Enables the stats module to generate statistics about the average of ITSM ticket solution."
 msgstr "Engedélyezi a statisztikák modult az ITSM jegy megoldásának átlagával kapcsolatos statisztikák előállításához."
 
 #. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the additional"
-" ITSM field screen of the agent interface."
+msgid "If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface."
 msgstr "Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of a ticket in the decision "
-"screen of the agent interface."
+msgid "If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface."
 msgstr "Ha egy ügyintéző hozzáadott egy megjegyzést, akkor beállítja egy jegy állapotát az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Modifies the display order of the dynamic field ITSMImpact and other things."
+msgid "Modifies the display order of the dynamic field ITSMImpact and other things."
 msgstr "Módosítja az ITSM hatás dinamikus mező és egyéb dolgok megjelenítési sorrendjét."
 
 #. SysConfig
-msgid ""
-"Module to dynamically show the service incident state and to calculate the "
-"priority."
+msgid "Module to dynamically show the service incident state and to calculate the priority."
 msgstr "Egy modul a szolgáltatás incidensállapotának dinamikus megjelenítéséhez és a prioritás kiszámításához."
 
 #. SysConfig
-msgid ""
-"Required permissions to use the additional ITSM field screen in the agent "
-"interface."
+msgid "Required permissions to use the additional ITSM field screen in the agent interface."
 msgstr "A szükséges jogosultságok a további ITSM mező képernyőjének használatához az ügyintézői felületen."
 
 #. SysConfig
-msgid ""
-"Required permissions to use the decision screen in the agent interface."
+msgid "Required permissions to use the decision screen in the agent interface."
 msgstr "A szükséges jogosultságok a döntési képernyő használatához az ügyintézői felületen."
 
 #. SysConfig
@@ -289,27 +227,19 @@ msgid "Service Incident State and Priority Calculation"
 msgstr "Szolgáltatás incidensállapot és prioritás számítás"
 
 #. SysConfig
-msgid ""
-"Sets the service in the additional ITSM field screen of the agent interface "
-"(Ticket::Service needs to be activated)."
+msgid "Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated)."
 msgstr "Beállítja a szolgáltatást az ügyintézői felület további ITSM mező képernyőjén (a Ticket::Service lehetőségnek bekapcsolva kell lennie)."
 
 #. SysConfig
-msgid ""
-"Sets the service in the decision screen of the agent interface "
-"(Ticket::Service needs to be activated)."
+msgid "Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated)."
 msgstr "Beállítja a szolgáltatást az ügyintézői felület döntési képernyőjén (a Ticket::Service lehetőségnek bekapcsolva kell lennie)."
 
 #. SysConfig
-msgid ""
-"Sets the service in the ticket priority screen of a zoomed ticket in the "
-"agent interface (Ticket::Service needs to be activated)."
+msgid "Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
 msgstr "Beállítja a szolgáltatást egy nagyított jegynek a jegyprioritás képernyőjén az ügyintézői felületen (a Ticket::Service modulnak aktiválva kell lennie)."
 
 #. SysConfig
-msgid ""
-"Sets the ticket owner in the additional ITSM field screen of the agent "
-"interface."
+msgid "Sets the ticket owner in the additional ITSM field screen of the agent interface."
 msgstr "Beállítja a jegy tulajdonosát az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
@@ -317,88 +247,59 @@ msgid "Sets the ticket owner in the decision screen of the agent interface."
 msgstr "Beállítja a jegy tulajdonosát az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Sets the ticket responsible in the additional ITSM field screen of the agent"
-" interface."
+msgid "Sets the ticket responsible in the additional ITSM field screen of the agent interface."
 msgstr "Beállítja a jegy felelősét az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Sets the ticket responsible in the decision screen of the agent interface."
+msgid "Sets the ticket responsible in the decision screen of the agent interface."
 msgstr "Beállítja a jegy felelősét az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Sets the ticket type in the additional ITSM field screen of the agent "
-"interface (Ticket::Type needs to be activated)."
+msgid "Sets the ticket type in the additional ITSM field screen of the agent interface (Ticket::Type needs to be activated)."
 msgstr "Beállítja a jegy típusát az ügyintézői felület további ITSM mező képernyőjén (a Ticket::Type lehetőségnek bekapcsolva kell lennie)."
 
 #. SysConfig
-msgid ""
-"Sets the ticket type in the decision screen of the agent interface "
-"(Ticket::Type needs to be activated)."
+msgid "Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated)."
 msgstr "Beállítja a jegy típusát az ügyintézői felület döntési képernyőjén (a Ticket::Type lehetőségnek bekapcsolva kell lennie)."
 
 #. SysConfig
-msgid ""
-"Sets the ticket type in the ticket priority screen of a zoomed ticket in the"
-" agent interface (Ticket::Type needs to be activated)."
+msgid "Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
 msgstr "Beállítja a jegy típusát egy nagyított jegynek a jegy prioritás képernyőjén az ügyintézői felületen (a Ticket::Type modulnak aktiválva kell lennie)."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to change the decision of a ticket in its zoom view"
-" of the agent interface."
+msgid "Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben egy jegy döntésének megváltoztatásához az ügyintézői felületen az elem nagyítási nézetében."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to modify additional ITSM fields in the ticket zoom"
-" view of the agent interface."
+msgid "Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface."
 msgstr "Egy hivatkozást jelenít meg a menüben a további ITSM mezők módosításához az ügyintézői felület jegynagyítás nézetében."
 
 #. SysConfig
-msgid ""
-"Shows a list of all the involved agents on this ticket, in the additional "
-"ITSM field screen of the agent interface."
+msgid "Shows a list of all the involved agents on this ticket, in the additional ITSM field screen of the agent interface."
 msgstr "Megjeleníti a jegyen részt vevő összes ügyintéző listáját az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Shows a list of all the involved agents on this ticket, in the decision "
-"screen of the agent interface."
+msgid "Shows a list of all the involved agents on this ticket, in the decision screen of the agent interface."
 msgstr "Megjeleníti a jegyen részt vevő összes ügyintéző listáját az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Shows a list of all the possible agents (all agents with note permissions on"
-" the queue/ticket) to determine who should be informed about this note, in "
-"the additional ITSM field screen of the agent interface."
+msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the additional ITSM field screen of the agent interface."
 msgstr "Megjeleníti az összes lehetséges ügyintéző (a várólistán vagy jegyen jegyzet jogosultsággal rendelkező összes ügyintéző) listáját az ügyintézői felület további ITSM mező képernyőjén annak meghatározásához, hogy kit kell tájékoztatni erről a jegyzetről."
 
 #. SysConfig
-msgid ""
-"Shows a list of all the possible agents (all agents with note permissions on"
-" the queue/ticket) to determine who should be informed about this note, in "
-"the decision screen of the agent interface."
+msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the decision screen of the agent interface."
 msgstr "Megjeleníti az összes lehetséges ügyintéző (a várólistán vagy jegyen jegyzet jogosultsággal rendelkező összes ügyintéző) listáját az ügyintézői felület döntési képernyőjén annak meghatározásához, hogy kit kell tájékoztatni erről a jegyzetről."
 
 #. SysConfig
-msgid ""
-"Shows the ticket priority options in the additional ITSM field screen of the"
-" agent interface."
+msgid "Shows the ticket priority options in the additional ITSM field screen of the agent interface."
 msgstr "Megjeleníti a jegy prioritási lehetőségeket az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
-msgid ""
-"Shows the ticket priority options in the decision screen of the agent "
-"interface."
+msgid "Shows the ticket priority options in the decision screen of the agent interface."
 msgstr "Megjeleníti a jegy prioritási lehetőségeket az ügyintézői felület döntési képernyőjén."
 
 #. SysConfig
-msgid ""
-"Shows the title fields in the additional ITSM field screen of the agent "
-"interface."
+msgid "Shows the title fields in the additional ITSM field screen of the agent interface."
 msgstr "Megjeleníti a címmezőket az ügyintézői felület további ITSM mező képernyőjén."
 
 #. SysConfig
@@ -408,3 +309,4 @@ msgstr "Megjeleníti a címmezőket az ügyintézői felület döntési képerny
 #. SysConfig
 msgid "Ticket decision."
 msgstr "Jegydöntés."
+

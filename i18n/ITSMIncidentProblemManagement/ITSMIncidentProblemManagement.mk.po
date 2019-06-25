@@ -1,0 +1,312 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ITSMIncidentProblemManagement\n"
+"POT-Creation-Date: 2019-06-25 12:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Template: AgentTicketOverviewMedium
+msgid "Criticality"
+msgstr "Критично"
+
+#. Template: AgentTicketOverviewMedium
+msgid "Impact"
+msgstr "Влијание"
+
+#. JS Template: ServiceIncidentState
+msgid "Service Incident State"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Link ticket"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change Decision of %s%s%s"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/FilterElementPost/ITSMIncidentProblemManagement.pm
+msgid "Change ITSM fields of %s%s%s"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Review Required"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Result"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Approved"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Postponed"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Pre-approved"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Rejected"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Repair Start Time"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Recovery Start Time"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Decision Date"
+msgstr ""
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Due Date"
+msgstr ""
+
+#. Database XML Definition: ITSMIncidentProblemManagement.sopm
+msgid "closed with workaround"
+msgstr ""
+
+#. SysConfig
+msgid "Add a decision!"
+msgstr ""
+
+#. SysConfig
+msgid "Additional ITSM Fields"
+msgstr ""
+
+#. SysConfig
+msgid "Additional ITSM ticket fields."
+msgstr ""
+
+#. SysConfig
+msgid "Allows adding notes in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Allows adding notes in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Allows defining new types for ticket (if ticket type feature is enabled)."
+msgstr ""
+
+#. SysConfig
+msgid "Change the ITSM fields!"
+msgstr ""
+
+#. SysConfig
+msgid "Decision"
+msgstr ""
+
+#. SysConfig
+msgid "Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
+msgstr ""
+
+#. SysConfig
+msgid "Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
+msgstr ""
+
+#. SysConfig
+msgid "Defines if the service incident state should be shown during service selection in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default body of a note in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default body of a note in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default subject of a note in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default subject of a note in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default ticket priority in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the default ticket priority in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the history comment for the additional ITSM field screen action, which gets used for ticket history."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the history comment for the decision screen action, which gets used for ticket history."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the history type for the additional ITSM field screen action, which gets used for ticket history."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the history type for the decision screen action, which gets used for ticket history."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Defines the next state of a ticket after adding a note, in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Dynamic fields shown in the ticket zoom screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate."
+msgstr ""
+
+#. SysConfig
+msgid "Enables the stats module to generate statistics about the average of ITSM ticket solution."
+msgstr ""
+
+#. SysConfig
+msgid "If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Modifies the display order of the dynamic field ITSMImpact and other things."
+msgstr ""
+
+#. SysConfig
+msgid "Module to dynamically show the service incident state and to calculate the priority."
+msgstr ""
+
+#. SysConfig
+msgid "Required permissions to use the additional ITSM field screen in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Required permissions to use the decision screen in the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Service Incident State and Priority Calculation"
+msgstr ""
+
+#. SysConfig
+msgid "Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the service in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket owner in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket owner in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket responsible in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket responsible in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket type in the additional ITSM field screen of the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a list of all the involved agents on this ticket, in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a list of all the involved agents on this ticket, in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows the ticket priority options in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows the ticket priority options in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows the title fields in the additional ITSM field screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows the title fields in the decision screen of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Ticket decision."
+msgstr ""
+

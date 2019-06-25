@@ -15,30 +15,53 @@
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMTicket.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/TicketITSMTicket.xml" />
+        <File Permission="660" Location="Kernel/Language/ar_SA_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/bg_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ca_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/cs_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/da_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMIncidentProblemManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/es_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/el_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/en_CA_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/en_GB_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/es_CO_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/es_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/et_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_CA_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/fr_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/gl_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/he_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/hi_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/id_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/it_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ja_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ko_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/lt_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/lv_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ms_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/nb_NO_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/nl_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pl_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pt_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_ITSMIncidentProblemManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_ITSMIncidentProblemManagement.pm" />
         <File Permission="660" Location="Kernel/Modules/AgentITSMIncidentProblemManagement.pm" />
