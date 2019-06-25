@@ -22,12 +22,12 @@ sub Data {
         'Podstawowy interfejs e-mailowy dla Systemów Monitorujących. Użyj tego bloku, jeśli filtr powinien się wykonać PRZED PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Określ typ potwierdzenia Nagiosa.';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = 'URL do API Ininga';
+    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = 'Autor potwierdzenia Icinga2.';
+    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = 'Komentarz do potwierdzenia Icinga2.';
+    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = 'Czy potwierdzenia Icinga2 są włączone?';
+    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = 'Powiadomienie potwierdzenia Icinga2.';
+    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = 'Przyklejone potwierdzenie Icinga2.';
     $Self->{Translation}->{'Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.'} =
         'Połącz już otwarte zgłoszenie zdarzenia z dotyczącym go CI. Jest to możliwe wtedy, gdy nadejdzie kolejny email z systemu monitorującego.';
     $Self->{Translation}->{'Name of the Dynamic Field for Host.'} = 'Nazwa pola dynamicznego dla hosta.';
@@ -40,7 +40,7 @@ sub Data {
     $Self->{Translation}->{'The HTTP acknowledge URL.'} = 'URL HTTP dlo potwierdzeń.';
     $Self->{Translation}->{'The HTTP acknowledge password.'} = 'Hasło HTTP dla potwierdzeń.';
     $Self->{Translation}->{'The HTTP acknowledge user.'} = 'Użytkownik HTTP dla potwierdzeń.';
-    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = '';
+    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = 'Nazwa modułu obsługi zdarzeń zgłoszenia do wysyłki potwierdzeń Icinga2.';
     $Self->{Translation}->{'Ticket event module to send an acknowledge to Nagios.'} = 'Nazwa modułu obsługi zgłoszenia do wysyłki potwierdzeń do Nagiosa.';
     $Self->{Translation}->{'pipe'} = 'potok';
 

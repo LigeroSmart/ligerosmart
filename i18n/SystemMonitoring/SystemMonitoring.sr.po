@@ -1,34 +1,22 @@
-# Translators:
-# Милорад Јовановић <j.milorad@gmail.com>, 2016
-# Dusan Vuckovic <dusan@dvuckovic.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-11-14 23:48+0000\n"
+"POT-Creation-Date: 2019-06-25 13:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Dusan Vuckovic <dusan@dvuckovic.com>, 2016\n"
-"Language-Team: Serbian (https://www.transifex.com/otrs/teams/23435/sr/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run AFTER PostMasterFilter."
-msgstr ""
-"Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер "
-"треба да буде пуштен ПОСЛЕ PostMasterFilter."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
+msgstr "Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер треба да буде пуштен ПОСЛЕ PostMasterFilter."
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run BEFORE PostMasterFilter."
-msgstr ""
-"Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер "
-"треба да буде пуштен ПРЕ PostMasterFilter."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
+msgstr "Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер треба да буде пуштен ПРЕ PostMasterFilter."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
@@ -39,36 +27,32 @@ msgid "HTTP"
 msgstr "HTTP"
 
 #. SysConfig
-msgid "Icinga API URL ."
-msgstr ""
+msgid "Icinga API URL."
+msgstr "Адреса Icinga API."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement author."
-msgstr ""
+msgstr "Icinga2 аутор потврде."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement comment."
-msgstr ""
+msgstr "Icinga2 коментар потврде."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement enabled?"
-msgstr ""
+msgstr "Icinga2 потврда омогућена?"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement notify."
-msgstr ""
+msgstr "Icinga2 обавештење потврде."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement sticky."
-msgstr ""
+msgstr "Icinga2 маркирање потврде."
 
 #. SysConfig
-msgid ""
-"Link an already opened incident ticket with the affected CI. This is only "
-"possible when a subsequent system monitoring email arrives."
-msgstr ""
-"Повежи већ отворени тикет инцидента са погођеном конфигурационом ставком. "
-"Ово је једино могуће када стигне следећи имејл од системског надзора."
+msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
+msgstr "Повежи већ отворени тикет инцидента са погођеном конфигурационом ставком. Ово је једино могуће када стигне следећи имејл од системског надзора."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
@@ -91,12 +75,8 @@ msgid "Named pipe acknowledge format for service."
 msgstr "Формат потврде за сервис именованог канала."
 
 #. SysConfig
-msgid ""
-"Set the incident state of a CI automatically when a system monitoring email "
-"arrives."
-msgstr ""
-"Постави аутоматски стање инцидента конфигурационе ставке када стигне имејл "
-"од системског надзора."
+msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
+msgstr "Постави аутоматски стање инцидента конфигурационе ставке када стигне имејл од системског надзора."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
@@ -112,7 +92,7 @@ msgstr "Корисник HTTP потврде."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
-msgstr ""
+msgstr "Модул догађаја тикета за слање потврде за Icinga2."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
@@ -121,3 +101,4 @@ msgstr "Модул догађаја тикета за слање потврде 
 #. SysConfig
 msgid "pipe"
 msgstr "канал"
+

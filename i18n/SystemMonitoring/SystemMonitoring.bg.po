@@ -12,19 +12,19 @@ msgstr ""
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr "Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ПОСЛЕ PostMasterFilter."
+msgstr "Основен интерфейс за поща към системния мониторинг. Използвайте този блок, ако филтърът трябва да се изпълнява СЛЕД Филтърът за пощенска администрация"
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr "Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ДО PostMasterFilter."
+msgstr "Основен интерфейс за поща към системния мониторинг. Използвайте този блок, ако филтърът трябва да се изпълнява ПРЕДИ Филтърът за пощенска администрация."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr "Определите тип подтверждения Nagios."
+msgstr "Определете типа признаване на Nagios."
 
 #. SysConfig
 msgid "HTTP"
-msgstr "HTTP"
+msgstr ""
 
 #. SysConfig
 msgid "Icinga API URL."
@@ -52,43 +52,43 @@ msgstr ""
 
 #. SysConfig
 msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr "Свяжите уже открытый инцидент с затронутым CI. Это возможно только в том случае, если приходит сообщение о последующей проверке электронной почты."
+msgstr "Свържете вече отворен билет за инцидент със засегнатия CI. Това е възможно само при пристигането на последващ имейл за наблюдение на системата."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
-msgstr "Имя динамического поля для хоста."
+msgstr "Име на динамичното поле за хост."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Service."
-msgstr "Имя динамического поля для службы."
+msgstr "Име на динамичното поле за обслужване."
 
 #. SysConfig
 msgid "Named pipe acknowledge command."
-msgstr "Команда подтверждения пайпа."
+msgstr "Команда за потвърждаване на име pipe."
 
 #. SysConfig
 msgid "Named pipe acknowledge format for host."
-msgstr "Формат подтверждения именованного пайпа для хоста."
+msgstr ""
 
 #. SysConfig
 msgid "Named pipe acknowledge format for service."
-msgstr "Формат подтверждения именованного пайпа для сервиса."
+msgstr ""
 
 #. SysConfig
 msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
-msgstr "Автоматически задавать состояние инцидента для CI, когда приходит сообщение системы мониторинга."
+msgstr "Настройте инцидентното състояние на CI автоматично, когато пристигне имейл за мониторинг на системата."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
-msgstr "URL-адрес подтверждения HTTP."
+msgstr ""
 
 #. SysConfig
 msgid "The HTTP acknowledge password."
-msgstr "Пароль подтверждения HTTP."
+msgstr ""
 
 #. SysConfig
 msgid "The HTTP acknowledge user."
-msgstr "Пользователь с подтверждением HTTP."
+msgstr ""
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
@@ -96,9 +96,9 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
-msgstr "Модуль события заявки для отправки подтверждения в Nagios."
+msgstr ""
 
 #. SysConfig
 msgid "pipe"
-msgstr "pipe"
+msgstr ""
 

@@ -1,28 +1,21 @@
-# Translators:
-# 汇民 王 <whuim@163.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-11-14 23:48+0000\n"
+"POT-Creation-Date: 2019-06-25 13:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: 汇民 王 <whuim@163.com>, 2017\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/otrs/teams/23435/zh_CN/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run AFTER PostMasterFilter."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
 msgstr "系统监控套件的基本邮件接口。仅当此过滤器在邮件管理员过滤器之后运行时使用。"
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run BEFORE PostMasterFilter."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
 msgstr "系统监控套件的基本邮件接口。仅当此过滤器在邮件管理员过滤器之前运行时使用。"
 
 #. SysConfig
@@ -34,33 +27,31 @@ msgid "HTTP"
 msgstr "HTTP"
 
 #. SysConfig
-msgid "Icinga API URL ."
-msgstr ""
+msgid "Icinga API URL."
+msgstr "Icinga API的URL 。"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement author."
-msgstr ""
+msgstr "Icinga2 确认的作者。"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement comment."
-msgstr ""
+msgstr "Icinga2 确认的注释。"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement enabled?"
-msgstr ""
+msgstr "已经启用了Icinga2确认？"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement notify."
-msgstr ""
+msgstr "Icinga2 确认的通知。"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement sticky."
-msgstr ""
+msgstr "Icinga2 确认的粘性通知。"
 
 #. SysConfig
-msgid ""
-"Link an already opened incident ticket with the affected CI. This is only "
-"possible when a subsequent system monitoring email arrives."
+msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
 msgstr "将受影响的配置项链接到已打开的故障工单。此功能只在配置项随后的系统监控邮件到达时才可用。"
 
 #. SysConfig
@@ -84,9 +75,7 @@ msgid "Named pipe acknowledge format for service."
 msgstr "命名管道已知问题的服务格式。"
 
 #. SysConfig
-msgid ""
-"Set the incident state of a CI automatically when a system monitoring email "
-"arrives."
+msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
 msgstr "当配置项的系统监控邮件到达时自动设置它的故障状态。"
 
 #. SysConfig
@@ -103,7 +92,7 @@ msgstr "HTTP已知问题的用户名。"
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
-msgstr ""
+msgstr "发送一个确认到Icinga2的工单事件模块。"
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
@@ -112,3 +101,4 @@ msgstr "发送一个已知问题到Nagios的工单事件模块。"
 #. SysConfig
 msgid "pipe"
 msgstr "管道"
+

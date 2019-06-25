@@ -12,15 +12,15 @@ msgstr ""
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr "Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ПОСЛЕ PostMasterFilter."
+msgstr "Grundlegendes Mail-Interface zu System Monitoring Anwendungen. Benutzen Sie diesen Abschnitt, wenn der Filter NACH dem PostMaster-Filter ausgeführt werden soll."
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr "Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ДО PostMasterFilter."
+msgstr "Grundlegendes Mail-Interface zu System Monitoring Anwendungen. Benutzen Sie diesen Abschnitt, wenn der Filter VOR dem PostMaster-Filter ausgeführt werden soll."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr "Определите тип подтверждения Nagios."
+msgstr "Definiere Nagios-Bestätigungs-Typ ."
 
 #. SysConfig
 msgid "HTTP"
@@ -28,77 +28,77 @@ msgstr "HTTP"
 
 #. SysConfig
 msgid "Icinga API URL."
-msgstr ""
+msgstr "Icinga API URL."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement author."
-msgstr ""
+msgstr "Icinga2 Bestätigungsverfasser"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement comment."
-msgstr ""
+msgstr "Icinga2 Bestätigungskommentar"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement enabled?"
-msgstr ""
+msgstr "Icinga2 Bestätigung aktiviert?"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement notify."
-msgstr ""
+msgstr "Icinga2 Bestätigungsnachricht"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement sticky."
-msgstr ""
+msgstr "Icinga2 acknowledgement sticky."
 
 #. SysConfig
 msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr "Свяжите уже открытый инцидент с затронутым CI. Это возможно только в том случае, если приходит сообщение о последующей проверке электронной почты."
+msgstr "Verlinkung eines bereits geöffneten Incident Tickets mit einem betroffenen CI. Dies ist nur möglich, wenn eine entsprechende System Monitoring E-Mail eintrifft."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
-msgstr "Имя динамического поля для хоста."
+msgstr "Name des dynamischen Feldes für den Host."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Service."
-msgstr "Имя динамического поля для службы."
+msgstr "Name des dynamischen Feldes für den Service."
 
 #. SysConfig
 msgid "Named pipe acknowledge command."
-msgstr "Команда подтверждения пайпа."
+msgstr "Named Pipe Bestätigungskommando"
 
 #. SysConfig
 msgid "Named pipe acknowledge format for host."
-msgstr "Формат подтверждения именованного пайпа для хоста."
+msgstr "Named Pipe-Acknowledge-Format für Host."
 
 #. SysConfig
 msgid "Named pipe acknowledge format for service."
-msgstr "Формат подтверждения именованного пайпа для сервиса."
+msgstr "Named Pipe-Acknowledge-Format für Service."
 
 #. SysConfig
 msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
-msgstr "Автоматически задавать состояние инцидента для CI, когда приходит сообщение системы мониторинга."
+msgstr "Setzt den Vorfallstatus eines Configuration Item automatisch, wenn eine E-Mail vom System-Monitoring eintrifft."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
-msgstr "URL-адрес подтверждения HTTP."
+msgstr "Die URL der HTTP-Bestätigung."
 
 #. SysConfig
 msgid "The HTTP acknowledge password."
-msgstr "Пароль подтверждения HTTP."
+msgstr "Das HTTP-Bestätigungspasswort."
 
 #. SysConfig
 msgid "The HTTP acknowledge user."
-msgstr "Пользователь с подтверждением HTTP."
+msgstr "Der HTTP-Bestätigungsbenutzer."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
-msgstr ""
+msgstr "Ticket-Ereignismodul, um eine Bestätigung an Icinga2 zu senden."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
-msgstr "Модуль события заявки для отправки подтверждения в Nagios."
+msgstr "Ticket-Ereignismodul, um eine Bestätigung zu Nagios zu senden."
 
 #. SysConfig
 msgid "pipe"
-msgstr "pipe"
+msgstr "Pipe"
 

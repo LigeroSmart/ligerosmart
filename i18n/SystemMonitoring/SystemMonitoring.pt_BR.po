@@ -1,33 +1,22 @@
-# Translators:
-# Ronaldo Richieri <ronaldo@complemento.net.br>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-11-14 23:48+0000\n"
+"POT-Creation-Date: 2019-06-25 13:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Ronaldo Richieri <ronaldo@complemento.net.br>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/otrs/teams/23435/pt_BR/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run AFTER PostMasterFilter."
-msgstr ""
-"Interface de email básica com Ferramentas de Monitoramento. Use este bloco "
-"se o filtro tiver que rodar DEPOIS do PostMasterFilter."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
+msgstr "Interface de email básica com Ferramentas de Monitoramento. Use este bloco se o filtro tiver que rodar DEPOIS do PostMasterFilter."
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run BEFORE PostMasterFilter."
-msgstr ""
-"Interface de email básica com Ferramentas de Monitoramento. Use este bloco "
-"se o filtro tiver que rodar ANTES do PostMasterFilter."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
+msgstr "Interface de email básica com Ferramentas de Monitoramento. Use este bloco se o filtro tiver que rodar ANTES do PostMasterFilter."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
@@ -38,7 +27,7 @@ msgid "HTTP"
 msgstr "HTTP"
 
 #. SysConfig
-msgid "Icinga API URL ."
+msgid "Icinga API URL."
 msgstr ""
 
 #. SysConfig
@@ -62,12 +51,8 @@ msgid "Icinga2 acknowledgement sticky."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Link an already opened incident ticket with the affected CI. This is only "
-"possible when a subsequent system monitoring email arrives."
-msgstr ""
-"Associar um chamado de incidente já criado com o IC afetado. Isto só é "
-"possível quando um email de monitoramento subsequente é recebido."
+msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
+msgstr "Associar um chamado de incidente já criado com o IC afetado. Isto só é possível quando um email de monitoramento subsequente é recebido."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
@@ -90,12 +75,8 @@ msgid "Named pipe acknowledge format for service."
 msgstr "Formato do acknowledge para serviço."
 
 #. SysConfig
-msgid ""
-"Set the incident state of a CI automatically when a system monitoring email "
-"arrives."
-msgstr ""
-"Alterar automaticamente o estado de um IC quando um email de monitoramento "
-"for recebido."
+msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
+msgstr "Alterar automaticamente o estado de um IC quando um email de monitoramento for recebido."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
@@ -120,3 +101,4 @@ msgstr "Eventos do Chamado para enviar o acknowledge para o Nagios."
 #. SysConfig
 msgid "pipe"
 msgstr "pipe"
+

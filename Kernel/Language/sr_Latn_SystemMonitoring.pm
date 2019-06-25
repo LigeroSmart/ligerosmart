@@ -22,12 +22,12 @@ sub Data {
         'Osnovni imejl interfejs za sistemski nadzor. Koristite ovaj blok ako filter treba da bude pušten PRE PostMasterFilter.';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = 'Određuje Nagios tip potvrde.';
     $Self->{Translation}->{'HTTP'} = 'HTTP';
-    $Self->{Translation}->{'Icinga API URL.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = '';
-    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = '';
+    $Self->{Translation}->{'Icinga API URL.'} = 'Adresa Icinga API.';
+    $Self->{Translation}->{'Icinga2 acknowledgement author.'} = 'Icinga2 autor potvrde.';
+    $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = 'Icinga2 komentar potvrde.';
+    $Self->{Translation}->{'Icinga2 acknowledgement enabled?'} = 'Icinga2 potvrda omogućena?';
+    $Self->{Translation}->{'Icinga2 acknowledgement notify.'} = 'Icinga2 obaveštenje potvrde.';
+    $Self->{Translation}->{'Icinga2 acknowledgement sticky.'} = 'Icinga2 markiranje potvrde.';
     $Self->{Translation}->{'Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives.'} =
         'Poveži već otvoreni tiket incidenta sa pogođenom konfiguracionom stavkom. Ovo je jedino moguće kada stigne sledeći imejl od sistemskog nadzora.';
     $Self->{Translation}->{'Name of the Dynamic Field for Host.'} = 'Naziv dinamičkog polja za server.';
@@ -40,7 +40,7 @@ sub Data {
     $Self->{Translation}->{'The HTTP acknowledge URL.'} = 'Adresa HTTP potvrde.';
     $Self->{Translation}->{'The HTTP acknowledge password.'} = 'Lozinka HTTP potvrde.';
     $Self->{Translation}->{'The HTTP acknowledge user.'} = 'Korisnik HTTP potvrde.';
-    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = '';
+    $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = 'Modul događaja tiketa za slanje potvrde za Icinga2.';
     $Self->{Translation}->{'Ticket event module to send an acknowledge to Nagios.'} = 'Modul događaja tiketa za slanje potvrde za Nagios.';
     $Self->{Translation}->{'pipe'} = 'kanal';
 

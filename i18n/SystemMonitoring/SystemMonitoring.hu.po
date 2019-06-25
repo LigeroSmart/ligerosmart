@@ -1,35 +1,22 @@
-# Translators:
-# Balázs Úr <urbalazs@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2017-11-14 23:48+0000\n"
+"POT-Creation-Date: 2019-06-25 13:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>, 2016\n"
-"Language-Team: Hungarian (https://www.transifex.com/otrs/teams/23435/hu/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run AFTER PostMasterFilter."
-msgstr ""
-"Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor "
-"használja ezt a blokkot, ha a szűrőt a levelezési szűrő UTÁN kell "
-"lefuttatni."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
+msgstr "Alapszintű levelezési felület a rendszerfigyelő alkalmazáscsomagokhoz. Akkor használja ezt a blokkot, ha a szűrőt a levelezési szűrő UTÁN kell lefuttatni."
 
 #. SysConfig
-msgid ""
-"Basic mail interface to System Monitoring Suites. Use this block if the "
-"filter should run BEFORE PostMasterFilter."
-msgstr ""
-"Alap levelezési felület a rendszerfigyelő alkalmazáscsomaghoz. Akkor "
-"használja ezt a blokkot, ha a szűrőt a levelezési szűrő ELŐTT kell "
-"lefuttatni."
+msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
+msgstr "Alapszintű levelezési felület a rendszerfigyelő alkalmazáscsomagokhoz. Akkor használja ezt a blokkot, ha a szűrőt a levelezési szűrő ELŐTT kell lefuttatni."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
@@ -40,36 +27,32 @@ msgid "HTTP"
 msgstr "HTTP"
 
 #. SysConfig
-msgid "Icinga API URL ."
-msgstr ""
+msgid "Icinga API URL."
+msgstr "Icinga API URL."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement author."
-msgstr ""
+msgstr "Icinga2 nyugtázás szerzője."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement comment."
-msgstr ""
+msgstr "Icinga2 nyugtázás megjegyzése."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement enabled?"
-msgstr ""
+msgstr "Icinga2 nyugtázás engedélyezve?"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement notify."
-msgstr ""
+msgstr "Icinga2 nyugtázás értesítés."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement sticky."
-msgstr ""
+msgstr "Icinga2 nyugtázás ragasztás."
 
 #. SysConfig
-msgid ""
-"Link an already opened incident ticket with the affected CI. This is only "
-"possible when a subsequent system monitoring email arrives."
-msgstr ""
-"Egy már megnyitott incidensjegy összekapcsolása az érintett CI-vel. Ez csak "
-"akkor lehetséges, amikor egy következő rendszerfigyelő e-mail érkezik."
+msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
+msgstr "Egy már megnyitott incidensjegy összekapcsolása az érintett CI-vel. Ez csak akkor lehetséges, amikor egy következő rendszerfigyelő e-mail érkezik."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
@@ -92,12 +75,8 @@ msgid "Named pipe acknowledge format for service."
 msgstr "Elnevezett cső nyugtázási formátum a szolgáltatásnál."
 
 #. SysConfig
-msgid ""
-"Set the incident state of a CI automatically when a system monitoring email "
-"arrives."
-msgstr ""
-"Egy CI incidensállapotának automatikus beállítása, amikor egy "
-"rendszerfigyelő e-mail érkezik."
+msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
+msgstr "Egy CI incidensállapotának automatikus beállítása, amikor egy rendszerfigyelő e-mail érkezik."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
@@ -113,7 +92,7 @@ msgstr "A HTTP nyugtázási felhasználó."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
-msgstr ""
+msgstr "Jegyesemény modul egy nyugta küldéséhez a Icinga2 számára."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
@@ -122,3 +101,4 @@ msgstr "Jegyesemény modul egy nyugta küldéséhez a Nagios számára."
 #. SysConfig
 msgid "pipe"
 msgstr "cső"
+
