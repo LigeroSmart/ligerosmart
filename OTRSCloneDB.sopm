@@ -23,11 +23,16 @@
     <Filelist>
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSCloneDB.xml" />
         <File Permission="660" Location="Kernel/Language/bg_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/de_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/es_MX_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/es_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/hu_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/it_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/ja_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/nb_NO_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/pl_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_OTRSCloneDB.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/ru_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_OTRSCloneDB.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_OTRSCloneDB.pm" />

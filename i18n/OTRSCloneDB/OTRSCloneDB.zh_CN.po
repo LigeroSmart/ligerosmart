@@ -1,26 +1,17 @@
-# Translators:
-# 汇民 王 <whuim@163.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2017-09-25 10:08+0000\n"
+"POT-Creation-Date: 2019-06-25 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: 汇民 王 <whuim@163.com>, 2017\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/otrs/teams/23435/zh_CN/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
-msgid ""
-"List of tables should be skipped, perhaps internal DB tables. Please use "
-"lowercase."
+msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
 msgstr "应该跳过的数据库表（可能是数据库内部表）清单，请使用小写字母。"
 
 #. SysConfig
@@ -36,7 +27,6 @@ msgid "Specifies which columns should be checked for valid UTF-8 source data."
 msgstr "指定哪些列需要检查源数据是否为有效的UTF-8格式。"
 
 #. SysConfig
-msgid ""
-"This setting specifies which table columns contain blob data as these need "
-"special treatment."
+msgid "This setting specifies which table columns contain blob data as these need special treatment."
 msgstr "这个设置项指定包含BLOB数据的表列名，这些列需要特殊处理。"
+

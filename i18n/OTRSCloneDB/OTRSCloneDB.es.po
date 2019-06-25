@@ -1,35 +1,22 @@
-# Translators:
-# David B <link.bigpoint@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2017-09-25 10:08+0000\n"
+"POT-Creation-Date: 2019-06-25 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: David B <link.bigpoint@outlook.com>, 2017\n"
-"Language-Team: Spanish (https://www.transifex.com/otrs/teams/23435/es/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
-msgid ""
-"List of tables should be skipped, perhaps internal DB tables. Please use "
-"lowercase."
-msgstr ""
-"La lista de tablas debe omitirse, quizás tablas de Bases de datos internas. "
-"Utilice minúsculas."
+msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
+msgstr "La lista de tablas debe omitirse, quizás tablas de Bases de datos internas. Utilice minúsculas."
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
-msgstr ""
-"Archivo de registro para el reemplazo de valores de datos UTF-8 con formato "
-"incorrecto."
+msgstr "Archivo de registro para el reemplazo de valores de datos UTF-8 con formato incorrecto."
 
 #. SysConfig
 msgid "Settings for connecting with the target database."
@@ -37,14 +24,9 @@ msgstr "Configuración para conectarse con la base de datos de destino."
 
 #. SysConfig
 msgid "Specifies which columns should be checked for valid UTF-8 source data."
-msgstr ""
-"Especifica qué columnas deben comprobarse para los datos de origen UTF-8 "
-"válidos."
+msgstr "Especifica qué columnas deben comprobarse para los datos de origen UTF-8 válidos."
 
 #. SysConfig
-msgid ""
-"This setting specifies which table columns contain blob data as these need "
-"special treatment."
-msgstr ""
-"Esta configuración especifica qué columnas de tabla contienen datos de blob "
-"ya que éstos necesitan un tratamiento especial."
+msgid "This setting specifies which table columns contain blob data as these need special treatment."
+msgstr "Esta configuración especifica qué columnas de tabla contienen datos de blob ya que éstos necesitan un tratamiento especial."
+

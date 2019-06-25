@@ -1,29 +1,18 @@
-# Translators:
-# Anatoly A <aaksinenko@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2017-09-25 10:08+0000\n"
+"POT-Creation-Date: 2019-06-25 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Anatoly A <aaksinenko@gmail.com>, 2017\n"
-"Language-Team: Russian (https://www.transifex.com/otrs/teams/23435/ru/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. SysConfig
-msgid "Dutch"
-msgstr ""
-
-#. SysConfig
-msgid ""
-"List of tables should be skipped, perhaps internal DB tables. Please use "
-"lowercase."
-msgstr ""
-"Список таблиц которые следует пропускать, возможно, внутренние таблицы БД. "
-"Используйте нижний регистр."
+msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
+msgstr "Список таблиц которые следует пропускать, возможно, внутренние таблицы БД. Используйте нижний регистр."
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
@@ -35,14 +24,9 @@ msgstr "Настройки для соединения с целевой баз�
 
 #. SysConfig
 msgid "Specifies which columns should be checked for valid UTF-8 source data."
-msgstr ""
-"Указывает, какие столбцы следует проверять для допустимых исходных данных "
-"UTF-8."
+msgstr "Указывает, какие столбцы следует проверять для допустимых исходных данных UTF-8."
 
 #. SysConfig
-msgid ""
-"This setting specifies which table columns contain blob data as these need "
-"special treatment."
-msgstr ""
-"Этот параметр указывает, какие столбцы таблицы содержат данные BLOB, так как"
-" они требуют специальной обработки."
+msgid "This setting specifies which table columns contain blob data as these need special treatment."
+msgstr "Этот параметр указывает, какие столбцы таблицы содержат данные BLOB, так как они требуют специальной обработки."
+
