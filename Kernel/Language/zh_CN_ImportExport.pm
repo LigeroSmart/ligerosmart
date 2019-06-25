@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Add template'} = '添加模板';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '创建模板导入和导出对象信息。';
     $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
-        '';
+        '要使用此模块，您需要安装ITSMConfigurationManagement或为要导入和导出的对象提供后端的任何其它包。';
     $Self->{Translation}->{'Start Import'} = '开始导入';
     $Self->{Translation}->{'Start Export'} = '开始导出';
     $Self->{Translation}->{'Delete this template'} = '';
@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = '重复的名称';
     $Self->{Translation}->{'Last processed line number of import file'} = '导入文件最后处理的行数';
     $Self->{Translation}->{'Ok'} = '确定';
-    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '您真的想要删除这个模板条目吗？';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '没有找到对象的后端！';
@@ -75,10 +75,10 @@ sub Data {
     $Self->{Translation}->{'Column'} = '列';
 
     # JS File: ITSM.Admin.ImportExport
-    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'Deleting template...'} = '正在删除模板……';
     $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
-        '';
-    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+        '删除模板时出错，请检查日志以获取更多信息。';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '模板已成功删除。';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

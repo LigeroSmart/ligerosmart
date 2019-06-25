@@ -1,29 +1,30 @@
-# 
-# Translators:
-# Alexandru <lec@bibi.ro>, 2016
-# Costin Stanescu, 2017
-# Dragos Ungureanu <dragos@voipmonitoring.net>, 2015
-# Toader Lucia Andreea <lucia.toader@qwerty.solutions>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:57+0000\n"
-"PO-Revision-Date: 2017-09-29 14:58+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Romanian (http://www.transifex.com/otrs/OTRS/language/ro/)\n"
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2019-06-25 12:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ro\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
 msgstr "Management import/export"
 
 #. Template: AdminImportExport
+msgid "Add template"
+msgstr ""
+
+#. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Crează un șablon pentru import/export informații obiecte."
+
+#. Template: AdminImportExport
+msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -34,8 +35,12 @@ msgid "Start Export"
 msgstr "Start Export"
 
 #. Template: AdminImportExport
-msgid "Step 1 of 5 - Edit common information"
+msgid "Delete this template"
 msgstr ""
+
+#. Template: AdminImportExport
+msgid "Step 1 of 5 - Edit common information"
+msgstr "Pasul 1 din 5 - Editează informații generale"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
@@ -51,11 +56,11 @@ msgstr "Formatul este cerut!"
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr ""
+msgstr "Pasul 2 din 5 - Editează informații despre obiect"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5 - Edit format information"
-msgstr ""
+msgstr "Pasul 3 din 5 - Editeaza informații despre format"
 
 #. Template: AdminImportExport
 msgid "is required!"
@@ -63,7 +68,7 @@ msgstr "este obligatoriu!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr ""
+msgstr "Pasul 4 din 5 - Editează informații despre asocieri"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
@@ -75,7 +80,7 @@ msgstr "Adaugă element de asociere"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
-msgstr ""
+msgstr "Pasul 5 din 5 - Editează informații de căutare"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
@@ -91,7 +96,7 @@ msgstr "Fișier sursă"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr ""
+msgstr "Rezumat import pentru %s"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -111,7 +116,11 @@ msgstr "Numărul ultimei linii procesate din fișierul de import"
 
 #. Template: AdminImportExport
 msgid "Ok"
-msgstr "Ok"
+msgstr "确定"
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -127,23 +136,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr ""
+msgstr "Nu se poate introduce/actualiza șablon!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr ""
+msgstr "Necesar ID Șablon!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr ""
+msgstr "Eroare. Import imposibil! Vezi Syslog pentru detalii."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr ""
+msgstr "Eroare. Export imposibil! Vezi Syslog pentru detalii."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr ""
+msgstr "Listă Șabloane"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
@@ -155,11 +164,11 @@ msgstr "numar mai mare ca zero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer"
-msgstr "intreg"
+msgstr "întreg"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer bigger than zero"
-msgstr "intreg mai mare ca zero"
+msgstr "întreg mai mare ca zero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
@@ -195,7 +204,7 @@ msgstr "Punct (.)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Comma (,)"
-msgstr ""
+msgstr "Virgulă (,)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Charset"
@@ -209,9 +218,21 @@ msgstr "Include capul de tabel"
 msgid "Column"
 msgstr "Coloană"
 
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "There was an error deleting the template. Please check the logs for more information."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
+msgstr ""
+
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr ""
+msgstr "为导入/导出模块的格式后端模块注册。"
 
 #. SysConfig
 msgid "Import and export object information."
@@ -220,3 +241,4 @@ msgstr "Informații de import/export ale obiectului."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Import/Export"
+

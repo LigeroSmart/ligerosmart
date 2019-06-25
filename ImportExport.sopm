@@ -15,32 +15,52 @@
         <File Permission="660" Location="doc/import-export-database.dia" />
         <File Permission="660" Location="doc/import-export-database.png" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ImportExport.xml" />
+        <File Permission="660" Location="Kernel/Language/ar_SA_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/bg_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/ca_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/cs_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/da_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/de_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/el_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/en_CA_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/es_CO_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/es_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/es_MX_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/et_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_CA_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/fr_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/gl_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/he_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/hi_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/id_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/it_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/ja_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/ko_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/lt_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/lv_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/mk_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/ms_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/nb_NO_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/nl_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/pl_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_ImportExport.pm" />
-        <File Permission="660" Location="Kernel/Language/ro_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/pt_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sv_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_ImportExport.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/vi_VN_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_ImportExport.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_ImportExport.pm" />

@@ -1,27 +1,30 @@
-# 
-# Translators:
-# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2017
-# Luis Armando Medina <lamedina@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 14:08+0000\n"
-"PO-Revision-Date: 2017-10-25 02:58+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2019-06-25 12:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
 msgstr "Gestión de Importación/Exportación"
 
 #. Template: AdminImportExport
+msgid "Add template"
+msgstr "Agregar plantilla"
+
+#. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Crear una plantilla para importar y exportar información de objetos."
+
+#. Template: AdminImportExport
+msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -30,6 +33,10 @@ msgstr "Iniciar Importación"
 #. Template: AdminImportExport
 msgid "Start Export"
 msgstr "Iniciar Exportación"
+
+#. Template: AdminImportExport
+msgid "Delete this template"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
@@ -110,6 +117,10 @@ msgstr "Último número de línea procesada del archivo a importar"
 #. Template: AdminImportExport
 msgid "Ok"
 msgstr "Aceptar"
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -207,6 +218,18 @@ msgstr "Incluir Cabecera de Columnas"
 msgid "Column"
 msgstr "Calumna"
 
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "There was an error deleting the template. Please check the logs for more information."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
+msgstr ""
+
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
 msgstr "Formato del módulo administrativo de registro para el módulo de importación/exportación."
@@ -218,3 +241,4 @@ msgstr "Importar y exportar información de un objeto."
 #. SysConfig
 msgid "Import/Export"
 msgstr "Importar/Exportar"
+

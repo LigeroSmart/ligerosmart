@@ -1,30 +1,30 @@
-# 
-# Translators:
-# Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
-# David B <link.bigpoint@outlook.com>, 2017-2018
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
-# Iñaki Martínez, 2017
-# juanman <juanma@gnutn.org.ar>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-10-10 14:08+0000\n"
-"PO-Revision-Date: 2018-01-17 21:16+0000\n"
-"Last-Translator: David B <link.bigpoint@outlook.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2019-06-25 12:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
 msgstr "Gestión de Importación/Exportación"
 
 #. Template: AdminImportExport
+msgid "Add template"
+msgstr "Agregar plantilla"
+
+#. Template: AdminImportExport
 msgid "Create a template to import and export object information."
-msgstr "Crear una plantilla para importar y exportar informacion del objeto."
+msgstr "Crear una plantilla para importar y exportar información de objetos."
+
+#. Template: AdminImportExport
+msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -35,44 +35,48 @@ msgid "Start Export"
 msgstr "Iniciar Exportación"
 
 #. Template: AdminImportExport
+msgid "Delete this template"
+msgstr ""
+
+#. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
-msgstr "Paso 1 de 5 - Editar información común"
+msgstr "Paso 1 de 5 - Editar la información común"
 
 #. Template: AdminImportExport
 msgid "Name is required!"
-msgstr "¡Se requiere Nombre!"
+msgstr "Es requerido un nombre!"
 
 #. Template: AdminImportExport
 msgid "Object is required!"
-msgstr "¡Debe especificar Objeto!"
+msgstr "Es requerido un objeto!"
 
 #. Template: AdminImportExport
 msgid "Format is required!"
-msgstr "¡Debe especificar Formato!"
+msgstr "Es requerido un formato."
 
 #. Template: AdminImportExport
 msgid "Step 2 of 5 - Edit object information"
-msgstr "Paso 2 de 5 - Editar información de objeto"
+msgstr "Paso 2 de 5 - Editar la información del objeto"
 
 #. Template: AdminImportExport
 msgid "Step 3 of 5 - Edit format information"
-msgstr "Paso 3 de 5 - Editar información de formato"
+msgstr "Paso 3 de 5 - Editar la información de formato"
 
 #. Template: AdminImportExport
 msgid "is required!"
-msgstr "¡es requerido!"
+msgstr "es requerido!"
 
 #. Template: AdminImportExport
 msgid "Step 4 of 5 - Edit mapping information"
-msgstr "Paso 4 de 5 - Editar información de mapeo"
+msgstr "Paso 4 de 5 - Editar la información de mapeo"
 
 #. Template: AdminImportExport
 msgid "No map elements found."
-msgstr "No se encontraron elementos de mapeo."
+msgstr "No se han encontrado mapas."
 
 #. Template: AdminImportExport
 msgid "Add Mapping Element"
-msgstr "Añadir Mapeo de Elementos"
+msgstr "Agregar un Elemento de Mapeo"
 
 #. Template: AdminImportExport
 msgid "Step 5 of 5 - Edit search information"
@@ -80,19 +84,19 @@ msgstr "Paso 5 de 5 - Editar información de búsqueda"
 
 #. Template: AdminImportExport
 msgid "Restrict export per search"
-msgstr "Restringir exportación por búsqueda"
+msgstr "Restringir la exportación a la búsqueda"
 
 #. Template: AdminImportExport
 msgid "Import information"
-msgstr "Importar información"
+msgstr "Información de importación"
 
 #. Template: AdminImportExport
 msgid "Source File"
-msgstr "Archivo origen"
+msgstr "Archivo Fuente"
 
 #. Template: AdminImportExport
 msgid "Import summary for %s"
-msgstr "Resumen de importación de %s"
+msgstr "Resumen de importación para %s"
 
 #. Template: AdminImportExport
 msgid "Records"
@@ -108,51 +112,55 @@ msgstr "Nombres duplicados"
 
 #. Template: AdminImportExport
 msgid "Last processed line number of import file"
-msgstr "Última número de línea procesada del archivo importar"
+msgstr "Último número de línea procesada del archivo a importar"
 
 #. Template: AdminImportExport
 msgid "Ok"
-msgstr "Ok"
+msgstr "Aceptar"
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
-msgstr "¡No se encontró ningún objeto backend!"
+msgstr "¡No se encontró un 'backend' para el objeto!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No format backend found!"
-msgstr "No se encontró ningún formato backend!"
+msgstr "¡No se encontró un 'backend' para el formato!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template not found!"
-msgstr "¡Plantilla no encontrada!"
+msgstr "¡No se encontró la plantilla!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Can't insert/update template!"
-msgstr "¡No se puede insertar/actualizar la plantilla!"
+msgstr "¡No fue posible insertar/actualizar la plantilla!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Needed TemplateID!"
-msgstr "Se necesita IDPlantilla!"
+msgstr "¡Se necesita 'TemplateID'!"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Import impossible! See Syslog for details."
-msgstr "Ocurrió un error!. Imposible importar! Vea Syslog para detalles."
+msgstr "Ha ocurrido un error. ¡Imposible de Importar¡ Revise las trazas del sistema para obtener los detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Error occurred. Export impossible! See Syslog for details."
-msgstr "Ocurrió un error!. Imposible exportar! Vea Syslog para detalles."
+msgstr "Ha ocurrido un error. ¡Imposible de Exportar¡ Revise las trazas del sistema para obtener los detalles."
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Template List"
-msgstr "Lista de plantillas"
+msgstr "Lista de Plantillas"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number"
-msgstr "Número"
+msgstr "número"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "number bigger than zero"
-msgstr "número mayor que cero"
+msgstr "número mayor a cero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer"
@@ -160,19 +168,19 @@ msgstr "entero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "integer bigger than zero"
-msgstr "Entero mayo que cero"
+msgstr "entero mayor a cero"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Element required, please insert data"
-msgstr "Elemento requerido, por favor insertar datos"
+msgstr "Elemento requerido, por favor inserte el dato"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Invalid data, please insert a valid %s"
-msgstr "Datos no válido, por favor inserte un %s válido "
+msgstr "Datos inválidos, por favor oeste un %s válido"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "Format not found!"
-msgstr "¡Formato no encontrado!"
+msgstr "¡No se encontró el Formato!"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column Separator"
@@ -184,11 +192,11 @@ msgstr "Tabulador (TAB)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Semicolon (;)"
-msgstr "Punto y Coma (;)"
+msgstr "Punto y coma (;)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Colon (:)"
-msgstr "Dos puntos (:)"
+msgstr "Dos Puntos (:)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Dot (.)"
@@ -200,24 +208,37 @@ msgstr "Coma (,)"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Charset"
-msgstr "Juego de caracteres"
+msgstr "Conjunto de Caracteres"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Include Column Headers"
-msgstr "Incluir Cabecera de la Columna"
+msgstr "Incluir Cabecera de Columnas"
 
 #. Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
 msgid "Column"
-msgstr "Columna"
+msgstr "Calumna"
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "There was an error deleting the template. Please check the logs for more information."
+msgstr ""
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
+msgstr ""
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
-msgstr "Registro de módulo de formato backend para el módulo import/export."
+msgstr "Formato del módulo administrativo de registro para el módulo de importación/exportación."
 
 #. SysConfig
 msgid "Import and export object information."
-msgstr "Importar y exportar información de objetos."
+msgstr "Importar y exportar información de un objeto."
 
 #. SysConfig
 msgid "Import/Export"
 msgstr "Importar/Exportar"
+

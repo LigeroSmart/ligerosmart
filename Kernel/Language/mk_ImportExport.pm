@@ -15,46 +15,36 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Añadir plantilla de mapeo';
-    $Self->{Translation}->{'Charset'} = 'Juego de caracteres';
-    $Self->{Translation}->{'Colon (:)'} = 'Dos puntos (:)';
-    $Self->{Translation}->{'Column'} = 'Columna';
-    $Self->{Translation}->{'Column Separator'} = 'Separador de Columna';
-    $Self->{Translation}->{'Dot (.)'} = 'Punto (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Punto y Coma (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulador (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Incluir Cabecera de la Columna';
-    $Self->{Translation}->{'Import summary for'} = 'Importar resumen para';
-    $Self->{Translation}->{'Imported records'} = 'Registros importados';
-    $Self->{Translation}->{'Exported records'} = 'Registros exportados';
-    $Self->{Translation}->{'Records'} = 'Registros';
-    $Self->{Translation}->{'Skipped'} = 'Saltado';
-
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = 'Gestión de Importación/Exportación';
-    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Crear una plantilla para importar y exportar informacion del objeto.';
-    $Self->{Translation}->{'Start Import'} = 'Iniciar Importación';
-    $Self->{Translation}->{'Start Export'} = 'Iniciar Exportación';
+    $Self->{Translation}->{'Import/Export Management'} = 'Внеси/Изнеси Менаџмент';
+    $Self->{Translation}->{'Add template'} = 'Додади шаблон';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Креирај шаблон за внесени и изнесени објект информации';
+    $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
+        '';
+    $Self->{Translation}->{'Start Import'} = 'Започни внесување';
+    $Self->{Translation}->{'Start Export'} = 'Започни излез';
+    $Self->{Translation}->{'Delete this template'} = '';
     $Self->{Translation}->{'Step 1 of 5 - Edit common information'} = '';
-    $Self->{Translation}->{'Name is required!'} = 'El nombre es requerido';
-    $Self->{Translation}->{'Object is required!'} = '¡Debe especificar Objeto!';
-    $Self->{Translation}->{'Format is required!'} = '¡Debe especificar Formato!';
+    $Self->{Translation}->{'Name is required!'} = 'Потребно е име!';
+    $Self->{Translation}->{'Object is required!'} = 'Потребен е објект!';
+    $Self->{Translation}->{'Format is required!'} = 'Потребен е формат!';
     $Self->{Translation}->{'Step 2 of 5 - Edit object information'} = '';
-    $Self->{Translation}->{'Step 3 of 5'} = '';
-    $Self->{Translation}->{'is required!'} = '¡es requerido!';
+    $Self->{Translation}->{'Step 3 of 5 - Edit format information'} = '';
+    $Self->{Translation}->{'is required!'} = 'Задолжително е!';
     $Self->{Translation}->{'Step 4 of 5 - Edit mapping information'} = '';
-    $Self->{Translation}->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
-    $Self->{Translation}->{'Add Mapping Element'} = 'Añadir Mapeo de Elementos';
+    $Self->{Translation}->{'No map elements found.'} = 'Нема мапирани елементи.';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Додади Мапирани Елементи';
     $Self->{Translation}->{'Step 5 of 5 - Edit search information'} = '';
-    $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportación por búsqueda';
-    $Self->{Translation}->{'Import information'} = 'Importar información';
-    $Self->{Translation}->{'Source File'} = 'Archivo origen';
-    $Self->{Translation}->{'Success'} = 'Éxito';
-    $Self->{Translation}->{'Failed'} = 'Fracasado';
-    $Self->{Translation}->{'Duplicate names'} = 'Nombres duplicados';
-    $Self->{Translation}->{'Last processed line number of import file'} = 'Última número de línea procesada del archivo importar';
+    $Self->{Translation}->{'Restrict export per search'} = 'Ограничи излезни барања';
+    $Self->{Translation}->{'Import information'} = 'Влезни Информации';
+    $Self->{Translation}->{'Source File'} = 'Изворен податок';
+    $Self->{Translation}->{'Import summary for %s'} = '';
+    $Self->{Translation}->{'Records'} = 'Снимки';
+    $Self->{Translation}->{'Success'} = 'Успешно';
+    $Self->{Translation}->{'Duplicate names'} = 'Дупликат име ';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Последно обработени број на линии на внесени податоци';
     $Self->{Translation}->{'Ok'} = 'Ok';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '';
@@ -64,6 +54,7 @@ sub Data {
     $Self->{Translation}->{'Needed TemplateID!'} = '';
     $Self->{Translation}->{'Error occurred. Import impossible! See Syslog for details.'} = '';
     $Self->{Translation}->{'Error occurred. Export impossible! See Syslog for details.'} = '';
+    $Self->{Translation}->{'Template List'} = '';
     $Self->{Translation}->{'number'} = '';
     $Self->{Translation}->{'number bigger than zero'} = '';
     $Self->{Translation}->{'integer'} = '';
@@ -72,11 +63,38 @@ sub Data {
     $Self->{Translation}->{'Invalid data, please insert a valid %s'} = '';
     $Self->{Translation}->{'Format not found!'} = '';
 
+    # Perl Module: Kernel/System/ImportExport/FormatBackend/CSV.pm
+    $Self->{Translation}->{'Column Separator'} = 'Разделувач на колони';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Таб (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Точка-запирка (;)';
+    $Self->{Translation}->{'Colon (:)'} = 'Две Точки (:)';
+    $Self->{Translation}->{'Dot (.)'} = 'Точка (.)';
+    $Self->{Translation}->{'Comma (,)'} = '';
+    $Self->{Translation}->{'Charset'} = 'Множество знаци';
+    $Self->{Translation}->{'Include Column Headers'} = 'Вклучи заглавие на колона';
+    $Self->{Translation}->{'Column'} = 'Колона';
+
+    # JS File: ITSM.Admin.ImportExport
+    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
+        '';
+    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
-        'Registro de módulo de formato backend para el módulo import/export.';
-    $Self->{Translation}->{'Import and export object information.'} = 'Importar y exportar información de objetos.';
-    $Self->{Translation}->{'Import/Export'} = 'Importar/Exportar';
+        'Формат позадински модул за регистрација за внеси / изнеси модул.';
+    $Self->{Translation}->{'Import and export object information.'} = 'Внеси и изнеси објект информации';
+    $Self->{Translation}->{'Import/Export'} = 'Внеси/Изнеси';
+
+
+    push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Confirm',
+    'Delete this template',
+    'Deleting template...',
+    'Template was deleted successfully.',
+    'There was an error deleting the template. Please check the logs for more information.',
+    );
 
 }
 

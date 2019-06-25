@@ -17,10 +17,10 @@ sub Data {
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Uvoz/Izvoz upravljanje';
-    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Add template'} = 'Dodaj šablon';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Kreiraj šablon za uvoz i izvoz informacija o objektu.';
     $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
-        '';
+        'Za korišćenje ovog modula, morate instalirati ITSMConfigurationManagement ili neki drugi paket koji obezbeđuje pozadinske module za entitete uvoza i izvoza.';
     $Self->{Translation}->{'Start Import'} = 'Počni uvoz';
     $Self->{Translation}->{'Start Export'} = 'Počni izvoz';
     $Self->{Translation}->{'Delete this template'} = '';
@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = 'Duplikat imena';
     $Self->{Translation}->{'Last processed line number of import file'} = 'Broj poslednje obrađene linije uvezene datoteke';
     $Self->{Translation}->{'Ok'} = 'U redu';
-    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = 'Da li stvarno želite da obrišete ovaj šablon?';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = 'Nije pronađen pozadinski modul objekta!';
@@ -75,10 +75,10 @@ sub Data {
     $Self->{Translation}->{'Column'} = 'Kolona';
 
     # JS File: ITSM.Admin.ImportExport
-    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'Deleting template...'} = 'Brisanje šablona...';
     $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
-        '';
-    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+        'Greška prilikom brisanja šablona. Molimo proverite log datoteku za više informacija.';
+    $Self->{Translation}->{'Template was deleted successfully.'} = 'Šablon je uspešno obrisan.';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =

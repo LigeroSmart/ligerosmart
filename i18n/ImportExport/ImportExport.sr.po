@@ -1,27 +1,30 @@
-# 
-# Translators:
-# Dusan Vuckovic, 2016-2017
-# Милорад Јовановић <j.milorad@gmail.com>, 2015-2017
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2017-09-29 14:57+0000\n"
-"PO-Revision-Date: 2017-09-29 14:58+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
+"Project-Id-Version: ImportExport\n"
+"POT-Creation-Date: 2019-06-25 12:47+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AdminImportExport
 msgid "Import/Export Management"
 msgstr "Увоз/Извоз управљање"
 
 #. Template: AdminImportExport
+msgid "Add template"
+msgstr "Додај шаблон"
+
+#. Template: AdminImportExport
 msgid "Create a template to import and export object information."
 msgstr "Креирај шаблон за увоз и извоз информација о објекту."
+
+#. Template: AdminImportExport
+msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
+msgstr "За коришћење овог модула, морате инсталирати ITSMConfigurationManagement или неки други пакет који обезбеђује позадинске модуле за ентитете увоза и извоза."
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -30,6 +33,10 @@ msgstr "Почни увоз"
 #. Template: AdminImportExport
 msgid "Start Export"
 msgstr "Почни извоз"
+
+#. Template: AdminImportExport
+msgid "Delete this template"
+msgstr ""
 
 #. Template: AdminImportExport
 msgid "Step 1 of 5 - Edit common information"
@@ -110,6 +117,10 @@ msgstr "Број последње обрађене линије увезене �
 #. Template: AdminImportExport
 msgid "Ok"
 msgstr "У реду"
+
+#. Template: AdminImportExport
+msgid "Do you really want to delete this template item?"
+msgstr "Да ли стварно желите да обришете овај шаблон?"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -207,6 +218,18 @@ msgstr "Укључи наслове колона"
 msgid "Column"
 msgstr "Колона"
 
+#. JS File: ITSM.Admin.ImportExport
+msgid "Deleting template..."
+msgstr "Брисање шаблона..."
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "There was an error deleting the template. Please check the logs for more information."
+msgstr "Грешка приликом брисања шаблона. Молимо проверите лог датотеку за више информација."
+
+#. JS File: ITSM.Admin.ImportExport
+msgid "Template was deleted successfully."
+msgstr "Шаблон је успешно обрисан."
+
 #. SysConfig
 msgid "Format backend module registration for the import/export module."
 msgstr "Формат регистрације „backend” модула за увоз/извоз модул."
@@ -218,3 +241,4 @@ msgstr "Информације о увозу и извозу објеката"
 #. SysConfig
 msgid "Import/Export"
 msgstr "Увоз/Извоз"
+
