@@ -1,13 +1,13 @@
-# 
+#
 # Translators:
 # 汇民 王 <whuim@163.com>, 2017
-# 汇民 王 <whuim@qq.com>, 2017-2018
+# 汇民 王 <whuim@qq.com>, 2017-2019
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 12:00+0000\n"
-"PO-Revision-Date: 2018-11-05 12:01+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2019-04-09 12:23+0000\n"
+"PO-Revision-Date: 2019-04-12 06:55+0000\n"
+"Last-Translator: 汇民 王 <whuim@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -244,16 +244,8 @@ msgid "History of %s%s"
 msgstr "工单%s%s的历史信息"
 
 #. Template: AgentITSMChangeHistory
-msgid "History Content"
-msgstr "历史值"
-
-#. Template: AgentITSMChangeHistory
 msgid "Workorder"
 msgstr "工作指令"
-
-#. Template: AgentITSMChangeHistory
-msgid "Createtime"
-msgstr "创建时间"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
@@ -330,10 +322,6 @@ msgstr "无效的用户"
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
 msgstr "当前CAB"
-
-#. Template: AgentITSMChangeOverviewNavBar
-msgid "Context Settings"
-msgstr "上下文设置"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
@@ -495,41 +483,20 @@ msgstr "CAB"
 msgid "Last changed"
 msgstr "上次修改于"
 
-#. Template: AgentITSMChangeZoom
-msgid "Last changed by"
-msgstr "上次修改人"
-
-#. Template: AgentITSMChangeZoom
-msgid ""
-"To open links in the following description blocks, you might need to press "
-"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
-"and OS)."
-msgstr "要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。"
-
-#. Template: AgentITSMChangeZoom
-msgid "Download Attachment"
-msgstr "下载附件"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "编辑CAB模板"
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"This will create a new change from this template, so you can edit and save "
-"it."
+msgid "This will create a new change from this template, so you can edit and save it."
 msgstr "这将从这个模板创建一个新的变更，这样您能够编辑和保存它。"
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"The new change will be deleted automatically after it has been saved as "
-"template."
+msgid "The new change will be deleted automatically after it has been saved as template."
 msgstr "新变更保存为模板后，将被自动删除。"
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"This will create a new workorder from this template, so you can edit and "
-"save it."
+msgid "This will create a new workorder from this template, so you can edit and save it."
 msgstr "这将从这个模板创建一个新的工作指令，这样您能够编辑和保存它。"
 
 #. Template: AgentITSMTemplateEditContent
@@ -537,9 +504,7 @@ msgid "A temporary change will be created which contains the workorder."
 msgstr "将创建一个包含这个工作指令的临时变更。"
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"The temporary change and new workorder will be deleted automatically after "
-"the workorder has been saved as template."
+msgid "The temporary change and new workorder will be deleted automatically after the workorder has been saved as template."
 msgstr "新的工作指令保存为模板后，临时变更和新的工作指令都将被自动删除。"
 
 #. Template: AgentITSMTemplateEditContent
@@ -599,8 +564,7 @@ msgid "Do you really want to delete this workorder?"
 msgstr "您真的想要删除这个工作指令吗?"
 
 #. Template: AgentITSMWorkOrderDelete
-msgid ""
-"You can not delete this Workorder. It is used in at least one Condition!"
+msgid "You can not delete this Workorder. It is used in at least one Condition!"
 msgstr "你无法删除这个工作单。至少有一个条件用到了它!"
 
 #. Template: AgentITSMWorkOrderDelete
@@ -616,9 +580,7 @@ msgid "Move following workorders accordingly"
 msgstr "相应的移动工作指令"
 
 #. Template: AgentITSMWorkOrderEdit
-msgid ""
-"If the planned end time of this workorder is changed, the planned start "
-"times of all following workorders will be changed accordingly"
+msgid "If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly"
 msgstr "如果该工作指令的计划结束时间改变了，所有后续工作指令的计划开始时间将相应的改变"
 
 #. Template: AgentITSMWorkOrderHistory
@@ -726,10 +688,6 @@ msgid "Could not delete ConditionID %s!"
 msgstr "不能删除ConditionID为%s的条件！"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "No %s is given!"
-msgstr "没有指定%s！"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
 msgstr "不能创建新的条件！"
 
@@ -831,7 +789,7 @@ msgstr "概览：我的工作指定"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "Overview: PIR"
-msgstr "概览：PIR（实施后审查）"
+msgstr "概览：PIR（实施后评审）"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "Overview: PSA"
@@ -1145,6 +1103,18 @@ msgstr "不能执行工作指令 %s！"
 msgid "The workorder \"%s\" could not be serialized."
 msgstr "不能序列化工作指令\"%s\"。"
 
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMChange.pm
+msgid "ITSM Change Attachment"
+msgstr "ITSM变更附件"
+
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
+msgid "ITSM Work Order"
+msgstr "ITSM工作指令"
+
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
+msgid "ITSM Work Order Attachment"
+msgstr "ITSM工作指令附件"
+
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Need config option %s!"
 msgstr "需要配置%s选项！"
@@ -1152,10 +1122,6 @@ msgstr "需要配置%s选项！"
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Config option %s needs to be a HASH ref!"
 msgstr "配置选项%s需要是一个哈希引用！"
-
-#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
-msgid "No config option found for the view \"%s\"!"
-msgstr "没有找到视图“%s”的配置选项！"
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Title: %s | Type: %s"
@@ -1172,6 +1138,14 @@ msgstr "我的变更"
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
 msgstr "我的工作指令"
+
+#. SysConfig
+msgid "ITSM Changes"
+msgstr "变更"
+
+#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMWorkOrder.pm
+msgid "ITSM Work Orders"
+msgstr "ITSM工作指令"
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
 msgid "%s: %s"
@@ -1415,7 +1389,7 @@ msgstr "处理中"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pending pir"
-msgstr "等待实施后审查"
+msgstr "等待实施后评审"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "successful"
@@ -1463,7 +1437,7 @@ msgstr "决定"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "pir"
-msgstr "PIR (实施后审查)"
+msgstr "PIR (实施后评审)"
 
 #. Database XML Definition: ITSMChangeManagement.sopm
 msgid "ChangeStateID"
@@ -1565,20 +1539,12 @@ msgstr "你确定要删除这个操作吗？"
 msgid "Do you really want to delete this condition?"
 msgstr "你确定要删除这个条件吗？"
 
-#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
-msgid "Ok"
-msgstr "确定"
-
 #. SysConfig
-msgid ""
-"A list of the agents who have permission to take workorders. Key is a login "
-"name. Content is 0 or 1."
+msgid "A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1."
 msgstr "有权限接手工作指令的服务人员列表。“键”是登录名，“值”是0或1。"
 
 #. SysConfig
-msgid ""
-"A list of workorder states, at which the ActualStartTime of a workorder will"
-" be set if it was empty at this point."
+msgid "A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point."
 msgstr "工作指令状态列表，工作指令的ActualStartTime（实际开始时间）将被设置（如果这时候还没有设置的话）。"
 
 #. SysConfig
@@ -1626,15 +1592,11 @@ msgid "Admin of the state machine."
 msgstr "管理状态模式转换。"
 
 #. SysConfig
-msgid ""
-"Agent interface notification module to see the number of change advisory "
-"boards."
+msgid "Agent interface notification module to see the number of change advisory boards."
 msgstr "查看CAB数量的服务人员界面通知模块。"
 
 #. SysConfig
-msgid ""
-"Agent interface notification module to see the number of changes managed by "
-"the user."
+msgid "Agent interface notification module to see the number of changes managed by the user."
 msgstr "查看变更经理管理的变更数的服务人员界面通知模块。"
 
 #. SysConfig
@@ -1650,15 +1612,11 @@ msgid "CAB Member Search"
 msgstr "CAB成员搜索"
 
 #. SysConfig
-msgid ""
-"Cache time in minutes for the change management toolbars. Default: 3 hours "
-"(180 minutes)."
+msgid "Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes)."
 msgstr "变更管理工具栏的缓存时间（单位：分钟）。默认：3小时（180分钟）。"
 
 #. SysConfig
-msgid ""
-"Cache time in minutes for the change management. Default: 5 days (7200 "
-"minutes)."
+msgid "Cache time in minutes for the change management. Default: 5 days (7200 minutes)."
 msgstr "变更管理的缓存时间（单位：分钟）。默认：5天（7200分钟）。"
 
 #. SysConfig
@@ -1688,10 +1646,6 @@ msgstr "打印变更。"
 #. SysConfig
 msgid "Change Schedule"
 msgstr "变更计划"
-
-#. SysConfig
-msgid "Change Schedule."
-msgstr "变更计划表。"
 
 #. SysConfig
 msgid "Change Settings"
@@ -1730,10 +1684,6 @@ msgid "Change number"
 msgstr "变更编号"
 
 #. SysConfig
-msgid "Change search backend router of the agent interface."
-msgstr "服务人员界面变更搜索后端路由"
-
-#. SysConfig
 msgid "Change state"
 msgstr "变更状态"
 
@@ -1754,15 +1704,11 @@ msgid "Condition Overview"
 msgstr "条件概览"
 
 #. SysConfig
-msgid ""
-"Configure which screen should be shown after a new workorder has been "
-"created."
+msgid "Configure which screen should be shown after a new workorder has been created."
 msgstr "配置创建新工作指令后显示的界面。"
 
 #. SysConfig
-msgid ""
-"Configures how often the notifications are sent when planned the start time "
-"or other time values have been reached/passed."
+msgid "Configures how often the notifications are sent when planned the start time or other time values have been reached/passed."
 msgstr "配置计划开始时间或其它时间到达/过去时发送通知的频率。"
 
 #. SysConfig
@@ -1790,38 +1736,19 @@ msgid "Create and manage change notifications."
 msgstr "创建和管理变更通知。"
 
 #. SysConfig
-msgid ""
-"Default type for a workorder. This entry must exist in general catalog class"
-" 'ITSM::ChangeManagement::WorkOrder::Type'."
+msgid "Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'."
 msgstr "工作指令的默认类型。这个条目必须在目录类'ITSM::ChangeManagement::WorkOrder::Type'中存在。"
-
-#. SysConfig
-msgid ""
-"Define Actions where a settings button is available in the linked objects "
-"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr "定义链接对象小部件(LinkObject::ViewMode = \\\"complex\\\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和CSS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。"
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
 msgstr "定义每个工作指令状态的标志信号。"
 
 #. SysConfig
-msgid ""
-"Define which columns are shown in the linked Changes widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
-"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
-"2 = Enabled by default."
+msgid "Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr "定义链接的变更小部件(LinkObject::ViewMode = \"complex\")要显示的列。注意：只有变更属性才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。"
 
 #. SysConfig
-msgid ""
-"Define which columns are shown in the linked Workorder widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
-"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
-"2 = Enabled by default."
+msgid "Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr "定义链接的工作指令小部件(LinkObject::ViewMode = \"complex\")要显示的列。注意：只有工作指令属性才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。"
 
 #. SysConfig
@@ -1841,15 +1768,11 @@ msgid "Defines if it will be possible to print the planned effort."
 msgstr "定义是否可以打印计划用时。"
 
 #. SysConfig
-msgid ""
-"Defines if reachable (as defined by the state machine) change end states "
-"should be allowed if a change is in a locked state."
+msgid "Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state."
 msgstr "定义是否允许一个锁定状态的变更可达到结束状态（在状态模式转换中定义）。"
 
 #. SysConfig
-msgid ""
-"Defines if reachable (as defined by the state machine) workorder end states "
-"should be allowed if a workorder is in a locked state."
+msgid "Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state."
 msgstr "定义是否允许一个锁定状态的工作指令可达到结束状态（在状态模式转换中定义）。"
 
 #. SysConfig
@@ -1861,15 +1784,11 @@ msgid "Defines if the actual start and end times should be set."
 msgstr "定义（工作指令报告中）是否要设置实际开始/结束时间。"
 
 #. SysConfig
-msgid ""
-"Defines if the change search and the workorder search functions could use "
-"the mirror DB."
+msgid "Defines if the change search and the workorder search functions could use the mirror DB."
 msgstr "定义变更搜索和工作指令搜索功能是否能够使用镜像数据库。"
 
 #. SysConfig
-msgid ""
-"Defines if the change state can be set in the change edit screen of the "
-"agent interface."
+msgid "Defines if the change state can be set in the change edit screen of the agent interface."
 msgstr "定义服务人员界面在变更编辑屏幕能否设置变更状态。"
 
 #. SysConfig
@@ -1877,20 +1796,20 @@ msgid "Defines if the planned effort should be shown."
 msgstr "定义是否显示计划用时。"
 
 #. SysConfig
-msgid "Defines if the requested date should be print by customer."
-msgstr "定义客户是否可以打印请求日期。"
+msgid "Defines if the requested date could be printed by customer."
+msgstr "定义客户是否可以打印请求的日期。"
 
 #. SysConfig
-msgid "Defines if the requested date should be searched by customer."
-msgstr "定义客户是否可以搜索请求日期。"
+msgid "Defines if the requested date could be searched by customer."
+msgstr "定义客户是否可以搜索请求的日期。"
 
 #. SysConfig
-msgid "Defines if the requested date should be set by customer."
-msgstr "定义客户是否可以设置请求日期。"
+msgid "Defines if the requested date could be set by customer."
+msgstr "定义客户是否可以设置请求的日期。"
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
-msgstr "定义客户是否可以显示请求日期。"
+msgstr "定义客户是否可以显示请求的日期。"
 
 #. SysConfig
 msgid "Defines if the workorder state should be shown."
@@ -1905,62 +1824,35 @@ msgid "Defines shown graph attributes."
 msgstr "定义（变更详情窗口工作指令图）显示的图形的属性。"
 
 #. SysConfig
-msgid ""
-"Defines that only changes containing Workorders linked with services, which "
-"the customer user has permission to use will be shown. Any other changes "
-"will not be displayed."
-msgstr "定义仅显示变更中包含的工作指令中有 到客户联系人有权限使用的服务 的链接 的变更，任何其它变更都不会显示。"
-
-#. SysConfig
 msgid "Defines the change states that will be allowed to delete."
 msgstr "定义允许删除变更的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the Change PSA "
-"overview."
+msgid "Defines the change states that will be used as filters in the Change PSA overview."
 msgstr "定义'变更PSA'概览中能用于过滤器的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the Change "
-"Schedule overview."
+msgid "Defines the change states that will be used as filters in the Change Schedule overview."
 msgstr "定义'变更计划'概览中能用于过滤器的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the MyCAB "
-"overview."
+msgid "Defines the change states that will be used as filters in the MyCAB overview."
 msgstr "定义'我的CAB'概览中能用于过滤器的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the MyChanges "
-"overview."
+msgid "Defines the change states that will be used as filters in the MyChanges overview."
 msgstr "定义'我的变更'概览中能用于过滤器的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the change manager"
-" overview."
+msgid "Defines the change states that will be used as filters in the change manager overview."
 msgstr "定义'变更经理'概览中能用于过滤器的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the change "
-"overview."
+msgid "Defines the change states that will be used as filters in the change overview."
 msgstr "定义'变更'概览中能用于过滤器的变更状态。"
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the customer "
-"change schedule overview."
-msgstr "定义客户'变更计划'概览中能用于过滤器的变更状态。"
-
-#. SysConfig
-msgid ""
-"Defines the default change title for a dummy change which is needed to edit "
-"a workorder template."
+msgid "Defines the default change title for a dummy change which is needed to edit a workorder template."
 msgstr "定义编辑工作指令时创建的临时变更的默认标题。"
 
 #. SysConfig
@@ -1980,34 +1872,23 @@ msgid "Defines the default sort criteria in the change schedule overview."
 msgstr "定义'变更计划'概览中默认的排序条件。"
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the MyCAB overview."
+msgid "Defines the default sort criteria of the changes in the MyCAB overview."
 msgstr "定义'我的CAB'概览中默认的变更排序条件。"
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the MyChanges overview."
+msgid "Defines the default sort criteria of the changes in the MyChanges overview."
 msgstr "定义'我的变更'概览中默认的变更排序条件。"
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the MyWorkorders "
-"overview."
+msgid "Defines the default sort criteria of the changes in the MyWorkorders overview."
 msgstr "定义'我的工作指令'概览中默认的变更排序条件。"
 
 #. SysConfig
 msgid "Defines the default sort criteria of the changes in the PIR overview."
-msgstr "定义'PIR（实施后审查）'概览中默认的变更排序条件。"
+msgstr "定义'PIR（实施后评审）'概览中默认的变更排序条件。"
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the customer change "
-"schedule overview."
-msgstr "定义客户'变更计划'概览中默认的变更排序条件。"
-
-#. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the template overview."
+msgid "Defines the default sort criteria of the changes in the template overview."
 msgstr "定义'模板'概览中默认的变更排序条件。"
 
 #. SysConfig
@@ -2024,7 +1905,7 @@ msgstr "定义'我的工作指令'概览中默认的排序顺序。"
 
 #. SysConfig
 msgid "Defines the default sort order in the PIR overview."
-msgstr "定义'PIR（实施后审查）'概览中默认的排序顺序。"
+msgstr "定义'PIR（实施后评审）'概览中默认的排序顺序。"
 
 #. SysConfig
 msgid "Defines the default sort order in the change PSA overview."
@@ -2043,11 +1924,6 @@ msgid "Defines the default sort order in the change schedule overview."
 msgstr "定义'变更计划'概览中默认的排序顺序。"
 
 #. SysConfig
-msgid ""
-"Defines the default sort order in the customer change schedule overview."
-msgstr "定义客户界面'变更计划'概览中默认的排序顺序。"
-
-#. SysConfig
 msgid "Defines the default sort order in the template overview."
 msgstr "定义模板概览中默认的排序顺序。"
 
@@ -2060,230 +1936,147 @@ msgid "Defines the default value for the impact of a change."
 msgstr "定义一个变更影响的默认值。"
 
 #. SysConfig
-msgid ""
-"Defines the field type of CompareValue fields for change attributes used in "
-"the change condition edit screen of the agent interface. Valid values are "
-"Selection, Text and Date. If a type is not defined, the field will not be "
-"shown."
+msgid "Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
 msgstr "定义服务人员界面变更条件编辑屏幕变更属性比较值字段的类型，有效值是：Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被显示出来。"
 
 #. SysConfig
-msgid ""
-"Defines the field type of CompareValue fields for workorder attributes used "
-"in the change condition edit screen of the agent interface. Valid values are"
-" Selection, Text and Date. If a type is not defined, the field will not be "
-"shown."
+msgid "Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
 msgstr "定义服务人员界面工作指令条件编辑屏幕变更属性比较值字段的类型，有效值是：Selection（选择）、Text（文本）和Date（日期）。 如果没有定义类型，字段不会被显示出来。"
 
 #. SysConfig
-msgid ""
-"Defines the object attributes that are selectable for change objects in the "
-"change condition edit screen of the agent interface."
+msgid "Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中变更对象可选择的对象属性。"
 
 #. SysConfig
-msgid ""
-"Defines the object attributes that are selectable for workorder objects in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面工作指令条件编辑屏幕中工作指令对象可选择的对象属性。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute AccountedTime in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中占用时间属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ActualEndTime in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中实际结束时间属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ActualStartTime "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中实际开始时间属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute CategoryID in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中目录ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中目录创建人ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeManagerID "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中目录管理人ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeStateID in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中变更状态ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeTitle in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中变更标题属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute DynamicField in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中动态字段属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in the "
-"change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中影响ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PlannedEffort in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中计划用时属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PlannedEndTime "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中计划结束时间属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PlannedStartTime"
-" in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中计划开始时间属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PriorityID in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中优先级ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute RequestedTime in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中请求时间属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中工作指令服务人员ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中工作指令编号属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中工作指令状态ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中工作指令标题属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface."
 msgstr "定义服务人员界面变更条件编辑屏幕中工作指令类型ID属性可选择的运算符。"
 
 #. SysConfig
-msgid ""
-"Defines the period (in years), in which start and end times can be selected."
+msgid "Defines the period (in years), in which start and end times can be selected."
 msgstr "定义能够选择开始时间和结束时间的时间段（单位：年）。"
 
 #. SysConfig
-msgid ""
-"Defines the shown attributes of a workorder in the tooltip of the workorder "
-"graph in the change zoom. To show workorder dynamic fields in the tooltip, "
-"they must be specified like DynamicField_WorkOrderFieldName1, "
-"DynamicField_WorkOrderFieldName2, etc."
+msgid "Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc."
 msgstr "在变更详情窗口显示在工作指令图提示文本的属性。要在提示文本中显示工作指令动态字段，他们必须按如下格式指定，如DynamicField_WorkOrderFieldName1、DynamicField_WorkOrderFieldName2等等。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the Change PSA overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column."
 msgstr "定义在'变更PSA'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the Change Schedule overview. This option has "
-"no effect on the position of the column."
+msgid "Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column."
 msgstr "定义在'变更计划'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the MyCAB overview. This option has no effect "
-"on the position of the column."
+msgid "Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column."
 msgstr "定义在'我的CAB'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the MyChanges overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column."
 msgstr "定义在'我的变更'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the MyWorkorders overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column."
 msgstr "定义在'我的工作指令'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the PIR overview. This option has no effect on "
-"the position of the column."
-msgstr "定义在'PIR（实施后审查）'概览中显示的字段，这个选项不会影响字段的显示位置。"
+msgid "Defines the shown columns in the PIR overview. This option has no effect on the position of the column."
+msgstr "定义在'PIR（实施后评审）'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the change manager overview. This option has no"
-" effect on the position of the column."
+msgid "Defines the shown columns in the change manager overview. This option has no effect on the position of the column."
 msgstr "定义在'变更经理'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the change overview. This option has no effect "
-"on the position of the column."
+msgid "Defines the shown columns in the change overview. This option has no effect on the position of the column."
 msgstr "定义在'变更'概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the change search. This option has no effect on"
-" the position of the column."
+msgid "Defines the shown columns in the change search. This option has no effect on the position of the column."
 msgstr "定义在变更搜索结果中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the customer change schedule overview. This "
-"option has no effect on the position of the column."
-msgstr "定义在客户'变更计划'概览中显示的字段，这个选项不会影响字段的显示位置。"
-
-#. SysConfig
-msgid ""
-"Defines the shown columns in the template overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the template overview. This option has no effect on the position of the column."
 msgstr "定义在模板概览中显示的字段，这个选项不会影响字段的显示位置。"
 
 #. SysConfig
@@ -2291,27 +2084,20 @@ msgid "Defines the signals for each ITSM change state."
 msgstr "定义每个变更状态的标志信号。"
 
 #. SysConfig
-msgid ""
-"Defines the template types that will be used as filters in the template "
-"overview."
+msgid "Defines the template types that will be used as filters in the template overview."
 msgstr "定义在模板概览中用作过滤器的模板类型。"
 
 #. SysConfig
-msgid ""
-"Defines the workorder states that will be used as filters in the "
-"MyWorkorders overview."
+msgid "Defines the workorder states that will be used as filters in the MyWorkorders overview."
 msgstr "定义在'我的工作指令'概览中用作过滤器的工作指令状态。"
 
 #. SysConfig
-msgid ""
-"Defines the workorder states that will be used as filters in the PIR "
-"overview."
-msgstr "定义在'PIR（实施后审查）'概览中用作过滤器的工作指令状态。"
+msgid "Defines the workorder states that will be used as filters in the PIR overview."
+msgstr "定义在'PIR（实施后评审）'概览中用作过滤器的工作指令状态。"
 
 #. SysConfig
-msgid ""
-"Defines the workorder types that will be used to show the PIR overview."
-msgstr "定义在'PIR（实施后审查）'概览中用作过滤器的工作指令类型。"
+msgid "Defines the workorder types that will be used to show the PIR overview."
+msgstr "定义在'PIR（实施后评审）'概览中用作过滤器的工作指令类型。"
 
 #. SysConfig
 msgid "Defines whether notifications should be sent."
@@ -2334,44 +2120,31 @@ msgid "Details of a change history entry."
 msgstr "一个变更历史条目的详细信息。"
 
 #. SysConfig
-msgid ""
-"Determines if an agent can exchange the X-axis of a stat if he generates "
-"one."
+msgid "Determines if an agent can exchange the X-axis of a stat if he generates one."
 msgstr "确定服务人员能否交换他生成的统计的X轴。"
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes done "
-"for config item classes."
+msgid "Determines if the common stats module may generate stats about changes done for config item classes."
 msgstr "确定通用统计模块能否生成配置项类所做的变更统计。"
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes "
-"regarding change state updates within a timeperiod."
+msgid "Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod."
 msgstr "确定通用统计模块能否生成一段时间内变更关于变更状态更新的统计。"
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes "
-"regarding the relation between changes and incident tickets."
+msgid "Determines if the common stats module may generate stats about changes regarding the relation between changes and incident tickets."
 msgstr "确定通用统计模块能否生成变更关于变更和故障工单之间的关系的统计。"
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes."
+msgid "Determines if the common stats module may generate stats about changes."
 msgstr "确定通用统计模块能否生成关于变更的统计。"
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about the number of"
-" Rfc tickets a requester created."
+msgid "Determines if the common stats module may generate stats about the number of Rfc tickets a requester created."
 msgstr "确定通用统计模块能否生成一个请求者创建的RFC（变更请求）的数量的统计。"
 
 #. SysConfig
-msgid ""
-"Dynamic fields (for changes and workorders) shown in the change print screen"
-" of the agent interface."
+msgid "Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface."
 msgstr "在服务人员界面变更打印窗口中显示的（变更和工作指令）动态字段。"
 
 #. SysConfig
@@ -2383,8 +2156,7 @@ msgid "Dynamic fields shown in the change edit screen of the agent interface."
 msgstr "在服务人员界面编辑变更窗口中显示的动态字段。"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the change search screen of the agent interface."
+msgid "Dynamic fields shown in the change search screen of the agent interface."
 msgstr "在服务人员界面搜索变更窗口中显示的动态字段。"
 
 #. SysConfig
@@ -2392,29 +2164,23 @@ msgid "Dynamic fields shown in the change zoom screen of the agent interface."
 msgstr "在服务人员界面变更详情窗口中显示的动态字段。"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder add screen of the agent interface."
+msgid "Dynamic fields shown in the workorder add screen of the agent interface."
 msgstr "在服务人员界面添加工作指令窗口中显示的动态字段。"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder edit screen of the agent interface."
+msgid "Dynamic fields shown in the workorder edit screen of the agent interface."
 msgstr "在服务人员界面编辑工作指令窗口中显示的动态字段。"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder report screen of the agent interface."
+msgid "Dynamic fields shown in the workorder report screen of the agent interface."
 msgstr "在服务人员界面工作指令报告窗口中显示的动态字段。"
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgid "Dynamic fields shown in the workorder zoom screen of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口中显示的动态字段。"
 
 #. SysConfig
-msgid ""
-"DynamicField event module to handle the update of conditions if dynamic "
-"fields are added, updated or deleted."
+msgid "DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted."
 msgstr "处理动态字段更新条件（添加、更新或删除）的动态字段事件模块。"
 
 #. SysConfig
@@ -2434,9 +2200,7 @@ msgid "Edit the workorder."
 msgstr "编辑工作指令。"
 
 #. SysConfig
-msgid ""
-"Enables the minimal change counter size (if \"Date\" was selected as "
-"ITSMChange::NumberGenerator)."
+msgid "Enables the minimal change counter size (if \"Date\" was selected as ITSMChange::NumberGenerator)."
 msgstr "启用最小的变更计数器大小（如果ITSMChange::NumberGenerator 变更编号生成器选择为“日期”）"
 
 #. SysConfig
@@ -2469,15 +2233,11 @@ msgstr "ITSM变更通知"
 
 #. SysConfig
 msgid "ITSM Change PIR Overview."
-msgstr "变更PIR（实施后审查）概览。"
+msgstr "变更PIR（实施后评审）概览。"
 
 #. SysConfig
 msgid "ITSM Change notification rules"
 msgstr "变更通知规则"
-
-#. SysConfig
-msgid "ITSM Changes"
-msgstr "变更"
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
@@ -2532,6 +2292,14 @@ msgid "ITSM event module that sends notifications."
 msgstr "发送通知的ITSM事件模块。"
 
 #. SysConfig
+msgid "ITSM event module that updates the ITSMChange index."
+msgstr "更新变更索引的ITSM事件模块。"
+
+#. SysConfig
+msgid "ITSM event module that updates the ITSMWorkOrder index."
+msgstr "更新ITSM工作指令索引的ITSM事件模块。"
+
+#. SysConfig
 msgid "ITSM event module that updates the history of changes."
 msgstr "更新变更历史的ITSM事件模块。"
 
@@ -2560,10 +2328,16 @@ msgid "ITSMWorkOrder"
 msgstr "工作指令"
 
 #. SysConfig
-msgid ""
-"If frequency is 'regularly', you can configure how often the notifications "
-"are sent (every X hours)."
+msgid "If frequency is 'regularly', you can configure how often the notifications are sent (every X hours)."
 msgstr "如果频率设置为“定期”，你可以设置发送通知的频率间隔（每X小时）。"
+
+#. SysConfig
+msgid "It controls availability for ITSMChange search driver."
+msgstr "它控制ITSM变更搜索驱动的可用性。"
+
+#. SysConfig
+msgid "It controls availability for ITSMWorkOrder search driver."
+msgstr "它控制ITSM工作指令搜索驱动的可用性。"
 
 #. SysConfig
 msgid "Link another object to the change."
@@ -2598,9 +2372,7 @@ msgid "Manage the category ↔ impact ↔ priority matrix."
 msgstr "管理 风险类别 ↔ 影响 ↔ 优先级 矩阵。"
 
 #. SysConfig
-msgid ""
-"Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
-"permitted."
+msgid "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted."
 msgstr "检查是否允许WorkOrderAdd（添加工作指令）或WorkOrderAddFromTemplate（从模板添加工作指令）的模块。"
 
 #. SysConfig
@@ -2632,9 +2404,7 @@ msgid "Module to check whether the agent is contained in the configured list."
 msgstr "检查服务人员是否包含在在配置列表中的模块。"
 
 #. SysConfig
-msgid ""
-"Module to show a link to create a change from this ticket. The ticket will "
-"be automatically linked with the new change."
+msgid "Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change."
 msgstr "显示一个链接以从工单创建一个变更的模块。工单将自动链接到新的变更。"
 
 #. SysConfig
@@ -2650,10 +2420,7 @@ msgid "New (from template)"
 msgstr "从模板新建变更"
 
 #. SysConfig
-msgid ""
-"Only users of these groups have the permission to use the ticket types as "
-"defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
-"\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
+msgid "Only users of these groups have the permission to use the ticket types as defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature \"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
 msgstr "如果启用了“Ticket::Acl::Module###200-Ticket::Acl::Module”，只有这些组中的用户有权使用“ITSMChange::AddChangeLinkTicketTypes”中定义的工单类型。"
 
 #. SysConfig
@@ -2670,28 +2437,22 @@ msgstr "实施后评审"
 
 #. SysConfig
 msgid "PIR (Post Implementation Review)"
-msgstr "PIR (实施后审查)"
+msgstr "PIR (实施后评审)"
 
 #. SysConfig
 msgid "PSA"
 msgstr "PSA"
 
 #. SysConfig
-msgid ""
-"Parameters for the UserCreateWorkOrderNextMask object in the preference view"
-" of the agent interface."
+msgid "Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface."
 msgstr "服务人员界面偏好设置视图UserCreateWorkOrderNextMask（创建工作指令后的窗口）对象的参数。"
 
 #. SysConfig
-msgid ""
-"Parameters for the pages (in which the changes are shown) of the small "
-"change overview."
+msgid "Parameters for the pages (in which the changes are shown) of the small change overview."
 msgstr "变更概览简洁模式显示变更的页面参数。"
 
 #. SysConfig
-msgid ""
-"Performs the configured action for each event (as an Invoker) for each "
-"configured Webservice."
+msgid "Performs the configured action for each event (as an Invoker) for each configured Webservice."
 msgstr "为每个配置的WEB服务的每个事件执行配置好的操作（以调用程序角色）。"
 
 #. SysConfig
@@ -2719,9 +2480,7 @@ msgid "Projected Service Availability (PSA)"
 msgstr "计划服务可用性（PSA）"
 
 #. SysConfig
-msgid ""
-"Projected Service Availability (PSA) of changes. Overview of approved "
-"changes and their services."
+msgid "Projected Service Availability (PSA) of changes. Overview of approved changes and their services."
 msgstr "变更的计划服务可用性（PSA）。已批准的变更和它们的服务的概览。"
 
 #. SysConfig
@@ -2821,14 +2580,11 @@ msgid "Required privileges to view changes."
 msgstr "查看变更所需的权限。"
 
 #. SysConfig
-msgid ""
-"Required privileges to view list of changes where the user is a CAB member."
+msgid "Required privileges to view list of changes where the user is a CAB member."
 msgstr "查看'我的CAB'的变更列表所需的权限。"
 
 #. SysConfig
-msgid ""
-"Required privileges to view list of changes where the user is the change "
-"manager."
+msgid "Required privileges to view list of changes where the user is the change manager."
 msgstr "查看'我的变更'的变更列表所需的权限。"
 
 #. SysConfig
@@ -2864,10 +2620,8 @@ msgid "Required privileges to view the list of change PSA."
 msgstr "查看变更PSA列表所需的权限。"
 
 #. SysConfig
-msgid ""
-"Required privileges to view the list of changes with an upcoming PIR (Post "
-"Implementation Review)."
-msgstr "查看有即使来临的PIR（实施后审查）的变更列表所需的权限。"
+msgid "Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review)."
+msgstr "查看有即使来临的PIR（实施后评审）的变更列表所需的权限。"
 
 #. SysConfig
 msgid "Required privileges to view the list of own changes."
@@ -2890,9 +2644,7 @@ msgid "Reset change and its workorders."
 msgstr "重置变更和它的工作指令。"
 
 #. SysConfig
-msgid ""
-"Run task to check if specific times have been reached in changes and "
-"workorders."
+msgid "Run task to check if specific times have been reached in changes and workorders."
 msgstr "执行任务来检查是否到达了变更和工作指令的特定时间点。"
 
 #. SysConfig
@@ -2902,10 +2654,6 @@ msgstr "保存变更为模板。"
 #. SysConfig
 msgid "Save workorder as a template."
 msgstr "保存工作指令为模板。"
-
-#. SysConfig
-msgid "Schedule"
-msgstr "计划表"
 
 #. SysConfig
 msgid "Screen after creating a workorder"
@@ -2920,16 +2668,7 @@ msgid "Search Changes."
 msgstr "搜索变更。"
 
 #. SysConfig
-msgid ""
-"Selects the change number generator module. \"AutoIncrement\" increments the"
-" change number, the SystemID and the counter are used with SystemID.counter "
-"format (e.g. 100118, 100119). With \"Date\", the change numbers will be "
-"generated by the current date and a counter; this format looks like "
-"Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "
-"\"DateChecksum\", the counter will be appended as checksum to the string of "
-"date plus the SystemID. The checksum will be rotated on a daily basis. This "
-"format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
-"2010062410000017, 2010062410000026."
+msgid "Selects the change number generator module. \"AutoIncrement\" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With \"Date\", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With \"DateChecksum\", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026."
 msgstr "选择变更编号生成器模块。“自动增量”--递增变更编号，系统ID和计数器配合使用的格式为：系统ID.计数器（如100118、100119）。“日期”--会用当前日期、系统ID和计数器共同生成变更编号，格式为：年.月.日.系统ID.计数器（如2010062400001、2010062400002）。“日期校验和”--计数器的值以校验和的方式追加日期和系统ID的字符串后面，校验和每日轮换，这种格式为：年.月.日.系统ID.计数器.校验和（如2010062410000017、2010062410000026）。"
 
 #. SysConfig
@@ -2937,22 +2676,15 @@ msgid "Set the agent for the workorder."
 msgstr "为工作指令指派服务人员。"
 
 #. SysConfig
-msgid ""
-"Set the default height (in pixels) of inline HTML fields in the change zoom "
-"screen and workorder zoom screen of the agent interface."
+msgid "Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface."
 msgstr "设置服务人员界面变更详情屏幕和工作指令详情屏幕中内联HTML字段的默认高度（单位：像素）。"
 
 #. SysConfig
-msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
-"screen and workorder zoom screen of the agent interface."
+msgid "Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface."
 msgstr "设置服务人员界面变更详情屏幕和工作指令详情屏幕中内联HTML字段的最大高度（单位：像素）。"
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
-"ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
-"from 10000."
+msgid "Sets the minimal change counter size (if \"AutoIncrement\" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000."
 msgstr "设置最小的变更计数器大小（如果变更编号生成器选用“自动增量”）。默认是5（位数），意味着计数器从10000开始。"
 
 #. SysConfig
@@ -2964,142 +2696,95 @@ msgid "Sets up the state machine for workorders."
 msgstr "设置工作指令的状态模式转换。"
 
 #. SysConfig
-msgid ""
-"Shows a checkbox in the workorder edit screen of the agent interface that "
-"defines if the the following workorders should also be moved if a workorder "
-"is modified and the planned end time has changed."
+msgid "Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed."
 msgstr "在服务人员界面编辑工作指令屏幕显示一个复选框，用于确定当一个工作指令被修改且计划结束时间变更时，是否将后面的工作指令也随之移动时间。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of the workorder of the agent interface."
+msgid "Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个允许修改该工作指令的服务人员的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows defining a change as a template in the "
-"zoom view of the change, in the agent interface."
+msgid "Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个允许定义一个变更为模板的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows defining a workorder as a template in "
-"the zoom view of the workorder, in the agent interface."
+msgid "Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个允许定义一个工作指令为模板的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of the workorder of the agent interface."
+msgid "Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个允许编辑该工作指令的报告的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows linking a change with another object in"
-" the change zoom view of the agent interface."
+msgid "Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个允许链接变更到另一对象的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of the workorder of the agent interface."
+msgid "Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个允许链接该工作指令到其它对象的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows moving the time slot of a change in its"
-" zoom view of the agent interface."
-msgstr "在服务人员界面变更详情窗口，在菜单中显示一个允许移动变更时间轴的链接。"
+msgid "Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface."
+msgstr "在服务人员界面工单变更详情窗口，在菜单中显示一个允许移动变更时间轴的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows taking a workorder in the its zoom view"
-" of the agent interface."
+msgid "Shows a link in the menu that allows taking a workorder in the zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个允许执行一个工作指令的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to access the conditions of a change in the its "
-"zoom view of the agent interface."
+msgid "Shows a link in the menu to access the conditions of a change in the zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更条件的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to access the history of a change in the its zoom "
-"view of the agent interface."
+msgid "Shows a link in the menu to access the history of a change in the zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更历史的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to access the history of a workorder in the its "
-"zoom view of the agent interface."
+msgid "Shows a link in the menu to access the history of a workorder in the zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个访问工作指令历史的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to add a workorder in the change zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to add a workorder in the change zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个添加工作指令的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to delete a change in its zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to delete a change in its zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个删除变更的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to delete a workorder in its zoom view of the agent"
-" interface."
+msgid "Shows a link in the menu to delete a workorder in its zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个删除工作指令的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to edit a change in the its zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to edit a change in the zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个编辑变更的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to edit a workorder in the its zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to edit a workorder in the zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个编辑工作指令的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to go back in the change zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to go back in the change zoom view of the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个返回链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to go back in the workorder zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to go back in the workorder zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个返回链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to print a change in the its zoom view of the agent"
-" interface."
-msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个打印变更的链接。"
+msgid "Shows a link in the menu to print a change in the zoom view of the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个打印变更的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to print a workorder in the its zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to print a workorder in the zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个打印工作指令的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to reset a change and its workorders in its zoom "
-"view of the agent interface."
+msgid "Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface."
 msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个重置变更和工作指令的链接。"
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to show the involved persons in a change, in the "
-"zoom view of the change in the agent interface."
+msgid "Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface."
 msgstr "在服务人员界面变更详情窗口，在菜单中显示一个链接以显示变更的相关人员。"
 
 #. SysConfig
@@ -3111,9 +2796,7 @@ msgid "State Machine"
 msgstr "状态模式转换"
 
 #. SysConfig
-msgid ""
-"Stores change and workorder ids and their corresponding template id, while a"
-" user is editing a template."
+msgid "Stores change and workorder ids and their corresponding template id, while a user is editing a template."
 msgstr "当用户编辑一个模板时，存储变更和工作指令的ID和他们对应的模板ID。"
 
 #. SysConfig
@@ -3141,25 +2824,15 @@ msgid "Template."
 msgstr "模板。"
 
 #. SysConfig
-msgid ""
-"The identifier for a change, e.g. Change#, MyChange#. The default is "
-"Change#."
+msgid "The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
 msgstr "变更的标识符，例如：Change#、MyChange#。默认为Change#。"
 
 #. SysConfig
-msgid ""
-"The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
-"is Workorder#."
+msgid "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#."
 msgstr "工作指令的标识符，例如：Workorder#、MyWorkorder#。默认为Workorder#。"
 
 #. SysConfig
-msgid ""
-"This ACL module restricts the usuage of the ticket types that are defined in"
-" the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of "
-"the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As "
-"this ACL could collide with other ACLs which are also related to the ticket "
-"type, this sysconfig option is disabled by default and should only be "
-"activated if needed."
+msgid "This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed."
 msgstr "这个ACL模块限制使用定义在系统配置选项'ITSMChange::AddChangeLinkTicketTypes'中的工单类型， 仅在'ITSMChange::RestrictTicketTypes::Groups'中定义的组成员能够使用。这个ACL可能会和其它与这个工单类型相关的ACL冲突， 所以这个系统配置选项默认是禁用的，仅在需要时启用。"
 
 #. SysConfig
@@ -3167,9 +2840,7 @@ msgid "Time Slot"
 msgstr "时间轴"
 
 #. SysConfig
-msgid ""
-"Types of tickets, where in the ticket zoom view a link to add a change will "
-"be displayed."
+msgid "Types of tickets, where in the ticket zoom view a link to add a change will be displayed."
 msgstr "在工单详情窗口添加一个变更链接时显示的工单类型。"
 
 #. SysConfig
@@ -3223,3 +2894,120 @@ msgstr "单次"
 #. SysConfig
 msgid "regularly"
 msgstr "定期"
+
+#. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "历史值"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "创建时间"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Context Settings"
+msgstr "上下文设置"
+
+#. Template: AgentITSMChangeZoom
+msgid "Last changed by"
+msgstr "上次修改人"
+
+#. Template: AgentITSMChangeZoom
+msgid "To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS)."
+msgstr "要打开下面描述中的链接，你可能需要在单击链接的同时按住 Ctrl 或 Cmd 或 Shift 键 （取决于您的浏览器和操作系统 ）。"
+
+#. Template: AgentITSMChangeZoom
+msgid "Download Attachment"
+msgstr "下载附件"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "No %s is given!"
+msgstr "没有指定%s！"
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr "没有找到视图“%s”的配置选项！"
+
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "确定"
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr "变更计划表。"
+
+#. SysConfig
+msgid "Change search backend router of the agent interface."
+msgstr "服务人员界面变更搜索后端路由"
+
+#. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr "定义链接对象小部件(LinkObject::ViewMode = \\\\\"complex\\\\\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和CSS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。"
+
+#. SysConfig
+msgid "Defines if the requested date should be print by customer."
+msgstr "定义客户是否可以打印请求日期。"
+
+#. SysConfig
+msgid "Defines if the requested date should be searched by customer."
+msgstr "定义客户是否可以搜索请求日期。"
+
+#. SysConfig
+msgid "Defines if the requested date should be set by customer."
+msgstr "定义客户是否可以设置请求日期。"
+
+#. SysConfig
+msgid "Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed."
+msgstr "定义仅显示变更中包含的工作指令中有 到客户联系人有权限使用的服务 的链接 的变更，任何其它变更都不会显示。"
+
+#. SysConfig
+msgid "Defines the change states that will be used as filters in the customer change schedule overview."
+msgstr "定义客户'变更计划'概览中能用于过滤器的变更状态。"
+
+#. SysConfig
+msgid "Defines the default sort criteria of the changes in the customer change schedule overview."
+msgstr "定义客户'变更计划'概览中默认的变更排序条件。"
+
+#. SysConfig
+msgid "Defines the default sort order in the customer change schedule overview."
+msgstr "定义客户界面'变更计划'概览中默认的排序顺序。"
+
+#. SysConfig
+msgid "Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column."
+msgstr "定义在客户'变更计划'概览中显示的字段，这个选项不会影响字段的显示位置。"
+
+#. SysConfig
+msgid "Schedule"
+msgstr "计划表"
+
+#. SysConfig
+msgid "Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个允许执行一个工作指令的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更条件的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to access the history of a change in the its zoom view of the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个访问变更历史的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to access the history of a workorder in the its zoom view of the agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个访问工作指令历史的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to edit a change in the its zoom view of the agent interface."
+msgstr "在服务人员界面变更详情窗口，在菜单中显示一个编辑变更的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to edit a workorder in the its zoom view of the agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个编辑工作指令的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to print a change in the its zoom view of the agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个打印变更的链接。"
+
+#. SysConfig
+msgid "Shows a link in the menu to print a workorder in the its zoom view of the agent interface."
+msgstr "在服务人员界面工作指令详情窗口，在菜单中显示一个打印工作指令的链接。"
+
