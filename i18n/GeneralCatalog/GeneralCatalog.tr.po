@@ -1,12 +1,12 @@
-# 
+#
 # Translators:
 # Kaya Zeren <kayazeren@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-09-14 12:08+0000\n"
-"PO-Revision-Date: 2018-09-14 12:08+0000\n"
-"Last-Translator: Udo Bretz\n"
+"POT-Creation-Date: 2019-05-14 15:21+0000\n"
+"PO-Revision-Date: 2019-02-12 10:07+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/otrs/OTRS/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,15 +27,7 @@ msgid "Items in Class"
 msgstr ""
 
 #. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
 msgid "Add Class"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
 msgstr ""
 
 #. Template: AdminGeneralCatalog
@@ -67,17 +59,11 @@ msgid "Define the general catalog comment 2."
 msgstr ""
 
 #. SysConfig
-msgid "Define the group with permissions."
-msgstr ""
-
-#. SysConfig
 msgid "Defines the URL JS Color Picker path."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminGeneralCatalog configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
 msgstr "Yönetim bölümüneki AdminGeneralCatalog ayarları için önyüz modül kaydı."
 
 #. SysConfig
@@ -85,12 +71,22 @@ msgid "General Catalog"
 msgstr "Genel Katalog"
 
 #. SysConfig
-msgid ""
-"Parameters for the example comment 2 of the general catalog attributes."
+msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Genel katalog özniteliklerinin ikinci örnek yorumunun parametreleri."
 
 #. SysConfig
-msgid ""
-"Parameters for the example permission groups of the general catalog "
-"attributes."
+msgid "Parameters for the example permission groups of the general catalog attributes."
 msgstr "Genel katalog özniteliklerinin örnek izin gruplarının parametreleri."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr ""
+

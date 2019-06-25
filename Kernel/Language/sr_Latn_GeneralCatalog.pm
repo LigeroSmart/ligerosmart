@@ -41,7 +41,7 @@ sub Data {
         'Parametri za primer komentara 2 atributa opšteg kataloga.';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'Parametri za primer grupe za dozvole atributa opšteg kataloga.';
-    $Self->{Translation}->{'Permission Group'} = '';
+    $Self->{Translation}->{'Permission Group'} = 'Grupa pristupa';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

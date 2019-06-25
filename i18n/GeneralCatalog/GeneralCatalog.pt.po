@@ -1,12 +1,12 @@
-# 
+#
 # Translators:
 # Joao Ferro <fmthard@gmail.com>, 2016-2017
 # Udo Bretz, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-09-14 12:08+0000\n"
-"PO-Revision-Date: 2018-09-14 12:08+0000\n"
+"POT-Creation-Date: 2019-05-14 15:21+0000\n"
+"PO-Revision-Date: 2019-02-12 10:07+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -28,16 +28,8 @@ msgid "Items in Class"
 msgstr "Items na Classe"
 
 #. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr "Editar Item"
-
-#. Template: AdminGeneralCatalog
 msgid "Add Class"
 msgstr "Adicionar Classe"
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr "Adicionar Item"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -68,17 +60,11 @@ msgid "Define the general catalog comment 2."
 msgstr "Definir o Catálogo Geral comentário 2."
 
 #. SysConfig
-msgid "Define the group with permissions."
-msgstr "Definir o grupo com permissões."
-
-#. SysConfig
 msgid "Defines the URL JS Color Picker path."
 msgstr "Definir o URL para o caminho do JS Color Picker"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminGeneralCatalog configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
 msgstr "Módulo de registo da interface para a configuração AdminGeneralCatalog na área administrativa."
 
 #. SysConfig
@@ -86,12 +72,22 @@ msgid "General Catalog"
 msgstr "Catálogo Geral"
 
 #. SysConfig
-msgid ""
-"Parameters for the example comment 2 of the general catalog attributes."
+msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Parâmetros para o comentário de exemplo 2 dos atributos do catálogo geral."
 
 #. SysConfig
-msgid ""
-"Parameters for the example permission groups of the general catalog "
-"attributes."
+msgid "Parameters for the example permission groups of the general catalog attributes."
 msgstr "Parâmetros para os grupos de permissão de exemplo dos atributos do catálogo geral."
+
+#. SysConfig
+msgid "Permission Group"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Editar Item"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Adicionar Item"
+
