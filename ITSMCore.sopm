@@ -18,30 +18,53 @@
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMCore.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMService.xml" />
         <File Permission="660" Location="Kernel/Config/Files/XML/TicketITSMService.xml" />
+        <File Permission="660" Location="Kernel/Language/ar_SA_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/bg_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ca_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/cs_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/da_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/el_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/en_CA_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/en_GB_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/es_CO_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/es_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/es_MX_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/et_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/fi_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_CA_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/fr_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/gl_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/he_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/hi_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/hr_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/id_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/it_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/ja_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ko_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/lt_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/lv_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/mk_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/ms_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/nb_NO_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/nl_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/pl_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/pt_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/ro_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sk_SK_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sl_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/tr_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/uk_ITSMCore.pm" />
+        <File Permission="660" Location="Kernel/Language/vi_VN_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_ITSMCore.pm" />
         <File Permission="660" Location="Kernel/Modules/AdminITSMCIPAllocate.pm" />

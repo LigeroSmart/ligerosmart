@@ -47,9 +47,9 @@ sub Data {
     $Self->{Translation}->{'Calendar Default'} = '默认日历';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
-    $Self->{Translation}->{'operational'} = '';
-    $Self->{Translation}->{'warning'} = '';
-    $Self->{Translation}->{'incident'} = '';
+    $Self->{Translation}->{'operational'} = '正常';
+    $Self->{Translation}->{'warning'} = '警告';
+    $Self->{Translation}->{'incident'} = '故障';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = '没有指定ServiceID ！';

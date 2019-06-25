@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016,2018
 # Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014
@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-13 10:00+0000\n"
-"PO-Revision-Date: 2018-07-15 11:48+0000\n"
-"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
+"POT-Creation-Date: 2019-05-14 15:46+0000\n"
+"PO-Revision-Date: 2019-02-22 15:08+0000\n"
+"Last-Translator: Udo Bretz\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,10 +45,6 @@ msgid "Last changed"
 msgstr "最終変更時刻"
 
 #. Template: AgentITSMSLAZoom
-msgid "Last changed by"
-msgstr "最終変更者"
-
-#. Template: AgentITSMSLAZoom
 msgid "Associated Services"
 msgstr "関連するサービス"
 
@@ -80,6 +76,18 @@ msgstr "SLAID %s はデータベースにありません！"
 msgid "Calendar Default"
 msgstr "カレンダー・デフォルト"
 
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "operational"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "warning"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "incident"
+msgstr ""
+
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
 msgstr "ServiceIDは指定されていません！"
@@ -92,9 +100,21 @@ msgstr "ServiceID %s はデータベースにありません！"
 msgid "Current Incident State"
 msgstr "インシデントの状態"
 
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMSLA.pm
+msgid "ITSM SLA"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMService.pm
+msgid "ITSM Service"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
 msgid "Incident State"
 msgstr "インシデントの状態"
+
+#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMService.pm
+msgid "ITSM Services"
+msgstr ""
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Operational"
@@ -181,20 +201,7 @@ msgid "Connected to"
 msgstr "接続："
 
 #. SysConfig
-msgid ""
-"Define Actions where a settings button is available in the linked objects "
-"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr "リンクオブジェクトウィジェット（LinkObject :: ViewMode = \"complex\"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js"
-
-#. SysConfig
-msgid ""
-"Define which columns are shown in the linked Services widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
-"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
-"2 = Enabled by default."
+msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr "リンクされたサービスウィジェットに表示される列を定義します（LinkObject :: ViewMode = \"complex\"）。 注：DefaultColumnsにはサービス属性のみが許可されています。 可能な設定：0 =使用不可、1 =使用可能、2 =デフォルトで使用可能。"
 
 #. SysConfig
@@ -202,45 +209,31 @@ msgid "Depends on"
 msgstr "依存："
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminITSMCIPAllocate configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
 msgstr "管理エリアでのAdminITSMCIPAllocateのフロントエンドモジュールの登録"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLA object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
 msgstr "担当者インタフェースのAgentITSMSLAオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLAPrint object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
 msgstr "担当者インタフェースのAgentITSMSLAPrintオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLAZoom object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
 msgstr "担当者インタフェースのAgentITSMSLAZoomオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMService object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
 msgstr "担当者インタフェースのAgentITSMServiceオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMServicePrint object in the "
-"agent interface."
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
 msgstr "担当者インタフェースのAgentITSMServicePrintオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMServiceZoom object in the "
-"agent interface."
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
 msgstr "担当者インタフェースのAgentITSMServiceZoomオブジェクト　フロントエンド・モジュールの登録です。"
 
 #. SysConfig
@@ -252,16 +245,32 @@ msgid "ITSM Service Overview."
 msgstr "ITSM サービスの概要"
 
 #. SysConfig
-msgid "Incident State Type"
-msgstr "インシデント状態のタイプ"
+msgid "ITSM event module that updates the ITSMConfigItem index."
+msgstr ""
 
 #. SysConfig
-msgid "Incident State Type."
+msgid "ITSM event module that updates the ITSMSLA index."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that updates the ITSMService index."
+msgstr ""
+
+#. SysConfig
+msgid "Incident State Type"
 msgstr "インシデント状態のタイプ"
 
 #. SysConfig
 msgid "Includes"
 msgstr "含む："
+
+#. SysConfig
+msgid "It controls availability for ITSMSLA search driver."
+msgstr ""
+
+#. SysConfig
+msgid "It controls availability for ITSMService search driver."
+msgstr ""
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -336,200 +345,134 @@ msgid "Service-Area"
 msgstr "サービス・エリア"
 
 #. SysConfig
-msgid ""
-"Set the type and direction of links to be used to calculate the incident "
-"state. The key is the name of the link type (as defined in "
-"LinkObject::Type), and the value is the direction of the IncidentLinkType "
-"that should be followed to calculate the incident state. For example if the "
-"IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only "
-"'Depends on' links will be followed (and not the opposite link 'Required "
-"for') to calculate the incident state. You can add more link types ad "
-"directions as you like, e.g. 'Includes' with the direction 'Target'. All "
-"link types defined in the sysconfig options LinkObject::Type are possible "
-"and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
-"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
-"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "インシデント状態の計算に使用するリンクのタイプと方向を設定します。 キーはリンクタイプの名前（LinkObject :: Typeで定義されている）であり、値はインシデントステータスを計算するために従うべきIncidentLinkTypeの方向です。 たとえば、IncidentLinkTypeが 'DependsOn'に設定されており、Directionが 'Source'の場合、インシデントのステータスを計算するために、 '依存する'リンクのみが表示されます（反対のリンクは 'Required for'ではありません）。 広告タイプのリンクタイプを追加できます（例： 方向 'Target'を含む 'Includes'。 sysconfigオプションLinkObject :: Typeで定義されているすべてのリンクタイプが可能で、方向は 'Source'、 'Target'、または 'Both'です。 重要：このSYSCONFIGオプションに変更を加えたら、コンソールコマンドbin/otrs.Console.plを実行する必要があります。Admin :: ITSM :: IncidentState :: Recalculateしたがって、すべての事態は新しい設定に基づいて再計算されます！"
 
 #. SysConfig
-msgid "Source"
-msgstr "ソース"
-
-#. SysConfig
-msgid ""
-"This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
-"objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
 msgstr "‘Normal’リンク・タイプを使用して、‘ITSMChange’オブジェクトが他の‘Ticket’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
 msgstr "‘Normal’リンク・タイプを使用して、‘ITSMChange’オブジェクトが‘FAQ’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'ParentChild' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
 msgstr "‘親子’リンク・タイプを使用して、‘ITSMChange’オブジェクトが‘FAQ’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
 msgstr "‘関連した’リンク・タイプを使用して、‘ITSMChange’オブジェクトが‘FAQ’オブジェクトとリンクされるように、定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「AlternativeTo/~の代替」リンクタイプを使用して、「サービス」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「DependsOn/~に依存する」リンクタイプを使用して、「サービス」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「RelevantTo/~と関連する」リンクタイプを使用して、「サービス」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「AlternativeTo/~の代替」リンクタイプを使用して、「チケット」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「DependsOn/~に依存する」リンクタイプを使用して、「チケット」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「RelevantTo/~と関連する」リンクタイプを使用して、「チケット」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「AlternativeTo/~の代替」リンクタイプを使用して、他の「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「ConnectedTo/~とつながっている」リンクタイプを使用して、他の「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「DependsOn/~に依存する」リンクタイプを使用して、他の「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'Includes' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「Includes/~を含む」リンクタイプを使用して、他の「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
 msgstr "この設定は、「ITSMConfigItem」オブジェクトが「RelevantTo/~と関連する」リンクタイプを使用して、他の「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
 msgstr "この設定は、「ITSMWorkOrder」オブジェクトが「DependsOn/~に依存する」リンクタイプを使用して、「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'ITSMConfigItem' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
 msgstr "この設定は、「ITSMWorkOrder」オブジェクトが「Normal/通常」リンクタイプを使用して、「ITSMConfigItem」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Service' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
 msgstr "この設定は、「ITSMWorkOrder」オブジェクトが「DependsOn/~に依存する」リンクタイプを使用して、「Service」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Service' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
 msgstr "この設定は、「ITSMWorkOrder」オブジェクトが「Normal/通常」リンクタイプを使用して、「Service」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Ticket' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
 msgstr "この設定は、「ITSMWorkOrder」オブジェクトが「Normal/通常」リンクタイプを使用して、「Ticket」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'Normal' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
 msgstr "この設定は、「Service」オブジェクトが「Normal/通常」リンクタイプを使用して、「FAQ」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'ParentChild' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
 msgstr "この設定は、「Service」オブジェクトが「ParentChild/親子」リンクタイプを使用して、「FAQ」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
 msgstr "この設定は、「Service」オブジェクトが「RelevantTo/~と関連する」リンクタイプを使用して、「FAQ」オブジェクトとリンクできることを定義します。"
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'AlternativeTo'. If the source name and "
-"the target name contain the same value, the resulting link is a non-"
-"directional one. If the values are different, the resulting link is a "
-"directional link."
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "リンク・タイプ'AlternativeTo'の定義です。もしソース名およびターゲット名が同じ値を含んでいる場合、結果のリンクは非直接リンクになり、そうでない結果は直接リンクになります。"
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'ConnectedTo'. If the source name and the"
-" target name contain the same value, the resulting link is a non-directional"
-" one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "リンク・タイプ'ConnectedTo'の定義です。もしソース名およびターゲット名が同じ値を含んでいる場合、結果のリンクは非直接リンクになり、そうでない結果は直接リンクになります。"
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'DependsOn'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "リンク・タイプ'DependsOn'の定義です。もしソース名およびターゲット名が同じ値を含んでいる場合、結果のリンクは非直接リンクになり、そうでない結果は直接リンクになります。"
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'Includes'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "リンク・タイプ'Includes'の定義です。もしソース名およびターゲット名が同じ値を含んでいる場合、結果のリンクは非直接リンクになり、そうでない結果は直接リンクになります。"
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'RelevantTo'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "リンク・タイプ'RelevantTo'の定義です。もしソース名およびターゲット名が同じ値を含んでいる場合、結果のリンクは非直接リンクになり、そうでない結果は直接リンクになります。"
 
 #. SysConfig
 msgid "Width of ITSM textareas."
 msgstr "ITSM テキストエリア幅"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "最終変更者"
+
+#. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr "リンクオブジェクトウィジェット（LinkObject :: ViewMode = \"complex\"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js"
+
+#. SysConfig
+msgid "Source"
+msgstr "ソース"
+

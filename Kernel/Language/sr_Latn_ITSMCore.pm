@@ -47,9 +47,9 @@ sub Data {
     $Self->{Translation}->{'Calendar Default'} = 'Podrazumevani kalendar';
 
     # Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
-    $Self->{Translation}->{'operational'} = '';
-    $Self->{Translation}->{'warning'} = '';
-    $Self->{Translation}->{'incident'} = '';
+    $Self->{Translation}->{'operational'} = 'operativni';
+    $Self->{Translation}->{'warning'} = 'upozorenje';
+    $Self->{Translation}->{'incident'} = 'incident';
 
     # Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
     $Self->{Translation}->{'No ServiceID is given!'} = 'Nije dat ServiceID!';

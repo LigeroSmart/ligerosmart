@@ -1,20 +1,14 @@
-# 
-# Translators:
-# Dusan Vuckovic, 2017-2018
-# Jaroslav Balaz <balazj315@gmail.com>, 2014-2015
-# Милорад Јовановић <j.milorad@gmail.com>, 2015-2017
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-06-13 10:00+0000\n"
-"PO-Revision-Date: 2018-07-10 13:57+0000\n"
-"Last-Translator: Dusan Vuckovic\n"
-"Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
+"Project-Id-Version: ITSMCore\n"
+"POT-Creation-Date: 2019-06-25 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
@@ -79,6 +73,18 @@ msgstr "SLAID %s није нађен у бази података!"
 #. Perl Module: Kernel/Modules/AgentITSMSLAPrint.pm
 msgid "Calendar Default"
 msgstr "Подразумевани календар"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "operational"
+msgstr "оперативни"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "warning"
+msgstr "упозорење"
+
+#. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
+msgid "incident"
+msgstr "инцидент"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
@@ -181,20 +187,11 @@ msgid "Connected to"
 msgstr "Повезано на"
 
 #. SysConfig
-msgid ""
-"Define Actions where a settings button is available in the linked objects "
-"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
 msgstr "Дефинише Акције где је дугме поставки доступно у повезаном графичком елементу објекта (LinkObject::ViewMode = \"complex\"). Молимо да имате на уму да ове Акције морају да буду регистроване у следећим JS и CSS датотекама: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js."
 
 #. SysConfig
-msgid ""
-"Define which columns are shown in the linked Services widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are "
-"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
-"2 = Enabled by default."
+msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr "Дефинише које колоне су приказане у повезаном графичком елементу Сервиса (LinkObject::ViewMode = \"complex\"). Напомена: Само атрибути сервиса су дозвољени за подразумеване колоне. Могуће поставке: 0 = онемогућено, 1 = доступно, 2 = подразумевано активирано."
 
 #. SysConfig
@@ -202,45 +199,31 @@ msgid "Depends on"
 msgstr "Зависи од"
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AdminITSMCIPAllocate configuration in "
-"the admin area."
+msgid "Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area."
 msgstr "Регистрација приступног модула за конфигурацију AdminITSMCIPAllocate у простору администратора."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLA object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLA object in the agent interface."
 msgstr "Регистрација приступног модула за конфигурацију AgentITSMSLA објекта у интерфејсу оператера."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLAPrint object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLAPrint object in the agent interface."
 msgstr "Регистрација приступног модула за конфигурацију AgentITSMSLAPrint објекта у интерфејсу оператера."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMSLAZoom object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMSLAZoom object in the agent interface."
 msgstr "Регистрација приступног модула за конфигурацију AgentITSMSLAZoom објекта у интерфејсу оператера."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMService object in the agent "
-"interface."
+msgid "Frontend module registration for the AgentITSMService object in the agent interface."
 msgstr "Регистрација приступног модула за конфигурацију AgentITSMService објекта у интерфејсу оператера."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMServicePrint object in the "
-"agent interface."
+msgid "Frontend module registration for the AgentITSMServicePrint object in the agent interface."
 msgstr "Регистрација приступног модула за конфигурацију AgentITSMServicePrint објекта у интерфејсу оператера."
 
 #. SysConfig
-msgid ""
-"Frontend module registration for the AgentITSMServiceZoom object in the "
-"agent interface."
+msgid "Frontend module registration for the AgentITSMServiceZoom object in the agent interface."
 msgstr "Регистрација приступног модула за конфигурацију AgentITSMServiceZoom објекта у интерфејсу оператера."
 
 #. SysConfig
@@ -254,10 +237,6 @@ msgstr "ITSM преглед сервиса."
 #. SysConfig
 msgid "Incident State Type"
 msgstr "Тип стања инцидента"
-
-#. SysConfig
-msgid "Incident State Type."
-msgstr "Тип стања инцидента."
 
 #. SysConfig
 msgid "Includes"
@@ -336,20 +315,7 @@ msgid "Service-Area"
 msgstr "Простор сервиса"
 
 #. SysConfig
-msgid ""
-"Set the type and direction of links to be used to calculate the incident "
-"state. The key is the name of the link type (as defined in "
-"LinkObject::Type), and the value is the direction of the IncidentLinkType "
-"that should be followed to calculate the incident state. For example if the "
-"IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only "
-"'Depends on' links will be followed (and not the opposite link 'Required "
-"for') to calculate the incident state. You can add more link types ad "
-"directions as you like, e.g. 'Includes' with the direction 'Target'. All "
-"link types defined in the sysconfig options LinkObject::Type are possible "
-"and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU"
-" MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND "
-"bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL "
-"INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "Подешава тип и смер веза који ће се користити за утврђивање стања инцидента. Кључ је назив типа везе (као што је дефинисано у LinkObject::Type), а вредност је смер IncidentLinkType који треба испратити за одређивање стања инцидента. На пример, ако је IncidentLinkType подешен на DependsOn и смер је Source, само веза \"Зависи од\" ће бити праћена (а неће и супротна веза \"Неопходно за\") у одређивању стања инцидента. Уколико желите може додати још типова и смерова веза, нпр. \"Укључује\" са смером \"Циљ\". Сви типови веза дефинисани у системској конфигурацији LinkObject::Type су могући и смер може бити \"Извор\", \"Циљ\" или \"Оба\". ВАЖНО: НАКОН ИЗМЕНЕ ОПЦИЈА СИСТЕМСКЕ КОНФИГУРАЦИЈЕ МОРАТЕ ПОКРЕНУТИ СКРИПТ bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate ДА БИ СВА СТАЊА ИНЦИДЕНТА БИЛА ПОНОВО УТВРЂЕНА НА ОСНОВУ НОВИХ ПОДЕШАВАЊА!"
 
 #. SysConfig
@@ -357,179 +323,118 @@ msgid "Source"
 msgstr "Извор"
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMChange' object can be linked with 'Ticket' "
-"objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"Normal\" објекат ITSM промена може да се повеже са објектом тикета."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'Normal' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"Normal\" објекат ITSM конфигурациона ставка може да се повеже са објектом FAQ."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'ParentChild' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
 msgstr "Ово подешавање одређује да ли везом типа ParentChild објекат ITSM конфигурациона ставка може да се повеже са објектом FAQ."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ'"
-" objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"RelevantTo\" објекат ITSM конфигурациона ставка може да се повеже са објектом FAQ."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'AlternativeTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"AlternativeTo\" објекат ITSM конфигурациона ставка може да се повеже са објектом сервиса."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'DependsOn' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"DependsOn\" објекат ITSM конфигурациона ставка може да се повеже са објектом сервиса."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Service' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Service' objects using the 'RelevantTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"RelevantTo\" објекат ITSM конфигурациона ставка може да се повеже са објектом сервиса."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'AlternativeTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"AlternativeTo\" објекат ITSM конфигурациона ставка може да се повеже са објектом тикета."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'DependsOn' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"DependsOn\" објекат ITSM конфигурациона ставка може да се повеже са објектом тикета."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with "
-"'Ticket' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with 'Ticket' objects using the 'RelevantTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"RelevantTo\" објекат ITSM конфигурациона ставка може да се повеже са објектом тикета."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'AlternativeTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"AlternativeTo\" објекaт ITSM конфигурациона ставка може да се повеже са другим објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'ConnectedTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"ConnectedTo\" објекат ITSM конфигурациона ставка може да се повеже са другим објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'DependsOn' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"DependsOn\" објекат ITSM конфигурациона ставка може да се повеже са другим објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'Includes' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'Includes' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"Includes\" објекат ITSM конфигурациона ставка може да се повеже са другим објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMConfigItem' object can be linked with other"
-" 'ITSMConfigItem' objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'ITSMConfigItem' object can be linked with other 'ITSMConfigItem' objects using the 'RelevantTo' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"RelevantTo\" објекат ITSM конфигурациона ставка може да се повеже са другим објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'ITSMConfigItem' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'DependsOn' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"DependsOn\" објекат ITSM радни налог може да се повеже са објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'ITSMConfigItem' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'ITSMConfigItem' objects using the 'Normal' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"Normal\" објекат ITSM радни налог може да се повеже са објектом ITSM конфигурациона ставка."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Service' objects using the 'DependsOn' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'DependsOn' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"DependsOn\" објекат ITSM радни налог може да се повеже са објектом сервиса."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Service' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Service' objects using the 'Normal' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"Normal\" објекат ITSM радни налог може да се повеже са објектом сервиса."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'ITSMWorkOrder' object can be linked with "
-"'Ticket' objects using the 'Normal' link type."
+msgid "This setting defines that a 'ITSMWorkOrder' object can be linked with 'Ticket' objects using the 'Normal' link type."
 msgstr "Ово подешавање одређује да ли везом типа \"Normal\" објекат ITSM радни налог може да се повеже са објектом тикета."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'Normal' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'Normal' link type."
 msgstr "Ово подешавање одређује да објекат сервис може да се повеже са објектом FAQ везом типа \"Normal\"."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'ParentChild' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'ParentChild' link type."
 msgstr "Ово подешавање одређује да објекат сервис може да се повеже са објектом FAQ везом типа \"ParentChild\"."
 
 #. SysConfig
-msgid ""
-"This setting defines that a 'Service' object can be linked with 'FAQ' "
-"objects using the 'RelevantTo' link type."
+msgid "This setting defines that a 'Service' object can be linked with 'FAQ' objects using the 'RelevantTo' link type."
 msgstr "Ово подешавање одређује да објекат сервис може да се повеже са објектом FAQ везом типа \"RelevantTo\"."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'AlternativeTo'. If the source name and "
-"the target name contain the same value, the resulting link is a non-"
-"directional one. If the values are different, the resulting link is a "
-"directional link."
+msgid "This setting defines the link type 'AlternativeTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Ово подешавање дефинише везу типа \"AlternativeTo\". Ако изворни и циљни назив садрже исту вредност, резултујућа веза је неусмерена. Ако су вредности различите, резултујућа веза је усмерена."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'ConnectedTo'. If the source name and the"
-" target name contain the same value, the resulting link is a non-directional"
-" one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'ConnectedTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Ово подешавање дефинише везу типа \"ConnectedTo\". Ако изворни и циљни назив садрже исту вредност, резултујућа веза је неусмерена. Ако су вредности различите, резултујућа веза је усмерена."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'DependsOn'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'DependsOn'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Ово подешавање дефинише везу типа \"DependsOn\". Ако изворни и циљни назив садрже исту вредност, резултујућа веза је неусмерена. Ако су вредности различите, резултујућа веза је усмерена."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'Includes'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'Includes'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Ово подешавање дефинише везу типа \"Includes\". Ако изворни и циљни назив садрже исту вредност, резултујућа веза је неусмерена. Ако су вредности различите, резултујућа веза је усмерена."
 
 #. SysConfig
-msgid ""
-"This setting defines the link type 'RelevantTo'. If the source name and the "
-"target name contain the same value, the resulting link is a non-directional "
-"one. If the values are different, the resulting link is a directional link."
+msgid "This setting defines the link type 'RelevantTo'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link."
 msgstr "Ово подешавање дефинише везу типа \"RelevantTo\". Ако изворни и циљни назив садрже исту вредност, резултујућа веза је неусмерена. Ако су вредности различите, резултујућа веза је усмерена."
 
 #. SysConfig
 msgid "Width of ITSM textareas."
 msgstr "Ширина ITSM простора текста."
+
