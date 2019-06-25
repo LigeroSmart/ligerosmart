@@ -108,11 +108,11 @@ sub Data {
         ' Muestra el campo de título en la pantalla Maestro-Esclavo en la vista detallada de dicho ticket de la interfaz del agente.';
     $Self->{Translation}->{'Slave Tickets'} = 'Ticket Esclavos';
     $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        '';
+        'Especifica los diferentes canales de comunicación de artículos en los cuales se reemplazará el nombre real de ticket Maestro con el nombre del ticket Esclavo.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Este módulo activa el campo Maestro/Esclavo en una nueva pantalla de ticket por email o por teléfono.';
     $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
-        '';
+        'Esta configuración es obsoleta y será removida en futuras versiones de OTRSMasterSlave.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Ticket MaestroEsclavo';
 
 

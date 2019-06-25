@@ -12,71 +12,71 @@ msgstr ""
 
 #. Template: AdminDynamicFieldMasterSlave
 msgid "Field"
-msgstr "Pole"
+msgstr "Campo"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
-msgstr "Ustaw stan Nadrzędny/Podrzędny dla %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr "Nowe zgłoszenie nadrzędne"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
-msgstr "Wyłącz wartość Nadrzędny"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Slave Ticket"
-msgstr "Wyłącz wartość Podrzędny"
+msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Slave of %s%s%s: %s"
-msgstr "Podrzędne do %s%s%s: %s"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Master Tickets"
-msgstr "Wyczyść wartość Nadrzędny"
+msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/TicketBulk/MasterSlave.pm
 msgid "Unset Slave Tickets"
-msgstr "Wyczyść wartość Podrzędny"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master"
-msgstr "Nadrzędny"
+msgstr "Principal"
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Slave of %s%s%s"
-msgstr "Podrzędny do %s%s%s"
+msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
-msgstr "Zgłoszenie nadrzędne"
+msgstr ""
 
 #. SysConfig
 msgid "All master tickets"
-msgstr "Wszystkie zgłoszenia nadrzędne"
+msgstr ""
 
 #. SysConfig
 msgid "All slave tickets"
-msgstr "Wszystkie zgłoszenia podrzędne"
+msgstr ""
 
 #. SysConfig
 msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Pozwala na dodanie notatki na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Change the MasterSlave state of the ticket."
-msgstr "Zmień stan zgłoszenia dla Nadrzędny/Podrzędny."
+msgstr "Cambiar o estado AmoEscravo do tícket."
 
 #. SysConfig
 msgid "Defines dynamic field name for master ticket feature."
-msgstr "Określa nazwę pola dynamicznego dla funkcjonalności zgłoszenia nadrzędnego."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
-msgstr "Określa, czy wymagana jest zablokowanie zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta (jeśli zgłoszenie nie jest jeszcze zablokowane, staje się zablokowane, a bieżący agent staje się jego właścicielem)."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the MasterSlave note is visible for the customer by default."
@@ -84,139 +84,139 @@ msgstr ""
 
 #. SysConfig
 msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Określa domyślny następny stan zgłoszenia po dodaniu notatki na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Określa domyślny priorytet zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Określa komentarz historii dla akcji zgłoszenia na ekranie Nadrzędny/Podrzędny który zostanie użyty w historii zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
-msgstr "Określa typ historii dla akcji zgłoszenia na ekranie Nadrzędny/Podrzędny który zostanie użyty w historii zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Określa następny stan zgłoszenia po dodaniu notatki na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the advanced MasterSlave part of the feature."
-msgstr "Włącza zaawansowaną część funkcjonalności Nadrzędny/Podrzędny."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
-msgstr "Włącza funkcjonalność trybu zaawansowanego Nadrzędny/Podrzędny, w której zgłoszenia podrzędne podążają za zgłoszeniem nadrzędnym do nowego zgłoszenia nadrzędnego."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
-msgstr "Włącza funkcjonalność trybu zaawansowanego Nadrzędny/Podrzędny umożliwiającą zmianę stanu Nadrzędny/Podrzędny w zgłoszeniu."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
-msgstr "Włącza funkcjonalność przesyłania artykułów typu \"przekaż\" ze zgłoszenia nadrzędnego do klientów zgłoszeń podrzędnych. Domyślnie (wyłączone) artykuły typu \"przekaż\" nie są przekazywane do zgłoszeń podrzędnych."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
-msgstr "Włącza funkcjonalność trybu zaawansowanego Nadrzędny/Podrzędny, polegającą na utrzymaniu połączenia rodzic-dziecko po zmianie zależności Nadrzędny/Podrzędny."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
-msgstr "Włącza funkcjonalność trybu zaawansowanego Nadrzędny/Podrzędny, polegającą na utrzymaniu połączenia rodzic-dziecko po usunięciu zależności Nadrzędny/Podrzędny."
+msgstr ""
 
 #. SysConfig
 msgid "Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
-msgstr "Włącza funkcjonalność trybu zaawansowanego Nadrzędny/Podrzędny, usuwania stanu Nadrzędny/Podrzędny ze zgłoszenia."
+msgstr ""
 
 #. SysConfig
 msgid "If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Jeśli agent doda notatkę, to ustawiany jest stan zgłoszenia na ekranie Nadrzędny/Podrzędny okna szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr "Nadrzędny / Podrzędny"
+msgstr ""
 
 #. SysConfig
 msgid "Master Tickets"
-msgstr "Zgłoszenia nadrzędne"
+msgstr ""
 
 #. SysConfig
 msgid "MasterSlave"
-msgstr "Nadrzędny/Podrzędny"
+msgstr ""
 
 #. SysConfig
 msgid "MasterSlave module for Ticket Bulk feature."
-msgstr "Moduł Nadrzędnych/Podrzędnych dla funkcji grupowych zgłoszeń."
+msgstr ""
 
 #. SysConfig
 msgid "Parameters for the dashboard backend of the master tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Parametr okna pulpitu zgłoszeń nadrzędnych interfejsu agenta. \"Limit\" jest liczbą wierszy pokazywaną domyślnie. \"Group\" jest używana do ograniczenia dostępu do wtyczki (np.: Group: admin;group1;group2;). \"Default\" określa czy wtyczka jest domyślnie włączona lub czy użytkownik może włączyć ją ręcznie. \"CacheTTLLocal\" jest czasem podanym w minutach określającym czas cache'owania wtyczki."
+msgstr ""
 
 #. SysConfig
 msgid "Parameters for the dashboard backend of the slave tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
-msgstr "Parametr okna pulpitu zgłoszeń podrzędnych interfejsu agenta. \"Limit\" jest liczbą wierszy pokazywaną domyślnie. \"Group\" jest używana do ograniczenia dostępu do wtyczki (np.: Group: admin;group1;group2;). \"Default\" określa czy wtyczka jest domyślnie włączona lub czy użytkownik może włączyć ją ręcznie. \"CacheTTLLocal\" jest czasem podanym w minutach określającym czas cache'owania wtyczki."
+msgstr ""
 
 #. SysConfig
 msgid "Registration of the ticket event module."
-msgstr "Rejestracja modułu zdarzeń zgłoszenia,"
+msgstr ""
 
 #. SysConfig
 msgid "Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Uprawnienia wymagane do używania ekranu Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Sets if Master / Slave field must be selected by the agent."
-msgstr "Określa, czy pole Nadrzędny/Podrzędny musi być wybrane przez agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Ustawia domyślną treść notatki dodawanej do zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Ustawia domyślny temat dla notatek dodawanych do zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Ustawia odpowiedzialnego za zgłoszenie agenta na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
-msgstr "Ustawia usługę w zgłoszeniu na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta (Ticket::Service musi być aktywowane)."
+msgstr ""
 
 #. SysConfig
 msgid "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Ustawia właściciela zgłoszenia na ekranie Nadrzędny/Podrzędny w oknie szczegółów zgłoszenia interfejsu agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
-msgstr "Ustawia typ zgłoszenia na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agent (Ticket::Type musi być aktywowany)."
+msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface."
-msgstr "Na ekranie przybliżonego widoku zgłoszenia w interfejsie agenta, pokazuje link w menu do zmiany stanu Nadrzędny/Podrzędny."
+msgstr ""
 
 #. SysConfig
 msgid "Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta, pokazuje listę wszystkich agentów zaangażowanych w zgłoszenie."
+msgstr ""
 
 #. SysConfig
 msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta, pokazuje listę wszystkich możliwych agentów (wszystkich agentów z uprawnieniami do notatek w kolejce/zgłoszeniu), w celu określenia kto powinien być poinformowany o tej notatce."
+msgstr ""
 
 #. SysConfig
 msgid "Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Pokazuje opcje priorytetu zgłoszenia na ekranie Nadrzędny/Podrzędny, wywołanym z przybliżonego widoku zgłoszenia w interfejsie agenta"
+msgstr ""
 
 #. SysConfig
 msgid "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
-msgstr "Pokazuje pole tytułu na ekranie Nadrzędny/Podrzędny w szczegółach zgłoszenia w intefejsie agenta."
+msgstr ""
 
 #. SysConfig
 msgid "Slave Tickets"
-msgstr "Zgłoszenia podrzędne"
+msgstr ""
 
 #. SysConfig
 msgid "Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket."
@@ -224,7 +224,7 @@ msgstr ""
 
 #. SysConfig
 msgid "This module activates Master/Slave field in new email and phone ticket screens."
-msgstr "Ten moduł aktywuje pole Nadrzędny/Podrzędny w oknie nowego zgłoszenia e-mail i telefonicznego"
+msgstr ""
 
 #. SysConfig
 msgid "This setting is deprecated and will be removed in further versions of OTRSMasterSlave."
@@ -232,5 +232,5 @@ msgstr ""
 
 #. SysConfig
 msgid "Ticket MasterSlave."
-msgstr "Zgłoszenie Nadrzędne/Podrzędne"
+msgstr ""
 

@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} =
         'Bestimmt, ob dieser Screen im Agenten-Interface das Sperren des Tickets voraussetzt. Das Ticket wird (falls nötig) gesperrt und der aktuelle Agent wird als Besitzer gesetzt.';
     $Self->{Translation}->{'Defines if the MasterSlave note is visible for the customer by default.'} =
-        '';
+        'Definiert, ob die MasterSlave-Notiz standardmäßig für Kunden sichtbar ist.';
     $Self->{Translation}->{'Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         'Bestimmt den Folgestatus für Tickets, für die im MasterSlave-Bildschirm des Agenten-Interface eine Notiz hinzugefügt wurde.';
     $Self->{Translation}->{'Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
@@ -108,11 +108,11 @@ sub Data {
         'Zeigt das Titel-Feld in der MasterSlave-Oberfläche eines aufgerufenen Tickets im Agenten-Interface an. ';
     $Self->{Translation}->{'Slave Tickets'} = 'Slave-Tickets';
     $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        '';
+        'Gibt die verschiedenen Artikel-Kommunikationskanäle an, bei denen der echte Name vom Eltern-Ticket durch den im Kind-Ticket ersetzt wird.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Dieses Modul aktiviert das Master/Slave-Feld in der Anzeige für ein neues Email- oder Telefon-Ticket.';
     $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
-        '';
+        'Diese Einstellung ist veraltet und wird in weiteren Versionen von OTRSMasterSlave entfernt.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Ticket MasterSlave.';
 
 

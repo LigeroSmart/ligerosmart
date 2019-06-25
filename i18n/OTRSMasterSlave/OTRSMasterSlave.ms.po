@@ -1,18 +1,14 @@
-# 
-# Translators:
-# OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-09-15 05:04+0000\n"
-"PO-Revision-Date: 2018-09-15 05:06+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Malay (http://www.transifex.com/otrs/OTRS/language/ms/)\n"
+"Project-Id-Version: OTRSMasterSlave\n"
+"POT-Creation-Date: 2019-06-25 13:04+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ms\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminDynamicFieldMasterSlave
 msgid "Field"
@@ -67,9 +63,7 @@ msgid "All slave tickets"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in "
-"the agent interface."
+msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Membenarkan menambah nota dalam skrin MasterSlave tiket bagi tiket dizum dalam antara muka ejen."
 
 #. SysConfig
@@ -81,46 +75,31 @@ msgid "Defines dynamic field name for master ticket feature."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines if a ticket lock is required in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface (if the ticket isn't locked yet, the "
-"ticket gets locked and the current agent will be set automatically as its "
-"owner)."
+msgid "Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner)."
 msgstr "Mentakrifkan jika kunci tiket diperlukan dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen (jika tiket itu tidak dikunci lagi, tiket yang akan dikunci dan ejen semasa akan ditetapkan secara automatik sebagai pemiliknya)."
 
 #. SysConfig
-msgid ""
-"Defines if the MasterSlave note is visible for the customer by default."
+msgid "Defines if the MasterSlave note is visible for the customer by default."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the default next state of a ticket after adding a note, in the "
-"ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgid "Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Mentakrifkan keadaan default seterusnya bagi tiket selepas menambah nota, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Defines the default ticket priority in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
+msgid "Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Mentakrifkan keutamaan tiket default dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Defines the history comment for the ticket MasterSlave screen action, which "
-"gets used for ticket history in the agent interface."
+msgid "Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
 msgstr "Mentakrifkan komen sejarah bagi kesan skrin MasterSlave tiket, yang akan digunakan untuk sejarah tiket dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Defines the history type for the ticket MasterSlave screen action, which "
-"gets used for ticket history in the agent interface."
+msgid "Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface."
 msgstr "Mentakrifkan jenis sejarah bagi tindakan skrin tiket MasterSlave, yang akan digunakan untuk sejarah tiket dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Defines the next state of a ticket after adding a note, in the ticket "
-"MasterSlave screen of a zoomed ticket in the agent interface."
+msgid "Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Mentakrifkan keadaan seterusnya bagi tiket selepas menambah nota, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
@@ -128,46 +107,31 @@ msgid "Enables the advanced MasterSlave part of the feature."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the feature that slave tickets follow the master ticket to a new "
-"master in the advanced MasterSlave mode."
+msgid "Enables the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the feature to change the MasterSlave state of a ticket in the "
-"advanced MasterSlave mode."
+msgid "Enables the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the feature to forward articles from type 'forward' of a master "
-"ticket to the customers of the slave tickets. By default (disabled) it will "
-"not forward articles from type 'forward' to the slave tickets."
+msgid "Enables the feature to forward articles from type 'forward' of a master ticket to the customers of the slave tickets. By default (disabled) it will not forward articles from type 'forward' to the slave tickets."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the feature to keep parent-child link after change of the "
-"MasterSlave state in the advanced MasterSlave mode."
+msgid "Enables the feature to keep parent-child link after change of the MasterSlave state in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the feature to keep parent-child link after unset of the MasterSlave"
-" state in the advanced MasterSlave mode."
+msgid "Enables the feature to keep parent-child link after unset of the MasterSlave state in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the feature to unset the MasterSlave state of a ticket in the "
-"advanced MasterSlave mode."
+msgid "Enables the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"If a note is added by an agent, sets the state of the ticket in the ticket "
-"MasterSlave screen of a zoomed ticket in the agent interface."
+msgid "If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Jika nota ditambah oleh ejen, tetapkan keadaan tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
@@ -187,23 +151,11 @@ msgid "MasterSlave module for Ticket Bulk feature."
 msgstr "Modul MasterSlave untuk ciri Bulk Tiket."
 
 #. SysConfig
-msgid ""
-"Parameters for the dashboard backend of the master tickets overview of the "
-"agent interface. \"Limit\" is the number of entries shown by default. "
-"\"Group\" is used to restrict the access to the plugin (e. g. Group: "
-"admin;group1;group2;). \"Default\" determines if the plugin is enabled by "
-"default or if the user needs to enable it manually. \"CacheTTLLocal\" is the"
-" cache time in minutes for the plugin."
+msgid "Parameters for the dashboard backend of the master tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
 msgstr "Parameter untuk bahagian belakang papan pemuka daripada gambaran keseluruhan tiket master antara muka ejen. \"Had\" adalah bilangan penyertaan ditunjukkan secara default. \"Kumpulan\" digunakan untuk menyekat akses kepada masuk (contoh: Kumpulan: admin; kumpulan1; kumpulan2;). \"Default\" menentukan jika plugin ini diaktifkan secara default atau jika pengguna perlu untuk membolehkan secara manual. \"CacheTTLLocal\" adalah masa cache dalam minit untuk plugin."
 
 #. SysConfig
-msgid ""
-"Parameters for the dashboard backend of the slave tickets overview of the "
-"agent interface. \"Limit\" is the number of entries shown by default. "
-"\"Group\" is used to restrict the access to the plugin (e. g. Group: "
-"admin;group1;group2;). \"Default\" determines if the plugin is enabled by "
-"default or if the user needs to enable it manually. \"CacheTTLLocal\" is the"
-" cache time in minutes for the plugin."
+msgid "Parameters for the dashboard backend of the slave tickets overview of the agent interface. \"Limit\" is the number of entries shown by default. \"Group\" is used to restrict the access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" determines if the plugin is enabled by default or if the user needs to enable it manually. \"CacheTTLLocal\" is the cache time in minutes for the plugin."
 msgstr "Parameter untuk bahagian belakang papan pemuka daripada gambaran keseluruhan tiket slave antara muka ejen. \"Had\" adalah bilangan penyertaan ditunjukkan secara default. \"Kumpulan\" digunakan untuk menyekat akses kepada masuk (contoh: Kumpulan: admin; kumpulan1; kumpulan2;). \"Default\" menentukan jika plugin ini diaktifkan secara default atau jika pengguna perlu untuk membolehkan secara manual. \"CacheTTLLocal\" adalah masa cache dalam minit untuk plugin."
 
 #. SysConfig
@@ -211,9 +163,7 @@ msgid "Registration of the ticket event module."
 msgstr "Pendaftaran tiket modul acara."
 
 #. SysConfig
-msgid ""
-"Required permissions to use the ticket MasterSlave screen of a zoomed ticket"
-" in the agent interface."
+msgid "Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Kebenaran yang diperlukan untuk menggunakan skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
@@ -221,70 +171,47 @@ msgid "Sets if Master / Slave field must be selected by the agent."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Sets the default body text for notes added in the ticket MasterSlave screen "
-"of a zoomed ticket in the agent interface."
+msgid "Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Menetapkan teks badan default untuk nota ditambah dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Sets the default subject for notes added in the ticket MasterSlave screen of"
-" a zoomed ticket in the agent interface."
+msgid "Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Set subjek default untuk nota ditambah dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Sets the responsible agent of the ticket in the ticket MasterSlave screen of"
-" a zoomed ticket in the agent interface."
+msgid "Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Set ejen yang bertanggungjawab bagi tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Sets the service in the ticket MasterSlave screen of a zoomed ticket in the "
-"agent interface (Ticket::Service needs to be activated)."
+msgid "Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated)."
 msgstr "Set perkhidmatan di skrin MasterSlave tiket tiket dizum dalam antara muka ejen (Tiket::Perkhidmatan perlu diaktifkan)."
 
 #. SysConfig
-msgid ""
-"Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in"
-" the agent interface."
+msgid "Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Set pemilik tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in "
-"the agent interface (Ticket::Type needs to be activated)."
+msgid "Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated)."
 msgstr "Menetapkan jenis tiket yang dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen (Tiket::Jenis perlu diaktifkan)."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to change the MasterSlave status of a ticket in the"
-" ticket zoom view of the agent interface."
+msgid "Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface."
 msgstr "Menunjukkan pautan dalam menu untuk menukar status MasterSlave bagi tiket dalam pandangan zum tiket bagi antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Shows a list of all the involved agents on this ticket, in the ticket "
-"MasterSlave screen of a zoomed ticket in the agent interface."
+msgid "Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Memaparkan senarai semua ejen yang terlibat dalam tiket ini, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Shows a list of all the possible agents (all agents with note permissions on"
-" the queue/ticket) to determine who should be informed about this note, in "
-"the ticket MasterSlave screen of a zoomed ticket in the agent interface."
+msgid "Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Memaparkan senarai semua kemungkinan ejen (semua ejen dengan kebenaran nota mengenai barisan/tiket) untuk menentukan siapa yang perlu diberitahu tentang nota ini, dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Shows the ticket priority options in the ticket MasterSlave screen of a "
-"zoomed ticket in the agent interface."
+msgid "Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr "Menunjukkan pilihan keutamaan tiket dalam skrin MasterSlave tiket tiket dizum dalam antara muka ejen."
 
 #. SysConfig
-msgid ""
-"Shows the title field in the ticket MasterSlave screen of a zoomed ticket in"
-" the agent interface."
+msgid "Shows the title field in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -292,17 +219,18 @@ msgid "Slave Tickets"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Specifies the different article types where the real name from Master ticket"
-" will be replaced with the one in the Slave ticket."
-msgstr "Menentukan jenis artikel yang berbeza di mana nama sebenar dari tiket Master akan digantikan dengan yang dalam tiket Slave."
+msgid "Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket."
+msgstr ""
 
 #. SysConfig
-msgid ""
-"This module activates Master/Slave field in new email and phone ticket "
-"screens."
+msgid "This module activates Master/Slave field in new email and phone ticket screens."
 msgstr "Modul ini mengaktifkan medan Master/Slave di skrin emel dan tiket telefon baru."
+
+#. SysConfig
+msgid "This setting is deprecated and will be removed in further versions of OTRSMasterSlave."
+msgstr ""
 
 #. SysConfig
 msgid "Ticket MasterSlave."
 msgstr ""
+

@@ -13,17 +13,22 @@
         <File Permission="660" Location="Kernel/Config/Files/XML/OTRSMasterSlave.xml" />
         <File Permission="660" Location="Kernel/Language/cs_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/de_OTRSMasterSlave.pm" />
-        <File Permission="660" Location="Kernel/Language/es_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/es_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/fr_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/gl_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/hu_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/id_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/it_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/ja_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/ms_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/pl_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/pt_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/ru_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_OTRSMasterSlave.pm" />
+        <File Permission="660" Location="Kernel/Language/sv_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/sw_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_OTRSMasterSlave.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_OTRSMasterSlave.pm" />
