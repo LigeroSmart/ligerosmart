@@ -1,11 +1,11 @@
-#
+# 
 # Translators:
 # OTRS SDN BHD <otrssdnbhd@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-04-09 12:23+0000\n"
-"PO-Revision-Date: 2019-04-09 12:23+0000\n"
+"POT-Creation-Date: 2018-11-05 12:00+0000\n"
+"PO-Revision-Date: 2018-11-05 12:01+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Thai (Thailand) (http://www.transifex.com/otrs/OTRS/language/th_TH/)\n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,11 @@ msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category ↔ Impact ↔ Priority"
-msgstr "หมวดหมู่↔ ผลกระทบ ↔ ลำดับความสำคัญ"
+msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category ↔ Impact."
-msgstr "การจัดการลำดับความสำคัญของผลการผสมผสานวิกฤต↔ ผลกระทบ"
+msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -243,8 +243,16 @@ msgid "History of %s%s"
 msgstr "ประวัติของ %s%s"
 
 #. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "เนื้อหาประวัติ"
+
+#. Template: AgentITSMChangeHistory
 msgid "Workorder"
 msgstr "ใบสั่งงาน"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "เวลาที่สร้าง"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
@@ -321,6 +329,10 @@ msgstr "ผู้ใช้ไม่ถูกต้อง"
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
 msgstr "CAB ปัจจุบัน"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Context Settings"
+msgstr "การตั้งค่าข้อความ"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
@@ -482,20 +494,41 @@ msgstr "CAB"
 msgid "Last changed"
 msgstr "การเปลี่ยนแปลงล่าสุด"
 
+#. Template: AgentITSMChangeZoom
+msgid "Last changed by"
+msgstr "การเปลี่ยนแปลงล่าสุดโดย"
+
+#. Template: AgentITSMChangeZoom
+msgid ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
+msgstr "ในการเปิดการลิ้งในบล็อกคำอธิบายต่อไปนี้ คุณอาจจะต้องกดปุ่ม Ctrl หรือ Cmd หรือ Shift ในขณะที่กดลิ้ง (ขึ้นอยุ่กับเบราเซอร์และระบบปฎิบัติการของคุณ)"
+
+#. Template: AgentITSMChangeZoom
+msgid "Download Attachment"
+msgstr "ดาวน์โหลดสิ่งที่แนบมา"
+
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "แก้ไขแม่แบบ CAB"
 
 #. Template: AgentITSMTemplateEditContent
-msgid "This will create a new change from this template, so you can edit and save it."
+msgid ""
+"This will create a new change from this template, so you can edit and save "
+"it."
 msgstr "นี่จะสร้างChange ใหม่จากแม่แบบนี้ ดังนั้นคุณจึงสามารถแก้ไขและบันทึกไว้"
 
 #. Template: AgentITSMTemplateEditContent
-msgid "The new change will be deleted automatically after it has been saved as template."
+msgid ""
+"The new change will be deleted automatically after it has been saved as "
+"template."
 msgstr "Change ใหม่จะถูกลบโดยอัตโนมัติหลังจากที่มันได้รับการบันทึกเป็นแม่แบบ"
 
 #. Template: AgentITSMTemplateEditContent
-msgid "This will create a new workorder from this template, so you can edit and save it."
+msgid ""
+"This will create a new workorder from this template, so you can edit and "
+"save it."
 msgstr "นี่จะสร้างใบสั่งงานใหม่จากแม่แบบนี้ ดังนั้นคุณจึงสามารถแก้ไขและบันทึกไว้"
 
 #. Template: AgentITSMTemplateEditContent
@@ -503,7 +536,9 @@ msgid "A temporary change will be created which contains the workorder."
 msgstr "Change ชั่วคราวจะถูกสร้างขึ้นซึ่งประกอบด้วยใบสั่งงาน"
 
 #. Template: AgentITSMTemplateEditContent
-msgid "The temporary change and new workorder will be deleted automatically after the workorder has been saved as template."
+msgid ""
+"The temporary change and new workorder will be deleted automatically after "
+"the workorder has been saved as template."
 msgstr "Change ชั่วคราวและใบสั่งงานใหม่จะถูกลบโดยอัตโนมัติหลังจากที่มันได้รับการบันทึกเป็นแม่แบบ"
 
 #. Template: AgentITSMTemplateEditContent
@@ -563,7 +598,8 @@ msgid "Do you really want to delete this workorder?"
 msgstr "คุณแน่ใจหรือไม่ที่จะลบใบสั่งงานนี้?"
 
 #. Template: AgentITSMWorkOrderDelete
-msgid "You can not delete this Workorder. It is used in at least one Condition!"
+msgid ""
+"You can not delete this Workorder. It is used in at least one Condition!"
 msgstr "คุณไม่สามรถลบใบสั่งงานนี้ เนื่องจากได้ใช้งานอย่างน้อยหนึ่งเงื่อนไข!"
 
 #. Template: AgentITSMWorkOrderDelete
@@ -579,7 +615,9 @@ msgid "Move following workorders accordingly"
 msgstr "ย้าย workorders ต่อไปนี้ตามลำดับ"
 
 #. Template: AgentITSMWorkOrderEdit
-msgid "If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly"
+msgid ""
+"If the planned end time of this workorder is changed, the planned start "
+"times of all following workorders will be changed accordingly"
 msgstr "หากเวลาสิ้นสุดที่วางแผนไว้ของ workorder นี้มีการเปลี่ยนแปลง ดังนั้นเวลาเริ่มต้นที่วางแผนไว้ ของ workorders ต่อไปนี้จะมีการเปลี่ยนแปลงตามความเหมาะสม"
 
 #. Template: AgentITSMWorkOrderHistory
@@ -684,6 +722,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Could not delete ConditionID %s!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "No %s is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
@@ -1102,24 +1144,16 @@ msgstr ""
 msgid "The workorder \"%s\" could not be serialized."
 msgstr ""
 
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMChange.pm
-msgid "ITSM Change Attachment"
-msgstr ""
-
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
-msgid "ITSM Work Order"
-msgstr ""
-
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
-msgid "ITSM Work Order Attachment"
-msgstr ""
-
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Need config option %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Config option %s needs to be a HASH ref!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
@@ -1136,14 +1170,6 @@ msgstr "changeของฉัน"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
-msgstr ""
-
-#. SysConfig
-msgid "ITSM Changes"
-msgstr "ITSM Changes"
-
-#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMWorkOrder.pm
-msgid "ITSM Work Orders"
 msgstr ""
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
@@ -1538,12 +1564,20 @@ msgstr ""
 msgid "Do you really want to delete this condition?"
 msgstr ""
 
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "โอเค"
+
 #. SysConfig
-msgid "A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1."
+msgid ""
+"A list of the agents who have permission to take workorders. Key is a login "
+"name. Content is 0 or 1."
 msgstr "รายชื่อของเอเย่นต์ที่ได้รับอนุญาตให้ใช้ใบสั่งงาน คีย์สำคัญคือชื่อล๊อกอิน เนื้อหาเป็น 0 หรือ 1"
 
 #. SysConfig
-msgid "A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point."
+msgid ""
+"A list of workorder states, at which the ActualStartTime of a workorder will"
+" be set if it was empty at this point."
 msgstr "รายการสถานภาพของใบสั่งงานที่ ActualStartTime ของ workorder จะถูกตั้งค่าถ้าหากจุดนี้เป็นที่ว่างเปล่า"
 
 #. SysConfig
@@ -1591,11 +1625,15 @@ msgid "Admin of the state machine."
 msgstr "ผู้ดูแลของสถานะกลไก"
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of change advisory boards."
+msgid ""
+"Agent interface notification module to see the number of change advisory "
+"boards."
 msgstr "โมดูลอินเตอร์เฟซการแจ้งเตือนเอเย่นต์ในการดูจำนวนของการเปลี่ยนแปลงของ advisory boards "
 
 #. SysConfig
-msgid "Agent interface notification module to see the number of changes managed by the user."
+msgid ""
+"Agent interface notification module to see the number of changes managed by "
+"the user."
 msgstr "โมดูลอินเตอร์เฟซการแจ้งเตือนเอเย่นต์ในการดูจำนวนของการเปลี่ยนแปลงการควบคุมโดยลูกค้า"
 
 #. SysConfig
@@ -1611,11 +1649,15 @@ msgid "CAB Member Search"
 msgstr ""
 
 #. SysConfig
-msgid "Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes)."
+msgid ""
+"Cache time in minutes for the change management toolbars. Default: 3 hours "
+"(180 minutes)."
 msgstr "เวลา Cache ต่อนาทีสำหรับการจัดการการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Cache time in minutes for the change management. Default: 5 days (7200 minutes)."
+msgid ""
+"Cache time in minutes for the change management. Default: 5 days (7200 "
+"minutes)."
 msgstr "แคชเวลาเป็นนาทีสำหรับการจัดการการเปลี่ยนแปลง เริ่มต้น: 5 วัน (7200 นาที)"
 
 #. SysConfig
@@ -1645,6 +1687,10 @@ msgstr ""
 #. SysConfig
 msgid "Change Schedule"
 msgstr "ตารางchange"
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr ""
 
 #. SysConfig
 msgid "Change Settings"
@@ -1683,6 +1729,10 @@ msgid "Change number"
 msgstr ""
 
 #. SysConfig
+msgid "Change search backend router of the agent interface."
+msgstr "เปลี่ยนการค้นหา  backend router ของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
 msgid "Change state"
 msgstr ""
 
@@ -1703,11 +1753,15 @@ msgid "Condition Overview"
 msgstr ""
 
 #. SysConfig
-msgid "Configure which screen should be shown after a new workorder has been created."
+msgid ""
+"Configure which screen should be shown after a new workorder has been "
+"created."
 msgstr ""
 
 #. SysConfig
-msgid "Configures how often the notifications are sent when planned the start time or other time values have been reached/passed."
+msgid ""
+"Configures how often the notifications are sent when planned the start time "
+"or other time values have been reached/passed."
 msgstr "กำหนดค่าการแจ้งเตือนจะถูกส่งบ่อยแค่ใหนเมื่อมีการวางแผนเวลาเริ่มต้นหรือค่าเวลาอื่น ๆ ได้มาถึง /ผ่านไป"
 
 #. SysConfig
@@ -1735,19 +1789,38 @@ msgid "Create and manage change notifications."
 msgstr ""
 
 #. SysConfig
-msgid "Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'."
+msgid ""
+"Default type for a workorder. This entry must exist in general catalog class"
+" 'ITSM::ChangeManagement::WorkOrder::Type'."
 msgstr "ประเภทเริ่มต้นสำหรับการสั่งงาน รายการป้อนนี้ต้องมีอยู่ในคลาสแคตตาล็อกทั่วไป 'ITSM::ChangeManagement::WorkOrder::Type'."
+
+#. SysConfig
+msgid ""
+"Define Actions where a settings button is available in the linked objects "
+"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
+"must have registered the following JS and CSS files: "
+"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
+"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
 msgstr "กำหนดสัญญาณสำหรับแต่ละสถานภาพของใบสั่งงาน"
 
 #. SysConfig
-msgid "Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgid ""
+"Define which columns are shown in the linked Changes widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
-msgid "Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgid ""
+"Define which columns are shown in the linked Workorder widget "
+"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
+"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
+"2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -1767,11 +1840,15 @@ msgid "Defines if it will be possible to print the planned effort."
 msgstr "กำหนดค่าถ้าหากเป็นไปไมได้ในการที่จะพิมพ์ the planned effort"
 
 #. SysConfig
-msgid "Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state."
+msgid ""
+"Defines if reachable (as defined by the state machine) change end states "
+"should be allowed if a change is in a locked state."
 msgstr "กำหนดหากสามารถเข้าถึง (ตามที่กำหนดโดยเครื่องสถานะ) สถานะการเปลี่ยนแปลงที่สิ้นสุดควรได้รับอนุญาตหากมีการเปลี่ยนแปลงที่อยู่ในสถานะที่ถูกล็อก"
 
 #. SysConfig
-msgid "Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state."
+msgid ""
+"Defines if reachable (as defined by the state machine) workorder end states "
+"should be allowed if a workorder is in a locked state."
 msgstr "กำหนดหากสามารถเข้าถึง (ตามที่กำหนดโดยเครื่องสถานะ) สถานะใบสั่งงานที่สิ้นสุดควรได้รับอนุญาตหากมีใบสั่งงานอยู่ในสถานะที่ถูกล็อก"
 
 #. SysConfig
@@ -1783,11 +1860,15 @@ msgid "Defines if the actual start and end times should be set."
 msgstr "กำหนดถ้าหาก the actual start time และ the end time จะต้องบันทึก"
 
 #. SysConfig
-msgid "Defines if the change search and the workorder search functions could use the mirror DB."
+msgid ""
+"Defines if the change search and the workorder search functions could use "
+"the mirror DB."
 msgstr "กำหนดหากการค้นหาการเปลี่ยนแปลงและฟังก์ชั่นการค้นหา workorder สามารถใช้ฐานข้อมูลสะท้อนกลับ"
 
 #. SysConfig
-msgid "Defines if the change state can be set in the change edit screen of the agent interface."
+msgid ""
+"Defines if the change state can be set in the change edit screen of the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
@@ -1795,16 +1876,16 @@ msgid "Defines if the planned effort should be shown."
 msgstr "กำหนดค่าถ้าหาก the planned effort จะต้องแสดง"
 
 #. SysConfig
-msgid "Defines if the requested date could be printed by customer."
-msgstr ""
+msgid "Defines if the requested date should be print by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าต้องการพิมพ์ the requested date "
 
 #. SysConfig
-msgid "Defines if the requested date could be searched by customer."
-msgstr ""
+msgid "Defines if the requested date should be searched by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าจะต้องค้นหา the requested date"
 
 #. SysConfig
-msgid "Defines if the requested date could be set by customer."
-msgstr ""
+msgid "Defines if the requested date should be set by customer."
+msgstr "กำหนดค่าถ้าหากลูกค้าต้องการเซตวันที่ที่เรียกร้อง"
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
@@ -1823,35 +1904,62 @@ msgid "Defines shown graph attributes."
 msgstr "กำหนดค่ากราฟแอตทริบิวต์ที่จะแสดง"
 
 #. SysConfig
+msgid ""
+"Defines that only changes containing Workorders linked with services, which "
+"the customer user has permission to use will be shown. Any other changes "
+"will not be displayed."
+msgstr "กำหนดว่ามีการเปลี่ยนแปลงเท่านั้นที่ประกอบด้วยการเชื่อมโยงใบสั่งงานด้วยการบริการที่จะแสดงลูกค้าผู้ใช้มีสิทธิ์ในการใช้ การเปลี่ยนแปลงอื่น ๆ จะไม่สามารถแสดงได้"
+
+#. SysConfig
 msgid "Defines the change states that will be allowed to delete."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะได้รับอนุญาตให้ลบ"
 
 #. SysConfig
-msgid "Defines the change states that will be used as filters in the Change PSA overview."
+msgid ""
+"Defines the change states that will be used as filters in the Change PSA "
+"overview."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม Change PSA "
 
 #. SysConfig
-msgid "Defines the change states that will be used as filters in the Change Schedule overview."
+msgid ""
+"Defines the change states that will be used as filters in the Change "
+"Schedule overview."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม Change Schedule "
 
 #. SysConfig
-msgid "Defines the change states that will be used as filters in the MyCAB overview."
+msgid ""
+"Defines the change states that will be used as filters in the MyCAB "
+"overview."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม MyCAB"
 
 #. SysConfig
-msgid "Defines the change states that will be used as filters in the MyChanges overview."
+msgid ""
+"Defines the change states that will be used as filters in the MyChanges "
+"overview."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวม MyChanges"
 
 #. SysConfig
-msgid "Defines the change states that will be used as filters in the change manager overview."
+msgid ""
+"Defines the change states that will be used as filters in the change manager"
+" overview."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมตัวจัดการการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Defines the change states that will be used as filters in the change overview."
+msgid ""
+"Defines the change states that will be used as filters in the change "
+"overview."
 msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Defines the default change title for a dummy change which is needed to edit a workorder template."
+msgid ""
+"Defines the change states that will be used as filters in the customer "
+"change schedule overview."
+msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
+
+#. SysConfig
+msgid ""
+"Defines the default change title for a dummy change which is needed to edit "
+"a workorder template."
 msgstr "กำหนดชื่อการเปลี่ยนแปลงเริ่มต้นสำหรับการเปลี่ยนแปลงจำลองซึ่งจำเป็นเพื่อแก้ไขแม่แบบใบสั่งงาน"
 
 #. SysConfig
@@ -1871,15 +1979,19 @@ msgid "Defines the default sort criteria in the change schedule overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Defines the default sort criteria of the changes in the MyCAB overview."
+msgid ""
+"Defines the default sort criteria of the changes in the MyCAB overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม MyCAB"
 
 #. SysConfig
-msgid "Defines the default sort criteria of the changes in the MyChanges overview."
+msgid ""
+"Defines the default sort criteria of the changes in the MyChanges overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม MyChanges "
 
 #. SysConfig
-msgid "Defines the default sort criteria of the changes in the MyWorkorders overview."
+msgid ""
+"Defines the default sort criteria of the changes in the MyWorkorders "
+"overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม MyWorkorders"
 
 #. SysConfig
@@ -1887,7 +1999,14 @@ msgid "Defines the default sort criteria of the changes in the PIR overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวม PIR"
 
 #. SysConfig
-msgid "Defines the default sort criteria of the changes in the template overview."
+msgid ""
+"Defines the default sort criteria of the changes in the customer change "
+"schedule overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
+
+#. SysConfig
+msgid ""
+"Defines the default sort criteria of the changes in the template overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวมรูปแบบ"
 
 #. SysConfig
@@ -1923,6 +2042,11 @@ msgid "Defines the default sort order in the change schedule overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลง"
 
 #. SysConfig
+msgid ""
+"Defines the default sort order in the customer change schedule overview."
+msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
+
+#. SysConfig
 msgid "Defines the default sort order in the template overview."
 msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมรูปแบบ"
 
@@ -1935,147 +2059,230 @@ msgid "Defines the default value for the impact of a change."
 msgstr "กำหนดประเภทเริ่มต้นสำหรับผลกระทบของการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
+msgid ""
+"Defines the field type of CompareValue fields for change attributes used in "
+"the change condition edit screen of the agent interface. Valid values are "
+"Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
+msgid ""
+"Defines the field type of CompareValue fields for workorder attributes used "
+"in the change condition edit screen of the agent interface. Valid values are"
+" Selection, Text and Date. If a type is not defined, the field will not be "
+"shown."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the object attributes that are selectable for change objects in the "
+"change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the object attributes that are selectable for workorder objects in "
+"the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute AccountedTime in"
+" the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ActualEndTime in"
+" the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ActualStartTime "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute CategoryID in "
+"the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeBuilderID "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeManagerID "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeStateID in"
+" the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ChangeTitle in "
+"the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute DynamicField in "
+"the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute ImpactID in the "
+"change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedEffort in"
+" the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedEndTime "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute PlannedStartTime"
+" in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute PriorityID in "
+"the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute RequestedTime in"
+" the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderAgentID"
+" in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderNumber "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderStateID"
+" in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderTitle "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface."
+msgid ""
+"Defines the operators that are selectable for the attribute WorkOrderTypeID "
+"in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the period (in years), in which start and end times can be selected."
+msgid ""
+"Defines the period (in years), in which start and end times can be selected."
 msgstr "กำหนดระยะเวลา (ในปีที่ผ่านมา) ซึ่งวันเริ่มต้นและวันสิ้นสุดสามารถเลือกได้"
 
 #. SysConfig
-msgid "Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc."
+msgid ""
+"Defines the shown attributes of a workorder in the tooltip of the workorder "
+"graph in the change zoom. To show workorder dynamic fields in the tooltip, "
+"they must be specified like DynamicField_WorkOrderFieldName1, "
+"DynamicField_WorkOrderFieldName2, etc."
 msgstr "กำหนดคุณลักษณะของใบสั่งงานที่จะแสดงในคำแนะนำของกราฟใบสั่งงานในการซูมการเปลี่ยนแปลง เพื่อแสดงฟิลด์แบบไดนามิกของใบสั่งงานในคำแนะนำที่พวกเขาจะต้องระบุเช่น DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2 ฯลฯ"
 
 #. SysConfig
-msgid "Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the Change PSA overview. This option has no "
+"effect on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมของภาพรวมการเปลี่ยนแปลง PSA ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the Change Schedule overview. This option has "
+"no effect on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมตารางเวลาการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the MyCAB overview. This option has no effect "
+"on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม MyCAB  ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the MyChanges overview. This option has no "
+"effect on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม MyChanges  ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the MyWorkorders overview. This option has no "
+"effect on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม MyWorkorders  ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the PIR overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the PIR overview. This option has no effect on "
+"the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวม PIR ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the change manager overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the change manager overview. This option has no"
+" effect on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมตัวจัดการการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the change overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the change overview. This option has no effect "
+"on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the change search. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the change search. This option has no effect on"
+" the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในค้นหาการเปลี่ยนแปลง ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
-msgid "Defines the shown columns in the template overview. This option has no effect on the position of the column."
+msgid ""
+"Defines the shown columns in the customer change schedule overview. This "
+"option has no effect on the position of the column."
+msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
+
+#. SysConfig
+msgid ""
+"Defines the shown columns in the template overview. This option has no "
+"effect on the position of the column."
 msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมรูแปบบ ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
 
 #. SysConfig
@@ -2083,19 +2290,26 @@ msgid "Defines the signals for each ITSM change state."
 msgstr ""
 
 #. SysConfig
-msgid "Defines the template types that will be used as filters in the template overview."
+msgid ""
+"Defines the template types that will be used as filters in the template "
+"overview."
 msgstr "กำหนดประเภทแม่แบบที่จะนำมาใช้เป็นตัวกรองในภาพรวมแม่แบบ"
 
 #. SysConfig
-msgid "Defines the workorder states that will be used as filters in the MyWorkorders overview."
+msgid ""
+"Defines the workorder states that will be used as filters in the "
+"MyWorkorders overview."
 msgstr "กำหนดสถานะของใบสั่งงานที่จะนำมาใช้เป็นตัวกรองในภาพรวม MyWorkorders"
 
 #. SysConfig
-msgid "Defines the workorder states that will be used as filters in the PIR overview."
+msgid ""
+"Defines the workorder states that will be used as filters in the PIR "
+"overview."
 msgstr "กำหนดสถานะของใบสั่งงานที่จะนำมาใช้เป็นตัวกรองในภาพรวมPIR"
 
 #. SysConfig
-msgid "Defines the workorder types that will be used to show the PIR overview."
+msgid ""
+"Defines the workorder types that will be used to show the PIR overview."
 msgstr "กำหนดประเภทของใบสั่งงานที่จะนำมาแสดงในภาพรวมPIR"
 
 #. SysConfig
@@ -2119,31 +2333,44 @@ msgid "Details of a change history entry."
 msgstr ""
 
 #. SysConfig
-msgid "Determines if an agent can exchange the X-axis of a stat if he generates one."
+msgid ""
+"Determines if an agent can exchange the X-axis of a stat if he generates "
+"one."
 msgstr "กำหนดถ้าหากเอเย่นต์สามารถแลกเปลี่ยนแกน X ของสถิติถ้าเขาสร้างแค่หนึ่ง"
 
 #. SysConfig
-msgid "Determines if the common stats module may generate stats about changes done for config item classes."
+msgid ""
+"Determines if the common stats module may generate stats about changes done "
+"for config item classes."
 msgstr "กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลงสำหรับคลาสรายการการตั้งค่า"
 
 #. SysConfig
-msgid "Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod."
+msgid ""
+"Determines if the common stats module may generate stats about changes "
+"regarding change state updates within a timeperiod."
 msgstr "กำหนดถ้าหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลงในการอัพเดตสถานะการเปลี่ยนแปลงภายในระยะเวลาที่กำหนด"
 
 #. SysConfig
-msgid "Determines if the common stats module may generate stats about changes regarding the relation between changes and incident tickets."
+msgid ""
+"Determines if the common stats module may generate stats about changes "
+"regarding the relation between changes and incident tickets."
 msgstr "กำหนดถ้าหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลงในความสัมพันธ์ระหว่างการเปลี่ยนแปลงและตั๋วที่เกิดขึ้น"
 
 #. SysConfig
-msgid "Determines if the common stats module may generate stats about changes."
+msgid ""
+"Determines if the common stats module may generate stats about changes."
 msgstr "กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Determines if the common stats module may generate stats about the number of Rfc tickets a requester created."
+msgid ""
+"Determines if the common stats module may generate stats about the number of"
+" Rfc tickets a requester created."
 msgstr "กำหนดหากโมดูลสถิติที่พบบ่อยอาจสร้างสถิติเกี่ยวกับจำนวนของตั๋ว RFC ผู้ร้องขอที่สร้างขึ้น"
 
 #. SysConfig
-msgid "Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface."
+msgid ""
+"Dynamic fields (for changes and workorders) shown in the change print screen"
+" of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2155,7 +2382,8 @@ msgid "Dynamic fields shown in the change edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the change search screen of the agent interface."
+msgid ""
+"Dynamic fields shown in the change search screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2163,23 +2391,29 @@ msgid "Dynamic fields shown in the change zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder add screen of the agent interface."
+msgid ""
+"Dynamic fields shown in the workorder add screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder edit screen of the agent interface."
+msgid ""
+"Dynamic fields shown in the workorder edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder report screen of the agent interface."
+msgid ""
+"Dynamic fields shown in the workorder report screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgid ""
+"Dynamic fields shown in the workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted."
+msgid ""
+"DynamicField event module to handle the update of conditions if dynamic "
+"fields are added, updated or deleted."
 msgstr "โมดูลจัดกิจกรรม DynamicField เพื่อจัดการกับการอัพเดตเงื่อนไขถ้าฟิลด์แบบไดนามิกที่มีการเพิ่ม การปรับปรุงหรือลบ"
 
 #. SysConfig
@@ -2199,7 +2433,9 @@ msgid "Edit the workorder."
 msgstr ""
 
 #. SysConfig
-msgid "Enables the minimal change counter size (if \"Date\" was selected as ITSMChange::NumberGenerator)."
+msgid ""
+"Enables the minimal change counter size (if \"Date\" was selected as "
+"ITSMChange::NumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2237,6 +2473,10 @@ msgstr ""
 #. SysConfig
 msgid "ITSM Change notification rules"
 msgstr ""
+
+#. SysConfig
+msgid "ITSM Changes"
+msgstr "ITSM Changes"
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
@@ -2291,14 +2531,6 @@ msgid "ITSM event module that sends notifications."
 msgstr "โมดูลเหตุการณ์ ITSM ที่ส่งการแจ้งเตือน"
 
 #. SysConfig
-msgid "ITSM event module that updates the ITSMChange index."
-msgstr ""
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMWorkOrder index."
-msgstr ""
-
-#. SysConfig
 msgid "ITSM event module that updates the history of changes."
 msgstr "โมดูลเหตุการณ์ ITSM ที่อัปเดตประวัติของการเปลี่ยนแปลง"
 
@@ -2327,15 +2559,9 @@ msgid "ITSMWorkOrder"
 msgstr "ใบสั่งงานของITSM"
 
 #. SysConfig
-msgid "If frequency is 'regularly', you can configure how often the notifications are sent (every X hours)."
-msgstr ""
-
-#. SysConfig
-msgid "It controls availability for ITSMChange search driver."
-msgstr ""
-
-#. SysConfig
-msgid "It controls availability for ITSMWorkOrder search driver."
+msgid ""
+"If frequency is 'regularly', you can configure how often the notifications "
+"are sent (every X hours)."
 msgstr ""
 
 #. SysConfig
@@ -2371,7 +2597,9 @@ msgid "Manage the category ↔ impact ↔ priority matrix."
 msgstr ""
 
 #. SysConfig
-msgid "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted."
+msgid ""
+"Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
+"permitted."
 msgstr "โมดูลเพื่อตรวจสอบว่า WorkOrderAdd หรือ WorkOrderAddFromTemplate ควรได้รับการอนุญาต"
 
 #. SysConfig
@@ -2403,7 +2631,9 @@ msgid "Module to check whether the agent is contained in the configured list."
 msgstr "โมดูลในการตรวจสอบว่าเอเย่นต์บรรจุอยู่ในรายการของการกำหนดค่าหรือไม่"
 
 #. SysConfig
-msgid "Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change."
+msgid ""
+"Module to show a link to create a change from this ticket. The ticket will "
+"be automatically linked with the new change."
 msgstr "โมดูลในการแสดงลิงค์เพื่อสร้างการเปลี่ยนแปลงจากตั๋วนี้ ตั๋วนี้จะลิงค์กับการเปลี่ยนแปลงใหม่โดยอัตโนมัติ"
 
 #. SysConfig
@@ -2419,7 +2649,10 @@ msgid "New (from template)"
 msgstr "ใหม่ (จาก แม่แบบ)"
 
 #. SysConfig
-msgid "Only users of these groups have the permission to use the ticket types as defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature \"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
+msgid ""
+"Only users of these groups have the permission to use the ticket types as "
+"defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
+"\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
 msgstr "เฉพาะผู้ใช้ของกลุ่มเหล่านี้เท่านั้นที่ได้รับอนุญาตให้ใช้รูปแบบตั๋วตามที่กำหนดใน \"ITSMChange::AddChangeLinkTicketTypes\" ถ้าคุณลักษณะแบบดังกล่าว \"Tiket::Acl::Modul###200-Tiket::Acl::Modul\" เปิดใช้งาน"
 
 #. SysConfig
@@ -2443,15 +2676,21 @@ msgid "PSA"
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface."
+msgid ""
+"Parameters for the UserCreateWorkOrderNextMask object in the preference view"
+" of the agent interface."
 msgstr "พารามิเตอร์สำหรับออบเจค UserCreateWorkOrderNextMask ในมุมมองของการตั้งค่าของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Parameters for the pages (in which the changes are shown) of the small change overview."
+msgid ""
+"Parameters for the pages (in which the changes are shown) of the small "
+"change overview."
 msgstr "พารามิเตอร์สำหรับแต่ละหน้า(ซึ่งการเปลี่ยนแปลงจะแสดง) ของภาพรวมการเปลี่ยนแปลงขนาดเล็ก"
 
 #. SysConfig
-msgid "Performs the configured action for each event (as an Invoker) for each configured Webservice."
+msgid ""
+"Performs the configured action for each event (as an Invoker) for each "
+"configured Webservice."
 msgstr ""
 
 #. SysConfig
@@ -2479,7 +2718,9 @@ msgid "Projected Service Availability (PSA)"
 msgstr ""
 
 #. SysConfig
-msgid "Projected Service Availability (PSA) of changes. Overview of approved changes and their services."
+msgid ""
+"Projected Service Availability (PSA) of changes. Overview of approved "
+"changes and their services."
 msgstr ""
 
 #. SysConfig
@@ -2579,11 +2820,14 @@ msgid "Required privileges to view changes."
 msgstr "สิทธิพิเศษที่จำเป็นในการดูการเปลี่ยนแปลง"
 
 #. SysConfig
-msgid "Required privileges to view list of changes where the user is a CAB member."
+msgid ""
+"Required privileges to view list of changes where the user is a CAB member."
 msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงที่ผู้ใช้ที่เป็นสมาชิก CAB"
 
 #. SysConfig
-msgid "Required privileges to view list of changes where the user is the change manager."
+msgid ""
+"Required privileges to view list of changes where the user is the change "
+"manager."
 msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงที่ผู้ใช้เป็นผู้จัดการการเปลี่ยนแปลง"
 
 #. SysConfig
@@ -2619,7 +2863,9 @@ msgid "Required privileges to view the list of change PSA."
 msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลง PSA"
 
 #. SysConfig
-msgid "Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review)."
+msgid ""
+"Required privileges to view the list of changes with an upcoming PIR (Post "
+"Implementation Review)."
 msgstr "สิทธิพิเศษที่จำเป็นในการดูรายการของการเปลี่ยนแปลงด้วย PIR ที่จะมาถึง (รีวิวหลังการดำเนินงาน)"
 
 #. SysConfig
@@ -2643,7 +2889,9 @@ msgid "Reset change and its workorders."
 msgstr ""
 
 #. SysConfig
-msgid "Run task to check if specific times have been reached in changes and workorders."
+msgid ""
+"Run task to check if specific times have been reached in changes and "
+"workorders."
 msgstr ""
 
 #. SysConfig
@@ -2652,6 +2900,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Save workorder as a template."
+msgstr ""
+
+#. SysConfig
+msgid "Schedule"
 msgstr ""
 
 #. SysConfig
@@ -2667,7 +2919,16 @@ msgid "Search Changes."
 msgstr ""
 
 #. SysConfig
-msgid "Selects the change number generator module. \"AutoIncrement\" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With \"Date\", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With \"DateChecksum\", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026."
+msgid ""
+"Selects the change number generator module. \"AutoIncrement\" increments the"
+" change number, the SystemID and the counter are used with SystemID.counter "
+"format (e.g. 100118, 100119). With \"Date\", the change numbers will be "
+"generated by the current date and a counter; this format looks like "
+"Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "
+"\"DateChecksum\", the counter will be appended as checksum to the string of "
+"date plus the SystemID. The checksum will be rotated on a daily basis. This "
+"format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
+"2010062410000017, 2010062410000026."
 msgstr "เลือกโมดูลตัวสร้างหมายเลขการเปลี่ยนแปลง \"AutoIncrement\" เพิ่มจำนวนการเปลี่ยนแปลง SystemID และตัวนับจะใช้กับ SystemID รูปแบบตัวนับ (เช่น 100118, 100119) กับ \"วันที่\" ซึ่งหมายเลขการเปลี่ยนแปลงจะถูกสร้างขึ้นโดยวันที่ปัจจุบันและตัวนับ; รูปแบบนี้มีลักษณะเช่น Year.Month.Day.counter เช่น 2010062400001, 2010062400002. กับ \"DateChecksum\" ตัวนับจะถูกผนวกเป็นการตรวจสอบไปยังสตริงวันบวกด้วย SystemID ที่การตรวจสอบจะมีการหมุนในแต่ละวัน รูปแบบนี้มีลักษณะเช่นYear.Month.Day.SystemID.Counter.CheckSum เช่น 2010062410000017, 2010062410000026"
 
 #. SysConfig
@@ -2675,15 +2936,22 @@ msgid "Set the agent for the workorder."
 msgstr ""
 
 #. SysConfig
-msgid "Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface."
+msgid ""
+"Set the default height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface."
+msgid ""
+"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
+"screen and workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Sets the minimal change counter size (if \"AutoIncrement\" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000."
+msgid ""
+"Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
+"ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
+"from 10000."
 msgstr "ตั้งค่าขนาดตัวนับการเปลี่ยนแปลงน้อยที่สุด (ถ้า \"AutoIncrement\" ได้รับเลือกเป็น ITSMChange :: NumberGenerator) ค่าเริ่มต้นคือ 5 ซึ่งหมายความว่าตัวนับเริ่มต้นจาก 10000"
 
 #. SysConfig
@@ -2695,96 +2963,142 @@ msgid "Sets up the state machine for workorders."
 msgstr "ตั้งค่าเครื่องของสถานะสำหรับใบสั่งงาน"
 
 #. SysConfig
-msgid "Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed."
+msgid ""
+"Shows a checkbox in the workorder edit screen of the agent interface that "
+"defines if the the following workorders should also be moved if a workorder "
+"is modified and the planned end time has changed."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface."
+msgid ""
+"Shows a link in the menu that allows changing the workorder agent, in the "
+"zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface."
-msgstr "แสดงการเชื่อมโยงในเมนูที่อนุญาติให้กำหนด\n"
-"การเปลี่ยนแปลงเป็นแม่แบบในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์"
+msgid ""
+"Shows a link in the menu that allows defining a change as a template in the "
+"zoom view of the change, in the agent interface."
+msgstr "แสดงการเชื่อมโยงในเมนูที่อนุญาติให้กำหนด\nการเปลี่ยนแปลงเป็นแม่แบบในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface."
+msgid ""
+"Shows a link in the menu that allows defining a workorder as a template in "
+"the zoom view of the workorder, in the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface."
+msgid ""
+"Shows a link in the menu that allows editing the report of a workorder, in "
+"the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu that allows linking a change with another object in"
+" the change zoom view of the agent interface."
 msgstr "แสดงการเชื่อมโยงในเมนูที่อนุญาติให้เชื่อมโยงการเปลี่ยนแปลงกับออบเจคอื่นในมุมมองการซูมของใบสั่งงานดังกล่าวอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface."
+msgid ""
+"Shows a link in the menu that allows linking a workorder with another object"
+" in the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu that allows moving the time slot of a change in its"
+" zoom view of the agent interface."
 msgstr "แสดงการเชื่อมโยงในเมนูที่อนุญาติให้ย้ายช่วงเวลาของการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu that allows taking a workorder in the zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu that allows taking a workorder in the its zoom view"
+" of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to access the conditions of a change in the zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to access the conditions of a change in the its "
+"zoom view of the agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อที่เข้าดูเงื่อนไขการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a change in the its zoom "
+"view of the agent interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อที่เข้าชมประวัติการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to access the history of a workorder in the its "
+"zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to access the history of a change in the zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to add a workorder in the change zoom view of the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to access the history of a workorder in the zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to add a workorder in the change zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to delete a change in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to delete a change in its zoom view of the agent "
+"interface."
 msgstr "แสดงลิงค์ในเมนูเพื่อที่จะลบการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu to delete a workorder in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to delete a workorder in its zoom view of the agent"
+" interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a change in the zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to edit a change in the its zoom view of the agent "
+"interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to edit a workorder in the its zoom view of the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to edit a workorder in the zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to go back in the change zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to go back in the change zoom view of the agent "
+"interface."
 msgstr "แสดงลิงค์ในเมนูเพื่อกลับไปยังมุมมองการซูมของการเปลี่ยนแปลงของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu to go back in the workorder zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to go back in the workorder zoom view of the agent "
+"interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to print a change in the zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to print a change in the its zoom view of the agent"
+" interface."
+msgstr "แสดงลิงค์ในเมนูเพื่อพิมพ์การเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
+
+#. SysConfig
+msgid ""
+"Shows a link in the menu to print a workorder in the its zoom view of the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
-msgid "Shows a link in the menu to print a workorder in the zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface."
+msgid ""
+"Shows a link in the menu to reset a change and its workorders in its zoom "
+"view of the agent interface."
 msgstr "แสดงการเชื่อมโยงในเมนูเพื่อรีเซ็ตการเปลี่ยนแปลงและใบสั่งงานในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
 
 #. SysConfig
-msgid "Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface."
+msgid ""
+"Shows a link in the menu to show the involved persons in a change, in the "
+"zoom view of the change in the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2796,7 +3110,9 @@ msgid "State Machine"
 msgstr "สถานะกลไก"
 
 #. SysConfig
-msgid "Stores change and workorder ids and their corresponding template id, while a user is editing a template."
+msgid ""
+"Stores change and workorder ids and their corresponding template id, while a"
+" user is editing a template."
 msgstr "จัดเก็บการเปลี่ยนแปลงและไอดีใบสั่งงานและไอดีแม่แบบที่สอดคล้องกันของพวกเขาในขณะที่ผู้ใช้แก้ไขแม่แบบ"
 
 #. SysConfig
@@ -2824,24 +3140,35 @@ msgid "Template."
 msgstr ""
 
 #. SysConfig
-msgid "The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
+msgid ""
+"The identifier for a change, e.g. Change#, MyChange#. The default is "
+"Change#."
 msgstr "ตัวบ่งชี้สำหรับการเปลี่ยนแปลง เช่น การเปลี่ยนแปลง#  การเปลี่ยนแปลงของฉัน# ค่าเริ่มต้นคือ การเปลี่ยนแปลง#"
 
 #. SysConfig
-msgid "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#."
+msgid ""
+"The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
+"is Workorder#."
 msgstr "ตัวบ่งชี้สำหรับใบสั่งงาน เช่น ใบสั่งงาน#  ใบสั่งงานของฉัน# ค่าเริ่มต้นคือ ใบสั่งงาน#.';"
 
 #. SysConfig
-msgid "This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed."
-msgstr "โมดูล ACL นี้จำกัดการใช้งานของประเภทตั๋วที่กำหนดไว้ในตัวเลือกที่ sysconfig 'ITSMChange :: AddChangeLinkTicketTypes' ให้กับผู้ใช้ของกลุ่มนั้นๆตามที่กำหนดใน \"ITSMChange :: RestrictTicketTypes :: Groups\"\n"
-"ในฐานะที่เป็น ACL นี้อาจขัดแย้งกับ ACLs อื่น ๆ ที่ยังเกี่ยวข้องกับประเภทตั๋ว ตัวเลือก sysconfig นี้ถูกปิดใช้งานโดยค่าเริ่มต้นและควรจะเปิดใช้งานในกรณีที่จำเป็น"
+msgid ""
+"This ACL module restricts the usuage of the ticket types that are defined in"
+" the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of "
+"the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As "
+"this ACL could collide with other ACLs which are also related to the ticket "
+"type, this sysconfig option is disabled by default and should only be "
+"activated if needed."
+msgstr "โมดูล ACL นี้จำกัดการใช้งานของประเภทตั๋วที่กำหนดไว้ในตัวเลือกที่ sysconfig 'ITSMChange :: AddChangeLinkTicketTypes' ให้กับผู้ใช้ของกลุ่มนั้นๆตามที่กำหนดใน \"ITSMChange :: RestrictTicketTypes :: Groups\"\nในฐานะที่เป็น ACL นี้อาจขัดแย้งกับ ACLs อื่น ๆ ที่ยังเกี่ยวข้องกับประเภทตั๋ว ตัวเลือก sysconfig นี้ถูกปิดใช้งานโดยค่าเริ่มต้นและควรจะเปิดใช้งานในกรณีที่จำเป็น"
 
 #. SysConfig
 msgid "Time Slot"
 msgstr ""
 
 #. SysConfig
-msgid "Types of tickets, where in the ticket zoom view a link to add a change will be displayed."
+msgid ""
+"Types of tickets, where in the ticket zoom view a link to add a change will "
+"be displayed."
 msgstr "ประเภทของตั๋วที่ซูมตั๋วดูการลิงค์ที่จะเพิ่มการเปลี่ยนแปลงจะปรากฏ"
 
 #. SysConfig
@@ -2895,120 +3222,3 @@ msgstr ""
 #. SysConfig
 msgid "regularly"
 msgstr ""
-
-#. Template: AgentITSMChangeHistory
-msgid "History Content"
-msgstr "เนื้อหาประวัติ"
-
-#. Template: AgentITSMChangeHistory
-msgid "Createtime"
-msgstr "เวลาที่สร้าง"
-
-#. Template: AgentITSMChangeOverviewNavBar
-msgid "Context Settings"
-msgstr "การตั้งค่าข้อความ"
-
-#. Template: AgentITSMChangeZoom
-msgid "Last changed by"
-msgstr "การเปลี่ยนแปลงล่าสุดโดย"
-
-#. Template: AgentITSMChangeZoom
-msgid "To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS)."
-msgstr "ในการเปิดการลิ้งในบล็อกคำอธิบายต่อไปนี้ คุณอาจจะต้องกดปุ่ม Ctrl หรือ Cmd หรือ Shift ในขณะที่กดลิ้ง (ขึ้นอยุ่กับเบราเซอร์และระบบปฎิบัติการของคุณ)"
-
-#. Template: AgentITSMChangeZoom
-msgid "Download Attachment"
-msgstr "ดาวน์โหลดสิ่งที่แนบมา"
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "No %s is given!"
-msgstr ""
-
-#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
-msgid "No config option found for the view \"%s\"!"
-msgstr ""
-
-#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
-msgid "Ok"
-msgstr "โอเค"
-
-#. SysConfig
-msgid "Change Schedule."
-msgstr ""
-
-#. SysConfig
-msgid "Change search backend router of the agent interface."
-msgstr "เปลี่ยนการค้นหา  backend router ของอินเตอร์เฟซเอเย่นต์"
-
-#. SysConfig
-msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
-
-#. SysConfig
-msgid "Defines if the requested date should be print by customer."
-msgstr "กำหนดค่าถ้าหากลูกค้าต้องการพิมพ์ the requested date "
-
-#. SysConfig
-msgid "Defines if the requested date should be searched by customer."
-msgstr "กำหนดค่าถ้าหากลูกค้าจะต้องค้นหา the requested date"
-
-#. SysConfig
-msgid "Defines if the requested date should be set by customer."
-msgstr "กำหนดค่าถ้าหากลูกค้าต้องการเซตวันที่ที่เรียกร้อง"
-
-#. SysConfig
-msgid "Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed."
-msgstr "กำหนดว่ามีการเปลี่ยนแปลงเท่านั้นที่ประกอบด้วยการเชื่อมโยงใบสั่งงานด้วยการบริการที่จะแสดงลูกค้าผู้ใช้มีสิทธิ์ในการใช้ การเปลี่ยนแปลงอื่น ๆ จะไม่สามารถแสดงได้"
-
-#. SysConfig
-msgid "Defines the change states that will be used as filters in the customer change schedule overview."
-msgstr "กำหนดสถานะการเปลี่ยนแปลงที่จะใช้เป็นตัวกรองในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
-
-#. SysConfig
-msgid "Defines the default sort criteria of the changes in the customer change schedule overview."
-msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นของการเปลี่ยนแปลงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
-
-#. SysConfig
-msgid "Defines the default sort order in the customer change schedule overview."
-msgstr "กำหนดเกณฑ์การจัดเรียงเริ่มต้นในภาพรวมตารางการเปลี่ยนแปลงลูกค้า"
-
-#. SysConfig
-msgid "Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column."
-msgstr "กำหนดคอลัมน์ที่จะแสดงในภาพรวมตารางการเปลี่ยนแปลงลูกค้า ตัวเลือกนี้จะไม่มีผลต่อตำแหน่งของคอลัมน์"
-
-#. SysConfig
-msgid "Schedule"
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อที่เข้าดูเงื่อนไขการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
-
-#. SysConfig
-msgid "Shows a link in the menu to access the history of a change in the its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อที่เข้าชมประวัติการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
-
-#. SysConfig
-msgid "Shows a link in the menu to access the history of a workorder in the its zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to edit a change in the its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อแก้ไขการเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
-
-#. SysConfig
-msgid "Shows a link in the menu to edit a workorder in the its zoom view of the agent interface."
-msgstr ""
-
-#. SysConfig
-msgid "Shows a link in the menu to print a change in the its zoom view of the agent interface."
-msgstr "แสดงลิงค์ในเมนูเพื่อพิมพ์การเปลี่ยนแปลงในมุมมองการซูมของอินเตอร์เฟซเอเย่นต์"
-
-#. SysConfig
-msgid "Shows a link in the menu to print a workorder in the its zoom view of the agent interface."
-msgstr ""
-

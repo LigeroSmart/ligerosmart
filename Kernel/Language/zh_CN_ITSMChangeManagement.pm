@@ -328,7 +328,7 @@ sub Data {
     $Self->{Translation}->{'Overview: My Workorders'} = '概览：我的工作指定';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
-    $Self->{Translation}->{'Overview: PIR'} = '概览：PIR（实施后评审）';
+    $Self->{Translation}->{'Overview: PIR'} = '概览：PIR（实施后审查）';
 
     # Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
     $Self->{Translation}->{'Overview: PSA'} = '概览：PSA（计划服务可用性）';
@@ -532,7 +532,7 @@ sub Data {
     $Self->{Translation}->{'rejected'} = '被拒绝';
     $Self->{Translation}->{'approved'} = '通过审批';
     $Self->{Translation}->{'in progress'} = '处理中';
-    $Self->{Translation}->{'pending pir'} = '等待实施后评审';
+    $Self->{Translation}->{'pending pir'} = '等待实施后审查';
     $Self->{Translation}->{'successful'} = '成功';
     $Self->{Translation}->{'failed'} = '失败';
     $Self->{Translation}->{'canceled'} = '取消';
@@ -544,7 +544,7 @@ sub Data {
     $Self->{Translation}->{'workorder'} = '工作指令';
     $Self->{Translation}->{'backout'} = '回退';
     $Self->{Translation}->{'decision'} = '决定';
-    $Self->{Translation}->{'pir'} = 'PIR (实施后评审)';
+    $Self->{Translation}->{'pir'} = 'PIR (实施后审查)';
     $Self->{Translation}->{'ChangeStateID'} = '变更状态ID';
     $Self->{Translation}->{'CategoryID'} = '类别ID';
     $Self->{Translation}->{'ImpactID'} = '影响ID';
@@ -668,7 +668,7 @@ sub Data {
     $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} =
         '定义客户是否可以搜索请求日期。';
     $Self->{Translation}->{'Defines if the requested date should be set by customer.'} = '定义客户是否可以设置请求日期。';
-    $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = '定义客户是否可以显示请求的日期。';
+    $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = '定义客户是否可以显示请求日期。';
     $Self->{Translation}->{'Defines if the workorder state should be shown.'} = '定义是否显示工作指令状态。';
     $Self->{Translation}->{'Defines if the workorder title should be shown.'} = '定义是否显示工作指令标题。';
     $Self->{Translation}->{'Defines shown graph attributes.'} = '定义（变更详情窗口工作指令图）显示的图形的属性。';
@@ -705,7 +705,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyWorkorders overview.'} =
         '定义\'我的工作指令\'概览中默认的变更排序条件。';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} =
-        '定义\'PIR（实施后评审）\'概览中默认的变更排序条件。';
+        '定义\'PIR（实施后审查）\'概览中默认的变更排序条件。';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} =
         '定义客户\'变更计划\'概览中默认的变更排序条件。';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} =
@@ -714,7 +714,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = '定义\'我的变更\'概览中默认的排序顺序。';
     $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} =
         '定义\'我的工作指令\'概览中默认的排序顺序。';
-    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = '定义\'PIR（实施后评审）\'概览中默认的排序顺序。';
+    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = '定义\'PIR（实施后审查）\'概览中默认的排序顺序。';
     $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = '定义\'变更PSA\'概览中默认的排序顺序。';
     $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} =
         '定义\'变更经理\'概览中默认的排序顺序。';
@@ -789,7 +789,7 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column.'} =
         '定义在\'我的工作指令\'概览中显示的字段，这个选项不会影响字段的显示位置。';
     $Self->{Translation}->{'Defines the shown columns in the PIR overview. This option has no effect on the position of the column.'} =
-        '定义在\'PIR（实施后评审）\'概览中显示的字段，这个选项不会影响字段的显示位置。';
+        '定义在\'PIR（实施后审查）\'概览中显示的字段，这个选项不会影响字段的显示位置。';
     $Self->{Translation}->{'Defines the shown columns in the change manager overview. This option has no effect on the position of the column.'} =
         '定义在\'变更经理\'概览中显示的字段，这个选项不会影响字段的显示位置。';
     $Self->{Translation}->{'Defines the shown columns in the change overview. This option has no effect on the position of the column.'} =
@@ -806,9 +806,9 @@ sub Data {
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the MyWorkorders overview.'} =
         '定义在\'我的工作指令\'概览中用作过滤器的工作指令状态。';
     $Self->{Translation}->{'Defines the workorder states that will be used as filters in the PIR overview.'} =
-        '定义在\'PIR（实施后评审）\'概览中用作过滤器的工作指令状态。';
+        '定义在\'PIR（实施后审查）\'概览中用作过滤器的工作指令状态。';
     $Self->{Translation}->{'Defines the workorder types that will be used to show the PIR overview.'} =
-        '定义在\'PIR（实施后评审）\'概览中用作过滤器的工作指令类型。';
+        '定义在\'PIR（实施后审查）\'概览中用作过滤器的工作指令类型。';
     $Self->{Translation}->{'Defines whether notifications should be sent.'} = '定义是否发送通知。';
     $Self->{Translation}->{'Delete a change.'} = '删除一个变更。';
     $Self->{Translation}->{'Delete the change.'} = '删除此变更。';
@@ -860,7 +860,7 @@ sub Data {
     $Self->{Translation}->{'ITSM Change Condition Overview.'} = '变更条件概览。';
     $Self->{Translation}->{'ITSM Change Manager Overview.'} = '变更经理概览。';
     $Self->{Translation}->{'ITSM Change Notifications'} = 'ITSM变更通知';
-    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '变更PIR（实施后评审）概览。';
+    $Self->{Translation}->{'ITSM Change PIR Overview.'} = '变更PIR（实施后审查）概览。';
     $Self->{Translation}->{'ITSM Change notification rules'} = '变更通知规则';
     $Self->{Translation}->{'ITSM Changes'} = '变更';
     $Self->{Translation}->{'ITSM MyCAB Overview.'} = '我的CAB概览';
@@ -915,7 +915,7 @@ sub Data {
     $Self->{Translation}->{'Other Settings'} = '其它设置';
     $Self->{Translation}->{'Overview over all Changes.'} = '所有变更的概览。';
     $Self->{Translation}->{'PIR'} = '实施后评审';
-    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (实施后评审)';
+    $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (实施后审查)';
     $Self->{Translation}->{'PSA'} = 'PSA';
     $Self->{Translation}->{'Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface.'} =
         '服务人员界面偏好设置视图UserCreateWorkOrderNextMask（创建工作指令后的窗口）对象的参数。';
@@ -972,7 +972,7 @@ sub Data {
     $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = '查看变更计划列表所需的权限。';
     $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = '查看变更PSA列表所需的权限。';
     $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} =
-        '查看有即使来临的PIR（实施后评审）的变更列表所需的权限。';
+        '查看有即使来临的PIR（实施后审查）的变更列表所需的权限。';
     $Self->{Translation}->{'Required privileges to view the list of own changes.'} = '查看自己的变更列表所需的权限。';
     $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = '查看自己的工作指令所需的权限。';
     $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = '为工作指令编写报告所需的权限。';
@@ -1012,7 +1012,7 @@ sub Data {
     $Self->{Translation}->{'Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface.'} =
         '在服务人员界面工作指令详情窗口，在菜单中显示一个允许链接该工作指令到其它对象的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface.'} =
-        '在服务人员界面工单变更详情窗口，在菜单中显示一个允许移动变更时间轴的链接。';
+        '在服务人员界面变更详情窗口，在菜单中显示一个允许移动变更时间轴的链接。';
     $Self->{Translation}->{'Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface.'} =
         '在服务人员界面工作指令详情窗口，在菜单中显示一个允许执行一个工作指令的链接。';
     $Self->{Translation}->{'Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface.'} =

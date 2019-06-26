@@ -18,53 +18,23 @@
         <File Permission="660" Location="Kernel/Config/Files/XML/ITSMChangeManagement.xml" />
         <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMChange.pm" />
         <File Permission="660" Location="Kernel/GenericInterface/Event/ObjectType/ITSMWorkOrder.pm" />
-        <File Permission="660" Location="Kernel/Language/ar_SA_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/bg_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/ca_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/cs_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/da_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/el_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/en_CA_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/en_GB_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/es_CO_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/es_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/es_MX_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/et_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/fa_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/fi_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/fr_CA_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/fr_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/gl_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/he_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/hi_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/hr_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/hu_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/id_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/it_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ja_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/ko_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/lt_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/lv_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/mk_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ms_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/nb_NO_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/nl_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pl_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pt_BR_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/pt_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/ro_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/ru_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/sk_SK_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/sl_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Cyrl_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sr_Latn_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/sv_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/sw_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/th_TH_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/tr_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/uk_ITSMChangeManagement.pm" />
-        <File Permission="660" Location="Kernel/Language/vi_VN_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/zh_CN_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/zh_TW_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm" />
