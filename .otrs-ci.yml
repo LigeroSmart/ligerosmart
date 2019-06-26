@@ -8,7 +8,7 @@ DeployOTRSBranch: rel-6_0
 DeployOTRSPackages:
  - OTRSCodePolicy@master
 
- TestModes:
+TestModes:
  Merge:
   PlatformSets:
    - ondemand-merge-otrs6
