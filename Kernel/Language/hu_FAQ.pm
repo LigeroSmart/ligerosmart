@@ -22,7 +22,7 @@ sub Data {
     $Self->{Translation}->{'Approval'} = 'Jóváhagyás';
 
     # Template: AgentFAQCategory
-    $Self->{Translation}->{'FAQ Category Management'} = 'GyIK kategória kezelés';
+    $Self->{Translation}->{'FAQ Category Management'} = 'GyIK kategóriakezelés';
     $Self->{Translation}->{'Add FAQ Category'} = 'GyIK kategória hozzáadása';
     $Self->{Translation}->{'Edit FAQ Category'} = 'GyIK kategória szerkesztése';
     $Self->{Translation}->{'Add category'} = 'Kategória hozzáadása';
@@ -463,7 +463,7 @@ sub Data {
     $Self->{Translation}->{'Module to generate HTML OpenSearch profile for short FAQ search in the public interface.'} =
         'Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez a nyilvános felületen.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
-        'Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez.';
+        'Egy modul a gyors GyIK keresés HTML OpenSearch profiljának előállításához.';
     $Self->{Translation}->{'New FAQ Article.'} = 'Új GyIK bejegyzés.';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Az új GyIK bejegyzések jóváhagyása szükséges a közzétételük előtt.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =

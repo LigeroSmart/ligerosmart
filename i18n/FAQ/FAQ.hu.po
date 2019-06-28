@@ -1,12 +1,13 @@
 # 
 # Translators:
+# Balázs Úr <balazs.ur@otrs.com>, 2014-2019
 # Balázs Úr <urbalazs@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2018-12-06 07:28+0000\n"
-"Last-Translator: Balázs Úr <ur.balazs@fsf.hu>\n"
+"PO-Revision-Date: 2019-06-27 18:46+0000\n"
+"Last-Translator: Balázs Úr\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgstr "Jóváhagyás"
 
 #. Template: AgentFAQCategory
 msgid "FAQ Category Management"
-msgstr "GyIK kategória kezelés"
+msgstr "GyIK kategóriakezelés"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
@@ -1266,7 +1267,7 @@ msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK ker
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
-msgstr "Egy modul a HTML OpenSearch profil előállításához a rövid GyIK kereséshez."
+msgstr "Egy modul a gyors GyIK keresés HTML OpenSearch profiljának előállításához."
 
 #. SysConfig
 msgid "New FAQ Article."
