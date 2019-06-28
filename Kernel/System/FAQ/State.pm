@@ -378,7 +378,7 @@ sub StateTypeList {
 
         # call StateTypeList without parameters to validate Types
         my $StateTypeList = $Self->StateTypeList( UserID => $Param{UserID} );
-        my %StateTypes = reverse %{ $StateTypeList || {} };
+        my %StateTypes    = reverse %{ $StateTypeList || {} };
         my @Types;
 
         # only add types to list that exist
