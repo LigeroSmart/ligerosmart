@@ -181,25 +181,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # Refresh screen.
-        $Selenium->VerifiedRefresh();
-
-        $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentITSMChangeHistory;ChangeID=$ChangeID\"]').length"
-        );
-
-        # Click on 'History'.
-        $Selenium->find_element(
-            "//a[contains(\@href, \'Action=AgentITSMChangeHistory;ChangeID=$ChangeID' )]"
-        )->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeHistory;ChangeID=$ChangeID");
 
         # Check history log to verify change involved persons.
         $Self->True(
@@ -211,13 +193,9 @@ $Selenium->RunTest(
             "Change in customer CAB - success",
         );
         $Self->True(
-            index( $Selenium->get_page_source(), "ChangeManager: (new=$TestUserLogin" ) > -1,
+            index( $Selenium->get_page_source(), "Change Manager: (new=$TestUserLogin" ) > -1,
             "Change in manager - success",
         );
-
-        # Close popup.
-        $Selenium->close();
-        $Selenium->WaitFor( WindowCount => 1 );
 
         # Delete created test change.
         my $Success = $ChangeObject->ChangeDelete(

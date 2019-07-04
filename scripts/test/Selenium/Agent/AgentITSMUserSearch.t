@@ -42,14 +42,20 @@ $Selenium->RunTest(
         );
 
         # Create and log in builder user.
+        my $Language      = 'en';
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
+            Groups   => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
+            Language => $Language,
         ) || die "Did not get test builder user";
 
         $Selenium->Login(
             Type     => 'Agent',
             User     => $TestUserLogin,
             Password => $TestUserLogin,
+        );
+
+        my $LanguageObject = Kernel::Language->new(
+            UserLanguage => $Language,
         );
 
         # Get test user ID.
@@ -98,7 +104,7 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length;' );
 
         # Check manager change.
-        my $ExpectedManagerMessage = "ChangeManager: (new=$TestUserLogin";
+        my $ExpectedManagerMessage = $LanguageObject->Translate('ChangeManager') . ": (new=$TestUserLogin";
 
         $Self->True(
             index( $Selenium->get_page_source(), $ExpectedManagerMessage ) > -1,

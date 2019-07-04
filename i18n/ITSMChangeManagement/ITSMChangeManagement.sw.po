@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Macbethana Wilfred <mwi@nrd.no>, 2014
 # nilsleideck <nils.leideck@leidex.net>, 2014
@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 12:00+0000\n"
-"PO-Revision-Date: 2018-11-05 12:01+0000\n"
+"POT-Creation-Date: 2019-04-09 12:23+0000\n"
+"PO-Revision-Date: 2019-04-09 12:23+0000\n"
 "Last-Translator: Udo Bretz\n"
 "Language-Team: Swahili (http://www.transifex.com/otrs/OTRS/language/sw/)\n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category ↔ Impact ↔ Priority"
-msgstr ""
+msgstr "Kategoria↔ Athari↔ Kipaumbele"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category ↔ Impact."
-msgstr ""
+msgstr "Simamia matokeo ya kipaumbele cha Kategoria zinazochanganywa ↔ Athari."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -245,16 +245,8 @@ msgid "History of %s%s"
 msgstr ""
 
 #. Template: AgentITSMChangeHistory
-msgid "History Content"
-msgstr "Maudhui ya historia"
-
-#. Template: AgentITSMChangeHistory
 msgid "Workorder"
 msgstr "Oda ya kazi"
-
-#. Template: AgentITSMChangeHistory
-msgid "Createtime"
-msgstr "Muda wa kutengeneza"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
@@ -331,10 +323,6 @@ msgstr "Mtumiaji Batili"
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
 msgstr "CAB ya sasa"
-
-#. Template: AgentITSMChangeOverviewNavBar
-msgid "Context Settings"
-msgstr "Mipangilio ya Muktadha"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
@@ -496,41 +484,20 @@ msgstr "CAB"
 msgid "Last changed"
 msgstr "Mara ya mwisho imebadilishwa"
 
-#. Template: AgentITSMChangeZoom
-msgid "Last changed by"
-msgstr "Mara ya mwisho imebadilishwa na"
-
-#. Template: AgentITSMChangeZoom
-msgid ""
-"To open links in the following description blocks, you might need to press "
-"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
-"and OS)."
-msgstr ""
-
-#. Template: AgentITSMChangeZoom
-msgid "Download Attachment"
-msgstr "Pakua Kiambatanisho"
-
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
 msgstr "Hariri kiolezo cha CAB"
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"This will create a new change from this template, so you can edit and save "
-"it."
+msgid "This will create a new change from this template, so you can edit and save it."
 msgstr "Hii itatengeneza mabadiliko mapya kutoka kwenye hiki kiolezo, ili uweze kuhariri na kuhifadhi."
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"The new change will be deleted automatically after it has been saved as "
-"template."
+msgid "The new change will be deleted automatically after it has been saved as template."
 msgstr "Mabadiliko mapya yatafutwa kiotomatiki baada ya kuhifadhiwa kama kiolezo."
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"This will create a new workorder from this template, so you can edit and "
-"save it."
+msgid "This will create a new workorder from this template, so you can edit and save it."
 msgstr "Hii itatengeneza oda mpya ya kazi kutoka kwenye kiolezo hiki, ili uweze kuihariri na kuihifadhi."
 
 #. Template: AgentITSMTemplateEditContent
@@ -538,9 +505,7 @@ msgid "A temporary change will be created which contains the workorder."
 msgstr "Mabadiliko ya muda yatatengenezwa yenye oda ya kazi."
 
 #. Template: AgentITSMTemplateEditContent
-msgid ""
-"The temporary change and new workorder will be deleted automatically after "
-"the workorder has been saved as template."
+msgid "The temporary change and new workorder will be deleted automatically after the workorder has been saved as template."
 msgstr "Mabadiliko ya muda na oda ya kazi mpya yatafutwa kiotomatiki baada ya oda ya kazi kuhifadhiwa kama kiolezo."
 
 #. Template: AgentITSMTemplateEditContent
@@ -600,8 +565,7 @@ msgid "Do you really want to delete this workorder?"
 msgstr "Kweli unataka kufuta oda hii ya kazi?"
 
 #. Template: AgentITSMWorkOrderDelete
-msgid ""
-"You can not delete this Workorder. It is used in at least one Condition!"
+msgid "You can not delete this Workorder. It is used in at least one Condition!"
 msgstr "Huwezi kufuta oda hii ya kazi. Inatumika japo kwenye sharti moja!"
 
 #. Template: AgentITSMWorkOrderDelete
@@ -617,9 +581,7 @@ msgid "Move following workorders accordingly"
 msgstr "Hamisha oda za kazi zifuatazo ipasavyo"
 
 #. Template: AgentITSMWorkOrderEdit
-msgid ""
-"If the planned end time of this workorder is changed, the planned start "
-"times of all following workorders will be changed accordingly"
+msgid "If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly"
 msgstr "Kama muda wa kumaliza wa oda ya kazi hii umebadilishwa, muda wa kuanza wa oda za kazi zote zinazofuata zitabadilika"
 
 #. Template: AgentITSMWorkOrderHistory
@@ -724,10 +686,6 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Could not delete ConditionID %s!"
-msgstr ""
-
-#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
-msgid "No %s is given!"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
@@ -1146,16 +1104,24 @@ msgstr ""
 msgid "The workorder \"%s\" could not be serialized."
 msgstr ""
 
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMChange.pm
+msgid "ITSM Change Attachment"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
+msgid "ITSM Work Order"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMWorkOrder.pm
+msgid "ITSM Work Order Attachment"
+msgstr ""
+
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Need config option %s!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
 msgid "Config option %s needs to be a HASH ref!"
-msgstr ""
-
-#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
-msgid "No config option found for the view \"%s\"!"
 msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
@@ -1172,6 +1138,14 @@ msgstr "Mabadiliko Yangu"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/MyWorkOrders.pm
 msgid "My Work Orders"
+msgstr ""
+
+#. SysConfig
+msgid "ITSM Changes"
+msgstr "Mabadiliko ya ITSM"
+
+#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMWorkOrder.pm
+msgid "ITSM Work Orders"
 msgstr ""
 
 #. Perl Module: Kernel/System/ITSMChange/History.pm
@@ -1566,20 +1540,12 @@ msgstr ""
 msgid "Do you really want to delete this condition?"
 msgstr ""
 
-#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
-msgid "Ok"
-msgstr "Sawa"
-
 #. SysConfig
-msgid ""
-"A list of the agents who have permission to take workorders. Key is a login "
-"name. Content is 0 or 1."
+msgid "A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1."
 msgstr "Orodha ya mawakala wenye ruhusa ya kuchukua oda za kazi. Muhimu ni jina la kuingia. Iliyomo ni 0 au 1."
 
 #. SysConfig
-msgid ""
-"A list of workorder states, at which the ActualStartTime of a workorder will"
-" be set if it was empty at this point."
+msgid "A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point."
 msgstr "Orodha ya hali za oda ya kazi, ambapo MudaHalisiKuanza wa oda ya kazi utasetiwa kama ulikuwa wazi katika pointi hii."
 
 #. SysConfig
@@ -1627,15 +1593,11 @@ msgid "Admin of the state machine."
 msgstr "Msimamizi wa mashine ya hali."
 
 #. SysConfig
-msgid ""
-"Agent interface notification module to see the number of change advisory "
-"boards."
+msgid "Agent interface notification module to see the number of change advisory boards."
 msgstr "Moduli taarifa ya kiolesura cha wakala kuonyesha idadi ya bodi za ushauri wa mabadiliko."
 
 #. SysConfig
-msgid ""
-"Agent interface notification module to see the number of changes managed by "
-"the user."
+msgid "Agent interface notification module to see the number of changes managed by the user."
 msgstr "Moduli taarifa ya kiolesura cha wakala kuona idadi ya mabadiliko yanayosimamiwa na mtumiaji."
 
 #. SysConfig
@@ -1651,15 +1613,11 @@ msgid "CAB Member Search"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Cache time in minutes for the change management toolbars. Default: 3 hours "
-"(180 minutes)."
+msgid "Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes)."
 msgstr "Muda wa hifadhi muda kwa dakika kwa ajili ya mwambaa zana za usimamizi wa mabadiliko. Chaguo-msingi: Masaa 3 (Dakika 180)."
 
 #. SysConfig
-msgid ""
-"Cache time in minutes for the change management. Default: 5 days (7200 "
-"minutes)."
+msgid "Cache time in minutes for the change management. Default: 5 days (7200 minutes)."
 msgstr "Muda wa hifadhi muda kwa dakika kwa ajili ya usimamizi wa mabadiliko. Chaguo-msingi: Siku 5 (Dakika 7200)."
 
 #. SysConfig
@@ -1689,10 +1647,6 @@ msgstr ""
 #. SysConfig
 msgid "Change Schedule"
 msgstr "Badili Ratiba"
-
-#. SysConfig
-msgid "Change Schedule."
-msgstr ""
 
 #. SysConfig
 msgid "Change Settings"
@@ -1731,10 +1685,6 @@ msgid "Change number"
 msgstr ""
 
 #. SysConfig
-msgid "Change search backend router of the agent interface."
-msgstr "Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko."
-
-#. SysConfig
 msgid "Change state"
 msgstr ""
 
@@ -1755,15 +1705,11 @@ msgid "Condition Overview"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Configure which screen should be shown after a new workorder has been "
-"created."
+msgid "Configure which screen should be shown after a new workorder has been created."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Configures how often the notifications are sent when planned the start time "
-"or other time values have been reached/passed."
+msgid "Configures how often the notifications are sent when planned the start time or other time values have been reached/passed."
 msgstr "Ina sanidi ni kwa mara ngapi taarifa zinatumwa pale muda uliopangwa wa kuanza au mida mingine inapofikiwa/kupitwa."
 
 #. SysConfig
@@ -1791,38 +1737,19 @@ msgid "Create and manage change notifications."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Default type for a workorder. This entry must exist in general catalog class"
-" 'ITSM::ChangeManagement::WorkOrder::Type'."
+msgid "Default type for a workorder. This entry must exist in general catalog class 'ITSM::ChangeManagement::WorkOrder::Type'."
 msgstr "Chaguo-msingi la aina ya oda ya kazi. Hili ingizo lazima liwepo katika tabaka la katalogi la ujumla 'ITSM::UsimamiziMabadiliko::Oda ya Kazi::Aina' ."
-
-#. SysConfig
-msgid ""
-"Define Actions where a settings button is available in the linked objects "
-"widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
 
 #. SysConfig
 msgid "Define the signals for each workorder state."
 msgstr "Fafanua ishara kwa kila hali ya oda ya kazi."
 
 #. SysConfig
-msgid ""
-"Define which columns are shown in the linked Changes widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are "
-"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
-"2 = Enabled by default."
+msgid "Define which columns are shown in the linked Changes widget (LinkObject::ViewMode = \"complex\"). Note: Only Change attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Define which columns are shown in the linked Workorder widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are "
-"allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, "
-"2 = Enabled by default."
+msgid "Define which columns are shown in the linked Workorder widget (LinkObject::ViewMode = \"complex\"). Note: Only Workorder attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr ""
 
 #. SysConfig
@@ -1842,15 +1769,11 @@ msgid "Defines if it will be possible to print the planned effort."
 msgstr "Inafafanua kama itawezekana kuchapisha juhudi zilizopangwa."
 
 #. SysConfig
-msgid ""
-"Defines if reachable (as defined by the state machine) change end states "
-"should be allowed if a change is in a locked state."
+msgid "Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state."
 msgstr "Inafafanua kama hali za mwisho za mabadiliko zinazopatikana (kama ilivyofafanuliwa na mashine ya hali) ziruhusiwe kama mabadiliko yako kwenye hali iliyofungwa."
 
 #. SysConfig
-msgid ""
-"Defines if reachable (as defined by the state machine) workorder end states "
-"should be allowed if a workorder is in a locked state."
+msgid "Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state."
 msgstr "Inafafanua kama hali za mwisho za oda za kazi zinazopatikana (kama ilivyofafanuliwa na mashine ya hali) ziruhusiwe kama oda ya kazi iko kwenye hali iliyofungwa."
 
 #. SysConfig
@@ -1862,15 +1785,11 @@ msgid "Defines if the actual start and end times should be set."
 msgstr "Inafafanua kama muda halisi wa kuanza na kumaliza usetiwe."
 
 #. SysConfig
-msgid ""
-"Defines if the change search and the workorder search functions could use "
-"the mirror DB."
+msgid "Defines if the change search and the workorder search functions could use the mirror DB."
 msgstr "Amefafanua kama Change utafutaji na Workorder tafuta kazi inaweza kutumia kioo DB."
 
 #. SysConfig
-msgid ""
-"Defines if the change state can be set in the change edit screen of the "
-"agent interface."
+msgid "Defines if the change state can be set in the change edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -1878,16 +1797,16 @@ msgid "Defines if the planned effort should be shown."
 msgstr "Inafafanua kama juhudi zilizopangwa zionyeshwe."
 
 #. SysConfig
-msgid "Defines if the requested date should be print by customer."
-msgstr "Inafafanua kama tarehe iliyoombwa ichapishwe na mteja."
+msgid "Defines if the requested date could be printed by customer."
+msgstr ""
 
 #. SysConfig
-msgid "Defines if the requested date should be searched by customer."
-msgstr "Inafafanua kama tarehe iliyoombwa itafutwe na mteja."
+msgid "Defines if the requested date could be searched by customer."
+msgstr ""
 
 #. SysConfig
-msgid "Defines if the requested date should be set by customer."
-msgstr "Inafafanua kama tarehe iliyoombwa isetiwe na mteja."
+msgid "Defines if the requested date could be set by customer."
+msgstr ""
 
 #. SysConfig
 msgid "Defines if the requested date should be shown by customer."
@@ -1906,62 +1825,35 @@ msgid "Defines shown graph attributes."
 msgstr "Inafafanua sifa za jedwali lililoonyeshwa."
 
 #. SysConfig
-msgid ""
-"Defines that only changes containing Workorders linked with services, which "
-"the customer user has permission to use will be shown. Any other changes "
-"will not be displayed."
-msgstr "Inafafanua kwamba mabadiliko yenye oda za kazi zilizounganishwa na huduma, ambazo mteja ana ruhusa ya kutumia zitaonyeshwa. Mabadiliko mengine yoyote hayataonyeshwa."
-
-#. SysConfig
 msgid "Defines the change states that will be allowed to delete."
 msgstr "Inafafanua hali za mabadiliko zinazoruhusiwa kufuta."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the Change PSA "
-"overview."
+msgid "Defines the change states that will be used as filters in the Change PSA overview."
 msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika Mapitio ya Mabadiliko ya PSA."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the Change "
-"Schedule overview."
+msgid "Defines the change states that will be used as filters in the Change Schedule overview."
 msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya Ratiba za Mabadiliko."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the MyCAB "
-"overview."
+msgid "Defines the change states that will be used as filters in the MyCAB overview."
 msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya MyCAB."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the MyChanges "
-"overview."
+msgid "Defines the change states that will be used as filters in the MyChanges overview."
 msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya MabadilikoYangu."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the change manager"
-" overview."
+msgid "Defines the change states that will be used as filters in the change manager overview."
 msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya meneja mabadiliko."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the change "
-"overview."
+msgid "Defines the change states that will be used as filters in the change overview."
 msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya mabadiliko."
 
 #. SysConfig
-msgid ""
-"Defines the change states that will be used as filters in the customer "
-"change schedule overview."
-msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya ratiba za mabadiliko ya mteja."
-
-#. SysConfig
-msgid ""
-"Defines the default change title for a dummy change which is needed to edit "
-"a workorder template."
+msgid "Defines the default change title for a dummy change which is needed to edit a workorder template."
 msgstr "Inafafanua chaguo-msingi la kichwa cha habari cha mabadiliko kwa ajili ya mabadiliko ya mfano ambayo yanahitajika kuhariri kiolezo cha oda ya kazi."
 
 #. SysConfig
@@ -1981,19 +1873,15 @@ msgid "Defines the default sort criteria in the change schedule overview."
 msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya ratiba."
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the MyCAB overview."
+msgid "Defines the default sort criteria of the changes in the MyCAB overview."
 msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya CABYangu."
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the MyChanges overview."
+msgid "Defines the default sort criteria of the changes in the MyChanges overview."
 msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya MabadilikoYangu."
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the MyWorkorders "
-"overview."
+msgid "Defines the default sort criteria of the changes in the MyWorkorders overview."
 msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya OdaZanguzzaKazi."
 
 #. SysConfig
@@ -2001,14 +1889,7 @@ msgid "Defines the default sort criteria of the changes in the PIR overview."
 msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya PIR."
 
 #. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the customer change "
-"schedule overview."
-msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya ratiba ya mabadiliko ya mteja."
-
-#. SysConfig
-msgid ""
-"Defines the default sort criteria of the changes in the template overview."
+msgid "Defines the default sort criteria of the changes in the template overview."
 msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya kiolezo."
 
 #. SysConfig
@@ -2044,11 +1925,6 @@ msgid "Defines the default sort order in the change schedule overview."
 msgstr "Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya ratiba."
 
 #. SysConfig
-msgid ""
-"Defines the default sort order in the customer change schedule overview."
-msgstr "Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya ratiba ya mteja."
-
-#. SysConfig
 msgid "Defines the default sort order in the template overview."
 msgstr "Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya kiolezo."
 
@@ -2061,230 +1937,147 @@ msgid "Defines the default value for the impact of a change."
 msgstr "Inafafanua thamani ya chaguo-msingi la athari ya mabadiliko."
 
 #. SysConfig
-msgid ""
-"Defines the field type of CompareValue fields for change attributes used in "
-"the change condition edit screen of the agent interface. Valid values are "
-"Selection, Text and Date. If a type is not defined, the field will not be "
-"shown."
+msgid "Defines the field type of CompareValue fields for change attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the field type of CompareValue fields for workorder attributes used "
-"in the change condition edit screen of the agent interface. Valid values are"
-" Selection, Text and Date. If a type is not defined, the field will not be "
-"shown."
+msgid "Defines the field type of CompareValue fields for workorder attributes used in the change condition edit screen of the agent interface. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the object attributes that are selectable for change objects in the "
-"change condition edit screen of the agent interface."
+msgid "Defines the object attributes that are selectable for change objects in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the object attributes that are selectable for workorder objects in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the object attributes that are selectable for workorder objects in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute AccountedTime in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute AccountedTime in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ActualEndTime in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ActualEndTime in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ActualStartTime "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ActualStartTime in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute CategoryID in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute CategoryID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeBuilderID "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeBuilderID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeManagerID "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeManagerID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeStateID in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeStateID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ChangeTitle in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ChangeTitle in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute DynamicField in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute DynamicField in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute ImpactID in the "
-"change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute ImpactID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PlannedEffort in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PlannedEffort in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PlannedEndTime "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PlannedEndTime in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PlannedStartTime"
-" in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PlannedStartTime in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute PriorityID in "
-"the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute PriorityID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute RequestedTime in"
-" the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute RequestedTime in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderAgentID"
-" in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderAgentID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderNumber "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderNumber in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderStateID"
-" in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderStateID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderTitle "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderTitle in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the operators that are selectable for the attribute WorkOrderTypeID "
-"in the change condition edit screen of the agent interface."
+msgid "Defines the operators that are selectable for the attribute WorkOrderTypeID in the change condition edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the period (in years), in which start and end times can be selected."
+msgid "Defines the period (in years), in which start and end times can be selected."
 msgstr "Inafafanua kipindi (kwa miaka), ambapo muda wa kuanza na kumaliza inaweza kuchaguliwa."
 
 #. SysConfig
-msgid ""
-"Defines the shown attributes of a workorder in the tooltip of the workorder "
-"graph in the change zoom. To show workorder dynamic fields in the tooltip, "
-"they must be specified like DynamicField_WorkOrderFieldName1, "
-"DynamicField_WorkOrderFieldName2, etc."
+msgid "Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom. To show workorder dynamic fields in the tooltip, they must be specified like DynamicField_WorkOrderFieldName1, DynamicField_WorkOrderFieldName2, etc."
 msgstr "Inafafanua sifa zilizoonyeshwa za oda ya kazi katika kidokezozana cha jedwali la oda za kazi katika kuza mabadiliko. Kuonyesha sehemu zinazobadilika za oda ya kazi kwenye kidokezozana, lazima ziwekwe bayana mfano SehemuInayobadilika_OdaYaKaziJinaSehemu1, SehemuInayobadilika_OdaYaKaziJinaSehemu2, na kadh."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the Change PSA overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya Mabadiliko ya PSA. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the Change Schedule overview. This option has "
-"no effect on the position of the column."
+msgid "Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya Mabadiliko ya Ratiba. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the MyCAB overview. This option has no effect "
-"on the position of the column."
+msgid "Defines the shown columns in the MyCAB overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya CABZangu. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the MyChanges overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the MyChanges overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya MabadilikoYangu. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the MyWorkorders overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the MyWorkorders overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya OdaZanguZaKazi. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the PIR overview. This option has no effect on "
-"the position of the column."
+msgid "Defines the shown columns in the PIR overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya PIR. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the change manager overview. This option has no"
-" effect on the position of the column."
+msgid "Defines the shown columns in the change manager overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya meneja mabadiliko. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the change overview. This option has no effect "
-"on the position of the column."
+msgid "Defines the shown columns in the change overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya mabadiliko. Hili chaguo halina athari kwa nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the change search. This option has no effect on"
-" the position of the column."
+msgid "Defines the shown columns in the change search. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mabadiliko ya utafutaji. Hili chaguo halina athari kwenye nafasi ya safuwima."
 
 #. SysConfig
-msgid ""
-"Defines the shown columns in the customer change schedule overview. This "
-"option has no effect on the position of the column."
-msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya ratiba ya mabadiliko ya mteja. Hili chaguo halina athari kwenye nafasi ya safuwima."
-
-#. SysConfig
-msgid ""
-"Defines the shown columns in the template overview. This option has no "
-"effect on the position of the column."
+msgid "Defines the shown columns in the template overview. This option has no effect on the position of the column."
 msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya kiolezo. Hili chaguo halina athari kwenye nafasi ya safuwima."
 
 #. SysConfig
@@ -2292,26 +2085,19 @@ msgid "Defines the signals for each ITSM change state."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Defines the template types that will be used as filters in the template "
-"overview."
+msgid "Defines the template types that will be used as filters in the template overview."
 msgstr "Inafafanua aina ya violezo ambavyo vitatumika kama vichujio katika mapitio ya kiolezo."
 
 #. SysConfig
-msgid ""
-"Defines the workorder states that will be used as filters in the "
-"MyWorkorders overview."
+msgid "Defines the workorder states that will be used as filters in the MyWorkorders overview."
 msgstr "Inafafanua hali za oda ya kazi ambazo zitatumika kama vichujio katika mapitio ya Oda zangu za kazi."
 
 #. SysConfig
-msgid ""
-"Defines the workorder states that will be used as filters in the PIR "
-"overview."
+msgid "Defines the workorder states that will be used as filters in the PIR overview."
 msgstr "Inafafanua hali ya oda za kazi ambazo zitatumika kama vichujio katika mapitio ya PIR."
 
 #. SysConfig
-msgid ""
-"Defines the workorder types that will be used to show the PIR overview."
+msgid "Defines the workorder types that will be used to show the PIR overview."
 msgstr "Inafafanua aina za oda za kazi ambazo zitatumika kuonyesha mapitio ya PIR."
 
 #. SysConfig
@@ -2335,44 +2121,31 @@ msgid "Details of a change history entry."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Determines if an agent can exchange the X-axis of a stat if he generates "
-"one."
+msgid "Determines if an agent can exchange the X-axis of a stat if he generates one."
 msgstr "Inaamua kama wakala anaweza kubadilisha jira-X la takwimu kama akitengeneza."
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes done "
-"for config item classes."
+msgid "Determines if the common stats module may generate stats about changes done for config item classes."
 msgstr "Inaamua kama moduli ya kawaida ya takwimu inaweza kutengeneza takwimu kuhusu mabadiliko yaliyofanywa kwenye matabaka ya vipengenele vya usanidi."
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes "
-"regarding change state updates within a timeperiod."
+msgid "Determines if the common stats module may generate stats about changes regarding change state updates within a timeperiod."
 msgstr "Inaamua kama moduli ya takwimu ya kawaida inaweza kuzalisha takwimu kuhusu mabadiliko kwa kuangalia kisasisho cha mabadiliko ya hali kwa kipindi cha muda."
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes "
-"regarding the relation between changes and incident tickets."
+msgid "Determines if the common stats module may generate stats about changes regarding the relation between changes and incident tickets."
 msgstr "Inaamua kama moduli ya takwimu ya kawaida inaweza kuzalisha takwimu kuhusu mabadiliko kwa kuangalia uhusiano kati ya mabadiliko na tiketi za matukio."
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about changes."
+msgid "Determines if the common stats module may generate stats about changes."
 msgstr "Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu mabadiliko."
 
 #. SysConfig
-msgid ""
-"Determines if the common stats module may generate stats about the number of"
-" Rfc tickets a requester created."
+msgid "Determines if the common stats module may generate stats about the number of Rfc tickets a requester created."
 msgstr "Inaamua kama moduli ya takwimu za kawaida inaweza kutengeneza takwimu kuhusu idadi ya tiketi za Rfc zilizotengenezwa na muombaji."
 
 #. SysConfig
-msgid ""
-"Dynamic fields (for changes and workorders) shown in the change print screen"
-" of the agent interface."
+msgid "Dynamic fields (for changes and workorders) shown in the change print screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2384,8 +2157,7 @@ msgid "Dynamic fields shown in the change edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the change search screen of the agent interface."
+msgid "Dynamic fields shown in the change search screen of the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -2393,29 +2165,23 @@ msgid "Dynamic fields shown in the change zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder add screen of the agent interface."
+msgid "Dynamic fields shown in the workorder add screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder edit screen of the agent interface."
+msgid "Dynamic fields shown in the workorder edit screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder report screen of the agent interface."
+msgid "Dynamic fields shown in the workorder report screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the workorder zoom screen of the agent interface."
+msgid "Dynamic fields shown in the workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"DynamicField event module to handle the update of conditions if dynamic "
-"fields are added, updated or deleted."
+msgid "DynamicField event module to handle the update of conditions if dynamic fields are added, updated or deleted."
 msgstr "Moduli ya matukio ya SehemuZinazobadilika kushughulikia usasishaji wa masharti kama sehemu zinazobadilika zimeongezwa, zimesasishwa au kufutwa."
 
 #. SysConfig
@@ -2435,9 +2201,7 @@ msgid "Edit the workorder."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Enables the minimal change counter size (if \"Date\" was selected as "
-"ITSMChange::NumberGenerator)."
+msgid "Enables the minimal change counter size (if \"Date\" was selected as ITSMChange::NumberGenerator)."
 msgstr ""
 
 #. SysConfig
@@ -2475,10 +2239,6 @@ msgstr ""
 #. SysConfig
 msgid "ITSM Change notification rules"
 msgstr ""
-
-#. SysConfig
-msgid "ITSM Changes"
-msgstr "Mabadiliko ya ITSM"
 
 #. SysConfig
 msgid "ITSM MyCAB Overview."
@@ -2533,6 +2293,14 @@ msgid "ITSM event module that sends notifications."
 msgstr "Moduli ya matukio ya ITSM inayotuma taarifa."
 
 #. SysConfig
+msgid "ITSM event module that updates the ITSMChange index."
+msgstr ""
+
+#. SysConfig
+msgid "ITSM event module that updates the ITSMWorkOrder index."
+msgstr ""
+
+#. SysConfig
 msgid "ITSM event module that updates the history of changes."
 msgstr "Moduli ya matukio ya ITSM inayosasisha historia ya mabadiliko."
 
@@ -2561,9 +2329,15 @@ msgid "ITSMWorkOrder"
 msgstr "ITSMOdaYaKazi"
 
 #. SysConfig
-msgid ""
-"If frequency is 'regularly', you can configure how often the notifications "
-"are sent (every X hours)."
+msgid "If frequency is 'regularly', you can configure how often the notifications are sent (every X hours)."
+msgstr ""
+
+#. SysConfig
+msgid "It controls availability for ITSMChange search driver."
+msgstr ""
+
+#. SysConfig
+msgid "It controls availability for ITSMWorkOrder search driver."
 msgstr ""
 
 #. SysConfig
@@ -2599,9 +2373,7 @@ msgid "Manage the category ↔ impact ↔ priority matrix."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be "
-"permitted."
+msgid "Module to check if WorkOrderAdd or WorkOrderAddFromTemplate should be permitted."
 msgstr "Moduli ya kukagua kama OngezaOdaYaKazi au OngezaOdaYaKaziKutokaKwenyeKiolezo iruhusiwe."
 
 #. SysConfig
@@ -2633,9 +2405,7 @@ msgid "Module to check whether the agent is contained in the configured list."
 msgstr "Moduli ya kukagua kama wakala yumo kwenye orodha ya usanidi."
 
 #. SysConfig
-msgid ""
-"Module to show a link to create a change from this ticket. The ticket will "
-"be automatically linked with the new change."
+msgid "Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change."
 msgstr "Moduli ya kuonyesha kiungo cha kutengeneza mabadiliko kutoka kwenye hii tiketi. Tiketi itaunganishwa kiotomatiki na mabadiliko mapya."
 
 #. SysConfig
@@ -2651,10 +2421,7 @@ msgid "New (from template)"
 msgstr "Mpya (kutoka kwenye kiolezo)"
 
 #. SysConfig
-msgid ""
-"Only users of these groups have the permission to use the ticket types as "
-"defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature "
-"\"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
+msgid "Only users of these groups have the permission to use the ticket types as defined in \"ITSMChange::AddChangeLinkTicketTypes\" if the feature \"Ticket::Acl::Module###200-Ticket::Acl::Module\" is enabled."
 msgstr "Watumiaji wa makundi haya tu wana ruhusa ya kutumia aina hii ya tiketi kama ilivyofafanuliwa katika \"Badiliko la ITSM::Ongeza aina za tiketi za kiungo cha badiliko\" kama kipengele \"Tiketi::Acl::Moduli###200-Tiketi::Acl::Moduli\" kimewezeshwa."
 
 #. SysConfig
@@ -2678,21 +2445,15 @@ msgid "PSA"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Parameters for the UserCreateWorkOrderNextMask object in the preference view"
-" of the agent interface."
+msgid "Parameters for the UserCreateWorkOrderNextMask object in the preference view of the agent interface."
 msgstr "Vigezo kwa ajili ya kipengele Barakoa ijayo ya mpangilio kazi wa kutengenezwa na mtumiaji katika mandhari ya mapendeleo ya kiolesura cha wakala."
 
 #. SysConfig
-msgid ""
-"Parameters for the pages (in which the changes are shown) of the small "
-"change overview."
+msgid "Parameters for the pages (in which the changes are shown) of the small change overview."
 msgstr "Vigezo kwa ajili vya kurasa(ambapo tiketi zinaonyeshwa) za mapitio ya mabadiliko madogo."
 
 #. SysConfig
-msgid ""
-"Performs the configured action for each event (as an Invoker) for each "
-"configured Webservice."
+msgid "Performs the configured action for each event (as an Invoker) for each configured Webservice."
 msgstr "Fanya kitecndo cha usanidishwaji kwa kila tukio (kama Kichochezi) kwa kila huduma ya wavuti iliyosanidiwa."
 
 #. SysConfig
@@ -2720,9 +2481,7 @@ msgid "Projected Service Availability (PSA)"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Projected Service Availability (PSA) of changes. Overview of approved "
-"changes and their services."
+msgid "Projected Service Availability (PSA) of changes. Overview of approved changes and their services."
 msgstr ""
 
 #. SysConfig
@@ -2822,14 +2581,11 @@ msgid "Required privileges to view changes."
 msgstr "Upendeleo unaotakiwa ili kuona mabadiliko."
 
 #. SysConfig
-msgid ""
-"Required privileges to view list of changes where the user is a CAB member."
+msgid "Required privileges to view list of changes where the user is a CAB member."
 msgstr "Upendeleo unaotakiwa ili kuona orodha ya mabadiliko ambapo mtumiaji ni mshirika wa CAB."
 
 #. SysConfig
-msgid ""
-"Required privileges to view list of changes where the user is the change "
-"manager."
+msgid "Required privileges to view list of changes where the user is the change manager."
 msgstr "Upendeleo unaotakiwa ili kuona orodha ya mabadiliko ambapo mtumiaji ni meneja mabadiliko."
 
 #. SysConfig
@@ -2865,9 +2621,7 @@ msgid "Required privileges to view the list of change PSA."
 msgstr "Upendeleo unaotakiwa ili kuona orodha ya mabadiliko ya PSA."
 
 #. SysConfig
-msgid ""
-"Required privileges to view the list of changes with an upcoming PIR (Post "
-"Implementation Review)."
+msgid "Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review)."
 msgstr "Upendeleo unaotakiwa ili kuona orodha ya mabadiliko violezo vyote."
 
 #. SysConfig
@@ -2891,9 +2645,7 @@ msgid "Reset change and its workorders."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Run task to check if specific times have been reached in changes and "
-"workorders."
+msgid "Run task to check if specific times have been reached in changes and workorders."
 msgstr ""
 
 #. SysConfig
@@ -2902,10 +2654,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Save workorder as a template."
-msgstr ""
-
-#. SysConfig
-msgid "Schedule"
 msgstr ""
 
 #. SysConfig
@@ -2921,16 +2669,7 @@ msgid "Search Changes."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Selects the change number generator module. \"AutoIncrement\" increments the"
-" change number, the SystemID and the counter are used with SystemID.counter "
-"format (e.g. 100118, 100119). With \"Date\", the change numbers will be "
-"generated by the current date and a counter; this format looks like "
-"Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With "
-"\"DateChecksum\", the counter will be appended as checksum to the string of "
-"date plus the SystemID. The checksum will be rotated on a daily basis. This "
-"format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. "
-"2010062410000017, 2010062410000026."
+msgid "Selects the change number generator module. \"AutoIncrement\" increments the change number, the SystemID and the counter are used with SystemID.counter format (e.g. 100118, 100119). With \"Date\", the change numbers will be generated by the current date and a counter; this format looks like Year.Month.Day.counter, e.g. 2010062400001, 2010062400002. With \"DateChecksum\", the counter will be appended as checksum to the string of date plus the SystemID. The checksum will be rotated on a daily basis. This format looks like Year.Month.Day.SystemID.Counter.CheckSum, e.g. 2010062410000017, 2010062410000026."
 msgstr "Chagua module ya kutengeneza namba ya badiliko. \"Kuongezeka kwa otomatiki\" inaongeza namba ya badiliko, kitambulisho cha mfumo na kihesabuji zinatumika na kitambulisho cha mfumo.umbizo la kihesabuji (mfano 100118, 100119). Na \"Tarehe\" namba za mabadiliko zitatengenezwa na tarehe ya sasa na kihesabuji; Umbizo linafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062400001, 2010062400002. Na \"Kuangalia jumla kwa tarehe\"  kihesabuji kitaambatanishwa kama kiangaliaji jumla kwenye tungo ya tarehe na kitambulisho. Kiangalia jumla kitazungushwa kwa mishingi ya kila siku. Umbizo litafanana kama hivi Mwaka.Mwezi.Siku.Kitambulisho cha mfumo.Kihesabuji mfano 2010062410000017, 2010062410000026."
 
 #. SysConfig
@@ -2938,22 +2677,15 @@ msgid "Set the agent for the workorder."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Set the default height (in pixels) of inline HTML fields in the change zoom "
-"screen and workorder zoom screen of the agent interface."
+msgid "Set the default height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Set the maximum height (in pixels) of inline HTML fields in the change zoom "
-"screen and workorder zoom screen of the agent interface."
+msgid "Set the maximum height (in pixels) of inline HTML fields in the change zoom screen and workorder zoom screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Sets the minimal change counter size (if \"AutoIncrement\" was selected as "
-"ITSMChange::NumberGenerator). Default is 5, this means the counter starts "
-"from 10000."
+msgid "Sets the minimal change counter size (if \"AutoIncrement\" was selected as ITSMChange::NumberGenerator). Default is 5, this means the counter starts from 10000."
 msgstr "Inaweka upeo wa chini wa ukubwa wa kihesabuji tiketi (Kama \"Inaongezeka otomatiki\" imechaguliwa kama Badiliko la ITSM::Kitengeneza namaba za tiketi). Chaguo-msingi ni 5, hii inamaanisha kihesabuji kinaanzia 10000"
 
 #. SysConfig
@@ -2965,142 +2697,95 @@ msgid "Sets up the state machine for workorders."
 msgstr "Inaseti hali ya mashine kwa oda za kazi."
 
 #. SysConfig
-msgid ""
-"Shows a checkbox in the workorder edit screen of the agent interface that "
-"defines if the the following workorders should also be moved if a workorder "
-"is modified and the planned end time has changed."
+msgid "Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows changing the workorder agent, in the "
-"zoom view of the workorder of the agent interface."
+msgid "Shows a link in the menu that allows changing the workorder agent, in the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows defining a change as a template in the "
-"zoom view of the change, in the agent interface."
+msgid "Shows a link in the menu that allows defining a change as a template in the zoom view of the change, in the agent interface."
 msgstr "Inaonyesha kiungo kwenye menyu kinachoruhusu kufafanua mabadiliko kama kiolezo katika muonekano uliokuzwa wa mabadiliko, katika kiolesura cha wakala. "
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows defining a workorder as a template in "
-"the zoom view of the workorder, in the agent interface."
+msgid "Shows a link in the menu that allows defining a workorder as a template in the zoom view of the workorder, in the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows editing the report of a workorder, in "
-"the zoom view of the workorder of the agent interface."
+msgid "Shows a link in the menu that allows editing the report of a workorder, in the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows linking a change with another object in"
-" the change zoom view of the agent interface."
+msgid "Shows a link in the menu that allows linking a change with another object in the change zoom view of the agent interface."
 msgstr "Inaonyesha kiungo kwenye menyu  kinachoruhusu kuunganisha mabadiliko na kitu kingine katika muonekano uliokuzwa kiolesura cha wakala."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows linking a workorder with another object"
-" in the zoom view of the workorder of the agent interface."
+msgid "Shows a link in the menu that allows linking a workorder with another object in the zoom view of the workorder of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows moving the time slot of a change in its"
-" zoom view of the agent interface."
+msgid "Shows a link in the menu that allows moving the time slot of a change in its zoom view of the agent interface."
 msgstr "Inaonyesha kiungo kwenye menyu  kinachoruhusu kuhamisha kipengele cha muda wa mabadiliko katika muonekano uliokuzwa wa kiolesura cha wakala."
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu that allows taking a workorder in the its zoom view"
-" of the agent interface."
+msgid "Shows a link in the menu that allows taking a workorder in the zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to access the conditions of a change in the its "
-"zoom view of the agent interface."
-msgstr "Inaonyesha kiungo kwenye menyu ili kufikia masharti ya mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
-
-#. SysConfig
-msgid ""
-"Shows a link in the menu to access the history of a change in the its zoom "
-"view of the agent interface."
-msgstr "Inaonyesha kiungo kwenye menyu ili kufikia masharti ya historia ya mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
-
-#. SysConfig
-msgid ""
-"Shows a link in the menu to access the history of a workorder in the its "
-"zoom view of the agent interface."
+msgid "Shows a link in the menu to access the conditions of a change in the zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to add a workorder in the change zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to access the history of a change in the zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to delete a change in its zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to access the history of a workorder in the zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to add a workorder in the change zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to delete a change in its zoom view of the agent interface."
 msgstr "Inaonyesha kiungo kwenye menyu ili kufuta mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to delete a workorder in its zoom view of the agent"
-" interface."
+msgid "Shows a link in the menu to delete a workorder in its zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to edit a change in the its zoom view of the agent "
-"interface."
-msgstr "Inaonyesha kiungo kwenye menyu ili kuhariri mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
-
-#. SysConfig
-msgid ""
-"Shows a link in the menu to edit a workorder in the its zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to edit a change in the zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to go back in the change zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to edit a workorder in the zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to go back in the change zoom view of the agent interface."
 msgstr "Inaonyesha kiungo kwenye menyu ili kurudi nyuma kwenye muonekano wa mabadiliko uliokuzwa wa kiolesura cha wakala. "
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to go back in the workorder zoom view of the agent "
-"interface."
+msgid "Shows a link in the menu to go back in the workorder zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to print a change in the its zoom view of the agent"
-" interface."
-msgstr "Inaonyesha kiungo kwenye menyu ili kuchapisha mabadiliko kwenye muonekano wake uliokuzwa wa kiolesura cha wakala. "
-
-#. SysConfig
-msgid ""
-"Shows a link in the menu to print a workorder in the its zoom view of the "
-"agent interface."
+msgid "Shows a link in the menu to print a change in the zoom view of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to reset a change and its workorders in its zoom "
-"view of the agent interface."
+msgid "Shows a link in the menu to print a workorder in the zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface."
 msgstr "Inaonyesha kiungo kwenye menyu ili kweka upya mabadiliko na oda zake za kazi katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
 
 #. SysConfig
-msgid ""
-"Shows a link in the menu to show the involved persons in a change, in the "
-"zoom view of the change in the agent interface."
+msgid "Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface."
 msgstr ""
 
 #. SysConfig
@@ -3112,9 +2797,7 @@ msgid "State Machine"
 msgstr "Mashine ya Hali"
 
 #. SysConfig
-msgid ""
-"Stores change and workorder ids and their corresponding template id, while a"
-" user is editing a template."
+msgid "Stores change and workorder ids and their corresponding template id, while a user is editing a template."
 msgstr "Inahifadhi vitambulisho vya mabadiliko na oda za kazi sambamba na kitambulisho cha kiolezo, wakati mtumiaji anahariri kiolezo."
 
 #. SysConfig
@@ -3142,25 +2825,15 @@ msgid "Template."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"The identifier for a change, e.g. Change#, MyChange#. The default is "
-"Change#."
+msgid "The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
 msgstr "Kitambulisho cha mabadiliko, mf. Mabadiliko#, MabadilikoYangu#. Chaguo-msingi ni Mabadiliko#."
 
 #. SysConfig
-msgid ""
-"The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default "
-"is Workorder#."
+msgid "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#."
 msgstr "Kitambulisho cha oda ya kazi, mf. OdaYakazi#, OdaYanguYaKazi#. Chaguo-msingi ni OdaYakazi#."
 
 #. SysConfig
-msgid ""
-"This ACL module restricts the usuage of the ticket types that are defined in"
-" the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of "
-"the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As "
-"this ACL could collide with other ACLs which are also related to the ticket "
-"type, this sysconfig option is disabled by default and should only be "
-"activated if needed."
+msgid "This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed."
 msgstr "Aina hii ya ACL inazuia matumizi ya aina za tiketi ambazo zimefafanuliwa katika chaguo la sysconfig 'MabadilikoITSM::OngezaKiungoMabadilikoAinaTiketi', kwa watumiaji wa makundi kama ilivyofafanuliwa kwenye \"MabadilikoITSM::ZuiaAinaTiketi::Makundi\". Hii ACL inaweza kuingiliana na  ACL nyingine ambazo pia zina uhusiano na aina ya tiketi, hili chaguo la sysconfig lime lemazwa kwa kawaida na linaweza kuamilishwa kama itahitajika."
 
 #. SysConfig
@@ -3168,9 +2841,7 @@ msgid "Time Slot"
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Types of tickets, where in the ticket zoom view a link to add a change will "
-"be displayed."
+msgid "Types of tickets, where in the ticket zoom view a link to add a change will be displayed."
 msgstr "Aina za tiketi, ambazo kwenye muonekano uliokuzwa wa tiketi kiungo cha kuongeza mabadiliko kitaonyeshwa."
 
 #. SysConfig
@@ -3224,3 +2895,120 @@ msgstr ""
 #. SysConfig
 msgid "regularly"
 msgstr ""
+
+#. Template: AgentITSMChangeHistory
+msgid "History Content"
+msgstr "Maudhui ya historia"
+
+#. Template: AgentITSMChangeHistory
+msgid "Createtime"
+msgstr "Muda wa kutengeneza"
+
+#. Template: AgentITSMChangeOverviewNavBar
+msgid "Context Settings"
+msgstr "Mipangilio ya Muktadha"
+
+#. Template: AgentITSMChangeZoom
+msgid "Last changed by"
+msgstr "Mara ya mwisho imebadilishwa na"
+
+#. Template: AgentITSMChangeZoom
+msgid "To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS)."
+msgstr ""
+
+#. Template: AgentITSMChangeZoom
+msgid "Download Attachment"
+msgstr "Pakua Kiambatanisho"
+
+#. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
+msgid "No %s is given!"
+msgstr ""
+
+#. Perl Module: Kernel/Output/HTML/Layout/ITSMChange.pm
+msgid "No config option found for the view \"%s\"!"
+msgstr ""
+
+#. JS File: ITSM.Agent.ChangeManagement.ConfirmDialog
+msgid "Ok"
+msgstr "Sawa"
+
+#. SysConfig
+msgid "Change Schedule."
+msgstr ""
+
+#. SysConfig
+msgid "Change search backend router of the agent interface."
+msgstr "Kipanga njia cha mazingira ya nyuma ya kiolesura cha wakala cha kutafuta mabadiliko."
+
+#. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
+msgid "Defines if the requested date should be print by customer."
+msgstr "Inafafanua kama tarehe iliyoombwa ichapishwe na mteja."
+
+#. SysConfig
+msgid "Defines if the requested date should be searched by customer."
+msgstr "Inafafanua kama tarehe iliyoombwa itafutwe na mteja."
+
+#. SysConfig
+msgid "Defines if the requested date should be set by customer."
+msgstr "Inafafanua kama tarehe iliyoombwa isetiwe na mteja."
+
+#. SysConfig
+msgid "Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed."
+msgstr "Inafafanua kwamba mabadiliko yenye oda za kazi zilizounganishwa na huduma, ambazo mteja ana ruhusa ya kutumia zitaonyeshwa. Mabadiliko mengine yoyote hayataonyeshwa."
+
+#. SysConfig
+msgid "Defines the change states that will be used as filters in the customer change schedule overview."
+msgstr "Inafafanua hali za mabadiliko ambazo zitatumika kama vichujio katika mapitio ya ratiba za mabadiliko ya mteja."
+
+#. SysConfig
+msgid "Defines the default sort criteria of the changes in the customer change schedule overview."
+msgstr "Inafafanua chaguo-msingi la vigezo vya kupanga katika mapitio ya mabadiliko ya ratiba ya mabadiliko ya mteja."
+
+#. SysConfig
+msgid "Defines the default sort order in the customer change schedule overview."
+msgstr "Inafafanua chaguo-msingi la utaratibu wa kupanga katika mapitio ya mabadiliko ya ratiba ya mteja."
+
+#. SysConfig
+msgid "Defines the shown columns in the customer change schedule overview. This option has no effect on the position of the column."
+msgstr "Inafafanua safuwima zilizoonyeshwa katika mapitio ya ratiba ya mabadiliko ya mteja. Hili chaguo halina athari kwenye nafasi ya safuwima."
+
+#. SysConfig
+msgid "Schedule"
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu that allows taking a workorder in the its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to access the conditions of a change in the its zoom view of the agent interface."
+msgstr "Inaonyesha kiungo kwenye menyu ili kufikia masharti ya mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
+
+#. SysConfig
+msgid "Shows a link in the menu to access the history of a change in the its zoom view of the agent interface."
+msgstr "Inaonyesha kiungo kwenye menyu ili kufikia masharti ya historia ya mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
+
+#. SysConfig
+msgid "Shows a link in the menu to access the history of a workorder in the its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to edit a change in the its zoom view of the agent interface."
+msgstr "Inaonyesha kiungo kwenye menyu ili kuhariri mabadiliko katika muonekano wake uliokuzwa wa kiolesura cha wakala. "
+
+#. SysConfig
+msgid "Shows a link in the menu to edit a workorder in the its zoom view of the agent interface."
+msgstr ""
+
+#. SysConfig
+msgid "Shows a link in the menu to print a change in the its zoom view of the agent interface."
+msgstr "Inaonyesha kiungo kwenye menyu ili kuchapisha mabadiliko kwenye muonekano wake uliokuzwa wa kiolesura cha wakala. "
+
+#. SysConfig
+msgid "Shows a link in the menu to print a workorder in the its zoom view of the agent interface."
+msgstr ""
+

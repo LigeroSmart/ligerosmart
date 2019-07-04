@@ -148,9 +148,9 @@ $Selenium->RunTest(
 
         # Verify that change state is reseted.
         my $WorkOrderResetMessage
-            = "(ID=$WorkOrderID) WorkOrderState: (new=created (ID=$WorkOrderStateIDs[0]), old=accepted (ID=$WorkOrderStateIDs[1]))";
+            = "(ID=$WorkOrderID) Workorder State: (new=Created (ID=$WorkOrderStateIDs[0]), old=Accepted (ID=$WorkOrderStateIDs[1]))";
         my $ChangeResetMessage
-            = "ChangeState: (new=requested (ID=$ChangeStateIDs[0]), old=approved (ID=$ChangeStateIDs[1]))";
+            = "Change State: (new=Requested (ID=$ChangeStateIDs[0]), old=Approved (ID=$ChangeStateIDs[1]))";
         $Self->True(
             index( $Selenium->get_page_source(), $WorkOrderResetMessage ) > -1,
             "$WorkOrderResetMessage is found",

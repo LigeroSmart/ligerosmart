@@ -63,8 +63,10 @@ $Selenium->RunTest(
         );
 
         # Create and log in test user.
+        my $Language      = 'en';
         my $TestUserLogin = $Helper->TestUserCreate(
-            Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
+            Groups   => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
+            Language => $Language,
         ) || die "Did not get test user";
 
         $Selenium->Login(
@@ -73,7 +75,13 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
+        my $LanguageObject = Kernel::Language->new(
+            UserLanguage => $Language,
+        );
+
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
+
+        my $WorkOrderStateText = $LanguageObject->Translate('WorkOrderState');
 
         # Get work order states.
         my @WorkOrderStates = ( 'accepted', 'ready', 'in progress', 'closed' );
@@ -86,6 +94,8 @@ $Selenium->RunTest(
                 Class => 'ITSM::ChangeManagement::WorkOrder::State',
                 Name  => $ItemGetState,
             );
+
+            $WorkOrderState = $LanguageObject->Translate("$WorkOrderState");
 
             # Navigate to AgentITSMWorkOrderReport for test created work order.
             $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMWorkOrderReport;WorkOrderID=$WorkOrderID");
@@ -116,7 +126,7 @@ $Selenium->RunTest(
 
             # Verify report change.
             my $ReportUpdateMessage
-                = "WorkOrderState: (new=$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID}), old=";
+                = "$WorkOrderStateText: (new=$WorkOrderState (ID=$WorkOrderStateDataRef->{ItemID}), old=";
             $Self->True(
                 index( $Selenium->get_page_source(), $ReportUpdateMessage ) > -1,
                 "$ReportUpdateMessage is found",
