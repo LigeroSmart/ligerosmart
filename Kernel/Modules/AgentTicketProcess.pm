@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 624ee8cf5a3d071222f65a1cafe4132551f09393 - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 7ad974236118494aaf54172928974e58d931fb7a - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -3032,6 +3032,23 @@ sub _RenderCustomer {
         %CustomerUserData = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerUserDataGet(
             User => $SubmittedCustomerUserID
                 || $Param{Ticket}{CustomerUserID},
+        );
+    }
+
+    # Customer user from article is preselected for new split ticket. See bug#12956.
+    if ( $Self->{LinkArticleData}->{From} && $Self->{LinkArticleData}->{SenderType} eq 'customer' ) {
+
+        my @ArticleFromAddress = Mail::Address->parse( $Self->{LinkArticleData}->{From} );
+
+        my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+        my %List               = $CustomerUserObject->CustomerSearch(
+            PostMasterSearch => $ArticleFromAddress[0]->address(),
+            Valid            => 1,
+        );
+
+        my @CustomerUser = sort keys %List;
+        %CustomerUserData = $CustomerUserObject->CustomerUserDataGet(
+            User => $CustomerUser[0],
         );
     }
 
