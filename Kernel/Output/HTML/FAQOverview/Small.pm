@@ -155,7 +155,7 @@ sub Run {
                 );
 
                 if ($IsSortable) {
-                    my $CSS = '';
+                    my $CSS = 'OverviewHeader';
                     my $OrderBy;
                     if (
                         $Param{SortBy}
@@ -164,12 +164,15 @@ sub Run {
                     {
                         if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
                             $OrderBy = 'Down';
-                            $CSS .= ' SortDescending';
+                            $CSS .= ' SortDescendingLarge';
                         }
                         else {
                             $OrderBy = 'Up';
-                            $CSS .= ' SortAscending';
+                            $CSS .= ' SortAscendingLarge';
                         }
+                    }
+                    else {
+                        $OrderBy = 'Up';
                     }
 
                     $LayoutObject->Block(

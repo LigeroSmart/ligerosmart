@@ -938,10 +938,10 @@ sub FAQSearch {
     }
 
     # database query for sort/order by option
-    $Ext .= ' ORDER BY';
+    my $ExtOrderBy = ' ORDER BY';
     for my $Count ( 0 .. $#{ $Param{OrderBy} } ) {
         if ( $Count > 0 ) {
-            $Ext .= ',';
+            $ExtOrderBy .= ',';
         }
 
         # sort by dynamic field
@@ -958,7 +958,7 @@ sub FAQSearch {
                 #   for the DF which is used for sorting.
                 $SQL
                     .= " LEFT OUTER JOIN dynamic_field_value dfv$DynamicFieldJoinCounter
-                    ON (i.item_id = dfv$DynamicFieldJoinCounter.object_id
+                    ON (i.id = dfv$DynamicFieldJoinCounter.object_id
                         AND dfv$DynamicFieldJoinCounter.field_id = " .
                     $DBObject->Quote( $DynamicField->{ID}, 'Integer' ) . ") ";
 
@@ -971,20 +971,20 @@ sub FAQSearch {
                 DynamicFieldConfig => $DynamicField,
                 TableAlias         => $DynamicFieldJoinTables{$DynamicFieldName},
             );
-
-            $Ext .= " $SQLOrderField ";
+            $Ext        .= ", $SQLOrderField ";
+            $ExtOrderBy .= " $SQLOrderField ";
         }
         else {
 
-            # regular sort
-            $Ext .= ' ' . $OrderByTable{ $Param{OrderBy}->[$Count] };
+            # Regular sort.
+            $ExtOrderBy .= ' ' . $OrderByTable{ $Param{OrderBy}->[$Count] };
         }
 
         if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
-            $Ext .= ' ASC';
+            $ExtOrderBy .= ' ASC';
         }
         else {
-            $Ext .= ' DESC';
+            $ExtOrderBy .= ' DESC';
         }
     }
 
@@ -992,7 +992,7 @@ sub FAQSearch {
     # we add an descending ordering by id
     if ( !grep { $_ eq 'FAQID' } ( @{ $Param{OrderBy} } ) ) {
         if ( $#{ $Param{OrderBy} } >= 0 ) {
-            $Ext .= ',';
+            $ExtOrderBy .= ',';
         }
 
         # set default order by direction
@@ -1014,11 +1014,11 @@ sub FAQSearch {
             $Count++;
         }
 
-        $Ext .= ' ' . $OrderByTable{FAQID} . ' ' . $OrderByDirection;
+        $ExtOrderBy .= ' ' . $OrderByTable{FAQID} . ' ' . $OrderByDirection;
     }
 
     # add extended SQL
-    $SQL .= $Ext;
+    $SQL .= $Ext . $ExtOrderBy;
 
     # ask database
     return if !$DBObject->Prepare(

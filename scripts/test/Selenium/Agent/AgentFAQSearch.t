@@ -71,6 +71,43 @@ $Selenium->RunTest(
             UserID     => 1,
         );
 
+        # Create DynamicField.
+        my $DynamicFieldObject = $Kernel::OM->Get('Kernel::System::DynamicField');
+        my $DFTextName         = 'Text' . $RandomID;
+
+        my $DynamicFieldID = $DynamicFieldObject->DynamicFieldAdd(
+            Name       => $DFTextName,
+            Label      => $DFTextName,
+            FieldOrder => 9990,
+            FieldType  => 'Text',
+            ObjectType => 'FAQ',
+            Config     => {
+                DefaultValue => '',
+            },
+            Reorder => 0,
+            ValidID => 1,
+            UserID  => 1,
+        );
+        $Self->True(
+            $DynamicFieldID,
+            "DynamicFieldID $DynamicFieldID is created."
+        );
+
+        # Get test created DynamicField
+        my $TextTypeDynamicFieldConfig = $DynamicFieldObject->DynamicFieldGet(
+            Name => $DFTextName,
+        );
+        my $BackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+
+        # Enable test created DynamicField on AgentFAQSearch overview screen.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'FAQ::Frontend::OverviewSmall###DynamicField',
+            Value => {
+                $DFTextName => 1,
+            },
+        );
+
         # Create test user.
         my $TestUser = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
@@ -92,6 +129,7 @@ $Selenium->RunTest(
         my @FAQSearch;
 
         # Create test FAQs.
+        my $Count = 0;
         for my $Title (qw( FAQSearch FAQChangeSearch )) {
             for ( 1 .. 5 ) {
                 my $FAQTitle = $Title . $Helper->GetRandomID();
@@ -117,6 +155,20 @@ $Selenium->RunTest(
                 );
 
                 push @FAQSearch, \%FAQ;
+
+                # Set DynamicField value.
+                my $DFValue = $Count . 'DFValue';
+                my $Success = $BackendObject->ValueSet(
+                    DynamicFieldConfig => $TextTypeDynamicFieldConfig,
+                    ObjectID           => $ItemID,
+                    Value              => $DFValue,
+                    UserID             => 1,
+                );
+                $Self->True(
+                    $Success,
+                    "Value '$DFValue' is set successfully for FAQID $ItemID",
+                );
+                $Count++;
             }
         }
 
@@ -180,6 +232,7 @@ $Selenium->RunTest(
 
         # Check test FAQs searched by 'FAQ*'.
         # All FAQs will be in a search result.
+        $Count = 9;
         for my $FAQ (@FAQSearch) {
 
             # Check if there is test FAQ on screen.
@@ -187,6 +240,32 @@ $Selenium->RunTest(
                 index( $Selenium->get_page_source(), $FAQ->{FAQTitle} ) > -1,
                 "$FAQ->{FAQTitle} - found",
             );
+
+            # Verify sorting and ordering of FAQs.
+            $Self->True(
+                $Selenium->execute_script(
+                    "return \$('tbody tr:eq(\"$Count\") td > a[href*=\"ItemID=$FAQ->{ItemID}\"]').length;"
+                ),
+                "$FAQ->{FAQTitle} is in correct order - SortBy = FAQID, OrderBy = Down."
+            );
+            $Count--;
+        }
+
+        # Click to sort and order by DynamicField values.
+        # See bug#12780 (https://bugs.otrs.org/show_bug.cgi?id=12780).
+        $Selenium->find_element("//a[contains(\@href, \'SortBy=DynamicField_$DFTextName' )]")->VerifiedClick();
+
+        $Count = 0;
+        for my $FAQ (@FAQSearch) {
+
+            # Verify sorting and ordering of FAQs.
+            $Self->True(
+                $Selenium->execute_script(
+                    "return \$('tbody tr:eq(\"$Count\") td > a[href*=\"ItemID=$FAQ->{ItemID}\"]').length;"
+                ),
+                "$FAQ->{FAQTitle} is in correct order - SortBy = DynamicField, OrderBy = Up."
+            );
+            $Count++;
         }
 
         # Check 'Change search options' screen.
@@ -279,6 +358,20 @@ $Selenium->RunTest(
         $Self->True(
             $Success,
             "GroupID $GroupID is deleted",
+        );
+
+        # Delete DynamicField.
+        $Success = $DBObject->Do(
+            SQL  => "DELETE FROM dynamic_field_value WHERE field_id = ?",
+            Bind => [ \$DynamicFieldID ],
+        );
+        $Success = $DynamicFieldObject->DynamicFieldDelete(
+            ID     => $DynamicFieldID,
+            UserID => 1,
+        );
+        $Self->True(
+            $Success,
+            "DynamicFieldID $DynamicFieldID is deleted.",
         );
 
         # Make sure the cache is correct.
