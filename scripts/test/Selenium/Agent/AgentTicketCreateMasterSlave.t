@@ -89,6 +89,10 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#DynamicField_MasterSlave').val('Master').trigger('redraw.InputField').trigger('change');"
         );
+
+        $Selenium->execute_script(
+            "\$('#submitRichText')[0].scrollIntoView(true);",
+        );
         $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
 
         # get ticket object
