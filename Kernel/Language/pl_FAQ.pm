@@ -146,13 +146,13 @@ sub Data {
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Wyszukiwanie pełnotekstowe w artykułach FAQ (np. "Naj*pszy" lub "Kowalsk*")';
     $Self->{Translation}->{'Vote restrictions'} = 'Ograniczenia głosowania';
-    $Self->{Translation}->{'Only FAQ articles with votes...'} = '';
+    $Self->{Translation}->{'Only FAQ articles with votes...'} = 'Tylko artykuły FAQ z głosami...';
     $Self->{Translation}->{'Rate restrictions'} = 'Ograniczenia ocen';
-    $Self->{Translation}->{'Only FAQ articles with rate...'} = '';
+    $Self->{Translation}->{'Only FAQ articles with rate...'} = 'Tylko artykuły FAQ z oceną...';
     $Self->{Translation}->{'Time restrictions'} = 'Ograniczenia czasowe';
-    $Self->{Translation}->{'Only FAQ articles created'} = '';
-    $Self->{Translation}->{'Only FAQ articles created between'} = '';
-    $Self->{Translation}->{'Search-Profile as Template?'} = '';
+    $Self->{Translation}->{'Only FAQ articles created'} = 'Tylko utworzone artykuły FAQ';
+    $Self->{Translation}->{'Only FAQ articles created between'} = 'Tylko artykuły FAQ utworzone pomiędzy';
+    $Self->{Translation}->{'Search-Profile as Template?'} = 'Profil wyszukiwania jako Szablon?';
 
     # Template: CustomerFAQZoom
     $Self->{Translation}->{'Article Number'} = 'Numer artykułu';
@@ -189,7 +189,7 @@ sub Data {
     $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'CategoryID %s jest nie prawidłowe.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = 'Nie można wyświetlić historii, nie podano ItemID!';
     $Self->{Translation}->{'FAQ History'} = 'Historia FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
@@ -221,10 +221,10 @@ sub Data {
     $Self->{Translation}->{'No Result!'} = 'Brak Wyników!';
     $Self->{Translation}->{'FAQ Number'} = 'Numer FAQ';
     $Self->{Translation}->{'Last Changed by'} = 'Ostatnio Zmienione przez';
-    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Item Create Time (between)'} = '';
-    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = '';
-    $Self->{Translation}->{'FAQ Item Change Time (between)'} = '';
+    $Self->{Translation}->{'FAQ Item Create Time (before/after)'} = 'Czas utworzenia elementu FAQ (przed/po)';
+    $Self->{Translation}->{'FAQ Item Create Time (between)'} = 'Czas utworzenia elementu FAQ (pomiędzy)';
+    $Self->{Translation}->{'FAQ Item Change Time (before/after)'} = 'Czas zmiany elementu FAQ (przed/po)';
+    $Self->{Translation}->{'FAQ Item Change Time (between)'} = 'Czas zmiany elementu FAQ (pomiędzy)';
     $Self->{Translation}->{'Equals'} = 'Równe';
     $Self->{Translation}->{'Greater than'} = 'Większe niż';
     $Self->{Translation}->{'Greater than equals'} = 'Większe lub równe';
@@ -237,7 +237,7 @@ sub Data {
     $Self->{Translation}->{'You have already voted!'} = 'Już raz głosowałeś!';
     $Self->{Translation}->{'No rate selected!'} = 'Nie wybrałeś oceny!';
     $Self->{Translation}->{'The voting mechanism is not enabled!'} = 'Mechanizm głosowania nie jest włączony!';
-    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = 'Wskaźnik głosowania nie jest określony!';
 
     # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
     $Self->{Translation}->{'FAQ Article Print'} = 'Drukuj informację FAQ';

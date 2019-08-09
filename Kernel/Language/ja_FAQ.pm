@@ -167,7 +167,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
     $Self->{Translation}->{'You need rw permission!'} = '読書き(rw)の権限が必要です！';
     $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'ユーザーが　読む/書く 権限のあるカテゴリーが見つかりませんでした';
-    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'デフォルト言語が不明のため、新しいカテゴリの作成ができませんでした。';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
     $Self->{Translation}->{'Need CategoryID!'} = 'カテゴリIDの入力が必要です！';
@@ -175,21 +175,21 @@ sub Data {
     $Self->{Translation}->{'This category already exists'} = 'このカテゴリはすでに存在しています。';
     $Self->{Translation}->{'This category already exists!'} = 'このカテゴリはすでに存在しています！';
     $Self->{Translation}->{'No CategoryID is given!'} = 'カテゴリID が指定されていません！';
-    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = 'カテゴリ %s の削除ができませんでした！';
     $Self->{Translation}->{'FAQ category updated!'} = 'カテゴリが更新されました。';
     $Self->{Translation}->{'FAQ category added!'} = '新しいカテゴリが追加されました。';
     $Self->{Translation}->{'Delete Category'} = 'カテゴリを削除';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'アイテムID が指定されていません！';
-    $Self->{Translation}->{'You have no permission for this category!'} = '';
-    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = 'あなたはこのカテゴリへの権限がありません！';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'FAQ 記事 %s を削除できませんでした！';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'CategoryID %sの値が不正です。';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = 'ItemID が与えられていないため、履歴を表示できませんでした！';
     $Self->{Translation}->{'FAQ History'} = 'FAQ ヒストリー';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
@@ -197,13 +197,13 @@ sub Data {
     $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
         '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = '"%s"を閲覧するための設定値がありません！';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
     $Self->{Translation}->{'No LanguageID is given!'} = '言語IDが指定されていません！';
     $Self->{Translation}->{'The name is required!'} = '「名前」は必須項目です。';
     $Self->{Translation}->{'This language already exists!'} = 'この言語は設定済です。';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = '言語 %s の削除ができませんでした！';
     $Self->{Translation}->{'FAQ language updated!'} = '言語が更新されました。';
     $Self->{Translation}->{'FAQ language added!'} = '言語が追加されました。';
     $Self->{Translation}->{'Delete Language %s'} = '言語を削除 %s';
@@ -236,7 +236,7 @@ sub Data {
     $Self->{Translation}->{'Thanks for your vote!'} = '評価をいただきありがとうございます。';
     $Self->{Translation}->{'You have already voted!'} = 'あなたはすでに評価済です。';
     $Self->{Translation}->{'No rate selected!'} = '評価が選択されていません。';
-    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '';
+    $Self->{Translation}->{'The voting mechanism is not enabled!'} = '評価の機能を有効になっていません！';
     $Self->{Translation}->{'The vote rate is not defined!'} = '';
 
     # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
@@ -367,29 +367,29 @@ sub Data {
     $Self->{Translation}->{'Dynamic fields shown in the FAQ edit screen of the agent interface.'} =
         '担当者インタフェースの FAQ 編集画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the customer interface.'} =
-        '';
+        '顧客インターフェイス の FAQ 一覧画面に表示する ダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ overview screen of the public interface.'} =
-        '';
+        '公開インターフェイス の FAQ 一覧画面に表示する ダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the agent interface.'} =
         '担当者インタフェースの FAQ 印刷画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the customer interface.'} =
-        '';
+        '顧客インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ print screen of the public interface.'} =
-        '';
+        '公開インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the agent interface.'} =
         '担当者インタフェースの FAQ 検索画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the customer interface.'} =
-        '';
+        '顧客インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ search screen of the public interface.'} =
-        '';
+        '公開インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ small format overview screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスのコンパクトなFAQ概要画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the agent interface.'} =
-        '';
+        '担当者インターフェイスのFAQズーム画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the customer interface.'} =
-        '';
+        '顧客インターフェイスのFAQズーム画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Dynamic fields shown in the FAQ zoom screen of the public interface.'} =
-        '';
+        '公開インターフェイスのFAQズーム画面に表示するダイナミック・フィールド';
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
@@ -399,17 +399,17 @@ sub Data {
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
     $Self->{Translation}->{'FAQ Area'} = '';
-    $Self->{Translation}->{'FAQ Area.'} = '';
+    $Self->{Translation}->{'FAQ Area.'} = ' FAQ エリア';
     $Self->{Translation}->{'FAQ Delete.'} = 'FAQ の削除';
     $Self->{Translation}->{'FAQ Edit.'} = 'FAQ の編集';
-    $Self->{Translation}->{'FAQ History.'} = '';
+    $Self->{Translation}->{'FAQ History.'} = 'FAQ 更新履歴';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = 'FAQジャーナル一覧(S)の表示数';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ一覧(S)の表示数';
     $Self->{Translation}->{'FAQ Print.'} = 'FAQ の表示';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '担当者インターフェイスにおける、FAQ検索のバックエンドルータ';
     $Self->{Translation}->{'Field4'} = 'Field4';
     $Self->{Translation}->{'Field5'} = 'Field5';
-    $Self->{Translation}->{'Full FAQ'} = '';
+    $Self->{Translation}->{'Full FAQ'} = 'FAQ全文';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'FAQの記事の承認のためのグループ';
     $Self->{Translation}->{'History of this FAQ'} = 'この記事の履歴';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'FAQ由来のチケットに含まれる内部項目';
@@ -417,7 +417,7 @@ sub Data {
     $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = 'クイック検索が表示される画面';
     $Self->{Translation}->{'Journal'} = 'ジャーナル';
     $Self->{Translation}->{'Language Management'} = '言語管理';
-    $Self->{Translation}->{'Language Management.'} = '';
+    $Self->{Translation}->{'Language Management.'} = '言語管理';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
     $Self->{Translation}->{'Limit.'} = 'リミット';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'このFAQ記事に他オブジェクトを関連付ける';
@@ -464,7 +464,7 @@ sub Data {
         '公開インタフェースにおいて、ショート・チケット検索のためのhtml OpenSearchプロフィールを生成するモジュールです';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short FAQ search.'} =
         '';
-    $Self->{Translation}->{'New FAQ Article.'} = '';
+    $Self->{Translation}->{'New FAQ Article.'} = '新規 FAQ 項目';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新規 FAQ 項目を公開するには事前に承認されることが必要です';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} =
         '顧客用インターフェイスで表示される FAQ 項目の数';

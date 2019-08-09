@@ -3,14 +3,15 @@
 # andreasberger <andreas.berger@hagfors.se>, 2014
 # andreasberger <andreas.berger@hagfors.se>, 2014
 # Anthon Nilsson <superdos@gmail.com>, 2015,2017
+# Leif-Jöran Olsson <ljo@fripost.org>, 2019
 # Mikael Mattsson <sprouts@tnorala.net>, 2016
 # Tobias Andersson <tobias@piratbyran.org>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2018-11-08 10:51+0000\n"
-"Last-Translator: Tobias Andersson <tobias@piratbyran.org>\n"
+"PO-Revision-Date: 2019-07-23 13:51+0000\n"
+"Last-Translator: Leif-Jöran Olsson <ljo@fripost.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -150,15 +151,15 @@ msgstr "FAQ språkhantering"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "Lägg till FAQ-språk"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "Redigera FAQ-språk"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Använd den här funktionen om du vill arbeta med flera språk. "
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -476,19 +477,19 @@ msgstr "Ta bort kategori"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
-msgstr ""
+msgstr "Inget ItemID är angivet!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
-msgstr ""
+msgstr "Du saknar behörighet för den här kategorin!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "Was not able to delete the FAQ article %s!"
-msgstr ""
+msgstr "Kunde inte ta bort FAQ-artikeln %s!"
 
 #. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
 msgid "The CategoryID %s is invalid."
-msgstr ""
+msgstr "KategoriID:t %s är ogiltigt."
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"

@@ -63,10 +63,10 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ språkhantering';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'Lägg till FAQ-språk';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'Redigera FAQ-språk';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
-        '';
+        'Använd den här funktionen om du vill arbeta med flera språk. ';
     $Self->{Translation}->{'Add language'} = 'Lägg till språk';
     $Self->{Translation}->{'Add Language'} = 'Lägg till språk';
     $Self->{Translation}->{'Edit Language'} = 'Redigera språk';
@@ -181,12 +181,12 @@ sub Data {
     $Self->{Translation}->{'Delete Category'} = 'Ta bort kategori';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
-    $Self->{Translation}->{'No ItemID is given!'} = '';
-    $Self->{Translation}->{'You have no permission for this category!'} = '';
-    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+    $Self->{Translation}->{'No ItemID is given!'} = 'Inget ItemID är angivet!';
+    $Self->{Translation}->{'You have no permission for this category!'} = 'Du saknar behörighet för den här kategorin!';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'Kunde inte ta bort FAQ-artikeln %s!';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'KategoriID:t %s är ogiltigt.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
     $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';

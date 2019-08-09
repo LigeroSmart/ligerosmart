@@ -1,6 +1,6 @@
 # 
 # Translators:
-# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017
+# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016-2017,2019
 # Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014-2015,2017
 # Kentaro Matsuzaki <kentaro0919@gmail.com>, 2018
 # Kozo Sakurai <sakurai@io-architect.com>, 2017
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2018-11-05 20:00+0000\n"
-"Last-Translator: Martin Gruner <martin.gruner@otrs.com>\n"
+"PO-Revision-Date: 2019-07-20 14:25+0000\n"
+"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -436,7 +436,7 @@ msgstr "ユーザーが　読む/書く 権限のあるカテゴリーが見つ�
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
-msgstr ""
+msgstr "デフォルト言語が不明のため、新しいカテゴリの作成ができませんでした。"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
@@ -460,7 +460,7 @@ msgstr "カテゴリID が指定されていません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
-msgstr ""
+msgstr "カテゴリ %s の削除ができませんでした！"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "FAQ category updated!"
@@ -480,19 +480,19 @@ msgstr "アイテムID が指定されていません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
-msgstr ""
+msgstr "あなたはこのカテゴリへの権限がありません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "Was not able to delete the FAQ article %s!"
-msgstr ""
+msgstr "FAQ 記事 %s を削除できませんでした！"
 
 #. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
 msgid "The CategoryID %s is invalid."
-msgstr ""
+msgstr "CategoryID %sの値が不正です。"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
-msgstr ""
+msgstr "ItemID が与えられていないため、履歴を表示できませんでした！"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
@@ -512,7 +512,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
-msgstr ""
+msgstr "\"%s\"を閲覧するための設定値がありません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "No LanguageID is given!"
@@ -528,7 +528,7 @@ msgstr "この言語は設定済です。"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
-msgstr ""
+msgstr "言語 %s の削除ができませんでした！"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
@@ -628,7 +628,7 @@ msgstr "評価が選択されていません。"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The voting mechanism is not enabled!"
-msgstr ""
+msgstr "評価の機能を有効になっていません！"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The vote rate is not defined!"
@@ -981,12 +981,12 @@ msgstr "担当者インタフェースの FAQ 編集画面に表示するダイ�
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface."
-msgstr ""
+msgstr "顧客インターフェイス の FAQ 一覧画面に表示する ダイナミック・フィールド"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface."
-msgstr ""
+msgstr "公開インターフェイス の FAQ 一覧画面に表示する ダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
@@ -995,11 +995,11 @@ msgstr "担当者インタフェースの FAQ 印刷画面に表示するダイ�
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ print screen of the customer interface."
-msgstr ""
+msgstr "顧客インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface."
-msgstr ""
+msgstr "公開インターフェイス の FAQ 印刷画面に表示する ダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
@@ -1008,29 +1008,29 @@ msgstr "担当者インタフェースの FAQ 検索画面に表示するダイ�
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface."
-msgstr ""
+msgstr "顧客インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface."
-msgstr ""
+msgstr "公開インターフェイス の FAQ 検索画面に表示する ダイナミック・フィールド"
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr ""
+msgstr "担当者インターフェイスのコンパクトなFAQ概要画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr ""
+msgstr "担当者インターフェイスのFAQズーム画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
-msgstr ""
+msgstr "顧客インターフェイスのFAQズーム画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
-msgstr ""
+msgstr "公開インターフェイスのFAQズーム画面に表示するダイナミック・フィールド"
 
 #. SysConfig
 msgid "Edit this FAQ"
@@ -1066,7 +1066,7 @@ msgstr ""
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr " FAQ エリア"
 
 #. SysConfig
 msgid "FAQ Delete."
@@ -1078,7 +1078,7 @@ msgstr "FAQ の編集"
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "FAQ 更新履歴"
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
@@ -1106,7 +1106,7 @@ msgstr "Field5"
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "FAQ全文"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
@@ -1138,7 +1138,7 @@ msgstr "言語管理"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "言語管理"
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
@@ -1274,7 +1274,7 @@ msgstr ""
 
 #. SysConfig
 msgid "New FAQ Article."
-msgstr ""
+msgstr "新規 FAQ 項目"
 
 #. SysConfig
 msgid "New FAQ articles need approval before they get published."
