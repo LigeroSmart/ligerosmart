@@ -1,7 +1,7 @@
 // --
 // Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 // --
-// $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
+// $origin: otrs - b6755aea5cf49473731e4042f8731bdf17d9ed48 - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (GPL). If you
@@ -92,9 +92,6 @@ Core.Agent.TicketMasterSlave = (function (TargetNS) {
                 }
             });
         });
-
-        // Initialize the ticket action popup.
-        Core.Agent.TicketAction.Init();
     };
 
     /**
