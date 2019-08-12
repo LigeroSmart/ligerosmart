@@ -1815,12 +1815,12 @@
     ]]></CodeReinstall>
     <CodeUpgrade Type="pre" Version="3.2.91"><![CDATA[
 
-        # uninstall Feature AddOn OTRSWorkOrderTimeDependency that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 6.0.21 Beta 1)
+        # uninstall Feature AddOn OTRSWorkOrderTimeDependency that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
         $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
             Name => 'OTRSWorkOrderTimeDependency',
         );
 
-        # uninstall Feature AddOn OTRSWorkOrderReportAttachments that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 6.0.21 Beta 1)
+        # uninstall Feature AddOn OTRSWorkOrderReportAttachments that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 3.3.0 Beta 1)
         $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
             Name => 'OTRSWorkOrderReportAttachments',
         );
