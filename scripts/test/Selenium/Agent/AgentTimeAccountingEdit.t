@@ -118,12 +118,22 @@ $Selenium->RunTest(
         # Navigate to AgentTimeAccountingEdit.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingEdit");
 
-        # Add additional row.
-        my $RecordsNumber = $Selenium->execute_script('return parseInt($("#RecordsNumber").val(), 10);');
-        $Selenium->find_element("//button[\@id='MoreInputFields'][\@type='button']")->click();
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#MoreInputFields",
+        );
 
+        # Add additional row.
+        my $RecordsNumber     = $Selenium->execute_script('return parseInt($("#RecordsNumber").val(), 10);');
         my $NextRecordsNumber = $RecordsNumber + 1;
-        $Selenium->WaitFor( JavaScript => "return \$('#RecordsNumber').val() == $NextRecordsNumber;" );
+
+        $Selenium->find_element( "#MoreInputFields", 'css' )->click();
+
+        $Selenium->WaitFor(
+            JavaScript => "return \$('#RecordsNumber').val() == $NextRecordsNumber;"
+        );
+        $Selenium->WaitFor(
+            JavaScript => "return \$('#InsertWorkingHours tr.WorkingHours').length == $NextRecordsNumber;"
+        );
 
         # Check time accounting edit field IDs, first and added row.
         for my $Row ( 1, 9 ) {
