@@ -119,11 +119,11 @@ $Selenium->RunTest(
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingEdit");
 
         # Add additional row.
-        my $RecordsNumber = $Selenium->execute_script('return parseInt($("#RecordsNumber").val(), 10)');
+        my $RecordsNumber = $Selenium->execute_script('return parseInt($("#RecordsNumber").val(), 10);');
         $Selenium->find_element("//button[\@id='MoreInputFields'][\@type='button']")->click();
 
         my $NextRecordsNumber = $RecordsNumber + 1;
-        $Selenium->WaitFor( JavaScript => "return \$('#RecordsNumber').val() == $NextRecordsNumber" );
+        $Selenium->WaitFor( JavaScript => "return \$('#RecordsNumber').val() == $NextRecordsNumber;" );
 
         # Check time accounting edit field IDs, first and added row.
         for my $Row ( 1, 9 ) {
@@ -146,10 +146,16 @@ $Selenium->RunTest(
         }
 
         # Edit time accounting for test created user.
-        $Selenium->execute_script(
-            "\$('#ProjectID1').val('$ProjectID').trigger('redraw.InputField').trigger('change');"
+        $Selenium->InputFieldValueSet(
+            Element => '#ProjectID1',
+            Value   => $ProjectID,
         );
-        $Selenium->execute_script("\$('#ActionID1').val('$ActionID').trigger('redraw.InputField').trigger('change');");
+
+        $Selenium->InputFieldValueSet(
+            Element => '#ActionID1',
+            Value   => $ActionID,
+        );
+
         $Selenium->find_element( "#Remark1",    'css' )->send_keys('Selenium test remark');
         $Selenium->find_element( "#StartTime1", 'css' )->send_keys('10:00');
         $Selenium->find_element( "#EndTime1",   'css' )->send_keys( '16:00', "\t" );
@@ -196,6 +202,10 @@ $Selenium->RunTest(
 
         $Selenium->find_element( "#SubmitUserData", 'css' )->click();
 
+        $Selenium->WaitFor(
+            JavaScript => "return \$('.MessageBox.Error a[href*=\"Action=AgentTimeAccountingEdit\"]').length;"
+        );
+
         # Check if error notification is shown on page.
         $Self->Is(
             $Selenium->execute_script(
@@ -238,6 +248,10 @@ $Selenium->RunTest(
 
         # Refresh the screen to load new notification after changing config.
         $Selenium->VerifiedRefresh();
+
+        $Selenium->WaitFor(
+            JavaScript => "return \$('.MessageBox.Notice a[href*=\"Action=AgentTimeAccountingEdit\"]').length;"
+        );
 
         # Check if warrning notification is shown on page.
         $Self->Is(
