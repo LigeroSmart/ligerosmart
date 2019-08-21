@@ -118,14 +118,20 @@ $Selenium->RunTest(
         # Navigate to AgentTimeAccountingEdit.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTimeAccountingEdit");
 
-        $Selenium->WaitForjQueryEventBound(
-            CSSSelector => "#MoreInputFields",
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#RecordsNumber").length;'
         );
 
         # Add additional row.
         my $RecordsNumber     = $Selenium->execute_script('return parseInt($("#RecordsNumber").val(), 10);');
         my $NextRecordsNumber = $RecordsNumber + 1;
 
+        $Selenium->execute_script(
+            "\$(\"#MoreInputFields\")[0].scrollIntoView(true);",
+        );
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#MoreInputFields",
+        );
         $Selenium->find_element( "#MoreInputFields", 'css' )->click();
 
         $Selenium->WaitFor(
@@ -136,23 +142,25 @@ $Selenium->RunTest(
         );
 
         # Check time accounting edit field IDs, first and added row.
-        for my $Row ( 1, 9 ) {
+        for my $Row ( 1, $NextRecordsNumber ) {
             for my $EditFieldID (
                 qw(ProjectID ActionID Remark StartTime EndTime Period)
                 )
             {
-                my $Element = $Selenium->find_element( "#$EditFieldID$Row", 'css' );
-                $Element->is_enabled();
-                $Element->is_displayed();
+                $Self->True(
+                    $Selenium->execute_script("return \$('#$EditFieldID$Row').length;"),
+                    "Element '#$EditFieldID$Row' is found in screen",
+                );
             }
         }
         for my $EditRestID (
             qw(Month Day Year DayDatepickerIcon NavigationSelect IncompleteWorkingDaysList LeaveDay Sick Overtime)
             )
         {
-            my $Element = $Selenium->find_element( "#$EditRestID", 'css' );
-            $Element->is_enabled();
-            $Element->is_displayed();
+            $Self->True(
+                $Selenium->execute_script("return \$('#$EditRestID').length;"),
+                "Element '#$EditRestID' is found in screen",
+            );
         }
 
         # Edit time accounting for test created user.
@@ -210,6 +218,9 @@ $Selenium->RunTest(
         $Selenium->find_element( "#DateStart-1", 'css' )->clear();
         $Selenium->find_element( "#DateStart-1", 'css' )->send_keys($SubtractedDate);
 
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => "#SubmitUserData",
+        );
         $Selenium->find_element( "#SubmitUserData", 'css' )->click();
 
         $Selenium->WaitFor(
