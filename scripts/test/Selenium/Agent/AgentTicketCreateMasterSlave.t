@@ -17,6 +17,9 @@ my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 # Create local function for wait on AJAX update.
 my $WaitForAJAX = sub {
+
+    Time::HiRes::sleep(0.2);
+
     $Selenium->WaitFor(
         JavaScript =>
             'return typeof($) === "function" && !$("span.AJAXLoader:visible").length;'
@@ -80,8 +83,9 @@ $Selenium->RunTest(
         # Navigate to AgentTicketPhone screen.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 
-        $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $("#Dest").length;'
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#Dest',
+            Event       => 'change',
         );
 
         $Selenium->execute_script("\$('#Dest').val('2||Raw').trigger('redraw.InputField').trigger('change');");
@@ -112,6 +116,12 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#submitRichText')[0].scrollIntoView(true);",
         );
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#submitRichText').length;"
+            ),
+            "Element '#submitRichText' is found in the screen"
+        );
         $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
 
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
@@ -139,8 +149,9 @@ $Selenium->RunTest(
         # Navigate to AgentTicketEmail screen.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketEmail");
 
-        $Selenium->WaitFor(
-            JavaScript => 'return typeof($) === "function" && $("#Dest").length;'
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#Dest',
+            Event       => 'change',
         );
 
         # Create slave test email ticket.
@@ -169,6 +180,12 @@ $Selenium->RunTest(
 
         $Selenium->execute_script(
             "\$('#submitRichText')[0].scrollIntoView(true);",
+        );
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#submitRichText').length;"
+            ),
+            "Element '#submitRichText' is found in the screen"
         );
         $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
 
@@ -225,12 +242,22 @@ $Selenium->RunTest(
             "Slave dynamic field update value - found",
         );
 
-        # Delete created test tickets.
+        # Delete test tickets.
         for my $TicketID ( $MasterTicketID, $SlaveTicketID ) {
             my $Success = $TicketObject->TicketDelete(
                 TicketID => $TicketID,
                 UserID   => 1,
             );
+
+            # Ticket deletion could fail if apache still writes to ticket history. Try again in this case.
+            if ( !$Success ) {
+                sleep 3;
+                $Success = $TicketObject->TicketDelete(
+                    TicketID => $TicketID,
+                    UserID   => 1,
+                );
+            }
+
             $Self->True(
                 $Success,
                 "Ticket ID $TicketID - deleted"
