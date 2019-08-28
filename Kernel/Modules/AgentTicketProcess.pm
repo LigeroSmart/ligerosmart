@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 7ad974236118494aaf54172928974e58d931fb7a - Kernel/Modules/AgentTicketProcess.pm
+# $origin: otrs - 6813e07fe9a032f1e3db204d72d77090854ba4fd - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -2738,7 +2738,7 @@ sub _RenderArticle {
         };
     }
 
-    if ( $Self->{LinkArticleData} ) {
+    if ( IsHashRefWithData( $Self->{LinkArticleData} ) ) {
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
         my $TicketNumber = $TicketObject->TicketNumberLookup(
             TicketID => $Self->{LinkArticleData}->{TicketID},
@@ -3036,7 +3036,10 @@ sub _RenderCustomer {
     }
 
     # Customer user from article is preselected for new split ticket. See bug#12956.
-    if ( $Self->{LinkArticleData}->{From} && $Self->{LinkArticleData}->{SenderType} eq 'customer' ) {
+    if ( IsHashRefWithData( $Self->{LinkArticleData} )
+        && $Self->{LinkArticleData}->{From}
+        && $Self->{LinkArticleData}->{SenderType} eq 'customer' )
+    {
 
         my @ArticleFromAddress = Mail::Address->parse( $Self->{LinkArticleData}->{From} );
 
