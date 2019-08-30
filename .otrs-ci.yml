@@ -6,7 +6,6 @@ PlatformSets:
 DeployOTRSBranch: rel-6_0
 
 DeployOTRSPackages:
- - OTRSCodePolicy@master
  - GeneralCatalog@rel-6_0
 
 TestModes:
@@ -14,7 +13,6 @@ TestModes:
   PlatformSets:
    - ondemand-merge-otrs6
   DeployOTRSPackages:
-   - OTRSCodePolicy@master
    - FAQ@rel-6_0
    - TimeAccounting@rel-6_0
    - Survey@rel-6_0
