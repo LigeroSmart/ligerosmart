@@ -156,6 +156,15 @@ sub Run {
                 ItemID => $ItemData{ItemID},
             );
 
+            # Send data to JS if there is a specific screen ('Warning' item in 'ITSM::Core::IncidentState' class).
+            # See bug#14682.
+            if ( $ItemDataRef->{Class} eq 'ITSM::Core::IncidentState' && $ItemDataRef->{Name} eq 'Warning' ) {
+                $LayoutObject->AddJSData(
+                    Key   => 'WarningIncidentState',
+                    Value => 1,
+                );
+            }
+
             # check item data
             if ( !$ItemDataRef ) {
                 return $LayoutObject->ErrorScreen();

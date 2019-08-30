@@ -180,13 +180,101 @@ $Selenium->RunTest(
             "Cancel link is correct."
         );
 
+        # Get WarningID.
+        my $ItemDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
+            Class => 'ITSM::Core::IncidentState',
+            Name  => 'Warning',
+        );
+        my $WarningID = $ItemDataRef->{ItemID};
+        $Self->True(
+            $WarningID,
+            "Warning incident state ID - $WarningID",
+        );
+
+        # Navigate to Warning edit screen.
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AdminGeneralCatalog;Subaction=ItemEdit;ItemID=$WarningID"
+        );
+
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#ValidID").length && $("#Functionality").length;'
+        );
+
+        # Select 'warning' as Functionality option.
+        $Selenium->InputFieldValueSet(
+            Element => '#Functionality',
+            Value   => 'warning',
+        );
+
+        # Select 'Invalid' as ValidID option.
+        $Selenium->InputFieldValueSet(
+            Element => '#ValidID',
+            Value   => '2',
+        );
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#SubmitAndContinue',
+            Event       => 'click',
+        );
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#Submit',
+            Event       => 'click',
+        );
+
+        # Click 'Save' and 'Save and finish'.
+        for my $ButtonID (qw(SubmitAndContinue Submit)) {
+            $Selenium->find_element( "#$ButtonID", 'css' )->click();
+
+            $Selenium->WaitFor( JavaScript => 'return $(".Dialog:visible").length;' );
+
+            my $WarningText = 'Warning incident state can not be set to invalid.';
+
+            $Self->True(
+                $Selenium->execute_script("return \$('.Dialog:contains(\"$WarningText\")').length;"),
+                "'$ButtonID' click - Warning dialog is found",
+            );
+
+            $Selenium->WaitForjQueryEventBound(
+                CSSSelector => '#DialogButton1',
+                Event       => 'click',
+            );
+
+            # Click the cancel button.
+            $Selenium->find_element( '#DialogButton1', 'css' )->click();
+
+            $Selenium->WaitFor( JavaScript => 'return !$(".Dialog:visible").length;' );
+        }
+
+        # Select 'Valid' as ValidID option.
+        $Selenium->InputFieldValueSet(
+            Element => '#ValidID',
+            Value   => '1',
+        );
+
+        # Click Save.
+        $Selenium->find_element( "#SubmitAndContinue", 'css' )->VerifiedClick();
+
+        $Selenium->WaitFor(
+            JavaScript => 'return typeof($) === "function" && $("#ValidID").length && $("#Functionality").length;'
+        );
+
+        $Self->True(
+            $Selenium->execute_script("return \$('#Functionality').val() == 'warning';"),
+            "Incident State Type is set to 'warning'",
+        );
+        $Self->True(
+            $Selenium->execute_script("return \$('#ValidID').val() == '1';"),
+            "ValidID is set to '1'",
+        );
+
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
         # Delete created test catalog class.
         for my $CatalogItem (@CatalogItemIDs) {
 
             my $Success = $DBObject->Do(
-                SQL => "DELETE FROM general_catalog_preferences WHERE general_catalog_id = $CatalogItem",
+                SQL  => "DELETE FROM general_catalog_preferences WHERE general_catalog_id = ?",
+                Bind => [ \$CatalogItem ],
             );
             $Self->True(
                 $Success,
@@ -194,7 +282,8 @@ $Selenium->RunTest(
             );
 
             $Success = $DBObject->Do(
-                SQL => "DELETE FROM general_catalog WHERE id = $CatalogItem",
+                SQL  => "DELETE FROM general_catalog WHERE id = ?",
+                Bind => [ \$CatalogItem ],
             );
             $Self->True(
                 $Success,

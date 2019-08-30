@@ -30,6 +30,7 @@
                 <Item Key="JavaScript">
                     <Array>
                         <Item>ITSM.GeneralCatalog.JSColorPicker.js</Item>
+                        <Item>ITSM.GeneralCatalog.js</Item>
                     </Array>
                 </Item>
             </Hash>

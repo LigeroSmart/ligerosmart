@@ -78,6 +78,7 @@
         <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hs.png" />
         <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/hv.png" />
         <File Permission="660" Location="var/httpd/htdocs/js/thirdparty/jscolor_1.4.1/jscolor.js" />
+        <File Permission="660" Location="var/httpd/htdocs/js/ITSM.GeneralCatalog.js" />
         <File Permission="660" Location="var/httpd/htdocs/js/ITSM.GeneralCatalog.JSColorPicker.js" />
         <File Permission="660" Location="var/packagesetup/GeneralCatalog.pm" />
     </Filelist>
