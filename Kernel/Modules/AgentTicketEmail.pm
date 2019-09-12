@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 208741e494b27fa0ef75f002341680debc1e2629 - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - aeb33d800716e2a6653597aa86314c4cbdadb678 - Kernel/Modules/AgentTicketEmail.pm - rel-6_0_23
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -568,14 +568,20 @@ sub Run {
                 $Article{ContentType} = 'text/plain';
             }
 
-            # Strip out external content if BlockLoadingRemoteContent is enabled.
-            if ( $ConfigObject->Get('Ticket::Frontend::BlockLoadingRemoteContent') ) {
-                my %SafetyCheckResult = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
-                    String       => $Article{Body},
-                    NoExtSrcLoad => 1,
-                );
-                $Article{Body} = $SafetyCheckResult{String};
-            }
+            my %SafetyCheckResult = $Kernel::OM->Get('Kernel::System::HTMLUtils')->Safety(
+                String => $Article{Body},
+
+                # Strip out external content if BlockLoadingRemoteContent is enabled.
+                NoExtSrcLoad => $ConfigObject->Get('Ticket::Frontend::BlockLoadingRemoteContent'),
+
+                # Disallow potentially unsafe content.
+                NoApplet     => 1,
+                NoObject     => 1,
+                NoEmbed      => 1,
+                NoSVG        => 1,
+                NoJavaScript => 1,
+            );
+            $Article{Body} = $SafetyCheckResult{String};
 
             # show customer info
             if ( $ConfigObject->Get('Ticket::Frontend::CustomerInfoCompose') ) {

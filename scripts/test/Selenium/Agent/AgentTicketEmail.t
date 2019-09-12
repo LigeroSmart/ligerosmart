@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Agent/AgentTicketEmail.t
+# $origin: otrs - d1ef3728441342ba1dc946e3838e80230c391090 - scripts/test/Selenium/Agent/AgentTicketEmail.t - rel-6_0_23
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -248,6 +248,10 @@ $Selenium->RunTest(
 
         # Select customer user.
         $Selenium->find_element( "#ToCustomer", 'css' )->clear();
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => $Option,
+        );
         $Selenium->find_element( "#ToCustomer", 'css' )->send_keys( $TestData[0]->{UserLogin} );
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("li.ui-menu-item:visible").length' );
         $Selenium->execute_script("\$('li.ui-menu-item:contains($TestData[0]->{UserLogin})').click()");
