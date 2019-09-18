@@ -56,6 +56,12 @@ $Selenium->RunTest(
             Value => 0,
         );
 
+        # Make sure Note is enabled in AgentTicketMasterSlave screen.
+        $Helper->ConfigSettingChange(
+            Key   => 'Ticket::Frontend::AgentTicketMasterSlave###Note',
+            Value => 1,
+        );
+
         # Create test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
@@ -151,17 +157,13 @@ $Selenium->RunTest(
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        # Expand Miscellaneous dropdown menu.
-        $Selenium->execute_script(
-            '$("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;'
         );
 
-        # Click on 'History' and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketHistory;TicketID=$TicketIDs[0]' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to ticket history page of first created test ticket.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[0]");
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
@@ -174,13 +176,6 @@ $Selenium->RunTest(
             index( $Selenium->get_page_source(), 'Changed dynamic field MasterSlave from "" to "Master".' ) > -1,
             "Master dynamic field update value - found",
         );
-
-        # Close history window.
-        $Selenium->close();
-
-        # Switch window back to agent ticket zoom view of the first created test ticket.
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
 
         # Navigate to ticket zoom page of second created test ticket.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketZoom;TicketID=$TicketIDs[1]");
@@ -211,17 +206,13 @@ $Selenium->RunTest(
         $Selenium->switch_to_window( $Handles->[0] );
         $Selenium->WaitFor( WindowCount => 1 );
 
-        # Expand Miscellaneous dropdown menu.
-        $Selenium->execute_script(
-            '$("#nav-Miscellaneous ul").css({ "height": "auto", "opacity": "100" });'
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;'
         );
 
-        # Click on 'History' and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentTicketHistory;TicketID=$TicketIDs[1]' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to ticket history page of first created test ticket.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketIDs[1]");
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor(
@@ -237,9 +228,6 @@ $Selenium->RunTest(
             ) > -1,
             "Slave dynamic field update value - found",
         );
-
-        # Close history window.
-        $Selenium->close();
 
         # Delete created test tickets.
         for my $TicketID (@TicketIDs) {
