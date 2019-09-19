@@ -365,15 +365,15 @@ sub Run {
     # only screens that add notes can modify Article dynamic fields
     if ( $Config->{Note} ) {
         $ObjectType = [ 'Ticket', 'Article' ];
+    }
 # ---
 # OTRSMasterSlave
 # ---
-        if ($MasterSlaveAdvancedEnabled) {
-            my $Display = $Config->{MasterSlaveMandatory} ? 2 : 1;
-            $Config->{DynamicField}->{$MasterSlaveDynamicField} = $Display;
-        }
-# ---
+    if ($MasterSlaveAdvancedEnabled) {
+        my $Display = $Config->{MasterSlaveMandatory} ? 2 : 1;
+        $Config->{DynamicField}->{$MasterSlaveDynamicField} = $Display;
     }
+# ---
 
     # get the dynamic fields for this screen
     my $DynamicField = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldListGet(

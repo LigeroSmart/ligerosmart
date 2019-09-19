@@ -229,6 +229,25 @@ $Selenium->RunTest(
             "Slave dynamic field update value - found",
         );
 
+        # Disable Note in AgentTicketMasterSlave screen and
+        # check if MasterSlave dynamic field is shown in the screen (see bug#14780).
+        $Helper->ConfigSettingChange(
+            Key   => 'Ticket::Frontend::AgentTicketMasterSlave###Note',
+            Value => 0,
+        );
+
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketMasterSlave;TicketID=$TicketIDs[1]");
+
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $("#DynamicField_MasterSlave").length;'
+        );
+
+        $Self->True(
+            $Selenium->execute_script('return $("#DynamicField_MasterSlave").length;'),
+            "MasterSlave dynamic field is found"
+        );
+
         # Delete created test tickets.
         for my $TicketID (@TicketIDs) {
             my $Success = $TicketObject->TicketDelete(
