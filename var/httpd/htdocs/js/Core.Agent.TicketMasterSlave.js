@@ -1,7 +1,7 @@
 // --
 // Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 // --
-// $origin: otrs - b6755aea5cf49473731e4042f8731bdf17d9ed48 - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
+// $origin: otrs - 2433a13586f6d748eb3c6cd87fa51571c38c9e4f - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (GPL). If you
