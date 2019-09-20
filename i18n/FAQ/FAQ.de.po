@@ -52,12 +52,12 @@
 # Stefan Hagl <stefan.hagl@gmx.at>, 2018
 # Stefan Simmerstatter, 2015
 # Udo Bretz, 2018
-# zottto <mail@marcnilius.de>, 2017
+# bce0ba3cf0737f4654586bd1fe5e7d63, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-06-25 12:15+0000\n"
+"PO-Revision-Date: 2019-08-13 10:20+0000\n"
 "Last-Translator: Michael Reuther <michael.reuther@otrs.com>\n"
 "Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
 "MIME-Version: 1.0\n"
