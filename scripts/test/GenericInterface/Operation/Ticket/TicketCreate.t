@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: otrs - da70a016c4ba4350b5f516e08e68bd6251105e95 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -4247,6 +4247,65 @@ my @Tests        = (
                 },
             },
             Success => 1
+        },
+        Operation => 'TicketCreate',
+    },
+    {
+        Name           => 'Filename with name "0"',
+        SuccessRequest => 1,
+        SuccessCreate  => 1,
+        RequestData    => {
+            Ticket => {
+                Title         => 'Ticket Title',
+                CustomerUser  => $TestCustomerUserLogin,
+                QueueID       => $Queues[0]->{QueueID},
+                TypeID        => $TypeID,
+                ServiceID     => $ServiceID,
+                SLAID         => $SLAID,
+                StateID       => $StateID,
+                PriorityID    => $PriorityID,
+                OwnerID       => $OwnerID,
+                ResponsibleID => $ResponsibleID,
+                PendingTime   => {
+                    Year   => 2012,
+                    Month  => 12,
+                    Day    => 16,
+                    Hour   => 20,
+                    Minute => 48,
+                },
+            },
+            Article => {
+                Subject                         => 'Article subject',
+                Body                            => 'Article body',
+                AutoResponseType                => 'auto reply',
+                ArticleTypeID                   => 1,
+                SenderTypeID                    => 1,
+                CommunicationChannel            => 'Email',
+                ContentType                     => 'text/plain; charset=utf8',
+                HistoryType                     => 'NewTicket',
+                HistoryComment                  => '% % ',
+                TimeUnit                        => 25,
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
+                To =>
+                    "$TestCustomerUserLogin $TestCustomerUserLogin <${TestCustomerUserLogin}\@localunittest.com>, "
+                    . '"another \" recipient" <to_recipient_a@localunittest.com>, '
+                    . '<to_recipient_b@localunittest.com>',
+                Cc =>
+                    '"another \" recipient" <cc_recipient_a@localunittest.com>, '
+                    . '<cc_recipient_b@localunittest.com>',
+            },
+            DynamicField => {
+                Name  => $DynamicFieldDateTimeConfig{Name},
+                Value => '2012-01-17 12:40:00',
+            },
+            Attachment => {
+                Content     => 'VGhpcyBpcyBhIHRlc3QgdGV4dC4=',
+                ContentType => 'text/plain; charset=us-ascii',
+                Filename    => '0',
+                Disposition => 'attachment',
+            },
         },
         Operation => 'TicketCreate',
     },
