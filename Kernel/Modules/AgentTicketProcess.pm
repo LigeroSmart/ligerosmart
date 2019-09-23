@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - aeb33d800716e2a6653597aa86314c4cbdadb678 - Kernel/Modules/AgentTicketProcess.pm - rel-6_0_23
+# $origin: otrs - aeb33d800716e2a6653597aa86314c4cbdadb678 - Kernel/Modules/AgentTicketProcess.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
