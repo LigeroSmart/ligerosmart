@@ -1334,7 +1334,6 @@ Your OTRS Notification Master
                 <Item Key="PreferenceGroup">Miscellaneous</Item>
                 <Item Key="Label" Translatable="1">FAQ Overview "Small" Limit</Item>
                 <Item Key="Desc" Translatable="1">Select how many items should be shown in Overview "Small" by default.</Item>
-                <Item Key="Key" Translatable="1">Limit.</Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="10">10</Item>
@@ -1972,7 +1971,6 @@ Your OTRS Notification Master
                 <Item Key="PreferenceGroup">Miscellaneous</Item>
                 <Item Key="Label" Translatable="1">FAQ Journal Overview "Small" Limit</Item>
                 <Item Key="Desc" Translatable="1">Select how many items should be shown in Journal Overview "Small" by default.</Item>
-                <Item Key="Key" Translatable="1">Limit.</Item>
                 <Item Key="Data">
                     <Hash>
                         <Item Key="10">10</Item>
