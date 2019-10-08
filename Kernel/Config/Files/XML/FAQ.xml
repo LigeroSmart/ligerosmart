@@ -2661,22 +2661,27 @@ Your OTRS Notification Master
         </Value>
     </Setting>
     <Setting Name="LinkObject::ComplexTable###FAQ" Required="0" Valid="1">
-        <Description Translatable="1">Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.</Description>
+        <Description Translatable="1">Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.</Description>
         <Navigation>Frontend::Agent::LinkObject</Navigation>
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::LinkObject::FAQ.pm</Item>
                 <Item Key="DefaultColumns">
                     <Hash>
-                        <Item Key="FAQNumber">2</Item>
-                        <Item Key="Title">2</Item>
-                        <Item Key="State">2</Item>
-                        <Item Key="Created">2</Item>
-                        <Item Key="CategoryName">1</Item>
-                        <Item Key="Language">1</Item>
-                        <Item Key="Approved">1</Item>
-                        <Item Key="ContentType">1</Item>
-                        <Item Key="Changed">1</Item>
+                        <DefaultItem ValueType="Select">
+                            <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                            <Item ValueType="Option" Value="1" Translatable="1">1 - Available</Item>
+                            <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled by default</Item>
+                        </DefaultItem>
+                        <Item Key="FAQNumber" SelectedID="2"></Item>
+                        <Item Key="Title" SelectedID="2"></Item>
+                        <Item Key="State" SelectedID="2"></Item>
+                        <Item Key="Created" SelectedID="2"></Item>
+                        <Item Key="CategoryName" SelectedID="1"></Item>
+                        <Item Key="Language" SelectedID="1"></Item>
+                        <Item Key="Approved" SelectedID="1"></Item>
+                        <Item Key="ContentType" SelectedID="1"></Item>
+                        <Item Key="Changed" SelectedID="1"></Item>
                     </Hash>
                 </Item>
                 <Item Key="Priority">
