@@ -13,21 +13,20 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # do not check RichText
+        # Do not check RichText.
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Frontend::RichText',
             Value => 0,
         );
+
         $Helper->ConfigSettingChange(
             Valid => 1,
             Key   => 'Survey::CheckSendConditionCustomerFields',
@@ -37,7 +36,7 @@ $Selenium->RunTest(
             },
         );
 
-        # create test user and login
+        # Create test user and login.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'users' ],
         ) || die "Did not get test user";
@@ -48,47 +47,60 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentSurveyAdd
+        # Navigate to AgentSurveyAdd.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyAdd");
 
-        # check page
+        # Check page.
         for my $ID (
             qw(Title Introduction NotificationSender NotificationSubject NotificationBody Queues Description)
             )
         {
+            $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#$ID').length;" );
             my $Element = $Selenium->find_element( "#$ID", 'css' );
             $Element->is_enabled();
             $Element->is_displayed();
         }
 
-        # create test survey
+        # Create test survey.
         my $SurveyTitle = 'Survey ' . $Helper->GetRandomID();
         $Selenium->find_element( "#Title",        'css' )->send_keys($SurveyTitle);
         $Selenium->find_element( "#Introduction", 'css' )->send_keys('Selenium Introduction');
         $Selenium->execute_script("\$('#Queue_Search').val('2||Raw').trigger('redraw.InputField').trigger('change');");
         $Selenium->find_element( "#Description", 'css' )->send_keys('Selenium Description');
 
-        # scroll
+        # Scroll down.
         $Selenium->execute_script(
             "\$('#CustomerUserConditions')[0].scrollIntoView(true);",
+        );
+        $Self->True(
+            $Selenium->execute_script("return \$('#CustomerUserConditions').length;"),
+            "Element 'CustomerUserConditions' is found"
         );
 
         $Selenium->execute_script("\$('#CustomerUserConditions').val('UserLogin').change();");
         $Selenium->find_element( "#Description", 'css' )->send_keys('customer');
 
-        # UserLogin
+        # Scroll down.
+        $Selenium->execute_script(
+            "\$('button[value=Create][type=submit]')[0].scrollIntoView(true);",
+        );
+        $Self->True(
+            $Selenium->execute_script("return \$('button[value=Create][type=submit]').length;"),
+            "Submit button is found"
+        );
+
+        # UserLogin.
         $Selenium->find_element("//button[\@value='Create'][\@type='submit']")->VerifiedClick();
 
-        # check for test created survey values
+        # Check for test created survey values.
         $Self->True(
             index( $Selenium->get_page_source(), $SurveyTitle ) > -1,
             "$SurveyTitle title is found"
         );
 
-        # delete test created survey
+        # Delete test created survey.
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
         my $SurveyTitleQuoted = $DBObject->Quote($SurveyTitle);
@@ -153,7 +165,7 @@ $Selenium->RunTest(
             'Check Survey hash deeply.',
         );
 
-        # clean-up test created survey data
+        # Clean-up test created survey data.
         my $Success = $DBObject->Do(
             SQL  => "DELETE FROM survey_queue WHERE survey_id = ?",
             Bind => [ \$SurveyID ],
