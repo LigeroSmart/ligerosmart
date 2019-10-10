@@ -20,6 +20,8 @@ our @ObjectDependencies = (
     'Kernel::Language',
     'Kernel::Output::HTML::Layout',
     'Kernel::System::DynamicFieldValue',
+    'Kernel::System::DynamicField',
+    'Kernel::System::DynamicField::Backend',
     'Kernel::System::LinkObject',
     'Kernel::System::Log',
     'Kernel::System::Main',
@@ -439,7 +441,7 @@ sub _HandleLinks {
                 DynamicFields => 1,
             );
 
-            my $LinkedTicketValue = $Ticket{ 'DynamicField_' . $FieldName };
+            my $LinkedTicketValue = $LinkedTicket{ 'DynamicField_' . $FieldName };
 
             next LINKEDTICKETID if !$LinkedTicketValue;
             next LINKEDTICKETID if $LinkedTicketValue !~ /^SlaveOf:(.*?)$/;
@@ -523,13 +525,18 @@ sub _HandleLinks {
                     DynamicFields => 1,
                 );
 
-                my $LinkedTicketValue = $Ticket{ 'DynamicField_' . $FieldName };
+                my $LinkedTicketValue = $LinkedTicket{ 'DynamicField_' . $FieldName };
                 next LINKEDTICKETID if !$LinkedTicketValue;
                 next LINKEDTICKETID if $LinkedTicketValue !~ /^SlaveOf:(.*?)$/;
 
                 # remember ticket id
                 push @SlaveTicketIDs, $LinkedTicketID;
             }
+
+            my $MasterSlaveDF = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+                Name => $FieldName,
+            );
+            my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
             for my $LinkedTicketID (@SlaveTicketIDs) {
                 $LinkObject->LinkDelete(
@@ -539,6 +546,15 @@ sub _HandleLinks {
                     Key2    => $LinkedTicketID,
                     Type    => 'ParentChild',
                     UserID  => $Param{UserID},
+                );
+
+                # UnsetSlave DynamicField value from affected slave tickets.
+                $DynamicFieldBackendObject->ValueSet(
+                    DynamicFieldConfig => $MasterSlaveDF,
+                    FieldID            => $MasterSlaveDF->{ID},
+                    ObjectID           => $LinkedTicketID,
+                    Value              => 'UnsetSlave',
+                    UserID             => $Param{UserID},
                 );
             }
         }

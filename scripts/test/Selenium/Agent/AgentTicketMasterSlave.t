@@ -11,6 +11,8 @@ use strict;
 use warnings;
 use utf8;
 
+use Kernel::System::VariableCheck qw(:all);
+
 use vars (qw($Self));
 
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
@@ -248,6 +250,135 @@ $Selenium->RunTest(
             "MasterSlave dynamic field is found"
         );
 
+        # Create two more test tickets.
+        for my $TicketCreate ( 1 .. 2 ) {
+            my $TicketNumber = $TicketObject->TicketCreateNumber();
+            my $TicketID     = $TicketObject->TicketCreate(
+                TN           => $TicketNumber,
+                Title        => 'Selenium test Ticket',
+                Queue        => 'Raw',
+                Lock         => 'unlock',
+                Priority     => '3 normal',
+                StateID      => 1,
+                TypeID       => 1,
+                CustomerID   => 'SeleniumCustomer',
+                CustomerUser => 'SeleniumCustomer@localhost.com',
+                OwnerID      => $TestUserID,
+                UserID       => $TestUserID,
+            );
+            $Self->True(
+                $TicketID,
+                "Ticket ID $TicketID is created.",
+            );
+
+            push @TicketIDs,     $TicketID;
+            push @TicketNumbers, $TicketNumber;
+        }
+
+        # Set Master-Slave relation for test Tickets.
+        my @TestCase = (
+            {
+                TicketID => $TicketIDs[2],
+                Value    => "Master",
+            },
+            {
+                TicketID => $TicketIDs[3],
+                Value    => "SlaveOf:$TicketNumbers[2]",
+            },
+        );
+
+        my $MasterSlaveDFName = $Kernel::OM->Get('Kernel::Config')->Get('MasterSlave::DynamicField') || '';
+        my $DynamicField      = $Kernel::OM->Get('Kernel::System::DynamicField')->DynamicFieldGet(
+            Name => $MasterSlaveDFName,
+        );
+        my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
+        my $Success;
+        for my $Test (@TestCase) {
+            $Success = $DynamicFieldBackendObject->ValueSet(
+                DynamicFieldConfig => $DynamicField,
+                FieldID            => $DynamicField->{ID},
+                ObjectID           => $Test->{TicketID},
+                Value              => $Test->{Value},
+                UserID             => 1,
+            );
+            $Self->True(
+                $Success,
+                "Value '$Test->{Value}' is set for TicketID $Test->{TicketID}.",
+            );
+        }
+
+        # Verify Master Slave dynamic field value for Slave ticket.
+        my $DynamicFieldValueObject = $Kernel::OM->Get('Kernel::System::DynamicFieldValue');
+        my $Value                   = $DynamicFieldValueObject->ValueGet(
+            FieldID  => $DynamicField->{ID},
+            ObjectID => $TicketIDs[3],
+        );
+        $Self->Is(
+            $Value->[0]->{ValueText},
+            "SlaveOf:$TicketNumbers[2]",
+            "Master Slave dynamic field value for Slave ticket"
+        );
+
+        # Verify there is Master-Slave relation between two test Tickets.
+        my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
+        my $LinkList   = $LinkObject->LinkList(
+            Object => 'Ticket',
+            Key    => $TicketIDs[2],
+            State  => 'Valid',
+            UserID => 1,
+        );
+        $Self->True(
+            IsHashRefWithData($LinkList),
+            "MasterSlave link exists."
+        );
+
+        # Enable config "MasterSlave::UnsetMasterSlave".
+        $Helper->ConfigSettingChange(
+            Key   => 'MasterSlave::UnsetMasterSlave',
+            Value => 1,
+        );
+
+        # Navigate to AgentTicketMasterSlave screen of Master Ticket.
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AgentTicketMasterSlave;TicketID=$TicketIDs[2]"
+        );
+
+        # UnsetMaster status of Master Ticket.
+        $Selenium->execute_script(
+            "\$('#DynamicField_MasterSlave').val('UnsetMaster').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->find_element("//button[\@class='CallForAction Primary'][contains(.,'Submit')]")->VerifiedClick();
+
+        # Make sure the cache is correct.
+        my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
+        for my $Cache (qw( DynamicFieldValue LinkObject )) {
+            $CacheObject->CleanUp( Type => $Cache );
+        }
+
+        # Check if link to Slave ticket is deleted. See bug#14781.
+        $LinkList = $LinkObject->LinkList(
+            Object => 'Ticket',
+            Key    => $TicketIDs[2],
+            State  => 'Valid',
+            UserID => 1,
+        );
+        $Self->True(
+            !IsHashRefWithData($LinkList),
+            "MasterSlave link deleted."
+        );
+
+        # Check if Slave value for Master Slave field is deleted from Slave ticket after UnsetMaster.
+        $Value = $DynamicFieldValueObject->ValueGet(
+            FieldID  => $DynamicField->{ID},
+            ObjectID => $TicketIDs[3],
+        );
+
+        $Self->IsDeeply(
+            $Value,
+            [],
+            "Master Slave dynamic field value for Slave ticket"
+        );
+
         # Delete created test tickets.
         for my $TicketID (@TicketIDs) {
             my $Success = $TicketObject->TicketDelete(
@@ -256,12 +387,12 @@ $Selenium->RunTest(
             );
             $Self->True(
                 $Success,
-                "Ticket ID $TicketID - deleted"
+                "Ticket ID $TicketID is deleted."
             );
         }
 
         # Make sure the cache is correct.
-        $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+        $CacheObject->CleanUp(
             Type => 'Ticket',
         );
     }
