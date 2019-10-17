@@ -248,7 +248,7 @@ sub VoteSearch {
             FROM faq_voting
             WHERE item_id = ?',
         Bind  => [ \$Param{ItemID} ],
-        Limit => $Param{Limit} || 500,
+        Limit => 1,
     );
 
     my @VoteIDs;
@@ -311,12 +311,12 @@ sub ItemVoteDataGet {
             FROM faq_voting
             WHERE item_id = ?',
         Bind  => [ \$Param{ItemID} ],
-        Limit => $Param{Limit} || 500,
+        Limit => 1,
     );
 
     # fetch the result
     my %Data;
-    if ( my @Row = $DBObject->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $Data{Votes}  = $Row[0];
         $Data{Result} = $Row[1];
     }
