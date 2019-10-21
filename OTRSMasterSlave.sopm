@@ -42,6 +42,7 @@
         <File Permission="660" Location="Kernel/System/Ticket/Event/MasterSlave.pm" />
         <File Permission="660" Location="scripts/test/DynamicField/MasterSlave/EditFieldRender.t" />
         <File Permission="660" Location="scripts/test/DynamicField/MasterSlave/ValueSet.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/GenericAgent/MasterSlaveSelection.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t" />

@@ -104,6 +104,21 @@ sub new {
     return $Self;
 }
 
+sub ValueIsDifferent {
+    my ( $Self, %Param ) = @_;
+
+    # Special cases where the values are different but they should be reported as equals.
+    return
+        if !defined $Param{Value1}
+        && ( defined $Param{Value2} && $Param{Value2} eq 'UnsetMaster' || $Param{Value2} eq 'UnsetSlave' );
+
+    # Compare the results.
+    return DataIsDifferent(
+        Data1 => \$Param{Value1},
+        Data2 => \$Param{Value2}
+    );
+}
+
 sub ValueSet {
     my ( $Self, %Param ) = @_;
 
@@ -318,6 +333,14 @@ sub PossibleValuesGet {
             $CurrentTicket{TicketNumber},
             $CurrentTicket{Title},
         );
+    }
+
+    # If config UnsetMasterSlave is enabled and we are requesting values from AdminGenericAgent,
+    #   add UnsetMaster and UnsetSlave possible values. See bug#14778 (https://bugs.otrs.org/show_bug.cgi?id=14778).
+    if ( $ConfigObject->Get('MasterSlave::UnsetMasterSlave') && $Param{LayoutObject}->{Action} eq 'AdminGenericAgent' )
+    {
+        $PossibleValues{UnsetMaster} = $LayoutObject->{LanguageObject}->Translate('Unset Master Ticket');
+        $PossibleValues{UnsetSlave}  = $LayoutObject->{LanguageObject}->Translate('Unset Slave Ticket');
     }
 
     # return the possible values hash as a reference
