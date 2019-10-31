@@ -13,9 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-01-16 16:53+0000\n"
-"Last-Translator: Alan Cybar Sanier Quiñónez <cybarsan@gmail.com>\n"
+"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -841,10 +841,9 @@ msgstr "Determina si el título de FAQ debe ser concatenado al asunto del artíc
 #. SysConfig
 msgid ""
 "Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
-"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
-"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr "Define que columnas se muestran en el widget de preguntas frecuentes (LinkObject::ViewMode = \"complex\"). Nota: Solo los atributos de preguntas frecuentes y Campos dinámicos (DynamicField_NameX)  están permitidos para DefaultColumns. Configuraciones posibles: 0 = Deshabilitado, 1 = Disponible, 2 = Habilitado por defecto."
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
+"fields (DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1148,10 +1147,6 @@ msgstr "Gestión del lenguaje."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "Límite la búsqueda para crear la lista de palabras clave de la lista artículo de Preguntas frecuentes."
-
-#. SysConfig
-msgid "Limit."
-msgstr "Límite."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"

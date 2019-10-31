@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FAQ\n"
-"POT-Creation-Date: 2019-09-20 13:59+0000\n"
+"POT-Creation-Date: 2019-10-31 23:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -807,7 +807,7 @@ msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr ""
 
 #. SysConfig
-msgid "Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+msgid "Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
 
 #. SysConfig
@@ -1068,10 +1068,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
-
-#. SysConfig
-msgid "Limit."
 msgstr ""
 
 #. SysConfig

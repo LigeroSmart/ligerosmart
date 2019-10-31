@@ -317,7 +317,7 @@ sub Data {
         'リンクオブジェクトウィジェット（LinkObject :: ViewMode = "complex"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'FAQタイトルが記事の件名に連結するかどうかを定義します';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '簡易版FAQジャーナル表示用モジュールの概要を定義';
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = '言語管理';
     $Self->{Translation}->{'Language Management.'} = '言語管理';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
-    $Self->{Translation}->{'Limit.'} = 'リミット';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'このFAQ記事に他オブジェクトを関連付ける';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';

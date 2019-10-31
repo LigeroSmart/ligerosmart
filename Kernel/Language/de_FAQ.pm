@@ -317,8 +317,8 @@ sub Data {
         'Definieren Sie Actions, in denen im Verknüpfte-Objekte-Widget ein Einstellungen-Knopf verfügbar sein soll (LinkObject::ViewMode = "complex"). Bitte beachten Sie, dass für diese Actions die folgenden JS- und CSS-Dateien registriert sein müssen:  Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js und Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Definiert ob der FAQ-Titel mit dem Artikelbetreff verkettet werden soll.';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        'Definieren Sie, welche Spalten im verlinkte FAQ-Widget sichtbar sein sollen (LinkObject::ViewMode = "complex"). Hinweis: Nur FAQ-Attribute und dynamische Felder (DynamicField_NameX) sind als Standard-Spalten erlaubt. Mögliche Einstellungen: 0 = inaktiv, 1 = verfügbar, 2 = standardmäßig aktiv.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Definiert ein Übersichts-Modul um die Small-Ansicht im FAQ-Journal anzuzeigen.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Sprachenverwaltung';
     $Self->{Translation}->{'Language Management.'} = 'Sprachenverwaltung.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Limit für die Suche beim Erstellen der Schlüsselwort-FAQ-Artikel-Liste.';
-    $Self->{Translation}->{'Limit.'} = 'Limit.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Diese FAQ mit einem anderen Objekt verknüpfen';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Liste der Queue-Namen für welche die zugehörigen Artikel-Feature aktiviert wurden.';

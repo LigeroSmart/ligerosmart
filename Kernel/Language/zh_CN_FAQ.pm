@@ -317,8 +317,8 @@ sub Data {
         '定义链接对象小部件(LinkObject::ViewMode = \"complex\")设置按钮中的操作。请注意，这些操作必须已经在以下JS和CSS文件中注册：Core.AllocationList.css、Core.UI.AllocationList.js、 Core.UI.Table.Sort.js、Core.Agent.TableFilters.js和Core.Agent.LinkObject.js。';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         '定义FAQ标题是否要加到文章主题中。';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        '定义链接的知识库小部件(LinkObject::ViewMode = "complex")要显示的列。注意：只有知识库属性和动态字段（DynamicField_NameX）才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '定义一个显示FAQ日志简洁视图的概览模块。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = '管理语言';
     $Self->{Translation}->{'Language Management.'} = '管理语言';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '为建立关键字FAQ文章列表的搜索限制。';
-    $Self->{Translation}->{'Limit.'} = '限制。';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象到这个FAQ条目';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '启用相关文章功能的队列名称列表。';

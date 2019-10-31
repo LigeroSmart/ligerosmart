@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-07-20 14:25+0000\n"
-"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
+"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -836,9 +836,8 @@ msgstr "FAQタイトルが記事の件名に連結するかどうかを定義し
 #. SysConfig
 msgid ""
 "Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
-"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
-"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
+"fields (DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
 
 #. SysConfig
@@ -1143,10 +1142,6 @@ msgstr "言語管理"
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr ""
-
-#. SysConfig
-msgid "Limit."
-msgstr "リミット"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"

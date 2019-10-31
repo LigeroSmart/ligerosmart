@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-07-23 13:51+0000\n"
-"Last-Translator: Leif-Jöran Olsson <ljo@fripost.org>\n"
+"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/otrs/OTRS/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -837,9 +837,8 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
-"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
-"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
+"fields (DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
 
 #. SysConfig
@@ -1143,10 +1142,6 @@ msgstr ""
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
-msgstr ""
-
-#. SysConfig
-msgid "Limit."
 msgstr ""
 
 #. SysConfig

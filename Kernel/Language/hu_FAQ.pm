@@ -317,8 +317,8 @@ sub Data {
         'Műveletek meghatározása, ahol egy beállítások gomb érhető el a kapcsolt objektumok felületi elemen (LinkObject::ViewMode = „összetett”). Ne feledje, hogy ezeknek a műveleteknek rendelkezniük kell a következő JS és CSS fájlok regisztrálásával: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js és Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Meghatározza, hogy a GyIK címét össze kell-e fűzni a bejegyzés tárgyával.';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt GyIK-ok felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak GyIK attribútumok és dinamikus mezők (DynamicField_NévX) engedélyezettek a DefaultColumns értékeinél. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Egy áttekintő modult határoz meg egy GyIK napló kis nézetének megjelenítéséhez.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Nyelvkezelés';
     $Self->{Translation}->{'Language Management.'} = 'Nyelvkezelés.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'A keresés korlátozása a kulcsszó GyIK bejegyzéslista összeállításához.';
-    $Self->{Translation}->{'Limit.'} = 'Korlát.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Másik objektum hozzákapcsolása ehhez a GyIK elemhez';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Azon várólistanevek listája, amelyeknél a kapcsolódó bejegyzés funkció engedélyezve van.';

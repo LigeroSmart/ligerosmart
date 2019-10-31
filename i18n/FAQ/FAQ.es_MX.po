@@ -1,6 +1,6 @@
 # 
 # Translators:
-# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014-2015,2017-2018
+# Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014-2015,2017-2019
 # Carlos Rodríguez <carlos.rodriguez@otrs.com>, 2014
 # David Bautista <david.bautista@certicamara.com>, 2015
 # Leonel Vazquez <leonel.vazquez@otrs.com>, 2014
@@ -9,9 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-01-15 21:31+0000\n"
-"Last-Translator: Armando Ríos <armando.rios@otrs.com>\n"
+"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:06+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/otrs/OTRS/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -837,10 +837,9 @@ msgstr "Define si el título del FAQ debe estar concatenado al asunto del artíc
 #. SysConfig
 msgid ""
 "Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
-"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
-"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr "Define cuales columnas serán mostradas en el \"widget\" de FAQ vinculados (LinkObject::ViewMode = \"complex\"). Nota: Solamente atributos de FAQ y Campos Dinámicos (DynamicField_NombreX) son permitidos para columnas por omisión. Posibles configuraciones: 0 = Deshabitado, 1 = Habilitado, 2 = Habilitado por  omisión."
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
+"fields (DynamicField_NameX) are allowed for DefaultColumns."
+msgstr "Define cuales columnas serán mostradas en el \"widget\" de FAQ vinculados (LinkObject::ViewMode = \"complex\"). Nota: Solamente atributos de FAQ y campos dinámicos (DynamicField_NombreX) son permitidos para columnas por omisión."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1144,10 +1143,6 @@ msgstr "Gestión de Idiomas."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "Límite de la búsqueda para construir el listado de palabras clave de artículos FAQ."
-
-#. SysConfig
-msgid "Limit."
-msgstr "Límite"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"

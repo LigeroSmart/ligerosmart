@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-03-26 02:42+0000\n"
-"Last-Translator: 汇民 王 <whuim@qq.com>\n"
+"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/otrs/OTRS/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -838,10 +838,9 @@ msgstr "定义FAQ标题是否要加到文章主题中。"
 #. SysConfig
 msgid ""
 "Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
-"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
-"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr "定义链接的知识库小部件(LinkObject::ViewMode = \"complex\")要显示的列。注意：只有知识库属性和动态字段（DynamicField_NameX）才能作为默认列，可用的设置值为：0 = 禁用，1 = 可用， 2 = 默认启用。"
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
+"fields (DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1145,10 +1144,6 @@ msgstr "管理语言"
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "为建立关键字FAQ文章列表的搜索限制。"
-
-#. SysConfig
-msgid "Limit."
-msgstr "限制。"
 
 #. SysConfig
 msgid "Link another object to this FAQ item"

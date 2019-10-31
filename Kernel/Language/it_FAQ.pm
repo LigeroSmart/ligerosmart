@@ -317,7 +317,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Definisce se il titolo FAQ dovrebbe essere concatenato con l\'oggetto dell\'articolo.';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
         '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Definisce un modulo panoramica per mostrare una vista abbreviata di una lista di FAQ.';
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Gestione della lingua';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
-    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Collega un\'altro oggetto a questo oggetto FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';

@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2018-11-05 19:59+0000\n"
-"PO-Revision-Date: 2019-06-27 18:46+0000\n"
-"Last-Translator: Balázs Úr\n"
+"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"PO-Revision-Date: 2019-10-31 23:03+0000\n"
+"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -833,10 +833,9 @@ msgstr "Meghatározza, hogy a GyIK címét össze kell-e fűzni a bejegyzés tá
 #. SysConfig
 msgid ""
 "Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and Dynamic "
-"Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible "
-"settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
-msgstr "Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt GyIK-ok felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak GyIK attribútumok és dinamikus mezők (DynamicField_NévX) engedélyezettek a DefaultColumns értékeinél. Lehetséges beállítások: 0 = letiltva, 1 = elérhető, 2 = alapértelmezetten engedélyezett."
+"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
+"fields (DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -1140,10 +1139,6 @@ msgstr "Nyelvkezelés."
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr "A keresés korlátozása a kulcsszó GyIK bejegyzéslista összeállításához."
-
-#. SysConfig
-msgid "Limit."
-msgstr "Korlát."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"

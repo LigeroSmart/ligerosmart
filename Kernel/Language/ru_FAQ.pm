@@ -317,8 +317,8 @@ sub Data {
         'Задает Действия/Actions когда кнопка настройки доступна в связанном виджете (LinkObject::ViewMode = "complex"). Обратите внимание, что эти Действия/Actions должны иметь зарегистрированные JS или CSS файлы: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Задает, должен ли заголовок FAQ объединяться с темой статьи.';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        'Задает, какие колонки отображаются в связанном FAQ виджете ((LinkObject::ViewMode = "complex"). Внимание:только атрибуты FAQ и динамических полей (DynamicField_NameX) разрешены для DefaultColumns/Колонки по умолчанию. Возможные значения: 0 = Отключено, 1 = Да, 2 = Включено по умолчанию.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Задает модуль просмотра для отображения журнала FAQ в small формате';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Управление языками';
     $Self->{Translation}->{'Language Management.'} = 'Управление языками.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Лимит  для поиска для построения списка контекстных статей FAQ.';
-    $Self->{Translation}->{'Limit.'} = 'Ограничение.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Привязать другой объект к этому элементу FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Список очередей для которых возможность поиска контекстных статей FAQ включена.';

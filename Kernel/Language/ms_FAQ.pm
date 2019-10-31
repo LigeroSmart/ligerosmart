@@ -317,8 +317,8 @@ sub Data {
         'Takrifkan Tindakan dimana butang tetapan itu ada dalam widget objek bersambung (LinkObject::ViewMode = "complex"). Sila pastikan yang Tindakan ini perlu didaftarkan yang berikut fail-fail JS dan CSS: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Tentukan jika tajuk FAQ perlu dirangkaikan kepada artikel subjek.';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        'Takrifkan dimana kolum ditunjukkan dalam widget FAQ-FAQ bersambung (LinkObject::ViewMode = "complex"). Nota: Hanya sifat-sifat FAQ dan Dynamic Fields (DynamicField_NameX) yang dibenarkan untuk DefaultColumns. Kemungkinan tetapan: 0 = Dinyahaktif, 1 = Ada, 2 = Aktif secara lazim.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Kenalpasti lihat semula modul untuk papar paparan kecil dari Jurnal FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Pengurusan Bahasa';
     $Self->{Translation}->{'Language Management.'} = '';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '';
-    $Self->{Translation}->{'Limit.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'FAQ pautan ini kepada objek lain';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         '';

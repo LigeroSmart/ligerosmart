@@ -317,8 +317,8 @@ sub Data {
         'Definiše Akcije gde je dugme postavki dostupno u povezanom grafičkom elementu objekta (LinkObject::ViewMode = "complex"). Molimo da imate na umu da ove Akcije moraju da budu registrovane u sledećim JS i CSS datotekama: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js i Core.Agent.LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Određuje da li naslov FAQ treba da bude dodat na temu članka.';
-    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and Dynamic Fields (DynamicField_NameX) are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.'} =
-        'Definiše koje kolone su prikazane u povezanom FAQ grafičkom elementu (LinkObject::ViewMode = "complex"). Napomena: samo FAQ atributi i dinamička polja (DynamicField_NameX) su dozvoljeni za podrazumevane kolone. Moguće postavke: 0 = isključeno, 1 = uključeno, 2 = podrazumevano uključeno.';
+    $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
+        '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Definiše modul pregleda za mali prikaz FAQ dnevnika. ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -419,7 +419,6 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Upravljanje jezicima';
     $Self->{Translation}->{'Language Management.'} = 'Upravljanje jezicima.';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = 'Ograničenje pretrage za generisanje liste ključnih reči FAQ članaka.';
-    $Self->{Translation}->{'Limit.'} = 'Ograničenje.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Poveži drugi objekat sa ovom stavkom FAQ';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =
         'Lista imena redova za koje je funcija srodnih članaka aktivirana.';
