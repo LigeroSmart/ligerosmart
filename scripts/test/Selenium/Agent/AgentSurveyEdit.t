@@ -142,9 +142,11 @@ $Selenium->RunTest(
             $Selenium->find_element( "#$SurveyStored->{ID}", 'css' )->send_keys(' edited');
         }
 
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#UserLoginInput1").length' );
+
         # Update customer user condition.
         $Selenium->execute_script(
-            "\$('#CustomerUserConditions')[0].scrollIntoView(true);",
+            "\$('#UserLoginInput1')[0].scrollIntoView(true);",
         );
         $Selenium->find_element( "#UserLoginInput1", 'css' )->send_keys(' edited');
 
