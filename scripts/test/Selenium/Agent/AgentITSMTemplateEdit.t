@@ -12,25 +12,22 @@ use utf8;
 
 use vars (qw($Self));
 
-# get selenium object
 my $Selenium = $Kernel::OM->Get('Kernel::System::UnitTest::Selenium');
 
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # get change state data
+        # Get change state data.
         my $ChangeStateDataRef = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemGet(
             Class => 'ITSM::ChangeManagement::Change::State',
             Name  => 'requested',
         );
 
-        # get change object
         my $ChangeObject = $Kernel::OM->Get('Kernel::System::ITSMChange');
 
-        # create test change
+        # Create test change.
         my $ChangeTitleRandom = 'ITSMChange Requested ' . $Helper->GetRandomID();
         my $ChangeID          = $ChangeObject->ChangeAdd(
             ChangeTitle   => $ChangeTitleRandom,
@@ -44,10 +41,9 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is created",
         );
 
-        # get template object
         my $TemplateObject = $Kernel::OM->Get('Kernel::System::ITSMChange::Template');
 
-        # create simple change template
+        # Create simple change template.
         my $TemplateNameRandom = 'Template ' . $Helper->GetRandomID();
         my $ChangeContent      = $TemplateObject->TemplateSerialize(
             Name         => $TemplateNameRandom,
@@ -58,7 +54,7 @@ $Selenium->RunTest(
             UserID       => 1
         );
 
-        # create test template from test change
+        # Create test template from test change.
         my $TemplateID = $TemplateObject->TemplateAdd(
             Name         => $TemplateNameRandom,
             TemplateType => 'ITSMChange',
@@ -73,7 +69,7 @@ $Selenium->RunTest(
             "Change Template ID $TemplateID is created",
         );
 
-        # create and log in test user
+        # Create and log in test user.
         my $TestUserLogin = $Helper->TestUserCreate(
             Groups => [ 'admin', 'itsm-change', 'itsm-change-manager' ],
         ) || die "Did not get test user";
@@ -84,25 +80,29 @@ $Selenium->RunTest(
             Password => $TestUserLogin,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to AgentITSMTemplateOverview screen
+        # Navigate to AgentITSMTemplateOverview screen.
         $Selenium->VerifiedGet(
             "${ScriptAlias}index.pl?Action=AgentITSMTemplateOverview;SortBy=TemplateID;OrderBy=Down;Filter=ITSMChange"
         );
 
-        # click on test template and switch window
+        # Wait until page has loaded, if necessary.
+        $Selenium->WaitFor(
+            ElementExists => "//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]"
+        );
+
+        # Click on test template and switch window.
         $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         my $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
 
-        # check stored values
+        # Check stored values.
         $Self->Is(
             $Selenium->find_element( '#TemplateName', 'css' )->get_value(),
             $TemplateNameRandom,
@@ -114,7 +114,7 @@ $Selenium->RunTest(
             "#Comment stored value",
         );
 
-        # edit values and submit
+        # Edit values and submit.
         $Selenium->find_element( "#TemplateName", 'css' )->send_keys(" Edit");
         $Selenium->find_element( "#Comment",      'css' )->send_keys(" Edit");
         $Selenium->find_element("//button[\@id='submitEditTemplate'][\@type='submit']")->click();
@@ -124,17 +124,17 @@ $Selenium->RunTest(
 
         sleep(1);
 
-        # click on edited test template and switch window
+        # Click on edited test template and switch window.
         $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
 
         $Selenium->WaitFor( WindowCount => 2 );
         $Handles = $Selenium->get_window_handles();
         $Selenium->switch_to_window( $Handles->[1] );
 
-        # wait until page has loaded, if necessary
+        # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
 
-        # check edited values
+        # Check edited values.
         $Self->Is(
             $Selenium->find_element( '#TemplateName', 'css' )->get_value(),
             $TemplateNameRandom . ' Edit',
@@ -146,7 +146,7 @@ $Selenium->RunTest(
             "#Comment edited value",
         );
 
-        # delete test template
+        # Delete test template.
         my $Success = $TemplateObject->TemplateDelete(
             TemplateID => $TemplateID,
             UserID     => 1,
@@ -156,7 +156,7 @@ $Selenium->RunTest(
             "$TemplateNameRandom edit is deleted",
         );
 
-        # delete test created change
+        # Delete test created change.
         $Success = $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -166,7 +166,7 @@ $Selenium->RunTest(
             "$ChangeTitleRandom is deleted",
         );
 
-        # make sure cache is correct
+        # Make sure cache is correct.
         $Kernel::OM->Get('Kernel::System::Cache')->CleanUp( Type => 'ITSMChange*' );
     }
 );
