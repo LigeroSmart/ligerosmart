@@ -148,7 +148,8 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#UserLoginInput1')[0].scrollIntoView(true);",
         );
-        $Selenium->find_element( "#UserLoginInput1", 'css' )->send_keys(' edited');
+
+        $Selenium->execute_script("\$('#UserLoginInput1').val('John edited');");
 
         # Submit updates and switch back window.
         $Selenium->find_element("//button[\@value='Update'][\@type='submit']")->click();
