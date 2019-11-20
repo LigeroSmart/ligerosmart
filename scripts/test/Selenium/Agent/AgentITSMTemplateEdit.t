@@ -92,12 +92,10 @@ $Selenium->RunTest(
             ElementExists => "//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]"
         );
 
-        # Click on test template and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to AgentITSMTemplateEdit screen.
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AgentITSMTemplateEdit;TemplateID=$TemplateID"
+        );
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
@@ -117,19 +115,12 @@ $Selenium->RunTest(
         # Edit values and submit.
         $Selenium->find_element( "#TemplateName", 'css' )->send_keys(" Edit");
         $Selenium->find_element( "#Comment",      'css' )->send_keys(" Edit");
-        $Selenium->find_element("//button[\@id='submitEditTemplate'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@id='submitEditTemplate'][\@type='submit']")->VerifiedClick();
 
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
-
-        sleep(1);
-
-        # Click on edited test template and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'AgentITSMTemplateEdit;TemplateID=$TemplateID' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
+        # Navigate to AgentITSMTemplateEdit screen in ordr to check edited ITSM tamplete.
+        $Selenium->VerifiedGet(
+            "${ScriptAlias}index.pl?Action=AgentITSMTemplateEdit;TemplateID=$TemplateID"
+        );
 
         # Wait until page has loaded, if necessary.
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#TemplateName").length' );
