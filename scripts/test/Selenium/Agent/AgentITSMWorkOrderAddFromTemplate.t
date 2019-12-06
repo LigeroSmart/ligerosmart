@@ -110,6 +110,7 @@ $Selenium->RunTest(
 
         # navigate to AgentITSMChangeZoom for second test created change
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentITSMChangeZoom;ChangeID=$ChangeIDs[1]");
+        $Selenium->execute_script('window.Core.App.PageLoadComplete = false;');
 
         # click on 'Add Workorder (from template)' and switch window
         $Selenium->find_element(
@@ -137,14 +138,16 @@ $Selenium->RunTest(
         $Selenium->execute_script(
             "\$('#TemplateID').val('$TemplateID').trigger('redraw.InputField').trigger('change');"
         );
+
         $Selenium->find_element( "#SubmitTemplate", 'css' )->click();
 
         $Selenium->WaitFor( WindowCount => 1 );
         $Selenium->switch_to_window( $Handles->[0] );
 
-        sleep(1);
-
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("body").length' );
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete'
+        );
 
         # check work order values created from test template
         $Self->True(
