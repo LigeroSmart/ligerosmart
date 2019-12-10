@@ -379,6 +379,47 @@ $Selenium->RunTest(
             "Master Slave dynamic field value for Slave ticket"
         );
 
+        # Check if there is MasterSlave error log during ticket creation. See bug#14899.
+        my $RandomID = $Helper->GetRandomID();
+
+        # Navigate to AgentTicketPhone and create test ticket.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
+
+        my $TestCustomer = 'customer' . $RandomID . '@gmail.com';
+        $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
+        $Selenium->InputFieldValueSet(
+            Element => '#Dest',
+            Value   => '2||Raw',
+        );
+
+        # Wait for loader.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length;' );
+
+        $Selenium->find_element( "#Subject",        'css' )->send_keys("Subject$RandomID");
+        $Selenium->find_element( "#RichText",       'css' )->clear();
+        $Selenium->find_element( "#RichText",       'css' )->send_keys("Text$RandomID");
+        $Selenium->find_element( "#submitRichText", 'css' )->click();
+
+        $Selenium->WaitFor(
+            JavaScript =>
+                'return typeof($) === "function" && $(".MessageBox a[href*=\'AgentTicketZoom;TicketID=\']").length !== 0;'
+        );
+
+        my @Ticket   = split( 'TicketID=', $Selenium->get_current_url() );
+        my $TicketID = $Ticket[1];
+
+        push @TicketIDs, $TicketID;
+
+        # Navigate to AdminLog.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminLog");
+
+        # Check if MasterSlave error log is created.
+        my $Message = "Could not update field MasterSlave for Ticket ID $TicketID";
+        $Self->True(
+            $Selenium->execute_script("return \$('#LogEntries .Error:eq(0)').text().indexOf('$Message') == -1;"),
+            "Error message is not created for update field MasterSlave for Ticket ID $TicketID",
+        );
+
         # Delete created test tickets.
         for my $TicketID (@TicketIDs) {
             my $Success = $TicketObject->TicketDelete(

@@ -110,7 +110,14 @@ sub ValueIsDifferent {
     # Special cases where the values are different but they should be reported as equals.
     return
         if !defined $Param{Value1}
-        && ( defined $Param{Value2} && $Param{Value2} eq 'UnsetMaster' || $Param{Value2} eq 'UnsetSlave' );
+        && (
+        defined $Param{Value2}
+        && (
+            $Param{Value2} eq 'UnsetMaster'
+            || $Param{Value2} eq 'UnsetSlave'
+            || $Param{Value2} eq ''
+        )
+        );
 
     # Compare the results.
     return DataIsDifferent(
