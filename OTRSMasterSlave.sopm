@@ -83,12 +83,6 @@
         You are about to install the OTRS package OTRSMasterSlave.<br/>
         <br/>
         <br/>
-        <strong>ATTENTION</strong>
-        <br/>
-        <br/>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
-        <br/>
-        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
@@ -100,12 +94,6 @@
         Usted est&aacute; a punto de instalar el paquete OTRSMasterSlave de OTRS.<br/>
         <br/>
         <br/>
-        <strong>ATENCI&Oacute;N</strong>
-        <br/>
-        <br/>
-        Por favor aseg&uacute;rese que su base de datos acepte paquetes de m&aacute;s de 5 MB de tama&ntilde;o. Por ejemplo una base de datos de MySQL acepta paquetes de m&aacute;s de 1 MB predefinido. En este caso la configuraci&oacute;n max_allowed_packet debe ser incrementada. El tama&ntilde;o recomendado es 20 MB.
-        <br/>
-        <br/>
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
@@ -115,15 +103,6 @@
         <br/>
         <br/>
         Ön az OTRSMasterSlave OTRS csomag telepítésére készül.<br/>
-        <br/>
-        <br/>
-        <strong>FIGYELEM</strong>
-        <br/>
-        <br/>
-        Győződjön meg arról, hogy az adatbázisa elfogadja-e az 5 MB-nál nagyobb méretű csomagokat.
-        Például egy MySQL adatbázis alapértelmezetten legfeljebb 1 MB méretű csomagot fogad el.
-        Ebben az esetben a max_allowed_packet értékét kell megnövelni.
-        A javasolt legnagyobb elfogadott méret 20 MB.
         <br/>
         <br/>
         ((enjoy))<br/>
