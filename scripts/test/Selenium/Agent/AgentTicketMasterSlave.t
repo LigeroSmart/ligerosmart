@@ -47,6 +47,13 @@ $Selenium->RunTest(
             Value => 'Kernel::System::Email::Test',
         );
 
+        # Disable Type feature.
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'Ticket::Type',
+            Value => 0,
+        );
+
         # Make sure InvovedAgent and InformAgent are disabled, otherwise it uses part of the visible
         # Screen making the submit button not visible and then not click-able.
         $Helper->ConfigSettingChange(
