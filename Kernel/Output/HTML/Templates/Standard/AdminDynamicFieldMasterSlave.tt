@@ -7,7 +7,30 @@
 # --
 
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
-    <h1>[% Translate("Dynamic Fields") | html %] - [% Translate(Data.ObjectTypeName) | html %]: [% Translate(Data.Mode) | html %] [% Translate(Data.FieldTypeName) | html %] [% Translate("Field") | html %]</h1>
+    <h1 class="InvisibleText">
+        [% Translate("Dynamic Fields") | html %] - [% Translate(Data.ObjectTypeName) | html %]:
+        [% USE Title = String(Data.BreadcrumbText) %]
+        [% Title | html %]
+    </h1>
+
+    [% BreadcrumbPath = [
+            {
+                Name => Translate('Dynamic Fields Management'),
+                Link => 'AdminDynamicField',
+            },
+        ]
+    %]
+
+    [% USE BreadcrumbName = String(Translate(Data.ObjectTypeName)) %]
+
+    [% SWITCH Data.Mode %]
+        [% CASE 'Add' %]
+            [% BreadcrumbPath.push({ Name => BreadcrumbName.append( ': ', Title ) }) %]
+        [% CASE 'Change' %]
+            [% BreadcrumbPath.push({ Name => BreadcrumbName.append( ': ', Title, ' - ', Data.Name ) }) %]
+    [% END %]
+
+    [% INCLUDE "Breadcrumb.tt" Path = BreadcrumbPath %]
 
     <div class="Clear"></div>
 
