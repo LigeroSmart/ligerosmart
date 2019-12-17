@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - b9cf29ede488bbc3bf5bd0d49f422ecc65668a0c - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
+# $origin: otrs - 920072b78060d84b50a521275c1a8855eb81cc16 - scripts/test/Selenium/Agent/Admin/AdminCustomerUserService.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -90,17 +90,6 @@ $Selenium->RunTest(
             "Breadcrumb is found on Overview screen.",
         );
 
-        # Test search filter for CustomerUser.
-        $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
-        $Selenium->find_element( "#CustomerUserSearch", 'css' )->send_keys($CustomerUserName);
-        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
-        $Self->True(
-            index( $Selenium->get_page_source(), $CustomerUserName ) > -1,
-            "CustomerUser $CustomerUserName found on page",
-        );
-        $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
-        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
-
         # Filter for service. It is auto complete, submit is not necessary.
         $Selenium->find_element( "#FilterServices", 'css' )->send_keys($ServiceName);
         $Self->True(
@@ -108,6 +97,16 @@ $Selenium->RunTest(
             "$ServiceName service found on page",
         );
         $Selenium->find_element( "#FilterServices", 'css' )->clear();
+
+        # Test search filter for CustomerUser.
+        $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
+        $Selenium->find_element( "#CustomerUserSearch", 'css' )->send_keys($CustomerUserName);
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
+
+        $Self->True(
+            index( $Selenium->get_page_source(), $CustomerUserName ) > -1,
+            "CustomerUser $CustomerUserName found on page",
+        );
 
         # Allocate test service to test customer user.
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
@@ -138,24 +137,30 @@ $Selenium->RunTest(
         # Check test customer user allocation to test service.
         $Selenium->find_element( $ServiceName, 'link_text' )->VerifiedClick();
 
+        $Selenium->find_element( "#CustomerUserSearch", 'css' )->clear();
+        $Selenium->find_element( "#CustomerUserSearch", 'css' )->send_keys($CustomerUserName);
+        $Selenium->find_element("//button[\@value='Search'][\@type='submit']")->VerifiedClick();
+
         $Self->Is(
-            $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->is_selected(),
+            $Selenium->find_element("//input[contains(\@title, \'Toggle active state for $CustomerUserName' )]")
+                ->is_selected(),
             1,
             "Service $ServiceName is active for CustomerUser $CustomerUserName",
-        );
+        ) || die;
 
         # Remove test customer user allocations from test service.
-        $Selenium->find_element("//input[\@value=\"$CustomerUserName\"]")->click();
+        $Selenium->find_element( "#SelectAllItemsSelected", 'css' )->click();
         $Selenium->find_element("//button[\@value='Save'][\@type='submit']")->VerifiedClick();
 
         # Check if there is any test service allocation towards test customer user
         $Selenium->find_element("//a[contains(\@href, \'CustomerUserLogin=$CustomerUserName' )]")->VerifiedClick();
+        $Selenium->find_element( "#FilterServices", 'css' )->send_keys($ServiceName);
 
         $Self->Is(
-            $Selenium->find_element("//input[\@value='$ServiceID']")->is_selected(),
+            $Selenium->find_element("//input[\@title=\'Toggle active state for $ServiceName\']")->is_selected(),
             0,
             "Service $ServiceName is not active for CustomerUser $CustomerUserName",
-        );
+        ) || die;
 
         my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
 
