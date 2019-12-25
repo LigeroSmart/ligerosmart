@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - adea4cdf9a778f90eff7facedef87ec2a9ee50a7 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t
+# $origin: otrs - 72e208103bf51b613531cba92682b8dfcb2a8888 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t - rel-6_0_26
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -628,6 +628,23 @@ my $CustomerPassword  = $CustomerUserLogin;
 # create a customer that will not have permissions
 my $CustomerUserLogin2 = $Helper->TestCustomerUserCreate();
 my $CustomerPassword2  = $CustomerUserLogin2;
+
+# Create a customer with email address.
+my $CustomerRand       = 'email-customer-' . $Helper->GetRandomID();
+my $EmailCustomerRand  = $CustomerRand . '@localhost.com';
+my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
+my $TestCustomerUserID = $CustomerUserObject->CustomerUserAdd(
+    Source         => 'CustomerUser',
+    UserFirstname  => 'Firstname Test',
+    UserLastname   => 'Lastname Test',
+    UserCustomerID => $CustomerRand,
+    UserLogin      => $CustomerRand,
+    UserEmail      => $EmailCustomerRand,
+    UserPassword   => $CustomerRand,
+    ValidID        => 1,
+    UserID         => 1,
+);
 
 # start requester with our web service
 my $RequesterSessionResult = $RequesterSessionObject->Run(
@@ -3176,6 +3193,45 @@ my @Tests        = (
         Operation => 'TicketCreate',
     },
     {
+        Name           => 'Ticket with Customer User by email.',
+        Type           => 'EmailCustomerUser',
+        SuccessRequest => 1,
+        SuccessCreate  => 1,
+        RequestData    => {
+            Ticket => {
+                Title         => 'Ticket Title',
+                CustomerUser  => $EmailCustomerRand,
+                QueueID       => $Queues[0]->{QueueID},
+                TypeID        => $TypeID,
+                StateID       => $StateID,
+                PriorityID    => $PriorityID,
+                OwnerID       => $OwnerID,
+                ResponsibleID => $ResponsibleID,
+            },
+            Article => {
+                SenderTypeID         => 1,
+                Subject              => 'Article subject',
+                Body                 => 'Article body',
+                AutoResponseType     => 'auto reply',
+                From                 => $EmailCustomerRand,
+                ContentType          => 'text/plain; charset=utf8',
+                IsVisibleForCustomer => '1',
+                TimeUnit             => 25,
+            },
+            DynamicField => {
+                Name  => $DynamicFieldDateTimeConfig{Name},
+                Value => '2012-01-17 12:40:00',
+            },
+            Attachment => {
+                Content     => 'VGhpcyBpcyBhIHRlc3QgdGV4dC4=',
+                ContentType => 'text/plain; charset=utf8',
+                Filename    => 'Test.txt',
+                Disposition => 'attachment',
+            },
+        },
+        Operation => 'TicketCreate',
+    },
+    {
         Name           => 'Ticket with IDs PendingTime Diff',
         SuccessRequest => 1,
         SuccessCreate  => 1,
@@ -3386,7 +3442,7 @@ my @Tests        = (
         Operation => 'TicketCreate',
     },
     {
-        Name             => 'Ticket with external customer user',
+        Name             => 'Ticket with external customer user - valid address',
         SuccessRequest   => 1,
         SuccessCreate    => 1,
         ExternalCustomer => 1,
@@ -3433,6 +3489,65 @@ my @Tests        = (
                 Filename    => 'Test.txt',
                 Disposition => 'attachment',
             },
+        },
+        Operation => 'TicketCreate',
+    },
+    {
+        Name             => 'Ticket with external customer user - invalid address',
+        SuccessRequest   => 1,
+        SuccessCreate    => 0,
+        ExternalCustomer => 1,
+        RequestData      => {
+            Ticket => {
+                Title        => 'Ticket Title',
+                CustomerUser => 'someonesomehots.com',
+                Queue        => $Queues[0]->{Name},
+                Type         => $TypeData{Name},
+                State        => $StateData{Name},
+                Priority     => $PriorityData{Name},
+                Owner        => $TestOwnerLogin,
+                Responsible  => $TestResponsibleLogin,
+                PendingTime  => {
+                    Year   => 2012,
+                    Month  => 12,
+                    Day    => 16,
+                    Hour   => 20,
+                    Minute => 48,
+                },
+            },
+            Article => {
+                Subject => 'Article subject äöüßÄÖÜ€ис',
+                Body    => 'Article body ɟ ɠ ɡ ɢ ɣ ɤ ɥ ɦ ɧ ʀ ʁ ʂ ʃ ʄ ʅ ʆ ʇ ʈ ʉ ʊ ʋ ʌ ʍ ʎ',
+                AutoResponseType                => 'auto reply',
+                SenderType                      => 'agent',
+                IsVisibleForCustomer            => 1,
+                From                            => 'enjoy@otrs.com',
+                ContentType                     => 'text/plain; charset=UTF8',
+                HistoryType                     => 'NewTicket',
+                HistoryComment                  => '% % ',
+                TimeUnit                        => 25,
+                ForceNotificationToUserID       => [$UserID],
+                ExcludeNotificationToUserID     => [$UserID],
+                ExcludeMuteNotificationToUserID => [$UserID],
+            },
+            DynamicField => {
+                Name  => $DynamicFieldDateTimeConfig{Name},
+                Value => '2012-01-17 12:40:00',
+            },
+            Attachment => {
+                Content     => 'VGhpcyBpcyBhIHRlc3QgdGV4dC4=',
+                ContentType => 'text/plain; charset=UTF8',
+                Filename    => 'Test.txt',
+                Disposition => 'attachment',
+            },
+        },
+        ExpectedData => {
+            Data => {
+                Error => {
+                    ErrorCode => 'TicketCreate.InvalidParameter',
+                },
+            },
+            Success => 1,
         },
         Operation => 'TicketCreate',
     },
@@ -3785,7 +3900,6 @@ my @Tests        = (
         },
         Operation => 'TicketCreate',
     },
-
     {
         Name           => 'Create DynamicFields (with not empty value)',
         SuccessRequest => 1,
@@ -3848,7 +3962,6 @@ my @Tests        = (
         },
         Operation => 'TicketCreate',
     },
-
     {
         Name           => 'Create DynamicFields (with wrong value type)',
         SuccessRequest => 1,
@@ -3915,7 +4028,6 @@ my @Tests        = (
         },
         Operation => 'TicketCreate',
     },
-
     {
         Name           => 'Create DynamicFields (with invalid value)',
         SuccessRequest => 1,
@@ -3978,7 +4090,6 @@ my @Tests        = (
         },
         Operation => 'TicketCreate',
     },
-
     {
         Name           => 'Ticket with Alias Charsets attachment',
         SuccessRequest => 1,
@@ -4084,7 +4195,6 @@ my @Tests        = (
         },
         Operation => 'TicketCreate',
     },
-
     {
         Name           => 'Article with Internal communication channel',
         SuccessRequest => 1,
@@ -4333,6 +4443,21 @@ my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 TEST:
 for my $Test (@Tests) {
 
+    if ( $Test->{Type} eq 'EmailCustomerUser' ) {
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'CheckEmailAddresses',
+            Value => 0,
+        );
+    }
+    else {
+        $Helper->ConfigSettingChange(
+            Valid => 1,
+            Key   => 'CheckEmailAddresses',
+            Value => 1,
+        );
+    }
+
     # create local object
     my $LocalObject = "Kernel::GenericInterface::Operation::Ticket::$Test->{Operation}"->new(
         DebuggerObject => $DebuggerObject,
@@ -4484,19 +4609,26 @@ for my $Test (@Tests) {
 
         );
 
-        # external customers only set it's value in article (if no From is defined), ticket
-        # is created with an empty customer
+        # external customers only set it's value in article (if no From is defined)
+        # or CustomerUser is set as valid address.
+        # See bug#14288 for more information.
         if ( $Test->{ExternalCustomer} ) {
             $Self->Is(
                 $LocalTicketData{CustomerUserID},
-                undef,
+                $Test->{RequestData}->{Ticket}->{CustomerUser},
                 "$Test->{Name} - local Ticket->CustomerUser is empty."
             );
         }
         else {
+            my $ExpectedCustomerUserID = $Test->{RequestData}->{Ticket}->{CustomerUser};
+
+            if ( $Test->{Type} eq 'EmailCustomerUser' ) {
+                $ExpectedCustomerUserID = $CustomerRand;
+            }
+
             $Self->Is(
                 $LocalTicketData{CustomerUserID},
-                $Test->{RequestData}->{Ticket}->{CustomerUser},
+                $ExpectedCustomerUserID,
                 "$Test->{Name} - local Ticket->CustomerUser match test definition."
             );
         }
