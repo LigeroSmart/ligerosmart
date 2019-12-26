@@ -82,18 +82,8 @@ $Selenium->RunTest(
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # Navigate to AgentSurveyZoom of created test survey.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyZoom;SurveyID=$SurveyID");
-
-        # Click on 'Edit General Info' and switch screen.
-        $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
+        # Navigate to AgentSurveyEdit of created test survey.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyEdit;SurveyID=$SurveyID");
 
         # Get test params.
         my @Test = (
@@ -152,21 +142,10 @@ $Selenium->RunTest(
         $Selenium->execute_script("\$('#UserLoginInput1').val('John edited');");
 
         # Submit updates and switch back window.
-        $Selenium->find_element("//button[\@value='Update'][\@type='submit']")->click();
+        $Selenium->find_element("//button[\@value='Update'][\@type='submit']")->VerifiedClick();
 
-        $Selenium->WaitFor( WindowCount => 1 );
-        $Selenium->switch_to_window( $Handles->[0] );
-
-        # Click on 'Edit General Info' again and switch window.
-        $Selenium->VerifiedRefresh();
-        $Selenium->find_element( "#Menu010-EditGeneralInfo", 'css' )->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length' );
+        # Navigate to AgentSurveyEdit of created test survey again.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentSurveyEdit;SurveyID=$SurveyID");
 
         # Check edited values.
         for my $SurveryEdited (@Test) {
