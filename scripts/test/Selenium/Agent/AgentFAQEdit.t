@@ -95,15 +95,8 @@ $Selenium->RunTest(
             "$FAQTitle is found",
         );
 
-        # Click on 'Edit' and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (first time).";
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length;' );
+        # Navigate to AgentFAQEdit screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQEdit;ItemID=$ItemID");
 
         # Verify stored values.
         for my $Stored ( sort keys %{ $Test{Stored} } ) {
@@ -136,27 +129,10 @@ $Selenium->RunTest(
             Value   => 2,
         );
 
-        # Submit and switch back window.
-        $Selenium->find_element( "#FAQSubmit", 'css' )->click();
-        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
-        $Selenium->switch_to_window( $Handles->[0] );
+        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
 
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('a[href*=\"Action=AgentFAQEdit;ItemID=$ItemID\"]').length;"
-        );
-        sleep 2;
-
-        # Click on 'Edit' and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemID' )]")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created (second time).";
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Title").length;' );
+        # Navigate to AgentFAQEdit screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQEdit;ItemID=$ItemID");
 
         # Verify edited values.
         for my $Edited ( sort keys %{ $Test{Edited} } ) {
@@ -168,12 +144,6 @@ $Selenium->RunTest(
                 );
             }
         }
-
-        # Close 'Edit' pop-up window.
-        $Selenium->close();
-
-        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
-        $Selenium->switch_to_window( $Handles->[0] );
 
         # Enable RichText.
         $Helper->ConfigSettingChange(
@@ -285,23 +255,14 @@ $Selenium->RunTest(
             "Before Edit screen - Inline attachment $Filename.png is found",
         );
 
-        # Click on 'Edit' and switch window.
-        $Selenium->find_element("//a[contains(\@href, \'Action=AgentFAQEdit;ItemID=$ItemIDs[1]' )]")->click();
+        # Navigate to AgentFAQEdit screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentFAQEdit;ItemID=$ItemIDs[1]");
 
-        $Selenium->WaitFor( WindowCount => 2 ) || die "Popup window not created.";
-        $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # Wait until page has loaded, if necessary.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FAQSubmit").length;' );
+        # # Wait until page has loaded, if necessary.
         $Selenium->WaitForjQueryEventBound(
             CSSSelector => "#FAQSubmit",
         );
-
-        # Submit and switch back main window.
-        $Selenium->execute_script('$("#FAQSubmit").click();');
-        $Selenium->WaitFor( WindowCount => 1 ) || die "Popup window not closed.";
-        $Selenium->switch_to_window( $Handles->[0] );
+        $Selenium->find_element( "#FAQSubmit", 'css' )->VerifiedClick();
 
         # Waiting just to be sure attachment is stored.
         sleep 1;
