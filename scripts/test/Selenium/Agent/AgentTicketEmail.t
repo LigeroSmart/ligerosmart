@@ -408,18 +408,8 @@ $Selenium->RunTest(
 # ---
 # ITSMIncidentProblemManagement
 # ---
-        # force sub menus to be visible in order to be able to click one of the links
-        $Selenium->execute_script("\$('.Cluster ul ul').addClass('ForceVisible');");
-
-        # click on history and switch window
-        $Selenium->find_element("//*[text()='History']")->click();
-
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # wait until page has loaded, if necessary
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $(".CancelClosePopup").length' );
+        # Navigate to AgentTicketHistory screen.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketHistory;TicketID=$TicketID");
 
         # check for ITSM updated fields
         for my $UpdateText (qw(Impact Criticality)) {
@@ -428,9 +418,6 @@ $Selenium->RunTest(
                 "DynamicFieldUpdate $UpdateText - found",
             );
         }
-
-        $Selenium->close();
-        $Selenium->switch_to_window( $Handles->[0] );
 # ---
 
         # Disable session management use html cookies to check signature update (see bug#12890).
