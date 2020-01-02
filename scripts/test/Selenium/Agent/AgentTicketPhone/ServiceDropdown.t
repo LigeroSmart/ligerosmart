@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # $origin: otrs - c0be9f23c12e8b0ffd1c672966c2025c05309e1a - scripts/test/Selenium/Agent/AgentTicketPhone/ServiceDropdown.t
 # --

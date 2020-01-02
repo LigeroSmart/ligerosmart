@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # $origin: otrs - aeb33d800716e2a6653597aa86314c4cbdadb678 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
