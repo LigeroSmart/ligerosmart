@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # $origin: otrs - 23605d3bb5380943e245826ffa18a12126db777b - scripts/test/Selenium/Agent/AgentTicketFreeText.t
 # --

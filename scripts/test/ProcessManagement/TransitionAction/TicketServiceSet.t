@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # $origin: otrs - 22d4d836f2843dfaa95b6cb1b613424f032f0b9b - scripts/test/ProcessManagement/TransitionAction/TicketServiceSet.t
 # --

@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # $origin: otrs - 4d66abb7365ab5baf5ad2b1ec8019759e11067b4 - scripts/test/Selenium/Agent/AgentStatistics/Add.t
 # --
