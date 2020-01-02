@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+// Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 // --
 // $origin: otrs - 2433a13586f6d748eb3c6cd87fa51571c38c9e4f - var/httpd/htdocs/js/Core.Agent.TicketActionCommon.js
 // --
