@@ -55,7 +55,7 @@ sub Param {
     my $Y = sprintf( "%02d", $DateTimeSettings->{Year} );
 
     # Create possible time selections.
-    my %Year = map { $_ => $_ } ( $Y - 10 .. $Y + 1 );
+    my %Year  = map { $_ => $_ } ( $Y - 10 .. $Y + 1 );
     my %Month = map { sprintf( "%02d", $_ ) => sprintf( "%02d", $_ ) } ( 1 .. 12 );
     my %Day   = map { sprintf( "%02d", $_ ) => sprintf( "%02d", $_ ) } ( 1 .. 31 );
 
