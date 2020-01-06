@@ -89,7 +89,7 @@ sub Run {
 
         # check cache
         my $CacheKey = join ',', sort @ChangeStates;
-        my $Cache    = $CacheObject->Get(
+        my $Cache = $CacheObject->Get(
             Type => $Self->{CacheType},
             Key  => $CacheKey,
         );
