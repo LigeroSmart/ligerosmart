@@ -74,8 +74,8 @@ sub FormInputCreate {
 
     $Param{Prefix} ||= '';
 
-    my $Value = $Param{Value} || $Param{Item}->{Input}->{ValueDefault};
-    my $Size = $Param{Item}->{Input}->{Size} || 40;
+    my $Value = $Param{Value}                 || $Param{Item}->{Input}->{ValueDefault};
+    my $Size  = $Param{Item}->{Input}->{Size} || 40;
     my $SizeClass;
     if ( $Size < 15 ) {
         $SizeClass = 'W10pc';
