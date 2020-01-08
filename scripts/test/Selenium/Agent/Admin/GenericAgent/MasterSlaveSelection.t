@@ -39,11 +39,26 @@ $Selenium->RunTest(
 
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # Navigate to AdminGenericAgent screen.
-        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminGenericAgent");
+        # Navigate to AdminGenericAgent screen for new job adding.
+        $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AdminGenericAgent;Subaction=Update");
 
-        # Click to add new job.
-        $Selenium->find_element("//a[contains(\@href, \'Subaction=Update' )]")->VerifiedClick();
+        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function';" );
+
+        # Expand appropriate widget.
+        $Selenium->execute_script(
+            "\$('.WidgetSimple.Collapsed:contains(\"Update/Add Ticket Attributes\") .WidgetAction.Toggle a').trigger('click');"
+        );
+        $Selenium->WaitFor(
+            JavaScript => "return \$('.WidgetSimple.Expanded').length;"
+        );
+
+        # Add appropriate dynamic field.
+        $Selenium->execute_script(
+            "\$('#AddNewDynamicFields').val('DynamicField_MasterSlave').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->WaitFor(
+            JavaScript => "return \$('#SelectedNewDynamicFields #DynamicField_MasterSlave').length;"
+        );
 
         # Verify possible MasterSlave values 'UnsetMaster' and 'UnsetSlave' in 'Update/Add Ticket Attributes' widget.
         # See bug#14778 (https://bugs.otrs.org/show_bug.cgi?id=14778).
@@ -62,6 +77,22 @@ $Selenium->RunTest(
 
         # Refresh screen.
         $Selenium->VerifiedRefresh();
+
+        # Expand appropriate widget.
+        $Selenium->execute_script(
+            "\$('.WidgetSimple.Collapsed:contains(\"Update/Add Ticket Attributes\") .WidgetAction.Toggle a').trigger('click');"
+        );
+        $Selenium->WaitFor(
+            JavaScript => "return \$('.WidgetSimple.Expanded').length;"
+        );
+
+        # Add appropriate dynamic field.
+        $Selenium->execute_script(
+            "\$('#AddNewDynamicFields').val('DynamicField_MasterSlave').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->WaitFor(
+            JavaScript => "return \$('#SelectedNewDynamicFields #DynamicField_MasterSlave').length;"
+        );
 
         # Verify possible MasterSlave values 'UnsetMaster' and 'UnsetSlave' are not available
         #   in 'Update/Add Ticket Attributes' widget.
