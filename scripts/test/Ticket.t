@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8c7a61c39b5f55f06e517c11de6d4459cdfba5ec - scripts/test/Ticket.t
+# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - scripts/test/Ticket.t - rel-6_0_26
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -293,7 +293,7 @@ $ArticleObject->ArticleSearchIndexBuild(
 );
 
 my $TicketSearchTicketNumber = substr $Ticket{TicketNumber}, 0, 10;
-my %TicketIDs                = $TicketObject->TicketSearch(
+my %TicketIDs = $TicketObject->TicketSearch(
     Result       => 'HASH',
     Limit        => 100,
     TicketNumber => [ $TicketSearchTicketNumber . '%', '%not exisiting%' ],

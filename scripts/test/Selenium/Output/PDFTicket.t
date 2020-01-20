@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - c0be9f23c12e8b0ffd1c672966c2025c05309e1a - scripts/test/Selenium/Output/PDFTicket.t
+# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - scripts/test/Selenium/Output/PDFTicket.t - rel-6_0_26
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -333,7 +333,7 @@ $Helper->ConfigSettingChange(
         }
 
         # Create Dynamic Fields.
-        my $RandomNumber  = substr $Helper->GetRandomNumber(), -7;
+        my $RandomNumber = substr $Helper->GetRandomNumber(), -7;
         my %DynamicFields = (
             Dropdown => {
                 Name       => 'DFDropdown' . $RandomNumber,

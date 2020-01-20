@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 72e208103bf51b613531cba92682b8dfcb2a8888 - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t - rel-6_0_26
+# $origin: otrs - 0927fbc4716e7bdbe25cbbaaaf1b93e9bdb1488f - scripts/test/GenericInterface/Operation/Ticket/TicketCreate.t - rel-6_0_26
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -655,6 +655,45 @@ my $RequesterSessionResult = $RequesterSessionObject->Run(
         Password  => $Password,
     },
 );
+
+my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+my $TestTicketDelete = sub {
+    my %Param = @_;
+
+    my @TicketIDs = @{ $Param{TicketIDs} };
+
+    # Allow some time for all history entries to be written to the ticket before deleting it,
+    #   otherwise TicketDelete could fail.
+    sleep 1;
+    for my $TicketID (@TicketIDs) {
+
+        my $TicketDelete = $TicketObject->TicketDelete(
+            TicketID => $TicketID,
+            UserID   => 1,
+        );
+
+        # Ticket deletion could fail if apache still writes to ticket history. Try again in this case.
+        if ( !$TicketDelete ) {
+            sleep 3;
+            $TicketDelete = $TicketObject->TicketDelete(
+                TicketID => $TicketID,
+                UserID   => 1,
+            );
+        }
+        $Self->True(
+            $TicketDelete,
+            "Delete ticket - $TicketID"
+        );
+
+        # sanity check
+        $Self->True(
+            $TicketDelete,
+            "TicketDelete() successful for Ticket ID $TicketID"
+        );
+    }
+    return 1;
+};
 
 my $NewSessionID = $RequesterSessionResult->{Data}->{SessionID};
 my @Tests        = (
@@ -4438,8 +4477,6 @@ $Self->Is(
     'DebuggerObject instantiate correctly'
 );
 
-my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
-
 TEST:
 for my $Test (@Tests) {
 
@@ -4520,6 +4557,12 @@ for my $Test (@Tests) {
         'faultcode: Server, faultstring: Attachment could not be created, please contact the system administrator'
         )
     {
+
+        my @TicketIDs = ( $LocalResult->{Data}->{TicketID}, $RequesterResult->{Data}->{TicketID} );
+        $TestTicketDelete->(
+            TicketIDs => \@TicketIDs,
+        );
+
         next TEST;
     }
 
@@ -4798,6 +4841,11 @@ for my $Test (@Tests) {
             \%RequesterArticleData,
             "$Test->{Name} - Local article result matched with remote result."
         );
+
+        my @TicketIDs = ( $LocalResult->{Data}->{TicketID}, $RequesterResult->{Data}->{TicketID} );
+        $TestTicketDelete->(
+            TicketIDs => \@TicketIDs,
+        );
     }
 
     # tests supposed to fail
@@ -4885,36 +4933,9 @@ my @TicketIDs = $TicketObject->TicketSearch(
     UserID   => 1,
 );
 
-# Delete the tickets.
-# Allow some time for all history entries to be written to the ticket before deleting it,
-#   otherwise TicketDelete could fail.
-sleep 1;
-for my $TicketID (@TicketIDs) {
-
-    my $TicketDelete = $TicketObject->TicketDelete(
-        TicketID => $TicketID,
-        UserID   => 1,
-    );
-
-    # Ticket deletion could fail if apache still writes to ticket history. Try again in this case.
-    if ( !$TicketDelete ) {
-        sleep 3;
-        $TicketDelete = $TicketObject->TicketDelete(
-            TicketID => $TicketID,
-            UserID   => 1,
-        );
-    }
-    $Self->True(
-        $TicketDelete,
-        "Delete ticket - $TicketID"
-    );
-
-    # sanity check
-    $Self->True(
-        $TicketDelete,
-        "TicketDelete() successful for Ticket ID $TicketID"
-    );
-}
+$TestTicketDelete->(
+    TicketIDs => \@TicketIDs,
+);
 
 # delete queues
 for my $QueueData (@Queues) {
