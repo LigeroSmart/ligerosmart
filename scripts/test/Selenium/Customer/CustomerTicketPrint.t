@@ -25,10 +25,9 @@ if ( $Selenium->{browser_name} ne 'firefox' ) {
 $Selenium->RunTest(
     sub {
 
-        # get helper object
         my $Helper = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
 
-        # create test customer user and login
+        # Create test customer user and login.
         my $TestCustomerUserLogin = $Helper->TestCustomerUserCreate(
         ) || die "Did not get test customer user";
 
@@ -38,7 +37,6 @@ $Selenium->RunTest(
             Password => $TestCustomerUserLogin,
         );
 
-        # get needed data
         my @User = $Kernel::OM->Get('Kernel::System::CustomerUser')->CustomerIDs(
             User => $TestCustomerUserLogin,
         );
@@ -46,7 +44,7 @@ $Selenium->RunTest(
 
         my $TypeID = $Kernel::OM->Get('Kernel::System::Type')->TypeLookup( Type => 'Incident' );
 
-        # create test service
+        # Create test service.
         my $ServiceName     = "Service" . $Helper->GetRandomID();
         my $ITSMCriticality = '5 very high';
         my $ServiceID       = $Kernel::OM->Get('Kernel::System::Service')->ServiceAdd(
@@ -62,18 +60,17 @@ $Selenium->RunTest(
             "Service is created - ID $ServiceID",
         );
 
-        # set ITSMImpact to '3 normal' and get priority
-        # expected value is '4 high', it will be checked in AgentTicketPrint screen
+        # Set ITSMImpact to '3 normal' and get priority.
+        # Expected value is '4 high', it will be checked in AgentTicketPrint screen.
         my $ITSMImpact = '3 normal';
         my $PriorityID = $Kernel::OM->Get('Kernel::System::ITSMCIPAllocate')->PriorityAllocationGet(
             Criticality => $ITSMCriticality,
             Impact      => $ITSMImpact,
         );
 
-        # get Ticket object
         my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
 
-        # create test customer
+        # Create test customer.
         my $TicketNumber = $TicketObject->TicketCreateNumber();
         my $TicketID     = $TicketObject->TicketCreate(
             TN           => $TicketNumber,
@@ -94,7 +91,6 @@ $Selenium->RunTest(
             "Ticket is created - ID $TicketID",
         );
 
-        # get needed objects
         my $DynamicFieldObject        = $Kernel::OM->Get('Kernel::System::DynamicField');
         my $DynamicFieldBackendObject = $Kernel::OM->Get('Kernel::System::DynamicField::Backend');
 
@@ -105,7 +101,7 @@ $Selenium->RunTest(
             Name => "ITSMImpact",
         );
 
-        # set dynamic field value for Criticality and Impact
+        # Set dynamic field value for Criticality and Impact.
         $DynamicFieldBackendObject->ValueSet(
             DynamicFieldConfig => $ITSMCriticalityConfig,
             ObjectID           => $TicketID,
@@ -119,21 +115,12 @@ $Selenium->RunTest(
             UserID             => 1,
         );
 
-        # get script alias
         my $ScriptAlias = $Kernel::OM->Get('Kernel::Config')->Get('ScriptAlias');
 
-        # navigate to CustomerTicketZoom screen
-        $Selenium->VerifiedGet("${ScriptAlias}customer.pl?Action=CustomerTicketZoom;TicketNumber=$TicketNumber");
+        # Navigate to CustomerTicketPrint screen
+        $Selenium->get("${ScriptAlias}customer.pl?Action=CustomerTicketPrint;TicketID=$TicketID");
 
-        # click on print menu item
-        $Selenium->find_element("//a[contains(\@href, \'Action=CustomerTicketPrint;TicketID=$TicketID\' )]")->click();
-
-        # switch to another window
-        $Selenium->WaitFor( WindowCount => 2 );
-        my $Handles = $Selenium->get_window_handles();
-        $Selenium->switch_to_window( $Handles->[1] );
-
-        # wait until print screen is loaded
+        # Wait until print screen is loaded.
         ACTIVESLEEP:
         for my $Second ( 1 .. 20 ) {
             if ( index( $Selenium->get_page_source(), "Priority" ) > -1, ) {
@@ -142,7 +129,7 @@ $Selenium->RunTest(
             sleep 1;
         }
 
-        # check for printed values of test ticket
+        # Check for printed values of test ticket.
         $Self->True(
             index( $Selenium->get_page_source(), "Priority" ) > -1
                 && index( $Selenium->get_page_source(), "4 high" ) > -1,
@@ -159,8 +146,8 @@ $Selenium->RunTest(
             "Criticality: 5 very high - found on print screen",
         );
 
-        # clean up test data from the DB
-        # delete test ticket
+        # Clean up test data from the DB.
+        # Delete test ticket.
         my $Success = $TicketObject->TicketDelete(
             TicketID => $TicketID,
             UserID   => 1,
@@ -170,7 +157,7 @@ $Selenium->RunTest(
             "Ticket is deleted - $TicketID"
         );
 
-        # delete test service
+        # Delete test service.
         $Success = $Kernel::OM->Get('Kernel::System::DB')->Do(
             SQL => "DELETE FROM service WHERE id = $ServiceID",
         );
@@ -179,7 +166,7 @@ $Selenium->RunTest(
             "Service is deleted - ID $ServiceID",
         );
 
-        # make sure the cache is correct
+        # Make sure the cache is correct.
         for my $Cache (qw (Ticket Service)) {
             $Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
                 Type => $Cache,
