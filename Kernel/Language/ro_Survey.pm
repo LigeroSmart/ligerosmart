@@ -17,10 +17,10 @@ sub Data {
 
     # Template: AgentSurveyAdd
     $Self->{Translation}->{'Create New Survey'} = '';
-    $Self->{Translation}->{'Introduction'} = '';
+    $Self->{Translation}->{'Introduction'} = 'Introducere';
     $Self->{Translation}->{'Survey Introduction'} = '';
     $Self->{Translation}->{'Notification Body'} = '';
-    $Self->{Translation}->{'Ticket Types'} = '';
+    $Self->{Translation}->{'Ticket Types'} = 'Tipurile tichetelor';
     $Self->{Translation}->{'Internal Description'} = '';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
@@ -32,7 +32,7 @@ sub Data {
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = '';
-    $Self->{Translation}->{'You are here'} = '';
+    $Self->{Translation}->{'You are here'} = 'Sunteti aici';
     $Self->{Translation}->{'Survey Questions'} = '';
     $Self->{Translation}->{'Add Question'} = '';
     $Self->{Translation}->{'Type the question'} = '';
@@ -100,26 +100,26 @@ sub Data {
     $Self->{Translation}->{'Survey Title'} = '';
 
     # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
-    $Self->{Translation}->{'Add New Survey'} = '';
+    $Self->{Translation}->{'Add New Survey'} = 'Adauga sondaj nou';
 
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Survey Edit'} = '';
+    $Self->{Translation}->{'Survey Edit'} = 'Editare Sondaj';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
     $Self->{Translation}->{'Survey Edit Questions'} = '';
-    $Self->{Translation}->{'Yes/No'} = '';
-    $Self->{Translation}->{'Radio (List)'} = '';
-    $Self->{Translation}->{'Checkbox (List)'} = '';
+    $Self->{Translation}->{'Yes/No'} = 'Da/Nu';
+    $Self->{Translation}->{'Radio (List)'} = 'Radio (Lista)';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Checkbox  (Lista)';
     $Self->{Translation}->{'Net Promoter Score'} = '';
     $Self->{Translation}->{'Question Type'} = '';
     $Self->{Translation}->{'Complete'} = '';
-    $Self->{Translation}->{'Incomplete'} = '';
-    $Self->{Translation}->{'Question Edit'} = '';
-    $Self->{Translation}->{'Answer Edit'} = '';
+    $Self->{Translation}->{'Incomplete'} = 'Incomplet';
+    $Self->{Translation}->{'Question Edit'} = 'Editeaza Intrebare';
+    $Self->{Translation}->{'Answer Edit'} = 'Editare raspuns';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
     $Self->{Translation}->{'Stats Overview'} = '';
@@ -127,7 +127,7 @@ sub Data {
     $Self->{Translation}->{'Stats Detail'} = '';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nu poate fi setat un status nou! Nu exista intrebari definite.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
     $Self->{Translation}->{'Status changed.'} = '';
     $Self->{Translation}->{'- No queue selected -'} = '';
@@ -135,7 +135,7 @@ sub Data {
     $Self->{Translation}->{'- No ticket service selected -'} = '';
     $Self->{Translation}->{'- Change Status -'} = '';
     $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'Invalid'} = '';
+    $Self->{Translation}->{'Invalid'} = 'Invalid';
     $Self->{Translation}->{'New Status'} = '';
     $Self->{Translation}->{'Survey Description'} = '';
     $Self->{Translation}->{'answered'} = '';

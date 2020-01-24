@@ -143,7 +143,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Obrigado pela sua participação.';
-    $Self->{Translation}->{'The survey is finished.'} = 'A pesquisa está finalizada.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Este questionário terminou.';
     $Self->{Translation}->{'Survey Message!'} = 'Mensagem da Pesquisa!';
     $Self->{Translation}->{'Module not enabled.'} = 'Módulo não habilitado.';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =

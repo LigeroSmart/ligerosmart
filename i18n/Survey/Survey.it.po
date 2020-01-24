@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"POT-Creation-Date: 2020-01-24 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,19 +36,19 @@ msgstr "Descrizione ad uso interno"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
-msgstr ""
+msgstr "Condizioni del cliente"
 
 #. Template: AgentSurveyAdd
 msgid "Please choose a Customer property to add a condition."
-msgstr ""
+msgstr "Scegli una proprietà del cliente per aggiungere una condizione."
 
 #. Template: AgentSurveyAdd
 msgid "Public survey key"
-msgstr ""
+msgstr "Chiave per sondaggi pubblici"
 
 #. Template: AgentSurveyAdd
 msgid "Example survey"
-msgstr ""
+msgstr "Esempio di sondaggio"
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
@@ -140,15 +140,15 @@ msgstr "Risposta:"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey overview options"
-msgstr ""
+msgstr "Opzioni di panoramica del sondaggio"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Searches in the attributes Number, Title, Introduction, Description, NotificationSender, NotificationSubject and NotificationBody, overriding other attributes with the same name."
-msgstr ""
+msgstr "Ricerca negli attributi Numero, Titolo, Introduzione, Descrizione, NotificationSender, NotificationSubject e NotificationBody, sovrascrivendo altri attributi con lo stesso nome."
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Survey Create Time"
-msgstr ""
+msgstr "Sondaggio Creare Tempo"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "No restriction"
@@ -156,7 +156,7 @@ msgstr "Nessuna restrizione"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Only surveys created between"
-msgstr ""
+msgstr "Solo sondaggi creati tra"
 
 #. Template: AgentSurveyOverviewNavBar
 msgid "Max. shown surveys per page"
@@ -184,7 +184,7 @@ msgstr "Tabella delle richieste"
 
 #. Template: AgentSurveyStats
 msgid "Select all requests"
-msgstr ""
+msgstr "Seleziona tutte le richieste"
 
 #. Template: AgentSurveyStats
 msgid "Send Time"
@@ -196,7 +196,7 @@ msgstr "Data e Ora di compilazione"
 
 #. Template: AgentSurveyStats
 msgid "Select this request"
-msgstr ""
+msgstr "Seleziona questa richiesta"
 
 #. Template: AgentSurveyStats
 msgid "See Details"
@@ -204,7 +204,7 @@ msgstr "Vedi i dettagli"
 
 #. Template: AgentSurveyStats
 msgid "Delete stats"
-msgstr ""
+msgstr "Elimina le statistiche"
 
 #. Template: AgentSurveyStats
 msgid "Survey Stat Details"
@@ -216,11 +216,11 @@ msgstr "Ritorna alle statistiche"
 
 #. Template: AgentSurveyStats
 msgid "Previous vote"
-msgstr ""
+msgstr "Voto precedente"
 
 #. Template: AgentSurveyStats
 msgid "Next vote"
-msgstr ""
+msgstr "Voto successivo"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Information"
@@ -288,11 +288,11 @@ msgstr "Modifica Sondaggio"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
-msgstr ""
+msgstr "Non hai i permessi per questo sondaggio o domanda!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey, question or answer!"
-msgstr ""
+msgstr "Non hai i permessi per questo sondaggio, domanda o risposta!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Survey Edit Questions"
@@ -312,7 +312,7 @@ msgstr "Casella di selezione (elenco)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
-msgstr ""
+msgstr "Punteggio promotore net"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
@@ -340,7 +340,7 @@ msgstr "Risultati statistici"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
-msgstr ""
+msgstr "Non hai i permessi per questo sondaggio o per i dettagli delle statistiche!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Detail"
@@ -352,7 +352,7 @@ msgstr "Impossibile impostare il nuovo stato! Nessuna domanda definita."
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
-msgstr ""
+msgstr "Impossibile impostare un nuovo stato! Domande incomplete."
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Status changed."
@@ -368,7 +368,7 @@ msgstr "- Nessuna tipologia di ticket selezionata -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket service selected -"
-msgstr ""
+msgstr "- Nessun servizio di ticket selezionato -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- Change Status -"
@@ -428,7 +428,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
-msgstr ""
+msgstr "La chiave di sondaggio inserita non è valida, se hai seguito un link forse è obsoleto o rotto."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote"
@@ -444,7 +444,7 @@ msgstr "Hai già risposto al sondaggio."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
-msgstr ""
+msgstr "Lista dei sondaggi"
 
 #. JS File: Survey.Agent.SurveyEditQuestions
 msgid "Do you really want to delete this question? ALL associated data will be LOST!"
@@ -488,11 +488,11 @@ msgstr "Definisce il modulo per mostrare la visualizzazione compatta di una list
 
 #. SysConfig
 msgid "Defines groups which have a permission to change survey status. Array is empty by default and agents from all groups can change survey status."
-msgstr ""
+msgstr "Definisce i gruppi che dispongono dell'autorizzazione per modificare lo stato del sondaggio. La matrice è vuota per impostazione predefinita e gli agenti di tutti i gruppi possono modificare lo stato del sondaggio."
 
 #. SysConfig
 msgid "Defines if survey requests will be only send to real customers."
-msgstr ""
+msgstr "Definisce se le richieste di sondaggio verranno inviate solo a clienti reali."
 
 #. SysConfig
 msgid "Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent)."
@@ -504,7 +504,7 @@ msgstr "Definisci il numero di ore dopo la chiusura del ticket per l'invio del s
 
 #. SysConfig
 msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
-msgstr ""
+msgstr "Definisce le colonne per l'elenco a discesa per la creazione delle condizioni di invio (0 => inattivo, 1 => attivo)."
 
 #. SysConfig
 msgid "Defines the default height for Richtext views for SurveyZoom elements."
@@ -512,27 +512,27 @@ msgstr "Definisce l'altezza di default per la vista completa per gli elementi Su
 
 #. SysConfig
 msgid "Defines the groups (rw) which can delete survey stats."
-msgstr ""
+msgstr "Definisce i gruppi (rw) che possono eliminare le statistiche del sondaggio."
 
 #. SysConfig
 msgid "Defines the maximum height for Richtext views for SurveyZoom elements."
-msgstr ""
+msgstr "Definisce l'altezza massima per le viste Richtext per gli elementi SurveyZoom."
 
 #. SysConfig
 msgid "Defines the shown columns in the survey overview. This option has no effect on the position of the columns."
-msgstr ""
+msgstr "Definisce le colonne visualizzate nella panoramica del sondaggio. Questa opzione non ha alcun effetto sulla posizione delle colonne."
 
 #. SysConfig
 msgid "Determines if the statistics module may generate survey lists."
-msgstr ""
+msgstr "Determina se il modulo statistico può generare elenchi di sondaggi."
 
 #. SysConfig
 msgid "Edit survey general information."
-msgstr ""
+msgstr "Modifica le informazioni generali del sondaggio."
 
 #. SysConfig
 msgid "Edit survey questions."
-msgstr ""
+msgstr "Modifica domande del sondaggio."
 
 #. SysConfig
 msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
@@ -548,15 +548,15 @@ msgstr "Abilita o disabilita il controllo della condizione di invio per il tipo 
 
 #. SysConfig
 msgid "Frontend module registration for survey add in the agent interface."
-msgstr ""
+msgstr "Registrazione del modulo frontend per l'indagine aggiunta nell'interfaccia agenti."
 
 #. SysConfig
 msgid "Frontend module registration for survey edit in the agent interface."
-msgstr ""
+msgstr "Registrazione del modulo frontend per la modifica dell'indagine nell'interfaccia agenti."
 
 #. SysConfig
 msgid "Frontend module registration for survey stats in the agent interface."
-msgstr ""
+msgstr "Registrazione del modulo frontend per le statistiche del sondaggio nell'interfaccia agenti."
 
 #. SysConfig
 msgid "Frontend module registration for survey zoom in the agent interface."
@@ -572,7 +572,7 @@ msgstr "Se questa sottostringa viene riconosciuta, il sondaggio non viene inviat
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Limite."
 
 #. SysConfig
 msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
@@ -584,23 +584,23 @@ msgstr "Sondaggio pubblico."
 
 #. SysConfig
 msgid "Results older than the configured amount of days will be deleted. Note: delete results done by the OTRS Daemon, prior activation of 'Task###SurveyRequestsDelete' setting."
-msgstr ""
+msgstr "I risultati più vecchi del numero di giorni configurato verranno eliminati. Nota: eliminare i risultati ottenuti dal demone OTRS, prima dell'attivazione dell'impostazione 'Task###SurveyRequestsDelete'."
 
 #. SysConfig
 msgid "Shows a link in the menu to edit a survey in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per modificare un sondaggio nella sua vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to edit survey questions in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per modificare le domande del sondaggio nella sua vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to go back in the survey zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per tornare indietro nella vista di zoom dell'indagine dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per ingrandire i dettagli delle statistiche dell'indagine nella sua vista di zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Stats Details"
@@ -628,7 +628,7 @@ msgstr "Modulo di zoom per i sondaggi."
 
 #. SysConfig
 msgid "Survey limit per page for Survey Overview \"Small\"."
-msgstr ""
+msgstr "Limite sondaggio per pagina per Panoramica sondaggio \"Piccolo\"."
 
 #. SysConfig
 msgid "Surveys will not be sent to the configured email addresses."
@@ -640,17 +640,17 @@ msgstr "Identificativo per il sondaggio, per esempio Sondaggio#, Inchiesta#. Il 
 
 #. SysConfig
 msgid "Ticket event module to send automatically survey email requests to customers if a ticket is closed."
-msgstr ""
+msgstr "Modulo evento ticket per inviare automaticamente richieste di e-mail di sondaggio ai clienti se un ticket viene chiuso."
 
 #. SysConfig
 msgid "Trigger delete results (including vote data and requests)."
-msgstr ""
+msgstr "Attiva i risultati dell'eliminazione (inclusi i dati e le richieste di voto)."
 
 #. SysConfig
 msgid "Trigger sending delayed survey requests."
-msgstr ""
+msgstr "Attiva l'invio di richieste di sondaggi ritardate."
 
 #. SysConfig
 msgid "Zoom into statistics details."
-msgstr ""
+msgstr "Ingrandisci i dettagli delle statistiche."
 

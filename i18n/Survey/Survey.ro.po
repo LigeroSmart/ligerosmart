@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"POT-Creation-Date: 2020-01-24 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
-msgstr ""
+msgstr "Introducere"
 
 #. Template: AgentSurveyAdd
 msgid "Survey Introduction"
@@ -28,7 +28,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Ticket Types"
-msgstr ""
+msgstr "Tipurile tichetelor"
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
@@ -60,7 +60,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
-msgstr ""
+msgstr "Sunteti aici"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
@@ -272,7 +272,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
 msgid "Add New Survey"
-msgstr ""
+msgstr "Adauga sondaj nou"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
@@ -284,7 +284,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
-msgstr ""
+msgstr "Editare Sondaj"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -300,15 +300,15 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Yes/No"
-msgstr ""
+msgstr "Da/Nu"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Radio (List)"
-msgstr ""
+msgstr "Radio (Lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Checkbox (List)"
-msgstr ""
+msgstr "Checkbox  (Lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Net Promoter Score"
@@ -324,15 +324,15 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Incomplete"
-msgstr ""
+msgstr "Incomplet"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Edit"
-msgstr ""
+msgstr "Editeaza Intrebare"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Answer Edit"
-msgstr ""
+msgstr "Editare raspuns"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Overview"
@@ -348,7 +348,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! No questions defined."
-msgstr ""
+msgstr "Nu poate fi setat un status nou! Nu exista intrebari definite."
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
@@ -380,7 +380,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Invalid"
-msgstr ""
+msgstr "Invalid"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"

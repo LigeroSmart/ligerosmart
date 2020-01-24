@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = 'Esittely';
     $Self->{Translation}->{'Survey Introduction'} = 'Kyselyn esittely';
     $Self->{Translation}->{'Notification Body'} = 'Muistutuksen viesti';
-    $Self->{Translation}->{'Ticket Types'} = '';
+    $Self->{Translation}->{'Ticket Types'} = 'Tikettien tyypit';
     $Self->{Translation}->{'Internal Description'} = 'Sisäinen kuvaus';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
@@ -135,7 +135,7 @@ sub Data {
     $Self->{Translation}->{'- No ticket service selected -'} = '';
     $Self->{Translation}->{'- Change Status -'} = '- Muuta tilaa -';
     $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'Invalid'} = '';
+    $Self->{Translation}->{'Invalid'} = 'Poistettu käytöstä';
     $Self->{Translation}->{'New Status'} = '';
     $Self->{Translation}->{'Survey Description'} = 'Kyselyn kuvaus';
     $Self->{Translation}->{'answered'} = 'Vastasi';

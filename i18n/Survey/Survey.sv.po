@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"POT-Creation-Date: 2020-01-24 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,15 +12,15 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr ""
+msgstr "Skapa ny undersökning"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
-msgstr ""
+msgstr "Introduktion"
 
 #. Template: AgentSurveyAdd
 msgid "Survey Introduction"
-msgstr ""
+msgstr "Undersökningsintroduktion"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -28,11 +28,11 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Ticket Types"
-msgstr ""
+msgstr "Ärendetyper"
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
-msgstr ""
+msgstr "Intern beskrivning"
 
 #. Template: AgentSurveyAdd
 msgid "Customer conditions"
@@ -52,31 +52,31 @@ msgstr ""
 
 #. Template: AgentSurveyEdit
 msgid "Edit General Info"
-msgstr ""
+msgstr "Redigera generell information"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr ""
+msgstr "Redigera frågor"
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
-msgstr ""
+msgstr "Du är här"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Survey Questions"
-msgstr ""
+msgstr "Undersökningens frågor"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
-msgstr ""
+msgstr "Lägg till en fråga"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Type the question"
-msgstr ""
+msgstr "Skriv frågan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
-msgstr ""
+msgstr "Måste besvaras"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -252,7 +252,7 @@ msgstr ""
 
 #. Template: PublicSurvey
 msgid "Survey"
-msgstr ""
+msgstr "Undersökning"
 
 #. Template: PublicSurvey
 msgid "Please answer these questions"
@@ -272,7 +272,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
 msgid "Add New Survey"
-msgstr ""
+msgstr "Lägg till ny undersökning"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
@@ -284,7 +284,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
-msgstr ""
+msgstr "Redigera undersökningen"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -296,15 +296,15 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Survey Edit Questions"
-msgstr ""
+msgstr "Redigera frågor i undersökningen"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Yes/No"
-msgstr ""
+msgstr "Ja/Nej"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Radio (List)"
-msgstr ""
+msgstr "Radio (Lista)"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Checkbox (List)"
@@ -316,23 +316,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
-msgstr ""
+msgstr "Typ av fråga"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Complete"
-msgstr ""
+msgstr "Färdig"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Incomplete"
-msgstr ""
+msgstr "Inkomplett"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Edit"
-msgstr ""
+msgstr "Redigera fråga"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Answer Edit"
-msgstr ""
+msgstr "Redigera svar"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Overview"
@@ -344,7 +344,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Detail"
-msgstr ""
+msgstr "Statusdetalj"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! No questions defined."
@@ -356,11 +356,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Status changed."
-msgstr ""
+msgstr "Status ändrad."
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No queue selected -"
-msgstr ""
+msgstr "- Ingen kö vald -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
@@ -372,7 +372,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- Change Status -"
-msgstr ""
+msgstr "- Ändra status -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Master"
@@ -380,23 +380,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Invalid"
-msgstr ""
+msgstr "Ogiltig"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
-msgstr ""
+msgstr "Ny status"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Survey Description"
-msgstr ""
+msgstr "Beskrivning av undersökningen"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "answered"
-msgstr ""
+msgstr "besvarad"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "not answered"
-msgstr ""
+msgstr "ej besvarad"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Thank you for your feedback."
@@ -404,7 +404,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "The survey is finished."
-msgstr ""
+msgstr "Undersökningen är avslutad."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
@@ -440,7 +440,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "You have already answered the survey."
-msgstr ""
+msgstr "Du har redan svarat på den här undersökningen."
 
 #. Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
 msgid "Survey List"
@@ -604,7 +604,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Stats Details"
-msgstr ""
+msgstr "Statusdetaljer"
 
 #. SysConfig
 msgid "Survey Add Module."

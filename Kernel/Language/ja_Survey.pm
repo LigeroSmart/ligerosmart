@@ -123,16 +123,16 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
     $Self->{Translation}->{'Stats Overview'} = '統計一覧';
-    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
+    $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = 'あなたは、このアンケートまたは詳細ステータスへの権限がありません！';
     $Self->{Translation}->{'Stats Detail'} = '統計の詳細';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '新しい状態を設定できません! 質問が定義されていません。';
-    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
+    $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '新しい状態を設定できません! 設問が不完全です。';
     $Self->{Translation}->{'Status changed.'} = '状態が変更されました。';
     $Self->{Translation}->{'- No queue selected -'} = 'キューが選択されていません';
-    $Self->{Translation}->{'- No ticket type selected -'} = '';
-    $Self->{Translation}->{'- No ticket service selected -'} = '';
+    $Self->{Translation}->{'- No ticket type selected -'} = '- チケットタイプを選択してください -';
+    $Self->{Translation}->{'- No ticket service selected -'} = '- チケットサービスを選択してください -';
     $Self->{Translation}->{'- Change Status -'} = '- ステータス変更 -';
     $Self->{Translation}->{'Master'} = 'マスター';
     $Self->{Translation}->{'Invalid'} = '無効';

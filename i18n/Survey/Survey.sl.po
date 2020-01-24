@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"POT-Creation-Date: 2020-01-24 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
-msgstr ""
+msgstr "Ustvari novo anketo"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Survey Introduction"
-msgstr ""
+msgstr "Predstavitev ankete"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
@@ -28,7 +28,7 @@ msgstr ""
 
 #. Template: AgentSurveyAdd
 msgid "Ticket Types"
-msgstr ""
+msgstr "Tipi zahtevka"
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
@@ -56,7 +56,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Questions"
-msgstr ""
+msgstr "Uredi vprašanja"
 
 #. Template: AgentSurveyEditQuestions
 msgid "You are here"
@@ -68,7 +68,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Question"
-msgstr ""
+msgstr "Dodaj vprašanja"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Type the question"
@@ -76,7 +76,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer required"
-msgstr ""
+msgstr "Odgovor je zahtevan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
@@ -84,11 +84,11 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
-msgstr ""
+msgstr "Vprašanje"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Answer Required"
-msgstr ""
+msgstr "Odgovor je zahtevan"
 
 #. Template: AgentSurveyEditQuestions
 msgid "When you finish to edit the survey questions just close this screen."
@@ -100,11 +100,11 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
-msgstr ""
+msgstr "Uredi vprašanje"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to questions"
-msgstr ""
+msgstr "pojdi nazaj na vprašanje"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question:"
@@ -116,7 +116,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Add Answer"
-msgstr ""
+msgstr "Dodaj odgovor"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No answers saved for this question."
@@ -128,7 +128,7 @@ msgstr ""
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
-msgstr ""
+msgstr "Uredi odgovor"
 
 #. Template: AgentSurveyEditQuestions
 msgid "go back to edit question"
@@ -172,7 +172,7 @@ msgstr ""
 
 #. Template: AgentSurveyOverviewSmall
 msgid "Changed By"
-msgstr ""
+msgstr "Spremenil"
 
 #. Template: AgentSurveyStats
 msgid "Stats Overview of"
@@ -228,15 +228,15 @@ msgstr ""
 
 #. Template: AgentSurveyZoom
 msgid "Sent requests"
-msgstr ""
+msgstr "Pošlji zahtevke"
 
 #. Template: AgentSurveyZoom
 msgid "Received surveys"
-msgstr ""
+msgstr "Prejete ankete"
 
 #. Template: AgentSurveyZoom
 msgid "Survey Details"
-msgstr ""
+msgstr "Podrobnosti ankete"
 
 #. Template: AgentSurveyZoom
 msgid "Ticket Services"
@@ -252,7 +252,7 @@ msgstr ""
 
 #. Template: PublicSurvey
 msgid "Survey"
-msgstr ""
+msgstr "Anketa"
 
 #. Template: PublicSurvey
 msgid "Please answer these questions"
@@ -272,7 +272,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyAdd.pm
 msgid "Add New Survey"
-msgstr ""
+msgstr "Dodaj novo anketo"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "You have no permission for this survey!"
@@ -284,7 +284,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
-msgstr ""
+msgstr "Uredi anketo"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "You have no permission for this survey or question!"
@@ -300,7 +300,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Yes/No"
-msgstr ""
+msgstr "Da/Ne"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Radio (List)"
@@ -316,23 +316,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Type"
-msgstr ""
+msgstr "Tip vprašanja"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Complete"
-msgstr ""
+msgstr "Zaključena"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Incomplete"
-msgstr ""
+msgstr "Pomanjkljiva"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Question Edit"
-msgstr ""
+msgstr "Uredi vprašanja"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
 msgid "Answer Edit"
-msgstr ""
+msgstr "Uredi odgovore"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Overview"
@@ -372,7 +372,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- Change Status -"
-msgstr ""
+msgstr "- Spremeni status -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Master"
@@ -380,7 +380,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Invalid"
-msgstr ""
+msgstr "Neveljavno"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"
@@ -388,15 +388,15 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Survey Description"
-msgstr ""
+msgstr "Opis ankete"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "answered"
-msgstr ""
+msgstr "odgovorjen"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "not answered"
-msgstr ""
+msgstr "neodgovorjen"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Thank you for your feedback."
@@ -404,7 +404,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "The survey is finished."
-msgstr ""
+msgstr "Anketa je končana."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"

@@ -96,7 +96,7 @@ sub Data {
     $Self->{Translation}->{'Survey'} = 'Анкета';
     $Self->{Translation}->{'Please answer these questions'} = '';
     $Self->{Translation}->{'Show my answers'} = '';
-    $Self->{Translation}->{'These are your answers'} = '';
+    $Self->{Translation}->{'These are your answers'} = 'Овие се ваши одговори';
     $Self->{Translation}->{'Survey Title'} = '';
 
     # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
@@ -143,7 +143,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
     $Self->{Translation}->{'Thank you for your feedback.'} = '';
-    $Self->{Translation}->{'The survey is finished.'} = '';
+    $Self->{Translation}->{'The survey is finished.'} = 'Анкетата е завршена.';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -154,7 +154,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
-    $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Веќе ја одговоривте анкетата.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
     $Self->{Translation}->{'Survey List'} = '';

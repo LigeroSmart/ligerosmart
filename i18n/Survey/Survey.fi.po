@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:57+0000\n"
+"POT-Creation-Date: 2020-01-24 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Muistutuksen viesti"
 
 #. Template: AgentSurveyAdd
 msgid "Ticket Types"
-msgstr ""
+msgstr "Tikettien tyypit"
 
 #. Template: AgentSurveyAdd
 msgid "Internal Description"
@@ -380,7 +380,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Invalid"
-msgstr ""
+msgstr "Poistettu käytöstä"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "New Status"

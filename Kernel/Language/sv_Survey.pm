@@ -16,27 +16,27 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurveyAdd
-    $Self->{Translation}->{'Create New Survey'} = '';
-    $Self->{Translation}->{'Introduction'} = '';
-    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Create New Survey'} = 'Skapa ny undersökning';
+    $Self->{Translation}->{'Introduction'} = 'Introduktion';
+    $Self->{Translation}->{'Survey Introduction'} = 'Undersökningsintroduktion';
     $Self->{Translation}->{'Notification Body'} = '';
-    $Self->{Translation}->{'Ticket Types'} = '';
-    $Self->{Translation}->{'Internal Description'} = '';
+    $Self->{Translation}->{'Ticket Types'} = 'Ärendetyper';
+    $Self->{Translation}->{'Internal Description'} = 'Intern beskrivning';
     $Self->{Translation}->{'Customer conditions'} = '';
     $Self->{Translation}->{'Please choose a Customer property to add a condition.'} = '';
     $Self->{Translation}->{'Public survey key'} = '';
     $Self->{Translation}->{'Example survey'} = '';
 
     # Template: AgentSurveyEdit
-    $Self->{Translation}->{'Edit General Info'} = '';
+    $Self->{Translation}->{'Edit General Info'} = 'Redigera generell information';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Edit Questions'} = '';
-    $Self->{Translation}->{'You are here'} = '';
-    $Self->{Translation}->{'Survey Questions'} = '';
-    $Self->{Translation}->{'Add Question'} = '';
-    $Self->{Translation}->{'Type the question'} = '';
-    $Self->{Translation}->{'Answer required'} = '';
+    $Self->{Translation}->{'Edit Questions'} = 'Redigera frågor';
+    $Self->{Translation}->{'You are here'} = 'Du är här';
+    $Self->{Translation}->{'Survey Questions'} = 'Undersökningens frågor';
+    $Self->{Translation}->{'Add Question'} = 'Lägg till en fråga';
+    $Self->{Translation}->{'Type the question'} = 'Skriv frågan';
+    $Self->{Translation}->{'Answer required'} = 'Måste besvaras';
     $Self->{Translation}->{'No questions saved for this survey.'} = '';
     $Self->{Translation}->{'Question'} = '';
     $Self->{Translation}->{'Answer Required'} = '';
@@ -93,57 +93,57 @@ sub Data {
     $Self->{Translation}->{'No stat results.'} = '';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = '';
+    $Self->{Translation}->{'Survey'} = 'Undersökning';
     $Self->{Translation}->{'Please answer these questions'} = '';
     $Self->{Translation}->{'Show my answers'} = '';
     $Self->{Translation}->{'These are your answers'} = '';
     $Self->{Translation}->{'Survey Title'} = '';
 
     # Perl Module: Kernel/Modules/AgentSurveyAdd.pm
-    $Self->{Translation}->{'Add New Survey'} = '';
+    $Self->{Translation}->{'Add New Survey'} = 'Lägg till ny undersökning';
 
     # Perl Module: Kernel/Modules/AgentSurveyEdit.pm
     $Self->{Translation}->{'You have no permission for this survey!'} = '';
     $Self->{Translation}->{'No SurveyID is given!'} = '';
-    $Self->{Translation}->{'Survey Edit'} = '';
+    $Self->{Translation}->{'Survey Edit'} = 'Redigera undersökningen';
 
     # Perl Module: Kernel/Modules/AgentSurveyEditQuestions.pm
     $Self->{Translation}->{'You have no permission for this survey or question!'} = '';
     $Self->{Translation}->{'You have no permission for this survey, question or answer!'} = '';
-    $Self->{Translation}->{'Survey Edit Questions'} = '';
-    $Self->{Translation}->{'Yes/No'} = '';
-    $Self->{Translation}->{'Radio (List)'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Redigera frågor i undersökningen';
+    $Self->{Translation}->{'Yes/No'} = 'Ja/Nej';
+    $Self->{Translation}->{'Radio (List)'} = 'Radio (Lista)';
     $Self->{Translation}->{'Checkbox (List)'} = '';
     $Self->{Translation}->{'Net Promoter Score'} = '';
-    $Self->{Translation}->{'Question Type'} = '';
-    $Self->{Translation}->{'Complete'} = '';
-    $Self->{Translation}->{'Incomplete'} = '';
-    $Self->{Translation}->{'Question Edit'} = '';
-    $Self->{Translation}->{'Answer Edit'} = '';
+    $Self->{Translation}->{'Question Type'} = 'Typ av fråga';
+    $Self->{Translation}->{'Complete'} = 'Färdig';
+    $Self->{Translation}->{'Incomplete'} = 'Inkomplett';
+    $Self->{Translation}->{'Question Edit'} = 'Redigera fråga';
+    $Self->{Translation}->{'Answer Edit'} = 'Redigera svar';
 
     # Perl Module: Kernel/Modules/AgentSurveyStats.pm
     $Self->{Translation}->{'Stats Overview'} = '';
     $Self->{Translation}->{'You have no permission for this survey or stats detail!'} = '';
-    $Self->{Translation}->{'Stats Detail'} = '';
+    $Self->{Translation}->{'Stats Detail'} = 'Statusdetalj';
 
     # Perl Module: Kernel/Modules/AgentSurveyZoom.pm
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'} = '';
-    $Self->{Translation}->{'Status changed.'} = '';
-    $Self->{Translation}->{'- No queue selected -'} = '';
+    $Self->{Translation}->{'Status changed.'} = 'Status ändrad.';
+    $Self->{Translation}->{'- No queue selected -'} = '- Ingen kö vald -';
     $Self->{Translation}->{'- No ticket type selected -'} = '';
     $Self->{Translation}->{'- No ticket service selected -'} = '';
-    $Self->{Translation}->{'- Change Status -'} = '';
+    $Self->{Translation}->{'- Change Status -'} = '- Ändra status -';
     $Self->{Translation}->{'Master'} = '';
-    $Self->{Translation}->{'Invalid'} = '';
-    $Self->{Translation}->{'New Status'} = '';
-    $Self->{Translation}->{'Survey Description'} = '';
-    $Self->{Translation}->{'answered'} = '';
-    $Self->{Translation}->{'not answered'} = '';
+    $Self->{Translation}->{'Invalid'} = 'Ogiltig';
+    $Self->{Translation}->{'New Status'} = 'Ny status';
+    $Self->{Translation}->{'Survey Description'} = 'Beskrivning av undersökningen';
+    $Self->{Translation}->{'answered'} = 'besvarad';
+    $Self->{Translation}->{'not answered'} = 'ej besvarad';
 
     # Perl Module: Kernel/Modules/PublicSurvey.pm
     $Self->{Translation}->{'Thank you for your feedback.'} = '';
-    $Self->{Translation}->{'The survey is finished.'} = '';
+    $Self->{Translation}->{'The survey is finished.'} = 'Undersökningen är avslutad.';
     $Self->{Translation}->{'Survey Message!'} = '';
     $Self->{Translation}->{'Module not enabled.'} = '';
     $Self->{Translation}->{'This functionality is not enabled, please contact your administrator.'} =
@@ -154,7 +154,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Survey Vote'} = '';
     $Self->{Translation}->{'Survey Vote Data'} = '';
-    $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Du har redan svarat på den här undersökningen.';
 
     # Perl Module: Kernel/System/Stats/Dynamic/SurveyList.pm
     $Self->{Translation}->{'Survey List'} = '';
@@ -230,7 +230,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Shows a link in the menu to zoom into the survey statistics details in its zoom view of the agent interface.'} =
         '';
-    $Self->{Translation}->{'Stats Details'} = '';
+    $Self->{Translation}->{'Stats Details'} = 'Statusdetaljer';
     $Self->{Translation}->{'Survey Add Module.'} = '';
     $Self->{Translation}->{'Survey Edit Module.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';

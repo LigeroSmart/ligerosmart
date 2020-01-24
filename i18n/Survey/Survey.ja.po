@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
-"POT-Creation-Date: 2019-06-25 13:42+0000\n"
+"POT-Creation-Date: 2020-01-24 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -340,7 +340,7 @@ msgstr "統計一覧"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "You have no permission for this survey or stats detail!"
-msgstr ""
+msgstr "あなたは、このアンケートまたは詳細ステータスへの権限がありません！"
 
 #. Perl Module: Kernel/Modules/AgentSurveyStats.pm
 msgid "Stats Detail"
@@ -352,7 +352,7 @@ msgstr "新しい状態を設定できません! 質問が定義されていま�
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Can't set new status! Questions incomplete."
-msgstr ""
+msgstr "新しい状態を設定できません! 設問が不完全です。"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Status changed."
@@ -364,11 +364,11 @@ msgstr "キューが選択されていません"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket type selected -"
-msgstr ""
+msgstr "- チケットタイプを選択してください -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- No ticket service selected -"
-msgstr ""
+msgstr "- チケットサービスを選択してください -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "- Change Status -"
