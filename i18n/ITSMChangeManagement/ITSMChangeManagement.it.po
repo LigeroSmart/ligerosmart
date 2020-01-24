@@ -1,12 +1,13 @@
 #
 # Translators:
+# Denis Renzi <itis05@virgilio.it>, 2020
 # Vincenzo Reale <vinx.reale@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2019-04-09 12:23+0000\n"
-"PO-Revision-Date: 2019-04-09 12:23+0000\n"
-"Last-Translator: Udo Bretz\n"
+"PO-Revision-Date: 2020-01-18 20:42+0000\n"
+"Last-Translator: Denis Renzi <itis05@virgilio.it>\n"
 "Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,11 +17,11 @@ msgstr ""
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Category ↔ Impact ↔ Priority"
-msgstr ""
+msgstr "Categoria ↔ Impatto ↔ Priorità"
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Manage the priority result of combinating Category ↔ Impact."
-msgstr ""
+msgstr "Gestire il risultato prioritario della combinazione di Categoria ↔ Impatto."
 
 #. Template: AdminITSMChangeCIPAllocate
 msgid "Priority allocation"
@@ -28,7 +29,7 @@ msgstr "Assegnazione prioritaria"
 
 #. Template: AdminITSMChangeNotification
 msgid "ITSM ChangeManagement Notification Management"
-msgstr ""
+msgstr "Gestione delle notifiche di ChangeManagement ITSM"
 
 #. Template: AdminITSMChangeNotification
 msgid "Add Notification Rule"
@@ -36,7 +37,7 @@ msgstr "Aggiungi regola di notifica"
 
 #. Template: AdminITSMChangeNotification
 msgid "Edit Notification Rule"
-msgstr ""
+msgstr "Modifica regola di notifica"
 
 #. Template: AdminITSMChangeNotification
 msgid "A notification should have a name!"
@@ -48,7 +49,7 @@ msgstr "Il nome è obbligatorio."
 
 #. Template: AdminITSMStateMachine
 msgid "Admin State Machine"
-msgstr ""
+msgstr "Admin State Machine"
 
 #. Template: AdminITSMStateMachine
 msgid "Select a catalog class!"
@@ -72,7 +73,7 @@ msgstr "Nome oggetto"
 
 #. Template: AdminITSMStateMachine
 msgid "Overview over state transitions for"
-msgstr ""
+msgstr "Panoramica sulle transizioni di stato per"
 
 #. Template: AdminITSMStateMachine
 msgid "Delete this state transition"
@@ -80,7 +81,7 @@ msgstr "Elimina questa transizione di stato"
 
 #. Template: AdminITSMStateMachine
 msgid "Add a new state transition for"
-msgstr ""
+msgstr "Aggiungi una nuova transizione di stato per"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a state!"
@@ -88,7 +89,7 @@ msgstr "Seleziona uno stato!"
 
 #. Template: AdminITSMStateMachine
 msgid "Please select a next state!"
-msgstr ""
+msgstr "Seleziona uno stato successivo!"
 
 #. Template: AdminITSMStateMachine
 msgid "Edit a state transition for"
@@ -96,23 +97,23 @@ msgstr "Modifica una transizione di stato per"
 
 #. Template: AdminITSMStateMachine
 msgid "Do you really want to delete the state transition"
-msgstr ""
+msgstr "Vuoi veramente cancellare la transizione di stato"
 
 #. Template: AgentITSMChangeAdd
 msgid "Add Change"
-msgstr ""
+msgstr "Aggiungi modifica"
 
 #. Template: AgentITSMChangeAdd
 msgid "ITSM Change"
-msgstr ""
+msgstr "ITSM Change"
 
 #. Template: AgentITSMChangeAdd
 msgid "Justification"
-msgstr ""
+msgstr "Giustificazione"
 
 #. Template: AgentITSMChangeAdd
 msgid "Input invalid."
-msgstr ""
+msgstr "Input non valido."
 
 #. Template: AgentITSMChangeAdd
 msgid "Impact"
@@ -120,31 +121,31 @@ msgstr "Impatto"
 
 #. Template: AgentITSMChangeAdd
 msgid "Requested Date"
-msgstr ""
+msgstr "Data richiesta"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Select Change Template"
-msgstr ""
+msgstr "Seleziona Cambia modello"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Time type"
-msgstr ""
+msgstr "Tipo di tempo"
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "Invalid time type."
-msgstr ""
+msgstr "Tipo di tempo non valido."
 
 #. Template: AgentITSMChangeAddFromTemplate
 msgid "New time"
-msgstr ""
+msgstr "Nuovo tempo"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Save Change CAB as template"
-msgstr ""
+msgstr "Salva Modifica CAB come modello"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "go to involved persons screen"
-msgstr ""
+msgstr "vai alla schermata delle persone coinvolte"
 
 #. Template: AgentITSMChangeCABTemplate
 msgid "Invalid Name"
@@ -156,7 +157,7 @@ msgstr "Condizioni e azioni"
 
 #. Template: AgentITSMChangeCondition
 msgid "Delete Condition"
-msgstr ""
+msgstr "Elimina condizione"
 
 #. Template: AgentITSMChangeCondition
 msgid "Add new condition"
@@ -164,15 +165,15 @@ msgstr "Aggiungi nuova condizione"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Edit Condition"
-msgstr ""
+msgstr "Modifica condizione"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Need a valid name."
-msgstr ""
+msgstr "Hai bisogno di un nome valido."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "A valid name is needed."
-msgstr ""
+msgstr "È necessario un nome valido."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Duplicate name:"
@@ -180,11 +181,11 @@ msgstr "Nome duplicato:"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "This name is already used by another condition."
-msgstr ""
+msgstr "Questo nome è già utilizzato da un'altra condizione."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Matching"
-msgstr ""
+msgstr "Accoppiamento"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Any expression (OR)"
@@ -208,7 +209,7 @@ msgstr "Operatore"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Delete Expression"
-msgstr ""
+msgstr "Elimina espressione"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Expressions found."
@@ -224,7 +225,7 @@ msgstr "Elimina azione"
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "No Actions found."
-msgstr ""
+msgstr "Nessuna azione trovata."
 
 #. Template: AgentITSMChangeConditionEdit
 msgid "Add new action"
@@ -232,11 +233,11 @@ msgstr "Aggiungi nuova azione"
 
 #. Template: AgentITSMChangeDelete
 msgid "Do you really want to delete this change?"
-msgstr ""
+msgstr "Vuoi veramente cancellare questa modifica?"
 
 #. Template: AgentITSMChangeEdit
 msgid "Edit %s%s"
-msgstr ""
+msgstr "Modificare %s%s"
 
 #. Template: AgentITSMChangeHistory
 msgid "History of %s%s"
@@ -244,7 +245,7 @@ msgstr "Storico di %s%s"
 
 #. Template: AgentITSMChangeHistory
 msgid "Workorder"
-msgstr ""
+msgstr "Ordine di lavoro"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show details"
@@ -252,15 +253,15 @@ msgstr "Mostra i dettagli"
 
 #. Template: AgentITSMChangeHistory
 msgid "Show workorder"
-msgstr ""
+msgstr "Mostrare ordine di lavoro"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Detailed history information of %s"
-msgstr ""
+msgstr "Informazioni dettagliate sulla storia di %s"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Modified"
-msgstr ""
+msgstr "Modificata"
 
 #. Template: AgentITSMChangeHistoryZoom
 msgid "Old Value"
@@ -272,119 +273,119 @@ msgstr "Nuovo valore"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Edit Involved Persons of %s%s"
-msgstr ""
+msgstr "Modifica persone coinvolte di %s%s"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Involved Persons"
-msgstr ""
+msgstr "Persone coinvolte"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeManager"
-msgstr ""
+msgstr "ChangeManager"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "User invalid."
-msgstr ""
+msgstr "Utente non valido."
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "ChangeBuilder"
-msgstr ""
+msgstr "ChangeBuilder"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Change Advisory Board"
-msgstr ""
+msgstr "Consiglio consultivo del cambiamento"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "CAB Template"
-msgstr ""
+msgstr "Modello CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Apply Template"
-msgstr ""
+msgstr "Applica Modello"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "NewTemplate"
-msgstr ""
+msgstr "NewTemplate"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Save this CAB as template"
-msgstr ""
+msgstr "Salva questo CAB come modello"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Add to CAB"
-msgstr ""
+msgstr "Aggiungi a CAB"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Invalid User"
-msgstr ""
+msgstr "Utente non valido"
 
 #. Template: AgentITSMChangeInvolvedPersons
 msgid "Current CAB"
-msgstr ""
+msgstr "CAB corrente"
 
 #. Template: AgentITSMChangeOverviewNavBar
 msgid "Changes per page"
-msgstr ""
+msgstr "Modifiche per pagina"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Title"
-msgstr ""
+msgstr "Titolo dell'ordine di lavoro"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Title"
-msgstr ""
+msgstr "Cambia titolo"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Agent"
-msgstr ""
+msgstr "Agente di ordine di lavoro"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Builder"
-msgstr ""
+msgstr "Cambia costruttore"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change Manager"
-msgstr ""
+msgstr "Gestione dei Change"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorders"
-msgstr ""
+msgstr "Ordini di lavoro"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Change State"
-msgstr ""
+msgstr "Cambia stato"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder State"
-msgstr ""
+msgstr "Stato dell'ordine di lavoro"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Workorder Type"
-msgstr ""
+msgstr "Tipo di ordine di lavoro"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Requested Time"
-msgstr ""
+msgstr "Tempo richiesto"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Planned Start Time"
-msgstr ""
+msgstr "Ora di inizio pianificata"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Planned End Time"
-msgstr ""
+msgstr "Ora di fine pianificata"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Actual Start Time"
-msgstr ""
+msgstr "Ora di inizio effettiva"
 
 #. Template: AgentITSMChangeOverviewSmall
 msgid "Actual End Time"
-msgstr ""
+msgstr "Ora di fine effettiva"
 
 #. Template: AgentITSMChangeReset
 msgid "Do you really want to reset this change?"
-msgstr ""
+msgstr "Vuoi davvero ripristinare questa modifica?"
 
 #. Template: AgentITSMChangeSearch
 msgid "(e.g. 10*5155 or 105658*)"
@@ -392,7 +393,7 @@ msgstr "(ad es. '10*5155' o '105658*')"
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Agent"
-msgstr ""
+msgstr "Agente CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "e.g."
@@ -400,79 +401,79 @@ msgstr "ad es."
 
 #. Template: AgentITSMChangeSearch
 msgid "CAB Customer"
-msgstr ""
+msgstr "Cliente CAB"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Instruction"
-msgstr ""
+msgstr "Istruzioni per l'ordinatore ITSM"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Workorder Report"
-msgstr ""
+msgstr "Rapporto sull'ordine di lavoro ITSM"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Change Priority"
-msgstr ""
+msgstr "Priorità di cambiamento ITSM"
 
 #. Template: AgentITSMChangeSearch
 msgid "ITSM Change Impact"
-msgstr ""
+msgstr "Impatto del cambiamento ITSM"
 
 #. Template: AgentITSMChangeSearch
 msgid "Change Category"
-msgstr ""
+msgstr "Cambia categoria"
 
 #. Template: AgentITSMChangeSearch
 msgid "(before/after)"
-msgstr ""
+msgstr "(prima/dopo)"
 
 #. Template: AgentITSMChangeSearch
 msgid "(between)"
-msgstr ""
+msgstr "(tra)"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Save Change as Template"
-msgstr ""
+msgstr "Salva modifica come modello"
 
 #. Template: AgentITSMChangeTemplate
 msgid "A template should have a name!"
-msgstr ""
+msgstr "Un modello dovrebbe avere un nome!"
 
 #. Template: AgentITSMChangeTemplate
 msgid "The template name is required."
-msgstr ""
+msgstr "È richiesto il nome del modello."
 
 #. Template: AgentITSMChangeTemplate
 msgid "Reset States"
-msgstr ""
+msgstr "Ripristina Stati"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Overwrite original template"
-msgstr ""
+msgstr "Sovrascrivi modello originale"
 
 #. Template: AgentITSMChangeTemplate
 msgid "Delete original change"
-msgstr ""
+msgstr "Elimina la modifica originale"
 
 #. Template: AgentITSMChangeTimeSlot
 msgid "Move Time Slot"
-msgstr ""
+msgstr "Sposta fascia oraria"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Information"
-msgstr ""
+msgstr "Modifica informazioni"
 
 #. Template: AgentITSMChangeZoom
 msgid "Planned Effort"
-msgstr ""
+msgstr "Sforzo pianificato"
 
 #. Template: AgentITSMChangeZoom
 msgid "Accounted Time"
-msgstr ""
+msgstr "Tempo contabilizzato"
 
 #. Template: AgentITSMChangeZoom
 msgid "Change Initiator(s)"
-msgstr ""
+msgstr "Cambia iniziatore(i)"
 
 #. Template: AgentITSMChangeZoom
 msgid "CAB"
@@ -484,27 +485,27 @@ msgstr "Ultima modifica"
 
 #. Template: AgentITSMTemplateEditCAB
 msgid "Edit CAB Template"
-msgstr ""
+msgstr "Modifica modello CAB"
 
 #. Template: AgentITSMTemplateEditContent
 msgid "This will create a new change from this template, so you can edit and save it."
-msgstr ""
+msgstr "Ciò creerà una nuova modifica da questo modello, quindi puoi modificarlo e salvarlo."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "The new change will be deleted automatically after it has been saved as template."
-msgstr ""
+msgstr "La nuova modifica verrà eliminata automaticamente dopo essere stata salvata come modello."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "This will create a new workorder from this template, so you can edit and save it."
-msgstr ""
+msgstr "Ciò creerà un nuovo ordine di lavoro da questo modello, in modo che tu possa modificarlo e salvarlo."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "A temporary change will be created which contains the workorder."
-msgstr ""
+msgstr "Verrà creato un cambiamento temporaneo che contiene l'ordine di lavoro."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "The temporary change and new workorder will be deleted automatically after the workorder has been saved as template."
-msgstr ""
+msgstr "La modifica temporanea e il nuovo ordine di lavoro verranno eliminati automaticamente dopo che l'ordine di lavoro è stato salvato come modello."
 
 #. Template: AgentITSMTemplateEditContent
 msgid "Do you want to proceed?"
@@ -512,435 +513,435 @@ msgstr "Vuoi continuare?"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Template ID"
-msgstr ""
+msgstr "Modello ID"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Edit Content"
-msgstr ""
+msgstr "Modifica contenuto"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Create by"
-msgstr ""
+msgstr "Creato da"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change by"
-msgstr ""
+msgstr "Cambiato da"
 
 #. Template: AgentITSMTemplateOverviewSmall
 msgid "Change Time"
-msgstr ""
+msgstr "Cambia ora"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Add Workorder to %s%s"
-msgstr ""
+msgstr "Aggiungi ordine di lavoro a %s%s"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Instruction"
-msgstr ""
+msgstr "Istruzione"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid workorder type."
-msgstr ""
+msgstr "Tipo di ordine di lavoro non valido."
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "The planned start time must be before the planned end time!"
-msgstr ""
+msgstr "L'ora di inizio pianificata deve essere precedente all'ora di fine pianificata!"
 
 #. Template: AgentITSMWorkOrderAdd
 msgid "Invalid format."
-msgstr ""
+msgstr "Formato non valido."
 
 #. Template: AgentITSMWorkOrderAddFromTemplate
 msgid "Select Workorder Template"
-msgstr ""
+msgstr "Seleziona modello di ordine di lavoro"
 
 #. Template: AgentITSMWorkOrderAgent
 msgid "Edit Workorder Agent of %s%s"
-msgstr ""
+msgstr "Modifica agente di lavoro di %s%s"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "Do you really want to delete this workorder?"
-msgstr ""
+msgstr "Vuoi veramente cancellare questo ordine?"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "You can not delete this Workorder. It is used in at least one Condition!"
-msgstr ""
+msgstr "Non è possibile eliminare questo ordine di lavoro. È usato in almeno una condizione!"
 
 #. Template: AgentITSMWorkOrderDelete
 msgid "This Workorder is used in the following Condition(s)"
-msgstr ""
+msgstr "Questo ordine di lavoro viene utilizzato nelle seguenti condizione(i)"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "Edit %s%s-%s"
-msgstr ""
+msgstr "Modifica %s%s-%s"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "Move following workorders accordingly"
-msgstr ""
+msgstr "Spostare i seguenti ordini di lavoro di conseguenza"
 
 #. Template: AgentITSMWorkOrderEdit
 msgid "If the planned end time of this workorder is changed, the planned start times of all following workorders will be changed accordingly"
-msgstr ""
+msgstr "Se l'ora di fine pianificata di questo ordine di lavoro viene modificata, gli orari di inizio pianificati di tutti i seguenti ordini di lavoro verranno modificati di conseguenza"
 
 #. Template: AgentITSMWorkOrderHistory
 msgid "History of %s%s-%s"
-msgstr ""
+msgstr "Storia di %s%s-%s"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "Edit Report of %s%s-%s"
-msgstr ""
+msgstr "Modifica rapporto di %s%s-%s"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "Report"
-msgstr ""
+msgstr "Report"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be before the actual end time!"
-msgstr ""
+msgstr "L'ora di inizio effettiva deve essere precedente all'ora di fine effettiva!"
 
 #. Template: AgentITSMWorkOrderReport
 msgid "The actual start time must be set, when the actual end time is set!"
-msgstr ""
+msgstr "L'ora di inizio effettiva deve essere impostata, quando è impostata l'ora di fine effettiva!"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Current Agent"
-msgstr ""
+msgstr "Agente attuale"
 
 #. Template: AgentITSMWorkOrderTake
 msgid "Do you really want to take this workorder?"
-msgstr ""
+msgstr "Vuoi davvero prendere questo ordine?"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Save Workorder as Template"
-msgstr ""
+msgstr "Salva Modello di lavoro come modello"
 
 #. Template: AgentITSMWorkOrderTemplate
 msgid "Delete original workorder (and surrounding change)"
-msgstr ""
+msgstr "Elimina ordine di lavoro originale (e modifiche circostanti)"
 
 #. Template: AgentITSMWorkOrderZoom
 msgid "Workorder Information"
-msgstr ""
+msgstr "Informazioni ordine di lavoro"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Notification Added!"
-msgstr ""
+msgstr "Notifica aggiunta!"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "Unknown notification %s!"
-msgstr ""
+msgstr "Notifica sconosciuta %s!"
 
 #. Perl Module: Kernel/Modules/AdminITSMChangeNotification.pm
 msgid "There was an error creating the notification."
-msgstr ""
+msgstr "Si è verificato un errore durante la creazione della notifica."
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Updated!"
-msgstr ""
+msgstr "Transizione di stato aggiornata!"
 
 #. Perl Module: Kernel/Modules/AdminITSMStateMachine.pm
 msgid "State Transition Added!"
-msgstr ""
+msgstr "Aggiunta transizione di stato!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChange.pm
 msgid "Overview: ITSM Changes"
-msgstr ""
+msgstr "Panoramica: modifiche ITSM"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Ticket with TicketID %s does not exist!"
-msgstr ""
+msgstr "Ticket con TicketID %s non esiste!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Missing sysconfig option \"ITSMChange::AddChangeLinkTicketTypes\"!"
-msgstr ""
+msgstr "Opzione sysconfig mancante \"ITSMChange::AddChangeLinkTicketTypes\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAdd.pm
 msgid "Was not able to add change!"
-msgstr ""
+msgstr "Non è stato possibile aggiungere il cambiamento!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeAddFromTemplate.pm
 msgid "Was not able to create change from template!"
-msgstr ""
+msgstr "Impossibile creare il cambiamento dal modello!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "No ChangeID is given!"
-msgstr ""
+msgstr " Nessun ChangeID è dato!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "No change found for changeID %s."
-msgstr ""
+msgstr "Nessuna modifica trovata per changeID %s."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "The CAB of change \"%s\" could not be serialized."
-msgstr ""
+msgstr "Il CAB del cambiamento \"%s\" non è stato possibile serializzare."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCABTemplate.pm
 msgid "Could not add the template."
-msgstr ""
+msgstr "Impossibile aggiungere il modello."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Change \"%s\" not found in database!"
-msgstr ""
+msgstr "Modificare \"%s\" non trovato nel database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeCondition.pm
 msgid "Could not delete ConditionID %s!"
-msgstr ""
+msgstr "Impossibile eliminare ConditionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not create new condition!"
-msgstr ""
+msgstr "Impossibile creare una nuova condizione!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ConditionID %s!"
-msgstr ""
+msgstr "Impossibile aggiornare ConditionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ExpressionID %s!"
-msgstr ""
+msgstr "Impossibile aggiornare ExpressionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not add new Expression!"
-msgstr ""
+msgstr "Impossibile aggiungere una nuova espressione!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not update ActionID %s!"
-msgstr ""
+msgstr "Impossibile aggiornare ActionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not add new Action!"
-msgstr ""
+msgstr "Impossibile aggiungere una nuova azione!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not delete ExpressionID %s!"
-msgstr ""
+msgstr "Impossibile eliminare ExpressionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Could not delete ActionID %s!"
-msgstr ""
+msgstr "Impossibile eliminare ActionID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "Error: Unknown field type \"%s\"!"
-msgstr ""
+msgstr "Errore: tipo di campo sconosciuto \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeConditionEdit.pm
 msgid "ConditionID %s does not belong to the given ChangeID %s!"
-msgstr ""
+msgstr "ConditionID %s non appartiene al ChangeID specificato %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Change \"%s\" does not have an allowed change state to be deleted!"
-msgstr ""
+msgstr "Modificare \"%s\" non è consentito eliminare uno stato di modifica!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeDelete.pm
 msgid "Was not able to delete the changeID %s!"
-msgstr ""
+msgstr "Impossibile eliminare il changeID %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeEdit.pm
 msgid "Was not able to update Change!"
-msgstr ""
+msgstr "Impossibile aggiornare Change!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Can't show history, as no ChangeID is given!"
-msgstr ""
+msgstr "Impossibile mostrare la cronologia, poiché non viene fornito alcun ChangeID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Change \"%s\" not found in the database!"
-msgstr ""
+msgstr "Modificare \"%s\" non trovato nel database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Unknown type \"%s\" encountered!"
-msgstr ""
+msgstr "Tipo sconosciuto \"%s\" incontrato!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistory.pm
 msgid "Change History"
-msgstr ""
+msgstr "Cambiare la storia"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
 msgid "Can't show history zoom, no HistoryEntryID is given!"
-msgstr ""
+msgstr "Impossibile mostrare lo zoom della cronologia, non viene fornito alcun HistoryEntryID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
 msgid "HistoryEntry \"%s\" not found in database!"
-msgstr ""
+msgstr "HistoryEntry \"%s\" non trovato nel database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
 msgid "Was not able to update Change CAB for Change %s!"
-msgstr ""
+msgstr "Impossibile aggiornare Change CAB for Change %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeInvolvedPersons.pm
 msgid "Was not able to update Change %s!"
-msgstr ""
+msgstr "Impossibile aggiornare Change %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeManager.pm
 msgid "Overview: ChangeManager"
-msgstr ""
+msgstr "Panoramica: ChangeManager"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyCAB.pm
 msgid "Overview: My CAB"
-msgstr ""
+msgstr "Panoramica: My CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyChanges.pm
 msgid "Overview: My Changes"
-msgstr ""
+msgstr "Panoramica: le mie modifiche"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeMyWorkOrders.pm
 msgid "Overview: My Workorders"
-msgstr ""
+msgstr "Panoramica: I miei lavori"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePIR.pm
 msgid "Overview: PIR"
-msgstr ""
+msgstr "Panoramica: PIR"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePSA.pm
 msgid "Overview: PSA"
-msgstr ""
+msgstr "Panoramica: PSA"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrder \"%s\" not found in database!"
-msgstr ""
+msgstr "Ordine di lavoro \"%s\" non trovato nel database!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "Can't create output, as the workorder is not attached to a change!"
-msgstr ""
+msgstr "Impossibile creare output, poiché il workorder non è associato a una modifica!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "Can't create output, as no ChangeID is given!"
-msgstr ""
+msgstr "Impossibile creare output, poiché non viene fornito alcun ChangeID!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown change title"
-msgstr ""
+msgstr "titolo del cambiamento sconosciuto"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder"
-msgstr ""
+msgstr "Ordine di lavoro ITSM"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrderNumber"
-msgstr ""
+msgstr "WorkOrderNumber"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrderTitle"
-msgstr ""
+msgstr "WorkOrderTitle"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "unknown workorder title"
-msgstr ""
+msgstr "titolo di lavoro sconosciuto"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ChangeState"
-msgstr ""
+msgstr "ChangeState"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedEffort"
-msgstr ""
+msgstr "PlannedEffort"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "CAB Agents"
-msgstr ""
+msgstr "Agenti CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "CAB Customers"
-msgstr ""
+msgstr "Clienti CAB"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "RequestedTime"
-msgstr ""
+msgstr "RequestedTime"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedStartTime"
-msgstr ""
+msgstr "PlannedStartTime"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "PlannedEndTime"
-msgstr ""
+msgstr "PlannedEndTime"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualStartTime"
-msgstr ""
+msgstr "ActualStartTime"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ActualEndTime"
-msgstr ""
+msgstr "ActualEndTime"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ChangeTime"
-msgstr ""
+msgstr "ChangeTime"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ChangeNumber"
-msgstr ""
+msgstr "ChangeNumber"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrderState"
-msgstr ""
+msgstr "WorkOrderState"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrderType"
-msgstr ""
+msgstr "WorkOrderType"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "WorkOrderAgent"
-msgstr ""
+msgstr "WorkOrderAgent"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangePrint.pm
 msgid "ITSM Workorder Overview (%s)"
-msgstr ""
+msgstr "Panoramica sull'ordine di lavoro ITSM (%s)"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset WorkOrder %s of Change %s!"
-msgstr ""
+msgstr "Impossibile ripristinare WorkOrder %s di cambiamenti %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeReset.pm
 msgid "Was not able to reset Change %s!"
-msgstr ""
+msgstr "Impossibile ripristinare la modifica %s!"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSchedule.pm
 msgid "Overview: Change Schedule"
-msgstr ""
+msgstr "Panoramica: modifica programma"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search"
-msgstr ""
+msgstr "Cambia ricerca"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "ChangeTitle"
-msgstr ""
+msgstr "ChangeTitle"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrders"
-msgstr ""
+msgstr "WorkOrders"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Search Result"
-msgstr ""
+msgstr "Cambia risultato ricerca"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Number"
-msgstr ""
+msgstr "Cambia numero"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Work Order Title"
-msgstr ""
+msgstr "Titolo dell'ordine di lavoro"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Description"
-msgstr ""
+msgstr "Modifica descrizione"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Justification"
-msgstr ""
+msgstr "Modifica giustificazione"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Instruction"
-msgstr ""
+msgstr "Istruzioni sull'ordine di lavoro"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "WorkOrder Report"
-msgstr ""
+msgstr "Rapporto sull'ordine di lavoro."
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Priority"
-msgstr ""
+msgstr "Cambia priorità"
 
 #. Perl Module: Kernel/Modules/AgentITSMChangeSearch.pm
 msgid "Change Impact"
@@ -2692,7 +2693,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Sets up the state machine for workorders."
-msgstr ""
+msgstr "Imposta la macchina a stati per gli ordini di lavoro."
 
 #. SysConfig
 msgid "Shows a checkbox in the workorder edit screen of the agent interface that defines if the the following workorders should also be moved if a workorder is modified and the planned end time has changed."
@@ -2728,87 +2729,87 @@ msgstr ""
 
 #. SysConfig
 msgid "Shows a link in the menu that allows taking a workorder in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu che consente di prendere un ordine nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to access the conditions of a change in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per accedere alle condizioni di una modifica nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to access the history of a change in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per accedere alla cronologia di una modifica nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to access the history of a workorder in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per accedere alla cronologia di un ordine di lavoro nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to add a workorder in the change zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per aggiungere un ordine di lavoro nella vista di modifica dello zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to delete a change in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per eliminare una modifica nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to delete a workorder in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per eliminare un ordine di lavoro nella sua vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to edit a change in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per modificare una modifica nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to edit a workorder in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per modificare un ordine di lavoro nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to go back in the change zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per tornare indietro nella vista di modifica dello zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to go back in the workorder zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per tornare indietro nella vista di zoom dell'ordine di lavoro dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to print a change in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per stampare una modifica nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to print a workorder in the zoom view of the agent interface."
-msgstr ""
+msgstr "Mostrare un collegamento nel menu per stampare un ordine di lavoro nella vista zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface."
-msgstr ""
+msgstr "Mostrare un collegamento nel menu per ripristinare una modifica e i relativi workorder nella visualizzazione zoom dell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows a link in the menu to show the involved persons in a change, in the zoom view of the change in the agent interface."
-msgstr ""
+msgstr "Mostra un collegamento nel menu per mostrare le persone coinvolte in una modifica, nella vista zoom della modifica nell'interfaccia agenti."
 
 #. SysConfig
 msgid "Shows the change history (reverse ordered) in the agent interface."
-msgstr ""
+msgstr "Mostra la cronologia delle modifiche (ordine inverso) nell'interfaccia agenti."
 
 #. SysConfig
 msgid "State Machine"
-msgstr ""
+msgstr "Macchina statale"
 
 #. SysConfig
 msgid "Stores change and workorder ids and their corresponding template id, while a user is editing a template."
-msgstr ""
+msgstr "Memorizza gli ID di cambiamento e di ordine di lavoro e il loro ID modello corrispondente, mentre un utente sta modificando un modello."
 
 #. SysConfig
 msgid "Take Workorder"
-msgstr ""
+msgstr "Prendi l'ordine di lavoro"
 
 #. SysConfig
 msgid "Take Workorder."
-msgstr ""
+msgstr "Prendi l'ordine di lavoro."
 
 #. SysConfig
 msgid "Take the workorder."
-msgstr ""
+msgstr "Prendi l'ordine."
 
 #. SysConfig
 msgid "Template Overview"
@@ -2816,83 +2817,83 @@ msgstr "Riepilogo del modello"
 
 #. SysConfig
 msgid "Template type"
-msgstr ""
+msgstr "Tipo di modello"
 
 #. SysConfig
 msgid "Template."
-msgstr ""
+msgstr "Modello"
 
 #. SysConfig
 msgid "The identifier for a change, e.g. Change#, MyChange#. The default is Change#."
-msgstr ""
+msgstr "L'identificatore di una modifica, ad es. Change#, MyChange#. L'impostazione predefinita è Change#."
 
 #. SysConfig
 msgid "The identifier for a workorder, e.g. Workorder#, MyWorkorder#. The default is Workorder#."
-msgstr ""
+msgstr "L'identificatore per un ordine di lavoro, ad es. Workorder#, MyWorkorder#. L'impostazione predefinita è Workorder#."
 
 #. SysConfig
 msgid "This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in \"ITSMChange::RestrictTicketTypes::Groups\". As this ACL could collide with other ACLs which are also related to the ticket type, this sysconfig option is disabled by default and should only be activated if needed."
-msgstr ""
+msgstr "Questo modulo ACL limita l'utilizzo dei tipi di ticket definiti nell'opzione sysconfig 'ITSMChange::AddChangeLinkTicketTypes', agli utenti dei gruppi come definiti in \"ITSMChange::RestrictTicketTypes::Groups\". Poiché questo ACL potrebbe scontrarsi con altri ACL correlati anche al tipo di ticket, questa opzione di sysconfig è disabilitata per impostazione predefinita e deve essere attivata solo se necessario."
 
 #. SysConfig
 msgid "Time Slot"
-msgstr ""
+msgstr "Fascia oraria"
 
 #. SysConfig
 msgid "Types of tickets, where in the ticket zoom view a link to add a change will be displayed."
-msgstr ""
+msgstr "Tipi di ticket, in cui nella visualizzazione dello zoom del ticket verrà visualizzato un collegamento per aggiungere una modifica."
 
 #. SysConfig
 msgid "User Search"
-msgstr ""
+msgstr "Ricerca utente"
 
 #. SysConfig
 msgid "Workorder Add (from template)."
-msgstr ""
+msgstr "Aggiungi all'ordine di lavoro (dal modello)."
 
 #. SysConfig
 msgid "Workorder Add."
-msgstr ""
+msgstr "Aggiungi ordine di lavoro."
 
 #. SysConfig
 msgid "Workorder Agent."
-msgstr ""
+msgstr "Agente di ordine di lavoro."
 
 #. SysConfig
 msgid "Workorder Delete."
-msgstr ""
+msgstr "Elimina ordine di lavoro."
 
 #. SysConfig
 msgid "Workorder Edit."
-msgstr ""
+msgstr "Modifica ordine di lavoro."
 
 #. SysConfig
 msgid "Workorder History Zoom."
-msgstr ""
+msgstr "Zoom cronologia ordine di lavoro."
 
 #. SysConfig
 msgid "Workorder History."
-msgstr ""
+msgstr "Storia degli ordini di lavoro."
 
 #. SysConfig
 msgid "Workorder Report."
-msgstr ""
+msgstr "Rapporto sull'ordine di lavoro."
 
 #. SysConfig
 msgid "Workorder Zoom"
-msgstr ""
+msgstr "Zoom sull'ordine di lavoro"
 
 #. SysConfig
 msgid "Workorder Zoom."
-msgstr ""
+msgstr "Zoom sull'ordine di lavoro."
 
 #. SysConfig
 msgid "once"
-msgstr ""
+msgstr "una volta"
 
 #. SysConfig
 msgid "regularly"
-msgstr ""
+msgstr "Regolarmente"
 
 #. Template: AgentITSMChangeHistory
 msgid "History Content"

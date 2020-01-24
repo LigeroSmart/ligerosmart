@@ -305,7 +305,7 @@ sub Data {
     $Self->{Translation}->{'Can\'t show history, as no ChangeID is given!'} = '';
     $Self->{Translation}->{'Change "%s" not found in the database!'} = '';
     $Self->{Translation}->{'Unknown type "%s" encountered!'} = '';
-    $Self->{Translation}->{'Change History'} = '';
+    $Self->{Translation}->{'Change History'} = 'Zmień historię.';
 
     # Perl Module: Kernel/Modules/AgentITSMChangeHistoryZoom.pm
     $Self->{Translation}->{'Can\'t show history zoom, no HistoryEntryID is given!'} = '';
