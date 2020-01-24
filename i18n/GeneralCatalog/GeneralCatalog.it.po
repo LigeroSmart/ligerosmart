@@ -1,22 +1,14 @@
-#
-# Translators:
-# Giulio <giulio.compagnone@gmail.com>, 2014
-# Luca Maranzano <liuk@linux.it>, 2014
-# Sergio Giganti <s.giganti@eaisoftware.it>, 2017
-# Udo Bretz, 2016
-# Vincenzo Reale <vinx.reale@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-02-12 10:07+0000\n"
-"Last-Translator: Luca Maranzano <liuk@linux.it>\n"
-"Language-Team: Italian (http://www.transifex.com/otrs/OTRS/language/it/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -31,8 +23,16 @@ msgid "Items in Class"
 msgstr "Elementi nella Classe"
 
 #. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Modifica Elemento"
+
+#. Template: AdminGeneralCatalog
 msgid "Add Class"
 msgstr "Aggiungi Classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Aggiungi Elemento"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -49,6 +49,10 @@ msgstr "Classe di Catalogo"
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
 msgstr "Modifica elemento di catalogo"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr "Lo stato dell'incidente di avviso non può essere impostato su non valido."
 
 #. SysConfig
 msgid "Comment 2"
@@ -84,13 +88,5 @@ msgstr "Parametri per i gruppi di permessi di esempio degli attributi del catalo
 
 #. SysConfig
 msgid "Permission Group"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr "Modifica Elemento"
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr "Aggiungi Elemento"
+msgstr "Gruppo di autorizzazioni"
 

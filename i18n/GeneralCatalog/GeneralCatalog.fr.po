@@ -1,23 +1,14 @@
-#
-# Translators:
-# Gaudin vincent <vincent.gaudin@cprpsncf.fr>, 2015
-# Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>, 2015
-# Richard BARET <inactive+rbaret@transifex.com>, 2015
-# Snake, 2018
-# Thomas Imbreckx <zinks@linux.com>, 2018
-# Udo Bretz, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-02-12 10:07+0000\n"
-"Last-Translator: Snake\n"
-"Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -32,8 +23,16 @@ msgid "Items in Class"
 msgstr "Éléments dans la classe"
 
 #. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Éditer un élément"
+
+#. Template: AdminGeneralCatalog
 msgid "Add Class"
 msgstr "Ajouter une classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Ajouter un élément"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -50,6 +49,10 @@ msgstr "Classe de catalogue"
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
 msgstr "Éditer un élément du catalogue"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
 
 #. SysConfig
 msgid "Comment 2"
@@ -86,12 +89,4 @@ msgstr "Paramètres pour l'exemple des permissions de groupes des attributs du c
 #. SysConfig
 msgid "Permission Group"
 msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr "Éditer un élément"
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr "Ajouter un élément"
 

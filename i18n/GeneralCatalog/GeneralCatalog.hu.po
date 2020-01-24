@@ -1,21 +1,14 @@
-#
-# Translators:
-# Balázs Úr <balazs.ur@otrs.com>, 2014-2019
-# Balázs Úr, 2014-2017
-# Gergely Baranyai <baranyai.gergely@alohainformatika.hu>, 2015
-# Udo Bretz, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-02-12 12:29+0000\n"
-"Last-Translator: Balázs Úr\n"
-"Language-Team: Hungarian (http://www.transifex.com/otrs/OTRS/language/hu/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -30,8 +23,16 @@ msgid "Items in Class"
 msgstr "Elemek az osztályban"
 
 #. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Elem szerkesztése"
+
+#. Template: AdminGeneralCatalog
 msgid "Add Class"
 msgstr "Osztály hozzáadása"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Elem hozzáadása"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -48,6 +49,10 @@ msgstr "Katalógusosztály"
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
 msgstr "Katalóguselem szerkesztése"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr "A figyelmeztetés incidensállapotot nem lehet érvénytelenre állítani."
 
 #. SysConfig
 msgid "Comment 2"
@@ -84,12 +89,4 @@ msgstr "Paraméterek az általános katalógus attribútumainak példa jogosults
 #. SysConfig
 msgid "Permission Group"
 msgstr "Jogosultsági csoport"
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr "Elem szerkesztése"
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr "Elem hozzáadása"
 

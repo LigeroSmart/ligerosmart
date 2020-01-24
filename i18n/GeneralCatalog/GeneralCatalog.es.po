@@ -1,22 +1,14 @@
-#
-# Translators:
-# Anatoli F. Peña Castillo <djanatoli@gmail.com>, 2016
-# David B <link.bigpoint@outlook.com>, 2017
-# Duilio Poggi Oneto <duiliopoggio@gmail.com>, 2015
-# Fernando Casal <fernando.casal@serviciomovil.com>, 2017-2018
-# Iñaki Martínez, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-02-12 10:07+0000\n"
-"Last-Translator: David B <link.bigpoint@outlook.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -31,8 +23,16 @@ msgid "Items in Class"
 msgstr "Items en Clase"
 
 #. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Editar elemento"
+
+#. Template: AdminGeneralCatalog
 msgid "Add Class"
 msgstr "Añadir Clase"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Añadir elemento"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -49,6 +49,10 @@ msgstr "Clase de Catálogo"
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
 msgstr "Editar Elemento del Catálogo"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
 
 #. SysConfig
 msgid "Comment 2"
@@ -85,12 +89,4 @@ msgstr "Parámetros para los permisos de ejemplo de los atributos del catálogo 
 #. SysConfig
 msgid "Permission Group"
 msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr "Editar elemento"
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr "Añadir elemento"
 

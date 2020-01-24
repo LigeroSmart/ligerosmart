@@ -20,14 +20,17 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'ジェネラル・カタログ管理';
-    $Self->{Translation}->{'Items in Class'} = '';
+    $Self->{Translation}->{'Items in Class'} = 'クラス内のアイテム';
     $Self->{Translation}->{'Edit Item'} = '';
-    $Self->{Translation}->{'Add Class'} = '';
+    $Self->{Translation}->{'Add Class'} = 'クラスの追加';
     $Self->{Translation}->{'Add Item'} = '';
     $Self->{Translation}->{'Add Catalog Item'} = 'カタログ項目を追加';
     $Self->{Translation}->{'Add Catalog Class'} = 'カタログクラスを追加';
     $Self->{Translation}->{'Catalog Class'} = 'カタログクラス';
     $Self->{Translation}->{'Edit Catalog Item'} = 'カタログ・アイテムを修正';
+
+    # JS File: ITSM.GeneralCatalog
+    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = '';
@@ -41,10 +44,13 @@ sub Data {
         'ジェネラル・カタログ属性のコメント例 2　の設定値';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} =
         'ジェネラル・カタログ属性の権限グループ　の設定値';
-    $Self->{Translation}->{'Permission Group'} = '';
+    $Self->{Translation}->{'Permission Group'} = '権限グループ';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Warning',
+    'Warning incident state can not be set to invalid.',
     );
 
 }

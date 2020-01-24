@@ -1,19 +1,14 @@
-#
-# Translators:
-# Joao Ferro <fmthard@gmail.com>, 2016-2017
-# Udo Bretz, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-02-12 10:07+0000\n"
-"Last-Translator: Udo Bretz\n"
-"Language-Team: Portuguese (http://www.transifex.com/otrs/OTRS/language/pt/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -28,8 +23,16 @@ msgid "Items in Class"
 msgstr "Items na Classe"
 
 #. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr "Editar Item"
+
+#. Template: AdminGeneralCatalog
 msgid "Add Class"
 msgstr "Adicionar Classe"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
+msgstr "Adicionar Item"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
@@ -46,6 +49,10 @@ msgstr "Classe do Catálogo"
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
 msgstr "Editar Item do Catálogo"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
 
 #. SysConfig
 msgid "Comment 2"
@@ -82,12 +89,4 @@ msgstr "Parâmetros para os grupos de permissão de exemplo dos atributos do cat
 #. SysConfig
 msgid "Permission Group"
 msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr "Editar Item"
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr "Adicionar Item"
 

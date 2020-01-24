@@ -29,6 +29,9 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = '目录类';
     $Self->{Translation}->{'Edit Catalog Item'} = '编辑目录项目';
 
+    # JS File: ITSM.GeneralCatalog
+    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = '警告事件状态不能设置为无效。';
+
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = '注释2';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '创建和管理目录';
@@ -45,6 +48,9 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Warning',
+    'Warning incident state can not be set to invalid.',
     );
 
 }

@@ -29,6 +29,9 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Katalógusosztály';
     $Self->{Translation}->{'Edit Catalog Item'} = 'Katalóguselem szerkesztése';
 
+    # JS File: ITSM.GeneralCatalog
+    $Self->{Translation}->{'Warning incident state can not be set to invalid.'} = 'A figyelmeztetés incidensállapotot nem lehet érvénytelenre állítani.';
+
     # SysConfig
     $Self->{Translation}->{'Comment 2'} = '2. megjegyzés';
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Az általános katalógus létrehozása és kezelése.';
@@ -45,6 +48,9 @@ sub Data {
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
+    'Cancel',
+    'Warning',
+    'Warning incident state can not be set to invalid.',
     );
 
 }

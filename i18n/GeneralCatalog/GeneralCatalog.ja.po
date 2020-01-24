@@ -1,20 +1,14 @@
-#
-# Translators:
-# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016
-# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014
-# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-05-01 09:43+0000\n"
-"Last-Translator: Hisatoshi Onishi <hisatoshi.onishi@gmail.com>\n"
-"Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -26,10 +20,18 @@ msgstr "ジェネラル・カタログ管理"
 
 #. Template: AdminGeneralCatalog
 msgid "Items in Class"
+msgstr "クラス内のアイテム"
+
+#. Template: AdminGeneralCatalog
+msgid "Edit Item"
 msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Add Class"
+msgstr "クラスの追加"
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
 msgstr ""
 
 #. Template: AdminGeneralCatalog
@@ -47,6 +49,10 @@ msgstr "カタログクラス"
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
 msgstr "カタログ・アイテムを修正"
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
+msgstr ""
 
 #. SysConfig
 msgid "Comment 2"
@@ -82,13 +88,5 @@ msgstr "ジェネラル・カタログ属性の権限グループ　の設定値
 
 #. SysConfig
 msgid "Permission Group"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
-msgstr ""
+msgstr "権限グループ"
 

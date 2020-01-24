@@ -1,17 +1,14 @@
-#
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:21+0000\n"
-"PO-Revision-Date: 2019-02-12 10:07+0000\n"
-"Last-Translator: Udo Bretz\n"
-"Language-Team: Slovak (Slovakia) (http://www.transifex.com/otrs/OTRS/language/sk_SK/)\n"
+"Project-Id-Version: GeneralCatalog\n"
+"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sk_SK\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -26,7 +23,15 @@ msgid "Items in Class"
 msgstr ""
 
 #. Template: AdminGeneralCatalog
+msgid "Edit Item"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
 msgid "Add Class"
+msgstr ""
+
+#. Template: AdminGeneralCatalog
+msgid "Add Item"
 msgstr ""
 
 #. Template: AdminGeneralCatalog
@@ -43,6 +48,10 @@ msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
+msgstr ""
+
+#. JS File: ITSM.GeneralCatalog
+msgid "Warning incident state can not be set to invalid."
 msgstr ""
 
 #. SysConfig
@@ -79,13 +88,5 @@ msgstr ""
 
 #. SysConfig
 msgid "Permission Group"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Edit Item"
-msgstr ""
-
-#. Template: AdminGeneralCatalog
-msgid "Add Item"
 msgstr ""
 
