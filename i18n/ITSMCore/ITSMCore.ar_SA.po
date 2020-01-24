@@ -1,17 +1,14 @@
-#
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:46+0000\n"
-"PO-Revision-Date: 2019-02-22 15:08+0000\n"
-"Last-Translator: Udo Bretz\n"
-"Language-Team: Arabic (Saudi Arabia) (http://www.transifex.com/otrs/OTRS/language/ar_SA/)\n"
+"Project-Id-Version: ITSMCore\n"
+"POT-Creation-Date: 2020-01-24 12:24+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ar_SA\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
@@ -39,6 +36,10 @@ msgstr ""
 
 #. Template: AgentITSMSLAZoom
 msgid "Last changed"
+msgstr ""
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
 msgstr ""
 
 #. Template: AgentITSMSLAZoom
@@ -97,20 +98,8 @@ msgstr ""
 msgid "Current Incident State"
 msgstr ""
 
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMSLA.pm
-msgid "ITSM SLA"
-msgstr ""
-
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMService.pm
-msgid "ITSM Service"
-msgstr ""
-
 #. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
 msgid "Incident State"
-msgstr ""
-
-#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMService.pm
-msgid "ITSM Services"
 msgstr ""
 
 #. Database XML Definition: ITSMCore.sopm
@@ -198,6 +187,10 @@ msgid "Connected to"
 msgstr ""
 
 #. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr ""
 
@@ -242,31 +235,11 @@ msgid "ITSM Service Overview."
 msgstr ""
 
 #. SysConfig
-msgid "ITSM event module that updates the ITSMConfigItem index."
-msgstr ""
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMSLA index."
-msgstr ""
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMService index."
-msgstr ""
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr ""
 
 #. SysConfig
 msgid "Includes"
-msgstr ""
-
-#. SysConfig
-msgid "It controls availability for ITSMSLA search driver."
-msgstr ""
-
-#. SysConfig
-msgid "It controls availability for ITSMService search driver."
 msgstr ""
 
 #. SysConfig
@@ -343,6 +316,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
+msgstr ""
+
+#. SysConfig
+msgid "Source"
 msgstr ""
 
 #. SysConfig
@@ -459,17 +436,5 @@ msgstr ""
 
 #. SysConfig
 msgid "Width of ITSM textareas."
-msgstr ""
-
-#. Template: AgentITSMSLAZoom
-msgid "Last changed by"
-msgstr ""
-
-#. SysConfig
-msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
-
-#. SysConfig
-msgid "Source"
 msgstr ""
 

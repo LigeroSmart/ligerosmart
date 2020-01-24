@@ -1,20 +1,14 @@
-#
-# Translators:
-# Hisatoshi Onishi <hisatoshi.onishi@gmail.com>, 2016,2018
-# Kentaro Matsuzaki <kentaro0919@gmail.com>, 2014
-# Kozo Sakurai <sakurai@io-architect.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:46+0000\n"
-"PO-Revision-Date: 2019-02-22 15:08+0000\n"
-"Last-Translator: Udo Bretz\n"
-"Language-Team: Japanese (http://www.transifex.com/otrs/OTRS/language/ja/)\n"
+"Project-Id-Version: ITSMCore\n"
+"POT-Creation-Date: 2020-01-24 12:24+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
@@ -43,6 +37,10 @@ msgstr "SLA情報"
 #. Template: AgentITSMSLAZoom
 msgid "Last changed"
 msgstr "最終変更時刻"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "最終変更者"
 
 #. Template: AgentITSMSLAZoom
 msgid "Associated Services"
@@ -78,15 +76,15 @@ msgstr "カレンダー・デフォルト"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
 msgid "operational"
-msgstr ""
+msgstr "通常運用"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
 msgid "warning"
-msgstr ""
+msgstr "警告"
 
 #. Perl Module: Kernel/Modules/AgentITSMSLAZoom.pm
 msgid "incident"
-msgstr ""
+msgstr "インシデント"
 
 #. Perl Module: Kernel/Modules/AgentITSMServicePrint.pm
 msgid "No ServiceID is given!"
@@ -100,21 +98,9 @@ msgstr "ServiceID %s はデータベースにありません！"
 msgid "Current Incident State"
 msgstr "インシデントの状態"
 
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMSLA.pm
-msgid "ITSM SLA"
-msgstr ""
-
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMService.pm
-msgid "ITSM Service"
-msgstr ""
-
 #. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
 msgid "Incident State"
 msgstr "インシデントの状態"
-
-#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMService.pm
-msgid "ITSM Services"
-msgstr ""
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Operational"
@@ -201,6 +187,10 @@ msgid "Connected to"
 msgstr "接続："
 
 #. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr "リンクオブジェクトウィジェット（LinkObject :: ViewMode = \"complex\"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js"
+
+#. SysConfig
 msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr "リンクされたサービスウィジェットに表示される列を定義します（LinkObject :: ViewMode = \"complex\"）。 注：DefaultColumnsにはサービス属性のみが許可されています。 可能な設定：0 =使用不可、1 =使用可能、2 =デフォルトで使用可能。"
 
@@ -245,32 +235,12 @@ msgid "ITSM Service Overview."
 msgstr "ITSM サービスの概要"
 
 #. SysConfig
-msgid "ITSM event module that updates the ITSMConfigItem index."
-msgstr ""
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMSLA index."
-msgstr ""
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMService index."
-msgstr ""
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr "インシデント状態のタイプ"
 
 #. SysConfig
 msgid "Includes"
 msgstr "含む："
-
-#. SysConfig
-msgid "It controls availability for ITSMSLA search driver."
-msgstr ""
-
-#. SysConfig
-msgid "It controls availability for ITSMService search driver."
-msgstr ""
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -347,6 +317,10 @@ msgstr "サービス・エリア"
 #. SysConfig
 msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "インシデント状態の計算に使用するリンクのタイプと方向を設定します。 キーはリンクタイプの名前（LinkObject :: Typeで定義されている）であり、値はインシデントステータスを計算するために従うべきIncidentLinkTypeの方向です。 たとえば、IncidentLinkTypeが 'DependsOn'に設定されており、Directionが 'Source'の場合、インシデントのステータスを計算するために、 '依存する'リンクのみが表示されます（反対のリンクは 'Required for'ではありません）。 広告タイプのリンクタイプを追加できます（例： 方向 'Target'を含む 'Includes'。 sysconfigオプションLinkObject :: Typeで定義されているすべてのリンクタイプが可能で、方向は 'Source'、 'Target'、または 'Both'です。 重要：このSYSCONFIGオプションに変更を加えたら、コンソールコマンドbin/otrs.Console.plを実行する必要があります。Admin :: ITSM :: IncidentState :: Recalculateしたがって、すべての事態は新しい設定に基づいて再計算されます！"
+
+#. SysConfig
+msgid "Source"
+msgstr "ソース"
 
 #. SysConfig
 msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
@@ -463,16 +437,4 @@ msgstr "リンク・タイプ'RelevantTo'の定義です。もしソース名お
 #. SysConfig
 msgid "Width of ITSM textareas."
 msgstr "ITSM テキストエリア幅"
-
-#. Template: AgentITSMSLAZoom
-msgid "Last changed by"
-msgstr "最終変更者"
-
-#. SysConfig
-msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr "リンクオブジェクトウィジェット（LinkObject :: ViewMode = \"complex\"）で設定ボタンを使用できるアクションを定義します。 これらのアクションは、次のJSおよびCSSファイルを登録している必要があります。Core.AllocationList.css、Core.UI.AllocationList.js、Core.UI.Table.Sort.js、Core.Agent.TableFilters.js、及びCore.Agent .LinkObject.js"
-
-#. SysConfig
-msgid "Source"
-msgstr "ソース"
 

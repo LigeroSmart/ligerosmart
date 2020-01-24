@@ -1,22 +1,14 @@
-#
-# Translators:
-# Ettore Atalan <atalanttore@googlemail.com>, 2015-2016
-# Felix Schäfer <web.otrs@yorfeix.de>, 2017
-# Michael Reuther <michael.reuther@otrs.com>, 2019
-# ru_otrs <robert.ullrich@otrs.com>, 2014
-# Udo Bretz, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 15:46+0000\n"
-"PO-Revision-Date: 2019-04-10 18:56+0000\n"
-"Last-Translator: Michael Reuther <michael.reuther@otrs.com>\n"
-"Language-Team: German (http://www.transifex.com/otrs/OTRS/language/de/)\n"
+"Project-Id-Version: ITSMCore\n"
+"POT-Creation-Date: 2020-01-24 12:24+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AdminITSMCIPAllocate
 msgid "Criticality ↔ Impact ↔ Priority"
@@ -45,6 +37,10 @@ msgstr "SLA-Informationen"
 #. Template: AgentITSMSLAZoom
 msgid "Last changed"
 msgstr "Zuletzt geändert"
+
+#. Template: AgentITSMSLAZoom
+msgid "Last changed by"
+msgstr "Zuletzt geändert von"
 
 #. Template: AgentITSMSLAZoom
 msgid "Associated Services"
@@ -102,21 +98,9 @@ msgstr "ServiceID \"%s\" in der Datenbank nicht gefunden!"
 msgid "Current Incident State"
 msgstr "Aktueller Vorfallstatus"
 
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMSLA.pm
-msgid "ITSM SLA"
-msgstr "ITSM SLA"
-
-#. Perl Module: Kernel/Output/HTML/DocumentSearch/ITSMService.pm
-msgid "ITSM Service"
-msgstr "ITSM Service"
-
 #. Perl Module: Kernel/Output/HTML/LinkObject/Service.pm
 msgid "Incident State"
 msgstr "Vorfallstatus"
-
-#. Perl Module: Kernel/System/DocumentSearch/Driver/ITSMService.pm
-msgid "ITSM Services"
-msgstr "ITSM Services"
 
 #. Database XML Definition: ITSMCore.sopm
 msgid "Operational"
@@ -203,6 +187,10 @@ msgid "Connected to"
 msgstr "Verbunden mit"
 
 #. SysConfig
+msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+
+#. SysConfig
 msgid "Define which columns are shown in the linked Services widget (LinkObject::ViewMode = \"complex\"). Note: Only Service attributes are allowed for DefaultColumns. Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default."
 msgstr "Definiert welche Spalten im Widget \"Verknüpfte Services\" angezeigt werden (LinkObject::ViewMode = \"complex\"). Hinweis: Es sind nur Service-Eigenschaften als Default-Spalten erlaubt. Mögliche Werte: 0 = Deaktiviert, 1 = Verfügbar, 2 = Standardmäßig aktiviert."
 
@@ -247,32 +235,12 @@ msgid "ITSM Service Overview."
 msgstr "ITSM-Services-Übersicht."
 
 #. SysConfig
-msgid "ITSM event module that updates the ITSMConfigItem index."
-msgstr "ITSM-Ereignismodul, das den ITSMConfigItem-Index aktualisiert."
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMSLA index."
-msgstr "ITSM-Ereignismodul, das den ITSMSLA-Index aktualisiert."
-
-#. SysConfig
-msgid "ITSM event module that updates the ITSMService index."
-msgstr "ITSM-Ereignismodul, das den ITSMService-Index aktualisiert."
-
-#. SysConfig
 msgid "Incident State Type"
 msgstr "Vorfallstatus-Typ"
 
 #. SysConfig
 msgid "Includes"
 msgstr "Beinhaltet"
-
-#. SysConfig
-msgid "It controls availability for ITSMSLA search driver."
-msgstr "Es steuert die Verfügbarkeit des ITSMSLA-Suchtreibers."
-
-#. SysConfig
-msgid "It controls availability for ITSMService search driver."
-msgstr "Es steuert die Verfügbarkeit des ITSMService-Suchtreibers."
 
 #. SysConfig
 msgid "Manage priority matrix."
@@ -349,6 +317,10 @@ msgstr "Service-Bereich"
 #. SysConfig
 msgid "Set the type and direction of links to be used to calculate the incident state. The key is the name of the link type (as defined in LinkObject::Type), and the value is the direction of the IncidentLinkType that should be followed to calculate the incident state. For example if the IncidentLinkType is set to 'DependsOn', and the Direction is 'Source', only 'Depends on' links will be followed (and not the opposite link 'Required for') to calculate the incident state. You can add more link types ad directions as you like, e.g. 'Includes' with the direction 'Target'. All link types defined in the sysconfig options LinkObject::Type are possible and the direction can be 'Source', 'Target', or 'Both'. IMPORTANT: AFTER YOU MAKE CHANGES TO THIS SYSCONFIG OPTION YOU NEED TO RUN THE CONSOLE COMMAND bin/otrs.Console.pl Admin::ITSM::IncidentState::Recalculate SO THAT ALL INCIDENT STATES WILL BE RECALCULATED BASED ON THE NEW SETTINGS!"
 msgstr "Setzen des Typs und der Richtung der verwendeten Links, um den Vorfallstatus zu berechnen. Der Schlüssel ist der Name des Link-Typs (wie in LinkObject::Type definiert), und der Wert ist die Richtung des IncidentLinkType, die befolgt werden soll, um den Incident-Status zu berechnen. Zum Beispiel, wenn der IncidentLinkType auf 'DependsOn' und als Richtung 'Quelle' gesetzt ist, wird nur 'Depends' Links gefolgt (und nicht dem Gegenteil 'Benötigt für') um den IncidentState zu berechnen. Sie können soviele Link-Typen und Richtungen hinzufügen wie Sie möchten, z.B.: 'Enthält' mit der Richtung 'Target'. Alle in der Sysconfig unter Linkobject::Type definierten Verknüpfungsarten sind möglich sind und die Richtung kann 'Quelle', 'Ziel' oder 'Beide' sein. WICHTIG: Nachdem Sie Änderungen an dieser Sysconfig-Einstellung gemacht haben, führen Sie das Skript bin/otrs.ITSMConfigItemIncidentStateRecalculate.pl SO aus, damit alle Vorfallstatus anhand der neuen Einstellungen berechnet werden."
+
+#. SysConfig
+msgid "Source"
+msgstr ""
 
 #. SysConfig
 msgid "This setting defines that a 'ITSMChange' object can be linked with 'Ticket' objects using the 'Normal' link type."
@@ -465,16 +437,4 @@ msgstr "Definiert den Linktyp 'RelevantTo'. Wird als SourceName und TargetName d
 #. SysConfig
 msgid "Width of ITSM textareas."
 msgstr "Anzahl der Zeichen pro Zeile in ITSM-Textfeldern."
-
-#. Template: AgentITSMSLAZoom
-msgid "Last changed by"
-msgstr "Zuletzt geändert von"
-
-#. SysConfig
-msgid "Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr ""
-
-#. SysConfig
-msgid "Source"
-msgstr ""
 
