@@ -23,7 +23,7 @@ sub Data {
     $Self->{Translation}->{'Specifies which columns should be checked for valid UTF-8 source data.'} =
         'Određuje koje kolone treba proveriti za ispravni UTF-8 izvor podataka.';
     $Self->{Translation}->{'This setting specifies which table columns contain blob data as these need special treatment.'} =
-        'Ova postavka određuje koje kolone u tabelama sadrže „blob” podatke jer njih treba posebno tretitati.';
+        'Ova postavka određuje koje kolone u tabelama sadrže blob podatke jer njih treba posebno tretitati.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

@@ -19,7 +19,7 @@ sub Data {
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
         '';
     $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = '';
-    $Self->{Translation}->{'Settings for connecting with the target database.'} = '';
+    $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Innstillinger for tilkobling til måldatabasen.';
     $Self->{Translation}->{'Specifies which columns should be checked for valid UTF-8 source data.'} =
         '';
     $Self->{Translation}->{'This setting specifies which table columns contain blob data as these need special treatment.'} =

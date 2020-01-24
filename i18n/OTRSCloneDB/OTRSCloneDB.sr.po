@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2019-06-25 14:27+0000\n"
+"POT-Creation-Date: 2020-01-24 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,5 +28,5 @@ msgstr "Одређује које колоне треба проверити з�
 
 #. SysConfig
 msgid "This setting specifies which table columns contain blob data as these need special treatment."
-msgstr "Ова поставка одређује које колоне у табелама садрже „blob” податке јер њих треба посебно третитати."
+msgstr "Ова поставка одређује које колоне у табелама садрже blob податке јер њих треба посебно третитати."
 

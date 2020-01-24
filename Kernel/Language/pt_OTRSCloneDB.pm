@@ -17,13 +17,13 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
-        'Lista de tabelas que devem ser ignoradas, talvez tabelas de DB interno. Por favor, use letras minúsculas.';
-    $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'Arquivo de log para substituição de valores de dados UTF-8 com formato incorreto.';
-    $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Configurações para conexão com o banco de dados de destino.';
+        'Lista de tabelas a ser ignoradas, talvez tabelas internas da BD.   Por favor utilize letras minúsculas.';
+    $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'Ficheiro de log para a substituição de valores de dados UTF-8 com defeito.';
+    $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Configurações para ligação à base de dados destino.';
     $Self->{Translation}->{'Specifies which columns should be checked for valid UTF-8 source data.'} =
-        'Especifica quais colunas devem ser verificadas para validar a fonte de dados UTF-8.';
+        'Especifica que colunas a verificar para dados de origem UTF-8 válidos.';
     $Self->{Translation}->{'This setting specifies which table columns contain blob data as these need special treatment.'} =
-        'Essa configuração especifica quais colunas de tabela contêm dados do tipo blob, pois elas precisam de tratamento especial.';
+        'Este parâmetro específica que colunas da tabela contém, dados blob, pois necessitam de tratamento especial.';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

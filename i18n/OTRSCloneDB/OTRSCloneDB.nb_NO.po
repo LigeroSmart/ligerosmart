@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2019-06-25 14:26+0000\n"
+"POT-Creation-Date: 2020-01-24 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Settings for connecting with the target database."
-msgstr ""
+msgstr "Innstillinger for tilkobling til måldatabasen."
 
 #. SysConfig
 msgid "Specifies which columns should be checked for valid UTF-8 source data."

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
-"POT-Creation-Date: 2019-06-25 14:26+0000\n"
+"POT-Creation-Date: 2020-01-24 14:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,21 +12,21 @@ msgstr ""
 
 #. SysConfig
 msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
-msgstr "Lista de tabelas que devem ser ignoradas, talvez tabelas de DB interno. Por favor, use letras minúsculas."
+msgstr "Lista de tabelas a ser ignoradas, talvez tabelas internas da BD.   Por favor utilize letras minúsculas."
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
-msgstr "Arquivo de log para substituição de valores de dados UTF-8 com formato incorreto."
+msgstr "Ficheiro de log para a substituição de valores de dados UTF-8 com defeito."
 
 #. SysConfig
 msgid "Settings for connecting with the target database."
-msgstr "Configurações para conexão com o banco de dados de destino."
+msgstr "Configurações para ligação à base de dados destino."
 
 #. SysConfig
 msgid "Specifies which columns should be checked for valid UTF-8 source data."
-msgstr "Especifica quais colunas devem ser verificadas para validar a fonte de dados UTF-8."
+msgstr "Especifica que colunas a verificar para dados de origem UTF-8 válidos."
 
 #. SysConfig
 msgid "This setting specifies which table columns contain blob data as these need special treatment."
-msgstr "Essa configuração especifica quais colunas de tabela contêm dados do tipo blob, pois elas precisam de tratamento especial."
+msgstr "Este parâmetro específica que colunas da tabela contém, dados blob, pois necessitam de tratamento especial."
 
