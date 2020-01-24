@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2019-06-25 12:45+0000\n"
+"POT-Creation-Date: 2020-01-24 10:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "オブジェクトのインポート・エクスポート用のテンプ
 
 #. Template: AdminImportExport
 msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
-msgstr ""
+msgstr "このモジュールを利用するには、 ITSMConfigurationManagement か、オブジェクトのインポートおよびエクスポートの機能を提供するパッケージをインストールする必要があります。"
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -120,7 +120,7 @@ msgstr "Ok"
 
 #. Template: AdminImportExport
 msgid "Do you really want to delete this template item?"
-msgstr ""
+msgstr "本当にこのテンプレートを削除してよろしいですか？"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -220,15 +220,15 @@ msgstr "桁"
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Deleting template..."
-msgstr ""
+msgstr "テンプレートを削除中…"
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "There was an error deleting the template. Please check the logs for more information."
-msgstr ""
+msgstr "テンプレートの削除中にエラーが発生しました。詳細はログを確認してください。"
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Template was deleted successfully."
-msgstr ""
+msgstr "テンプレートが正常に削除されました。"
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ImportExport\n"
-"POT-Creation-Date: 2019-06-25 12:45+0000\n"
+"POT-Creation-Date: 2020-01-24 10:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "Crea un template per importare ed esportare le informazioni degli oggett
 
 #. Template: AdminImportExport
 msgid "To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported."
-msgstr ""
+msgstr "Per utilizzare questo modulo, è necessario installare ITSMConfigurationManagement o qualsiasi altro pacchetto che fornisce back-end per gli oggetti da importare ed esportare."
 
 #. Template: AdminImportExport
 msgid "Start Import"
@@ -120,7 +120,7 @@ msgstr "Ok"
 
 #. Template: AdminImportExport
 msgid "Do you really want to delete this template item?"
-msgstr ""
+msgstr "Vuoi veramente cancellare questo modello?"
 
 #. Perl Module: Kernel/Modules/AdminImportExport.pm
 msgid "No object backend found!"
@@ -220,15 +220,15 @@ msgstr "Colonna"
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Deleting template..."
-msgstr ""
+msgstr "Eliminazione modello in corso ..."
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "There was an error deleting the template. Please check the logs for more information."
-msgstr ""
+msgstr "Si è verificato un errore durante l'eliminazione del modello. Si prega di controllare i registri per ulteriori informazioni."
 
 #. JS File: ITSM.Admin.ImportExport
 msgid "Template was deleted successfully."
-msgstr ""
+msgstr "Il modello è stato eliminato correttamente."
 
 #. SysConfig
 msgid "Format backend module registration for the import/export module."

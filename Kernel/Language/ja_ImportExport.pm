@@ -20,7 +20,7 @@ sub Data {
     $Self->{Translation}->{'Add template'} = 'テンプレートを追加';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'オブジェクトのインポート・エクスポート用のテンプレートを作成する';
     $Self->{Translation}->{'To use this module, you need to install ITSMConfigurationManagement or any other package that provides back end for objects to be imported and exported.'} =
-        '';
+        'このモジュールを利用するには、 ITSMConfigurationManagement か、オブジェクトのインポートおよびエクスポートの機能を提供するパッケージをインストールする必要があります。';
     $Self->{Translation}->{'Start Import'} = 'インポート開始';
     $Self->{Translation}->{'Start Export'} = 'エクスポート開始';
     $Self->{Translation}->{'Delete this template'} = '';
@@ -44,7 +44,7 @@ sub Data {
     $Self->{Translation}->{'Duplicate names'} = '名前が重複しています';
     $Self->{Translation}->{'Last processed line number of import file'} = '読み込み済みファイルの最終実行行数';
     $Self->{Translation}->{'Ok'} = 'Ok';
-    $Self->{Translation}->{'Do you really want to delete this template item?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this template item?'} = '本当にこのテンプレートを削除してよろしいですか？';
 
     # Perl Module: Kernel/Modules/AdminImportExport.pm
     $Self->{Translation}->{'No object backend found!'} = '指定されたオブジェクトのバックエンドが見つかりません！';
@@ -75,10 +75,10 @@ sub Data {
     $Self->{Translation}->{'Column'} = '桁';
 
     # JS File: ITSM.Admin.ImportExport
-    $Self->{Translation}->{'Deleting template...'} = '';
+    $Self->{Translation}->{'Deleting template...'} = 'テンプレートを削除中…';
     $Self->{Translation}->{'There was an error deleting the template. Please check the logs for more information.'} =
-        '';
-    $Self->{Translation}->{'Template was deleted successfully.'} = '';
+        'テンプレートの削除中にエラーが発生しました。詳細はログを確認してください。';
+    $Self->{Translation}->{'Template was deleted successfully.'} = 'テンプレートが正常に削除されました。';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
