@@ -12,93 +12,93 @@ msgstr ""
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr ""
+msgstr "Interfaccia di posta elettronica di base per Suite di monitoraggio del sistema. Utilizzare questo blocco se il filtro deve essere eseguito DOPO PostMasterFilter."
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr ""
+msgstr "Interfaccia di posta elettronica di base per Suite di monitoraggio del sistema. Utilizzare questo blocco se il filtro deve essere eseguito PRIMA di PostMasterFilter."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr ""
+msgstr "Definisci il tipo di riconoscimento Nagios."
 
 #. SysConfig
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #. SysConfig
 msgid "Icinga API URL."
-msgstr ""
+msgstr "Icinga API URL."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement author."
-msgstr ""
+msgstr "Autore del riconoscimento Icinga2."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement comment."
-msgstr ""
+msgstr "Commento di riconoscimento Icinga2."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement enabled?"
-msgstr ""
+msgstr "Riconoscimento Icinga2 abilitato?"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement notify."
-msgstr ""
+msgstr "Riconoscimento Icinga2 notifica."
 
 #. SysConfig
 msgid "Icinga2 acknowledgement sticky."
-msgstr ""
+msgstr "Riconoscimento Icinga2 sticky."
 
 #. SysConfig
 msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr ""
+msgstr "Collegare un ticket incidente già aperto con l'elemento della configurazione interessato. Questo è possibile solo quando arriva una successiva e-mail di monitoraggio del sistema."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
-msgstr ""
+msgstr "Nome del campo dinamico per Host."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Service."
-msgstr ""
+msgstr "Nome del campo dinamico per servizio."
 
 #. SysConfig
 msgid "Named pipe acknowledge command."
-msgstr ""
+msgstr "Comando di riconoscimento pipe denominato."
 
 #. SysConfig
 msgid "Named pipe acknowledge format for host."
-msgstr ""
+msgstr "Formato di riconoscimento pipe denominato per l'host."
 
 #. SysConfig
 msgid "Named pipe acknowledge format for service."
-msgstr ""
+msgstr "Formato di riconoscimento della pipe denominato per il servizio."
 
 #. SysConfig
 msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
-msgstr ""
+msgstr "Imposta automaticamente lo stato dell'incident di un CI quando arriva una mail di system monitoring."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
-msgstr ""
+msgstr "L'indirizzo URL HTTP riconosciuto."
 
 #. SysConfig
 msgid "The HTTP acknowledge password."
-msgstr ""
+msgstr "Password HTTP riconosciuta."
 
 #. SysConfig
 msgid "The HTTP acknowledge user."
-msgstr ""
+msgstr "L'utente HTTP riconosciuto."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
-msgstr ""
+msgstr "Modulo evento Ticket per inviare un riconoscimento a Icinga2."
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
-msgstr ""
+msgstr "Modulo evento Ticket per inviare un riconoscimento a Nagios."
 
 #. SysConfig
 msgid "pipe"
-msgstr ""
+msgstr "pipe"
 

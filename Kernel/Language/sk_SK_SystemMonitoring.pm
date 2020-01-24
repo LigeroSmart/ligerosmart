@@ -21,7 +21,7 @@ sub Data {
     $Self->{Translation}->{'Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter.'} =
         '';
     $Self->{Translation}->{'Define Nagios acknowledge type.'} = '';
-    $Self->{Translation}->{'HTTP'} = '';
+    $Self->{Translation}->{'HTTP'} = 'HTTP';
     $Self->{Translation}->{'Icinga API URL.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement author.'} = '';
     $Self->{Translation}->{'Icinga2 acknowledgement comment.'} = '';
@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'The HTTP acknowledge user.'} = '';
     $Self->{Translation}->{'Ticket event module to send an acknowledge to Icinga2.'} = '';
     $Self->{Translation}->{'Ticket event module to send an acknowledge to Nagios.'} = '';
-    $Self->{Translation}->{'pipe'} = '';
+    $Self->{Translation}->{'pipe'} = 'Rúra';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (

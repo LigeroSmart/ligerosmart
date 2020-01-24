@@ -24,7 +24,7 @@ msgstr ""
 
 #. SysConfig
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #. SysConfig
 msgid "Icinga API URL."
@@ -100,5 +100,5 @@ msgstr ""
 
 #. SysConfig
 msgid "pipe"
-msgstr ""
+msgstr "Rúra"
 

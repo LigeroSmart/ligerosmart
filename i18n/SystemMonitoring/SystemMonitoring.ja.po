@@ -12,93 +12,93 @@ msgstr ""
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr ""
+msgstr "System Monitoring Suiteへの基本的なメールインターフェース。 ポストマスターフィルターの後にフィルタを実行する必要がある場合は、このブロックを使用します。"
 
 #. SysConfig
 msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr ""
+msgstr "System Monitoring Suiteへの基本的なメールインターフェース。 ポストマスターフィルターの前にフィルタを実行する必要がある場合は、このブロックを使用します。"
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
-msgstr ""
+msgstr "Nagiosの確認タイプを定義します。"
 
 #. SysConfig
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #. SysConfig
 msgid "Icinga API URL."
-msgstr ""
+msgstr "Icinga API の URL"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement author."
-msgstr ""
+msgstr "Icinga2承認著者"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement comment."
-msgstr ""
+msgstr "Icinga2承認コメント"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement enabled?"
-msgstr ""
+msgstr "Icinga2確認応答が有効になっていますか？"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement notify."
-msgstr ""
+msgstr "Icinga2承認通知"
 
 #. SysConfig
 msgid "Icinga2 acknowledgement sticky."
-msgstr ""
+msgstr "Icinga2の応答はスティッキーです。"
 
 #. SysConfig
 msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr ""
+msgstr "既に開かれているインシデントチケットを影響を受けるCIにリンクします。 これは、後続のシステム監視電子メールが到着したときにのみ可能です。"
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
-msgstr ""
+msgstr "ホストのダイナミック・フィールドの名前。"
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Service."
-msgstr ""
+msgstr "サービスのダイナミック・フィールドの名前。"
 
 #. SysConfig
 msgid "Named pipe acknowledge command."
-msgstr ""
+msgstr "コマンドパイプ承認形式"
 
 #. SysConfig
 msgid "Named pipe acknowledge format for host."
-msgstr ""
+msgstr "ホストの名前付きパイプ承認形式"
 
 #. SysConfig
 msgid "Named pipe acknowledge format for service."
-msgstr ""
+msgstr "サービスの名前付きパイプ承認形式"
 
 #. SysConfig
 msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
-msgstr ""
+msgstr "システム監視メールを受信すると、CIのインシデント・ステータスを自動的に設定します。"
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
-msgstr ""
+msgstr "HTTP認証URL"
 
 #. SysConfig
 msgid "The HTTP acknowledge password."
-msgstr ""
+msgstr "HTTP認証パスワード"
 
 #. SysConfig
 msgid "The HTTP acknowledge user."
-msgstr ""
+msgstr "HTTP認証ユーザー"
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Icinga2."
-msgstr ""
+msgstr "チケットイベントモジュールは、Icinga2に確認応答を送信します。"
 
 #. SysConfig
 msgid "Ticket event module to send an acknowledge to Nagios."
-msgstr ""
+msgstr "Nagiosに認証を送信するチケットイベントモジュール"
 
 #. SysConfig
 msgid "pipe"
-msgstr ""
+msgstr "パイプ"
 
