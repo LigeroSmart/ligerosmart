@@ -1,22 +1,14 @@
-#
-# Translators:
-# David B <link.bigpoint@outlook.com>, 2017
-# Deiry Arias <mailimarias@gmail.com>, 2015
-# Fernando Casal <fernando.casal@serviciomovil.com>, 2017
-# Luigy, 2016
-# Roberto Lugo <rlugo@cinetixgroup.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-05-14 16:21+0000\n"
-"PO-Revision-Date: 2018-11-05 12:28+0000\n"
-"Last-Translator: Udo Bretz\n"
-"Language-Team: Spanish (http://www.transifex.com/otrs/OTRS/language/es/)\n"
+"Project-Id-Version: ITSMIncidentProblemManagement\n"
+"POT-Creation-Date: 2019-06-25 12:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentTicketOverviewMedium
 msgid "Criticality"
@@ -49,6 +41,10 @@ msgstr "Revisión Requerida"
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Decision Result"
 msgstr "Resultado de Decisión"
+
+#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
+msgid "Approved"
+msgstr "Aprobado"
 
 #. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
 msgid "Postponed"
@@ -313,8 +309,4 @@ msgstr "Muestra los campos del título en la ventana de decisión de la interfaz
 #. SysConfig
 msgid "Ticket decision."
 msgstr "Decisión del Ticket."
-
-#. Perl Module: var/packagesetup/ITSMIncidentProblemManagement.pm
-msgid "Approved"
-msgstr "Aprobado"
 
