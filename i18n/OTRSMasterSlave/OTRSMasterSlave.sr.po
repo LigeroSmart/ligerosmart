@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2019-06-25 13:12+0000\n"
+"POT-Creation-Date: 2020-01-24 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,10 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#. Template: AdminDynamicFieldMasterSlave
-msgid "Field"
-msgstr "Поље"
 
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
@@ -220,7 +216,7 @@ msgstr "Зависни тикети"
 
 #. SysConfig
 msgid "Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket."
-msgstr ""
+msgstr "Наводи разне комуникационе канале чланака где ће стварно име са главног тикета бити замењено са једним на зависном тикету."
 
 #. SysConfig
 msgid "This module activates Master/Slave field in new email and phone ticket screens."
@@ -228,7 +224,7 @@ msgstr "Овај модул активира поље главни/зависн�
 
 #. SysConfig
 msgid "This setting is deprecated and will be removed in further versions of OTRSMasterSlave."
-msgstr ""
+msgstr "Ово подешавање је застарело и биће избачено из будућих верзија модула главни/зависни."
 
 #. SysConfig
 msgid "Ticket MasterSlave."

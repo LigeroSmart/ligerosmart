@@ -15,14 +15,11 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AdminDynamicFieldMasterSlave
-    $Self->{Translation}->{'Field'} = '';
-
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '';
 
     # Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
-    $Self->{Translation}->{'New Master Ticket'} = '';
+    $Self->{Translation}->{'New Master Ticket'} = 'Nytt Masterärende';
     $Self->{Translation}->{'Unset Master Ticket'} = '';
     $Self->{Translation}->{'Unset Slave Ticket'} = '';
     $Self->{Translation}->{'Slave of %s%s%s: %s'} = '';
@@ -34,11 +31,11 @@ sub Data {
     # Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
     $Self->{Translation}->{'Master'} = '';
     $Self->{Translation}->{'Slave of %s%s%s'} = '';
-    $Self->{Translation}->{'Master Ticket'} = '';
+    $Self->{Translation}->{'Master Ticket'} = 'Masterärende';
 
     # SysConfig
-    $Self->{Translation}->{'All master tickets'} = '';
-    $Self->{Translation}->{'All slave tickets'} = '';
+    $Self->{Translation}->{'All master tickets'} = 'Alla masterärenden';
+    $Self->{Translation}->{'All slave tickets'} = 'Alla slavärenden';
     $Self->{Translation}->{'Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
     $Self->{Translation}->{'Change the MasterSlave state of the ticket.'} = '';
@@ -72,7 +69,7 @@ sub Data {
         '';
     $Self->{Translation}->{'If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.'} =
         '';
-    $Self->{Translation}->{'Master / Slave'} = '';
+    $Self->{Translation}->{'Master / Slave'} = 'Master / Slave';
     $Self->{Translation}->{'Master Tickets'} = '';
     $Self->{Translation}->{'MasterSlave'} = '';
     $Self->{Translation}->{'MasterSlave module for Ticket Bulk feature.'} = '';

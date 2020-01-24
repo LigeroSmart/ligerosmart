@@ -15,9 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AdminDynamicFieldMasterSlave
-    $Self->{Translation}->{'Field'} = 'Polje';
-
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = 'Upravljanje statusom glavni/zavisni za %s%s%s';
 
@@ -108,11 +105,11 @@ sub Data {
         'Prikazuje naslovna polja na ekranu glavni/zavisni tiketa u interfejsu operatera.';
     $Self->{Translation}->{'Slave Tickets'} = 'Zavisni tiketi';
     $Self->{Translation}->{'Specifies the different article communication channels where the real name from Master ticket will be replaced with the one in the Slave ticket.'} =
-        '';
+        'Navodi razne komunikacione kanale članaka gde će stvarno ime sa glavnog tiketa biti zamenjeno sa jednim na zavisnom tiketu.';
     $Self->{Translation}->{'This module activates Master/Slave field in new email and phone ticket screens.'} =
         'Ovaj modul aktivira polje glavni/zavisni na ekranu novih imejl tiketa i tiketa poziva.';
     $Self->{Translation}->{'This setting is deprecated and will be removed in further versions of OTRSMasterSlave.'} =
-        '';
+        'Ovo podešavanje je zastarelo i biće izbačeno iz budućih verzija modula glavni/zavisni.';
     $Self->{Translation}->{'Ticket MasterSlave.'} = 'Tiket glavni/zavisni.';
 
 

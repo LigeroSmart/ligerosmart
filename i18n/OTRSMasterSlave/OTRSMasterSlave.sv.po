@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRSMasterSlave\n"
-"POT-Creation-Date: 2019-06-25 13:04+0000\n"
+"POT-Creation-Date: 2020-01-24 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Template: AdminDynamicFieldMasterSlave
-msgid "Field"
-msgstr ""
-
 #. Template: AgentTicketMasterSlave
 msgid "Manage Master/Slave status for %s%s%s"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "New Master Ticket"
-msgstr ""
+msgstr "Nytt Masterärende"
 
 #. Perl Module: Kernel/Modules/AgentTicketMasterSlave.pm
 msgid "Unset Master Ticket"
@@ -52,15 +48,15 @@ msgstr ""
 
 #. Perl Module: Kernel/System/DynamicField/Driver/MasterSlave.pm
 msgid "Master Ticket"
-msgstr ""
+msgstr "Masterärende"
 
 #. SysConfig
 msgid "All master tickets"
-msgstr ""
+msgstr "Alla masterärenden"
 
 #. SysConfig
 msgid "All slave tickets"
-msgstr ""
+msgstr "Alla slavärenden"
 
 #. SysConfig
 msgid "Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface."
@@ -136,7 +132,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Master / Slave"
-msgstr ""
+msgstr "Master / Slave"
 
 #. SysConfig
 msgid "Master Tickets"

@@ -15,9 +15,6 @@ use utf8;
 sub Data {
     my $Self = shift;
 
-    # Template: AdminDynamicFieldMasterSlave
-    $Self->{Translation}->{'Field'} = 'フィールド';
-
     # Template: AgentTicketMasterSlave
     $Self->{Translation}->{'Manage Master/Slave status for %s%s%s'} = '%s%s%sのマスタ/スレーブステータスを管理する';
 
