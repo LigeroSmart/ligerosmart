@@ -1,9 +1,0 @@
-[main]
-host = https://www.transifex.com
-
-[OTRS.FAQ]
-file_filter = i18n/FAQ/FAQ.<lang>.po
-#trans.de    = i18n/FAQ/FAQ.de.po
-source_file = i18n/FAQ/FAQ.pot
-source_lang = en
-type = PO

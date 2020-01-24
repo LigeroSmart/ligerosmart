@@ -318,7 +318,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Determina si el título de FAQ debe ser concatenado al asunto del artículo.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
-        '';
+        'Define cuales columnas serán mostradas en el "widget" de FAQ vinculados (LinkObject::ViewMode = "complex"). Nota: Solamente atributos de FAQ y campos dinámicos (DynamicField_NombreX) son permitidos para columnas por omisión.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Define un módulo de vista general para mostrar la vista pequeña de Diario de las FAQ.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =

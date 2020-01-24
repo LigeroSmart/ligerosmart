@@ -318,7 +318,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Meghatározza, hogy a GyIK címét össze kell-e fűzni a bejegyzés tárgyával.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
-        '';
+        'Annak meghatározása, hogy mely oszlopok legyenek láthatók a kapcsolt GyIK-ok felületi elemen (LinkObject::ViewMode = „összetett”). Megjegyzés: csak GyIK attribútumok és dinamikus mezők (DynamicField_NévX) engedélyezettek a DefaultColumns értékeinél.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Egy áttekintő modult határoz meg egy GyIK napló kis nézetének megjelenítéséhez.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =

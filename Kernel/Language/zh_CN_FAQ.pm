@@ -318,7 +318,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         '定义FAQ标题是否要加到文章主题中。';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
-        '';
+        '定义链接的知识库小部件中显示哪些列（LinkObject::ViewMode = "complex"）。 注意：只有知识库属性和动态字段（DynamicField_NameX）才允许用作 DefaultColumns。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '定义一个显示FAQ日志简洁视图的概览模块。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =

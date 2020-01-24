@@ -7,7 +7,7 @@
 # Richard BARET <inactive+rbaret@transifex.com>, 2015
 # ShevAbam, 2016
 # Snake, 2018
-# Thomas Imbreckx <zinks@linux.com>, 2017
+# Thomas, 2017
 # Vincent SAOUT <v.saout@atool-dev.fr>, 2016
 msgid ""
 msgstr ""

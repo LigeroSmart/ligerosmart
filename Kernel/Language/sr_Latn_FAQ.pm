@@ -318,7 +318,7 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'Određuje da li naslov FAQ treba da bude dodat na temu članka.';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
-        '';
+        'Određuje koje kolone će biti prikazane u dodatku povezanih FAQ članaka (LinkObject::ViewMode = "složeno"). Napomena: samo atributi FAQ članka i dinamička polja (DynamicField_NameX) su dozvoljeni za DefaultColumns.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         'Definiše modul pregleda za mali prikaz FAQ dnevnika. ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =

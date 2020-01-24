@@ -1,14 +1,14 @@
 # 
 # Translators:
-# Dusan Vuckovic, 2017-2018
+# Dusan Vuckovic, 2017-2019
 # Jaroslav Balaz <balazj315@gmail.com>, 2015
 # Милорад Јовановић <j.milorad@gmail.com>, 2014-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2019-10-31 23:00+0000\n"
-"PO-Revision-Date: 2019-10-31 23:03+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
+"PO-Revision-Date: 2019-11-10 18:09+0000\n"
+"Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -836,7 +836,7 @@ msgid ""
 "Define which columns are shown in the linked FAQs widget "
 "(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
 "fields (DynamicField_NameX) are allowed for DefaultColumns."
-msgstr ""
+msgstr "Одређује које колоне ће бити приказане у додатку повезаних FAQ чланака (LinkObject::ViewMode = \"сложено\"). Напомена: само атрибути FAQ чланка и динамичка поља (DynamicField_NameX) су дозвољени за DefaultColumns."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."

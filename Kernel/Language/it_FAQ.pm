@@ -23,8 +23,8 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'Gestioni Categorie FAQ';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = 'Aggiungi categoria FAQ';
+    $Self->{Translation}->{'Edit FAQ Category'} = 'Modifica categoria FAQ';
     $Self->{Translation}->{'Add category'} = 'Aggiungi categoria';
     $Self->{Translation}->{'Add Category'} = 'Aggiungi Categoria';
     $Self->{Translation}->{'Edit Category'} = 'Modifica Categoria';
@@ -63,10 +63,10 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Gestione Linguaggio FAQ';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = 'Aggiungi lingua FAQ';
+    $Self->{Translation}->{'Edit FAQ Language'} = 'Modifica lingua FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
-        '';
+        'Utilizzare questa funzione se si desidera lavorare con più lingue.';
     $Self->{Translation}->{'Add language'} = 'Aggiungi lingua';
     $Self->{Translation}->{'Add Language'} = 'Aggiungi Lingua';
     $Self->{Translation}->{'Edit Language'} = 'Modifica della lingua';
@@ -139,9 +139,9 @@ sub Data {
     $Self->{Translation}->{'No FAQ articles found.'} = 'Nessun articolo FAQ trovato.';
 
     # Template: CustomerFAQRelatedArticles
-    $Self->{Translation}->{'This might be helpful'} = '';
-    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = '';
-    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = '';
+    $Self->{Translation}->{'This might be helpful'} = 'Questo potrebbe essere utile';
+    $Self->{Translation}->{'Found no helpful resources for the subject and text.'} = 'Non sono state trovate risorse utili per l\'oggetto e il testo.';
+    $Self->{Translation}->{'Type a subject or text to get a list of helpful resources.'} = 'Digita un oggetto o un testo per ottenere un elenco di risorse utili.';
 
     # Template: CustomerFAQSearch
     $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Ricerca testuale negli articoli FAQ (ad esempio "John*n" or "Will*")';
@@ -165,23 +165,23 @@ sub Data {
     $Self->{Translation}->{'Back to FAQ Explorer'} = 'Torna al navigatore delle FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
-    $Self->{Translation}->{'You need rw permission!'} = '';
-    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '';
-    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '';
+    $Self->{Translation}->{'You need rw permission!'} = 'È necessaria l\'autorizzazione rw!';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = 'Nessuna categoria trovata in cui l\'utente dispone dei permessi di lettura/scrittura!';
+    $Self->{Translation}->{'No default language found and can\'t create a new one.'} = 'Nessuna lingua predefinita trovata e impossibile crearne una nuova.';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
-    $Self->{Translation}->{'Need CategoryID!'} = '';
+    $Self->{Translation}->{'Need CategoryID!'} = 'Hai bisogno di IDCategoria!';
     $Self->{Translation}->{'A category should have a name!'} = 'Una categoria deve avere un nome!';
     $Self->{Translation}->{'This category already exists'} = 'Categoria esistente';
-    $Self->{Translation}->{'This category already exists!'} = '';
-    $Self->{Translation}->{'No CategoryID is given!'} = '';
-    $Self->{Translation}->{'Was not able to delete the category %s!'} = '';
+    $Self->{Translation}->{'This category already exists!'} = 'Questa categoria esiste già!';
+    $Self->{Translation}->{'No CategoryID is given!'} = 'Nessun ID categoria è dato!';
+    $Self->{Translation}->{'Was not able to delete the category %s!'} = 'Impossibile eliminare la categoria %s!';
     $Self->{Translation}->{'FAQ category updated!'} = 'Categoria FAQ aggiornata!';
     $Self->{Translation}->{'FAQ category added!'} = 'Categoria FAQ aggiunta!';
     $Self->{Translation}->{'Delete Category'} = 'Elimina categoria';
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
-    $Self->{Translation}->{'No ItemID is given!'} = '';
+    $Self->{Translation}->{'No ItemID is given!'} = 'Nessun ItemID è dato!';
     $Self->{Translation}->{'You have no permission for this category!'} = '';
     $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
 
@@ -555,7 +555,7 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'esterno (cliente)';
     $Self->{Translation}->{'internal (agent)'} = 'interno (agente)';
     $Self->{Translation}->{'public (all)'} = 'pubblico (tutti)';
-    $Self->{Translation}->{'public (public)'} = '';
+    $Self->{Translation}->{'public (public)'} = 'pubblico (pubblico)';
 
 
     push @{ $Self->{JavaScriptStrings} // [] }, (
