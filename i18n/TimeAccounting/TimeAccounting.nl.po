@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2019-06-25 14:09+0000\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
-msgstr ""
+msgstr "Weet u zeker dat u de Time Accounting wilt verwijderen van deze dag?"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Edit Time Record"
@@ -20,35 +20,35 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Go to settings"
-msgstr ""
+msgstr "Ga naar instellingen"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
-msgstr ""
+msgstr "Datum Navigatie"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Days without entries"
-msgstr ""
+msgstr "Dag zonder boeking"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Select all days"
-msgstr ""
+msgstr "Selecteer alle dagen"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Mass entry"
-msgstr ""
+msgstr "Massa toevoegen"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose the reason for your absence for the selected days"
-msgstr ""
+msgstr "Kies een reden van absentie voor de geselecteerde dagen"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On vacation"
-msgstr ""
+msgstr "Op vakantie"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On sick leave"
-msgstr ""
+msgstr "Ziekmelding"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On overtime leave"
@@ -56,23 +56,23 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
-msgstr ""
+msgstr "Verplichte velden zijn gemarkeerd met \"*\"."
 
 #. Template: AgentTimeAccountingEdit
 msgid "You have to fill in start and end time or a time period."
-msgstr ""
+msgstr "U moet een begin en eindtijd of een tijdperiode invullen."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Project"
-msgstr ""
+msgstr "Project"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Task"
-msgstr ""
+msgstr "Taak"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Remark"
-msgstr ""
+msgstr "Aanmerking"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
@@ -80,7 +80,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Negative times are not allowed."
-msgstr ""
+msgstr "Negatieve tijden zijn niet toegestaan."
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. Start time matches another interval."
@@ -88,7 +88,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid format! Please enter a time with the format HH:MM."
-msgstr ""
+msgstr "Ongeldig formaat! Voer een tijd in met het formaat HH:MM."
 
 #. Template: AgentTimeAccountingEdit
 msgid "24:00 is only permitted as end time."
@@ -96,7 +96,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
-msgstr ""
+msgstr "Ongeldige tijd! Een dag heeft 24 uur."
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
@@ -148,15 +148,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (Hours)"
-msgstr ""
+msgstr "Overuren (Uren)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (this month)"
-msgstr ""
+msgstr "Overuren (deze maand)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (total)"
-msgstr ""
+msgstr "Overuren (totaal)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Remaining overtime leave"
@@ -164,7 +164,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation (Days)"
-msgstr ""
+msgstr "Vakantie (dagen)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (this month)"
@@ -180,35 +180,35 @@ msgstr ""
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick Leave (Days)"
-msgstr ""
+msgstr "Ziektedagen (Dagen)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick leave taken (this month)"
-msgstr ""
+msgstr "Ziektedagen (deze maand)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick leave taken (total)"
-msgstr ""
+msgstr "Ziektedagen opgenomen (totaal)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Previous month"
-msgstr ""
+msgstr "Vorige maand"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Next month"
-msgstr ""
+msgstr "Volgende maand"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Weekday"
-msgstr ""
+msgstr "Weekdag"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Working Hours"
-msgstr ""
+msgstr "Werkuren"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Total worked hours"
-msgstr ""
+msgstr "Totale werkuren"
 
 #. Template: AgentTimeAccountingOverview
 msgid "User's project overview"
@@ -216,15 +216,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingOverview
 msgid "Hours (monthly)"
-msgstr ""
+msgstr "Uren (Maandelijks)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Hours (Lifetime)"
-msgstr ""
+msgstr "Uren (Levensduur)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Grand total"
-msgstr ""
+msgstr "Totaal"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Time reporting"
@@ -232,11 +232,11 @@ msgstr ""
 
 #. Template: AgentTimeAccountingReporting
 msgid "Month Navigation"
-msgstr ""
+msgstr "Maandelijkse Navigatie"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Go to date"
-msgstr ""
+msgstr "Ga naar datum"
 
 #. Template: AgentTimeAccountingReporting
 msgid "User reports"
@@ -256,11 +256,11 @@ msgstr ""
 
 #. Template: AgentTimeAccountingReporting
 msgid "Vacation"
-msgstr ""
+msgstr "Vakantie"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Sick leave"
-msgstr ""
+msgstr "Ziektedag"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Vacation remaining"
@@ -316,7 +316,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add task"
-msgstr ""
+msgstr "Taak toevoegen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for projects, tasks or users"
@@ -324,7 +324,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time periods can not be deleted."
-msgstr ""
+msgstr "Tijdperiodes kunnen niet worden verwijderd."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
@@ -336,7 +336,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add Task"
-msgstr ""
+msgstr "Taak toevoegen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Task Settings"
@@ -348,7 +348,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "User List"
-msgstr ""
+msgstr "Gebruikerslijst"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User Settings"
@@ -360,7 +360,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Show Overtime"
-msgstr ""
+msgstr "Toon Overuren"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to create projects"
@@ -392,19 +392,19 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period Begin"
-msgstr ""
+msgstr "Beginperiode"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period End"
-msgstr ""
+msgstr "Eindperiode"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Days of Vacation"
-msgstr ""
+msgstr "Vakantiedagen"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Hours per Week"
-msgstr ""
+msgstr "Uren per week"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Authorized Overtime"
@@ -412,19 +412,19 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Start Date"
-msgstr ""
+msgstr "Begindatum"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
-msgstr ""
+msgstr "Voer een geldige datum in."
 
 #. Template: AgentTimeAccountingSetting
 msgid "End Date"
-msgstr ""
+msgstr "Einddatum"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
-msgstr ""
+msgstr "Eindperiode moet na Beginperiode zijn."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Leave Days"
@@ -432,19 +432,19 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Weekly Hours"
-msgstr ""
+msgstr "Weekuren"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Overtime"
-msgstr ""
+msgstr "Overuren"
 
 #. Template: AgentTimeAccountingSetting
 msgid "No time periods found."
-msgstr ""
+msgstr "Geen tijdperiodes gevonden."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add time period"
-msgstr ""
+msgstr "Voeg tijdperiode toe"
 
 #. Template: AgentTimeAccountingView
 msgid "View Time Record"
@@ -452,19 +452,19 @@ msgstr ""
 
 #. Template: AgentTimeAccountingView
 msgid "View of "
-msgstr ""
+msgstr "Weergave van"
 
 #. Template: AgentTimeAccountingView
 msgid "Previous day"
-msgstr ""
+msgstr "Vorige dag"
 
 #. Template: AgentTimeAccountingView
 msgid "Next day"
-msgstr ""
+msgstr "Volgende dag"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
-msgstr ""
+msgstr "Geen data gevonden voor deze dag."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't insert Working Units!"
@@ -472,7 +472,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr ""
+msgstr "Laatste Projecten"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
@@ -488,23 +488,23 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
-msgstr ""
+msgstr "Incomplete Werkdagen"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
-msgstr ""
+msgstr "Succesvol ingevoerd!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Error while inserting multiple dates!"
-msgstr ""
+msgstr "Fout tijdens invoeren meerdere data!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successfully inserted entries for several dates!"
-msgstr ""
+msgstr "Succesvol invoeren van meerdere data!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Entered date was invalid! Date was changed to today."
-msgstr ""
+msgstr "Ingevoerde data is goedgekeurd! Data is aangepast naar vandaag."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "No time period configured, or the specified date is outside of the defined time periods."
@@ -516,11 +516,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Selected Projects"
-msgstr ""
+msgstr "Laatst Geselecteerde Projecten"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "Alle Projecten"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
@@ -532,7 +532,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
-msgstr ""
+msgstr "Rapportage"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
@@ -568,7 +568,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Setting"
-msgstr ""
+msgstr "Instelling"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
@@ -584,11 +584,11 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "Nieuwe Gebruiker"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
-msgstr ""
+msgstr "Periode Status"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
 msgid "View: Need %s!"
@@ -596,15 +596,15 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
 msgid "Please insert your working hours!"
-msgstr ""
+msgstr "Voer uw werkuren in!"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
-msgstr ""
+msgstr "Incomplete Werkdagen"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"
-msgstr ""
+msgstr "Kies op zijn minst 1 dag!"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Mass Entry"
@@ -612,7 +612,7 @@ msgstr ""
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose a reason for absence!"
-msgstr ""
+msgstr "Kies een reden van absentie!"
 
 #. JS File: TimeAccounting.Agent
 msgid "Delete Time Accounting Entry"
@@ -628,23 +628,23 @@ msgstr ""
 
 #. SysConfig
 msgid "Default name for new actions."
-msgstr ""
+msgstr "Standaardnaam voor nieuwe acties."
 
 #. SysConfig
 msgid "Default name for new projects."
-msgstr ""
+msgstr "Standaardnaam voor nieuwe projecten."
 
 #. SysConfig
 msgid "Default setting for date end."
-msgstr ""
+msgstr "Standaardinstelling voor einddatum."
 
 #. SysConfig
 msgid "Default setting for date start."
-msgstr ""
+msgstr "Standaardinstelling voor begindatum."
 
 #. SysConfig
 msgid "Default setting for description."
-msgstr ""
+msgstr "Standaardinstelling voor omschrijving."
 
 #. SysConfig
 msgid "Default setting for leave days."
@@ -748,7 +748,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr ""
+msgstr "Tijd verantwoording"
 
 #. SysConfig
 msgid "Time accounting edit."

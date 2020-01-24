@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2019-06-25 14:09+0000\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -372,19 +372,19 @@ msgstr "Consentire la creazione del progetto"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User is allowed to skip time accounting"
-msgstr ""
+msgstr "L'utente è autorizzato a saltare la contabilità del tempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow time accounting skipping"
-msgstr ""
+msgstr "Consenti il ​​salto della contabilità del tempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid "If this option is selected, time accounting is effectively optional for the user."
-msgstr ""
+msgstr "Se questa opzione è selezionata, la contabilità temporale è effettivamente facoltativa per l'utente."
 
 #. Template: AgentTimeAccountingSetting
 msgid "There will be no warnings about missing entries and no entry enforcement."
-msgstr ""
+msgstr "Non ci saranno avvisi in merito a voci mancanti e nessuna applicazione di accesso."
 
 #. Template: AgentTimeAccountingSetting
 msgid "Time Spans"

@@ -23,8 +23,8 @@ sub Data {
     $Self->{Translation}->{'Edit Time Record'} = '';
     $Self->{Translation}->{'Go to settings'} = '';
     $Self->{Translation}->{'Date Navigation'} = '';
-    $Self->{Translation}->{'Days without entries'} = '';
-    $Self->{Translation}->{'Select all days'} = '';
+    $Self->{Translation}->{'Days without entries'} = 'Zile fara intrari';
+    $Self->{Translation}->{'Select all days'} = 'Selecteaza toate zilele';
     $Self->{Translation}->{'Mass entry'} = '';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
         '';
@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'On overtime leave'} = '';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = '';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '';
-    $Self->{Translation}->{'Project'} = '';
+    $Self->{Translation}->{'Project'} = 'Proiect';
     $Self->{Translation}->{'Task'} = '';
     $Self->{Translation}->{'Remark'} = '';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
@@ -150,8 +150,8 @@ sub Data {
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = '';
     $Self->{Translation}->{'View of '} = '';
-    $Self->{Translation}->{'Previous day'} = '';
-    $Self->{Translation}->{'Next day'} = '';
+    $Self->{Translation}->{'Previous day'} = 'Ziua anterioara';
+    $Self->{Translation}->{'Next day'} = 'Ziua urmatoare';
     $Self->{Translation}->{'No data found for this day.'} = '';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
@@ -162,7 +162,7 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         '';
     $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
+    $Self->{Translation}->{'Successful insert!'} = 'Introdus cu succes!';
     $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
@@ -176,7 +176,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
     $Self->{Translation}->{'Reporting Project'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Raportare';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '';
@@ -187,7 +187,7 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'Setting'} = '';
+    $Self->{Translation}->{'Setting'} = 'Setare';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'Add a user to time accounting...'} = '';
@@ -198,13 +198,13 @@ sub Data {
     $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Va rugam introduceti cate ore ati lucrat!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
-    $Self->{Translation}->{'Please choose at least one day!'} = '';
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Va rugam alegeti cel putin o zi!';
     $Self->{Translation}->{'Mass Entry'} = '';
     $Self->{Translation}->{'Please choose a reason for absence!'} = '';
 

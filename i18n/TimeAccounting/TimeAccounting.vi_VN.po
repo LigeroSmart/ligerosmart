@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2019-06-25 14:09+0000\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Project"
-msgstr ""
+msgstr "Dự án"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Task"
@@ -492,15 +492,15 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successful insert!"
-msgstr ""
+msgstr "Nhập thành công"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Error while inserting multiple dates!"
-msgstr ""
+msgstr "Lỗi khi nhập nhiều ngày"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Successfully inserted entries for several dates!"
-msgstr ""
+msgstr "Nhập thành công "
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Entered date was invalid! Date was changed to today."
@@ -532,7 +532,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
-msgstr ""
+msgstr "Báo cáo"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
@@ -568,7 +568,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Setting"
-msgstr ""
+msgstr "Thiết lập"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
@@ -596,7 +596,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
 msgid "Please insert your working hours!"
-msgstr ""
+msgstr "Xin nhập thời gian làm việc"
 
 #. Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
 msgid "Incomplete working days"
@@ -748,7 +748,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Time Accounting"
-msgstr ""
+msgstr "Quản lý thời gian"
 
 #. SysConfig
 msgid "Time accounting edit."

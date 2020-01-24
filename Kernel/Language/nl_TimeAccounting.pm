@@ -17,32 +17,32 @@ sub Data {
 
     # Template: AgentTimeAccountingDelete
     $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} =
-        '';
+        'Weet u zeker dat u de Time Accounting wilt verwijderen van deze dag?';
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = '';
-    $Self->{Translation}->{'Go to settings'} = '';
-    $Self->{Translation}->{'Date Navigation'} = '';
-    $Self->{Translation}->{'Days without entries'} = '';
-    $Self->{Translation}->{'Select all days'} = '';
-    $Self->{Translation}->{'Mass entry'} = '';
+    $Self->{Translation}->{'Go to settings'} = 'Ga naar instellingen';
+    $Self->{Translation}->{'Date Navigation'} = 'Datum Navigatie';
+    $Self->{Translation}->{'Days without entries'} = 'Dag zonder boeking';
+    $Self->{Translation}->{'Select all days'} = 'Selecteer alle dagen';
+    $Self->{Translation}->{'Mass entry'} = 'Massa toevoegen';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
-        '';
-    $Self->{Translation}->{'On vacation'} = '';
-    $Self->{Translation}->{'On sick leave'} = '';
+        'Kies een reden van absentie voor de geselecteerde dagen';
+    $Self->{Translation}->{'On vacation'} = 'Op vakantie';
+    $Self->{Translation}->{'On sick leave'} = 'Ziekmelding';
     $Self->{Translation}->{'On overtime leave'} = '';
-    $Self->{Translation}->{'Required fields are marked with a "*".'} = '';
-    $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '';
-    $Self->{Translation}->{'Project'} = '';
-    $Self->{Translation}->{'Task'} = '';
-    $Self->{Translation}->{'Remark'} = '';
+    $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Verplichte velden zijn gemarkeerd met "*".';
+    $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'U moet een begin en eindtijd of een tijdperiode invullen.';
+    $Self->{Translation}->{'Project'} = 'Project';
+    $Self->{Translation}->{'Task'} = 'Taak';
+    $Self->{Translation}->{'Remark'} = 'Aanmerking';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
-    $Self->{Translation}->{'Negative times are not allowed.'} = '';
+    $Self->{Translation}->{'Negative times are not allowed.'} = 'Negatieve tijden zijn niet toegestaan.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '';
-    $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
+    $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = 'Ongeldig formaat! Voer een tijd in met het formaat HH:MM.';
     $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
-    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
+    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = 'Ongeldige tijd! Een dag heeft 24 uur.';
     $Self->{Translation}->{'End time must be after start time.'} = '';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         '';
@@ -59,37 +59,37 @@ sub Data {
 
     # Template: AgentTimeAccountingOverview
     $Self->{Translation}->{'Time reporting monthly overview'} = '';
-    $Self->{Translation}->{'Overtime (Hours)'} = '';
-    $Self->{Translation}->{'Overtime (this month)'} = '';
-    $Self->{Translation}->{'Overtime (total)'} = '';
+    $Self->{Translation}->{'Overtime (Hours)'} = 'Overuren (Uren)';
+    $Self->{Translation}->{'Overtime (this month)'} = 'Overuren (deze maand)';
+    $Self->{Translation}->{'Overtime (total)'} = 'Overuren (totaal)';
     $Self->{Translation}->{'Remaining overtime leave'} = '';
-    $Self->{Translation}->{'Vacation (Days)'} = '';
+    $Self->{Translation}->{'Vacation (Days)'} = 'Vakantie (dagen)';
     $Self->{Translation}->{'Vacation taken (this month)'} = '';
     $Self->{Translation}->{'Vacation taken (total)'} = '';
     $Self->{Translation}->{'Remaining vacation'} = '';
-    $Self->{Translation}->{'Sick Leave (Days)'} = '';
-    $Self->{Translation}->{'Sick leave taken (this month)'} = '';
-    $Self->{Translation}->{'Sick leave taken (total)'} = '';
-    $Self->{Translation}->{'Previous month'} = '';
-    $Self->{Translation}->{'Next month'} = '';
-    $Self->{Translation}->{'Weekday'} = '';
-    $Self->{Translation}->{'Working Hours'} = '';
-    $Self->{Translation}->{'Total worked hours'} = '';
+    $Self->{Translation}->{'Sick Leave (Days)'} = 'Ziektedagen (Dagen)';
+    $Self->{Translation}->{'Sick leave taken (this month)'} = 'Ziektedagen (deze maand)';
+    $Self->{Translation}->{'Sick leave taken (total)'} = 'Ziektedagen opgenomen (totaal)';
+    $Self->{Translation}->{'Previous month'} = 'Vorige maand';
+    $Self->{Translation}->{'Next month'} = 'Volgende maand';
+    $Self->{Translation}->{'Weekday'} = 'Weekdag';
+    $Self->{Translation}->{'Working Hours'} = 'Werkuren';
+    $Self->{Translation}->{'Total worked hours'} = 'Totale werkuren';
     $Self->{Translation}->{'User\'s project overview'} = '';
-    $Self->{Translation}->{'Hours (monthly)'} = '';
-    $Self->{Translation}->{'Hours (Lifetime)'} = '';
-    $Self->{Translation}->{'Grand total'} = '';
+    $Self->{Translation}->{'Hours (monthly)'} = 'Uren (Maandelijks)';
+    $Self->{Translation}->{'Hours (Lifetime)'} = 'Uren (Levensduur)';
+    $Self->{Translation}->{'Grand total'} = 'Totaal';
 
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = '';
-    $Self->{Translation}->{'Month Navigation'} = '';
-    $Self->{Translation}->{'Go to date'} = '';
+    $Self->{Translation}->{'Month Navigation'} = 'Maandelijkse Navigatie';
+    $Self->{Translation}->{'Go to date'} = 'Ga naar datum';
     $Self->{Translation}->{'User reports'} = '';
     $Self->{Translation}->{'Monthly total'} = '';
     $Self->{Translation}->{'Lifetime total'} = '';
     $Self->{Translation}->{'Overtime leave'} = '';
-    $Self->{Translation}->{'Vacation'} = '';
-    $Self->{Translation}->{'Sick leave'} = '';
+    $Self->{Translation}->{'Vacation'} = 'Vakantie';
+    $Self->{Translation}->{'Sick leave'} = 'Ziektedag';
     $Self->{Translation}->{'Vacation remaining'} = '';
     $Self->{Translation}->{'Project reports'} = '';
 
@@ -110,19 +110,19 @@ sub Data {
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
         '';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = '';
-    $Self->{Translation}->{'Add task'} = '';
+    $Self->{Translation}->{'Add task'} = 'Taak toevoegen';
     $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
-    $Self->{Translation}->{'Time periods can not be deleted.'} = '';
+    $Self->{Translation}->{'Time periods can not be deleted.'} = 'Tijdperiodes kunnen niet worden verwijderd.';
     $Self->{Translation}->{'Project List'} = '';
     $Self->{Translation}->{'Task List'} = '';
-    $Self->{Translation}->{'Add Task'} = '';
+    $Self->{Translation}->{'Add Task'} = 'Taak toevoegen';
     $Self->{Translation}->{'Edit Task Settings'} = '';
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         '';
-    $Self->{Translation}->{'User List'} = '';
+    $Self->{Translation}->{'User List'} = 'Gebruikerslijst';
     $Self->{Translation}->{'User Settings'} = '';
     $Self->{Translation}->{'User is allowed to see overtimes'} = '';
-    $Self->{Translation}->{'Show Overtime'} = '';
+    $Self->{Translation}->{'Show Overtime'} = 'Toon Overuren';
     $Self->{Translation}->{'User is allowed to create projects'} = '';
     $Self->{Translation}->{'Allow project creation'} = '';
     $Self->{Translation}->{'User is allowed to skip time accounting'} = '';
@@ -132,51 +132,51 @@ sub Data {
     $Self->{Translation}->{'There will be no warnings about missing entries and no entry enforcement.'} =
         '';
     $Self->{Translation}->{'Time Spans'} = '';
-    $Self->{Translation}->{'Period Begin'} = '';
-    $Self->{Translation}->{'Period End'} = '';
-    $Self->{Translation}->{'Days of Vacation'} = '';
-    $Self->{Translation}->{'Hours per Week'} = '';
+    $Self->{Translation}->{'Period Begin'} = 'Beginperiode';
+    $Self->{Translation}->{'Period End'} = 'Eindperiode';
+    $Self->{Translation}->{'Days of Vacation'} = 'Vakantiedagen';
+    $Self->{Translation}->{'Hours per Week'} = 'Uren per week';
     $Self->{Translation}->{'Authorized Overtime'} = '';
-    $Self->{Translation}->{'Start Date'} = '';
-    $Self->{Translation}->{'Please insert a valid date.'} = '';
-    $Self->{Translation}->{'End Date'} = '';
-    $Self->{Translation}->{'Period end must be after period begin.'} = '';
+    $Self->{Translation}->{'Start Date'} = 'Begindatum';
+    $Self->{Translation}->{'Please insert a valid date.'} = 'Voer een geldige datum in.';
+    $Self->{Translation}->{'End Date'} = 'Einddatum';
+    $Self->{Translation}->{'Period end must be after period begin.'} = 'Eindperiode moet na Beginperiode zijn.';
     $Self->{Translation}->{'Leave Days'} = '';
-    $Self->{Translation}->{'Weekly Hours'} = '';
-    $Self->{Translation}->{'Overtime'} = '';
-    $Self->{Translation}->{'No time periods found.'} = '';
-    $Self->{Translation}->{'Add time period'} = '';
+    $Self->{Translation}->{'Weekly Hours'} = 'Weekuren';
+    $Self->{Translation}->{'Overtime'} = 'Overuren';
+    $Self->{Translation}->{'No time periods found.'} = 'Geen tijdperiodes gevonden.';
+    $Self->{Translation}->{'Add time period'} = 'Voeg tijdperiode toe';
 
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = '';
-    $Self->{Translation}->{'View of '} = '';
-    $Self->{Translation}->{'Previous day'} = '';
-    $Self->{Translation}->{'Next day'} = '';
-    $Self->{Translation}->{'No data found for this day.'} = '';
+    $Self->{Translation}->{'View of '} = 'Weergave van';
+    $Self->{Translation}->{'Previous day'} = 'Vorige dag';
+    $Self->{Translation}->{'Next day'} = 'Volgende dag';
+    $Self->{Translation}->{'No data found for this day.'} = 'Geen data gevonden voor deze dag.';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
     $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
-    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Last Projects'} = 'Laatste Projecten';
     $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
     $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         '';
-    $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
-    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
+    $Self->{Translation}->{'Incomplete Working Days'} = 'Incomplete Werkdagen';
+    $Self->{Translation}->{'Successful insert!'} = 'Succesvol ingevoerd!';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Fout tijdens invoeren meerdere data!';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Succesvol invoeren van meerdere data!';
+    $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = 'Ingevoerde data is goedgekeurd! Data is aangepast naar vandaag.';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
         '';
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
-    $Self->{Translation}->{'Last Selected Projects'} = '';
-    $Self->{Translation}->{'All Projects'} = '';
+    $Self->{Translation}->{'Last Selected Projects'} = 'Laatst Geselecteerde Projecten';
+    $Self->{Translation}->{'All Projects'} = 'Alle Projecten';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
     $Self->{Translation}->{'Reporting Project'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Rapportage';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '';
@@ -187,26 +187,26 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'Setting'} = '';
+    $Self->{Translation}->{'Setting'} = 'Instelling';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'Add a user to time accounting...'} = '';
-    $Self->{Translation}->{'New User'} = '';
-    $Self->{Translation}->{'Period Status'} = '';
+    $Self->{Translation}->{'New User'} = 'Nieuwe Gebruiker';
+    $Self->{Translation}->{'Period Status'} = 'Periode Status';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
     $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Voer uw werkuren in!';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
-    $Self->{Translation}->{'Incomplete working days'} = '';
+    $Self->{Translation}->{'Incomplete working days'} = 'Incomplete Werkdagen';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
-    $Self->{Translation}->{'Please choose at least one day!'} = '';
+    $Self->{Translation}->{'Please choose at least one day!'} = 'Kies op zijn minst 1 dag!';
     $Self->{Translation}->{'Mass Entry'} = '';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = '';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = 'Kies een reden van absentie!';
 
     # JS File: TimeAccounting.Agent
     $Self->{Translation}->{'Delete Time Accounting Entry'} = '';
@@ -215,11 +215,11 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
         '';
-    $Self->{Translation}->{'Default name for new actions.'} = '';
-    $Self->{Translation}->{'Default name for new projects.'} = '';
-    $Self->{Translation}->{'Default setting for date end.'} = '';
-    $Self->{Translation}->{'Default setting for date start.'} = '';
-    $Self->{Translation}->{'Default setting for description.'} = '';
+    $Self->{Translation}->{'Default name for new actions.'} = 'Standaardnaam voor nieuwe acties.';
+    $Self->{Translation}->{'Default name for new projects.'} = 'Standaardnaam voor nieuwe projecten.';
+    $Self->{Translation}->{'Default setting for date end.'} = 'Standaardinstelling voor einddatum.';
+    $Self->{Translation}->{'Default setting for date start.'} = 'Standaardinstelling voor begindatum.';
+    $Self->{Translation}->{'Default setting for description.'} = 'Standaardinstelling voor omschrijving.';
     $Self->{Translation}->{'Default setting for leave days.'} = '';
     $Self->{Translation}->{'Default setting for overtime.'} = '';
     $Self->{Translation}->{'Default setting for the standard weekly hours.'} = '';
@@ -258,7 +258,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         '';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Tijd verantwoording';
     $Self->{Translation}->{'Time accounting edit.'} = '';
     $Self->{Translation}->{'Time accounting overview.'} = '';
     $Self->{Translation}->{'Time accounting reporting.'} = '';

@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'End time must be after start time.'} = 'Tempo final deve ser depois do tempo inicial.';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         'Horas repetidas não são liberadas. Inicie o apontamento em outro intervalo.';
-    $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Período inválido! Um dia tem apenas 24 horas.';
+    $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Periodo inválido. Um dia tem apenas 24 horas.';
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Um período válido deve ser maior que zero.';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Período inválido! Períodos negativos não são liberados.';
     $Self->{Translation}->{'Add one row'} = 'Adicionar uma linha';

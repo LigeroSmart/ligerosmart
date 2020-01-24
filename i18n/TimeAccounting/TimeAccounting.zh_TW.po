@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
-"POT-Creation-Date: 2019-06-25 14:09+0000\n"
+"POT-Creation-Date: 2020-01-24 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Go to settings"
-msgstr ""
+msgstr "前往設定"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Date Navigation"
@@ -32,7 +32,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Select all days"
-msgstr ""
+msgstr "選取所有日子"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Mass entry"
@@ -44,15 +44,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "On vacation"
-msgstr ""
+msgstr "休假"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On sick leave"
-msgstr ""
+msgstr "病假"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On overtime leave"
-msgstr ""
+msgstr "超時工作補假"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Required fields are marked with a \"*\"."
@@ -64,15 +64,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Project"
-msgstr ""
+msgstr "項目"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Task"
-msgstr ""
+msgstr "工作"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Remark"
-msgstr ""
+msgstr "備註"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please add a remark with more than 8 characters!"
@@ -92,15 +92,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "24:00 is only permitted as end time."
-msgstr ""
+msgstr "24:00 只容許於設定結束時間"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Invalid time! A day has only 24 hours."
-msgstr ""
+msgstr "無效的時間! 一日只有24小時。"
 
 #. Template: AgentTimeAccountingEdit
 msgid "End time must be after start time."
-msgstr ""
+msgstr "結束時間必須在開始時間之後"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Repeated hours are not allowed. End time matches another interval."
@@ -120,7 +120,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingEdit
 msgid "Add one row"
-msgstr ""
+msgstr "添加一行"
 
 #. Template: AgentTimeAccountingEdit
 msgid "You can only select one checkbox element!"
@@ -148,67 +148,67 @@ msgstr ""
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (Hours)"
-msgstr ""
+msgstr "超時 (小時)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (this month)"
-msgstr ""
+msgstr "超時 (此月)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Overtime (total)"
-msgstr ""
+msgstr "超時 (總計)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Remaining overtime leave"
-msgstr ""
+msgstr "餘下的超時工作補假"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation (Days)"
-msgstr ""
+msgstr "休假 (日)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (this month)"
-msgstr ""
+msgstr "已提交的休假 (此月)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Vacation taken (total)"
-msgstr ""
+msgstr "已提交的休假 (總計)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Remaining vacation"
-msgstr ""
+msgstr "餘下的休假"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick Leave (Days)"
-msgstr ""
+msgstr "病假 (日)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick leave taken (this month)"
-msgstr ""
+msgstr "已放的病假 (此月)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Sick leave taken (total)"
-msgstr ""
+msgstr "已放的病假 (總計)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Previous month"
-msgstr ""
+msgstr "上月"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Next month"
-msgstr ""
+msgstr "下月"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Weekday"
-msgstr ""
+msgstr "平日"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Working Hours"
-msgstr ""
+msgstr "工作時間"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Total worked hours"
-msgstr ""
+msgstr "工作時間總計"
 
 #. Template: AgentTimeAccountingOverview
 msgid "User's project overview"
@@ -216,7 +216,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingOverview
 msgid "Hours (monthly)"
-msgstr ""
+msgstr "小時 (每月)"
 
 #. Template: AgentTimeAccountingOverview
 msgid "Hours (Lifetime)"
@@ -236,15 +236,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingReporting
 msgid "Go to date"
-msgstr ""
+msgstr "前往日期"
 
 #. Template: AgentTimeAccountingReporting
 msgid "User reports"
-msgstr ""
+msgstr "用戶報告"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Monthly total"
-msgstr ""
+msgstr "每月總計"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Lifetime total"
@@ -252,15 +252,15 @@ msgstr ""
 
 #. Template: AgentTimeAccountingReporting
 msgid "Overtime leave"
-msgstr ""
+msgstr "超時工作補假"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Vacation"
-msgstr ""
+msgstr "休假"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Sick leave"
-msgstr ""
+msgstr "病假"
 
 #. Template: AgentTimeAccountingReporting
 msgid "Vacation remaining"
@@ -292,19 +292,19 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add project"
-msgstr ""
+msgstr "添加項目"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Go to settings overview"
-msgstr ""
+msgstr "前往設定概況"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add Project"
-msgstr ""
+msgstr "添加項目"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Project Settings"
-msgstr ""
+msgstr "編輯項目設定"
 
 #. Template: AgentTimeAccountingSetting
 msgid "There is already a project with this name. Please, choose a different one."
@@ -316,7 +316,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add task"
-msgstr ""
+msgstr "添加工作"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Filter for projects, tasks or users"
@@ -328,19 +328,19 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Project List"
-msgstr ""
+msgstr "項目列表"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Task List"
-msgstr ""
+msgstr "工作列表"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add Task"
-msgstr ""
+msgstr "添加工作"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Task Settings"
-msgstr ""
+msgstr "編輯工作設定"
 
 #. Template: AgentTimeAccountingSetting
 msgid "There is already a task with this name. Please, choose a different one."
@@ -348,7 +348,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "User List"
-msgstr ""
+msgstr "用戶列表"
 
 #. Template: AgentTimeAccountingSetting
 msgid "User Settings"
@@ -400,11 +400,11 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Days of Vacation"
-msgstr ""
+msgstr "休假日數"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Hours per Week"
-msgstr ""
+msgstr "小時/每週"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Authorized Overtime"
@@ -412,7 +412,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Start Date"
-msgstr ""
+msgstr "開始時間"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Please insert a valid date."
@@ -420,7 +420,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "End Date"
-msgstr ""
+msgstr "結束時間"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Period end must be after period begin."
@@ -436,7 +436,7 @@ msgstr ""
 
 #. Template: AgentTimeAccountingSetting
 msgid "Overtime"
-msgstr ""
+msgstr "超時工作"
 
 #. Template: AgentTimeAccountingSetting
 msgid "No time periods found."
@@ -456,11 +456,11 @@ msgstr ""
 
 #. Template: AgentTimeAccountingView
 msgid "Previous day"
-msgstr ""
+msgstr "前一天"
 
 #. Template: AgentTimeAccountingView
 msgid "Next day"
-msgstr ""
+msgstr "下一天"
 
 #. Template: AgentTimeAccountingView
 msgid "No data found for this day."
@@ -472,7 +472,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Last Projects"
-msgstr ""
+msgstr "最後的項目"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Can't save settings, because a day has only 24 hours!"
@@ -520,7 +520,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "All Projects"
-msgstr ""
+msgstr "所有項目"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "ReportingProject: Need ProjectID"
@@ -532,7 +532,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
-msgstr ""
+msgstr "報告"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
@@ -568,7 +568,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Setting"
-msgstr ""
+msgstr "設置"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "User updated!"
@@ -584,7 +584,7 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
-msgstr ""
+msgstr "新用戶"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Period Status"
@@ -604,7 +604,7 @@ msgstr ""
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose at least one day!"
-msgstr ""
+msgstr "請選取至少一天!"
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Mass Entry"
@@ -612,7 +612,7 @@ msgstr ""
 
 #. JS File: TimeAccounting.Agent.EditTimeRecords
 msgid "Please choose a reason for absence!"
-msgstr ""
+msgstr "請選擇缺席原因!"
 
 #. JS File: TimeAccounting.Agent
 msgid "Delete Time Accounting Entry"
@@ -620,7 +620,7 @@ msgstr ""
 
 #. JS File: TimeAccounting.Agent
 msgid "Confirm insert"
-msgstr ""
+msgstr "確認插入"
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of incomplete working days for the user."
@@ -720,7 +720,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Overview."
-msgstr ""
+msgstr "概況"
 
 #. SysConfig
 msgid "Project time reporting."

@@ -163,7 +163,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Incomplete Working Days'} = '';
     $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Помилка при вставці декількох дати!';
     $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
@@ -187,7 +187,7 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'Setting'} = '';
+    $Self->{Translation}->{'Setting'} = 'Параметр';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'Add a user to time accounting...'} = '';
@@ -258,7 +258,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         '';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Облік часу';
     $Self->{Translation}->{'Time accounting edit.'} = '';
     $Self->{Translation}->{'Time accounting overview.'} = '';
     $Self->{Translation}->{'Time accounting reporting.'} = '';

@@ -21,35 +21,35 @@ sub Data {
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = '';
-    $Self->{Translation}->{'Go to settings'} = '';
+    $Self->{Translation}->{'Go to settings'} = '前往設定';
     $Self->{Translation}->{'Date Navigation'} = '';
     $Self->{Translation}->{'Days without entries'} = '';
-    $Self->{Translation}->{'Select all days'} = '';
+    $Self->{Translation}->{'Select all days'} = '選取所有日子';
     $Self->{Translation}->{'Mass entry'} = '';
     $Self->{Translation}->{'Please choose the reason for your absence for the selected days'} =
         '';
-    $Self->{Translation}->{'On vacation'} = '';
-    $Self->{Translation}->{'On sick leave'} = '';
-    $Self->{Translation}->{'On overtime leave'} = '';
+    $Self->{Translation}->{'On vacation'} = '休假';
+    $Self->{Translation}->{'On sick leave'} = '病假';
+    $Self->{Translation}->{'On overtime leave'} = '超時工作補假';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = '';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '';
-    $Self->{Translation}->{'Project'} = '';
-    $Self->{Translation}->{'Task'} = '';
-    $Self->{Translation}->{'Remark'} = '';
+    $Self->{Translation}->{'Project'} = '項目';
+    $Self->{Translation}->{'Task'} = '工作';
+    $Self->{Translation}->{'Remark'} = '備註';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
     $Self->{Translation}->{'Negative times are not allowed.'} = '';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} =
         '';
     $Self->{Translation}->{'Invalid format! Please enter a time with the format HH:MM.'} = '';
-    $Self->{Translation}->{'24:00 is only permitted as end time.'} = '';
-    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '';
-    $Self->{Translation}->{'End time must be after start time.'} = '';
+    $Self->{Translation}->{'24:00 is only permitted as end time.'} = '24:00 只容許於設定結束時間';
+    $Self->{Translation}->{'Invalid time! A day has only 24 hours.'} = '無效的時間! 一日只有24小時。';
+    $Self->{Translation}->{'End time must be after start time.'} = '結束時間必須在開始時間之後';
     $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} =
         '';
     $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = '';
     $Self->{Translation}->{'A valid period must be greater than zero.'} = '';
     $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = '';
-    $Self->{Translation}->{'Add one row'} = '';
+    $Self->{Translation}->{'Add one row'} = '添加一行';
     $Self->{Translation}->{'You can only select one checkbox element!'} = '';
     $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = '';
     $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = '';
@@ -59,37 +59,37 @@ sub Data {
 
     # Template: AgentTimeAccountingOverview
     $Self->{Translation}->{'Time reporting monthly overview'} = '';
-    $Self->{Translation}->{'Overtime (Hours)'} = '';
-    $Self->{Translation}->{'Overtime (this month)'} = '';
-    $Self->{Translation}->{'Overtime (total)'} = '';
-    $Self->{Translation}->{'Remaining overtime leave'} = '';
-    $Self->{Translation}->{'Vacation (Days)'} = '';
-    $Self->{Translation}->{'Vacation taken (this month)'} = '';
-    $Self->{Translation}->{'Vacation taken (total)'} = '';
-    $Self->{Translation}->{'Remaining vacation'} = '';
-    $Self->{Translation}->{'Sick Leave (Days)'} = '';
-    $Self->{Translation}->{'Sick leave taken (this month)'} = '';
-    $Self->{Translation}->{'Sick leave taken (total)'} = '';
-    $Self->{Translation}->{'Previous month'} = '';
-    $Self->{Translation}->{'Next month'} = '';
-    $Self->{Translation}->{'Weekday'} = '';
-    $Self->{Translation}->{'Working Hours'} = '';
-    $Self->{Translation}->{'Total worked hours'} = '';
+    $Self->{Translation}->{'Overtime (Hours)'} = '超時 (小時)';
+    $Self->{Translation}->{'Overtime (this month)'} = '超時 (此月)';
+    $Self->{Translation}->{'Overtime (total)'} = '超時 (總計)';
+    $Self->{Translation}->{'Remaining overtime leave'} = '餘下的超時工作補假';
+    $Self->{Translation}->{'Vacation (Days)'} = '休假 (日)';
+    $Self->{Translation}->{'Vacation taken (this month)'} = '已提交的休假 (此月)';
+    $Self->{Translation}->{'Vacation taken (total)'} = '已提交的休假 (總計)';
+    $Self->{Translation}->{'Remaining vacation'} = '餘下的休假';
+    $Self->{Translation}->{'Sick Leave (Days)'} = '病假 (日)';
+    $Self->{Translation}->{'Sick leave taken (this month)'} = '已放的病假 (此月)';
+    $Self->{Translation}->{'Sick leave taken (total)'} = '已放的病假 (總計)';
+    $Self->{Translation}->{'Previous month'} = '上月';
+    $Self->{Translation}->{'Next month'} = '下月';
+    $Self->{Translation}->{'Weekday'} = '平日';
+    $Self->{Translation}->{'Working Hours'} = '工作時間';
+    $Self->{Translation}->{'Total worked hours'} = '工作時間總計';
     $Self->{Translation}->{'User\'s project overview'} = '';
-    $Self->{Translation}->{'Hours (monthly)'} = '';
+    $Self->{Translation}->{'Hours (monthly)'} = '小時 (每月)';
     $Self->{Translation}->{'Hours (Lifetime)'} = '';
     $Self->{Translation}->{'Grand total'} = '';
 
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = '';
     $Self->{Translation}->{'Month Navigation'} = '';
-    $Self->{Translation}->{'Go to date'} = '';
-    $Self->{Translation}->{'User reports'} = '';
-    $Self->{Translation}->{'Monthly total'} = '';
+    $Self->{Translation}->{'Go to date'} = '前往日期';
+    $Self->{Translation}->{'User reports'} = '用戶報告';
+    $Self->{Translation}->{'Monthly total'} = '每月總計';
     $Self->{Translation}->{'Lifetime total'} = '';
-    $Self->{Translation}->{'Overtime leave'} = '';
-    $Self->{Translation}->{'Vacation'} = '';
-    $Self->{Translation}->{'Sick leave'} = '';
+    $Self->{Translation}->{'Overtime leave'} = '超時工作補假';
+    $Self->{Translation}->{'Vacation'} = '休假';
+    $Self->{Translation}->{'Sick leave'} = '病假';
     $Self->{Translation}->{'Vacation remaining'} = '';
     $Self->{Translation}->{'Project reports'} = '';
 
@@ -103,23 +103,23 @@ sub Data {
 
     # Template: AgentTimeAccountingSetting
     $Self->{Translation}->{'Edit Time Accounting Project Settings'} = '';
-    $Self->{Translation}->{'Add project'} = '';
-    $Self->{Translation}->{'Go to settings overview'} = '';
-    $Self->{Translation}->{'Add Project'} = '';
-    $Self->{Translation}->{'Edit Project Settings'} = '';
+    $Self->{Translation}->{'Add project'} = '添加項目';
+    $Self->{Translation}->{'Go to settings overview'} = '前往設定概況';
+    $Self->{Translation}->{'Add Project'} = '添加項目';
+    $Self->{Translation}->{'Edit Project Settings'} = '編輯項目設定';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} =
         '';
     $Self->{Translation}->{'Edit Time Accounting Settings'} = '';
-    $Self->{Translation}->{'Add task'} = '';
+    $Self->{Translation}->{'Add task'} = '添加工作';
     $Self->{Translation}->{'Filter for projects, tasks or users'} = '';
     $Self->{Translation}->{'Time periods can not be deleted.'} = '';
-    $Self->{Translation}->{'Project List'} = '';
-    $Self->{Translation}->{'Task List'} = '';
-    $Self->{Translation}->{'Add Task'} = '';
-    $Self->{Translation}->{'Edit Task Settings'} = '';
+    $Self->{Translation}->{'Project List'} = '項目列表';
+    $Self->{Translation}->{'Task List'} = '工作列表';
+    $Self->{Translation}->{'Add Task'} = '添加工作';
+    $Self->{Translation}->{'Edit Task Settings'} = '編輯工作設定';
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} =
         '';
-    $Self->{Translation}->{'User List'} = '';
+    $Self->{Translation}->{'User List'} = '用戶列表';
     $Self->{Translation}->{'User Settings'} = '';
     $Self->{Translation}->{'User is allowed to see overtimes'} = '';
     $Self->{Translation}->{'Show Overtime'} = '';
@@ -134,29 +134,29 @@ sub Data {
     $Self->{Translation}->{'Time Spans'} = '';
     $Self->{Translation}->{'Period Begin'} = '';
     $Self->{Translation}->{'Period End'} = '';
-    $Self->{Translation}->{'Days of Vacation'} = '';
-    $Self->{Translation}->{'Hours per Week'} = '';
+    $Self->{Translation}->{'Days of Vacation'} = '休假日數';
+    $Self->{Translation}->{'Hours per Week'} = '小時/每週';
     $Self->{Translation}->{'Authorized Overtime'} = '';
-    $Self->{Translation}->{'Start Date'} = '';
+    $Self->{Translation}->{'Start Date'} = '開始時間';
     $Self->{Translation}->{'Please insert a valid date.'} = '';
-    $Self->{Translation}->{'End Date'} = '';
+    $Self->{Translation}->{'End Date'} = '結束時間';
     $Self->{Translation}->{'Period end must be after period begin.'} = '';
     $Self->{Translation}->{'Leave Days'} = '';
     $Self->{Translation}->{'Weekly Hours'} = '';
-    $Self->{Translation}->{'Overtime'} = '';
+    $Self->{Translation}->{'Overtime'} = '超時工作';
     $Self->{Translation}->{'No time periods found.'} = '';
     $Self->{Translation}->{'Add time period'} = '';
 
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = '';
     $Self->{Translation}->{'View of '} = '';
-    $Self->{Translation}->{'Previous day'} = '';
-    $Self->{Translation}->{'Next day'} = '';
+    $Self->{Translation}->{'Previous day'} = '前一天';
+    $Self->{Translation}->{'Next day'} = '下一天';
     $Self->{Translation}->{'No data found for this day.'} = '';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
     $Self->{Translation}->{'Can\'t insert Working Units!'} = '';
-    $Self->{Translation}->{'Last Projects'} = '';
+    $Self->{Translation}->{'Last Projects'} = '最後的項目';
     $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '';
     $Self->{Translation}->{'Can\'t delete Working Units!'} = '';
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
@@ -171,12 +171,12 @@ sub Data {
     $Self->{Translation}->{'Please contact the time accounting administrator to update your time periods!'} =
         '';
     $Self->{Translation}->{'Last Selected Projects'} = '';
-    $Self->{Translation}->{'All Projects'} = '';
+    $Self->{Translation}->{'All Projects'} = '所有項目';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
     $Self->{Translation}->{'Reporting Project'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
+    $Self->{Translation}->{'Reporting'} = '報告';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '';
@@ -187,11 +187,11 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'Setting'} = '';
+    $Self->{Translation}->{'Setting'} = '設置';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'Add a user to time accounting...'} = '';
-    $Self->{Translation}->{'New User'} = '';
+    $Self->{Translation}->{'New User'} = '新用戶';
     $Self->{Translation}->{'Period Status'} = '';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingView.pm
@@ -204,13 +204,13 @@ sub Data {
     $Self->{Translation}->{'Incomplete working days'} = '';
 
     # JS File: TimeAccounting.Agent.EditTimeRecords
-    $Self->{Translation}->{'Please choose at least one day!'} = '';
+    $Self->{Translation}->{'Please choose at least one day!'} = '請選取至少一天!';
     $Self->{Translation}->{'Mass Entry'} = '';
-    $Self->{Translation}->{'Please choose a reason for absence!'} = '';
+    $Self->{Translation}->{'Please choose a reason for absence!'} = '請選擇缺席原因!';
 
     # JS File: TimeAccounting.Agent
     $Self->{Translation}->{'Delete Time Accounting Entry'} = '';
-    $Self->{Translation}->{'Confirm insert'} = '';
+    $Self->{Translation}->{'Confirm insert'} = '確認插入';
 
     # SysConfig
     $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} =
@@ -247,7 +247,7 @@ sub Data {
         '';
     $Self->{Translation}->{'Maximum number of working days without working units entry after which a warning will be shown.'} =
         '';
-    $Self->{Translation}->{'Overview.'} = '';
+    $Self->{Translation}->{'Overview.'} = '概況';
     $Self->{Translation}->{'Project time reporting.'} = '';
     $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} =
         '';

@@ -33,7 +33,7 @@ sub Data {
     $Self->{Translation}->{'On overtime leave'} = '';
     $Self->{Translation}->{'Required fields are marked with a "*".'} = '';
     $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = '';
-    $Self->{Translation}->{'Project'} = '';
+    $Self->{Translation}->{'Project'} = 'Dự án';
     $Self->{Translation}->{'Task'} = '';
     $Self->{Translation}->{'Remark'} = '';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!'} = '';
@@ -162,9 +162,9 @@ sub Data {
     $Self->{Translation}->{'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'} =
         '';
     $Self->{Translation}->{'Incomplete Working Days'} = '';
-    $Self->{Translation}->{'Successful insert!'} = '';
-    $Self->{Translation}->{'Error while inserting multiple dates!'} = '';
-    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = '';
+    $Self->{Translation}->{'Successful insert!'} = 'Nhập thành công';
+    $Self->{Translation}->{'Error while inserting multiple dates!'} = 'Lỗi khi nhập nhiều ngày';
+    $Self->{Translation}->{'Successfully inserted entries for several dates!'} = 'Nhập thành công ';
     $Self->{Translation}->{'Entered date was invalid! Date was changed to today.'} = '';
     $Self->{Translation}->{'No time period configured, or the specified date is outside of the defined time periods.'} =
         '';
@@ -176,7 +176,7 @@ sub Data {
     # Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
     $Self->{Translation}->{'ReportingProject: Need ProjectID'} = '';
     $Self->{Translation}->{'Reporting Project'} = '';
-    $Self->{Translation}->{'Reporting'} = '';
+    $Self->{Translation}->{'Reporting'} = 'Báo cáo';
 
     # Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
     $Self->{Translation}->{'Unable to update user settings!'} = '';
@@ -187,7 +187,7 @@ sub Data {
     $Self->{Translation}->{'The UserID is not valid!'} = '';
     $Self->{Translation}->{'Can\'t insert user data!'} = '';
     $Self->{Translation}->{'Unable to add time period!'} = '';
-    $Self->{Translation}->{'Setting'} = '';
+    $Self->{Translation}->{'Setting'} = 'Thiết lập';
     $Self->{Translation}->{'User updated!'} = '';
     $Self->{Translation}->{'User added!'} = '';
     $Self->{Translation}->{'Add a user to time accounting...'} = '';
@@ -198,7 +198,7 @@ sub Data {
     $Self->{Translation}->{'View: Need %s!'} = '';
 
     # Perl Module: Kernel/Output/HTML/Notification/TimeAccounting.pm
-    $Self->{Translation}->{'Please insert your working hours!'} = '';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Xin nhập thời gian làm việc';
 
     # Perl Module: Kernel/Output/HTML/ToolBar/IncompleteWorkingDays.pm
     $Self->{Translation}->{'Incomplete working days'} = '';
@@ -258,7 +258,7 @@ sub Data {
     $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = '';
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} =
         '';
-    $Self->{Translation}->{'Time Accounting'} = '';
+    $Self->{Translation}->{'Time Accounting'} = 'Quản lý thời gian';
     $Self->{Translation}->{'Time accounting edit.'} = '';
     $Self->{Translation}->{'Time accounting overview.'} = '';
     $Self->{Translation}->{'Time accounting reporting.'} = '';
