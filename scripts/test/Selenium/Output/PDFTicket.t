@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - scripts/test/Selenium/Output/PDFTicket.t - rel-6_0_26
+# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - scripts/test/Selenium/Output/PDFTicket.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
