@@ -3,8 +3,8 @@
     <Name>ITSMIncidentProblemManagement</Name>
 <!-- nofilter(TidyAll::Plugin::OTRS::SOPM::DocumentationPresent) -->
     <Version>0.0.0</Version>
-    <Framework Minimum="6.0.25">6.0.x</Framework>
-    <PackageRequired Version="6.0.25">ITSMCore</PackageRequired>
+    <Framework Minimum="6.0.26">6.0.x</Framework>
+    <PackageRequired Version="6.0.26">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>https://otrs.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
@@ -156,7 +156,7 @@
     ]]></CodeReinstall>
     <CodeUpgrade Type="pre" Version="3.2.91"><![CDATA[
 
-        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 6.0.25 Beta 1)
+        # uninstall Feature AddOn OTRSServiceIncidentState that has been integrated in OTRS::ITSM 3.2.91 (OTRS::ITSM 6.0.26 Beta 1)
         $Kernel::OM->Get('Kernel::System::Package')->_PackageUninstallMerged(
             Name => 'OTRSServiceIncidentState',
         );
@@ -238,7 +238,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -256,7 +256,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -274,7 +274,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -292,7 +292,7 @@
         <br/>
         <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -310,7 +310,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -328,7 +328,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -346,7 +346,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -364,7 +364,7 @@
         <br/>
         <strong>SZÜKSÉGES OTRS CSOMAGOK</strong>
         <ul>
-        <li>ITSMCore 6.0.25</li>
+        <li>ITSMCore 6.0.26</li>
         </ul>
         <br/>
         ((enjoy))<br/>
