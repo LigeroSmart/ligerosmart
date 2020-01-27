@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - aeb33d800716e2a6653597aa86314c4cbdadb678 - Kernel/Modules/AgentTicketPhone.pm
+# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - Kernel/Modules/AgentTicketPhone.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -87,7 +87,7 @@ sub Run {
     # MultipleCustomer From-field
     my @MultipleCustomer;
     my $CustomersNumber = $ParamObject->GetParam( Param => 'CustomerTicketCounterFromCustomer' ) || 0;
-    my $Selected = $ParamObject->GetParam( Param => 'CustomerSelected' ) || '';
+    my $Selected        = $ParamObject->GetParam( Param => 'CustomerSelected' )                  || '';
 
     # hash for check duplicated entries
     my %AddressesList;
@@ -915,8 +915,8 @@ sub Run {
                 ID => $GetParam{NextStateID},
             );
         }
-        my $NextState = $StateData{Name} || '';
-        my $Dest = $ParamObject->GetParam( Param => 'Dest' ) || '';
+        my $NextState = $StateData{Name}                          || '';
+        my $Dest      = $ParamObject->GetParam( Param => 'Dest' ) || '';
 
         # see if only a name has been passed
         if ( $Dest && $Dest !~ m{ \A (\d+)? \| \| .+ \z }xms ) {

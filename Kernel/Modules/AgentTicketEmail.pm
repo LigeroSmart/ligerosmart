@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - aeb33d800716e2a6653597aa86314c4cbdadb678 - Kernel/Modules/AgentTicketEmail.pm
+# $origin: otrs - 09b7361cd0b8244087a5189f337559efa981bd7b - Kernel/Modules/AgentTicketEmail.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -109,7 +109,7 @@ sub Run {
     # MultipleCustomer To-field
     my @MultipleCustomer;
     my $CustomersNumber = $ParamObject->GetParam( Param => 'CustomerTicketCounterToCustomer' ) || 0;
-    my $Selected = $ParamObject->GetParam( Param => 'CustomerSelected' ) || '';
+    my $Selected        = $ParamObject->GetParam( Param => 'CustomerSelected' )                || '';
 
     # get check item object
     my $CheckItemObject = $Kernel::OM->Get('Kernel::System::CheckItem');
