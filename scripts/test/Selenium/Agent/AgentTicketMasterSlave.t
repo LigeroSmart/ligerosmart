@@ -405,7 +405,7 @@ $Selenium->RunTest(
         $Selenium->find_element( "#Subject",        'css' )->send_keys("Subject$RandomID");
         $Selenium->find_element( "#RichText",       'css' )->clear();
         $Selenium->find_element( "#RichText",       'css' )->send_keys("Text$RandomID");
-        $Selenium->find_element( "#submitRichText", 'css' )->click();
+        $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
 
         $Selenium->WaitFor(
             JavaScript =>
