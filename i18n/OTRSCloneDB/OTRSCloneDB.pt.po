@@ -2,17 +2,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRSCloneDB\n"
 "POT-Creation-Date: 2020-01-24 14:03+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-02-07 11:51+0000\n"
+"Last-Translator: Joao Ferro <joao.ferro@otrs.com>\n"
+"Language-Team: Portuguese <https://translate.app.otrs.com/projects/otrs-6/"
+"otrs-clone-db/pt/>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. SysConfig
 msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
-msgstr "Lista de tabelas a ser ignoradas, talvez tabelas internas da BD.   Por favor utilize letras minúsculas."
+msgstr ""
+"Lista de tabelas a ser ignoradas, talvez tabelas internas da BD. Por favor "
+"utilize letras minúsculas."
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
@@ -29,4 +34,3 @@ msgstr "Especifica que colunas a verificar para dados de origem UTF-8 válidos."
 #. SysConfig
 msgid "This setting specifies which table columns contain blob data as these need special treatment."
 msgstr "Este parâmetro específica que colunas da tabela contém, dados blob, pois necessitam de tratamento especial."
-
