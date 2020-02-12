@@ -25,6 +25,7 @@
         <File Permission="660" Location="Kernel/Language/da_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/de_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/el_ITSMChangeManagement.pm" />
+        <File Permission="660" Location="Kernel/Language/en_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/en_CA_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/en_GB_ITSMChangeManagement.pm" />
         <File Permission="660" Location="Kernel/Language/es_CO_ITSMChangeManagement.pm" />
