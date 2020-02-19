@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/Admin/AdminUser.t
+# $origin: otrs - ab399be8f5b3943af9d1bfda6745da4cafcfd72c - scripts/test/Selenium/Agent/Admin/AdminUser.t - rel-6_0_27
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -256,8 +256,8 @@ $Selenium->RunTest(
 
         # Wait for the AJAX call to finish.
         $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('#QueueID').closest('.WidgetSimple').hasClass('HasOverlay')"
+            ElementMissing =>
+                "//i[contains(\@class,\'fa fa-circle-o-notch fa-spin\')]"
         );
         $Selenium->WaitFor(
             JavaScript =>
@@ -275,8 +275,8 @@ $Selenium->RunTest(
 
         # Wait for the AJAX call to finish.
         $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('#ServiceID').closest('.WidgetSimple').hasClass('HasOverlay')"
+            ElementMissing =>
+                "//i[contains(\@class,\'fa fa-circle-o-notch fa-spin\')]"
         );
         $Selenium->WaitFor(
             JavaScript =>

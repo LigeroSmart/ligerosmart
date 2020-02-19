@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - scripts/test/Selenium/Agent/AgentStatistics/Import.t
+# $origin: otrs - a11807157a285a38d30c490c9ea69e9074ca1166 - scripts/test/Selenium/Agent/AgentStatistics/Import.t - rel-6_0_27
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -271,8 +271,9 @@ $Selenium->RunTest(
         $Selenium->WaitFor( JavaScript => "return !\$('.Dialog.Modal').length;" );
 
         # Check Restrictions configuration dialog.
-        $Selenium->find_element( ".EditRestrictions", 'css' )->click();
+        $Selenium->find_element("//span[contains(.,\'Filter\')]")->click();
         $Selenium->WaitFor( JavaScript => "return \$('.Dialog.Modal').length;" );
+        $Selenium->WaitFor( JavaScript => "return \$('#EditDialog select').length;" );
 
         $Selenium->InputFieldValueSet(
             Element => '#EditDialog select',
