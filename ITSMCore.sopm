@@ -120,6 +120,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMSLA.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMSLAPrint.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentITSMSLAZoom.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketActionCommonACLFrontend.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketService.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/PDFTicket.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/Preferences/Agent/CustomService.t" />
