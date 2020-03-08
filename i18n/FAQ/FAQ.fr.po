@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Gaudin vincent <vincent.gaudin@cprpsncf.fr>, 2016
 # Marc De Spiegeleer <marcds@scarlet.be>, 2016
@@ -12,14 +12,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"POT-Creation-Date: 2020-01-24 09:29+0000\n"
 "PO-Revision-Date: 2019-10-31 23:03+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
 "Language-Team: French (http://www.transifex.com/otrs/OTRS/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Template: AgentFAQAdd
@@ -84,9 +84,11 @@ msgstr "Voulez-vous vraiment supprimer cette catégorie ?"
 
 #. Template: AgentFAQCategory
 msgid ""
-"You can not delete this category. It is used in at least one FAQ article "
-"and/or is parent of at least one other category"
-msgstr "Vous ne pouvez pas supprimer cette catégorie. Elle est utilisée dans au moins un article de FAQ et/ou est parente d'au moins une autre catégorie."
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"Vous ne pouvez pas supprimer cette catégorie. Elle est utilisée dans au "
+"moins un article de FAQ et/ou est parente d'au moins une autre catégorie."
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
@@ -162,7 +164,8 @@ msgstr "Éditer une langue dans la FAQ"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr "Utilisez cette fonctionnalité afin de travailler avec plusieurs langues."
+msgstr ""
+"Utilisez cette fonctionnalité afin de travailler avec plusieurs langues."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -183,7 +186,9 @@ msgstr "Voulez-vous vraiment supprimer cette langue ?"
 #. Template: AgentFAQLanguage
 msgid ""
 "You can not delete this language. It is used in at least one FAQ article!"
-msgstr "Vous ne pouvez pas supprimer cette langue. Elle est utilisée dans au moins un article de la FAQ !"
+msgstr ""
+"Vous ne pouvez pas supprimer cette langue. Elle est utilisée dans au moins "
+"un article de la FAQ !"
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
@@ -322,13 +327,18 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr "Pour ouvrir les liens dans les blocs de description suivantes, vous pourriez avoir besoin d'appuyer sur Ctrl ou Cmd ou Maj tout en cliquant sur le lien (en fonction de votre navigateur et OS)."
+msgstr ""
+"Pour ouvrir les liens dans les blocs de description suivantes, vous pourriez "
+"avoir besoin d'appuyer sur Ctrl ou Cmd ou Maj tout en cliquant sur le lien "
+"(en fonction de votre navigateur et OS)."
 
 #. Template: AgentFAQZoom
 msgid ""
-"How helpful was this article? Please give us your rating and help to improve"
-" the FAQ Database. Thank You!"
-msgstr "Cet article était-il utile ? Merci de donner une note et de participer à l'amélioration de la base de données. Merci !"
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
+msgstr ""
+"Cet article était-il utile ? Merci de donner une note et de participer à "
+"l'amélioration de la base de données. Merci !"
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -380,7 +390,8 @@ msgstr "Tapez un sujet ou un mot pour obtenir une liste de ressources utiles."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
-msgstr "Rechercher un texte intégrale dans les articles (par exemple \"Will*\")"
+msgstr ""
+"Rechercher un texte intégrale dans les articles (par exemple \"Will*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
@@ -436,11 +447,13 @@ msgstr "Les permissions d'écriture sont requises !"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr "Aucunes catégories trouvées dans lesquelles vous avez le droit d'écriture !"
+msgstr ""
+"Aucunes catégories trouvées dans lesquelles vous avez le droit d'écriture !"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
-msgstr "Aucunes langues par défaut trouvées et impossible d'en créer une nouvelle."
+msgstr ""
+"Aucunes langues par défaut trouvées et impossible d'en créer une nouvelle."
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
@@ -496,7 +509,8 @@ msgstr "L'ID de catégorie %s est invalide !"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
-msgstr "Impossible d'afficher l'historique, puisqu'aucun ID d'élément n'a été donné !"
+msgstr ""
+"Impossible d'afficher l'historique, puisqu'aucun ID d'élément n'a été donné !"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
@@ -512,7 +526,9 @@ msgstr "Configuration du module FAQ::Frontend::Overview nécessaire"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
-msgstr "Configuration du module FAQ::Frontend::Overview doit être une référence \"hash\" !"
+msgstr ""
+"Configuration du module FAQ::Frontend::Overview doit être une référence "
+"\"hash\" !"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
@@ -668,7 +684,9 @@ msgstr "Aucun type n'a été donné !"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Type must be either LastCreate or LastChange or Top10!"
-msgstr "Le type doit être soit \"Derniers articles créés\", soit \"Derniers articles modifiés\", soit \"Top 10 des articles\" !"
+msgstr ""
+"Le type doit être soit \"Derniers articles créés\", soit \"Derniers articles "
+"modifiés\", soit \"Top 10 des articles\" !"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Can't create RSS file!"
@@ -828,9 +846,9 @@ msgstr ""
 msgid ""
 "Define Actions where a settings button is available in the linked objects "
 "widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
 msgstr ""
 
 #. SysConfig
@@ -839,9 +857,9 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
-"fields (DynamicField_NameX) are allowed for DefaultColumns."
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
 
 #. SysConfig
@@ -872,20 +890,20 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" agent interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" customer interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" public interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
 msgstr ""
 
 #. SysConfig
@@ -908,8 +926,8 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ order of a search result in the agent interface. Up:"
-" oldest on top. Down: latest on top."
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
 msgstr ""
 
 #. SysConfig
@@ -937,10 +955,9 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Defines the parameters for the dashboard backend. \"Limit\" defines the "
-"number of entries displayed by default. \"Group\" is used to restrict access"
-" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
-" the plugin is enabled by default or if the user needs to enable it "
-"manually."
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
 msgstr ""
 
 #. SysConfig
@@ -996,8 +1013,7 @@ msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
 msgstr ""
 
 #. SysConfig
@@ -1173,20 +1189,20 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the agent interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the customer interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the public interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
 msgstr ""
 
 #. SysConfig
@@ -1233,20 +1249,20 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the agent interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the customer interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the public interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
 msgstr ""
 
 #. SysConfig
@@ -1325,14 +1341,14 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" journal overview."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" overview."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
 msgstr ""
 
 #. SysConfig
@@ -1413,8 +1429,7 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
-"Articles."
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
 msgstr ""
 
 #. SysConfig
@@ -1424,7 +1439,8 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
 msgstr ""
 
 #. SysConfig
@@ -1473,8 +1489,8 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
-" agent interface."
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
 msgstr ""
 
 #. SysConfig

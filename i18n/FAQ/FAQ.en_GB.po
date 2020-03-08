@@ -1,17 +1,18 @@
-# 
+#
 # Translators:
 # 12a56fc90ea199edeccef8161f915e11, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"POT-Creation-Date: 2020-01-24 09:29+0000\n"
 "PO-Revision-Date: 2019-10-31 23:03+0000\n"
 "Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/otrs/OTRS/language/en_GB/)\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/otrs/OTRS/"
+"language/en_GB/)\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Template: AgentFAQAdd
@@ -76,9 +77,11 @@ msgstr "Do you really want to delete this category?"
 
 #. Template: AgentFAQCategory
 msgid ""
-"You can not delete this category. It is used in at least one FAQ article "
-"and/or is parent of at least one other category"
-msgstr "You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category"
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
@@ -175,7 +178,8 @@ msgstr "Do you really want to delete this language?"
 #. Template: AgentFAQLanguage
 msgid ""
 "You can not delete this language. It is used in at least one FAQ article!"
-msgstr "You can not delete this language. It is used in at least one FAQ article!"
+msgstr ""
+"You can not delete this language. It is used in at least one FAQ article!"
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
@@ -314,13 +318,18 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr "To open links in the following description blocks, you might need to press Ctrl or Cmd or Shift key while clicking the link (depending on your browser and OS)."
+msgstr ""
+"To open links in the following description blocks, you might need to press "
+"Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
+"and OS)."
 
 #. Template: AgentFAQZoom
 msgid ""
-"How helpful was this article? Please give us your rating and help to improve"
-" the FAQ Database. Thank You!"
-msgstr "How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank you!"
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
+msgstr ""
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank you!"
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -732,7 +741,11 @@ msgid ""
 "Image allows two input kinds. First the name of an image (e.g. faq.png). In "
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
-msgstr "A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image."
+msgstr ""
+"A filter for HTML output to add links behind a defined string. The element "
+"Image allows two input kinds. First the name of an image (e.g. faq.png). In "
+"this case the OTRS image path will be used. The second possibility is to "
+"insert the link to the image."
 
 #. SysConfig
 msgid "Add FAQ article"
@@ -814,15 +827,17 @@ msgstr "Default type of tickets for the approval of FAQ articles."
 msgid ""
 "Default value for the Action parameter for the public frontend. The Action "
 "parameter is used in the scripts of the system."
-msgstr "Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system."
+msgstr ""
+"Default value for the Action parameter for the public frontend. The Action "
+"parameter is used in the scripts of the system."
 
 #. SysConfig
 msgid ""
 "Define Actions where a settings button is available in the linked objects "
 "widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
 msgstr ""
 
 #. SysConfig
@@ -831,9 +846,9 @@ msgstr "Define if the FAQ title should be concatenated to article subject."
 
 #. SysConfig
 msgid ""
-"Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
-"fields (DynamicField_NameX) are allowed for DefaultColumns."
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
 
 #. SysConfig
@@ -848,73 +863,97 @@ msgstr "Defines an overview module to show the small view of a FAQ list."
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "agent interface."
-msgstr "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface."
+msgstr ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"agent interface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "customer interface."
-msgstr "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface."
+msgstr ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"customer interface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "public interface."
-msgstr "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface."
+msgstr ""
+"Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
+"public interface."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" agent interface."
-msgstr "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
+msgstr ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" customer interface."
-msgstr "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
+msgstr ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" public interface."
-msgstr "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
+msgstr ""
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Defines the default FAQ order in the FAQ Explorer result of the agent "
+"interface. Up: oldest on top. Down: latest on top."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Defines the default FAQ order in the FAQ Explorer result of the customer "
+"interface. Up: oldest on top. Down: latest on top."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Defines the default FAQ order in the FAQ Explorer result of the public "
+"interface. Up: oldest on top. Down: latest on top."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ order of a search result in the agent interface. Up:"
-" oldest on top. Down: latest on top."
-msgstr "Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top."
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
+msgstr ""
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr "Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Defines the default FAQ order of a search result in the customer interface. "
+"Up: oldest on top. Down: latest on top."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr "Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top."
+msgstr ""
+"Defines the default FAQ order of a search result in the public interface. "
+"Up: oldest on top. Down: latest on top."
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
@@ -924,34 +963,45 @@ msgstr "Defines the default shown FAQ search attribute for FAQ search screen."
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" includes text, attachments and inline images."
+msgstr ""
+"Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
+"includes text, attachments and inline images."
 
 #. SysConfig
 msgid ""
 "Defines the parameters for the dashboard backend. \"Limit\" defines the "
-"number of entries displayed by default. \"Group\" is used to restrict access"
-" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
-" the plugin is enabled by default or if the user needs to enable it "
-"manually."
-msgstr "Defines the parameters for the dashboard backend. \"Limit\" defines the number of entries displayed by default. \"Group\" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if the plugin is enabled by default or if the user needs to enable it manually."
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
+msgstr ""
+"Defines the parameters for the dashboard backend. \"Limit\" defines the "
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
-msgstr "Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column."
+msgstr ""
+"Defines the shown columns in the FAQ Explorer. This option has no effect on "
+"the position of the column."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ journal. This option has no effect on "
 "the position of the column."
-msgstr "Defines the shown columns in the FAQ journal. This option has no effect on the position of the column."
+msgstr ""
+"Defines the shown columns in the FAQ journal. This option has no effect on "
+"the position of the column."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ search. This option has no effect on "
 "the position of the column."
-msgstr "Defines the shown columns in the FAQ search. This option has no effect on the position of the column."
+msgstr ""
+"Defines the shown columns in the FAQ search. This option has no effect on "
+"the position of the column."
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
@@ -988,8 +1038,7 @@ msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
 msgstr ""
 
 #. SysConfig
@@ -1165,87 +1214,115 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the agent interface."
-msgstr "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the customer interface."
-msgstr "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the public interface."
-msgstr "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ journal in the "
 "agent interface."
-msgstr "Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the FAQ journal in the "
+"agent interface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the agent interface."
-msgstr "Maximum number of FAQ articles to be displayed in the result of a search in the agent interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the agent interface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the customer interface."
-msgstr "Maximum number of FAQ articles to be displayed in the result of a search in the customer interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the customer interface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the public interface."
-msgstr "Maximum number of FAQ articles to be displayed in the result of a search in the public interface."
+msgstr ""
+"Maximum number of FAQ articles to be displayed in the result of a search in "
+"the public interface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the agent interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the agent interface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the customer interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the customer interface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer in the public interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
+"in the public interface."
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the agent interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the agent interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the customer interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the customer interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the public interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in the public interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr "Maximum size of the titles in a FAQ article to be shown in the FAQ journal in the agent interface."
+msgstr ""
+"Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
+"in the agent interface."
 
 #. SysConfig
 msgid ""
@@ -1257,7 +1334,9 @@ msgstr ""
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr "Module to generate HTML OpenSearch profile for short FAQ search in the public interface."
+msgstr ""
+"Module to generate HTML OpenSearch profile for short FAQ search in the "
+"public interface."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
@@ -1275,25 +1354,33 @@ msgstr "New FAQ articles need approval before htey get published."
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
-msgstr "Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface."
+msgstr ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
+"interface."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the public "
 "interface."
-msgstr "Number of FAQ articles to be displayed in the FAQ Explorer of the public interface."
+msgstr ""
+"Number of FAQ articles to be displayed in the FAQ Explorer of the public "
+"interface."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the customer interface."
-msgstr "Number of FAQ articles to be displayed on each page of a search result in the customer interface."
+msgstr ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the customer interface."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the public interface."
-msgstr "Number of FAQ articles to be displayed on each page of a search result in the public interface."
+msgstr ""
+"Number of FAQ articles to be displayed on each page of a search result in "
+"the public interface."
 
 #. SysConfig
 msgid "Number of shown items in last changes."
@@ -1317,15 +1404,19 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" journal overview."
-msgstr "Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
+msgstr ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" overview."
-msgstr "Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
+msgstr ""
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
 
 #. SysConfig
 msgid "Print this FAQ"
@@ -1384,40 +1475,50 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr ""
+"Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom)."
+msgstr ""
+"Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
+msgstr ""
+"Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom)."
+msgstr ""
+"Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
+"(and PublicFAQZoom)."
 
 #. SysConfig
 msgid ""
-"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
-"Articles."
-msgstr "Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
 
 #. SysConfig
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
+"AgentFAQZoomSmall for public FAQ Articles."
 
 #. SysConfig
-msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgstr ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
@@ -1461,37 +1562,49 @@ msgstr "Show voting in defined interfaces."
 msgid ""
 "Shows a link in the menu that allows linking a FAQ with another object in "
 "the zoom view of such FAQ of the agent interface."
-msgstr "Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface."
+msgstr ""
+"Shows a link in the menu that allows linking a FAQ with another object in "
+"the zoom view of such FAQ of the agent interface."
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
-" agent interface."
-msgstr "Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface."
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
+msgstr ""
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a FAQ in its zoom view of "
 "the agent interface."
-msgstr "Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface."
+msgstr ""
+"Shows a link in the menu to access the history of a FAQ in its zoom view of "
+"the agent interface."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
 "interface."
-msgstr "Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface."
+msgstr ""
+"Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
+"interface."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the FAQ zoom view of the agent "
 "interface."
-msgstr "Shows a link in the menu to go back in the FAQ zoom view of the agent interface."
+msgstr ""
+"Shows a link in the menu to go back in the FAQ zoom view of the agent "
+"interface."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a FAQ in the its zoom view of the agent "
 "interface."
-msgstr "Shows a link in the menu to print a FAQ in the its zoom view of the agent interface."
+msgstr ""
+"Shows a link in the menu to print a FAQ in the its zoom view of the agent "
+"interface."
 
 #. SysConfig
 msgid "Solution"
@@ -1517,25 +1630,33 @@ msgstr "The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#."
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr "This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type."
+msgstr ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'Normal' link type."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr "This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type."
+msgstr ""
+"This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
+"objects using the 'ParentChild' link type."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr "This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type."
+msgstr ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'Normal' link type."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'ParentChild' link type."
-msgstr "This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type."
+msgstr ""
+"This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
+"objects using the 'ParentChild' link type."
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."

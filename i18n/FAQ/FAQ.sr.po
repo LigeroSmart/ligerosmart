@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # Dusan Vuckovic, 2017-2019
 # Jaroslav Balaz <balazj315@gmail.com>, 2015
@@ -6,15 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-10-31 23:00+0000\n"
+"POT-Creation-Date: 2020-01-24 09:29+0000\n"
 "PO-Revision-Date: 2019-11-10 18:09+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"
+"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -78,9 +79,11 @@ msgstr "Да ли стварно желите да обришете ову ка�
 
 #. Template: AgentFAQCategory
 msgid ""
-"You can not delete this category. It is used in at least one FAQ article "
-"and/or is parent of at least one other category"
-msgstr "Не можете обрисати ову категорију. Употребљена је у бар једном FAQ чланку и/или је надређена најмање једној другој категорији"
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"Не можете обрисати ову категорију. Употребљена је у бар једном FAQ чланку и/"
+"или је надређена најмање једној другој категорији"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
@@ -316,13 +319,18 @@ msgid ""
 "To open links in the following description blocks, you might need to press "
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
-msgstr "Да бисте отворили везе у следећим блоковима описа, можда ћете требати да притиснете „Ctrl” или „Cmd” или „Shift” тастер док истовремено кликнете на везу (зависи од вашег ОС и прегледача)."
+msgstr ""
+"Да бисте отворили везе у следећим блоковима описа, можда ћете требати да "
+"притиснете „Ctrl” или „Cmd” или „Shift” тастер док истовремено кликнете на "
+"везу (зависи од вашег ОС и прегледача)."
 
 #. Template: AgentFAQZoom
 msgid ""
-"How helpful was this article? Please give us your rating and help to improve"
-" the FAQ Database. Thank You!"
-msgstr "Колико је користан овај чланак? Молимо вас да дате вашу оцену и помогнете подизању квалитата базе често постављаних питања. Хвала Вам! "
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
+msgstr ""
+"Колико је користан овај чланак? Молимо вас да дате вашу оцену и помогнете "
+"подизању квалитата базе често постављаних питања. Хвала Вам! "
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
@@ -374,7 +382,8 @@ msgstr "За листу корисних ресурса, молимо унеси
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
-msgstr "Потпуна текстуална претрага у FAQ чланцима (нпр. \"John*n\" или \"Will*\")"
+msgstr ""
+"Потпуна текстуална претрага у FAQ чланцима (нпр. \"John*n\" или \"Will*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
@@ -506,7 +515,8 @@ msgstr "Потребна конфигурациона опција FAQ::Frontend
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
-msgstr "Конфигурациона опција FAQ::Frontend::Overview мора да буде HASH референца!"
+msgstr ""
+"Конфигурациона опција FAQ::Frontend::Overview мора да буде HASH референца!"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
@@ -734,7 +744,11 @@ msgid ""
 "Image allows two input kinds. First the name of an image (e.g. faq.png). In "
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
-msgstr "Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. Елемент Слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је унос везе до слике."
+msgstr ""
+"Филтер за „HTML” излаз за додавање везе иза дефинисаног низа знакова. "
+"Елемент Слика дозвољава два начина уноса. Први је назив слике (нпр faq.png). "
+"у овом случају биће коришћена „OTRS” путања до слике.  Друга могућност је "
+"унос везе до слике."
 
 #. SysConfig
 msgid "Add FAQ article"
@@ -794,7 +808,8 @@ msgstr "Подразумевани језик FAQ чланака у једној
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr "Подразумевана максимална дужина наслова FAQ чланка која ће бити приказана."
+msgstr ""
+"Подразумевана максимална дужина наслова FAQ чланка која ће бити приказана."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -816,16 +831,23 @@ msgstr "Подразумевани тип тикета за одобравање
 msgid ""
 "Default value for the Action parameter for the public frontend. The Action "
 "parameter is used in the scripts of the system."
-msgstr "Подразумевана вредност за „Action” параметар у јавном фронтенду. Овај параметар користе скрипте система. "
+msgstr ""
+"Подразумевана вредност за „Action” параметар у јавном фронтенду. Овај "
+"параметар користе скрипте система. "
 
 #. SysConfig
 msgid ""
 "Define Actions where a settings button is available in the linked objects "
 "widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
-msgstr "Дефинише Акције где је дугме поставки доступно у повезаном графичком елементу објекта (LinkObject::ViewMode = \"complex\"). Молимо да имате на уму да ове Акције морају да буду регистроване у следећим JS и CSS датотекама: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js."
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
+msgstr ""
+"Дефинише Акције где је дугме поставки доступно у повезаном графичком "
+"елементу објекта (LinkObject::ViewMode = \"complex\"). Молимо да имате на "
+"уму да ове Акције морају да буду регистроване у следећим JS и CSS "
+"датотекама: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI."
+"Table.Sort.js, Core.Agent.TableFilters.js и Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -833,10 +855,13 @@ msgstr "Одређује да ли наслов FAQ треба да буде д�
 
 #. SysConfig
 msgid ""
-"Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
-"fields (DynamicField_NameX) are allowed for DefaultColumns."
-msgstr "Одређује које колоне ће бити приказане у додатку повезаних FAQ чланака (LinkObject::ViewMode = \"сложено\"). Напомена: само атрибути FAQ чланка и динамичка поља (DynamicField_NameX) су дозвољени за DefaultColumns."
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
+msgstr ""
+"Одређује које колоне ће бити приказане у додатку повезаних FAQ чланака "
+"(LinkObject::ViewMode = \"сложено\"). Напомена: само атрибути FAQ чланка и "
+"динамичка поља (DynamicField_NameX) су дозвољени за DefaultColumns."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -850,110 +875,148 @@ msgstr "Дефинише модул прегледа за мали приказ 
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "agent interface."
-msgstr "Дефинише подразумевани атрибут за сортирање FAQ претрази FAQ  у интерфејсу  оператера."
+msgstr ""
+"Дефинише подразумевани атрибут за сортирање FAQ претрази FAQ  у интерфејсу  "
+"оператера."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "customer interface."
-msgstr "Дефинише подразумевани атрибут за сортирање FAQ у претрази FAQ  у интерфејсу клијента."
+msgstr ""
+"Дефинише подразумевани атрибут за сортирање FAQ у претрази FAQ  у интерфејсу "
+"клијента."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "public interface."
-msgstr "Дефинише подразумевани атрибут за сортирање FAQ у претрази FAQ  у јавном интерфејсу."
+msgstr ""
+"Дефинише подразумевани атрибут за сортирање FAQ у претрази FAQ  у јавном "
+"интерфејсу."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" agent interface."
-msgstr "Дефинише подразумевани атрибут за сортирање FAQ у FAQ претраживачу у интерфејсу оператера."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
+msgstr ""
+"Дефинише подразумевани атрибут за сортирање FAQ у FAQ претраживачу у "
+"интерфејсу оператера."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" customer interface."
-msgstr "Дефинише подразумевани атрибут за сортирање FAQ у FAQ претраживачу у интерфејсу клијента."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
+msgstr ""
+"Дефинише подразумевани атрибут за сортирање FAQ у FAQ претраживачу у "
+"интерфејсу клијента."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" public interface."
-msgstr "Дефинише подразумевани атрибут за сортирање FAQ у FAQ претраживачу у јавном интерфејсу."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
+msgstr ""
+"Дефинише подразумевани атрибут за сортирање FAQ у FAQ претраживачу у јавном "
+"интерфејсу."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Дефинише подразумевани редослед FAQ у резултатима FAQ претраживача у интерфејсу опрератера. Горе: најстарији на врху. Доле: најновије на врху."
+msgstr ""
+"Дефинише подразумевани редослед FAQ у резултатима FAQ претраживача у "
+"интерфејсу опрератера. Горе: најстарији на врху. Доле: најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Дефинише подразумевани редослед FAQ у резултатима FAQ претраживача у интерфејсу клијента. Горе: најстарији на врху. Доле: најновије на врху."
+msgstr ""
+"Дефинише подразумевани редослед FAQ у резултатима FAQ претраживача у "
+"интерфејсу клијента. Горе: најстарији на врху. Доле: најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
-msgstr "Дефинише подразумевани редослед FAQ резултатима FAQ претраживача у јавном интерфејсу. Горе: најстарији на врху. Доле: најновије на врху."
+msgstr ""
+"Дефинише подразумевани редослед FAQ резултатима FAQ претраживача у јавном "
+"интерфејсу. Горе: најстарији на врху. Доле: најновије на врху."
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ order of a search result in the agent interface. Up:"
-" oldest on top. Down: latest on top."
-msgstr "Дефинише подразумевани редослед FAQ у резултатима претраге у интерфејсу опрератера. Горе: најстарији на врху. Доле: најновије на врху."
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
+msgstr ""
+"Дефинише подразумевани редослед FAQ у резултатима претраге у интерфејсу "
+"опрератера. Горе: најстарији на врху. Доле: најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr "Дефинише подразумевани редослед FAQ у резултатима претраге у интерфејсу клијента. Горе: најстарији на врху. Доле: најновије на врху."
+msgstr ""
+"Дефинише подразумевани редослед FAQ у резултатима претраге у интерфејсу "
+"клијента. Горе: најстарији на врху. Доле: најновије на врху."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
-msgstr "Дефинише подразумевани редослед FAQ у резултатима претраге у јавном интерфејсу. Горе: најстарији на врху. Доле: најновије на врху."
+msgstr ""
+"Дефинише подразумевани редослед FAQ у резултатима претраге у јавном "
+"интерфејсу. Горе: најстарији на врху. Доле: најновије на врху."
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
-msgstr "Дефинише подразумевани приказани FAQ атрибут претраге за FAQ прозор за претрагу. "
+msgstr ""
+"Дефинише подразумевани приказани FAQ атрибут претраге за FAQ прозор за "
+"претрагу. "
 
 #. SysConfig
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
-msgstr "Одређује информације које ће бити убачене у FAQ базирани тикет. \"Комплетан FAQ\" укључује текст, прилоге и уметнуте слике."
+msgstr ""
+"Одређује информације које ће бити убачене у FAQ базирани тикет. \"Комплетан "
+"FAQ\" укључује текст, прилоге и уметнуте слике."
 
 #. SysConfig
 msgid ""
 "Defines the parameters for the dashboard backend. \"Limit\" defines the "
-"number of entries displayed by default. \"Group\" is used to restrict access"
-" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
-" the plugin is enabled by default or if the user needs to enable it "
-"manually."
-msgstr "Дефинише позадинске параметре за контролну таблу. \"Лимит\" дефинише број подрезумевано приказаних уноса. \"Група\" се користи да ограничи приступ додатку (нпр. Група: admin;group1;group2;).\"Подразумевано\" указује на то да ли је додатак подразумевано активиран или да је потребно да га корисник мануелно активира."
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
+msgstr ""
+"Дефинише позадинске параметре за контролну таблу. \"Лимит\" дефинише број "
+"подрезумевано приказаних уноса. \"Група\" се користи да ограничи приступ "
+"додатку (нпр. Група: admin;group1;group2;).\"Подразумевано\" указује на то "
+"да ли је додатак подразумевано активиран или да је потребно да га корисник "
+"мануелно активира."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
-msgstr "Дефинише приказане колоне у FAQ претраживачу. Ова опција нема утицај на позиције колона."
+msgstr ""
+"Дефинише приказане колоне у FAQ претраживачу. Ова опција нема утицај на "
+"позиције колона."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ journal. This option has no effect on "
 "the position of the column."
-msgstr "Дефинише приказане колоне у FAQ дневнику. Ова опција нема утицај на позиције колона."
+msgstr ""
+"Дефинише приказане колоне у FAQ дневнику. Ова опција нема утицај на позиције "
+"колона."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ search. This option has no effect on "
 "the position of the column."
-msgstr "Дефинише приказане колоне у FAQ претрази. Ова опција нема утицај на позиције колона."
+msgstr ""
+"Дефинише приказане колоне у FAQ претрази. Ова опција нема утицај на позиције "
+"колона."
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
@@ -990,8 +1053,7 @@ msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
 msgstr "Динамичка поља приказана у екрану штампе FAQ у интерфејсу оператера."
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
 msgstr "Динамичка поља приказана у екрану штампе FAQ у интерфејсу клијента."
 
 #. SysConfig
@@ -1015,15 +1077,18 @@ msgstr "Динамичка поља приказана у екрану прет�
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
-msgstr "Динамичка поља приказана у прегледу FAQ малог формата у интерфејсу оператера."
+msgstr ""
+"Динамичка поља приказана у прегледу FAQ малог формата у интерфејсу оператера."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
-msgstr "Динамичка поља приказана у детаљном прегледу FAQ у интерфејсу оператера."
+msgstr ""
+"Динамичка поља приказана у детаљном прегледу FAQ у интерфејсу оператера."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
-msgstr "Динамичка поља приказана у детаљном прегледу FAQ у интерфејсу клијента."
+msgstr ""
+"Динамичка поља приказана у детаљном прегледу FAQ у интерфејсу клијента."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
@@ -1167,99 +1232,131 @@ msgstr "Регистрација модула за учитавање за ја�
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the agent interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у резултату FAQ претраживача у интерфејсу оператера."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у резултату FAQ "
+"претраживача у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the customer interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у резултату FAQ претраживача у интерфејсу клијента."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у резултату FAQ "
+"претраживача у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the public interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у резултату FAQ претраживача у јавном интерфејсу."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у резултату FAQ "
+"претраживача у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ journal in the "
 "agent interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у FAQ дневнику у интерфејсу оператера."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у FAQ дневнику у "
+"интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the agent interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у резултату претраге у интерфејсу оператера."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у резултату претраге у "
+"интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the customer interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у резултату претраге у интерфејсу клијента."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у резултату претраге у "
+"интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the public interface."
-msgstr "Максимални број FAQ чланака који ће бити приказани у резултату претраге у јавном интерфејсу."
+msgstr ""
+"Максимални број FAQ чланака који ће бити приказани у резултату претраге у "
+"јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претраживачу у интерфејсу оператера."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ "
+"претраживачу у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претраживачу у интерфејсу клијента."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ "
+"претраживачу у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ истраживачу у јавном интерфејсу."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ "
+"истраживачу у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the agent interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претрази у интерфејсу оператера."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претрази "
+"у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the customer interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претрази у интерфејсу клијента."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претрази "
+"у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the public interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претрази у јавном интерфејсу."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ претрази "
+"у јавном интерфејсу."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
-msgstr "Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ дневнику у интерфејсу оператера."
+msgstr ""
+"Максимална дужина наслова у FAQ чланку који ће бити приказани у FAQ дневнику "
+"у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "customer interface."
-msgstr "Модул за генерисање HTML OpenSearch профила за кратку FAQ претрагу у интерфејсу клијента."
+msgstr ""
+"Модул за генерисање HTML OpenSearch профила за кратку FAQ претрагу у "
+"интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Module to generate HTML OpenSearch profile for short FAQ search in the "
 "public interface."
-msgstr "Модул за генерисање HTML OpenSearch профила за кратку FAQ претрагу у јавном профилу."
+msgstr ""
+"Модул за генерисање HTML OpenSearch профила за кратку FAQ претрагу у јавном "
+"профилу."
 
 #. SysConfig
 msgid "Module to generate html OpenSearch profile for short FAQ search."
@@ -1277,25 +1374,33 @@ msgstr "Нови FAQ чланци требају бити одобрени пр�
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the customer "
 "interface."
-msgstr "Број FAQ чланака који ће бити приказани у FAQ претраживачу у интерфејсу клијента."
+msgstr ""
+"Број FAQ чланака који ће бити приказани у FAQ претраживачу у интерфејсу "
+"клијента."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed in the FAQ Explorer of the public "
 "interface."
-msgstr "Број FAQ чланака који ће бити приказани у FAQ претраживачу у јавном интерфејсу."
+msgstr ""
+"Број FAQ чланака који ће бити приказани у FAQ претраживачу у јавном "
+"интерфејсу."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the customer interface."
-msgstr "Број FAQ чланака који ће бити приказани на свакој страни резултата претраге у интерфејсу клијента."
+msgstr ""
+"Број FAQ чланака који ће бити приказани на свакој страни резултата претраге "
+"у интерфејсу клијента."
 
 #. SysConfig
 msgid ""
 "Number of FAQ articles to be displayed on each page of a search result in "
 "the public interface."
-msgstr "Број FAQ чланака који ће бити приказани на свакој страни резултата претраге у јавном интерфејсу."
+msgstr ""
+"Број FAQ чланака који ће бити приказани на свакој страни резултата претраге "
+"у јавном интерфејсу."
 
 #. SysConfig
 msgid "Number of shown items in last changes."
@@ -1319,15 +1424,18 @@ msgstr "Ограничење броја приказаних сродних FAQ 
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" journal overview."
-msgstr "Параметри страница (на којима су FAQ ставке приказане) на малом приказу прегледа FAQ дневника."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
+msgstr ""
+"Параметри страница (на којима су FAQ ставке приказане) на малом приказу "
+"прегледа FAQ дневника."
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" overview."
-msgstr "Параметри страница (на којима су видљиве FAQ ставке) смањеног прегледа FAQ."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
+msgstr ""
+"Параметри страница (на којима су видљиве FAQ ставке) смањеног прегледа FAQ."
 
 #. SysConfig
 msgid "Print this FAQ"
@@ -1377,49 +1485,63 @@ msgstr "Претрага FAQ."
 msgid ""
 "Select how many items should be shown in Journal Overview \"Small\" by "
 "default."
-msgstr "Изаберите колико ће ставки бити подразумевано приказано у прегледу дневника малог формата."
+msgstr ""
+"Изаберите колико ће ставки бити подразумевано приказано у прегледу дневника "
+"малог формата."
 
 #. SysConfig
 msgid "Select how many items should be shown in Overview \"Small\" by default."
-msgstr "Изаберите колико ће ставки бити подразумевано приказано у прегледу малог формата."
+msgstr ""
+"Изаберите колико ће ставки бити подразумевано приказано у прегледу малог "
+"формата."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr "Подеси подразумевану висину (у пикселима) инлине HTML поља у AgentFAQZoom."
+msgstr ""
+"Подеси подразумевану висину (у пикселима) инлине HTML поља у AgentFAQZoom."
 
 #. SysConfig
 msgid ""
 "Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr "Подеси подразумевану висину (у пикселима) инлине HTML поља у CustomerFAQZoom (и PublicFAQZoom)."
+msgstr ""
+"Подеси подразумевану висину (у пикселима) инлине HTML поља у CustomerFAQZoom "
+"(и PublicFAQZoom)."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom."
-msgstr "Подеси максималну висину (у пикселима) инлине HTML поља у AgentFAQZoom."
+msgstr ""
+"Подеси максималну висину (у пикселима) инлине HTML поља у AgentFAQZoom."
 
 #. SysConfig
 msgid ""
 "Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom "
 "(and PublicFAQZoom)."
-msgstr "Подеси максималну висину (у пикселима) инлине HTML поља у CustomerFAQZoom (и PublicFAQZoom)."
+msgstr ""
+"Подеси максималну висину (у пикселима) инлине HTML поља у CustomerFAQZoom (и "
+"PublicFAQZoom)."
 
 #. SysConfig
 msgid ""
-"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
-"Articles."
-msgstr "Прикажи \"Убаци FAQ везу\" дугме у AgentFAQZoomSmall за јавне FAQ артикле."
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
+msgstr ""
+"Прикажи \"Убаци FAQ везу\" дугме у AgentFAQZoomSmall за јавне FAQ артикле."
 
 #. SysConfig
 msgid ""
 "Show \"Insert FAQ Text & Link\" / \"Insert Full FAQ & Link\" Button in "
 "AgentFAQZoomSmall for public FAQ Articles."
-msgstr "Прикажи \"Убаци FAQ текст и везу\" / \"Убаци цео FAQ и везу дугме у AgentFAQZoomSmall за јавне FAQ артикле."
+msgstr ""
+"Прикажи \"Убаци FAQ текст и везу\" / \"Убаци цео FAQ и везу дугме у "
+"AgentFAQZoomSmall за јавне FAQ артикле."
 
 #. SysConfig
-msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
-msgstr "Прикажи \"Убаци FAQ текст\" / \"Убаци цео FAQ\" дугме у AgentFAQZoomSmall."
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgstr ""
+"Прикажи \"Убаци FAQ текст\" / \"Убаци цео FAQ\" дугме у AgentFAQZoomSmall."
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
@@ -1431,7 +1553,9 @@ msgstr "Прикажи путању до FAQ да/не."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
-msgstr "Приказ неиспрвних ставки у резултатима FAQ претраживача у интерфејсу оператера."
+msgstr ""
+"Приказ неиспрвних ставки у резултатима FAQ претраживача у интерфејсу "
+"оператера."
 
 #. SysConfig
 msgid "Show items of subcategories."
@@ -1449,7 +1573,9 @@ msgstr "Прикажи задње креиране ставке у дефини�
 msgid ""
 "Show the stars for the articles with a rating equal or greater like the "
 "defined value (set value '0' to deactivate the output)."
-msgstr "Прикажи звездице за чланке са једнаком или бољом оценом од дефинисане вредности (поставите вредност '0' за деактивирање приказа)."
+msgstr ""
+"Прикажи звездице за чланке са једнаком или бољом оценом од дефинисане "
+"вредности (поставите вредност '0' за деактивирање приказа)."
 
 #. SysConfig
 msgid "Show top 10 items in defined interfaces."
@@ -1463,37 +1589,49 @@ msgstr "Прикажи гласање у дефинисаним интерфеј
 msgid ""
 "Shows a link in the menu that allows linking a FAQ with another object in "
 "the zoom view of such FAQ of the agent interface."
-msgstr "У менију приказује везу која омогућава повезивање FAQ са другим објектом у детаљном приказу тог FAQ у интерфејсу оператера."
+msgstr ""
+"У менију приказује везу која омогућава повезивање FAQ са другим објектом у "
+"детаљном приказу тог FAQ у интерфејсу оператера."
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
-" agent interface."
-msgstr "У менију приказује везу која омогућава брисање FAQ у детаљном приказу у интерфејсу оператера."
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
+msgstr ""
+"У менију приказује везу која омогућава брисање FAQ у детаљном приказу у "
+"интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to access the history of a FAQ in its zoom view of "
 "the agent interface."
-msgstr "У менију приказује везу за приступ FAQ историјату у детаљном приказу у интерфејсу оператера."
+msgstr ""
+"У менију приказује везу за приступ FAQ историјату у детаљном приказу у "
+"интерфејсу оператера."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to edit a FAQ in the its zoom view of the agent "
 "interface."
-msgstr "У менију приказује везу за измену FAQ у детаљном приказу у интерфејсу оператера."
+msgstr ""
+"У менију приказује везу за измену FAQ у детаљном приказу у интерфејсу "
+"оператера."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to go back in the FAQ zoom view of the agent "
 "interface."
-msgstr "У менију приказује везу за повратак у детаљни приказ FAQ у  интерфејсу оператера."
+msgstr ""
+"У менију приказује везу за повратак у детаљни приказ FAQ у  интерфејсу "
+"оператера."
 
 #. SysConfig
 msgid ""
 "Shows a link in the menu to print a FAQ in the its zoom view of the agent "
 "interface."
-msgstr "У менију приказује везу за штампање FAQ у детаљном приказу у интерфејсу оператера."
+msgstr ""
+"У менију приказује везу за штампање FAQ у детаљном приказу у интерфејсу "
+"оператера."
 
 #. SysConfig
 msgid "Solution"
@@ -1519,25 +1657,33 @@ msgstr "Идентификатор за FAQ, нпр. FAQ#, KB#, MyFAQ#. Подр
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'Normal' link type."
-msgstr "Ово подешавање дефинише да FAQ објект може да се повеже са другим FAQ објектима користећи везу типа 'Normal'."
+msgstr ""
+"Ово подешавање дефинише да FAQ објект може да се повеже са другим FAQ "
+"објектима користећи везу типа 'Normal'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'FAQ' "
 "objects using the 'ParentChild' link type."
-msgstr "Ово подешавање дефинише да FAQ објекaт може да се повеже са другим FAQ објектима користећи везу типа 'ParentChild'."
+msgstr ""
+"Ово подешавање дефинише да FAQ објекaт може да се повеже са другим FAQ "
+"објектима користећи везу типа 'ParentChild'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'Normal' link type."
-msgstr "Ово подешавање дефинише да FAQ објект може да се повеже са другим тикет објектима користећи везу типа 'Normal'."
+msgstr ""
+"Ово подешавање дефинише да FAQ објект може да се повеже са другим тикет "
+"објектима користећи везу типа 'Normal'."
 
 #. SysConfig
 msgid ""
 "This setting defines that a 'FAQ' object can be linked with other 'Ticket' "
 "objects using the 'ParentChild' link type."
-msgstr "Ово подешавање дефинише да FAQ објект може да се повеже са другим тикет објектима користећи везу типа 'ParentChild'."
+msgstr ""
+"Ово подешавање дефинише да FAQ објект може да се повеже са другим тикет "
+"објектима користећи везу типа 'ParentChild'."
 
 #. SysConfig
 msgid "Ticket body for approval of FAQ article."

@@ -1,19 +1,21 @@
-# 
+#
 # Translators:
 # Ann Li <dn.annli@gmail.com>, 2016
 # Hsiao-Ting Wang <hsiaoting.wang@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2019-10-31 23:00+0000\n"
-"PO-Revision-Date: 2019-10-31 23:03+0000\n"
-"Last-Translator: Carlos Rodríguez <carlos.rodriguez@otrs.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/otrs/OTRS/language/zh_TW/)\n"
+"POT-Creation-Date: 2020-01-24 09:29+0000\n"
+"PO-Revision-Date: 2020-02-25 22:18+0000\n"
+"Last-Translator: Howard <howardlababy@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <https://translate.app.otrs.com/"
+"projects/otrs-6/faq/zh_Hant/>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -37,11 +39,11 @@ msgstr "常見問題目錄分類管理"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "新增 FAQ 類別"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "編輯 FAQ 類別"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -57,7 +59,7 @@ msgstr "編輯目錄分類"
 
 #. Template: AgentFAQCategory
 msgid "Subcategory of"
-msgstr ""
+msgstr "子類別："
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
@@ -77,9 +79,11 @@ msgstr "您確定要刪除此目錄分類？"
 
 #. Template: AgentFAQCategory
 msgid ""
-"You can not delete this category. It is used in at least one FAQ article "
-"and/or is parent of at least one other category"
-msgstr "您無法刪除此目錄分類。至少被一篇常見問題文章在此目錄分類內，及/或它是至少一個其他目錄分類是它的母目錄分類。"
+"You can not delete this category. It is used in at least one FAQ article and/"
+"or is parent of at least one other category"
+msgstr ""
+"您無法刪除此目錄分類。至少被一篇常見問題文章在此目錄分類內，及/或它是至少一個"
+"其他目錄分類是它的母目錄分類。"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
@@ -147,11 +151,11 @@ msgstr "常見問題語言管理"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "新增 FAQ 語言"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "編輯 FAQ 語言"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
@@ -319,8 +323,8 @@ msgstr ""
 
 #. Template: AgentFAQZoom
 msgid ""
-"How helpful was this article? Please give us your rating and help to improve"
-" the FAQ Database. Thank You!"
+"How helpful was this article? Please give us your rating and help to improve "
+"the FAQ Database. Thank You!"
 msgstr ""
 
 #. Template: AgentFAQZoom
@@ -821,9 +825,9 @@ msgstr ""
 msgid ""
 "Define Actions where a settings button is available in the linked objects "
 "widget (LinkObject::ViewMode = \"complex\"). Please note that these Actions "
-"must have registered the following JS and CSS files: "
-"Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, "
-"Core.Agent.TableFilters.js and Core.Agent.LinkObject.js."
+"must have registered the following JS and CSS files: Core.AllocationList."
+"css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
+"TableFilters.js and Core.Agent.LinkObject.js."
 msgstr ""
 
 #. SysConfig
@@ -832,9 +836,9 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Define which columns are shown in the linked FAQs widget "
-"(LinkObject::ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic "
-"fields (DynamicField_NameX) are allowed for DefaultColumns."
+"Define which columns are shown in the linked FAQs widget (LinkObject::"
+"ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
+"(DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
 
 #. SysConfig
@@ -865,20 +869,20 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" agent interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" customer interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"customer interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the"
-" public interface."
+"Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
+"public interface."
 msgstr ""
 
 #. SysConfig
@@ -901,8 +905,8 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Defines the default FAQ order of a search result in the agent interface. Up:"
-" oldest on top. Down: latest on top."
+"Defines the default FAQ order of a search result in the agent interface. Up: "
+"oldest on top. Down: latest on top."
 msgstr ""
 
 #. SysConfig
@@ -930,10 +934,9 @@ msgstr ""
 #. SysConfig
 msgid ""
 "Defines the parameters for the dashboard backend. \"Limit\" defines the "
-"number of entries displayed by default. \"Group\" is used to restrict access"
-" to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if"
-" the plugin is enabled by default or if the user needs to enable it "
-"manually."
+"number of entries displayed by default. \"Group\" is used to restrict access "
+"to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
+"the plugin is enabled by default or if the user needs to enable it manually."
 msgstr ""
 
 #. SysConfig
@@ -989,8 +992,7 @@ msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
 msgstr ""
 
 #. SysConfig
-msgid ""
-"Dynamic fields shown in the FAQ print screen of the customer interface."
+msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
 msgstr ""
 
 #. SysConfig
@@ -1166,20 +1168,20 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the agent interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the agent interface."
 msgstr "在服務員介面可顯示於常見問題瀏覽器結果的常見問題文章最多數量"
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the customer interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the customer interface."
 msgstr "在客戶介面可顯示於常見問題瀏覽器結果的常見問題文章最大數量"
 
 #. SysConfig
 msgid ""
-"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of"
-" the public interface."
+"Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
+"the public interface."
 msgstr "在公開介面可顯示於常見問題瀏覽器結果的常見問題文章最大數量"
 
 #. SysConfig
@@ -1226,20 +1228,20 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the agent interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the agent interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the customer interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the customer interface."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in"
-" the public interface."
+"Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
+"the public interface."
 msgstr ""
 
 #. SysConfig
@@ -1318,14 +1320,14 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" journal overview."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"journal overview."
 msgstr ""
 
 #. SysConfig
 msgid ""
-"Parameters for the pages (in which the FAQ items are shown) of the small FAQ"
-" overview."
+"Parameters for the pages (in which the FAQ items are shown) of the small FAQ "
+"overview."
 msgstr ""
 
 #. SysConfig
@@ -1406,8 +1408,7 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ "
-"Articles."
+"Show \"Insert FAQ Link\" Button in AgentFAQZoomSmall for public FAQ Articles."
 msgstr ""
 
 #. SysConfig
@@ -1417,7 +1418,8 @@ msgid ""
 msgstr ""
 
 #. SysConfig
-msgid "Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
+msgid ""
+"Show \"Insert FAQ Text\" / \"Insert Full FAQ\" Button in AgentFAQZoomSmall."
 msgstr ""
 
 #. SysConfig
@@ -1466,8 +1468,8 @@ msgstr ""
 
 #. SysConfig
 msgid ""
-"Shows a link in the menu that allows to delete a FAQ in its zoom view in the"
-" agent interface."
+"Shows a link in the menu that allows to delete a FAQ in its zoom view in the "
+"agent interface."
 msgstr ""
 
 #. SysConfig
