@@ -194,9 +194,9 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ ジャーナル';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'オプション FAQ::Frontend::Overview の設定が必要です。';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
-        '';
+        'オプション FAQ::Frontend::Overview は HASH ref である必要があります!';
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '"%s"を閲覧するための設定値がありません！';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
@@ -237,7 +237,7 @@ sub Data {
     $Self->{Translation}->{'You have already voted!'} = 'あなたはすでに評価済です。';
     $Self->{Translation}->{'No rate selected!'} = '評価が選択されていません。';
     $Self->{Translation}->{'The voting mechanism is not enabled!'} = '評価の機能を有効になっていません！';
-    $Self->{Translation}->{'The vote rate is not defined!'} = '';
+    $Self->{Translation}->{'The vote rate is not defined!'} = '投票率が定義されていません!';
 
     # Perl Module: Kernel/Modules/CustomerFAQPrint.pm
     $Self->{Translation}->{'FAQ Article Print'} = '記事印刷';
@@ -255,7 +255,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/PublicFAQRSS.pm
     $Self->{Translation}->{'No Type is given!'} = 'タイプが指定されていません！';
-    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = '';
+    $Self->{Translation}->{'Type must be either LastCreate or LastChange or Top10!'} = 'Type は、 "LastCreate", "LastChange", "Top10" のいずれかでなくてはなりません!';
     $Self->{Translation}->{'Can\'t create RSS file!'} = 'RSSファイルが作成できません！';
 
     # Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
@@ -294,10 +294,10 @@ sub Data {
     $Self->{Translation}->{'CSS color for the voting result.'} = '評価の結果表示ようのカラー（スタイルシート）';
     $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'FAQ項目から離脱するまでのキャッシュ時間';
     $Self->{Translation}->{'Category Management'} = 'カテゴリー管理';
-    $Self->{Translation}->{'Category Management.'} = '';
+    $Self->{Translation}->{'Category Management.'} = 'カテゴリ管理';
     $Self->{Translation}->{'Customer FAQ Print.'} = '顧客用FAQの表示';
-    $Self->{Translation}->{'Customer FAQ Related Articles'} = '';
-    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '';
+    $Self->{Translation}->{'Customer FAQ Related Articles'} = '顧客向けFAQの関連記事';
+    $Self->{Translation}->{'Customer FAQ Related Articles.'} = '顧客向けFAQの関連記事';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '顧客用FAQの詳細表示';
     $Self->{Translation}->{'Customer FAQ search.'} = '顧客用FAQの検索';
     $Self->{Translation}->{'Customer FAQ.'} = '顧客用FAQ';
@@ -318,7 +318,8 @@ sub Data {
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         'FAQタイトルが記事の件名に連結するかどうかを定義します';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
-        '';
+        'リンクされた FAQ ウィジェットに表示される列を定義します (LinkObject::ViewMode = "complex") 。
+注: DefaultColumns には、FAQ属性とダイナミック・フィールド (DynamicField_NameX) のみが設定できます。';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} =
         '簡易版FAQジャーナル表示用モジュールの概要を定義';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} =
@@ -393,13 +394,13 @@ sub Data {
     $Self->{Translation}->{'Edit this FAQ'} = 'この記事を編集';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '多言語を有効にする';
     $Self->{Translation}->{'Enable the related article feature for the customer frontend.'} =
-        '';
+        '顧客向けフロントエンドの関連記事機能を有効にします。';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '評価の機能を有効にする';
     $Self->{Translation}->{'Explorer'} = '一覧';
     $Self->{Translation}->{'FAQ AJAX Responder'} = '';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '';
-    $Self->{Translation}->{'FAQ Area'} = '';
-    $Self->{Translation}->{'FAQ Area.'} = ' FAQ エリア';
+    $Self->{Translation}->{'FAQ Area'} = 'FAQ エリア';
+    $Self->{Translation}->{'FAQ Area.'} = 'FAQ エリア';
     $Self->{Translation}->{'FAQ Delete.'} = 'FAQ の削除';
     $Self->{Translation}->{'FAQ Edit.'} = 'FAQ の編集';
     $Self->{Translation}->{'FAQ History.'} = 'FAQ 更新履歴';

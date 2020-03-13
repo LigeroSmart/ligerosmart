@@ -30,7 +30,7 @@ sub Data {
     $Self->{Translation}->{'Edit Category'} = '编辑类别';
     $Self->{Translation}->{'Subcategory of'} = '子类别于';
     $Self->{Translation}->{'Please select at least one permission group.'} = '请至少选择一个组权限.';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '能访问此类别文章的服务人员组';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '能访问此类别文章的服务人员组。';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '将作为注释在浏览时显示.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = '你确定要删除这个类别吗?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} =
@@ -166,7 +166,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQAdd.pm
     $Self->{Translation}->{'You need rw permission!'} = '你需要rw权限！';
-    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '没有找到用户有读写权限的类别。';
+    $Self->{Translation}->{'No categories found where user has read/write permissions!'} = '没有找到用户有读写权限的类别！';
     $Self->{Translation}->{'No default language found and can\'t create a new one.'} = '没有找到默认语言且无法创建新的语言。';
 
     # Perl Module: Kernel/Modules/AgentFAQCategory.pm
@@ -194,7 +194,7 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ日志';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '需要配置选项FAQ::Frontend::Overview。';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '需要配置选项FAQ::Frontend::Overview';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
         '配置选项FAQ::Frontend::Overview需要是一个哈希引用！';
     $Self->{Translation}->{'No config option found for the view "%s"!'} = '没有找到视图“%s”的配置选项！';
@@ -299,7 +299,7 @@ sub Data {
     $Self->{Translation}->{'Customer FAQ Related Articles'} = '客户FAQ相关的文章';
     $Self->{Translation}->{'Customer FAQ Related Articles.'} = '客户FAQ相关的文章。';
     $Self->{Translation}->{'Customer FAQ Zoom.'} = '客户FAQ详情。';
-    $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索';
+    $Self->{Translation}->{'Customer FAQ search.'} = '客户FAQ搜索。';
     $Self->{Translation}->{'Customer FAQ.'} = '客户FAQ。';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '以十分制显示评分结果。';
     $Self->{Translation}->{'Default category name.'} = '默认的目录名称。';
@@ -396,7 +396,7 @@ sub Data {
         '启用客户前端的相关文章功能。';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '在FAQ模块中启用投票机制。';
     $Self->{Translation}->{'Explorer'} = '浏览';
-    $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX Responder';
+    $Self->{Translation}->{'FAQ AJAX Responder'} = 'FAQ AJAX 响应程序';
     $Self->{Translation}->{'FAQ AJAX Responder for Richtext.'} = '用于FAQ富文本的AJAX Responder。';
     $Self->{Translation}->{'FAQ Area'} = 'FAQ区域';
     $Self->{Translation}->{'FAQ Area.'} = 'FAQ区域。';
@@ -407,17 +407,17 @@ sub Data {
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = 'FAQ概览“简洁视图”限制';
     $Self->{Translation}->{'FAQ Print.'} = 'FAQ打印。';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '服务人员界面中，FAQ搜索的后台选项。';
-    $Self->{Translation}->{'Field4'} = '字段4';
-    $Self->{Translation}->{'Field5'} = '字段5';
+    $Self->{Translation}->{'Field4'} = 'Field4';
+    $Self->{Translation}->{'Field5'} = 'Field5';
     $Self->{Translation}->{'Full FAQ'} = '完整FAQ';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '批准 FAQ 文章请求的群组。';
     $Self->{Translation}->{'History of this FAQ'} = 'FAQ文章的历史信息';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '在基于FAQ文章的工单中包含内部字段。';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '在基于FAQ文章的工单中包含每个字段的名称。';
-    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '快速搜索时显示的界面';
+    $Self->{Translation}->{'Interfaces where the quick search should be shown.'} = '快速搜索时显示的界面。';
     $Self->{Translation}->{'Journal'} = '日志';
     $Self->{Translation}->{'Language Management'} = '管理语言';
-    $Self->{Translation}->{'Language Management.'} = '管理语言';
+    $Self->{Translation}->{'Language Management.'} = '管理语言。';
     $Self->{Translation}->{'Limit for the search to build the keyword FAQ article list.'} = '为建立关键字FAQ文章列表的搜索限制。';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接对象到这个FAQ条目';
     $Self->{Translation}->{'List of queue names for which the related article feature is enabled.'} =

@@ -182,28 +182,28 @@ sub Data {
 
     # Perl Module: Kernel/Modules/AgentFAQDelete.pm
     $Self->{Translation}->{'No ItemID is given!'} = 'Nessun ItemID è dato!';
-    $Self->{Translation}->{'You have no permission for this category!'} = '';
-    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = '';
+    $Self->{Translation}->{'You have no permission for this category!'} = 'Non hai i permessi per questa categoria!';
+    $Self->{Translation}->{'Was not able to delete the FAQ article %s!'} = 'Impossibile eliminare l\'articolo %s dalle FAQ!';
 
     # Perl Module: Kernel/Modules/AgentFAQExplorer.pm
-    $Self->{Translation}->{'The CategoryID %s is invalid.'} = '';
+    $Self->{Translation}->{'The CategoryID %s is invalid.'} = 'L\'ID della categoria %s non è valido.';
 
     # Perl Module: Kernel/Modules/AgentFAQHistory.pm
-    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = '';
+    $Self->{Translation}->{'Can\'t show history, as no ItemID is given!'} = 'Impossibile mostrare la cronologia, poiché non viene fornito alcun riferimento!';
     $Self->{Translation}->{'FAQ History'} = 'Cronologia FAQ';
 
     # Perl Module: Kernel/Modules/AgentFAQJournal.pm
     $Self->{Translation}->{'FAQ Journal'} = 'Registro delle FAQ';
-    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = '';
+    $Self->{Translation}->{'Need config option FAQ::Frontend::Overview'} = 'Devi confgurare l\'opzione FAQ::Frontend::Overview';
     $Self->{Translation}->{'Config option FAQ::Frontend::Overview needs to be a HASH ref!'} =
-        '';
-    $Self->{Translation}->{'No config option found for the view "%s"!'} = '';
+        'Nell\'opzione FAQ::Frontend::Overview è ammesso un valore di tipo HASH!';
+    $Self->{Translation}->{'No config option found for the view "%s"!'} = 'Nessuna opzione di configurazione trovata per la vista "%s"!';
 
     # Perl Module: Kernel/Modules/AgentFAQLanguage.pm
-    $Self->{Translation}->{'No LanguageID is given!'} = '';
+    $Self->{Translation}->{'No LanguageID is given!'} = 'Non è stato inserito l\'ID della lingua!';
     $Self->{Translation}->{'The name is required!'} = 'Il nome è obbligatorio!';
     $Self->{Translation}->{'This language already exists!'} = 'Linguaggio esistente!';
-    $Self->{Translation}->{'Was not able to delete the language %s!'} = '';
+    $Self->{Translation}->{'Was not able to delete the language %s!'} = 'Impossibile eliminare la lingua %s!';
     $Self->{Translation}->{'FAQ language updated!'} = 'Linguaggio FAQ aggiornato!';
     $Self->{Translation}->{'FAQ language added!'} = 'Linguaggio FAQ aggiunto!';
     $Self->{Translation}->{'Delete Language %s'} = 'Elimina Lingua %s';

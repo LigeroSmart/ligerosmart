@@ -23,12 +23,12 @@ sub Data {
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = '常見問題目錄分類管理';
-    $Self->{Translation}->{'Add FAQ Category'} = '';
-    $Self->{Translation}->{'Edit FAQ Category'} = '';
+    $Self->{Translation}->{'Add FAQ Category'} = '新增 FAQ 類別';
+    $Self->{Translation}->{'Edit FAQ Category'} = '編輯 FAQ 類別';
     $Self->{Translation}->{'Add category'} = '添加目錄分類';
     $Self->{Translation}->{'Add Category'} = '添加目錄分類';
     $Self->{Translation}->{'Edit Category'} = '編輯目錄分類';
-    $Self->{Translation}->{'Subcategory of'} = '';
+    $Self->{Translation}->{'Subcategory of'} = '子類別：';
     $Self->{Translation}->{'Please select at least one permission group.'} = '請選擇至少一個權限組。';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '可以存取此目錄分類文章的服務員組別。';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '在瀏覽器中將會顯示為評言。';
@@ -63,8 +63,8 @@ sub Data {
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = '常見問題語言管理';
-    $Self->{Translation}->{'Add FAQ Language'} = '';
-    $Self->{Translation}->{'Edit FAQ Language'} = '';
+    $Self->{Translation}->{'Add FAQ Language'} = '新增 FAQ 語言';
+    $Self->{Translation}->{'Edit FAQ Language'} = '編輯 FAQ 語言';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languages.'} =
         '';
     $Self->{Translation}->{'Add language'} = '添加語言';

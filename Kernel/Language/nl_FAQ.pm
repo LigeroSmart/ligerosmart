@@ -89,7 +89,7 @@ sub Data {
     $Self->{Translation}->{'Keyword'} = 'Trefwoorden';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Stem (bijv. gelijk aan 10 of groter dan 60)';
     $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Verhouding (vb: Gelijk aan 25% of Groter dan 75%)';
-    $Self->{Translation}->{'Approved'} = 'Aangenomen';
+    $Self->{Translation}->{'Approved'} = 'Goedgekeurd';
     $Self->{Translation}->{'Last changed by'} = 'Laatst gewijzigd door';
     $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ Article Create Time (voor/na)';
     $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ Article Create Time (tussen)';
@@ -314,7 +314,7 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} =
         '';
     $Self->{Translation}->{'Define Actions where a settings button is available in the linked objects widget (LinkObject::ViewMode = "complex"). Please note that these Actions must have registered the following JS and CSS files: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js and Core.Agent.LinkObject.js.'} =
-        '';
+        'Definieer acties waarbij een instellingenknop beschikbaar is in de widget voor gekoppelde objecten (LinkObject::ViewMode = "complex"). Houd er rekening mee dat deze acties de volgende JS- en CSS-bestanden moeten hebben geregistreerd: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent.TableFilters.js en Core.Agent .LinkObject.js.';
     $Self->{Translation}->{'Define if the FAQ title should be concatenated to article subject.'} =
         '';
     $Self->{Translation}->{'Define which columns are shown in the linked FAQs widget (LinkObject::ViewMode = "complex"). Note: Only FAQ attributes and dynamic fields (DynamicField_NameX) are allowed for DefaultColumns.'} =
