@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 2befc326148d97d4ecce398bdea289580cd18792 - Kernel/Modules/AgentTicketActionCommon.pm - rel-6_0_26
+# $origin: otrs - 8207d0f681adcdeb5c1b497ac547a1d9749838d5 - Kernel/Modules/AgentTicketActionCommon.pm
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1013,7 +1013,6 @@ sub Run {
         if ( $ConfigObject->Get('Ticket::Type') && $Config->{TicketType} ) {
             if ( $GetParam{TypeID} ) {
                 $TicketObject->TicketTypeSet(
-                    Action   => $Self->{Action},
                     TypeID   => $GetParam{TypeID},
                     TicketID => $Self->{TicketID},
                     UserID   => $Self->{UserID},
@@ -1027,7 +1026,6 @@ sub Run {
                 $TicketObject->TicketServiceSet(
                     %GetParam,
                     %ACLCompatGetParam,
-                    Action         => $Self->{Action},
                     ServiceID      => $GetParam{ServiceID},
                     TicketID       => $Self->{TicketID},
                     CustomerUserID => $Ticket{CustomerUserID},
@@ -1036,7 +1034,6 @@ sub Run {
             }
             if ( defined $GetParam{SLAID} ) {
                 $TicketObject->TicketSLASet(
-                    Action   => $Self->{Action},
                     SLAID    => $GetParam{SLAID},
                     TicketID => $Self->{TicketID},
                     UserID   => $Self->{UserID},
@@ -1070,7 +1067,6 @@ sub Run {
                 TicketID           => $Self->{TicketID},
                 SendNoNotification => $GetParam{NewUserID},
                 Comment            => $BodyAsText,
-                Action             => $Self->{Action},
             );
             if ( !$Move ) {
                 return $LayoutObject->ErrorScreen();
@@ -2396,7 +2392,6 @@ sub _Mask {
         my %PriorityList = $TicketObject->TicketPriorityList(
             UserID   => $Self->{UserID},
             TicketID => $Self->{TicketID},
-            Action   => $Self->{Action},
         );
         if ( !$Config->{PriorityDefault} ) {
             $PriorityList{''} = '-';
