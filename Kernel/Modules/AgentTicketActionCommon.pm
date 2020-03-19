@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - 2befc326148d97d4ecce398bdea289580cd18792 - Kernel/Modules/AgentTicketActionCommon.pm - rel-6_0_26
+# $origin: otrs - 61764fc3cfd0e81cd5f6dbcf08115e12240f412d - Kernel/Modules/AgentTicketActionCommon.pm - rel-6_0_28
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -2582,11 +2582,17 @@ sub _Mask {
             my @InvolvedAgents;
             my $Counter = 1;
 
-            # get involved user list
             my @InvolvedUserID = $ParamObject->GetArray( Param => 'InvolvedUserID' );
+
+            my %AgentWithPermission = $GroupObject->PermissionGroupGet(
+                GroupID => $GID,
+                Type    => 'ro',
+            );
 
             USER:
             for my $User ( reverse @UserIDs ) {
+
+                next USER if !defined $AgentWithPermission{ $User->{UserID} };
 
                 my $Value = "$Counter: $User->{UserFullname}";
                 if ( $User->{OutOfOfficeMessage} ) {
