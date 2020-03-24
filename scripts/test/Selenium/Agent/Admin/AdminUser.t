@@ -1,7 +1,7 @@
 # --
 # Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
-# $origin: otrs - ab399be8f5b3943af9d1bfda6745da4cafcfd72c - scripts/test/Selenium/Agent/Admin/AdminUser.t - rel-6_0_27
+# $origin: otrs - ab399be8f5b3943af9d1bfda6745da4cafcfd72c - scripts/test/Selenium/Agent/Admin/AdminUser.t
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
