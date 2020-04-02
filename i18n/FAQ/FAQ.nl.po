@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
 "POT-Creation-Date: 2020-01-24 09:29+0000\n"
-"PO-Revision-Date: 2020-03-04 21:49+0000\n"
+"PO-Revision-Date: 2020-04-02 13:55+0000\n"
 "Last-Translator: Nick van der Burg <nmp.vanderburg@gmail.com>\n"
 "Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/faq/nl/>"
 "\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11.2\n"
+"X-Generator: Weblate 3.11.3\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
-msgstr "Artikel toevoegen"
+msgstr "FAQ-artikel toevoegen"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr "Trefwoorden"
+msgstr "Sleutelwoorden"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
-msgstr "Kies een categorie."
+msgstr "Een categorie is vereist."
 
 #. Template: AgentFAQAdd
 msgid "Approval"
@@ -36,15 +36,15 @@ msgstr "Goedkeuring"
 
 #. Template: AgentFAQCategory
 msgid "FAQ Category Management"
-msgstr "FAQ categoriebeheer"
+msgstr "FAQ-categoriebeheer"
 
 #. Template: AgentFAQCategory
 msgid "Add FAQ Category"
-msgstr ""
+msgstr "FAQ-categorie toevoegen"
 
 #. Template: AgentFAQCategory
 msgid "Edit FAQ Category"
-msgstr ""
+msgstr "FAQ-categorie bewerken"
 
 #. Template: AgentFAQCategory
 msgid "Add category"
@@ -64,39 +64,39 @@ msgstr "Subcategorie van"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
-msgstr "Selecteer tenminste één permissiegroep."
+msgstr "Selecteer ten minste één toestemmingsgroep."
 
 #. Template: AgentFAQCategory
 msgid "Agent groups that can access articles in this category."
-msgstr "Gebruikers met rechten op artikelen in deze categorie."
+msgstr "Agentgroepen die toegang hebben tot artikelen in deze categorie."
 
 #. Template: AgentFAQCategory
 msgid "Will be shown as comment in Explorer."
-msgstr "Wordt in webinterface getoond."
+msgstr "Wordt weergegeven als opmerking in Verkenner."
 
 #. Template: AgentFAQCategory
 msgid "Do you really want to delete this category?"
-msgstr "Wilt u deze categorie verwijderen?"
+msgstr "Wil je deze categorie echt verwijderen?"
 
 #. Template: AgentFAQCategory
 msgid ""
 "You can not delete this category. It is used in at least one FAQ article and/"
 "or is parent of at least one other category"
 msgstr ""
-"U kunt deze categorie niet verwijderen. Hij wordt gebruikt in een of meer "
-"artikelen en/of heeft onderliggende categoriën."
+"Je kan deze categorie niet verwijderen. Het wordt gebruikt in ten minste één "
+"FAQ-artikel en/of is ouder van ten minste één andere categorie"
 
 #. Template: AgentFAQCategory
 msgid "This category is used in the following FAQ article(s)"
-msgstr "Deze categorie wordt gebruikt door de volgende artikelen"
+msgstr "Deze categorie wordt gebruikt in de volgende FAQ-artikel(en)"
 
 #. Template: AgentFAQCategory
 msgid "This category is parent of the following subcategories"
-msgstr "Deze categorie heeft de volgende subcategoriën"
+msgstr "Deze categorie is de bovenliggende van de volgende subcategorieën"
 
 #. Template: AgentFAQDelete
 msgid "Do you really want to delete this FAQ article?"
-msgstr "Wilt u dit artikel verwijderen?"
+msgstr "Wil je dit FAQ-artikel echt verwijderen?"
 
 #. Template: AgentFAQEdit
 msgid "FAQ"
@@ -104,11 +104,11 @@ msgstr "FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
-msgstr "FAQ verkenner"
+msgstr "FAQ Explorer"
 
 #. Template: AgentFAQExplorer
 msgid "Quick Search"
-msgstr "Zoeken"
+msgstr "Snelzoeken"
 
 #. Template: AgentFAQExplorer
 msgid "Wildcards are allowed."
@@ -116,7 +116,7 @@ msgstr "Wildcards zijn toegestaan."
 
 #. Template: AgentFAQExplorer
 msgid "Advanced Search"
-msgstr "Uitgebreid zoeken"
+msgstr "Geavanceerd zoeken"
 
 #. Template: AgentFAQExplorer
 msgid "Subcategories"
@@ -124,7 +124,7 @@ msgstr "Subcategoriën"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Articles"
-msgstr "Artikelen"
+msgstr "FAQ-artikelen"
 
 #. Template: AgentFAQExplorer
 msgid "No subcategories found."
@@ -136,31 +136,31 @@ msgstr "Geschiedenis van"
 
 #. Template: AgentFAQHistory
 msgid "History Content"
-msgstr "Inhoud"
+msgstr "Geschiedenisinhoud"
 
 #. Template: AgentFAQHistory
 msgid "Createtime"
-msgstr "Aangemaakt op"
+msgstr "Maaktijd"
 
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
-msgstr "Geen data gevonden."
+msgstr "Geen FAQ-journaalgegevens gevonden."
 
 #. Template: AgentFAQLanguage
 msgid "FAQ Language Management"
-msgstr "Beheer talen"
+msgstr "FAQ Taalbeheer"
 
 #. Template: AgentFAQLanguage
 msgid "Add FAQ Language"
-msgstr ""
+msgstr "FAQ-taal toevoegen"
 
 #. Template: AgentFAQLanguage
 msgid "Edit FAQ Language"
-msgstr ""
+msgstr "FAQ-taal bewerken"
 
 #. Template: AgentFAQLanguage
 msgid "Use this feature if you want to work with multiple languages."
-msgstr ""
+msgstr "Gebruik deze functie als je met meerdere talen wilt werken."
 
 #. Template: AgentFAQLanguage
 msgid "Add language"
@@ -176,46 +176,46 @@ msgstr "Taal bewerken"
 
 #. Template: AgentFAQLanguage
 msgid "Do you really want to delete this language?"
-msgstr "Wilt u deze taal verwijderen?"
+msgstr "Wil je deze taal echt verwijderen?"
 
 #. Template: AgentFAQLanguage
 msgid ""
 "You can not delete this language. It is used in at least one FAQ article!"
 msgstr ""
-"U kunt deze taal niet verwijderen, hij wordt gebruikt door een of meer "
-"artikelen."
+"Je kunt deze taal niet verwijderen. Het wordt gebruikt in ten minste één FAQ-"
+"artikel!"
 
 #. Template: AgentFAQLanguage
 msgid "This language is used in the following FAQ Article(s)"
-msgstr "Deze taal is gebruikt voor de volgende artikelen"
+msgstr "Deze taal wordt gebruikt in de volgende FAQ-artikel(en)"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "Context Settings"
-msgstr "Context Instellingen"
+msgstr "Contextinstellingen"
 
 #. Template: AgentFAQOverviewNavBar
 msgid "FAQ articles per page"
-msgstr "Aantal artikelen per pagina"
+msgstr "FAQ-artikelen per pagina"
 
 #. Template: AgentFAQOverviewSmall
 msgid "No FAQ data found."
-msgstr "Geen FAQ data gevonden."
+msgstr "Geen FAQ-gegevens gevonden."
 
 #. Template: AgentFAQRelatedArticles
 msgid "out of 5"
-msgstr "van 5"
+msgstr "van de 5"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr "Trefwoorden"
+msgstr "Sleutewoord"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
-msgstr "Stem (bijv. gelijk aan 10 of groter dan 60)"
+msgstr "Stem (bijv. is gelijk aan 10 of groter dan 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr "Verhouding (vb: Gelijk aan 25% of Groter dan 75%)"
+msgstr "Beoordeling (bijv.: Is gelijk aan 25% of Groter dan 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
@@ -227,23 +227,23 @@ msgstr "Laatst gewijzigd door"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr "FAQ Article Create Time (voor/na)"
+msgstr "FAQ-artikel maaktijd (voor/na)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr "FAQ Article Create Time (tussen)"
+msgstr "FAQ-artikel maaktijd (tussen)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr "FAQ Article Change Time (voor/na)"
+msgstr "FAQ-artike wijzigingstijd (voor/na)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
-msgstr "FAQ Article Change Time (tussen)"
+msgstr "FAQ-artikel wijzigingstijd (tussen)"
 
 #. Template: AgentFAQSearchOpenSearchDescriptionFulltext
 msgid "FAQFulltext"
-msgstr "Zoeken in FAQ"
+msgstr "FAQ volledige tekst"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
@@ -251,7 +251,7 @@ msgstr "FAQ zoeken"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
-msgstr "Profiel selectie"
+msgstr "Profielselectie"
 
 #. Template: AgentFAQSearchSmall
 msgid "Vote"
@@ -259,7 +259,7 @@ msgstr "Stem"
 
 #. Template: AgentFAQSearchSmall
 msgid "No vote settings"
-msgstr "Geen instellingen om te stemmen"
+msgstr "Geen steminstellingen"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific votes"
@@ -267,7 +267,7 @@ msgstr "Specifieke stemmen"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 10 or GreaterThan 60"
-msgstr "vb: Gelijk aan 10 of Groter Dan 60"
+msgstr "bijv. Is gelijk aan 10 of groter dan 60"
 
 #. Template: AgentFAQSearchSmall
 msgid "Rate"
@@ -275,7 +275,7 @@ msgstr "Beoordeling"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr "Geen beoordeling instellingen"
+msgstr "Geen beoordelinginstellingen"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
@@ -283,19 +283,19 @@ msgstr "Specifieke beoordeling"
 
 #. Template: AgentFAQSearchSmall
 msgid "e. g. Equals 25% or GreaterThan 75%"
-msgstr "bijv. gelijk 25% of groter dan 75%"
+msgstr "bijv. Is gelijk 25% of groter dan 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr "FAQ Article Create Time"
+msgstr "FAQ-artikel maaktijd"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
-msgstr "FAQ Article Change Time"
+msgstr "FAQ-artikel wijzigingstijd"
 
 #. Template: AgentFAQZoom
 msgid "FAQ Information"
-msgstr "Informatie"
+msgstr "FAQ Informatie"
 
 #. Template: AgentFAQZoom
 msgid "Rating"
@@ -307,15 +307,15 @@ msgstr "Stemmen"
 
 #. Template: AgentFAQZoom
 msgid "No votes found!"
-msgstr "Geen stemmen gevonden"
+msgstr "Geen stemmen gevonden!"
 
 #. Template: AgentFAQZoom
 msgid "No votes found! Be the first one to rate this FAQ article."
-msgstr "Geen stemmen gevonden. Wees de eerste om dit artikel te beoordelen."
+msgstr "Geen stemmen gevonden! Wees de eerste die dit FAQ-artikel beoordeelt."
 
 #. Template: AgentFAQZoom
 msgid "Download Attachment"
-msgstr "Sla bijlage op"
+msgstr "Bijlage downloaden"
 
 #. Template: AgentFAQZoom
 msgid ""
@@ -323,43 +323,45 @@ msgid ""
 "Ctrl or Cmd or Shift key while clicking the link (depending on your browser "
 "and OS)."
 msgstr ""
-"Om de links in de omschrijvingen te openen is het mogelijk dat u Ctrl of Cmd "
-"of Shift moet indrukken terwijl u op de link klikt (afhankelijk van uw "
+"Om links in de volgende beschrijvingsblokken te openen, moet je mogelijk op "
+"Ctrl of Cmd of Shift drukken terwijl je op de link klikt (afhankelijk van je "
 "browser en besturingssysteem)."
 
 #. Template: AgentFAQZoom
 msgid ""
 "How helpful was this article? Please give us your rating and help to improve "
 "the FAQ Database. Thank You!"
-msgstr "Hielp dit artikel bij het beantwoorden van uw vraag?"
+msgstr ""
+"Hoe nuttig was dit artikel? Geef ons je beoordeling en help om de FAQ-"
+"database te verbeteren. Dank je!"
 
 #. Template: AgentFAQZoom
 msgid "not helpful"
-msgstr "helemaal niet"
+msgstr "niet nuttig"
 
 #. Template: AgentFAQZoom
 msgid "very helpful"
-msgstr "heel erg"
+msgstr "erg nuttig"
 
 #. Template: AgentFAQZoomSmall
 msgid "Add FAQ title to article subject"
-msgstr "FAQ titel toevoegen aan onderwerp van het artikel"
+msgstr "Voeg FAQ-titel toe aan het onderwerp van het artikel"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text"
-msgstr "Voeg FAQ tekst in"
+msgstr "Voeg FAQ-tekst in"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ"
-msgstr "Volledige FAQ invoegen"
+msgstr "Voeg de volledige FAQ in"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Link"
-msgstr "Voeg link naar FAQ in"
+msgstr "FAQ-link invoegen"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert FAQ Text & Link"
-msgstr "Voeg FAQ tekst en link in"
+msgstr "Voeg FAQ Tekst & Link in"
 
 #. Template: AgentFAQZoomSmall
 msgid "Insert Full FAQ & Link"
@@ -367,55 +369,56 @@ msgstr "Volledige FAQ & Link invoegen"
 
 #. Template: CustomerFAQExplorer
 msgid "No FAQ articles found."
-msgstr "Geen artikelen gevonden."
+msgstr "Geen FAQ-artikelen gevonden."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "This might be helpful"
-msgstr ""
+msgstr "Dit kan nuttig zijn"
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Found no helpful resources for the subject and text."
-msgstr ""
+msgstr "Geen nuttige bronnen gevonden voor het onderwerp en de tekst."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr ""
+msgstr "Typ een onderwerp of tekst om een lijst met nuttige bronnen te krijgen."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
-msgstr "Zoeken in tekst van artikelen (bijv. \"Jans*en\" of \"Print*\")"
+msgstr ""
+"Zoeken in volledige tekst in FAQ-artikelen (bijv. \"John*n\" of \"Will*\")"
 
 #. Template: CustomerFAQSearch
 msgid "Vote restrictions"
-msgstr "Stemmingsbeperkingen"
+msgstr "Stem beperkingen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with votes..."
-msgstr "Alleen FAQ artikelen waarop gestemd werd..."
+msgstr "Alleen FAQ-artikelen met stemmen ..."
 
 #. Template: CustomerFAQSearch
 msgid "Rate restrictions"
-msgstr "Beperkingen van beoordelingen"
+msgstr "Beoordelingbeperkingen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles with rate..."
-msgstr "Alleen FAQ artikelen met een beoordeling ..."
+msgstr "Alleen FAQ-artikelen met een beoordeling..."
 
 #. Template: CustomerFAQSearch
 msgid "Time restrictions"
-msgstr "Tijd"
+msgstr "Tijdsbeperkingen"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created"
-msgstr "Alleen FAQ artikels die aangemaakt werden"
+msgstr "Alleen FAQ-artikelen gemaakt"
 
 #. Template: CustomerFAQSearch
 msgid "Only FAQ articles created between"
-msgstr "Alleen FAQ artikel die aangemaakt werden tussen"
+msgstr "Alleen FAQ-artikelen gemaakt tussen"
 
 #. Template: CustomerFAQSearch
 msgid "Search-Profile as Template?"
-msgstr "Zoek-Profiel als template?"
+msgstr "Zoekprofiel als sjabloon?"
 
 #. Template: CustomerFAQZoom
 msgid "Article Number"
@@ -423,7 +426,7 @@ msgstr "Artikelnummer"
 
 #. Template: CustomerFAQZoom
 msgid "Search for articles with keyword"
-msgstr "Zoek op artikelen met trefwoord"
+msgstr "Zoek naar artikelen met trefwoord"
 
 #. Template: PublicFAQSearchOpenSearchDescriptionFAQNumber
 msgid "Public"
@@ -431,27 +434,27 @@ msgstr "Openbaar"
 
 #. Template: PublicFAQSearchResultShort
 msgid "Back to FAQ Explorer"
-msgstr "Terug naar de FAQ Verkenner"
+msgstr "Terug naar FAQ Verkenner"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "You need rw permission!"
-msgstr ""
+msgstr "Je hebt rw toestemming nodig!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr ""
+msgstr "Geen categorieën gevonden waar de gebruiker lees-/schrijfrechten heeft!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
-msgstr ""
+msgstr "Geen standaardtaal gevonden en kan geen nieuwe maken."
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Need CategoryID!"
-msgstr ""
+msgstr "CategoryID nodig!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "A category should have a name!"
-msgstr "Geef een naam op voor de categorie."
+msgstr "Een categorie moet een naam hebben!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists"
@@ -459,23 +462,23 @@ msgstr "Deze categorie bestaat al"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "This category already exists!"
-msgstr ""
+msgstr "Deze categorie bestaat al!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "No CategoryID is given!"
-msgstr ""
+msgstr "Er wordt geen CategoryID gegeven!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Was not able to delete the category %s!"
-msgstr ""
+msgstr "Kon de categorie %s niet verwijderen!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "FAQ category updated!"
-msgstr "FAQ categorie bijgewerkt."
+msgstr "FAQ-categorie bijgewerkt!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "FAQ category added!"
-msgstr "FAQ categorie toegevoegd."
+msgstr "FAQ-categorie toegevoegd!"
 
 #. Perl Module: Kernel/Modules/AgentFAQCategory.pm
 msgid "Delete Category"
@@ -483,27 +486,27 @@ msgstr "Categorie verwijderen"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "No ItemID is given!"
-msgstr ""
+msgstr "Er wordt geen ItemID gegeven!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "You have no permission for this category!"
-msgstr ""
+msgstr "U heeft geen toestemming voor deze categorie!"
 
 #. Perl Module: Kernel/Modules/AgentFAQDelete.pm
 msgid "Was not able to delete the FAQ article %s!"
-msgstr ""
+msgstr "Kan het FAQ-artikel %s niet verwijderen!"
 
 #. Perl Module: Kernel/Modules/AgentFAQExplorer.pm
 msgid "The CategoryID %s is invalid."
-msgstr ""
+msgstr "De CategoryID %s is ongeldig."
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
-msgstr ""
+msgstr "Kan de geschiedenis niet weergeven, omdat er geen ItemID wordt gegeven!"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
-msgstr ""
+msgstr "FAQ geschiedenis"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "FAQ Journal"
@@ -511,43 +514,43 @@ msgstr "FAQ journaal"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Need config option FAQ::Frontend::Overview"
-msgstr ""
+msgstr "Configuratieoptie FAQ::Frontend::Overzicht nodig"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "Config option FAQ::Frontend::Overview needs to be a HASH ref!"
-msgstr ""
+msgstr "Configuratie-optie FAQ::Frontend::Overzicht moet een HASH-ref zijn!"
 
 #. Perl Module: Kernel/Modules/AgentFAQJournal.pm
 msgid "No config option found for the view \"%s\"!"
-msgstr ""
+msgstr "Geen configuratieoptie gevonden voor de weergave \"%s\"!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "No LanguageID is given!"
-msgstr ""
+msgstr "Er wordt geen LanguageID gegeven!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "The name is required!"
-msgstr "De naam is verplicht."
+msgstr "De naam is verplicht!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "This language already exists!"
-msgstr "Deze taal bestaat al."
+msgstr "Deze taal bestaat al!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Was not able to delete the language %s!"
-msgstr ""
+msgstr "Kan de taal %s niet verwijderen!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language updated!"
-msgstr "Taal bijgewerkt"
+msgstr "FAQ-taal bijgewerkt!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "FAQ language added!"
-msgstr "Taal toegevoegd."
+msgstr "FAQ-taal toegevoegd!"
 
 #. Perl Module: Kernel/Modules/AgentFAQLanguage.pm
 msgid "Delete Language %s"
-msgstr "Taal verwijderen %s"
+msgstr "Taal %s verwijderen"
 
 #. Perl Module: Kernel/Modules/AgentFAQPrint.pm
 msgid "Result"
@@ -563,11 +566,11 @@ msgstr "FAQ Dynamische velden"
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "No %s is given!"
-msgstr ""
+msgstr "Er wordt geen %s gegeven!"
 
 #. Perl Module: Kernel/Modules/AgentFAQRichText.pm
 msgid "Can't load LanguageObject!"
-msgstr ""
+msgstr "Kan LanguageObject niet laden!"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "No Result!"
@@ -575,151 +578,151 @@ msgstr "Geen resultaat!"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Number"
-msgstr "FAQ nummer"
+msgstr "FAQ-nummer"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Last Changed by"
-msgstr ""
+msgstr "Laatst gewijzigd door"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (before/after)"
-msgstr ""
+msgstr "FAQ-item maaktijd (voor/na)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Create Time (between)"
-msgstr ""
+msgstr "FAQ-item maaktijd (tussen)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (before/after)"
-msgstr ""
+msgstr "FAQ-item wijzigingstijd (voor/na)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "FAQ Item Change Time (between)"
-msgstr ""
+msgstr "FAQ-item wijzigingstijd (tussen)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Equals"
-msgstr ""
+msgstr "Is gelijk aan"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than"
-msgstr ""
+msgstr "Groter dan"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Greater than equals"
-msgstr ""
+msgstr "Groter dan is gelijk aan"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than"
-msgstr ""
+msgstr "Kleiner dan"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
 msgid "Smaller than equals"
-msgstr ""
+msgstr "Kleiner dan is gelijk aan"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Need FileID!"
-msgstr ""
+msgstr "FileID nodig!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Thanks for your vote!"
-msgstr "Bedankt voor uw stem!"
+msgstr "Bedankt voor je stem!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "You have already voted!"
-msgstr "U heeft al gestemd."
+msgstr "Je hebt al gestemd!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "No rate selected!"
-msgstr "Geen waardering geselecteerd."
+msgstr "Geen beoordeling geselecteerd!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The voting mechanism is not enabled!"
-msgstr ""
+msgstr "Het stemmechanisme is niet ingeschakeld!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "The vote rate is not defined!"
-msgstr ""
+msgstr "Het stempercentage is niet gedefinieerd!"
 
 #. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
 msgid "FAQ Article Print"
-msgstr "Artikel afdrukken"
+msgstr "FAQ-artikel afdrukken"
 
 #. Perl Module: Kernel/Modules/CustomerFAQSearch.pm
 msgid "Created between"
-msgstr ""
+msgstr "Gemaakt tussen"
 
 #. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
 msgid "Need ItemID!"
-msgstr ""
+msgstr "ItemID nodig!"
 
 #. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
 msgid "FAQ Articles (new created)"
-msgstr "Artikelen (nieuw aangemaakt)"
+msgstr "FAQ-artikelen (nieuw gemaakt)"
 
 #. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
 msgid "FAQ Articles (recently changed)"
-msgstr "Artikelen (laatst gewijzigd)"
+msgstr "FAQ-artikelen (onlangs gewijzigd)"
 
 #. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
 msgid "FAQ Articles (Top 10)"
-msgstr "Artikelen (top 10)"
+msgstr "FAQ-artikelen (Top 10)"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "No Type is given!"
-msgstr ""
+msgstr "Er wordt geen Type gegeven!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Type must be either LastCreate or LastChange or Top10!"
-msgstr ""
+msgstr "Type moet LastCreate of LastChange of Top10 zijn!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Can't create RSS file!"
-msgstr ""
+msgstr "Kan geen RSS-bestand maken!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (FAQ volledige tekst)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Klant (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - Klant (FAQ volledige tekst)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Openbaar (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - Openbaar (FAQ volledige tekst)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Need rate!"
-msgstr ""
+msgstr "Beoordeling nodig!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
-msgstr "Dit item heeft geen waarde!"
+msgstr "Dit artikel is leeg!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Latest created FAQ articles"
-msgstr "Laatst aangemaakte artikelen"
+msgstr "Laatst gemaakte FAQ-artikelen"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Latest updated FAQ articles"
-msgstr "Laatst gewijzigde artikelen"
+msgstr "Laatst bijgewerkte FAQ-artikelen"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "Top 10 FAQ articles"
-msgstr "Populairste artikelen"
+msgstr "Top 10 FAQ-artikelen"
 
 #. Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
 msgid "Content Type"
-msgstr ""
+msgstr "Inhoudstype"
 
 #. Database XML Definition: FAQ.sopm
 msgid "internal"
@@ -731,7 +734,7 @@ msgstr "extern"
 
 #. Database XML Definition: FAQ.sopm
 msgid "public"
-msgstr "publiek"
+msgstr "openbaar"
 
 #. JS File: FAQ.Agent.ConfirmationDialog
 msgid "Ok"
@@ -744,88 +747,97 @@ msgid ""
 "this case the OTRS image path will be used. The second possibility is to "
 "insert the link to the image."
 msgstr ""
+"Een filter voor HTML-uitvoer om links toe te voegen achter een gedefinieerde "
+"tekenreeks. Het element Image staat twee invoertypes toe. Eerst de naam van "
+"een afbeelding (bijv. Faq.png). In dit geval wordt het OTRS-afbeeldingspad "
+"gebruikt. De tweede mogelijkheid is om de link naar de afbeelding in te "
+"voegen."
 
 #. SysConfig
 msgid "Add FAQ article"
-msgstr ""
+msgstr "FAQ-artikel toevoegen"
 
 #. SysConfig
 msgid "CSS color for the voting result."
-msgstr "CSS kleur voor de stemmingsuitslag."
+msgstr "CSS-kleur voor het stemresultaat."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr ""
+msgstr "Cachetijd voor FAQ-items."
 
 #. SysConfig
 msgid "Category Management"
-msgstr "Beheer categoriën"
+msgstr "Categorie beheer"
 
 #. SysConfig
 msgid "Category Management."
-msgstr ""
+msgstr "Categorie beheer."
 
 #. SysConfig
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Klant FAQ afdrukken."
 
 #. SysConfig
 msgid "Customer FAQ Related Articles"
-msgstr ""
+msgstr "Klant FAQ Gerelateerde artikelen"
 
 #. SysConfig
 msgid "Customer FAQ Related Articles."
-msgstr ""
+msgstr "Klant FAQ Gerelateerde artikelen."
 
 #. SysConfig
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Klant FAQ Zoom."
 
 #. SysConfig
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Klant FAQ zoeken."
 
 #. SysConfig
 msgid "Customer FAQ."
-msgstr ""
+msgstr "Klant FAQ."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
-msgstr ""
+msgstr "Decimalen van het stemresultaat."
 
 #. SysConfig
 msgid "Default category name."
-msgstr "Standaard categorie"
+msgstr "Standaard categorienaam."
 
 #. SysConfig
 msgid "Default language for FAQ articles on single language mode."
-msgstr ""
+msgstr "Standaardtaal voor FAQ-artikelen over de modus voor één taal."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
 msgstr ""
+"Standaard maximale grootte van de titels in een FAQ-artikel dat moet worden "
+"weergegeven."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
-msgstr "Standaard prioriteit van tickets voor goedkeuring van FAQ artikels."
+msgstr "Standaardprioriteit van tickets voor de goedkeuring van FAQ-artikelen."
 
 #. SysConfig
 msgid "Default state for FAQ entry."
-msgstr "Standaard status voor FAQ artikels"
+msgstr "Standaardstatus voor FAQ-item."
 
 #. SysConfig
 msgid "Default state of tickets for the approval of FAQ articles."
-msgstr "Standaard status van het ticket voor het goedkeuren van FAQ artikels."
+msgstr "Standaardstatus van tickets voor de goedkeuring van FAQ-artikelen."
 
 #. SysConfig
 msgid "Default type of tickets for the approval of FAQ articles."
-msgstr ""
+msgstr "Standaard type tickets voor de goedkeuring van FAQ-artikelen."
 
 #. SysConfig
 msgid ""
 "Default value for the Action parameter for the public frontend. The Action "
 "parameter is used in the scripts of the system."
 msgstr ""
+"Standaardwaarde voor de parameter Actie voor de openbare frontend. De "
+"parameter Actie wordt gebruikt in de scripts van het systeem."
 
 #. SysConfig
 msgid ""
@@ -845,6 +857,8 @@ msgstr ""
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
 msgstr ""
+"Bepaal of de titel van de FAQ moet worden samengevoegd met het onderwerp van "
+"het artikel."
 
 #. SysConfig
 msgid ""
@@ -852,96 +866,132 @@ msgid ""
 "ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
 "(DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
+"Definieer welke kolommen worden weergegeven in de gekoppelde widget voor "
+"veelgestelde vragen (LinkObject::ViewMode = \"complex\"). Opmerking: alleen "
+"standaardkenmerken en dynamische velden (DynamicField_NameX) zijn toegestaan "
+"voor DefaultColumns."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
 msgstr ""
+"Definieert een overzichtsmodule om de kleine weergave van een FAQ-journaal "
+"te tonen."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ list."
 msgstr ""
+"Definieert een overzichtsmodule om de kleine weergave van een FAQ-lijst weer "
+"te geven."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "agent interface."
 msgstr ""
+"Definieert het standaard FAQ-kenmerk voor het sorteren van FAQ in een FAQ "
+"zoekopdracht in de agentinterface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "customer interface."
 msgstr ""
+"Definieert het standaard FAQ-kenmerk voor het sorteren van FAQ in een FAQ "
+"zoekopdracht in de klanteninterface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "public interface."
 msgstr ""
+"Definieert het standaard FAQ-kenmerk voor het sorteren van FAQ in een FAQ-"
+"zoekopdracht in de openbare interface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
 "agent interface."
 msgstr ""
+"Definieert het standaard FAQ-kenmerk voor het sorteren van FAQ in de FAQ "
+"Verkenner van de agentinterface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
 "customer interface."
 msgstr ""
+"Definieert het standaard FAQ-kenmerk voor het sorteren van FAQ in de FAQ "
+"Verkenner van de klanteninterface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
 "public interface."
 msgstr ""
+"Definieert het standaard FAQ-kenmerk voor het sorteren van FAQ in de FAQ "
+"Verkenner van de openbare interface."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
 msgstr ""
+"Definieert de standaard FAQ-volgorde in het FAQ Verkenner-resultaat van de "
+"agentinterface. Omhoog: oudste bovenaan. Omlaag: laatste bovenaan."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the customer "
 "interface. Up: oldest on top. Down: latest on top."
 msgstr ""
+"Definieert de standaard FAQ-volgorde in het FAQ Verkenner-resultaat van de "
+"klanteninterface. Omhoog: oudste bovenaan. Omlaag: laatste bovenaan."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the public "
 "interface. Up: oldest on top. Down: latest on top."
 msgstr ""
+"Definieert de standaard FAQ-volgorde in het FAQ Verkenner-resultaat van de "
+"openbare interface. Omhoog: oudste bovenaan. Omlaag: laatste bovenaan."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the agent interface. Up: "
 "oldest on top. Down: latest on top."
 msgstr ""
+"Definieert de standaard FAQ-volgorde van een zoekresultaat in de "
+"agentinterface. Omhoog: oudste bovenaan. Omlaag: laatste bovenaan."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the customer interface. "
 "Up: oldest on top. Down: latest on top."
 msgstr ""
+"Definieert de standaard FAQ-volgorde van een zoekresultaat in de "
+"klanteninterface. Omhoog: oudste bovenaan. Omlaag: laatste bovenaan."
 
 #. SysConfig
 msgid ""
 "Defines the default FAQ order of a search result in the public interface. "
 "Up: oldest on top. Down: latest on top."
 msgstr ""
+"Definieert de standaard FAQ-volgorde van een zoekresultaat in de openbare "
+"interface. Omhoog: oudste bovenaan. Omlaag: laatste bovenaan."
 
 #. SysConfig
 msgid "Defines the default shown FAQ search attribute for FAQ search screen."
 msgstr ""
+"Definieert het standaard weergegeven FAQ-zoekattribuut voor het FAQ-"
+"zoekscherm."
 
 #. SysConfig
 msgid ""
 "Defines the information to be inserted in a FAQ based Ticket. \"Full FAQ\" "
 "includes text, attachments and inline images."
 msgstr ""
+"Definieert de informatie die in een op FAQ gebaseerd ticket moet worden "
+"ingevoegd. \"Volledige FAQ\" bevat tekst, bijlagen en inline afbeeldingen."
 
 #. SysConfig
 msgid ""
@@ -950,161 +1000,196 @@ msgid ""
 "to the plugin (e. g. Group: admin;group1;group2;). \"Default\" indicates if "
 "the plugin is enabled by default or if the user needs to enable it manually."
 msgstr ""
+"Definieert de parameters voor de dashboardbackend. \"Limiet\" definieert het "
+"aantal items dat standaard wordt weergegeven. \"Groep\" wordt gebruikt om de "
+"toegang tot de plug-in te beperken (bijv. Groep: admin; groep1; groep2;). \""
+"Standaard\" geeft aan of de plug-in standaard is ingeschakeld of dat de "
+"gebruiker deze handmatig moet inschakelen."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ Explorer. This option has no effect on "
 "the position of the column."
 msgstr ""
+"Definieert de weergegeven kolommen in de FAQ Verkenner. Deze optie heeft "
+"geen invloed op de positie van de kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ journal. This option has no effect on "
 "the position of the column."
 msgstr ""
+"Definieert de weergegeven kolommen in het FAQ-journaal. Deze optie heeft "
+"geen invloed op de positie van de kolom."
 
 #. SysConfig
 msgid ""
 "Defines the shown columns in the FAQ search. This option has no effect on "
 "the position of the column."
 msgstr ""
+"Definieert de weergegeven kolommen in de FAQ-zoekopdracht. Deze optie heeft "
+"geen invloed op de positie van de kolom."
 
 #. SysConfig
 msgid "Defines where the 'Insert FAQ' link will be displayed."
-msgstr ""
+msgstr "Bepaalt waar de link 'FAQ invoegen' wordt weergegeven."
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
-msgstr ""
+msgstr "Definitie van het vrije tekstveld van het FAQ-item."
 
 #. SysConfig
 msgid "Delete this FAQ"
-msgstr "Verwijder dit artikel"
+msgstr "Verwijder deze FAQ"
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ add screen of the agent interface."
 msgstr ""
+"Dynamische velden die worden weergegeven in het FAQ toevoegen scherm van de "
+"agentinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ edit screen of the agent interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ bewerkingsscherm van de interface "
+"van de agent."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the customer interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ overzichtscherm van de "
+"klanteninterface."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ overview screen of the public interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ overzichtscherm van de openbare "
+"interface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the agent interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ afdrukken scherm van de "
+"agentinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the customer interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-afdrukscherm van de klantinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ print screen of the public interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-afdrukscherm van de openbare "
+"interface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the agent interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-zoekscherm van de agentinterface."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ search screen of the customer interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-zoekscherm van de klantinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ search screen of the public interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-zoekscherm van de openbare "
+"interface."
 
 #. SysConfig
 msgid ""
 "Dynamic fields shown in the FAQ small format overview screen of the agent "
 "interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-kleineoverzichtsscherm van de "
+"agentinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the agent interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-zoomscherm van de agentinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the customer interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-zoomscherm van de klantinterface."
 
 #. SysConfig
 msgid "Dynamic fields shown in the FAQ zoom screen of the public interface."
 msgstr ""
+"Dynamische velden weergegeven in het FAQ-zoomscherm van de openbare "
+"interface."
 
 #. SysConfig
 msgid "Edit this FAQ"
-msgstr "Bewerk dit artikel"
+msgstr "Bewerk deze FAQ"
 
 #. SysConfig
 msgid "Enable multiple languages on FAQ module."
-msgstr ""
+msgstr "Schakel meerdere talen in op de FAQ-module."
 
 #. SysConfig
 msgid "Enable the related article feature for the customer frontend."
 msgstr ""
+"Schakel de gerelateerde artikelfunctie in voor de frontend van de klant."
 
 #. SysConfig
 msgid "Enable voting mechanism on FAQ module."
-msgstr ""
+msgstr "Stemmechanisme inschakelen op de FAQ-module."
 
 #. SysConfig
 msgid "Explorer"
-msgstr "Overzicht"
+msgstr "Verkenner"
 
 #. SysConfig
 msgid "FAQ AJAX Responder"
-msgstr ""
+msgstr "FAQ AJAX-responder"
 
 #. SysConfig
 msgid "FAQ AJAX Responder for Richtext."
-msgstr ""
+msgstr "FAQ AJAX Responder voor Richtext."
 
 #. SysConfig
 msgid "FAQ Area"
-msgstr ""
+msgstr "FAQ-gebied"
 
 #. SysConfig
 msgid "FAQ Area."
-msgstr ""
+msgstr "FAQ-gebied."
 
 #. SysConfig
 msgid "FAQ Delete."
-msgstr ""
+msgstr "FAQ verwijderen."
 
 #. SysConfig
 msgid "FAQ Edit."
-msgstr ""
+msgstr "FAQ bewerken."
 
 #. SysConfig
 msgid "FAQ History."
-msgstr ""
+msgstr "FAQ geschiedenis."
 
 #. SysConfig
 msgid "FAQ Journal Overview \"Small\" Limit"
-msgstr ""
+msgstr "FAQ journaaloverzicht \"Kleine\" limiet"
 
 #. SysConfig
 msgid "FAQ Overview \"Small\" Limit"
-msgstr ""
+msgstr "FAQ-overzicht \"Kleine\" limiet"
 
 #. SysConfig
 msgid "FAQ Print."
-msgstr ""
+msgstr "FAQ Afdrukken."
 
 #. SysConfig
 msgid "FAQ search backend router of the agent interface."
-msgstr ""
+msgstr "FAQ zoeken backend router van de agent-interface."
 
 #. SysConfig
 msgid "Field4"
@@ -1116,151 +1201,184 @@ msgstr "Veld5"
 
 #. SysConfig
 msgid "Full FAQ"
-msgstr ""
+msgstr "Volledige FAQ"
 
 #. SysConfig
 msgid "Group for the approval of FAQ articles."
-msgstr "Groep voor de goedkeuring van FAQ items"
+msgstr "Groep voor de goedkeuring van FAQ-artikelen."
 
 #. SysConfig
 msgid "History of this FAQ"
-msgstr "Geschiedenis"
+msgstr "Geschiedenis van deze FAQ"
 
 #. SysConfig
 msgid "Include internal fields on a FAQ based Ticket."
-msgstr ""
+msgstr "Voeg interne velden toe aan een FAQ gebaseerd ticket."
 
 #. SysConfig
 msgid "Include the name of each field in a FAQ based Ticket."
-msgstr ""
+msgstr "Vermeld de naam van elk veld in een op FAQ gebaseerd ticket."
 
 #. SysConfig
 msgid "Interfaces where the quick search should be shown."
-msgstr ""
+msgstr "Interfaces waar de snelle zoekopdracht moet worden weergegeven."
 
 #. SysConfig
 msgid "Journal"
-msgstr "Logboek"
+msgstr "Journaal"
 
 #. SysConfig
 msgid "Language Management"
-msgstr "Beheer talen"
+msgstr "Taalbeheer"
 
 #. SysConfig
 msgid "Language Management."
-msgstr ""
+msgstr "Taalbeheer."
 
 #. SysConfig
 msgid "Limit for the search to build the keyword FAQ article list."
 msgstr ""
+"Limiet voor de zoekopdracht om de FAQ-artikellijst zoekwoorden te maken."
 
 #. SysConfig
 msgid "Link another object to this FAQ item"
-msgstr "Koppel een ander object aan dit artikel"
+msgstr "Koppel een ander object aan dit FAQ-item"
 
 #. SysConfig
 msgid "List of queue names for which the related article feature is enabled."
 msgstr ""
+"Lijst met wachtrijnamen waarvoor de gerelateerde artikelfunctie is "
+"ingeschakeld."
 
 #. SysConfig
 msgid "List of state types which can be used in the agent interface."
-msgstr ""
+msgstr "Lijst met statustypen die kunnen worden gebruikt in de agentinterface."
 
 #. SysConfig
 msgid "List of state types which can be used in the customer interface."
 msgstr ""
+"Lijst met statustypen die in de klanteninterface kunnen worden gebruikt."
 
 #. SysConfig
 msgid "List of state types which can be used in the public interface."
 msgstr ""
+"Lijst met statustypen die in de openbare interface kunnen worden gebruikt."
 
 #. SysConfig
 msgid "Loader module registration for the public interface."
-msgstr ""
+msgstr "Registratie van ladermodule voor de openbare interface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
 "the agent interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven in het FAQ Verkenner-"
+"resultaat van de agentinterface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
 "the customer interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven in het FAQ Verkenner-"
+"resultaat van de klanteninterface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ Explorer result of "
 "the public interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven in het FAQ Verkenner-"
+"resultaat van de openbare interface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the FAQ journal in the "
 "agent interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven in het FAQ-journaal "
+"in de agentinterface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the agent interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven als resultaat van "
+"een zoekopdracht in de agentinterface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the customer interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven als resultaat van "
+"een zoekopdracht in de klanteninterface."
 
 #. SysConfig
 msgid ""
 "Maximum number of FAQ articles to be displayed in the result of a search in "
 "the public interface."
 msgstr ""
+"Maximumaantal FAQ-artikelen dat moet worden weergegeven als resultaat van "
+"een zoekopdracht in de openbare interface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the agent interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat moet worden "
+"weergegeven in de FAQ-Verkenner in de agentinterface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the customer interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat in de FAQ Verkenner in "
+"de klanteninterface moet worden weergegeven."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Explorer "
 "in the public interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat in de FAQ Verkenner in "
+"de openbare interface moet worden weergegeven."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
 "the agent interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat moet worden "
+"weergegeven in de FAQ-zoekopdracht in de agentinterface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
 "the customer interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat moet worden "
+"weergegeven in de FAQ-zoekopdracht in de klanteninterface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ Search in "
 "the public interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat moet worden "
+"weergegeven in de FAQ-zoekopdracht in de openbare interface."
 
 #. SysConfig
 msgid ""
 "Maximum size of the titles in a FAQ article to be shown in the FAQ journal "
 "in the agent interface."
 msgstr ""
+"Maximale grootte van de titels in een FAQ-artikel dat in het FAQ-journaal in "
+"de agentinterface moet worden weergegeven."
 
 #. SysConfig
 msgid ""
@@ -1436,11 +1554,11 @@ msgstr ""
 
 #. SysConfig
 msgid "Show FAQ Article with HTML."
-msgstr "Toon FAQ item met HTML"
+msgstr "FAQ-artikel met HTML weergeven."
 
 #. SysConfig
 msgid "Show FAQ path yes/no."
-msgstr "Toon FAQ pad ja/nee"
+msgstr "FAQ-pad weergeven ja/nee."
 
 #. SysConfig
 msgid "Show invalid items in the FAQ Explorer result of the agent interface."
@@ -1448,7 +1566,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show items of subcategories."
-msgstr "Toon items van subcategoriën"
+msgstr "Items van subcategorieën weergeven."
 
 #. SysConfig
 msgid "Show last change items in defined interfaces."
@@ -1470,7 +1588,7 @@ msgstr ""
 
 #. SysConfig
 msgid "Show voting in defined interfaces."
-msgstr "Toon stem-feature"
+msgstr "Stemmen in gedefinieerde interfaces weergeven."
 
 #. SysConfig
 msgid ""
