@@ -45,6 +45,7 @@
         <File Permission="660" Location="scripts/test/Selenium/Agent/Admin/GenericAgent/MasterSlaveSelection.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketCreateMasterSlave.t" />
         <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketMasterSlave.t" />
+        <File Permission="660" Location="scripts/test/Selenium/Agent/AgentTicketSlaveSalutation.t" />
         <File Permission="660" Location="scripts/test/Selenium/Output/TicketBulk/MasterSlave.t" />
         <File Permission="660" Location="scripts/test/Ticket/Event/MasterSlave/ReplaceCustomerRealName.t" />
         <File Permission="660" Location="scripts/test/Ticket/Event/MasterSlave.t" />

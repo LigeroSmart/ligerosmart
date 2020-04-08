@@ -315,6 +315,23 @@ sub Run {
                 }
             }
 
+            my %AttachmentIndex = $ArticleBackendObject->ArticleAttachmentIndex(
+                ArticleID => $Articles[-1]->{ArticleID},
+            );
+
+            my @Attachments;
+            ATTACHMENT:
+            for my $FileID ( sort keys %AttachmentIndex ) {
+                next ATTACHMENT if !$FileID;
+                my %Attachment = $ArticleBackendObject->ArticleAttachment(
+                    ArticleID => $Articles[-1]->{ArticleID},
+                    FileID    => $FileID,
+                );
+
+                next ATTACHMENT if !IsHashRefWithData( \%Attachment );
+                push @Attachments, {%Attachment};
+            }
+
             # send article again
             $ArticleBackendObject->ArticleSend(
                 %Article,
@@ -325,6 +342,7 @@ sub Run {
                 HistoryComment => "Sent answer to '$Article{To}' based on master ticket.",
                 TicketID       => $TicketID,
                 UserID         => $Param{UserID},
+                Attachment     => \@Attachments,
             );
         }
         return 1;
