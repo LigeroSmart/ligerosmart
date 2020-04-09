@@ -172,6 +172,24 @@ sub Run {
         my $FirstSlaveTicket = 1;
         my $TmpArticleBody;
 
+        # Get attachments in master for usage in slave tickets (see bug#14983).
+        my %AttachmentIndex = $ArticleBackendObject->ArticleAttachmentIndex(
+            ArticleID => $Articles[-1]->{ArticleID},
+        );
+
+        my @Attachments;
+        ATTACHMENT:
+        for my $FileID ( sort keys %AttachmentIndex ) {
+            next ATTACHMENT if !$FileID;
+            my %Attachment = $ArticleBackendObject->ArticleAttachment(
+                ArticleID => $Articles[-1]->{ArticleID},
+                FileID    => $FileID,
+            );
+
+            next ATTACHMENT if !IsHashRefWithData( \%Attachment );
+            push @Attachments, {%Attachment};
+        }
+
         # perform action on linked tickets
         TICKETID:
         for my $TicketID (@TicketIDs) {
@@ -313,23 +331,6 @@ sub Run {
                 if ( $Search && $Replace ) {
                     $Article{Body} =~ s{ \Q$Search\E }{$Replace}xmsg;
                 }
-            }
-
-            my %AttachmentIndex = $ArticleBackendObject->ArticleAttachmentIndex(
-                ArticleID => $Articles[-1]->{ArticleID},
-            );
-
-            my @Attachments;
-            ATTACHMENT:
-            for my $FileID ( sort keys %AttachmentIndex ) {
-                next ATTACHMENT if !$FileID;
-                my %Attachment = $ArticleBackendObject->ArticleAttachment(
-                    ArticleID => $Articles[-1]->{ArticleID},
-                    FileID    => $FileID,
-                );
-
-                next ATTACHMENT if !IsHashRefWithData( \%Attachment );
-                push @Attachments, {%Attachment};
             }
 
             # send article again
