@@ -392,24 +392,42 @@ $Selenium->RunTest(
         # Navigate to AgentTicketPhone and create test ticket.
         $Selenium->VerifiedGet("${ScriptAlias}index.pl?Action=AgentTicketPhone");
 
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#FromCustomer").length;' );
+
         my $TestCustomer = 'customer' . $RandomID . '@gmail.com';
         $Selenium->find_element( "#FromCustomer", 'css' )->send_keys($TestCustomer);
+        $Selenium->WaitFor( JavaScript => 'return !$(".AJAXLoader:visible").length;' );
+
+        # Lose the focus.
+        $Selenium->find_element( 'body', 'css' )->click();
+        $Selenium->WaitFor(
+            JavaScript => 'return $("#TicketCustomerContentFromCustomer input.CustomerTicketText").length;'
+        );
+
         $Selenium->InputFieldValueSet(
             Element => '#Dest',
             Value   => '2||Raw',
         );
+        $Selenium->WaitFor( JavaScript => 'return !$(".AJAXLoader:visible").length;' );
 
-        # Wait for loader.
-        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && !$(".AJAXLoader:visible").length;' );
+        $Selenium->find_element( "#Subject",  'css' )->clear();
+        $Selenium->find_element( "#Subject",  'css' )->send_keys("Subject$RandomID");
+        $Selenium->find_element( "#RichText", 'css' )->clear();
+        $Selenium->find_element( "#RichText", 'css' )->send_keys("Text$RandomID");
 
-        $Selenium->find_element( "#Subject",        'css' )->send_keys("Subject$RandomID");
-        $Selenium->find_element( "#RichText",       'css' )->clear();
-        $Selenium->find_element( "#RichText",       'css' )->send_keys("Text$RandomID");
-        $Selenium->find_element( "#submitRichText", 'css' )->VerifiedClick();
+        # Submit form.
+        $Selenium->execute_script(
+            "\$('#submitRichText')[0].scrollIntoView(true);",
+        );
+        $Self->True(
+            $Selenium->execute_script("return \$('#submitRichText').length;"),
+            "Element '#submitRichText' is found in screen"
+        );
+        $Selenium->find_element( '#submitRichText', 'css' )->VerifiedClick();
 
         $Selenium->WaitFor(
             JavaScript =>
-                'return typeof($) === "function" && $(".MessageBox a[href*=\'AgentTicketZoom;TicketID=\']").length !== 0;'
+                'return typeof($) === "function" && $(".MessageBox a[href*=\'AgentTicketZoom;TicketID=\']").length;'
         );
 
         my @Ticket   = split( 'TicketID=', $Selenium->get_current_url() );
