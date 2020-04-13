@@ -17,7 +17,7 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'List of tables should be skipped, perhaps internal DB tables. Please use lowercase.'} =
-        'Lista de tabelas a ser ignoradas, talvez tabelas internas da BD.   Por favor utilize letras minúsculas.';
+        'Lista de tabelas a ser ignoradas, talvez tabelas internas da BD. Por favor utilize letras minúsculas.';
     $Self->{Translation}->{'Log file for replacement of malformed UTF-8 data values.'} = 'Ficheiro de log para a substituição de valores de dados UTF-8 com defeito.';
     $Self->{Translation}->{'Settings for connecting with the target database.'} = 'Configurações para ligação à base de dados destino.';
     $Self->{Translation}->{'Specifies which columns should be checked for valid UTF-8 source data.'} =
