@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TimeAccounting\n"
 "POT-Creation-Date: 2020-01-24 14:51+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-05-05 18:08+0000\n"
+"Last-Translator: Efrem Baraldo <efrem.baraldo@gmail.com>\n"
+"Language-Team: Italian <https://translate.app.otrs.com/projects/otrs-6/"
+"time-accounting/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.11.3\n"
 
 #. Template: AgentTimeAccountingDelete
 msgid "Do you really want to delete the Time Accounting of this day?"
@@ -40,7 +43,8 @@ msgstr "Inserimento massivo"
 
 #. Template: AgentTimeAccountingEdit
 msgid "Please choose the reason for your absence for the selected days"
-msgstr "Per favore seleziona il motivo della tua assenza per i giorni selezionati."
+msgstr ""
+"Per favore seleziona il motivo della tua assenza per i giorni selezionati"
 
 #. Template: AgentTimeAccountingEdit
 msgid "On vacation"
@@ -280,7 +284,9 @@ msgstr "Vai al riepilogo di reportistica"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Currently only active users in this project are shown. To change this behavior, please update setting:"
-msgstr "Vengono mostrati solo gli utenti attivi di questo progetto. Per cambiare questo comportaento aggiornare il parametro: "
+msgstr ""
+"Vengono mostrati solo gli utenti attivi di questo progetto. Per cambiare "
+"questo comportaento aggiornare il parametro:"
 
 #. Template: AgentTimeAccountingReportingProject
 msgid "Currently all time accounting users are shown. To change this behavior, please update setting:"
@@ -288,7 +294,7 @@ msgstr "Vengono mostrati tutti gli utenti per la rendicontazione tempo. Per camb
 
 #. Template: AgentTimeAccountingSetting
 msgid "Edit Time Accounting Project Settings"
-msgstr "Modificare le configurazioni di gestione del tempo del progetto."
+msgstr "Modificare le configurazioni di gestione del tempo del progetto"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Add project"
@@ -376,7 +382,7 @@ msgstr "L'utente è autorizzato a saltare la contabilità del tempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid "Allow time accounting skipping"
-msgstr "Consenti il ​​salto della contabilità del tempo"
+msgstr "Consenti il salto della contabilità del tempo"
 
 #. Template: AgentTimeAccountingSetting
 msgid "If this option is selected, time accounting is effectively optional for the user."
@@ -452,7 +458,7 @@ msgstr "Visualizzare registro orario"
 
 #. Template: AgentTimeAccountingView
 msgid "View of "
-msgstr "Visualizzazione di  "
+msgstr "Visualizzazione di "
 
 #. Template: AgentTimeAccountingView
 msgid "Previous day"
@@ -484,7 +490,9 @@ msgstr "Non puoi cancellare le unità lavorative!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "This Date is out of limit, but you haven't insert this day yet, so you get one(!) chance to insert"
-msgstr "Questa Data è fuori limite massimo, ma non hai ancora ancora inserito questo giorno, quindi hai ancora una (!) possibilità di inserirne uno."
+msgstr ""
+"Questa Data è fuori limite massimo, ma non hai ancora ancora inserito questo "
+"giorno, quindi hai ancora una (!) possibilità di inserirne uno"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingEdit.pm
 msgid "Incomplete Working Days"
@@ -532,7 +540,7 @@ msgstr "Compilando il rapporto del progetto"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingReporting.pm
 msgid "Reporting"
-msgstr "Reportistica"
+msgstr "Segnalazione"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Unable to update user settings!"
@@ -580,7 +588,7 @@ msgstr "Utente inserito!"
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "Add a user to time accounting..."
-msgstr "Aggiungi un utente per la contabilizzazione temporale"
+msgstr "Aggiungi un utente per la contabilizzazione temporale..."
 
 #. Perl Module: Kernel/Modules/AgentTimeAccountingSetting.pm
 msgid "New User"
@@ -624,7 +632,9 @@ msgstr "Confermare inserimento"
 
 #. SysConfig
 msgid "Agent interface notification module to see the number of incomplete working days for the user."
-msgstr "Modulo di notifica dell'interfaccia agente per vedere il numero di giorni lavorativi incompleti per l'utente"
+msgstr ""
+"Modulo di notifica dell'interfaccia agente per vedere il numero di giorni "
+"lavorativi incompleti per l'utente."
 
 #. SysConfig
 msgid "Default name for new actions."
@@ -684,7 +694,7 @@ msgstr "Modifica le impostazioni della rendicontazione temporale."
 
 #. SysConfig
 msgid "Edit time record."
-msgstr "Modifica registro orario"
+msgstr "Modifica registro orario."
 
 #. SysConfig
 msgid "For how many days ago you can insert working units."
@@ -777,4 +787,3 @@ msgstr "Contabilizzazione tempo."
 #. SysConfig
 msgid "To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50)."
 msgstr "Da utilizzare se alcune azioni hanno ridotto le ore lavorative (per esempio: se solo la metà del tempo di viaggio è pagato: Chiave => Viaggio; Contenuto => 50)."
-
