@@ -11,7 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
+msgid ""
+"List of tables should be skipped, perhaps internal DB tables. Please use "
+"lowercase."
 msgstr ""
 
 #. SysConfig
@@ -27,6 +29,7 @@ msgid "Specifies which columns should be checked for valid UTF-8 source data."
 msgstr ""
 
 #. SysConfig
-msgid "This setting specifies which table columns contain blob data as these need special treatment."
+msgid ""
+"This setting specifies which table columns contain blob data as these need "
+"special treatment."
 msgstr ""
-

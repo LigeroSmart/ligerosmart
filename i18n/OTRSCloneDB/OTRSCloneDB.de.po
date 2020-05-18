@@ -11,8 +11,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
-msgstr "Liste von Tabellen, die übersprungen werden sollen, z. B. interne Tabellen. Bitte Kleinbuchstaben verwenden."
+msgid ""
+"List of tables should be skipped, perhaps internal DB tables. Please use "
+"lowercase."
+msgstr ""
+"Liste von Tabellen, die übersprungen werden sollen, z. B. interne Tabellen. "
+"Bitte Kleinbuchstaben verwenden."
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
@@ -24,9 +28,14 @@ msgstr "Einstellungen für die Verbindung zur Zieldatenbank."
 
 #. SysConfig
 msgid "Specifies which columns should be checked for valid UTF-8 source data."
-msgstr "Gibt an, welche Spalten auf gültige UTF-8-Zeichenketten geprüft werden sollen."
+msgstr ""
+"Gibt an, welche Spalten auf gültige UTF-8-Zeichenketten geprüft werden "
+"sollen."
 
 #. SysConfig
-msgid "This setting specifies which table columns contain blob data as these need special treatment."
-msgstr "Diese Einstellung gibt an, welche Tabellenspalten Binärdaten enthalten, da diese besonders behandelt werden müssen."
-
+msgid ""
+"This setting specifies which table columns contain blob data as these need "
+"special treatment."
+msgstr ""
+"Diese Einstellung gibt an, welche Tabellenspalten Binärdaten enthalten, da "
+"diese besonders behandelt werden müssen."

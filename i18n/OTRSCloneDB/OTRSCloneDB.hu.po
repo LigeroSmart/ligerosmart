@@ -11,8 +11,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
-msgstr "Azon táblák listája, amelyeket ki kell hagyni. Valószínűleg belső adatbázistáblák. Használjon kisbetűs neveket."
+msgid ""
+"List of tables should be skipped, perhaps internal DB tables. Please use "
+"lowercase."
+msgstr ""
+"Azon táblák listája, amelyeket ki kell hagyni. Valószínűleg belső "
+"adatbázistáblák. Használjon kisbetűs neveket."
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
@@ -24,9 +28,14 @@ msgstr "Beállítások a céladatbázissal történő csatlakozáshoz."
 
 #. SysConfig
 msgid "Specifies which columns should be checked for valid UTF-8 source data."
-msgstr "Meghatározza, hogy mely oszlopokat kell ellenőrizni érvényes UTF-8 forrásadatokhoz."
+msgstr ""
+"Meghatározza, hogy mely oszlopokat kell ellenőrizni érvényes UTF-8 "
+"forrásadatokhoz."
 
 #. SysConfig
-msgid "This setting specifies which table columns contain blob data as these need special treatment."
-msgstr "Ez a beállítás határozza meg, hogy mely táblaoszlopok tartalmaznak blob adatokat, mivel ezek különleges bánásmódot igénylenek."
-
+msgid ""
+"This setting specifies which table columns contain blob data as these need "
+"special treatment."
+msgstr ""
+"Ez a beállítás határozza meg, hogy mely táblaoszlopok tartalmaznak blob "
+"adatokat, mivel ezek különleges bánásmódot igénylenek."

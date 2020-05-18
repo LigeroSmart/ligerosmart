@@ -11,8 +11,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
-msgstr "テーブルのリストはスキップする必要があります。おそらく内部DBテーブルです。 小文字を使用してください。"
+msgid ""
+"List of tables should be skipped, perhaps internal DB tables. Please use "
+"lowercase."
+msgstr ""
+"テーブルのリストはスキップする必要があります。おそらく内部DBテーブルです。 小"
+"文字を使用してください。"
 
 #. SysConfig
 msgid "Log file for replacement of malformed UTF-8 data values."
@@ -27,6 +31,7 @@ msgid "Specifies which columns should be checked for valid UTF-8 source data."
 msgstr "有効なUTF-8形式のソースデータを検証するためのスペックファイル"
 
 #. SysConfig
-msgid "This setting specifies which table columns contain blob data as these need special treatment."
+msgid ""
+"This setting specifies which table columns contain blob data as these need "
+"special treatment."
 msgstr "この設定は、特別な処理が必要なBLOBデータを含む表の列を指定します。"
-

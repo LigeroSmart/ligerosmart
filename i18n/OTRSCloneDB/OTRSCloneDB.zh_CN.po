@@ -11,7 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "List of tables should be skipped, perhaps internal DB tables. Please use lowercase."
+msgid ""
+"List of tables should be skipped, perhaps internal DB tables. Please use "
+"lowercase."
 msgstr "应该跳过的数据库表（可能是数据库内部表）清单，请使用小写字母。"
 
 #. SysConfig
@@ -27,6 +29,7 @@ msgid "Specifies which columns should be checked for valid UTF-8 source data."
 msgstr "指定哪些列需要检查源数据是否为有效的UTF-8格式。"
 
 #. SysConfig
-msgid "This setting specifies which table columns contain blob data as these need special treatment."
+msgid ""
+"This setting specifies which table columns contain blob data as these need "
+"special treatment."
 msgstr "这个设置项指定包含BLOB数据的表列名，这些列需要特殊处理。"
-
