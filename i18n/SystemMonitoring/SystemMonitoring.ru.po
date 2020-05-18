@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2019-06-25 13:30+0000\n"
+"POT-Creation-Date: 2020-01-24 14:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,12 +11,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr "Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ПОСЛЕ PostMasterFilter."
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run AFTER PostMasterFilter."
+msgstr ""
+"Основной почтовый интерфейс для System Monitoring Suites. Используйте этот "
+"блок, если фильтр должен выполняться ПОСЛЕ PostMasterFilter."
 
 #. SysConfig
-msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr "Основной почтовый интерфейс для System Monitoring Suites. Используйте этот блок, если фильтр должен выполняться ДО PostMasterFilter."
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run BEFORE PostMasterFilter."
+msgstr ""
+"Основной почтовый интерфейс для System Monitoring Suites. Используйте этот "
+"блок, если фильтр должен выполняться ДО PostMasterFilter."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
@@ -51,8 +59,12 @@ msgid "Icinga2 acknowledgement sticky."
 msgstr ""
 
 #. SysConfig
-msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr "Свяжите уже открытый инцидент с затронутым CI. Это возможно только в том случае, если приходит сообщение о последующей проверке электронной почты."
+msgid ""
+"Link an already opened incident ticket with the affected CI. This is only "
+"possible when a subsequent system monitoring email arrives."
+msgstr ""
+"Свяжите уже открытый инцидент с затронутым CI. Это возможно только в том "
+"случае, если приходит сообщение о последующей проверке электронной почты."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
@@ -75,8 +87,12 @@ msgid "Named pipe acknowledge format for service."
 msgstr "Формат подтверждения именованного пайпа для сервиса."
 
 #. SysConfig
-msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
-msgstr "Автоматически задавать состояние инцидента для CI, когда приходит сообщение системы мониторинга."
+msgid ""
+"Set the incident state of a CI automatically when a system monitoring email "
+"arrives."
+msgstr ""
+"Автоматически задавать состояние инцидента для CI, когда приходит сообщение "
+"системы мониторинга."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
@@ -101,4 +117,3 @@ msgstr "Модуль события заявки для отправки под�
 #. SysConfig
 msgid "pipe"
 msgstr "pipe"
-

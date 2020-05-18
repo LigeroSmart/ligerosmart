@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2019-06-25 13:31+0000\n"
+"POT-Creation-Date: 2020-01-24 14:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,12 +11,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr "Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер треба да буде пуштен ПОСЛЕ PostMasterFilter."
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run AFTER PostMasterFilter."
+msgstr ""
+"Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер "
+"треба да буде пуштен ПОСЛЕ PostMasterFilter."
 
 #. SysConfig
-msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr "Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер треба да буде пуштен ПРЕ PostMasterFilter."
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run BEFORE PostMasterFilter."
+msgstr ""
+"Основни имејл интерфејс за системски надзор. Користите овај блок ако филтер "
+"треба да буде пуштен ПРЕ PostMasterFilter."
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
@@ -51,8 +59,12 @@ msgid "Icinga2 acknowledgement sticky."
 msgstr "Icinga2 маркирање потврде."
 
 #. SysConfig
-msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr "Повежи већ отворени тикет инцидента са погођеном конфигурационом ставком. Ово је једино могуће када стигне следећи имејл од системског надзора."
+msgid ""
+"Link an already opened incident ticket with the affected CI. This is only "
+"possible when a subsequent system monitoring email arrives."
+msgstr ""
+"Повежи већ отворени тикет инцидента са погођеном конфигурационом ставком. "
+"Ово је једино могуће када стигне следећи имејл од системског надзора."
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
@@ -75,8 +87,12 @@ msgid "Named pipe acknowledge format for service."
 msgstr "Формат потврде за сервис именованог канала."
 
 #. SysConfig
-msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
-msgstr "Постави аутоматски стање инцидента конфигурационе ставке када стигне имејл од системског надзора."
+msgid ""
+"Set the incident state of a CI automatically when a system monitoring email "
+"arrives."
+msgstr ""
+"Постави аутоматски стање инцидента конфигурационе ставке када стигне имејл "
+"од системског надзора."
 
 #. SysConfig
 msgid "The HTTP acknowledge URL."
@@ -101,4 +117,3 @@ msgstr "Модул догађаја тикета за слање потврде 
 #. SysConfig
 msgid "pipe"
 msgstr "канал"
-

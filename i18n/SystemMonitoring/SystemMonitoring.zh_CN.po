@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SystemMonitoring\n"
-"POT-Creation-Date: 2019-06-25 13:30+0000\n"
+"POT-Creation-Date: 2020-01-24 14:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,12 +11,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. SysConfig
-msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run AFTER PostMasterFilter."
-msgstr "系统监控套件的基本邮件接口。仅当此过滤器在邮件管理员过滤器之后运行时使用。"
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run AFTER PostMasterFilter."
+msgstr ""
+"系统监控套件的基本邮件接口。仅当此过滤器在邮件管理员过滤器之后运行时使用。"
 
 #. SysConfig
-msgid "Basic mail interface to System Monitoring Suites. Use this block if the filter should run BEFORE PostMasterFilter."
-msgstr "系统监控套件的基本邮件接口。仅当此过滤器在邮件管理员过滤器之前运行时使用。"
+msgid ""
+"Basic mail interface to System Monitoring Suites. Use this block if the "
+"filter should run BEFORE PostMasterFilter."
+msgstr ""
+"系统监控套件的基本邮件接口。仅当此过滤器在邮件管理员过滤器之前运行时使用。"
 
 #. SysConfig
 msgid "Define Nagios acknowledge type."
@@ -51,8 +57,12 @@ msgid "Icinga2 acknowledgement sticky."
 msgstr "Icinga2 确认的粘性通知。"
 
 #. SysConfig
-msgid "Link an already opened incident ticket with the affected CI. This is only possible when a subsequent system monitoring email arrives."
-msgstr "将受影响的配置项链接到已打开的故障工单。此功能只在配置项随后的系统监控邮件到达时才可用。"
+msgid ""
+"Link an already opened incident ticket with the affected CI. This is only "
+"possible when a subsequent system monitoring email arrives."
+msgstr ""
+"将受影响的配置项链接到已打开的故障工单。此功能只在配置项随后的系统监控邮件到"
+"达时才可用。"
 
 #. SysConfig
 msgid "Name of the Dynamic Field for Host."
@@ -75,7 +85,9 @@ msgid "Named pipe acknowledge format for service."
 msgstr "命名管道已知问题的服务格式。"
 
 #. SysConfig
-msgid "Set the incident state of a CI automatically when a system monitoring email arrives."
+msgid ""
+"Set the incident state of a CI automatically when a system monitoring email "
+"arrives."
 msgstr "当配置项的系统监控邮件到达时自动设置它的故障状态。"
 
 #. SysConfig
@@ -101,4 +113,3 @@ msgstr "发送一个已知问题到Nagios的工单事件模块。"
 #. SysConfig
 msgid "pipe"
 msgstr "管道"
-
