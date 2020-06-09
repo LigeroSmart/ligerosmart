@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-01-24 09:29+0000\n"
+"POT-Creation-Date: 2020-03-13 18:43+0000\n"
 "PO-Revision-Date: 2019-11-10 18:09+0000\n"
 "Last-Translator: Dusan Vuckovic\n"
 "Language-Team: Serbian (http://www.transifex.com/otrs/OTRS/language/sr/)\n"

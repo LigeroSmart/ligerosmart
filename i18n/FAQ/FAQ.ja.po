@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-01-24 09:29+0000\n"
+"POT-Creation-Date: 2020-03-13 18:43+0000\n"
 "PO-Revision-Date: 2020-02-22 12:18+0000\n"
 "Last-Translator: HISATOSHI OONISHI <hisatoshi.onishi@gmail.com>\n"
 "Language-Team: Japanese <https://translate.app.otrs.com/projects/otrs-6/faq/"
@@ -672,7 +672,9 @@ msgstr "タイプが指定されていません！"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Type must be either LastCreate or LastChange or Top10!"
-msgstr "Type は、 \"LastCreate\", \"LastChange\", \"Top10\" のいずれかでなくてはなりません!"
+msgstr ""
+"Type は、 \"LastCreate\", \"LastChange\", \"Top10\" のいずれかでなくてはなり"
+"ません!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
 msgid "Can't create RSS file!"
@@ -858,8 +860,10 @@ msgid ""
 "ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
 "(DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
-"リンクされた FAQ ウィジェットに表示される列を定義します (LinkObject::ViewMode = \"complex\") 。\n"
-"注: DefaultColumns には、FAQ属性とダイナミック・フィールド (DynamicField_NameX) のみが設定できます。"
+"リンクされた FAQ ウィジェットに表示される列を定義します (LinkObject::"
+"ViewMode = \"complex\") 。\n"
+"注: DefaultColumns には、FAQ属性とダイナミック・フィールド "
+"(DynamicField_NameX) のみが設定できます。"
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."

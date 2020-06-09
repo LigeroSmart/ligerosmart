@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-01-24 09:29+0000\n"
-"PO-Revision-Date: 2020-04-02 13:55+0000\n"
+"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"PO-Revision-Date: 2020-05-06 09:01+0000\n"
 "Last-Translator: Nick van der Burg <nmp.vanderburg@gmail.com>\n"
-"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/faq/nl/>"
-"\n"
+"Language-Team: Dutch <https://translate.app.otrs.com/projects/otrs-6/faq/nl/"
+">\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr "FAQ-artikel toevoegen"
 
 #. Template: AgentFAQAdd
 msgid "Keywords"
-msgstr "Sleutelwoorden"
+msgstr "Zoekwoorden"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
@@ -64,7 +64,7 @@ msgstr "Subcategorie van"
 
 #. Template: AgentFAQCategory
 msgid "Please select at least one permission group."
-msgstr "Selecteer ten minste één toestemmingsgroep."
+msgstr "Selecteer ten minste één permissiegroep."
 
 #. Template: AgentFAQCategory
 msgid "Agent groups that can access articles in this category."
@@ -104,7 +104,7 @@ msgstr "FAQ"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Explorer"
-msgstr "FAQ Explorer"
+msgstr "FAQ Verkenner"
 
 #. Template: AgentFAQExplorer
 msgid "Quick Search"
@@ -120,7 +120,7 @@ msgstr "Geavanceerd zoeken"
 
 #. Template: AgentFAQExplorer
 msgid "Subcategories"
-msgstr "Subcategoriën"
+msgstr "Subcategorieën"
 
 #. Template: AgentFAQExplorer
 msgid "FAQ Articles"
@@ -128,7 +128,7 @@ msgstr "FAQ-artikelen"
 
 #. Template: AgentFAQExplorer
 msgid "No subcategories found."
-msgstr "Geen subcategoriën gevonden."
+msgstr "Geen Subcategorieën gevonden."
 
 #. Template: AgentFAQHistory
 msgid "History of"
@@ -140,7 +140,7 @@ msgstr "Geschiedenisinhoud"
 
 #. Template: AgentFAQHistory
 msgid "Createtime"
-msgstr "Maaktijd"
+msgstr "Maak tijd"
 
 #. Template: AgentFAQJournalOverviewSmall
 msgid "No FAQ Journal data found."
@@ -207,7 +207,7 @@ msgstr "van de 5"
 
 #. Template: AgentFAQSearch
 msgid "Keyword"
-msgstr "Sleutewoord"
+msgstr "Zoekwoord"
 
 #. Template: AgentFAQSearch
 msgid "Vote (e. g. Equals 10 or GreaterThan 60)"
@@ -215,7 +215,7 @@ msgstr "Stem (bijv. is gelijk aan 10 of groter dan 60)"
 
 #. Template: AgentFAQSearch
 msgid "Rate (e. g. Equals 25% or GreaterThan 75%)"
-msgstr "Beoordeling (bijv.: Is gelijk aan 25% of Groter dan 75%)"
+msgstr "Beoordeling (bijv. Is gelijk aan 25% of Groter dan 75%)"
 
 #. Template: AgentFAQSearch
 msgid "Approved"
@@ -227,15 +227,15 @@ msgstr "Laatst gewijzigd door"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (before/after)"
-msgstr "FAQ-artikel maaktijd (voor/na)"
+msgstr "FAQ-artikel maak tijd (voor/na)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Create Time (between)"
-msgstr "FAQ-artikel maaktijd (tussen)"
+msgstr "FAQ-artikel maak tijd (tussen)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (before/after)"
-msgstr "FAQ-artike wijzigingstijd (voor/na)"
+msgstr "FAQ-artikel wijzigingstijd (voor/na)"
 
 #. Template: AgentFAQSearch
 msgid "FAQ Article Change Time (between)"
@@ -247,7 +247,7 @@ msgstr "FAQ volledige tekst"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Search"
-msgstr "FAQ zoeken"
+msgstr "FAQ Zoeken"
 
 #. Template: AgentFAQSearchSmall
 msgid "Profile Selection"
@@ -275,7 +275,7 @@ msgstr "Beoordeling"
 
 #. Template: AgentFAQSearchSmall
 msgid "No rate settings"
-msgstr "Geen beoordelinginstellingen"
+msgstr "Geen beoordelingsinstellingen"
 
 #. Template: AgentFAQSearchSmall
 msgid "Specific rate"
@@ -287,7 +287,7 @@ msgstr "bijv. Is gelijk 25% of groter dan 75%"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Create Time"
-msgstr "FAQ-artikel maaktijd"
+msgstr "FAQ-artikel maak tijd"
 
 #. Template: AgentFAQSearchSmall
 msgid "FAQ Article Change Time"
@@ -381,7 +381,8 @@ msgstr "Geen nuttige bronnen gevonden voor het onderwerp en de tekst."
 
 #. Template: CustomerFAQRelatedArticles
 msgid "Type a subject or text to get a list of helpful resources."
-msgstr "Typ een onderwerp of tekst om een lijst met nuttige bronnen te krijgen."
+msgstr ""
+"Typ een onderwerp of tekst om een lijst met nuttige bronnen te krijgen."
 
 #. Template: CustomerFAQSearch
 msgid "Fulltext search in FAQ articles (e. g. \"John*n\" or \"Will*\")"
@@ -442,7 +443,8 @@ msgstr "Je hebt rw toestemming nodig!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No categories found where user has read/write permissions!"
-msgstr "Geen categorieën gevonden waar de gebruiker lees-/schrijfrechten heeft!"
+msgstr ""
+"Geen categorieën gevonden waar de gebruiker lees-/schrijfrechten heeft!"
 
 #. Perl Module: Kernel/Modules/AgentFAQAdd.pm
 msgid "No default language found and can't create a new one."
@@ -502,7 +504,8 @@ msgstr "De CategoryID %s is ongeldig."
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "Can't show history, as no ItemID is given!"
-msgstr "Kan de geschiedenis niet weergeven, omdat er geen ItemID wordt gegeven!"
+msgstr ""
+"Kan de geschiedenis niet weergeven, omdat er geen ItemID wordt gegeven!"
 
 #. Perl Module: Kernel/Modules/AgentFAQHistory.pm
 msgid "FAQ History"
@@ -850,9 +853,8 @@ msgstr ""
 "Definieer acties waarbij een instellingenknop beschikbaar is in de widget "
 "voor gekoppelde objecten (LinkObject::ViewMode = \"complex\"). Houd er "
 "rekening mee dat deze acties de volgende JS- en CSS-bestanden moeten hebben "
-"geregistreerd: Core.AllocationList.css, Core.UI.AllocationList.js, "
-"Core.UI.Table.Sort.js, Core.Agent.TableFilters.js en Core.Agent "
-".LinkObject.js."
+"geregistreerd: Core.AllocationList.css, Core.UI.AllocationList.js, Core.UI."
+"Table.Sort.js, Core.Agent.TableFilters.js en Core.Agent .LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -1002,8 +1004,8 @@ msgid ""
 msgstr ""
 "Definieert de parameters voor de dashboardbackend. \"Limiet\" definieert het "
 "aantal items dat standaard wordt weergegeven. \"Groep\" wordt gebruikt om de "
-"toegang tot de plug-in te beperken (bijv. Groep: admin; groep1; groep2;). \""
-"Standaard\" geeft aan of de plug-in standaard is ingeschakeld of dat de "
+"toegang tot de plug-in te beperken (bijv. Groep: admin; groep1; groep2;). "
+"\"Standaard\" geeft aan of de plug-in standaard is ingeschakeld of dat de "
 "gebruiker deze handmatig moet inschakelen."
 
 #. SysConfig

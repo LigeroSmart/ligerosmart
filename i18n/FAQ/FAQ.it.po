@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-01-24 09:29+0000\n"
-"PO-Revision-Date: 2020-03-08 22:10+0000\n"
+"POT-Creation-Date: 2020-03-13 18:43+0000\n"
+"PO-Revision-Date: 2020-05-05 15:34+0000\n"
 "Last-Translator: Efrem Baraldo <efrem.baraldo@gmail.com>\n"
 "Language-Team: Italian <https://translate.app.otrs.com/projects/otrs-6/faq/"
 "it/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11.2\n"
+"X-Generator: Weblate 3.11.3\n"
 
 #. Template: AgentFAQAdd
 msgid "Add FAQ Article"
@@ -34,7 +34,7 @@ msgstr "Parole chiave"
 
 #. Template: AgentFAQAdd
 msgid "A category is required."
-msgstr "Una categoria è obbligatoria"
+msgstr "Una categoria è obbligatoria."
 
 #. Template: AgentFAQAdd
 msgid "Approval"
@@ -74,7 +74,7 @@ msgstr "Selezionare almeno un gruppo di permessi."
 
 #. Template: AgentFAQCategory
 msgid "Agent groups that can access articles in this category."
-msgstr "Gruppo di tecnici the può accedere agli aritcoli in questa categoria"
+msgstr "Gruppo di tecnici the può accedere agli aritcoli in questa categoria."
 
 #. Template: AgentFAQCategory
 msgid "Will be shown as comment in Explorer."
@@ -591,48 +591,59 @@ msgid "FAQ Number"
 msgstr "Numero FAQ"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "Last Changed by"
-msgstr ""
+msgstr "Ultima Modifica di"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "FAQ Item Create Time (before/after)"
-msgstr ""
+msgstr "Articolo FAQ Data Creazione (prima/dopo)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "FAQ Item Create Time (between)"
-msgstr ""
+msgstr "Articolo FAQ Data Creazione (tra date)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "FAQ Item Change Time (before/after)"
-msgstr ""
+msgstr "Articolo FAQ Data Cambiamento (prima/dopo)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "FAQ Item Change Time (between)"
-msgstr ""
+msgstr "Articolo FAQ Data Cambiamento (tra date)"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "Equals"
-msgstr ""
+msgstr "Uguale"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "Greater than"
-msgstr ""
+msgstr "Maggiore di"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "Greater than equals"
-msgstr ""
+msgstr "Maggiore o uguale a"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "Smaller than"
-msgstr ""
+msgstr "Minore di"
 
 #. Perl Module: Kernel/Modules/AgentFAQSearch.pm
+#, fuzzy
 msgid "Smaller than equals"
-msgstr ""
+msgstr "Minore o uguale a"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+#, fuzzy
 msgid "Need FileID!"
-msgstr ""
+msgstr "Necessario un FileID!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
 msgid "Thanks for your vote!"
@@ -647,12 +658,14 @@ msgid "No rate selected!"
 msgstr "Nessuna valutazione selezionata!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+#, fuzzy
 msgid "The voting mechanism is not enabled!"
-msgstr ""
+msgstr "Il meccanismo di voto non è abilitato!"
 
 #. Perl Module: Kernel/Modules/AgentFAQZoom.pm
+#, fuzzy
 msgid "The vote rate is not defined!"
-msgstr ""
+msgstr "Il tasso di voto non è definito!"
 
 #. Perl Module: Kernel/Modules/CustomerFAQPrint.pm
 msgid "FAQ Article Print"
@@ -663,8 +676,9 @@ msgid "Created between"
 msgstr ""
 
 #. Perl Module: Kernel/Modules/CustomerFAQZoom.pm
+#, fuzzy
 msgid "Need ItemID!"
-msgstr ""
+msgstr "Necessario un ItemID!"
 
 #. Perl Module: Kernel/Modules/PublicFAQExplorer.pm
 msgid "FAQ Articles (new created)"
@@ -679,40 +693,49 @@ msgid "FAQ Articles (Top 10)"
 msgstr "Articoli FAQ (Primi 10)"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+#, fuzzy
 msgid "No Type is given!"
-msgstr ""
+msgstr "Nessun tipo indicato!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+#, fuzzy
 msgid "Type must be either LastCreate or LastChange or Top10!"
-msgstr ""
+msgstr "Il tipo deve essere LastCreate oppure LastChange oppure Top10!"
 
 #. Perl Module: Kernel/Modules/PublicFAQRSS.pm
+#, fuzzy
 msgid "Can't create RSS file!"
-msgstr ""
+msgstr "Non posso creare RSS file!"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/AgentFAQSearch.pm
+#, fuzzy
 msgid "%s (FAQFulltext)"
-msgstr ""
+msgstr "%s (FAQFulltext)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+#, fuzzy
 msgid "%s - Customer (%s)"
-msgstr ""
+msgstr "%s - Cliente (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/CustomerFAQSearch.pm
+#, fuzzy
 msgid "%s - Customer (FAQFulltext)"
-msgstr ""
+msgstr "%s - Cliente (FAQFulltext)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+#, fuzzy
 msgid "%s - Public (%s)"
-msgstr ""
+msgstr "%s - Publica (%s)"
 
 #. Perl Module: Kernel/Output/HTML/HeaderMeta/PublicFAQSearch.pm
+#, fuzzy
 msgid "%s - Public (FAQFulltext)"
-msgstr ""
+msgstr "%s - Publica (FAQFulltext)"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
+#, fuzzy
 msgid "Need rate!"
-msgstr ""
+msgstr "Richiedo una valutazione!"
 
 #. Perl Module: Kernel/Output/HTML/Layout/FAQ.pm
 msgid "This article is empty!"
@@ -764,8 +787,9 @@ msgstr ""
 "il collegamento all'immagine."
 
 #. SysConfig
+#, fuzzy
 msgid "Add FAQ article"
-msgstr ""
+msgstr "Aggiungi articolo FAQ"
 
 #. SysConfig
 msgid "CSS color for the voting result."
@@ -773,39 +797,46 @@ msgstr "Colore CSS per il risultato del voto."
 
 #. SysConfig
 msgid "Cache Time To Leave for FAQ items."
-msgstr "Tempo di durata nella Cache delle voci di FAQ"
+msgstr "Tempo di durata nella Cache delle voci di FAQ."
 
 #. SysConfig
 msgid "Category Management"
 msgstr "Gestione Categorie"
 
 #. SysConfig
+#, fuzzy
 msgid "Category Management."
-msgstr ""
+msgstr "Gestione Categorie."
 
 #. SysConfig
+#, fuzzy
 msgid "Customer FAQ Print."
-msgstr ""
+msgstr "Stampa FAQ Cliente."
 
 #. SysConfig
+#, fuzzy
 msgid "Customer FAQ Related Articles"
-msgstr ""
+msgstr "Articoli relativi alle FAQ Cliente"
 
 #. SysConfig
+#, fuzzy
 msgid "Customer FAQ Related Articles."
-msgstr ""
+msgstr "Articoli relativi alla FAQ Cliente."
 
 #. SysConfig
+#, fuzzy
 msgid "Customer FAQ Zoom."
-msgstr ""
+msgstr "Zoom FAQ Cliente."
 
 #. SysConfig
+#, fuzzy
 msgid "Customer FAQ search."
-msgstr ""
+msgstr "Ricerca FAQ Cliente."
 
 #. SysConfig
+#, fuzzy
 msgid "Customer FAQ."
-msgstr ""
+msgstr "FAQ Cliente."
 
 #. SysConfig
 msgid "Decimal places of the voting result."
@@ -818,11 +849,11 @@ msgstr "Nome Predefinito della categoria."
 #. SysConfig
 msgid "Default language for FAQ articles on single language mode."
 msgstr ""
-"Lingua predefinita per gli articoli  FAQ per la modalità singola lingua."
+"Lingua predefinita per gli articoli FAQ per la modalità singola lingua."
 
 #. SysConfig
 msgid "Default maximum size of the titles in a FAQ article to be shown."
-msgstr "Default numero di catteri del titolo di una FAQ da visualizzare"
+msgstr "Default numero di caratteri del titolo di una FAQ da visualizzare."
 
 #. SysConfig
 msgid "Default priority of tickets for the approval of FAQ articles."
@@ -856,6 +887,11 @@ msgid ""
 "css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core.Agent."
 "TableFilters.js and Core.Agent.LinkObject.js."
 msgstr ""
+"Definisce l'azione con cui il bottone dei settaggi è disponibile in un "
+"oggetto widget collegato (LinkObject::ViewMode = \"complex\"). Notare che "
+"queste Actions devono essere registrate nei seguenti file JS e CSS: Core."
+"AllocationList.css, Core.UI.AllocationList.js, Core.UI.Table.Sort.js, Core."
+"Agent.TableFilters.js and Core.Agent.LinkObject.js."
 
 #. SysConfig
 msgid "Define if the FAQ title should be concatenated to article subject."
@@ -864,11 +900,15 @@ msgstr ""
 "dell'articolo."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Define which columns are shown in the linked FAQs widget (LinkObject::"
 "ViewMode = \"complex\"). Note: Only FAQ attributes and dynamic fields "
 "(DynamicField_NameX) are allowed for DefaultColumns."
 msgstr ""
+"Definisce quali colonne vengono mostrate nel FAQ widget collegato "
+"(LinkObject::ViewMode = \"complex\"). Nota: Solo gli attributi FAQ e i campi "
+"dinamici (DynamicField_NameX) sono consentiti come DefaultColumns."
 
 #. SysConfig
 msgid "Defines an overview module to show the small view of a FAQ journal."
@@ -883,46 +923,68 @@ msgstr ""
 "FAQ."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "agent interface."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento in una ricerca "
+"dell'interfaccia Agente."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "customer interface."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento in una ricerca "
+"dell'interfaccia Cliente."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in a FAQ search of the "
 "public interface."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento in una ricerca "
+"dell'interfaccia Pubblica."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
 "agent interface."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento "
+"nell'esploratore FAQ dell'interfaccia Agente."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
 "customer interface."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento "
+"nell'esploratore FAQ dell'interfaccia Cliente."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the "
 "public interface."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento "
+"nell'esploratore FAQ dell'interfaccia Pubblica."
 
 #. SysConfig
+#, fuzzy
 msgid ""
 "Defines the default FAQ order in the FAQ Explorer result of the agent "
 "interface. Up: oldest on top. Down: latest on top."
 msgstr ""
+"Definisce l'attributo delle FAQ di default per l'ordinamento "
+"nell'esploratore FAQ dell'interfaccia Agente. Crescente: più vecchi in cima. "
+"Decrescente: ultimi in cima."
 
 #. SysConfig
 msgid ""
@@ -1011,7 +1073,7 @@ msgstr "Definisce dove verrà visualizzato il collegamento 'Inserisci FAQ'."
 
 #. SysConfig
 msgid "Definition of FAQ item free text field."
-msgstr "Definizione del campo testo libero delle FAQ"
+msgstr "Definizione del campo testo libero delle FAQ."
 
 #. SysConfig
 msgid "Delete this FAQ"

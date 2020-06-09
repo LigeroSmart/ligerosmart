@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OTRS\n"
-"POT-Creation-Date: 2020-01-24 09:29+0000\n"
+"POT-Creation-Date: 2020-03-13 18:43+0000\n"
 "PO-Revision-Date: 2020-01-25 23:27+0000\n"
 "Last-Translator: Marc De Mena Tomé <mdemena@gmail.com>\n"
 "Language-Team: Spanish <https://translate.app.otrs.com/projects/otrs-6/faq/"
