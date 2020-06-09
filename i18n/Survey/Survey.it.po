@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
 "POT-Creation-Date: 2020-01-24 14:38+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-05-05 21:01+0000\n"
+"Last-Translator: Efrem Baraldo <efrem.baraldo@gmail.com>\n"
+"Language-Team: Italian <https://translate.app.otrs.com/projects/otrs-6/"
+"survey/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.11.3\n"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -80,7 +83,7 @@ msgstr "Risposta richiesta"
 
 #. Template: AgentSurveyEditQuestions
 msgid "No questions saved for this survey."
-msgstr "Non ci sono voci per questo sondaggio"
+msgstr "Non ci sono voci per questo sondaggio."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Question"
@@ -96,7 +99,7 @@ msgstr "Quando completi la modifica delle domande del sondaggio, basta chiudere 
 
 #. Template: AgentSurveyEditQuestions
 msgid "Close this window"
-msgstr ""
+msgstr "Chiudi questa finestra"
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Question"
@@ -124,7 +127,9 @@ msgstr "Nessuna risposta salvata per questa domanda."
 
 #. Template: AgentSurveyEditQuestions
 msgid "This doesn't have several answers, a textarea will be displayed."
-msgstr "Non sono previste risposte multiple, il destinatario inserisce del testo libero"
+msgstr ""
+"Non sono previste risposte multiple, il destinatario inserisce del testo "
+"libero."
 
 #. Template: AgentSurveyEditQuestions
 msgid "Edit Answer"
@@ -248,7 +253,7 @@ msgstr "Grafici sul sondaggio"
 
 #. Template: AgentSurveyZoom
 msgid "No stat results."
-msgstr "Non ci sono risultati da mostrare"
+msgstr "Non ci sono risultati da mostrare."
 
 #. Template: PublicSurvey
 msgid "Survey"
@@ -280,7 +285,7 @@ msgstr "Non hai i permessi per questo Sondaggio!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "No SurveyID is given!"
-msgstr "Non è stato specificato un SurveyID"
+msgstr "Non è stato specificato un SurveyID!"
 
 #. Perl Module: Kernel/Modules/AgentSurveyEdit.pm
 msgid "Survey Edit"
@@ -376,7 +381,7 @@ msgstr "- Cambia stato -"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Master"
-msgstr "Principale"
+msgstr "Primario"
 
 #. Perl Module: Kernel/Modules/AgentSurveyZoom.pm
 msgid "Invalid"
@@ -408,23 +413,23 @@ msgstr "Il sondaggio è terminato."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Message!"
-msgstr ""
+msgstr "Messaggio dell'indagine!"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Module not enabled."
-msgstr ""
+msgstr "Modulo non abilitato."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "This functionality is not enabled, please contact your administrator."
-msgstr ""
+msgstr "Questa funzionalità non è abilitata, contattare l'amministratore."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Error!"
-msgstr ""
+msgstr "Errore del sondaggio!"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Invalid survey key."
-msgstr ""
+msgstr "Chiave sondaggio non valida."
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken."
@@ -432,11 +437,11 @@ msgstr "La chiave di sondaggio inserita non è valida, se hai seguito un link fo
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote"
-msgstr ""
+msgstr "Voto del sondaggio"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "Survey Vote Data"
-msgstr ""
+msgstr "Data di voto del sondaggio"
 
 #. Perl Module: Kernel/Modules/PublicSurvey.pm
 msgid "You have already answered the survey."
@@ -500,7 +505,12 @@ msgstr "Definisci il numero massimo di sondaggi che possono essere inviati al cl
 
 #. SysConfig
 msgid "Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ). Note: delayed survey sending is done by the OTRS Daemon, prior activation of 'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend' setting."
-msgstr "Definisci il numero di ore dopo la chiusura del ticket per l'invio del sondaggio (0 indica l'invio immediato dopo la chiusura). Nota: l'invio ritardato dei sondaggi viene eseguito dal Daemon OTRS con l'attivazione della preferenza  'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'."
+msgstr ""
+"Definisci il numero di ore dopo la chiusura del ticket per l'invio del "
+"sondaggio (0 indica l'invio immediato dopo la chiusura). Nota: l'invio "
+"ritardato dei sondaggi viene eseguito dal Daemon OTRS con l'attivazione "
+"della preferenza "
+"'Daemon::SchedulerCronTaskManager::Task###SurveyRequestsSend'."
 
 #. SysConfig
 msgid "Defines the columns for the dropdown list for building send conditions (0 => inactive, 1 => active)."
@@ -537,6 +547,9 @@ msgstr "Modifica domande del sondaggio."
 #. SysConfig
 msgid "Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time."
 msgstr ""
+"Abilitare o disabilitare la schermata ShowVoteData nell'interfaccia pubblica "
+"per mostrare i dati di uno specifico risultato del sondaggio quando il "
+"cliente tenta di rispondere a un sondaggio la seconda volta."
 
 #. SysConfig
 msgid "Enable or disable the send condition check for the service."
@@ -616,7 +629,7 @@ msgstr "Modulo di modifica dei sondaggi."
 
 #. SysConfig
 msgid "Survey Overview \"Small\" Limit"
-msgstr "Limite per visualizzazione \"compatta\"."
+msgstr "Limite per visualizzazione \"compatta\""
 
 #. SysConfig
 msgid "Survey Stats Module."
@@ -653,4 +666,3 @@ msgstr "Attiva l'invio di richieste di sondaggi ritardate."
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr "Ingrandisci i dettagli delle statistiche."
-

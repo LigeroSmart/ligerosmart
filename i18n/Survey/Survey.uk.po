@@ -2,13 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Survey\n"
 "POT-Creation-Date: 2020-01-24 14:38+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-06-09 21:00+0000\n"
+"Last-Translator: ANT <velmyshanovnyi@gmail.com>\n"
+"Language-Team: Ukrainian <https://translate.app.otrs.com/projects/otrs-6/"
+"survey/uk/>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #. Template: AgentSurveyAdd
 msgid "Create New Survey"
@@ -16,15 +20,15 @@ msgstr "Створити нове опитування"
 
 #. Template: AgentSurveyAdd
 msgid "Introduction"
-msgstr "Представлення"
+msgstr "Вступ"
 
 #. Template: AgentSurveyAdd
 msgid "Survey Introduction"
-msgstr "Представлення опитування"
+msgstr "Вступ до опитування"
 
 #. Template: AgentSurveyAdd
 msgid "Notification Body"
-msgstr "Тіло інформування"
+msgstr "Тіло сповішення"
 
 #. Template: AgentSurveyAdd
 msgid "Ticket Types"
@@ -572,7 +576,7 @@ msgstr "Якщо регулярний вираз визначає, жодне о
 
 #. SysConfig
 msgid "Limit."
-msgstr ""
+msgstr "Обмеження."
 
 #. SysConfig
 msgid "Parameters for the pages (in which the surveys are shown) of the small survey overview."
@@ -653,4 +657,3 @@ msgstr "Тригер відправки відкладених запитів о
 #. SysConfig
 msgid "Zoom into statistics details."
 msgstr "Перейти в деталі статистики"
-
