@@ -1,22 +1,27 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2020-01-24 10:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: 2020-01-28 14:51+0000\n"
+"Last-Translator: Egle Martisauskaite <egle.martisauskaite@gmail.com>\n"
+"Language-Team: Lithuanian <https://translate.app.otrs.com/projects/otrs-6/"
+"general-catalog/lt/>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 3.10\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
-msgstr ""
+msgstr "Funkcionalumas"
 
 #. Template: AdminGeneralCatalog
 msgid "General Catalog Management"
-msgstr ""
+msgstr "Bendrojo katalogo valdymas"
 
 #. Template: AdminGeneralCatalog
 msgid "Items in Class"
@@ -24,7 +29,7 @@ msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Item"
-msgstr ""
+msgstr "Redaguoti"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Class"
@@ -32,11 +37,11 @@ msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Add Item"
-msgstr ""
+msgstr "Pridėti dokumentą"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Item"
-msgstr ""
+msgstr "Pridėti katalogo objektą"
 
 #. Template: AdminGeneralCatalog
 msgid "Add Catalog Class"
@@ -44,11 +49,11 @@ msgstr ""
 
 #. Template: AdminGeneralCatalog
 msgid "Catalog Class"
-msgstr ""
+msgstr "Katalogo klasė"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Catalog Item"
-msgstr ""
+msgstr "Redaguoti katalogo objektą"
 
 #. JS File: ITSM.GeneralCatalog
 msgid "Warning incident state can not be set to invalid."
@@ -71,7 +76,9 @@ msgid "Defines the URL JS Color Picker path."
 msgstr ""
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
 msgstr ""
 
 #. SysConfig
@@ -83,10 +90,11 @@ msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr ""
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
 msgstr ""
 
 #. SysConfig
 msgid "Permission Group"
 msgstr ""
-

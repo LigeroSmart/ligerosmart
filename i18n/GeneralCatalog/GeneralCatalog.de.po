@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,8 +71,12 @@ msgid "Defines the URL JS Color Picker path."
 msgstr "Definiert die URL des JS-Farbwähler-Pfads."
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
-msgstr "Registrierung des Frontend-Moduls für die Konfiguration von AdminGeneralCatalog im Admin-Bereich."
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Registrierung des Frontend-Moduls für die Konfiguration von "
+"AdminGeneralCatalog im Admin-Bereich."
 
 #. SysConfig
 msgid "General Catalog"
@@ -83,10 +87,12 @@ msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Parameter für den Beispiel-Kommentar 2 der General Katalog-Attribute."
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
-msgstr "Parameter für die zugriffsberechtigte Gruppe der General Katalog-Attribute."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Parameter für die zugriffsberechtigte Gruppe der General Katalog-Attribute."
 
 #. SysConfig
 msgid "Permission Group"
 msgstr "Berechtigungsgruppe \\\\*"
-

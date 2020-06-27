@@ -2,13 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
 "POT-Creation-Date: 2020-01-24 11:05+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-01-25 23:27+0000\n"
+"Last-Translator: Marc De Mena Tomé <mdemena@gmail.com>\n"
+"Language-Team: Spanish <https://translate.app.otrs.com/projects/otrs-6/"
+"general-catalog/es/>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -52,7 +55,7 @@ msgstr "Editar Elemento del Catálogo"
 
 #. JS File: ITSM.GeneralCatalog
 msgid "Warning incident state can not be set to invalid."
-msgstr ""
+msgstr "El estado de incidente Atención no puede ser inválido."
 
 #. SysConfig
 msgid "Comment 2"
@@ -71,8 +74,12 @@ msgid "Defines the URL JS Color Picker path."
 msgstr "Define la ruta URL JS del selector de color"
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
-msgstr "El Frontend del registro del módulo para la configuración del AdminGeneralCatalog en el área admin"
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"El Frontend del registro del módulo para la configuración del "
+"AdminGeneralCatalog en el área admin"
 
 #. SysConfig
 msgid "General Catalog"
@@ -80,13 +87,18 @@ msgstr "Catálogo General"
 
 #. SysConfig
 msgid "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Parámetros para el ejemplo comentario 2 de los atributos del catálogo general."
+msgstr ""
+"Parámetros para el ejemplo comentario 2 de los atributos del catálogo "
+"general."
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
-msgstr "Parámetros para los permisos de ejemplo de los atributos del catálogo general."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Parámetros para los permisos de ejemplo de los atributos del catálogo "
+"general."
 
 #. SysConfig
 msgid "Permission Group"
-msgstr ""
-
+msgstr "Grupo de permisos"

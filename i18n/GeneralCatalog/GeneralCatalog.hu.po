@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,8 +71,12 @@ msgid "Defines the URL JS Color Picker path."
 msgstr "Meghatározza a JS színválasztó útvonalának URL-ét."
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
-msgstr "Előtétprogram modul regisztráció az adminisztrációs területen lévő általános katalógus beállításhoz."
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Előtétprogram modul regisztráció az adminisztrációs területen lévő általános "
+"katalógus beállításhoz."
 
 #. SysConfig
 msgid "General Catalog"
@@ -80,13 +84,17 @@ msgstr "Általános katalógus"
 
 #. SysConfig
 msgid "Parameters for the example comment 2 of the general catalog attributes."
-msgstr "Paraméterek az általános katalógus attribútumainak 2. példa megjegyzéseihez."
+msgstr ""
+"Paraméterek az általános katalógus attribútumainak 2. példa megjegyzéseihez."
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
-msgstr "Paraméterek az általános katalógus attribútumainak példa jogosultság csoportjaihoz."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Paraméterek az általános katalógus attribútumainak példa jogosultság "
+"csoportjaihoz."
 
 #. SysConfig
 msgid "Permission Group"
 msgstr "Jogosultsági csoport"
-

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2020-01-24 10:54+0000\n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,8 +71,12 @@ msgid "Defines the URL JS Color Picker path."
 msgstr ""
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
-msgstr "Modul pendaftaran muka hadapan bagi konfigurasi KatalogUmumTadbir dalam ruangan pentadbir. "
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
+msgstr ""
+"Modul pendaftaran muka hadapan bagi konfigurasi KatalogUmumTadbir dalam "
+"ruangan pentadbir. "
 
 #. SysConfig
 msgid "General Catalog"
@@ -83,10 +87,12 @@ msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "Parameter untuk contoh komen 2 pada ciri-ciri katalog."
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
-msgstr "Parameter untuk contoh kumpulan yang dibenarkan pada ciri-ciri katalog."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
+msgstr ""
+"Parameter untuk contoh kumpulan yang dibenarkan pada ciri-ciri katalog."
 
 #. SysConfig
 msgid "Permission Group"
 msgstr ""
-

@@ -1,14 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GeneralCatalog\n"
-"POT-Creation-Date: 2020-01-24 10:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-01-24 11:05+0000\n"
+"PO-Revision-Date: 2020-01-30 12:51+0000\n"
+"Last-Translator: Huimin Wang <whuim@qq.com>\n"
+"Language-Team: Chinese (Simplified) <https://translate.app.otrs.com/projects/"
+"otrs-6/general-catalog/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. Template: AAAGeneralCatalog
 msgid "Functionality"
@@ -20,7 +23,7 @@ msgstr "目录管理"
 
 #. Template: AdminGeneralCatalog
 msgid "Items in Class"
-msgstr "以下条目属于类："
+msgstr "以下条目属于类"
 
 #. Template: AdminGeneralCatalog
 msgid "Edit Item"
@@ -60,7 +63,7 @@ msgstr "注释2"
 
 #. SysConfig
 msgid "Create and manage the General Catalog."
-msgstr "创建和管理目录"
+msgstr "创建和管理目录。"
 
 #. SysConfig
 msgid "Define the general catalog comment 2."
@@ -71,7 +74,9 @@ msgid "Defines the URL JS Color Picker path."
 msgstr "定义JS颜色选择器的路径URL。"
 
 #. SysConfig
-msgid "Frontend module registration for the AdminGeneralCatalog configuration in the admin area."
+msgid ""
+"Frontend module registration for the AdminGeneralCatalog configuration in "
+"the admin area."
 msgstr "在系统管理中注册目录管理模块AdminGeneralCatalog的前端模块。"
 
 #. SysConfig
@@ -83,10 +88,11 @@ msgid "Parameters for the example comment 2 of the general catalog attributes."
 msgstr "目录属性样例-注释2的参数设置。"
 
 #. SysConfig
-msgid "Parameters for the example permission groups of the general catalog attributes."
+msgid ""
+"Parameters for the example permission groups of the general catalog "
+"attributes."
 msgstr "目录属性样例-权限组的参数。"
 
 #. SysConfig
 msgid "Permission Group"
 msgstr "权限组"
-
