@@ -279,7 +279,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = 'Tipo de conteúdo';
 
-    # Database XML Definition: FAQ.sopm
+    # Database XML / SOPM Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'interno';
     $Self->{Translation}->{'external'} = 'externo';
     $Self->{Translation}->{'public'} = 'público';

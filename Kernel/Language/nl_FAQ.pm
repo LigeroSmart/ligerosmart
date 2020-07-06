@@ -17,7 +17,7 @@ sub Data {
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQ-artikel toevoegen';
-    $Self->{Translation}->{'Keywords'} = 'Sleutelwoorden';
+    $Self->{Translation}->{'Keywords'} = 'Zoekwoorden';
     $Self->{Translation}->{'A category is required.'} = 'Een categorie is vereist.';
     $Self->{Translation}->{'Approval'} = 'Goedkeuring';
 
@@ -29,7 +29,7 @@ sub Data {
     $Self->{Translation}->{'Add Category'} = 'Categorie toevoegen';
     $Self->{Translation}->{'Edit Category'} = 'Categorie bewerken';
     $Self->{Translation}->{'Subcategory of'} = 'Subcategorie van';
-    $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer ten minste één toestemmingsgroep.';
+    $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer ten minste één permissiegroep.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Agentgroepen die toegang hebben tot artikelen in deze categorie.';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wordt weergegeven als opmerking in Verkenner.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Wil je deze categorie echt verwijderen?';
@@ -45,18 +45,18 @@ sub Data {
     $Self->{Translation}->{'FAQ'} = 'FAQ';
 
     # Template: AgentFAQExplorer
-    $Self->{Translation}->{'FAQ Explorer'} = 'FAQ Explorer';
+    $Self->{Translation}->{'FAQ Explorer'} = 'FAQ Verkenner';
     $Self->{Translation}->{'Quick Search'} = 'Snelzoeken';
     $Self->{Translation}->{'Wildcards are allowed.'} = 'Wildcards zijn toegestaan.';
     $Self->{Translation}->{'Advanced Search'} = 'Geavanceerd zoeken';
-    $Self->{Translation}->{'Subcategories'} = 'Subcategoriën';
+    $Self->{Translation}->{'Subcategories'} = 'Subcategorieën';
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ-artikelen';
-    $Self->{Translation}->{'No subcategories found.'} = 'Geen subcategoriën gevonden.';
+    $Self->{Translation}->{'No subcategories found.'} = 'Geen Subcategorieën gevonden.';
 
     # Template: AgentFAQHistory
     $Self->{Translation}->{'History of'} = 'Geschiedenis van';
     $Self->{Translation}->{'History Content'} = 'Geschiedenisinhoud';
-    $Self->{Translation}->{'Createtime'} = 'Maaktijd';
+    $Self->{Translation}->{'Createtime'} = 'Maak tijd';
 
     # Template: AgentFAQJournalOverviewSmall
     $Self->{Translation}->{'No FAQ Journal data found.'} = 'Geen FAQ-journaalgegevens gevonden.';
@@ -86,31 +86,31 @@ sub Data {
     $Self->{Translation}->{'out of 5'} = 'van de 5';
 
     # Template: AgentFAQSearch
-    $Self->{Translation}->{'Keyword'} = 'Sleutewoord';
+    $Self->{Translation}->{'Keyword'} = 'Zoekwoord';
     $Self->{Translation}->{'Vote (e. g. Equals 10 or GreaterThan 60)'} = 'Stem (bijv. is gelijk aan 10 of groter dan 60)';
-    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Beoordeling (bijv.: Is gelijk aan 25% of Groter dan 75%)';
+    $Self->{Translation}->{'Rate (e. g. Equals 25% or GreaterThan 75%)'} = 'Beoordeling (bijv. Is gelijk aan 25% of Groter dan 75%)';
     $Self->{Translation}->{'Approved'} = 'Goedgekeurd';
     $Self->{Translation}->{'Last changed by'} = 'Laatst gewijzigd door';
-    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ-artikel maaktijd (voor/na)';
-    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ-artikel maaktijd (tussen)';
-    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ-artike wijzigingstijd (voor/na)';
+    $Self->{Translation}->{'FAQ Article Create Time (before/after)'} = 'FAQ-artikel maak tijd (voor/na)';
+    $Self->{Translation}->{'FAQ Article Create Time (between)'} = 'FAQ-artikel maak tijd (tussen)';
+    $Self->{Translation}->{'FAQ Article Change Time (before/after)'} = 'FAQ-artikel wijzigingstijd (voor/na)';
     $Self->{Translation}->{'FAQ Article Change Time (between)'} = 'FAQ-artikel wijzigingstijd (tussen)';
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
     $Self->{Translation}->{'FAQFulltext'} = 'FAQ volledige tekst';
 
     # Template: AgentFAQSearchSmall
-    $Self->{Translation}->{'FAQ Search'} = 'FAQ zoeken';
+    $Self->{Translation}->{'FAQ Search'} = 'FAQ Zoeken';
     $Self->{Translation}->{'Profile Selection'} = 'Profielselectie';
     $Self->{Translation}->{'Vote'} = 'Stem';
     $Self->{Translation}->{'No vote settings'} = 'Geen steminstellingen';
     $Self->{Translation}->{'Specific votes'} = 'Specifieke stemmen';
     $Self->{Translation}->{'e. g. Equals 10 or GreaterThan 60'} = 'bijv. Is gelijk aan 10 of groter dan 60';
     $Self->{Translation}->{'Rate'} = 'Beoordeling';
-    $Self->{Translation}->{'No rate settings'} = 'Geen beoordelinginstellingen';
+    $Self->{Translation}->{'No rate settings'} = 'Geen beoordelingsinstellingen';
     $Self->{Translation}->{'Specific rate'} = 'Specifieke beoordeling';
     $Self->{Translation}->{'e. g. Equals 25% or GreaterThan 75%'} = 'bijv. Is gelijk 25% of groter dan 75%';
-    $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ-artikel maaktijd';
+    $Self->{Translation}->{'FAQ Article Create Time'} = 'FAQ-artikel maak tijd';
     $Self->{Translation}->{'FAQ Article Change Time'} = 'FAQ-artikel wijzigingstijd';
 
     # Template: AgentFAQZoom
@@ -279,7 +279,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = 'Inhoudstype';
 
-    # Database XML Definition: FAQ.sopm
+    # Database XML / SOPM Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'intern';
     $Self->{Translation}->{'external'} = 'extern';
     $Self->{Translation}->{'public'} = 'openbaar';

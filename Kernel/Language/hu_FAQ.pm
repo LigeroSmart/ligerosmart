@@ -279,7 +279,7 @@ sub Data {
     # Perl Module: Kernel/Output/HTML/LinkObject/FAQ.pm
     $Self->{Translation}->{'Content Type'} = 'Tartalomtípus';
 
-    # Database XML Definition: FAQ.sopm
+    # Database XML / SOPM Definition: FAQ.sopm
     $Self->{Translation}->{'internal'} = 'belső';
     $Self->{Translation}->{'external'} = 'külső';
     $Self->{Translation}->{'public'} = 'nyilvános';
